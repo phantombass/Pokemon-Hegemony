@@ -1,0 +1,30 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[077] # Route 1
+Land,21
+    20,STARLY,5,8
+	20,BIDOOF,5,8
+	10,SHINX,5,8
+	10,ROOKIDEE,5,8
+	10,BLIPBUG,5,8
+	10,ZIGZAGOON_1,5,8
+	5,PIKACHU,5,8
+	5,BUDEW,5,8
+	4,SLAKOTH,5,8
+	3,NIDORANfE,5,8
+	3,NIDORANmA,5,8
+Water,2
+    60,TENTACOOL,14,19
+    30,MANTYKE,15,16
+    10,REMORAID,14,16
+OldRod
+    100,MAGIKARP,16,19
+GoodRod
+    60,BARBOACH,17,18
+    20,KRABBY,15,16
+    20,SHELLDER,16,19
+SuperRod
+    40,CHINCHOU,17,19
+    40,QWILFISH,16,19
+    15,CORSOLA,15,18
+    5,STARYU,15,17

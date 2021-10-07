@@ -1,0 +1,7 @@
+Name         = Pokemon Hegemony Full Script
+Version      = 1.0
+Website      = https://luka-sj.com/res/ebdx
+Requires     = Luka's Scripting Utilities,3.2
+Requires     = Elite Battle: DX
+Conflicts    = Elite Battle System
+Credits      = Phantombass: the majority of the scripts within,Marin: Marins Stairs,Voltseon: Voltseons Handy Tools,Boonzeet: Item Find,suzerain: backbone for DexNav,NuriYuri and the developers of SimpleEncounterUI,joltik: backbone for Level Balance,#NotImportant: backbone for Better AI

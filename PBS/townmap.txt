@@ -1,0 +1,9 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[0]
+Filename = mapRegion0.png
+Name = Parthenia Region
+Point = 20,1,Garon Town,Pokémon Institute,32,27,5,
+Point = 20,2,Route 1,,77,34,12,
+Point = 19,2,Route 1,,77,34,12,
+

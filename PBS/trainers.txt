@@ -1,0 +1,67 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+# Trainer's Institute
+#-------------------------------
+[LASS,Krista]
+LoseText = "You're great!"
+Pokemon = BULBASAUR,6
+#-------------------------------
+[COOLTRAINER_F,Ashley]
+LoseText = "Not bad at all."
+Pokemon = SQUIRTLE,7
+#-------------------------------
+# Route 1
+#-------------------------------
+[LASS,Sophia]
+LoseText = "You're great!"
+Pokemon = ROSELIA,8
+#-------------------------------
+[YOUNGSTER,Billy]
+LoseText = "You're great!"
+Pokemon = ZIGZAGOON_1,7
+Pokemon = HOOTHOOT,7
+#-------------------------------
+[YOUNGSTER,Bobby]
+LoseText = "You're great!"
+Pokemon = TOTODILE,7
+Pokemon = SHINX,7
+#-------------------------------
+[BUGCATCHER,Kale]
+LoseText = "You're great!"
+Pokemon = SURSKIT,7
+Pokemon = JOLTIK,7
+Pokemon = BLIPBUG,8
+#-------------------------------
+# Rival Battles
+#-------------------------------
+[RIVAL1,Blue]
+LoseText = "Not too shabby."
+Pokemon = TREECKO2,5
+	Moves = POUND,LEER
+#-------------------------------
+[RIVAL1,Blue,1]
+LoseText = "Not too shabby."
+Pokemon = TORCHIC2,5
+	Moves = SCRATCH,GROWL
+#-------------------------------
+[RIVAL1,Blue,2]
+LoseText = "Not too shabby."
+Pokemon = MUDKIP2,5
+	Moves = TACKLE,GROWL
+#-------------------------------
+[RIVAL1,Blue,3]
+LoseText = "You're going to be tough."
+Pokemon = TREECKO2,8
+	Moves = POUND,LEER
+#-------------------------------
+[RIVAL1,Blue,4]
+LoseText = "You're going to be tough."
+Pokemon = TORCHIC2,8
+	Moves = SCRATCH,GROWL
+#-------------------------------
+[RIVAL1,Blue,5]
+LoseText = "You're going to be tough."
+Pokemon = MUDKIP2,8
+	Moves = TACKLE,GROWL
+#-------------------------------
+
