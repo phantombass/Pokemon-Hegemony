@@ -416,3 +416,20 @@ Outdoor = false
 ShowArea = false
 MapPosition = 0,19,2
 SnapEdges = true
+#-------------------------------
+[080]
+# Garon Woods
+Outdoor = true
+ShowArea = true
+MapPosition = 0,18,2
+SnapEdges = true
+#-------------------------------
+[081]
+# Hidden Grotto - Woods 1
+MapPosition = 0,18,2
+SnapEdges = true
+#-------------------------------
+[082]
+# Hidden Grotto - Woods 2
+MapPosition = 0,18,2
+SnapEdges = true
