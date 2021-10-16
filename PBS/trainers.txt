@@ -32,6 +32,18 @@ Pokemon = SURSKIT,7
 Pokemon = JOLTIK,7
 Pokemon = BLIPBUG,8
 #-------------------------------
+# Garon Woods
+#-------------------------------
+[BUGCATCHER,Jason]
+LoseText = "You're great!"
+Pokemon = CATERPIE,9
+Pokemon = WEEDLE,9
+#-------------------------------
+[BUGCATCHER,Jackson]
+LoseText = "You're great!"
+Pokemon = SHELMET,9
+Pokemon = KARRABLAST,9
+#-------------------------------
 # Rival Battles
 #-------------------------------
 [RIVAL1,Blue]
