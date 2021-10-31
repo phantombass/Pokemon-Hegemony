@@ -231,10 +231,10 @@ class PokeBattle_Scene
     x = v > 0 ? -8 : -6
     for i in 0...20.delta_add
       k = 20.delta_add/20.0
-      moveEntireScene(x, (speech ? +2 : -1), true, true) if i%k > 0
+      moveEntireScene(x, (speech ? +2 : -1), true, true) if i%k > 0 || k == 1
       @sprites["opponent"].opacity += 12.8.delta_sub(false)
-      @sprites["opponent"].x += x if i%k > 0
-      @sprites["opponent"].y += (speech ? 2 : -1) if i%k > 0
+      @sprites["opponent"].x += x if i%k > 0 || k == 1
+      @sprites["opponent"].y += (speech ? 2 : -1) if i%k > 0 || k == 1
       @sprites["box1"].zoom_x += (@viewport.width/16).delta_sub(false) if speech
       @sprites["box2"].zoom_x += (@viewport.width/16).delta_sub(false) if speech
       self.wait(1, true)
@@ -254,10 +254,10 @@ class PokeBattle_Scene
     x = v > 0 ? 8 : 6
     for i in 0...20.delta_add
       k = 20.delta_add/20.0
-      moveEntireScene(x, (speech ? -2 : +1), true, true) if i%k > 0
+      moveEntireScene(x, (speech ? -2 : +1), true, true) if i%k > 0 || k == 1
       @sprites["opponent"].opacity -= 12.8.delta_sub(false)
-      @sprites["opponent"].x += x if i%k > 0
-      @sprites["opponent"].y -= (speech ? 2 : -1) if i%k > 0
+      @sprites["opponent"].x += x if i%k > 0 || k == 1
+      @sprites["opponent"].y -= (speech ? 2 : -1) if i%k > 0 || k == 1
       @sprites["box1"].zoom_x -= (@viewport.width/16).delta_sub(false) if speech
       @sprites["box2"].zoom_x -= (@viewport.width/16).delta_sub(false) if speech
       self.wait(1, true)
@@ -333,8 +333,8 @@ end
 #===============================================================================
 class PokeBattle_AI
   #-----------------------------------------------------------------------------
-  def pbChooseBestNewEnemy(idxBattler,party,enemies)
-    return -1 if !enemies || enemies.length==0
+  def pbChooseBestNewEnemy(idxBattler, party, enemies)
+    return -1 if !enemies || enemies.length == 0
     best    = -1
     bestSum = 0
     # get opponent info
@@ -348,7 +348,7 @@ class PokeBattle_AI
       if !selAce.nil?
         cnt = 0
         party.each { |pl| cnt += 1 if pl.able? }
-        next if i == selAce - 1 && cnt > 1
+        next if i == selAce - 1 && cnt > 2
       end
       sum  = 0
       pkmn.moves.each do |m|
@@ -358,7 +358,7 @@ class PokeBattle_AI
           sum += Effectiveness.calculate(m.type, bTypes[0], bTypes[1], bTypes[2])
         end
       end
-      if best==-1 || sum>bestSum
+      if best == -1 || sum > bestSum
         best = i
         bestSum = sum
       end

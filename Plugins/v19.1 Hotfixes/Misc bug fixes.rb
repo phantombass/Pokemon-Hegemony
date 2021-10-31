@@ -6,7 +6,7 @@
 # https://github.com/Maruno17/pokemon-essentials
 #==============================================================================
 
-Essentials::ERROR_TEXT += "[v19.1 Hotfixes 1.0.3]\r\n"
+Essentials::ERROR_TEXT += "[v19.1 Hotfixes 1.0.7]\r\n"
 
 #==============================================================================
 # Fix for Vs. animation not playing, and a trainer's trainer type possibly
@@ -467,3 +467,280 @@ end
 ItemHandlers::UseInField.add(:POKERADAR,proc { |item|
   next (pbUsePokeRadar) ? 1 : 0
 })
+
+#==============================================================================
+# Fixed typo in def addBackgroundOrColoredPlane.
+#==============================================================================
+def addBackgroundOrColoredPlane(sprites,planename,background,color,viewport=nil)
+  bitmapName=pbResolveBitmap("Graphics/Pictures/#{background}")
+  if bitmapName==nil
+    # Plane should exist in any case
+    sprites[planename]=ColoredPlane.new(color,viewport)
+  else
+    sprites[planename]=AnimatedPlane.new(viewport)
+    sprites[planename].setBitmap(bitmapName)
+    for spr in sprites.values
+      if spr.is_a?(Window)
+        spr.windowskin=nil
+      end
+    end
+  end
+end
+
+#==============================================================================
+# Fixed crash when choosing Pokémon for NPC Bug Catching Contest participants.
+#==============================================================================
+class PokemonEncounters
+  def choose_wild_pokemon_for_map(map_ID, enc_type)
+    if !enc_type || !GameData::EncounterType.exists?(enc_type)
+      raise ArgumentError.new(_INTL("Encounter type {1} does not exist", enc_type))
+    end
+    # Get the encounter table
+    encounter_data = GameData::Encounter.get(map_ID, $PokemonGlobal.encounter_version)
+    return nil if !encounter_data
+    enc_list = encounter_data.types[enc_type]
+    return nil if !enc_list || enc_list.length == 0
+    # Calculate the total probability value
+    chance_total = 0
+    enc_list.each { |a| chance_total += a[0] }
+    # Choose a random entry in the encounter table based on entry probabilities
+    rnd = rand(chance_total)
+    encounter = nil
+    enc_list.each do |enc|
+      rnd -= enc[0]
+      next if rnd >= 0
+      encounter = enc
+      break
+    end
+    # Return [species, level]
+    level = rand(encounter[2]..encounter[3])
+    return [encounter[1], level]
+  end
+end
+
+#==============================================================================
+# Fixed the event command "Return to Title Screen"/resting in a Battle Facility
+# run causing issues when trying to continue the game again immediately.
+#==============================================================================
+module SaveData
+  class Value
+    def mark_as_unloaded
+      @loaded = false
+    end
+  end
+
+  def self.mark_values_as_unloaded
+    @values.each do |value|
+      value.mark_as_unloaded unless value.load_in_bootup?
+    end
+  end
+end
+
+alias __hotfixes__pbCallTitle pbCallTitle
+def pbCallTitle
+  $game_temp.to_title = false if $game_temp
+  SaveData.mark_values_as_unloaded
+  return __hotfixes__pbCallTitle
+end
+
+#==============================================================================
+# Fixed Pokédex search not considering the properties of alternate forms of
+# species if they were the ones last looked at.
+#==============================================================================
+class PokemonPokedex_Scene
+  def pbGetDexList
+    region = pbGetPokedexRegion
+    regionalSpecies = pbAllRegionalSpecies(region)
+    if !regionalSpecies || regionalSpecies.length == 0
+      # If no Regional Dex defined for the given region, use the National Pokédex
+      regionalSpecies = []
+      GameData::Species.each { |s| regionalSpecies.push(s.id) if s.form == 0 }
+    end
+    shift = Settings::DEXES_WITH_OFFSETS.include?(region)
+    ret = []
+    regionalSpecies.each_with_index do |species, i|
+      next if !species
+      next if !pbCanAddForModeList?($PokemonGlobal.pokedexMode, species)
+      _gender, form = $Trainer.pokedex.last_form_seen(species)
+      species_data = GameData::Species.get_species_form(species, form)
+      color  = species_data.color
+      type1  = species_data.type1
+      type2  = species_data.type2 || type1
+      shape  = species_data.shape
+      height = species_data.height
+      weight = species_data.weight
+      ret.push([species, species_data.name, height, weight, i + 1, shift, type1, type2, color, shape])
+    end
+    return ret
+  end
+end
+
+#==============================================================================
+# Fixed bad code in evolution method HappinessMoveType.
+#==============================================================================
+GameData::Evolution.register({
+  :id            => :HappinessMoveType,
+  :parameter     => :Type,
+  :minimum_level => 1,   # Needs any level up
+  :level_up_proc => proc { |pkmn, parameter|
+    if pkmn.happiness >= 220
+      next pkmn.moves.any? { |m| m && m.type == parameter }
+    end
+  }
+})
+
+#===============================================================================
+# Fixed particle effects on events not working.
+#===============================================================================
+def pbEventCommentInput(*args)
+  parameters = []
+  list = args[0].list   # List of commands for event or event page
+  elements = args[1]    # Number of elements
+  trigger = args[2]     # Trigger
+  return nil if list == nil
+  return nil unless list.is_a?(Array)
+  for item in list
+    next unless item.code == 108 || item.code == 408
+    if item.parameters[0] == trigger
+      start = list.index(item) + 1
+      finish = start + elements
+      for id in start...finish
+        next if !list[id]
+        parameters.push(list[id].parameters[0])
+      end
+      return parameters
+    end
+  end
+  return nil
+end
+
+#===============================================================================
+# Fixed Sweet Scent not working.
+#===============================================================================
+def pbSweetScent
+  if $game_screen.weather_type != :None
+    pbMessage(_INTL("The sweet scent faded for some reason..."))
+    return
+  end
+  viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
+  viewport.z = 99999
+  count = 0
+  viewport.color.red   = 255
+  viewport.color.green = 0
+  viewport.color.blue  = 0
+  viewport.color.alpha -= 10
+  alphaDiff = 12 * 20 / Graphics.frame_rate
+  loop do
+    if count==0 && viewport.color.alpha<128
+      viewport.color.alpha += alphaDiff
+    elsif count>Graphics.frame_rate/4
+      viewport.color.alpha -= alphaDiff
+    else
+      count += 1
+    end
+    Graphics.update
+    Input.update
+    pbUpdateSceneMap
+    break if viewport.color.alpha<=0
+  end
+  viewport.dispose
+  enctype = $PokemonEncounters.encounter_type
+  if !enctype || !$PokemonEncounters.encounter_possible_here? ||
+     !pbEncounter(enctype)
+    pbMessage(_INTL("There appears to be nothing here..."))
+  end
+end
+
+#===============================================================================
+# Fixed overworld weather moving relative to the screen rather than the map.
+#===============================================================================
+module RPG
+  class Weather
+    def update_sprite_position(sprite, index, is_new_sprite = false)
+      return if !sprite || !sprite.bitmap || !sprite.visible
+      delta_t = Graphics.delta_s
+      lifetimes = (is_new_sprite) ? @new_sprite_lifetimes : @sprite_lifetimes
+      if lifetimes[index] >= 0
+        lifetimes[index] -= delta_t
+        if lifetimes[index] <= 0
+          reset_sprite_position(sprite, index, is_new_sprite)
+          return
+        end
+      end
+      # Determine which weather type this sprite is representing
+      weather_type = (is_new_sprite) ? @target_type : @type
+      # Update visibility/position/opacity of sprite
+      if @weatherTypes[weather_type][0].category == :Rain && (index % 2) != 0   # Splash
+        sprite.opacity = (lifetimes[index] < 0.2) ? 255 : 0   # 0.2 seconds
+      else
+        dist_x = @weatherTypes[weather_type][0].particle_delta_x * delta_t
+        dist_y = @weatherTypes[weather_type][0].particle_delta_y * delta_t
+        sprite.x += dist_x
+        sprite.y += dist_y
+        if weather_type == :Snow
+          sprite.x += dist_x * (sprite.y - @oy) / (Graphics.height * 3)   # Faster when further down screen
+          sprite.x += [2, 1, 0, -1][rand(4)] * dist_x / 8   # Random movement
+          sprite.y += [2, 1, 1, 0, 0, -1][index % 6] * dist_y / 10   # Variety
+        end
+        sprite.x -= Graphics.width if sprite.x - @ox > Graphics.width
+        sprite.x += Graphics.width if sprite.x - @ox < -sprite.width
+        sprite.y -= Graphics.height if sprite.y - @oy > Graphics.height
+        sprite.y += Graphics.height if sprite.y - @oy < -sprite.height
+        sprite.opacity += @weatherTypes[weather_type][0].particle_delta_opacity * delta_t
+        x = sprite.x - @ox
+        y = sprite.y - @oy
+        # Check if sprite is off-screen; if so, reset it
+        if sprite.opacity < 64 || x < -sprite.bitmap.width || y > Graphics.height
+          reset_sprite_position(sprite, index, is_new_sprite)
+        end
+      end
+    end
+
+    def recalculate_tile_positions
+      delta_t = Graphics.delta_s
+      weather_type = @type
+      if @fading && @fade_time >= [FADE_OLD_TONE_END - @time_shift, 0].max
+        weather_type = @target_type
+      end
+      @tile_x += @weatherTypes[weather_type][0].tile_delta_x * delta_t
+      @tile_y += @weatherTypes[weather_type][0].tile_delta_y * delta_t
+      while @tile_x < @ox - @weatherTypes[weather_type][2][0].width
+        @tile_x += @weatherTypes[weather_type][2][0].width
+      end
+      while @tile_x > @ox
+        @tile_x -= @weatherTypes[weather_type][2][0].width
+      end
+      while @tile_y < @oy - @weatherTypes[weather_type][2][0].height
+        @tile_y += @weatherTypes[weather_type][2][0].height
+      end
+      while @tile_y > @oy
+        @tile_y -= @weatherTypes[weather_type][2][0].height
+      end
+    end
+
+    def update_tile_position(sprite, index)
+      return if !sprite || !sprite.bitmap || !sprite.visible
+      sprite.x = @tile_x.round + (index % @tiles_wide) * sprite.bitmap.width
+      sprite.y = @tile_y.round + (index / @tiles_wide) * sprite.bitmap.height
+      sprite.x += @tiles_wide * sprite.bitmap.width if sprite.x - @ox < -sprite.bitmap.width
+      sprite.y -= @tiles_tall * sprite.bitmap.height if sprite.y - @oy > Graphics.height
+      sprite.visible = true
+      if @fading && @type != @target_type
+        if @fade_time >= FADE_OLD_TILES_START && @fade_time < FADE_OLD_TILES_END
+          if @time_shift == 0   # There were old tiles to fade out
+            fraction = (@fade_time - [FADE_OLD_TILES_START - @time_shift, 0].max) / (FADE_OLD_TILES_END - FADE_OLD_TILES_START)
+            sprite.opacity = 255 * (1 - fraction)
+          end
+        elsif @fade_time >= [FADE_NEW_TILES_START - @time_shift, 0].max &&
+              @fade_time < [FADE_NEW_TILES_END - @time_shift, 0].max
+          fraction = (@fade_time - [FADE_NEW_TILES_START - @time_shift, 0].max) / (FADE_NEW_TILES_END - FADE_NEW_TILES_START)
+          sprite.opacity = 255 * fraction
+        else
+          sprite.opacity = 0
+        end
+      else
+        sprite.opacity = (@max > 0) ? 255 : 0
+      end
+    end
+  end
+end

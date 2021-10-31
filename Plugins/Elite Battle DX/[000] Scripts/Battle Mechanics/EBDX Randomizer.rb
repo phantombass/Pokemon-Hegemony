@@ -374,12 +374,17 @@ module GameData
     #---------------------------------------------------------------------------
     #  override standard get function
     #---------------------------------------------------------------------------
+    class << self
+      alias get_ebdx get unless self.method_defined?(:get_ebdx)
+    end
+    #---------------------------------------------------------------------------
     def self.get(map_id, map_version = 0)
       validate map_id => Integer
       validate map_version => Integer
       trial_key = sprintf("%s_%d", map_id, map_version).to_sym
       key = (self::DATA.has_key?(trial_key)) ? trial_key : sprintf("%s_0", map_id).to_sym
-      return EliteBattle.getRandomizedData(self::DATA[key], :ENCOUNTERS, key)
+      data = get_ebdx(map_id, map_version)
+      return EliteBattle.getRandomizedData(data, :ENCOUNTERS, key)
     end
     #---------------------------------------------------------------------------
   end

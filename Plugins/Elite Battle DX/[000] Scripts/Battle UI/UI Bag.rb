@@ -700,12 +700,12 @@ class PokeBattle_Scene
           when 1, 6   # Use on Pokémon
             if @battle.pbTeamLengthFromBattlerIndex(idxBattler) == 1
               ret = item
-              break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1
+              break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, @bagWindow
             end
           when 3, 8   # Use on battler
             if @battle.pbPlayerBattlerCount == 1
               ret = item
-              break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1
+              break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, @bagWindow
             end
           end
           # Get player's party
