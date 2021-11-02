@@ -448,3 +448,8 @@ SnapEdges = true
 # Baron PMC
 MapPosition = 0,16,2
 SnapEdges = true
+#-------------------------------
+[085]
+# Hidden Grotto - Boro
+Outdoor = true
+SnapEdges = true
