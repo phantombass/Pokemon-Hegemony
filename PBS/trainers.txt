@@ -44,6 +44,11 @@ LoseText = "You're great!"
 Pokemon = SHELMET,9
 Pokemon = KARRABLAST,9
 #-------------------------------
+[BUGCATCHER,Jimmy]
+LoseText = "You're great!"
+Pokemon = NINCADA,9
+Pokemon = SURSKIT,9
+#-------------------------------
 # Rival Battles
 #-------------------------------
 [RIVAL1,Blue]

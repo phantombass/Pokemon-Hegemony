@@ -407,12 +407,13 @@ SnapEdges = true
 #-------------------------------
 [078]
 # Hidden Grotto - Garon
+Outdoor = true
 MapPosition = 0,20,1
 SnapEdges = true
 #-------------------------------
 [079]
 # Hidden Grotto - Route 1
-Outdoor = false
+Outdoor = true
 ShowArea = false
 MapPosition = 0,19,2
 SnapEdges = true
@@ -426,10 +427,24 @@ SnapEdges = true
 #-------------------------------
 [081]
 # Hidden Grotto - Woods 1
+Outdoor = true
 MapPosition = 0,18,2
 SnapEdges = true
 #-------------------------------
 [082]
 # Hidden Grotto - Woods 2
+Outdoor = true
 MapPosition = 0,18,2
+SnapEdges = true
+#-------------------------------
+[083]
+# Boro Town
+Outdoor = true
+ShowArea = true
+MapPosition = 0,16,2
+SnapEdges = true
+#-------------------------------
+[084]
+# Baron PMC
+MapPosition = 0,16,2
 SnapEdges = true
