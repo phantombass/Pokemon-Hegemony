@@ -62,6 +62,20 @@ Pokemon = TORCHIC,13
 	Ability = SPEEDBOOST
 	Moves = FEATHERDART,AERIALACE,PROTECT,SUBSTITUTE
 #-------------------------------
+[LASS,Sheena]
+LoseText = "You're great!"
+Pokemon = SHINX,12
+	Ability = INTIMIDATE
+	Moves = SPARK,VOLTSWITCH,BITE,ICEFANG
+Pokemon = FLABEBE,12
+	Moves = WISH,FAIRYWIND,PROTECT,LEECHSEED
+Pokemon = ROGGENROLA,12
+	Ability = STURDY
+	Moves = ROCKTHROW,STEALTHROCK,HEADBUTT,BULLDOZE
+Pokemon = TIMBURR,13
+	Ability = GUTS
+	Moves = MACHPUNCH,ROCKTHROW,PROTECT,KNOCKOFF
+#-------------------------------
 # Rival Battles
 #-------------------------------
 [RIVAL1,Blue]

@@ -13,6 +13,7 @@ module LvlCap
   Gym = 70                   #Switch for Gym Battles
   Rival = 69                 #Switch for Rival Battles
   LvlTrainer = 83
+  Trainers = 72              #Switch for Trainers
   Ace = 129                  #Switch for Ace Trainer Battles
 end
 
@@ -31,6 +32,8 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = levelcap
       elsif $game_switches[LvlCap::LvlTrainer] == true
         level = levelcap - 5
+      elsif $game_switches[LvlCap::Trainers] == true
+        level = (mlv-1) - rand(3)
       elsif mlv<levelcap && mlv>party[i].level && $game_switches[LvlCap::Rival] == true
         level = mlv
       elsif mlv<levelcap && mlv<=party[i].level && $game_switches[LvlCap::Rival] == true
@@ -102,7 +105,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       party[i].name=GameData::Species.get(species).name
       party[i].species=species
       party[i].calc_stats
-      if $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Ace] == false && $game_switches[LvlCap::LvlTrainer] == false
+      if $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Ace] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Trainers] == false
         party[i].reset_moves
       end
       end #end of for
