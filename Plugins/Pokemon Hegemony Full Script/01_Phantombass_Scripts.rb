@@ -5,7 +5,11 @@ Events.onMapChange += proc {| sender, e |
   badges = $Trainer.badge_count
     if badges == 0
       if $game_switches[65] == true
-        $game_variables[106] = 15
+        if $game_switches[71] == true
+          $game_variables[106] = 21
+        else
+          $game_variables[106] = 15
+        end
       else
         $game_variables[106] = 9
       end
@@ -24,7 +28,11 @@ Events.onStepTaken += proc {| sender, e |
   badges = $Trainer.badge_count
     if badges == 0
       if $game_switches[65] == true
-        $game_variables[106] = 15
+        if $game_switches[71] == true
+          $game_variables[106] = 21
+        else
+          $game_variables[106] = 15
+        end
       else
         $game_variables[106] = 9
       end

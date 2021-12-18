@@ -49,6 +49,19 @@ LoseText = "You're great!"
 Pokemon = NINCADA,9
 Pokemon = SURSKIT,9
 #-------------------------------
+# Route 2
+#-------------------------------
+[YOUNGSTER,Shane]
+LoseText = "You're great!"
+Pokemon = ROSELIA,12
+	Moves = MEGADRAIN,SLUDGE,LEECHSEED,TOXICSPIKES
+Pokemon = MARILL,12
+	Ability = HUGEPOWER
+	Moves = AQUAJET,COVET,KNOCKOFF,PROTECT
+Pokemon = TORCHIC,13
+	Ability = SPEEDBOOST
+	Moves = FEATHERDART,AERIALACE,PROTECT,SUBSTITUTE
+#-------------------------------
 # Rival Battles
 #-------------------------------
 [RIVAL1,Blue]

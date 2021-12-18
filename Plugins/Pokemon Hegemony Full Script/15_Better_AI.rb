@@ -287,16 +287,37 @@ class PokeBattle_AI
 					type2Target = GameData::Type.get(battler.type1).effectiveness(target.type2) * GameData::Type.get(battler.type2).effectiveness(target.type2)
 				end
 				if skill>=PBTrainerAI.beastMode
+					if battler.effects[PBEffects::Substitute] > 0
+						shouldSwitch = false
+					end
+				if type1Target == Effectiveness::SUPER_EFFECTIVE_ONE && type2Target == Effectiveness::SUPER_EFFECTIVE_ONE
+					shouldSwitch = true
+				end
+				if type1Target != Effectiveness::SUPER_EFFECTIVE_ONE && type2Target != Effectiveness::SUPER_EFFECTIVE_ONE
+					if faster && target.hp <= (target.totalhp/3)
+						shouldSwitch = false
+					elsif faster
+						if type1Battler == Effectiveness::SUPER_EFFECTIVE_ONE || type2Battler == Effectiveness::SUPER_EFFECTIVE_ONE
+							shouldSwitch = false
+						else
+							switchChance = 10
+							shouldSwitch = (pbAIRandom(100)<switchChance)
+						end
+					else
+						switchChance = 95
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+					end
+				end
 				if type1Target == Effectiveness::SUPER_EFFECTIVE_ONE || type2Target == Effectiveness::SUPER_EFFECTIVE_ONE
 					if faster
 						if type1Battler == Effectiveness::SUPER_EFFECTIVE_ONE || type2Battler == Effectiveness::SUPER_EFFECTIVE_ONE
 							shouldSwitch = false
 						else
-							switchChance = 30
+							switchChance = 10
 							shouldSwitch = (pbAIRandom(100)<switchChance)
 						end
 					else
-						switchChance = 90
+						switchChance = 95
 						shouldSwitch = (pbAIRandom(100)<switchChance)
 					end
 				end

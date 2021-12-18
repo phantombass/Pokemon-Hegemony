@@ -453,3 +453,10 @@ SnapEdges = true
 # Hidden Grotto - Boro
 Outdoor = true
 SnapEdges = true
+#-------------------------------
+[088]
+# Route 2
+Outdoor = true
+ShowArea = true
+MapPosition = 0,15,1
+SnapEdges = true
