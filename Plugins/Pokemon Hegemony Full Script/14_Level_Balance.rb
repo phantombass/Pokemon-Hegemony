@@ -33,7 +33,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       elsif $game_switches[LvlCap::LvlTrainer] == true
         level = levelcap - 5
       elsif $game_switches[LvlCap::Trainers] == true
-        level = (mlv-1) - rand(3)
+        level = (mlv-1) - rand(2)
       elsif mlv<levelcap && mlv>party[i].level && $game_switches[LvlCap::Rival] == true
         level = mlv
       elsif mlv<levelcap && mlv<=party[i].level && $game_switches[LvlCap::Rival] == true
