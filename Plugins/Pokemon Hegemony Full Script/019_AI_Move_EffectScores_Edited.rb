@@ -2790,7 +2790,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "150"
-      score += 20 if !user.statStageAtMax?(:ATTACK) && target.hp<=target.totalhp/4
+      score += 60 if !user.statStageAtMax?(:ATTACK) && target.hp<=target.totalhp/4
     #---------------------------------------------------------------------------
     when "151"
       avg  = target.stages[:ATTACK]*10

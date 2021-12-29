@@ -460,3 +460,14 @@ Outdoor = true
 ShowArea = true
 MapPosition = 0,15,1
 SnapEdges = true
+#-------------------------------
+[089]
+# House
+MapPosition = 0,15,1
+SnapEdges = true
+#-------------------------------
+[090]
+# Helum Tunnel
+ShowArea = true
+MapPosition = 0,14,1
+SnapEdges = true

@@ -76,6 +76,16 @@ Pokemon = TIMBURR,13
 	Ability = GUTS
 	Moves = MACHPUNCH,ROCKTHROW,PROTECT,KNOCKOFF
 #-------------------------------
+[BUGCATCHER,Casey]
+LoseText = "You're great!"
+Pokemon = SHELMET,13
+	Moves = TOXICSPIKES,RECOVER,STRUGGLEBUG,MEGADRAIN
+Pokemon = DOTTLER,14
+	Moves = REFLECT,LIGHTSCREEN,RECOVER,CONFUSION
+Pokemon = KRICKETUNE,15
+	Ability = TECHNICIAN
+	Moves = FURYCUTTER,KNOCKOFF,FELLSTINGER,ROCKTOMB
+#-------------------------------
 # Rival Battles
 #-------------------------------
 [RIVAL1,Blue]
