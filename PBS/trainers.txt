@@ -79,12 +79,43 @@ Pokemon = TIMBURR,13
 [BUGCATCHER,Casey]
 LoseText = "You're great!"
 Pokemon = SHELMET,13
+	Ability = SHELLARMOR
 	Moves = TOXICSPIKES,RECOVER,STRUGGLEBUG,MEGADRAIN
 Pokemon = DOTTLER,14
+	Ability = MAGICGUARD
 	Moves = REFLECT,LIGHTSCREEN,RECOVER,CONFUSION
 Pokemon = KRICKETUNE,15
 	Ability = TECHNICIAN
 	Moves = FURYCUTTER,KNOCKOFF,FELLSTINGER,ROCKTOMB
+#-------------------------------
+# Gym Battles
+#-------------------------------
+[LEADER_Blaine,Turner]
+LoseText = "Well done! You'll go far in this Gym challenge!"
+Pokemon = THWACKEY,18
+	Ability = GRASSYSURGE
+	Item = TERRAINEXTENDER
+	Moves = UTURN,FAKEOUT,RAZORLEAF,LEECHSEED
+Pokemon = GLIGAR,18
+	Ability = IMMUNITY
+	Item = BERRYJUICE
+	Moves = STEALTHROCK,UTURN,ACROBATICS,ROOST
+Pokemon = BUIZEL,18
+	Ability = TECHNICIAN
+	Item = MYSTICWATER
+	Moves = FLIPTURN,AQUAJET,QUICKATTACK,PURSUIT
+Pokemon = SLOWPOKE,18
+	Ability = REGENERATOR
+	Item = LUMBERRY
+	Moves = TELEPORT,WATERPULSE,YAWN,CONFUSION
+Pokemon = COMFEY,18
+	Ability = NATURALCURE
+	Item = BIGROOT
+	Moves = UTURN,LEECHSEED,DRAININGKISS,MEGADRAIN
+Pokemon = BLITZLE2,20
+	Ability = NEUROFORCE
+	Item = BERRYJUICE
+	Moves = SPARK,FLAMECHARGE,BULLDOZE,VOLTSWITCH
 #-------------------------------
 # Rival Battles
 #-------------------------------
@@ -117,5 +148,42 @@ Pokemon = TORCHIC2,8
 LoseText = "You're going to be tough."
 Pokemon = MUDKIP2,8
 	Moves = TACKLE,GROWL
+#-------------------------------
+[RIVAL1,Blue,6]
+LoseText = "Awesome!"
+Pokemon = STARAVIA,16
+	Item = SHARPBEAK
+	Moves = QUICKATTACK,FURYATTACK,WINGATTACK,ROOST
+Pokemon = MISDREAVUS,16
+	Item = COLBURBERRY
+	Ability = PERISHBODY
+	Moves = OMINOUSWIND,NASTYPLOT,PSYWAVE,CONFUSERAY
+Pokemon = GROVYLE2,17
+	Moves = MACHPUNCH,SANDTOMB,LEER,POUND
+#-------------------------------
+[RIVAL1,Blue,7]
+LoseText = "Awesome!"
+Pokemon = STARAVIA,16
+	Item = SHARPBEAK
+	Moves = QUICKATTACK,FURYATTACK,WINGATTACK,ROOST
+Pokemon = MISDREAVUS,16
+	Item = COLBURBERRY
+	Ability = PERISHBODY
+	Moves = OMINOUSWIND,NASTYPLOT,PSYWAVE,CONFUSERAY
+Pokemon = COMBUSKEN2,17
+	Moves = CONFUSION,GUST,DEFOG
+#-------------------------------
+[RIVAL1,Blue,8]
+LoseText = "Awesome!"
+Pokemon = STARAVIA,16
+	Item = SHARPBEAK
+	Moves = QUICKATTACK,FURYATTACK,WINGATTACK,ROOST
+Pokemon = MISDREAVUS,16
+	Item = COLBURBERRY
+	Ability = PERISHBODY
+	Moves = OMINOUSWIND,NASTYPLOT,PSYWAVE,CONFUSERAY
+Pokemon = MARSHTOMP2,17
+	Item = BERRYJUICE
+	Moves = ROCKTHROW,TAUNT,BITE,BIDE
 #-------------------------------
 

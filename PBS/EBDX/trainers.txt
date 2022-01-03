@@ -3,23 +3,8 @@
 BattleBGM        = B2W2-RivalTheme.ogg
 BattleVS         = classicVS
 #-------------------------------
-[CHAMPION]
-BattleEnv        = CHAMPION
-BattleVS         = specialSM
-#-------------------------------
-[POKEMONTRAINER_Brendan]
-BattleBGM        = RSE Rival.mp3
-BattleVS         = classicVS
-#-------------------------------
-[POKEMONTRAINER_May]
-BattleBGM        = RSE Rival.mp3
-BattleVS         = classicVS
-#-------------------------------
-[POKEMONTRAINER_Wally]
-BattleBGM        = ORAS Wally Battle.mp3
-BattleVS         = classicVS
-#-------------------------------
-[LEADER_Roxanne]
-BattleBGM        = RSE Gym.mp3
-BattleVS         = specialSM
+[LEADER_Blaine]
+BattleBGM        = Gym Leader.ogg
+BattleVS         = plasmaSM
+Ace				 = 6
 #-------------------------------

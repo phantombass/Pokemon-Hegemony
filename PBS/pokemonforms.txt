@@ -3034,3 +3034,21 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions =
 #-------------------------------
+[CHIMECHO,1]
+FormName = Mega Chimecho
+MegaStone = CHIMECHONITE
+Type1 = PSYCHIC
+Type2 = FAIRY
+BaseStats = 95,50,120,95,125,120
+Abilities = PIXILATE
+HiddenAbility = PIXILATE
+#-------------------------------
+[CHIMECHO2,1]
+FormName = Wartime Mega Chimecho
+MegaStone = WCHIMECHONITE
+Type1 = STEEL
+Type2 = FAIRY
+BaseStats = 95,95,120,95,125,120
+Abilities = LEVITATE
+HiddenAbility = LEVITATE
+#-------------------------------
