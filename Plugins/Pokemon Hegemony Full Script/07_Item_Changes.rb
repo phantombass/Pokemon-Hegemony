@@ -87,15 +87,14 @@ def pbRaiseHappinessAndLowerEV(pkmn,scene,stat,messages)
   return true
 end
 
-
 def pbCut
-  if $PokemonBag.pbQuantity(:CHAINSAW)==0
+  if !$game_switches[HMCatalogue::Cut]
     pbMessage(_INTL("This tree looks like it can be cut down."))
     return false
   end
   pbMessage(_INTL("This tree looks like it can be cut down!\1"))
   if pbConfirmMessage(_INTL("Would you like to cut it?"))
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:CHAINSAW).name))
+    pbMessage(_INTL("{1} used Cut!",$Trainer.name))
     return true
   end
   return false
@@ -120,12 +119,12 @@ def pbDive
   return false if $game_player.pbFacingEvent
   map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
   return false if !map_metadata || !map_metadata.dive_map_id
-  if $PokemonBag.pbQuantity(:SCUBATANK)==0
+  if !$game_switches[HMCatalogue::Dive]
     pbMessage(_INTL("The sea is deep here. A Pokémon may be able to go underwater."))
     return false
   end
   if pbConfirmMessage(_INTL("The sea is deep here. Would you like to use Dive?"))
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
+    pbMessage(_INTL("{1} used Dive!",$Trainer.name))
     pbFadeOutIn {
        $game_temp.player_new_map_id    = map_metadata.dive_map_id
        $game_temp.player_new_x         = $game_player.x
@@ -153,12 +152,12 @@ def pbSurfacing
     break
   end
   return if !surface_map_id
-  if $PokemonBag.pbQuantity(:SCUBATANK)==0
+  if !$game_switches[HMCatalogue::Dive]
     pbMessage(_INTL("Light is filtering down from above. A Pokémon may be able to surface here."))
     return false
   end
   if pbConfirmMessage(_INTL("Light is filtering down from above. Would you like to use Dive?"))
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
+    pbMessage(_INTL("{1} used Dive!",$Trainer.name))
     pbFadeOutIn {
        $game_temp.player_new_map_id    = surface_map_id
        $game_temp.player_new_x         = $game_player.x
@@ -182,13 +181,13 @@ def pbStrength
     pbMessage(_INTL("Strength made it possible to move boulders around."))
     return false
   end
-  if $PokemonBag.pbQuantity(:FULCRUM)==0
+  if !$game_switches[HMCatalogue::Strength]
     pbMessage(_INTL("It's a big boulder, but a Pokémon may be able to push it aside."))
     return false
   end
   pbMessage(_INTL("It's a big boulder, but a Pokémon may be able to push it aside.\1"))
   if pbConfirmMessage(_INTL("Would you like to use Strength?"))
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:FULCRUM).name))
+    pbMessage(_INTL("{1} used Strength!",$Trainer.name))
     pbMessage(_INTL("{1}'s Strength made it possible to move boulders around!",$Trainer.name))
     $PokemonMap.strengthUsed = true
     return true
@@ -197,12 +196,12 @@ def pbStrength
 end
 
 def pbRockSmash
-  if $PokemonBag.pbQuantity(:HAMMER)==0
+  if !$game_switches[HMCatalogue::RockSmash]
     pbMessage(_INTL("It's a rugged rock, but a Pokémon may be able to smash it."))
     return false
   end
   if pbConfirmMessage(_INTL("This rock appears to be breakable. Would you like to use Rock Smash?"))
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HAMMER).name))
+    pbMessage(_INTL("{1} used Rock Smash!",$Trainer.name))
     return true
   end
   return false
@@ -211,11 +210,11 @@ end
 def pbSurf
   return false if $game_player.pbFacingEvent
   return false if $game_player.pbHasDependentEvents?
-  if $PokemonBag.pbQuantity(:HOVERCRAFT)==0
+  if !$game_switches[HMCatalogue::Surf]
     return false
   end
   if pbConfirmMessage(_INTL("The water is a deep blue...\nWould you like to surf on it?"))
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HOVERCRAFT).name))
+    pbMessage(_INTL("{1} used Surf!"))
     pbCancelVehicles
     surfbgm = GameData::Metadata.get.surf_BGM
     pbCueBGM(surfbgm,0.5) if surfbgm
@@ -226,12 +225,12 @@ def pbSurf
 end
 
 def pbWaterfall
-  if $PokemonBag.pbQuantity(:AQUAROCKET)==0
+  if !$game_switches[HMCatalogue::Waterfall]
     pbMessage(_INTL("A wall of water is crashing down with a mighty roar."))
     return false
   end
   if pbConfirmMessage(_INTL("It's a large waterfall. Would you like to use Waterfall?"))
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:AQUAROCKET).name))
+    pbMessage(_INTL("{1} used Waterfall!",$Trainer.name))
     pbAscendWaterfall
     return true
   end
@@ -240,7 +239,7 @@ end
 
 def canUseMoveCut?
   showmsg = true
-   return false if !$PokemonBag.pbHasItem?(:CHAINSAW)
+   return false if !$game_switches[HMCatalogue::Cut]
    facingEvent = $game_player.pbFacingEvent
    if !facingEvent || !facingEvent.name[/cuttree/i]
      pbMessage(_INTL("Can't use that here.")) if showmsg
@@ -251,7 +250,7 @@ end
 
 def useMoveCut
   if !pbHiddenMoveAnimation(nil)
-    pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:CHAINSAW).name))
+    pbMessage(_INTL("{1} used Cut!",$Trainer.name))
   end
   facingEvent = $game_player.pbFacingEvent
   if facingEvent
@@ -262,7 +261,7 @@ end
 
 def canUseMoveDive?
    showmsg = true
-   return false if !$PokemonBag.pbQuantity(:SCUBATANK)==0
+   return false if !$game_switches[HMCatalogue::Dive]
    if $PokemonGlobal.diving
      surface_map_id = nil
      GameData::MapMetadata.each do |map_data|
@@ -303,7 +302,7 @@ def useMoveDive
   end
   return false if !dive_map_id
   if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:SCUBATANK).name))
+    pbMessage(_INTL("{1} used Dive!",$Trainer.name))
   end
   pbFadeOutIn {
     $game_temp.player_new_map_id    = dive_map_id
@@ -337,7 +336,7 @@ def useMoveFlash
   darkness = $PokemonTemp.darknessSprite
   return false if !darkness || darkness.disposed?
   if !pbHiddenMoveAnimation(nil)
-    pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:TORCH).name))
+    pbMessage(_INTL("{1} used Flash!",$Trainer.name))
   end
   $PokemonGlobal.flashUsed = true
   radiusDiff = 8*20/Graphics.frame_rate
@@ -370,15 +369,15 @@ def useMoveFly
     pbMessage(_INTL("Can't use that here."))
     return false
   end
-  pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:WINGSUIT).name))
+  pbMessage(_INTL("{1} used Fly!",$Trainer.name))
   pbFadeOutIn {
     $game_temp.player_new_map_id    = $PokemonTemp.flydata[0]
     $game_temp.player_new_x         = $PokemonTemp.flydata[1]
     $game_temp.player_new_y         = $PokemonTemp.flydata[2]
-    for i in 115..121
-      $game_switches[i] = false
-    end
-    $game_switches[125] = false
+#    for i in 115..121
+#      $game_switches[i] = false
+#    end
+#    $game_switches[125] = false
     $CanToggle = true
     $game_temp.player_new_direction = 2
     $PokemonTemp.flydata = nil
@@ -479,7 +478,7 @@ end
 
 def canUseMoveRockSmash?
   showmsg = true
-  return false if $PokemonBag.pbQuantity(:HAMMER)==0
+  return false if !$game_switches[HMCatalogue::RockSmash]
   facingEvent = $game_player.pbFacingEvent
   if !facingEvent || !facingEvent.name[/smashrock/i]
     pbMessage(_INTL("Can't use that here.")) if showmsg
@@ -489,7 +488,7 @@ def canUseMoveRockSmash?
 end
 def useMoveRockSmash
   if !pbHiddenMoveAnimation(nil)
-    pbMessage(_INTL("{1} used a {2}!",$Trainer.name,GameData::Item.get(:HAMMER).name))
+    pbMessage(_INTL("{1} used Rock Smash!",$Trainer.name))
   end
   facingEvent = $game_player.pbFacingEvent
   if facingEvent
@@ -502,7 +501,7 @@ end
 
 def canUseMoveStrength?
    showmsg = true
-   return false if $PokemonBag.pbQuantity(:FULCRUM)==0
+   return false if !$game_switches[HMCatalogue::Strength]
    if $PokemonMap.strengthUsed
      pbMessage(_INTL("The Fulcrum is already being used.")) if showmsg
      return false
@@ -511,15 +510,15 @@ def canUseMoveStrength?
 end
 def useMoveStrength
   if !pbHiddenMoveAnimation(nil)
-    pbMessage(_INTL("{1} used a {2}!\1",$Trainer.name,GameData::Item.get(:FULCRUM).name))
+    pbMessage(_INTL("{1} used Strength!\1",$Trainer.name))
   end
-  pbMessage(_INTL("{1}'s {2} made it possible to move boulders around!",$Trainer.name,GameData::Item.get(:FULCRUM).name))
+  pbMessage(_INTL("{1}'s Strength made it possible to move boulders around!",$Trainer.name))
   $PokemonMap.strengthUsed = true
   return true
 end
 def canUseMoveSurf?
    showmsg = true
-   return false if $PokemonBag.pbQuantity(:HOVERCRAFT)==0
+   return false if !$game_switches[HMCatalogue::Surf]
    if $PokemonGlobal.surfing
      pbMessage(_INTL("You're already surfing.")) if showmsg
      return false
@@ -545,7 +544,7 @@ def useMoveSurf
   $game_temp.in_menu = false
   pbCancelVehicles
   if !pbHiddenMoveAnimation(nil)
-    pbMessage(_INTL("{1} used {2}!",$Trainer.name,GameData::Item.get(:HOVERCRAFT).name))
+    pbMessage(_INTL("{1} used Surf!",$Trainer.name))
   end
   surfbgm = GameData::Metadata.get.surf_BGM
   pbCueBGM(surfbgm,0.5) if surfbgm
@@ -563,7 +562,7 @@ def canUseMoveWaterfall?
 end
 def useMoveWaterfall
   if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used an {2}!",$Trainer.name,GameData::Item.get(:AQUAROCKET).name))
+    pbMessage(_INTL("{1} used Waterfall!",$Trainer.name))
   end
   pbAscendWaterfall
   return true
@@ -571,7 +570,7 @@ end
 
 def canUseMoveRockClimb?
   showmsg = true
-  return false if $PokemonBag.pbQuantity(:HIKINGGEAR)==0
+  return false if !$game_switches[HMCatalogue::RockClimb]
    if !$game_player.pbFacingTerrainTag.rock_climb
      pbMessage(_INTL("Can't use that here.")) if showmsg
      return false
@@ -580,7 +579,7 @@ def canUseMoveRockClimb?
 end
 def useMoveRockClimb
    if !pbHiddenMoveAnimation(nil)
-     pbMessage(_INTL("{1} uses the {2}!",$Trainer.name,GameData::Item.get(:HIKINGGEAR).name))
+     pbMessage(_INTL("{1} used Rock Climb!",$Trainer.name))
    end
    if event.direction=8
      pbRockClimbUp
@@ -662,12 +661,12 @@ end
 
 def pbRockClimb
   event = $game_player if !event
-  if $PokemonBag.pbQuantity(:HIKINGGEAR)==0
+  if !$game_switches[HMCatalogue::RockClimb]
     pbMessage(_INTL("These rocks look climbable."))
     return false
   end
   if pbConfirmMessage(_INTL("It's a large rock wall. Would you like to climb it?"))
-    if $PokemonBag.pbQuantity(:HIKINGGEAR)>0
+    if $PokemonBag.pbQuantity(:HIKINGGEAR)>0 || $game_switches[HMCatalogue::RockClimb]
       pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:HIKINGGEAR).name))
       pbHiddenMoveAnimation(nil)
     end
@@ -761,6 +760,14 @@ ItemHandlers::UseFromBag.add(:AQUAROCKET,proc{|item|
 
 ItemHandlers::UseInField.add(:AQUAROCKET,proc{|item|
    useMoveWaterfall if canUseMoveWaterfall?
+})
+
+ItemHandlers::UseInField.add(:HMCATALOGUE,proc{|item|
+  useHMCatalogue
+})
+
+ItemHandlers::UseFromBag.add(:HMCATALOGUE,proc{|item|
+  next 2
 })
 
 ItemHandlers::UseFromBag.add(:HIKINGGEAR,proc{|item|

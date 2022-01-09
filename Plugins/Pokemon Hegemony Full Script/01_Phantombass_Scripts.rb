@@ -503,6 +503,8 @@ class PokeBattle_Battle
       pbDisplay(_INTL("Mist swirls about the battlefield!"))
     when :Psychic
       pbDisplay(_INTL("The battlefield is weird!"))
+    when :Poison
+      pbDisplay(_INTL("Toxic waste covers the ground!"))
     end
     # Abilities upon entering battle
     pbOnActiveAll
