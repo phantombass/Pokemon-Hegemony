@@ -134,25 +134,46 @@ class HMScreen
         elsif cmdCut>=0 && cmd==cmdCut
           pbPlayDecisionSE
           dispose
-          pbMessage(_INTL("Interact with a Cut tree to use this move!."))
+          if !canUseMoveCut?
+          else
+            useMoveCut
+            break
+          end
         elsif cmdCut>=0 && cmd==cmdRockSmash
           pbPlayDecisionSE
           dispose
-          pbMessage(_INTL("Interact with a breakable rock to use this move!."))
+          if !canUseMoveRockSmash?
+          else
+            useMoveRockSmash
+            break
+          end
         elsif cmdCut>=0 && cmd==cmdStrength
           pbPlayDecisionSE
           dispose
-          pbMessage(_INTL("Interact with a large boulder to use this move!."))
+          if !canUseMoveStrength?
+          else
+            useMoveStrength
+            break
+          end
         elsif cmdCut>=0 && cmd==cmdFlash
           pbPlayDecisionSE
-          @scene.pbEndScene
-          useMoveFlash if canUseMoveFlash?
+          dispose
+          if !canUseMoveFlash?
+          else
+            useMoveFlash
+            break
+          end
         elsif cmdCut>=0 && cmd==cmdSurf
           pbPlayDecisionSE
           dispose
-          pbMessage(_INTL("Interact with water to use this move!."))
+          if !canUseMoveSurf?
+          else
+            useMoveSurf
+            break
+          end
         elsif cmdCut>=0 && cmd==cmdFly
           pbPlayDecisionSE
+          dispose
           if !canUseMoveFly?
             pbMessage(_INTL("You cannot use that here."))
           else
@@ -165,24 +186,36 @@ class HMScreen
             if ret
               $PokemonTemp.flydata = ret
               $game_temp.in_menu = false
-              dispose
               useMoveFly
-              break
             end
           }
+          dispose
+          break
           end
         elsif cmdCut>=0 && cmd==cmdDive
           pbPlayDecisionSE
           dispose
-          pbMessage(_INTL("Interact with a Dive spot to use this move!."))
+          if !canUseMoveDive?
+          else
+            useMoveDive
+            break
+          end
         elsif cmdCut>=0 && cmd==cmdRockClimb
           pbPlayDecisionSE
           dispose
-          pbMessage(_INTL("Interact with a Rock Climb spot to use this move!."))
+          if !canUseMoveRockClimb?
+          else
+            useMoveRockClimb
+            break
+          end
         elsif cmdCut>=0 && cmd==cmdWaterfall
           pbPlayDecisionSE
           dispose
-          pbMessage(_INTL("Interact with a waterfall to use this move!."))
+          if !canUseMoveWaterfall?
+          else
+            useMoveWaterfall
+            break
+          end
         else# Exit
         pbPlayCloseMenuSE
         break

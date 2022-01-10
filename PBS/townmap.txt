@@ -5,7 +5,14 @@ Filename = mapRegion0.png
 Name = Parthenia Region
 Point = 20,1,Garon Town,Pokémon Institute,32,27,5,
 Point = 20,2,Route 1,,77,34,12,
-Point = 19,2,Route 1,,77,34,12,
+Point = 19,2,Route 1,,,,,
 Point = 18,2,Garon Woods,,80,42,12,
-Point = 17,2,Garon Woods,,80,42,12,
-
+Point = 17,2,Garon Woods,,,,,
+Point = 16,2,Boro Town,OffCorp,83,10,8,
+Point = 15,2,Route 2,,,,,
+Point = 15,1,Route 2,,88,31,10,
+Point = 14,1,Route 2,,,,,
+Point = 13,1,Helum Tunnel,,,,,
+Point = 12,1,Helum Tunnel,,,,,
+Point = 11,1,Helum Tunnel,,,,,
+Point = 10,1,Helum City,Pokémon Gym,91,37,23,
