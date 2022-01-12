@@ -68,6 +68,7 @@ Pokemon = SHINX,12
 	Ability = INTIMIDATE
 	Moves = SPARK,VOLTSWITCH,BITE,ICEFANG
 Pokemon = FLABEBE,12
+	Ability = ADAPTABILITY
 	Moves = WISH,FAIRYWIND,PROTECT,MAGICALLEAF
 Pokemon = ROGGENROLA,12
 	Ability = STURDY
@@ -87,6 +88,43 @@ Pokemon = DOTTLER,14
 Pokemon = KRICKETUNE,15
 	Ability = TECHNICIAN
 	Moves = FURYCUTTER,KNOCKOFF,FELLSTINGER,ROCKTOMB
+#-------------------------------
+# Helum Gym
+#-------------------------------
+[YOUNGSTER,Dwayne]
+LoseText = "You're great!"
+Pokemon = STEENEE,19
+	Moves = RAZORLEAF,UTURN,LEECHSEED,RAPIDSPIN
+Pokemon = CHINCHOU,19
+	Moves = VOLTSWITCH,BUBBLEBEAM,ICYWIND,THUNDERWAVE
+#-------------------------------
+[YOUNGSTER,Gary]
+LoseText = "You're great!"
+Pokemon = MAGNEMITE,19
+	Moves = THUNDERSHOCK,VOLTSWITCH,MIRRORRUSH,METALSOUND
+Pokemon = CLEFAIRY,19
+	Ability = MAGICGUARD
+	Moves = DISARMINGVOICE,TELEPORT,WISH,ENCORE
+#-------------------------------
+[LASS,Zoe]
+LoseText = "You're great!"
+Pokemon = LUXIO,19
+	Ability = INTIMIDATE
+	Moves = SPARK,VOLTSWITCH,BITE,ICEFANG
+Pokemon = TENTACOOL,19
+	Ability = CLEARBODY
+	Moves = RAPIDSPIN,FLIPTURN,ACIDSPRAY,BUBBLEBEAM
+Pokemon = SKIPLOOM,19
+	Ability = AERILATE
+	Moves = TACKLE,UTURN,LEECHSEED,BULLETSEED
+#-------------------------------
+[LASS,Matilda]
+LoseText = "You're great!"
+Pokemon = ARCHEN,19
+	Moves = UTURN,ROCKTHROW,PLUCK,ROOST
+Pokemon = QWILFISH,19
+	Ability = INTIMIDATE
+	Moves = FLIPTURN,POISONTAIL,AQUAJET,PINMISSILE
 #-------------------------------
 # Gym Battles
 #-------------------------------
@@ -109,7 +147,7 @@ Pokemon = SLOWPOKE,18
 	Item = LUMBERRY
 	Moves = TELEPORT,WATERPULSE,YAWN,CONFUSION
 Pokemon = COMFEY,18
-	Ability = NATURALCURE
+	Ability = TRIAGE
 	Item = BIGROOT
 	Moves = UTURN,LEECHSEED,DRAININGKISS,MEGADRAIN
 Pokemon = BLITZLE2,20

@@ -445,7 +445,7 @@ MapPosition = 0,16,2
 SnapEdges = true
 #-------------------------------
 [084]
-# Baron PMC
+# Boro PMC
 MapPosition = 0,16,2
 SnapEdges = true
 #-------------------------------
@@ -470,4 +470,27 @@ SnapEdges = true
 # Helum Tunnel
 ShowArea = true
 MapPosition = 0,14,1
+SnapEdges = true
+#-------------------------------
+[091]
+# Helum City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,10,1
+SnapEdges = true
+#-------------------------------
+[092]
+# Helum PMC
+ShowArea = false
+MapPosition = 0,10,1
+SnapEdges = true
+#-------------------------------
+[093]
+# Helum Gym
+MapPosition = 0,10,1
+SnapEdges = true
+#-------------------------------
+[094]
+# House
+MapPosition = 0,10,1
 SnapEdges = true

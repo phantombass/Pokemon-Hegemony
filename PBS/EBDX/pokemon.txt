@@ -9032,3 +9032,66 @@ BattlerPlayerY  = 28
 BattlerEnemyY   = 36
 BattlerAltitude = 0
 #-------------------------------
+[BLITZLE2]
+BattlerEnemyY           = 46
+BattlerAltitude         = 0
+BattlerPlayerX          = -1
+BattlerPlayerY          = 54
+BattlerEnemyX           = 0
+#-------------------------------
+[ZEBSTRIKA2]
+BattlerEnemyY           = 37
+BattlerAltitude         = 0
+BattlerPlayerX          = 4
+BattlerPlayerY          = 52
+BattlerEnemyX           = 0
+#-------------------------------
+[SKIDDO2]
+BattlerEnemyY           = 54
+BattlerAltitude         = 0
+BattlerPlayerX          = 7
+BattlerPlayerY          = 70
+BattlerEnemyX           = -2
+#-------------------------------
+[GOGOAT2]
+BattlerEnemyY           = 41
+BattlerAltitude         = 0
+BattlerPlayerX          = 4
+BattlerPlayerY          = 58
+BattlerEnemyX           = -2
+#-------------------------------
+[DREEPY2]
+BattlerEnemyY           = 28
+BattlerAltitude         = 6
+BattlerPlayerX          = 15
+BattlerPlayerY          = 38
+BattlerEnemyX           = 5
+#-------------------------------
+[DRAKLOAK2]
+BattlerEnemyY           = 12
+BattlerAltitude         = 5
+BattlerPlayerX          = 29
+BattlerPlayerY          = 30
+BattlerEnemyX           = 0
+#-------------------------------
+[DRAGAPULT2]
+BattlerEnemyY           = 21
+BattlerAltitude         = 5
+BattlerPlayerX          = 29
+BattlerPlayerY          = 20
+BattlerEnemyX           = 3
+#-------------------------------
+[GROWLITHE2]
+BattlerEnemyY           = 68
+BattlerAltitude         = 0
+BattlerPlayerX          = 11
+BattlerPlayerY          = 65
+BattlerEnemyX           = -4
+#-------------------------------
+[ARCANINE2]
+BattlerEnemyY           = 42
+BattlerAltitude         = 0
+BattlerPlayerX          = 0
+BattlerPlayerY          = 37
+BattlerEnemyX           = 0
+#-------------------------------

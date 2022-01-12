@@ -3,16 +3,19 @@
 #===================================
 Events.onMapChange += proc {| sender, e |
   badges = $Trainer.badge_count
+  cap = $game_variables[106]
     if badges == 0
       if $game_switches[65] == true
         if $game_switches[71] == true
-          $game_variables[106] = 21
+          cap = 21
         else
-          $game_variables[106] = 15
+          cap = 15
         end
       else
-        $game_variables[106] = 9
+        cap = 9
       end
+    elsif badges == 1
+      cap = 25
     end
     # Weather Setting
     time = pbGetTimeNow
@@ -26,16 +29,19 @@ Events.onMapChange += proc {| sender, e |
 
 Events.onStepTaken += proc {| sender, e |
   badges = $Trainer.badge_count
+  cap = $game_variables[106]
     if badges == 0
       if $game_switches[65] == true
         if $game_switches[71] == true
-          $game_variables[106] = 21
+          cap = 21
         else
-          $game_variables[106] = 15
+          cap = 15
         end
       else
-        $game_variables[106] = 9
+        cap = 9
       end
+    elsif badges == 1
+      cap = 25
     end
 }
 
@@ -287,7 +293,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
     $game_switches[81] = true
   end
   abilRand = rand(100)
-  if abilRand > 80 && $game_map.map_id == 22 && $currentDexSearch == nil
+  if abilRand > 80 && $game_map.map_id == 91 && $currentDexSearch == nil
     pokemon.ability_index = 2
   end
 }

@@ -6,5 +6,6 @@ BattleVS         = classicVS
 [LEADER_Blaine]
 BattleBGM        = Gym Leader.ogg
 BattleVS         = plasmaSM
+BattleScript	 = TURNER
 Ace				 = 6
 #-------------------------------
