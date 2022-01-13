@@ -155,6 +155,21 @@ Pokemon = BLITZLE2,20
 	Item = BERRYJUICE
 	Moves = SPARK,FLAMECHARGE,BULLDOZE,VOLTSWITCH
 #-------------------------------
+# Militia Battles
+#-------------------------------
+[TEAMROCKET_M,Grunt]
+LoseText = "Ugh. Wasn't ready for that."
+Pokemon = HONEDGE,21
+	Item = COLBURBERRY
+	Moves = SHADOWSNEAK,SLASH,SWORDSDANCE,FURYCUTTER
+Pokemon = GASTLY, 21
+	Item = BERRYJUICE
+	Moves = OMINOUSWIND,SLUDGE,HYPNOSIS,CURSE
+Pokemon = ARON,21
+	Ability = STURDY
+	Item = BERRYJUICE
+	Moves = ROCKTOMB,METALCLAW,BULLDOZE,AUTOTOMIZE
+#-------------------------------
 # Rival Battles
 #-------------------------------
 [RIVAL1,Blue]

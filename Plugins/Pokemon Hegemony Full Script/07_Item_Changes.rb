@@ -605,11 +605,20 @@ def pbRockSmashRandomItem
     pbExclaim(get_character(-1))
     pbWait(8)
     pbMessage(_INTL("Oh, there was an item!"))
-    randFossil = rand(2)
-      if randFossil == 1
-        pbItemBall(:TOMBSEAL)
-      else
-        pbItemBall(:ANCIENTTOTEM)
+    randFossil = rand(12)
+      case randFossil
+      when 0 then pbItemBall(:HELIXFOSSIL)
+      when 1 then pbItemBall(:DOMEFOSSIL)
+      when 2 then pbItemBall(:CLAWFOSSIL)
+      when 3 then pbItemBall(:ROOTFOSSIL)
+      when 4 then pbItemBall(:OLDAMBER)
+      when 5 then pbItemBall(:SKULLFOSSIL)
+      when 6 then pbItemBall(:ARMORFOSSIL)
+      when 7 then pbItemBall(:COVERFOSSIL)
+      when 8 then pbItemBall(:PLUMEFOSSIL)
+      when 9 then pbItemBall(:JAWFOSSIL)
+      when 10 then pbItemBall(:SAILFOSSIL)
+      when 11 then pbItemBall(:ODDKEYSTONE)
       end
     else
       pbExclaim(get_character(-1))
@@ -1312,7 +1321,7 @@ BattleHandlers::DamageCalcUserItem.add(:TEMPORALPLATE,
 
 class PokeBattle_Battle
   def pbUsePokeBallInBattle(item,idxBattler,userBattler)
-    if $game_switches[81]
+    if $game_switches[89]
       pbDisplay(_INTL("This Pokémon cannot be caught!"))
       $PokemonBag.pbStoreItem(item)
       return false

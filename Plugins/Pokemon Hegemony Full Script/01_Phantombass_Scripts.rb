@@ -3,19 +3,18 @@
 #===================================
 Events.onMapChange += proc {| sender, e |
   badges = $Trainer.badge_count
-  cap = $game_variables[106]
     if badges == 0
       if $game_switches[65] == true
         if $game_switches[71] == true
-          cap = 21
+          $game_variables[106] = 21
         else
-          cap = 15
+          $game_variables[106] = 15
         end
       else
-        cap = 9
+        $game_variables[106] = 9
       end
     elsif badges == 1
-      cap = 25
+      $game_variables[106] = 25
     end
     # Weather Setting
     time = pbGetTimeNow
@@ -29,19 +28,18 @@ Events.onMapChange += proc {| sender, e |
 
 Events.onStepTaken += proc {| sender, e |
   badges = $Trainer.badge_count
-  cap = $game_variables[106]
     if badges == 0
       if $game_switches[65] == true
         if $game_switches[71] == true
-          cap = 21
+          $game_variables[106] = 21
         else
-          cap = 15
+          $game_variables[106] = 15
         end
       else
-        cap = 9
+        $game_variables[106] = 9
       end
     elsif badges == 1
-      cap = 25
+      $game_variables[106] = 25
     end
 }
 
@@ -290,16 +288,19 @@ end
 Events.onWildPokemonCreate+=proc {|sender,e|
   pokemon = e[0]
   if pokemon.level > $game_variables[106]
-    $game_switches[81] = true
+    $game_switches[89] = true
   end
   abilRand = rand(100)
   if abilRand > 80 && $game_map.map_id == 91 && $currentDexSearch == nil
     pokemon.ability_index = 2
   end
+  if $game_map.map_id == 78
+    pokemon.form = 1
+  end
 }
 
 Events.onEndBattle += proc { |_sender,e|
-  $game_switches[81] = false
+  $game_switches[89] = false
   $CanToggle = true
 }
 
@@ -626,7 +627,7 @@ class PokeBattle_Battle
     EliteBattle.set(:setBoss, false)
     EliteBattle.set(:colorAlpha, 0)
     EliteBattle.set(:smAnim, false)
-    $game_switches[81] = false
+    $game_switches[89] = false
     # return final output
     return @decision
   end

@@ -79,64 +79,10 @@ end
 def renderBadgeAnimation(badge_number = 0)
   $Trainer.badges[badge_number] = true
   badges = $Trainer.badge_count
-  if $game_switches[112] == true
-    if badges == 0
-      $game_variables[106] = 15
-    elsif badges == 1
-      $game_variables[106] = 22
-    elsif badges == 2
-      $game_variables[106] = 27
-    elsif badges == 3
-      $game_variables[106] = 32
-    elsif badges == 4
-      if $game_variables[110] == 6
-        $game_variables[106] = 64
-      elsif $game_variables[110] == 5
-        $game_variables[106] = 61
-      elsif $game_variables[110] == 4
-        $game_variables[106] = 58
-      elsif $game_variables[110] == 3
-        $game_variables[106] = 55
-      elsif $game_variables[110] == 2
-        $game_variables[106] = 46
-      elsif $game_variables[110] == 1
-        $game_variables[106] = 43
-      else
-      $game_variables[106] = 40
-      end
-    elsif badges == 5
-      if $game_variables[110] == 9
-        $game_variables[106] = 78
-      elsif $game_variables[110] == 8
-        $game_variables[106] = 75
-      elsif $game_variables[110] == 7
-        $game_variables[106] = 72
-      else
-      $game_variables[106] = 68
-      end
-    elsif badges == 6
-      $game_variables[106] = 81
-    elsif badges == 7
-      if $game_variables[110] == 13
-        $game_variables[106] = 95
-      elsif $game_variables[110] == 12
-        $game_variables[106] = 93
-      elsif $game_variables[110] == 11
-        $game_variables[106] = 90
-      elsif $game_variables[110] == 10
-        $game_variables[106] = 87
-      else
-      $game_variables[106] = 84
-      end
-    elsif badges == 8
-    if $game_variables[110] == 14
-      $game_variables[106] = 120
-    else
-      $game_variables[106] = 100
-    end
-    elsif $game_switches[12] == true
-      $game_variables[106] = 150
-    end
+  if badges == 0
+    $game_variables[106] = 21
+  elsif badges == 1
+    $game_variables[106] = 25
   end
   height = Graphics.height
   screen = Graphics.snap_to_bitmap
