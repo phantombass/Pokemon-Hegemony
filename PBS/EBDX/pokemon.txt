@@ -9061,13 +9061,14 @@ BattlerPlayerY          = 58
 BattlerEnemyX           = -2
 #-------------------------------
 [DREEPY2]
-BattlerEnemyY           = 28
-BattlerAltitude         = 6
-BattlerPlayerX          = 15
-BattlerPlayerY          = 38
-BattlerEnemyX           = 5
+SpriteScalePlayer		= 1
+BattlerPlayerX  = 16
+BattlerPlayerY  = -44
+BattlerEnemyY   = 14
+BattlerAltitude = 1
 #-------------------------------
 [DRAKLOAK2]
+SpriteScalePlayer		= 1
 BattlerEnemyY           = 12
 BattlerAltitude         = 5
 BattlerPlayerX          = 29
@@ -9075,6 +9076,7 @@ BattlerPlayerY          = 30
 BattlerEnemyX           = 0
 #-------------------------------
 [DRAGAPULT2]
+SpriteScalePlayer		= 1
 BattlerEnemyY           = 21
 BattlerAltitude         = 5
 BattlerPlayerX          = 29
