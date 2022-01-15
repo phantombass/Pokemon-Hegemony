@@ -5436,10 +5436,10 @@ BattlerPlayerY          = 0
 BattlerEnemyX           = 0
 #-------------------------------
 [SLOWPOKE,1]
-BattlerEnemyY           = 38
+BattlerEnemyY           = 60
 BattlerAltitude         = 0
-BattlerPlayerX          = 0
-BattlerPlayerY          = 62
+BattlerPlayerX          = 17
+BattlerPlayerY          = 71
 BattlerEnemyX           = 2
 #-------------------------------
 [SLOWBRO,1]
