@@ -170,6 +170,17 @@ Pokemon = ARON,21
 	Item = BERRYJUICE
 	Moves = ROCKTOMB,METALCLAW,BULLDOZE,AUTOTOMIZE
 #-------------------------------
+#-------------------------------
+[TEAMROCKET_M,Grunt,1]
+LoseText = "Ugh. Wasn't ready for that."
+Pokemon = GASTLY, 22
+	Item = PAYAPABERRY
+	Moves = OMINOUSWIND,SLUDGE,HYPNOSIS,CURSE
+Pokemon = KLINK,22
+	Ability = COMPOSURE
+	Item = BERRYJUICE
+	Moves = CHARGEBEAM,MIRRORRUSH,AUTOTOMIZE,ROUND
+#-------------------------------
 # Rival Battles
 #-------------------------------
 [RIVAL1,Blue]
