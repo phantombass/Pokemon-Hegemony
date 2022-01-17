@@ -1705,18 +1705,15 @@ class Scene_Credits
 
   Some resources from the Pokémon Reborn team.
 
+  Updated Move Animations:
+  StCooler, DarryBD99, WolfPP, ardicoozer, riddlemeree
+
   Regional Variant and Fakemon Sprites:
-  Caleb
-  Bl00dy
   Phantombass
 
   Mapping: Phantombass
 
   Eventing: Phantombass
-
-  Tilesets:
-  WesleyFG
-  KyleDove
 
   Playtesting:
 
@@ -1724,15 +1721,7 @@ class Scene_Credits
   ThatWelshOne_
   RGTheAwesome
   ItzMiller
-  PokeMaster Mike
-  Kyle
-  CloudEnvy
-  WMAR
-  Beta20x
-  pizzatacoburger1234
-  ChuTheWoop
-  TenaciousFoxYT
-  FlameHorizon
+  Bl00dy
 
   Dedicated to:
 
@@ -1740,7 +1729,7 @@ class Scene_Credits
 
   Also thanks to:
 
-  Tilly...for walking all over my keyboard many times during development.
+  Tilly and Zoe...for walking all over my keyboard many times during development.
 
 {INSERTS_PLUGIN_CREDITS_DO_NOT_REMOVE}
 
