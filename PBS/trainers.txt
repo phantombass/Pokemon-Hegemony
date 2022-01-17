@@ -242,7 +242,14 @@ Pokemon = METANG,25
 LoseText = "Hmm. Quite curious."
 Pokemon = METANG,25
 	Item = KASIBBERRY
-	Moves = BULLETPUNCH,BRICKBREAK,ZENHEADBUTT,ICEPUNCH
+	Moves = BULLETPUNCH,STEALTHROCK,ZENHEADBUTT,ICEPUNCH
+Pokemon = HAUNTER,25
+	Item = FOCUSSASH
+	Moves = SHADOWBALL,DAZZLINGGLEAM,THUNDERBOLT,DESTINYBOND
+Pokemon = DRAKLOAK2,25
+	Ability = PUNKROCK
+	Item = SITRUSBERRY
+	Moves = MIRRORRUSH,HYPERVOICE,THUNDERWAVE,HEX
 #-------------------------------
 # Rival Battles
 #-------------------------------
