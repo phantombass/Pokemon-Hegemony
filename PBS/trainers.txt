@@ -126,6 +126,42 @@ Pokemon = QWILFISH,19
 	Ability = INTIMIDATE
 	Moves = FLIPTURN,POISONTAIL,AQUAJET,PINMISSILE
 #-------------------------------
+# Nenox Canyon
+#-------------------------------
+[HIKER,Nob]
+LoseText = "Wow, awesome!"
+Pokemon = MAGNEMITE,19
+	Moves = THUNDERSHOCK,VOLTSWITCH,MIRRORRUSH,METALSOUND
+Pokemon = GEODUDE,19
+	Form = 1
+	Ability = STURDY
+	Moves = BULLDOZE,SMACKDOWN,FIREPUNCH,SPARK
+#-------------------------------
+[HIKER,Bob]
+LoseText = "Wow, awesome!"
+Pokemon = ONIX,19
+	Item = BERRYJUICE
+	Ability = STURDY
+	Moves = BULLDOZE,ROCKTHROW,GLARE,DRAGONBREATH
+Pokemon = CRANIDOS,19
+	Item = BERRYJUICE
+	Ability = SHEERFORCE
+	Moves = BITE,ROCKTOMB,FIREPUNCH,BULLDOZE
+#-------------------------------
+[HIKER,Rob]
+LoseText = "Wow, awesome!"
+Pokemon = DRIFLOON2,20
+	Item = BERRYJUICE
+	Ability = LEVITATE
+	Moves = MIRRORSHOT,CHARGEBEAM,THUNDERWAVE,HEX
+#-------------------------------
+[FISHERMAN,Robert]
+LoseText = "No?"
+Pokemon = GROWLITHE2,20
+	Item = BERRYJUICE
+	Ability = MINDGAMES
+	Moves = AQUAJET,BITE,COVET,MORNINGSUN
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
@@ -170,7 +206,6 @@ Pokemon = ARON,21
 	Item = BERRYJUICE
 	Moves = ROCKTOMB,METALCLAW,BULLDOZE,AUTOTOMIZE
 #-------------------------------
-#-------------------------------
 [TEAMROCKET_M,Grunt,1]
 LoseText = "Ugh. Wasn't ready for that."
 Pokemon = GASTLY, 22
@@ -180,6 +215,34 @@ Pokemon = KLINK,22
 	Ability = COMPOSURE
 	Item = BERRYJUICE
 	Moves = CHARGEBEAM,MIRRORRUSH,AUTOTOMIZE,ROUND
+#-------------------------------
+[TEAMROCKET_M,Grunt,2]
+LoseText = "What do you think you're proving?"
+Pokemon = HONEDGE,23
+	Item = OCCABERRY
+	Moves = SHADOWSNEAK,CUT,SWORDSDANCE,FURYCUTTER
+Pokemon = DRIFLOON,23
+	Ability = AFTERMATH
+	Item = BERRYJUICE
+	Moves = HEX,WILLOWISP,DOLDRUMS,OMINOUSWIND
+#-------------------------------
+[TEAMROCKET_M,Grunt,3]
+LoseText = "What do you think you're proving?"
+Pokemon = HAUNTER,25
+	Item = PAYAPABERRY
+	Moves = SLUDGE,HEX,WILLOWISP,THUNDERBOLT
+#-------------------------------
+[TEAMROCKET_F,Grunt]
+LoseText = "Get out of here, kid."
+Pokemon = METANG,25
+	Item = KASIBBERRY
+	Moves = BULLETPUNCH,BRICKBREAK,ZENHEADBUTT,ICEPUNCH
+#-------------------------------
+[ROCKETBOSS,Armand]
+LoseText = "Hmm. Quite curious."
+Pokemon = METANG,25
+	Item = KASIBBERRY
+	Moves = BULLETPUNCH,BRICKBREAK,ZENHEADBUTT,ICEPUNCH
 #-------------------------------
 # Rival Battles
 #-------------------------------

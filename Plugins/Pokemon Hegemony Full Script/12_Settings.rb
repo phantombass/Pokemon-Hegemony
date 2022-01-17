@@ -57,11 +57,11 @@ Settings::MENU_WINDOWSKINS = [
   ]
 Settings::FIELD_MOVES_COUNT_BADGES = true
 Settings::MAXIMUM_LEVEL = 100
-Settings::GAME_VERSION = "0.1.0"
+Settings::GAME_VERSION = "0.1.5"
 
 module Settings
   def self.storage_creator_name
-    return _INTL("Lyptus")
+    return _INTL("Yule")
   end
 
   def self.pokedex_names

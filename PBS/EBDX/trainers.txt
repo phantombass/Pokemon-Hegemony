@@ -9,3 +9,15 @@ BattleVS         = plasmaSM
 BattleScript	 = TURNER
 Ace				 = 6
 #-------------------------------
+[TEAMROCKET_M]
+BattleBGM        = BW-NeoPlasmaBattle.ogg
+BattleVS         = teamSkull
+#-------------------------------
+[TEAMROCKET_F]
+BattleBGM        = BW-NeoPlasmaBattle.ogg
+BattleVS         = teamSkull
+#-------------------------------
+[ROCKETBOSS]
+BattleBGM        = B2W2-ColressBattle.ogg
+BattleVS         = plasmaSM
+#-------------------------------
