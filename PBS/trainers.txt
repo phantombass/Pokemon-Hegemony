@@ -162,6 +162,40 @@ Pokemon = GROWLITHE2,20
 	Ability = MINDGAMES
 	Moves = AQUAJET,BITE,COVET,MORNINGSUN
 #-------------------------------
+# Route 3
+#-------------------------------
+[HIKER,Wayne]
+LoseText = "Wow, awesome!"
+Pokemon = NOIBAT,24
+	Ability = FRISK
+	Moves = DRAGONBREATH,AIRSLASH,ROOST,UPROAR
+Pokemon = GRAVELER,24
+	Form = 1
+	Ability = STURDY
+	Moves = BULLDOZE,ROCKSLIDE,FIREPUNCH,THUNDERPUNCH
+#-------------------------------
+[FISHERMAN,Sherman]
+LoseText = "Sigh..."
+Pokemon = GYARADOS,25
+	Item = LEFTOVERS
+	Ability = INTIMIDATE
+	Moves = WATERFALL,ICEFANG,BULLDOZE,SUBSTITUTE
+#-------------------------------
+[BUGCATCHER,Sheldon]
+LoseText = "What?!"
+Pokemon = ESCAVALIER,24
+	Ability = OVERCOAT
+	Item = ASSAULTVEST
+	Moves = SPIKECANNON,LUNGE,KNOCKOFF,DRILLRUN
+Pokemon = MASQUERAIN,24
+	Ability = INTIMIDATE
+	Item = FOCUSSASH
+	Moves = BUBBLEBEAM,BUGBUZZ,QUIVERDANCE,GIGADRAIN
+Pokemon = HERACROSS,24
+	Item = FLAMEORB
+	Ability = GUTS
+	Moves = PROTECT,KNOCKOFF,LUNGE,BRICKBREAK
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]

@@ -10,11 +10,13 @@ module QuestModule
     :Stage3 => "Speak with Bruce of OffCorp!",
     :Stage4 => "Challenge the Gym!",
     :Stage5 => "Follow the Miltia Member.",
+    :Stage6 => "Head to the next town.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
     :Location4 => "Helum City",
-    :Location5 => "Helum City"
+    :Location5 => "Helum City",
+    :Location6 => "Ogan City"
   }
 
 #====================================
