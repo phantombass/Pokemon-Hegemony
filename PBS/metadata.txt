@@ -494,3 +494,46 @@ SnapEdges = true
 # House
 MapPosition = 0,10,1
 SnapEdges = true
+#-------------------------------
+[097]
+# Nenox Canyon
+Outdoor = true
+ShowArea = true
+MapPosition = 0,9,1
+SnapEdges = true
+#-------------------------------
+[098]
+# Nenox Caverns
+Outdoor = false
+ShowArea = true
+MapPosition = 0,8,1
+SnapEdges = true
+#-------------------------------
+[099]
+# Route 3
+Outdoor = true
+ShowArea = true
+MapPosition = 0,3,1
+SnapEdges = true
+#-------------------------------
+[100]
+# Hidden Grotto - Route 3
+MapPosition = 0,3,1
+SnapEdges = true
+#-------------------------------
+[101]
+# Ogan City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,1,1
+SnapEdges = true
+#-------------------------------
+[102]
+# Hidden Cave
+MapPosition = 0,1,1
+SnapEdges = true
+#-------------------------------
+[103]
+# Ogan PMC
+MapPosition = 0,1,1
+SnapEdges = true
