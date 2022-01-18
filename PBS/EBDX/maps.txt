@@ -11,3 +11,6 @@ BattleEnv = OUTDOOR
 [89]
 BattleEnv = FOREST
 #===================
+[98]
+BattleEnv = CAVE
+#===================
