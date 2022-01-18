@@ -19,5 +19,6 @@ BattleVS         = teamSkull
 #-------------------------------
 [ROCKETBOSS]
 BattleBGM        = B2W2-ColressBattle.ogg
+BattleScript	 = MILITIA1
 BattleVS         = plasmaSM
 #-------------------------------
