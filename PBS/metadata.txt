@@ -513,6 +513,7 @@ SnapEdges = true
 # Route 3
 Outdoor = true
 ShowArea = true
+Weather = Rain,0
 MapPosition = 0,3,1
 SnapEdges = true
 #-------------------------------
@@ -525,6 +526,7 @@ SnapEdges = true
 # Ogan City
 Outdoor = true
 ShowArea = true
+Weather = Rain,0
 MapPosition = 0,1,1
 SnapEdges = true
 #-------------------------------
@@ -536,4 +538,20 @@ SnapEdges = true
 [103]
 # Ogan PMC
 MapPosition = 0,1,1
+SnapEdges = true
+#-------------------------------
+[105]
+# Mt. Nenox
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,5,4
+SafariMap = false
+SnapEdges = true
+Environment = Cave
+#-------------------------------
+[106]
+# Mt. Nenox
+Outdoor = true
+ShowArea = false
+Weather = Rain,0
 SnapEdges = true

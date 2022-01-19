@@ -14,3 +14,6 @@ BattleEnv = FOREST
 [98]
 BattleEnv = CAVE
 #===================
+[106]
+BattleEnv = SNOW
+#===================

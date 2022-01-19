@@ -9068,7 +9068,6 @@ BattlerEnemyY   = 14
 BattlerAltitude = 1
 #-------------------------------
 [DRAKLOAK2]
-SpriteScalePlayer		= 1
 BattlerEnemyY           = 12
 BattlerAltitude         = 5
 BattlerPlayerX          = 29
@@ -9076,7 +9075,6 @@ BattlerPlayerY          = 30
 BattlerEnemyX           = 0
 #-------------------------------
 [DRAGAPULT2]
-SpriteScalePlayer		= 1
 BattlerEnemyY           = 21
 BattlerAltitude         = 5
 BattlerPlayerX          = 29
