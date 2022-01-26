@@ -1160,44 +1160,51 @@ BattlerShadowSize = 3
 [CASTFORM,1]
 FormName = Sunny Form
 Type1 = FIRE
+Type2 = COSMIC
 Color = Red
 Pokedex = This is the form Castform takes on the brightest of days. Its skin is unexpectedly hot to the touch, so approach with care.
 #-------------------------------
 [CASTFORM,2]
 FormName = Rainy Form
 Type1 = WATER
+Type2 = COSMIC
 Color = Blue
 Pokedex = This is the form Castform takes when soaked with rain. When its body is compressed, water will seep out as if from a sponge.
 #-------------------------------
 [CASTFORM,3]
 FormName = Snowy Form
 Type1 = ICE
+Type2 = COSMIC
 Color = White
 Pokedex = This is the form Castform takes when covered in snow. Its body becomes an ice-like material, with a temperature near -5 degrees Celsius.
 #-------------------------------
 [CASTFORM,4]
 FormName = Foggy Form
 Type1 = FAIRY
+Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,5]
 FormName = Overcast Form
 Type1 = GHOST
+Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,6]
 FormName = Starry Form
-Type1 = QMARKS
+Type1 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,7]
 FormName = Eclipse Form
 Type1 = DARK
+Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,8]
 FormName = Windy Form
 Type1 = FLYING
+Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,9]
@@ -1213,11 +1220,13 @@ BattlerEnemyY = 28
 [CASTFORM,11]
 FormName = Acid Rain Form
 Type1 = POISON
+Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,12]
 FormName = Sandstorm Form
 Type1 = ROCK
+Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,13]
@@ -1880,7 +1889,7 @@ BattlerEnemyY = 21
 #-------------------------------
 [MELOETTA,1]
 FormName = Pirouette Forme
-Type1 = NORMAL
+Type1 = COSMIC
 Type2 = FIGHTING
 BaseStats = 100,128,90,128,77,77
 EffortPoints = 0,1,1,1,0,0
@@ -2160,7 +2169,7 @@ BattlerShadowSize = 3
 #-------------------------------
 [HOOPA,1]
 FormName = Hoopa Unbound
-Type1 = PSYCHIC
+Type1 = COSMIC
 Type2 = DARK
 BaseStats = 80,160,60,80,170,130
 Moves = 1,HYPERSPACEFURY,1,TRICK,1,DESTINYBOND,1,ALLYSWITCH,1,CONFUSION,6,ASTONISH,10,MAGICCOAT,15,LIGHTSCREEN,19,PSYBEAM,25,SKILLSWAP,29,POWERSPLIT,29,GUARDSPLIT,46,KNOCKOFF,50,WONDERROOM,50,TRICKROOM,55,DARKPULSE,75,PSYCHIC,85,HYPERSPACEFURY
@@ -2329,6 +2338,11 @@ FormName = Type: Fairy
 Type1 = FAIRY
 Pokedex = Thanks to its awakened powers, it can change to the Fairy type to match the memory it has equipped.
 #-------------------------------
+[SILVALLY,19]
+FormName = Type: Cosmic
+Type1 = COSMIC
+Pokedex = Thanks to its awakened powers, it can change to the Cosmic type to match the memory it has equipped.
+#-------------------------------
 [MINIOR,7]
 FormName = Red Core
 BaseStats = 60,100,60,120,100,60
@@ -2392,7 +2406,7 @@ BattlerEnemyX = 5
 #-------------------------------
 [NECROZMA,1]
 FormName = Dusk Mane
-Type1 = PSYCHIC
+Type1 = COSMIC
 Type2 = STEEL
 BaseStats = 97,157,127,77,113,109
 EffortPoints = 0,3,0,0,0,0
@@ -2408,7 +2422,7 @@ BattlerEnemyY = 8
 #-------------------------------
 [NECROZMA,2]
 FormName = Dawn Wings
-Type1 = PSYCHIC
+Type1 = COSMIC
 Type2 = GHOST
 BaseStats = 97,113,109,77,157,127
 EffortPoints = 0,0,0,0,3,0
@@ -2424,7 +2438,7 @@ BattlerEnemyY = 1
 #-------------------------------
 [NECROZMA,3]
 FormName = Ultra Necrozma
-Type1 = PSYCHIC
+Type1 = COSMIC
 Type2 = DRAGON
 BaseStats = 97,167,97,129,167,97
 EffortPoints = 0,1,0,1,1,0
@@ -2437,7 +2451,7 @@ BattlerEnemyY = 4
 #-------------------------------
 [NECROZMA,4]
 PokedexForm = 3
-Type1 = PSYCHIC
+Type1 = COSMIC
 Type2 = DRAGON
 BaseStats = 97,167,97,129,167,97
 EffortPoints = 0,1,0,1,1,0
@@ -3038,10 +3052,10 @@ Evolutions =
 FormName = Mega Chimecho
 MegaStone = CHIMECHONITE
 Type1 = PSYCHIC
-Type2 = FAIRY
+Type2 = COSMIC
 BaseStats = 95,50,120,95,125,120
-Abilities = PIXILATE
-HiddenAbility = PIXILATE
+Abilities = STELLARIZE
+HiddenAbility = STELLARIZE
 #-------------------------------
 [CHIMECHO2,1]
 FormName = Wartime Mega Chimecho
@@ -3050,5 +3064,5 @@ Type1 = STEEL
 Type2 = FAIRY
 BaseStats = 95,95,120,95,125,120
 Abilities = LEVITATE
-HiddenAbility = LEVITATE
+HiddenAbility = DIMENSIONBLOCK
 #-------------------------------

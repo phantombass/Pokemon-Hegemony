@@ -488,6 +488,14 @@ class PokeBattle_Move
       elsif type == :WATER
         multipliers[:final_damage_multiplier] *= 1.5
       end
+    when :Starstorm
+     if type == :COSMIC
+       multipliers[:final_damage_multiplier] *= 1.5
+     elsif type == :STEEL
+       multipliers[:final_damage_multiplier] /= 2
+     elsif target.pbHasType?(:COSMIC) && (physicalMove? || @function="122")
+       multipliers[:defense_multiplier] *= 1.5
+     end
     when :Windy
       if type == :ROCK || type == :ICE
         multipliers[:final_damage_multiplier] /= 2
@@ -840,6 +848,15 @@ BattleHandlers::AbilityOnSwitchIn.add(:DUAT,
   }
 )
 
+BattleHandlers::AbilityOnSwitchIn.add(:HAUNTED,
+  proc { |ability,battler,battle|
+    battler.effects[PBEffects::Type3] = :GHOST
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1} is possessed!",battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 BattleHandlers::AbilityOnSwitchIn.add(:SHADOWGUARD,
   proc { |ability,battler,battle|
     battler.effects[PBEffects::Type3] = :DARK
@@ -849,6 +866,20 @@ BattleHandlers::AbilityOnSwitchIn.add(:SHADOWGUARD,
   }
 )
 
+BattleHandlers::AbilityOnSwitchIn.add(:ASTRALCLOAK,
+  proc { |ability,battler,battle|
+    battler.effects[PBEffects::Type3] = :COSMIC
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1} is shrouded in the shadows!",battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.add(:EQUINOX,
+  proc { |ability,battler,battle|
+    pbBattleWeatherAbility(:Starstorm, battler, battle)
+  }
+)
 
 BattleHandlers::AbilityOnSwitchIn.add(:URBANCLOUD,
   proc { |ability,battler,battle|
@@ -982,6 +1013,12 @@ BattleHandlers::SpeedCalcAbility.add(:SLUSHRUSH,
   }
 )
 
+BattleHandlers::SpeedCalcAbility.add(:STARSPRINT,
+  proc { |ability,battler,mult|
+    next mult * 2 if [:Starstorm].include?(battler.battle.pbWeather)
+  }
+)
+
 BattleHandlers::SpeedCalcAbility.add(:TOXICRUSH,
   proc { |ability,battler,mult|
     next mult * 2 if [:AcidRain].include?(battler.battle.pbWeather)
@@ -1064,6 +1101,20 @@ BattleHandlers::MoveImmunityTargetAbility.add(:MENTALBLOCK,
   }
 )
 
+BattleHandlers::MoveBaseTypeModifierAbility.add(:STELLARIZE,
+  proc { |ability,user,move,type|
+    next if type != :NORMAL || !GameData::Type.exists?(:COSMIC)
+    move.powerBoost = true
+    next :COSMIC
+  }
+)
+
+BattleHandlers::MoveImmunityTargetAbility.add(:DIMENSIONBLOCK,
+  proc { |ability,user,target,move,type,battle|
+    next pbBattleMoveImmunityHealAbility(user,target,move,type,:COSMIC,battle)
+  }
+)
+
 BattleHandlers::MoveBaseTypeModifierAbility.add(:ENTYMATE,
   proc { |ability,user,move,type|
     next if type != :NORMAL || !GameData::Type.exists?(:BUG)
@@ -1072,7 +1123,7 @@ BattleHandlers::MoveBaseTypeModifierAbility.add(:ENTYMATE,
   }
 )
 
-BattleHandlers::DamageCalcUserAbility.copy(:AERILATE,:PIXILATE,:REFRIGERATE,:GALVANIZE,:ENTYMATE)
+BattleHandlers::DamageCalcUserAbility.copy(:AERILATE,:PIXILATE,:REFRIGERATE,:GALVANIZE,:ENTYMATE,:STELLARIZE)
 
 BattleHandlers::DamageCalcUserAbility.add(:COMPOSURE,
   proc { |ability,user,target,move,mults,baseDmg,type|
@@ -1745,6 +1796,15 @@ class PokeBattle_Battler
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
+  def takesStarstormDamage?
+    return false if hasActiveAbility?(:BAROMETRIC)
+    return false if !takesIndirectDamage?
+    return false if pbHasType?(:COSMIC)
+    return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
+    return false if hasActiveAbility?([:OVERCOAT,:ICEBODY,:SNOWCLOAK])
+    return false if hasActiveItem?(:SAFETYGOGGLES)
+    return true
+  end
 end
 
 class PokeBattle_Move
@@ -1855,7 +1915,8 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
                     (targetOpposingSide.effects[PBEffects::StealthRock] ||
                     targetOpposingSide.effects[PBEffects::Spikes]>0 ||
                     targetOpposingSide.effects[PBEffects::ToxicSpikes]>0 ||
-                    targetOpposingSide.effects[PBEffects::StickyWeb])
+                    targetOpposingSide.effects[PBEffects::StickyWeb] ||
+                    targetOpposingSide.effects[PBEffects::CometShards])
     return false if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
     return super
   end
@@ -1911,6 +1972,13 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
       target.pbOwnSide.effects[PBEffects::StickyWeb]      = false
       target.pbOpposingSide.effects[PBEffects::StickyWeb] = false if Settings::MECHANICS_GENERATION >= 6
       @battle.pbDisplay(_INTL("{1} blew away sticky webs!",user.pbThis))
+    end
+    if target.pbOwnSide.effects[PBEffects::CometShards] ||
+       (Settings::MECHANICS_GENERATION >= 6 &&
+       target.pbOpposingSide.effects[PBEffects::CometShards])
+      target.pbOwnSide.effects[PBEffects::CometShards]      = false
+      target.pbOpposingSide.effects[PBEffects::CometShards] = false if Settings::MECHANICS_GENERATION >= 6
+      @battle.pbDisplay(_INTL("{1} blew away stealth rocks!",user.pbThis))
     end
     if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
       case @battle.field.terrain
@@ -2841,6 +2909,25 @@ class PokeBattle_Move_199 < PokeBattle_Move
   # DYNAMAX IS NOT IMPLEMENTED.
 end
 
+class PokeBattle_Move_500 < PokeBattle_Move
+  def pbMoveFailed?(user,targets)
+    if user.pbOpposingSide.effects[PBEffects::CometShards] || user.pbOpposingSide.effects[PBEffects::StealthRock]
+      @battle.pbDisplay(_INTL("But it failed!"))
+      return true
+    end
+    if battle.field.weather==:Windy
+      @battle.pbDisplay(_INTL("The Wind prevented the hazards from being set!"))
+      return true
+    end
+    return false
+  end
+
+  def pbEffectGeneral(user)
+    user.pbOpposingSide.effects[PBEffects::CometShards] = true
+    @battle.pbDisplay(_INTL("Comet shards float in the air around {1}!",
+       user.pbOpposingTeam(true)))
+  end
+end
 
 
 class PokeBattle_Move_501 < PokeBattle_Move_163
@@ -2852,7 +2939,32 @@ class PokeBattle_Move_501 < PokeBattle_Move_163
   end
 end
 
+class PokeBattle_Move_502 <PokeBattle_WeatherMove
+  def initialize(battle,move)
+    super
+    @weatherType = :Starstorm
+  end
+end
 
+class PokeBattle_Move_503 < PokeBattle_TwoTurnMove
+  def pbIsChargingTurn?(user)
+    ret = super
+    if user.effects[PBEffects::TwoTurnAttack]==0
+      w = @battle.pbWeather
+      if w==:Starstorm
+        @powerHerb = false
+        @chargingTurn = true
+        @damagingTurn = true
+        return false
+      end
+    end
+    return ret
+  end
+
+  def pbChargingTurnMessage(user,targets)
+    @battle.pbDisplay(_INTL("{1} took in starlight!",user.pbThis))
+  end
+end
 
 class PokeBattle_Move_504 < PokeBattle_Move_163
 
@@ -2874,6 +2986,13 @@ class PokeBattle_Move_506 < PokeBattle_HealingMove
   def pbHealAmount(user)
     return (user.totalhp*2/3.0).round if user.effects[PBEffects::Charge] > 0
     return (user.totalhp/2.0).round
+  end
+end
+
+class PokeBattle_Move_507 < PokeBattle_Move
+  def pbEffectAgainstTarget(user,target)
+    target.effects[PBEffects::LeechSeed] = user.index
+    @battle.pbDisplay(_INTL("{1} was sapped!",target.pbThis))
   end
 end
 
@@ -3590,6 +3709,13 @@ class PokeBattle_Battle
         b.pbReduceHP(b.totalhp/8,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
+      when :Starstorm
+        next if !b.takesStarstormDamage? ||  b.isSpecies?(:ALTEMPER)
+        pbDisplay(_INTL("{1} is hurt by the Starstorm!",b.pbThis))
+        @scene.pbDamageAnimation(b)
+        b.pbReduceHP(b.totalhp/8,false)
+        b.pbItemHPHealCheck
+        b.pbFaint if b.fainted?
       when :ShadowSky
         next if !b.takesShadowSkyDamage?
         pbDisplay(_INTL("{1} is hurt by the shadow sky!",b.pbThis))
@@ -3598,7 +3724,7 @@ class PokeBattle_Battle
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :Windy
-        next if !b.pbOwnSide.effects[PBEffects::StealthRock] && b.pbOwnSide.effects[PBEffects::Spikes] == 0 && !b.pbOwnSide.effects[PBEffects::StickyWeb] && b.pbOwnSide.effects[PBEffects::ToxicSpikes] == 0
+        next if !b.pbOwnSide.effects[PBEffects::StealthRock] && b.pbOwnSide.effects[PBEffects::Spikes] == 0 && !b.pbOwnSide.effects[PBEffects::CometShards] && !b.pbOwnSide.effects[PBEffects::StickyWeb] && b.pbOwnSide.effects[PBEffects::ToxicSpikes] == 0
         if b.pbOwnSide.effects[PBEffects::StealthRock] || b.pbOpposingSide.effects[PBEffects::StealthRock]
           b.pbOwnSide.effects[PBEffects::StealthRock]      = false
           b.pbOpposingSide.effects[PBEffects::StealthRock] = false
@@ -3606,6 +3732,10 @@ class PokeBattle_Battle
         if b.pbOwnSide.effects[PBEffects::Spikes]>0 || b.pbOpposingSide.effects[PBEffects::Spikes]>0
           b.pbOwnSide.effects[PBEffects::Spikes]      = 0
           target.pbOpposingSide.effects[PBEffects::Spikes] = 0
+        end
+        if b.pbOwnSide.effects[PBEffects::CometShards] || b.pbOpposingSide.effects[PBEffects::CometShards]
+          b.pbOwnSide.effects[PBEffects::CometShards]      = false
+          b.pbOpposingSide.effects[PBEffects::CometShards] = false
         end
         if b.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || b.pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
           b.pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
@@ -3639,6 +3769,7 @@ module PBEffects
   BlunderPolicy       = 127
   #=
   StickyWebUser      = 22
+  CometShards        = 23
   #=
   NeutralizingGas = 13
 end
