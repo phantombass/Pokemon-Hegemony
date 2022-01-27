@@ -196,6 +196,41 @@ Pokemon = HERACROSS,24
 	Ability = GUTS
 	Moves = PROTECT,KNOCKOFF,LUNGE,BRICKBREAK
 #-------------------------------
+# Mt. Nenox
+#-------------------------------
+[SCIENTIST,Grunt]
+LoseText = "Of course..."
+Pokemon = HARIYAMA,25
+	Ability = THICKFAT
+	Moves = FAKEOUT,KNOCKOFF,FORCEPALM,ICEPUNCH
+Pokemon = RATICATE_1,25
+	Ability = HUSTLE
+	Moves = QUICKATTACK,HYPERFANG,CRUNCH,SWORDSDANCE
+Pokemon = FLETCHINDER,25
+	Ability = GALEWINGS
+	Item = FLYINGGEM
+	Moves = ACROBATICS,ROOST,FLAMECHARGE,BULKUP
+#-------------------------------
+[SCIENTIST,Grunt,1]
+LoseText = "This could be problematic."
+Pokemon = GABITE,25
+	Ability = ROUGHSKIN
+	Item = SAFETYGOGGLES
+	Moves = DRAGONCLAW,BULLDOZE,FIREFANG,STEALTHROCK
+Pokemon = PILOSWINE,25
+	Ability = THICKFAT
+	Moves = ICICLECRASH,ICESHARD,BULLDOZE,ROCKTOMB
+Pokemon = SANDSLASH_1,25
+	Ability = SLUSHRUSH
+	Moves = ICICLECRASH,SWORDSDANCE,BULLDOZE,IRONHEAD
+#-------------------------------
+[SCIENTIST,Grunt,2]
+LoseText = "Oh you are good."
+Pokemon = HERACROSS,26
+	Ability = GUTS
+	Item = HERACRONITE
+	Moves = PINMISSILE,KNOCKOFF,ROCKBLAST,BULLETSEED
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]

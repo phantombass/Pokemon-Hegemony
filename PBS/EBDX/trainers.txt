@@ -17,6 +17,10 @@ BattleVS         = teamSkull
 BattleBGM        = BW-NeoPlasmaBattle.ogg
 BattleVS         = teamSkull
 #-------------------------------
+[SCIENTIST]
+BattleBGM        = BW-NeoPlasmaBattle.ogg
+BattleVS         = teamSkull
+#-------------------------------
 [ROCKETBOSS]
 BattleBGM        = B2W2-ColressBattle.ogg
 BattleScript	 = MILITIA1
