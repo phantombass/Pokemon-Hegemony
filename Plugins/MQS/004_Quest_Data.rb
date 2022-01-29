@@ -5,20 +5,22 @@ module QuestModule
     :ID => "1",
     :Name => "Your Journey",
     :QuestDescription => "Make your way through Parthenia and complete the Gym Challenge!",
-    :Stage1 => "Head to the Trainer's Institute!",
-    :Stage2 => "Head to Boro Town!",
-    :Stage3 => "Speak with Bruce of OffCorp!",
-    :Stage4 => "Challenge the Gym!",
+    :Stage1 => "Head to the Trainer's Institute.",
+    :Stage2 => "Head to Boro Town.",
+    :Stage3 => "Speak with Bruce of OffCorp.",
+    :Stage4 => "Challenge the Gym.",
     :Stage5 => "Follow the Miltia Member.",
     :Stage6 => "Head to the next town.",
-    :Stage7 => "Find out what the Militia is after.",
+    :Stage7 => "Find out what OffCorp is after.",
+    :Stage8 => "Challenge the Gym.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
     :Location4 => "Helum City",
     :Location5 => "Helum City",
     :Location6 => "Ogan City",
-    :Location7 => "Mt. Nenox"
+    :Location7 => "Mt. Nenox",
+    :Location8 => "Ogan City"
   }
 
 #====================================

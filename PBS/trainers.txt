@@ -220,7 +220,8 @@ Pokemon = GABITE,25
 Pokemon = PILOSWINE,25
 	Ability = THICKFAT
 	Moves = ICICLECRASH,ICESHARD,BULLDOZE,ROCKTOMB
-Pokemon = SANDSLASH_1,25
+Pokemon = SANDSLASH,25
+	Form = 1
 	Ability = SLUSHRUSH
 	Moves = ICICLECRASH,SWORDSDANCE,BULLDOZE,IRONHEAD
 #-------------------------------

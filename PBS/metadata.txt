@@ -555,3 +555,28 @@ Outdoor = true
 ShowArea = false
 Weather = Rain,0
 SnapEdges = true
+#-------------------------------
+[107]
+# Mt. Nenox
+Outdoor = false
+MapPosition = 0,7,4
+SnapEdges = true
+Environment = Cave
+#-------------------------------
+[108]
+# Mt. Nenox
+MapPosition = 0,7,4
+SnapEdges = true
+#-------------------------------
+[109]
+# Mt. Nenox
+Outdoor = true
+Weather = Rain,0
+MapPosition = 0,7,2
+SnapEdges = true
+#-------------------------------
+[110]
+# Nenox Ruins
+ShowArea = true
+MapPosition = 0,7,2
+SnapEdges = true
