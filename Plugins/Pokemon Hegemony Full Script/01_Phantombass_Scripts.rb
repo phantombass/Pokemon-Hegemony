@@ -14,9 +14,9 @@ Events.onMapChange += proc {| sender, e |
         $game_variables[106] = 9
       end
     elsif badges == 1
-      if $game_switches[96] && $game_switches[95]
-        $game_variables[106] = 34
-      elsif $game_switches[95] && !$game_switches[96]
+      if $game_switches[98] && $game_switches[95]
+        $game_variables[106] = 35
+      elsif $game_switches[95] && !$game_switches[98]
         $game_variables[106] = 29
       else
         $game_variables[106] = 25
@@ -26,12 +26,12 @@ Events.onMapChange += proc {| sender, e |
     end
     # Weather Setting
     time = pbGetTimeNow
-    $game_variables[99] = time.day
-    dailyWeather = $game_variables[27]
-    if $game_variables[28] > $game_variables[99] || $game_variables[28]<$game_variables[99]
-      $game_variables[27] = 1+rand(100)
-      $game_variables[28] = $game_variables[99]
-    end
+#    $game_variables[99] = time.day
+#    dailyWeather = $game_variables[27]
+#    if $game_variables[28] > $game_variables[99] || $game_variables[28]<$game_variables[99]
+#      $game_variables[27] = 1+rand(100)
+#      $game_variables[28] = $game_variables[99]
+#    end
 }
 
 Events.onStepTaken += proc {| sender, e |
@@ -47,9 +47,9 @@ Events.onStepTaken += proc {| sender, e |
         $game_variables[106] = 9
       end
     elsif badges == 1
-      if $game_switches[96] && $game_switches[95]
-        $game_variables[106] = 34
-      elsif $game_switches[95] && !$game_switches[96]
+      if $game_switches[98] && $game_switches[95]
+        $game_variables[106] = 35
+      elsif $game_switches[95] && !$game_switches[98]
         $game_variables[106] = 29
       else
         $game_variables[106] = 25
@@ -312,6 +312,10 @@ Events.onWildPokemonCreate+=proc {|sender,e|
   end
   if $game_map.map_id == 78
     pokemon.form = 1
+  end
+  if $game_map.map_id == 110
+    formRand = rand(29)
+    pokemon.form = formRand
   end
 }
 
@@ -1123,6 +1127,17 @@ class PokeBattle_Battler
     # Belch
     return false if !move.pbCanChooseMove?(self,commandPhase,showMessages)
     return true
+  end
+  def trappedInBattle?
+    return true if @effects[PBEffects::Trapping] > 0
+    return true if @effects[PBEffects::MeanLook] >= 0
+    return true if @effects[PBEffects::JawLock] != -1
+    @battle.eachBattler { |b| return true if b.effects[PBEffects::JawLock] == @index }
+    return true if @effects[PBEffects::Octolock] >= 0
+    return true if @effects[PBEffects::Ingrain]
+    return true if @effects[PBEffects::NoRetreat]
+    return true if @battle.field.effects[PBEffects::FairyLock] > 0
+    return false
   end
 end
 class PokeBattle_Battle
