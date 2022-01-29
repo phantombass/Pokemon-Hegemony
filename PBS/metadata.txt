@@ -543,7 +543,6 @@ SnapEdges = true
 [105]
 # Mt. Nenox
 ShowArea = true
-Weather = Rain,0
 MapPosition = 0,5,4
 SafariMap = false
 SnapEdges = true
@@ -554,29 +553,37 @@ Environment = Cave
 Outdoor = true
 ShowArea = false
 Weather = Rain,0
+MapPosition = 0,5,1
 SnapEdges = true
 #-------------------------------
 [107]
 # Mt. Nenox
-Outdoor = false
-MapPosition = 0,7,4
 SnapEdges = true
 Environment = Cave
 #-------------------------------
 [108]
 # Mt. Nenox
-MapPosition = 0,7,4
+MapPosition = 0,5,1
 SnapEdges = true
 #-------------------------------
 [109]
 # Mt. Nenox
 Outdoor = true
 Weather = Rain,0
-MapPosition = 0,7,2
+MapPosition = 0,5,1
 SnapEdges = true
 #-------------------------------
 [110]
 # Nenox Ruins
-ShowArea = true
-MapPosition = 0,7,2
+MapPosition = 0,6,0
+SnapEdges = true
+#-------------------------------
+[111]
+# Ogan Gym
+MapPosition = 0,1,1
+SnapEdges = true
+#-------------------------------
+[112]
+# Other House
+MapPosition = 0,1,1
 SnapEdges = true

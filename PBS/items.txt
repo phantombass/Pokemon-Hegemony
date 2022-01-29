@@ -884,7 +884,7 @@
 859,TM102,TM102,TM102s,4,30000,"Sharp spikes are set on the ground on the opposing side.",3,0,0,SPIKES
 860,TM103,TM103,TM103s,4,30000,"Poisoned spikes are set on the ground on the opposing side.",3,0,0,TOXICSPIKES
 861,TM104,TM104,TM104s,4,30000,"Sticky webs are set on the ground on the opposing side.",3,0,0,STICKYWEB
-862,TM105,TM105,TM105s,4,30000,"Comet shards are set on the opposing side.",3,0,0,STRUGGLE
+862,TM105,TM105,TM105s,4,30000,"Comet shards are set on the opposing side.",3,0,0,COMETSHARDS
 863,TM106,TM106,TM106s,4,30000,"The target is hit with a rainbow-colored beam. This may also lower the target's Attack stat.",3,0,0,AURORABEAM
 864,IVMAXSTONE,IV Max Stone,IV Max Stones,1,15000,"When a Pokémon touches this stone, a chosen stat will have its IVs maxed out.",1,0,0,
 865,IVMINSTONE,IV Min Stone,IV Min Stones,1,15000,"When a Pokémon touches this stone, a chosen stat will have its IVs set to 0.",1,0,0,

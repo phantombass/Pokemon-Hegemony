@@ -13,6 +13,7 @@ module QuestModule
     :Stage6 => "Head to the next town.",
     :Stage7 => "Find out what OffCorp is after.",
     :Stage8 => "Challenge the Gym.",
+    :Stage9 => "Head toward Neonn City.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -20,7 +21,8 @@ module QuestModule
     :Location5 => "Helum City",
     :Location6 => "Ogan City",
     :Location7 => "Mt. Nenox",
-    :Location8 => "Ogan City"
+    :Location8 => "Ogan City",
+    :Location9 => "Helum Tunnel"
   }
 
 #====================================
@@ -39,6 +41,15 @@ module QuestModule
       :QuestDescription => "Find the lost Clefairy!",
       :Stage1 => "Find the woman's Clefairy.",
       :Location1 => "Nenox Caverns"
+    }
+
+  #====================================
+    Quest4 = {
+      :ID => "4",
+      :Name => "Chill Out",
+      :QuestDescription => "Find the lost child!",
+      :Stage1 => "Find the man's daughter.",
+      :Location1 => "Mt. Nenox"
     }
 
 end
