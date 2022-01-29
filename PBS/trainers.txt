@@ -232,6 +232,27 @@ Pokemon = HERACROSS,26
 	Item = HERACRONITE
 	Moves = PINMISSILE,KNOCKOFF,ROCKBLAST,BULLETSEED
 #-------------------------------
+# Ogan Gym
+#-------------------------------
+[HIKER,Ray]
+LoseText = "You're great!"
+Pokemon = GRAVELER,30
+	Moves = STEALTHROCK,ROCKBLAST,BULLDOZE,FIREPUNCH
+Pokemon = SANDSLASH,30
+	Moves = SPIKES,DIG,KNOCKOFF,POISONJAB
+#-------------------------------
+[HIKER,Rocco]
+LoseText = "You're great!"
+Pokemon = FORRETRESS,32
+	Moves = STEALTHROCK,SPIKES,GYROBALL,BUGBITE
+#-------------------------------
+[HIKER,Ethan]
+LoseText = "You're great!"
+Pokemon = SHUCKLE,30
+	Moves = STICKYWEB,STEALTHROCK,CURSE,ROLLOUT
+Pokemon = METANG,30
+	Moves = COMETSHARDS,BULLETPUNCH,ZENHEADBUTT,ICEPUNCH
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
@@ -260,6 +281,39 @@ Pokemon = BLITZLE2,20
 	Ability = NEUROFORCE
 	Item = BERRYJUICE
 	Moves = SPARK,FLAMECHARGE,BULLDOZE,VOLTSWITCH
+#-------------------------------
+[LEADER_Sabrina,Hazel]
+LoseText = "You've overcome our hazard-heavy strategy. Well done."
+Pokemon = CLEFABLE,33
+	Ability = MAGICGUARD
+	Item = LEFTOVERS
+	Nature = BOLD
+	Moves = COMETSHARDS,MOONBLAST,WISH,PROTECT
+Pokemon = SKARMORY,33
+	Ability = STURDY
+	Item = LEFTOVERS
+	Nature = CAREFUL
+	Moves = SPIKES,IRONHEAD,ROOST,WHIRLWIND
+Pokemon = TOXAPEX,33
+	Ability = REGENERATOR
+	Item = BLACKSLUDGE
+	Nature = RELAXED
+	Moves = TOXICSPIKES,VENOSHOCK,RECOVER,BANEFULBUNKER
+Pokemon = GALVANTULA,33
+	Ability = UNNERVE
+	Item = HEAVYDUTYBOOTS
+	Nature = TIMID
+	Moves = STICKYWEB,VOLTSWITCH,SIGNALBEAM,GIGADRAIN
+Pokemon = GOGOAT2,33
+	Ability = RESURGENCE
+	Item = LIFEORB
+	Nature = ADAMANT
+	Moves = BULKUP,MILKDRINK,ICICLECRASH,STOMPINGTANTRUM
+Pokemon = LUCARIO,35
+	Ability = INNERFOCUS
+	Item = LUCARIONITE
+	Nature = TIMID
+	Moves = VACUUMWAVE,AURASPHERE,FLASHCANNON,PSYCHIC
 #-------------------------------
 # Militia Battles
 #-------------------------------

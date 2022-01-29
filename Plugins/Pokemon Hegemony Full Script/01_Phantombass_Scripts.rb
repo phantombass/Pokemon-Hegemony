@@ -1075,7 +1075,7 @@ class PokeBattle_Battler
       end
     end
     # Gorilla Tactics
-    if @effects[PBEffects::GorillaTactics] != -1
+    if @effects[PBEffects::GorillaTactics]
       if hasActiveAbility?(:GORILLATACTICS)
         if move.id!=@effects[PBEffects::GorillaTactics]
           if showMessages
@@ -1085,7 +1085,7 @@ class PokeBattle_Battler
           return false
         end
       else
-        @effects[PBEffects::GorillaTactics] = -1
+        @effects[PBEffects::GorillaTactics] = nil
       end
     end
     # Taunt
