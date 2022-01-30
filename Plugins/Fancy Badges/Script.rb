@@ -83,6 +83,8 @@ def renderBadgeAnimation(badge_number = 0)
     $game_variables[106] = 21
   elsif badges == 1
     $game_variables[106] = 25
+  elsif badges == 2
+    $game_variables[106] = 38
   end
   height = Graphics.height
   screen = Graphics.snap_to_bitmap
