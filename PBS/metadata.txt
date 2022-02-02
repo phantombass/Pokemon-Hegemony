@@ -587,3 +587,24 @@ SnapEdges = true
 # Other House
 MapPosition = 0,1,1
 SnapEdges = true
+#-------------------------------
+[113]
+# Route 4
+Outdoor = true
+ShowArea = true
+MapPosition = 0,12,2
+SnapEdges = true
+#-------------------------------
+[114]
+# Neonn Town
+Outdoor = true
+ShowArea = true
+MapPosition = 0,12,4
+SnapEdges = true
+#-------------------------------
+[115]
+# Neonn Town
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+SnapEdges = true
