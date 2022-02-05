@@ -914,3 +914,7 @@
 889,ALCREMITE,Alcremite,Alcremites,1,0,"One of a variety of mysterious Mega Stones. Have Alcremie hold it, and it will be able to Mega Evolve.",0,0,12,
 890,WCHIMECHONITE,Wartime Chimechonite,Wartime Chimechonites,1,0,"One variety of the mysterious Mega Stones. Have Wartime Chimecho hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
 891,HMCATALOGUE,HM Catalogue,HM Catalogues,8,0,"A catalog of devices that allows Trainers to use HMs in the field.",2,0,6,
+892,COSMICGEM,Cosmic Gem,Fairy Gems,1,200,"A gem with an essence of the cosmos. When held, it strengthens the power of a Cosmic-type move only once.",0,0,10,
+893,TM109,TM109,TM109s,4,30000,"A powerful beam of stardust shot from the heavens. It may cause the opponent to fall asleep.",3,0,0,STARBEAM
+894,TM110,TM110,TM110s,4,30000,"The user uses cosmic winds to damage the opponent's side of the field.",3,0,0,ASTRALGALE
+895,CHATOTITE,Chatotite,Chatotites,1,0,"One variety of the mysterious Mega Stones. Have Chatot hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,

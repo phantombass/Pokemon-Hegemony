@@ -15,6 +15,12 @@ BattleVS         = plasmaSM
 BattleScript	 = HAZEL
 Ace				 = 6
 #-------------------------------
+[LEADER_Erika]
+BattleBGM        = Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = ASTRID
+Ace				 = 6
+#-------------------------------
 [TEAMROCKET_M]
 BattleBGM        = BW-NeoPlasmaBattle.ogg
 BattleVS         = teamSkull

@@ -1319,6 +1319,12 @@ BattleHandlers::DamageCalcUserItem.add(:TEMPORALPLATE,
   }
 )
 
+BattleHandlers::DamageCalcUserItem.add(:COSMICGEM,
+  proc { |item,user,target,move,mults,baseDmg,type|
+    pbBattleGem(user,:COSMIC,move,mults,type)
+  }
+)
+
 class PokeBattle_Battle
   def pbUsePokeBallInBattle(item,idxBattler,userBattler)
     if $game_switches[89]

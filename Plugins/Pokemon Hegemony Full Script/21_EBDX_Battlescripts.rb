@@ -9,6 +9,11 @@ module BattleScripts
     "turnStart0" => "I'm very curious to see how you handle this battle style."
   }
 
+  ASTRID = {
+    "afterLastOpp" => "My heavens. Is this my last Pokémon?",
+    "turnStart0" => "I hope you're ready to learn about the power of Cosmic-types."
+  }
+
   MILITIA1 = {
     "afterLastOpp" => "You are quite good. How frustrating.",
     "turnStart0" => "You don't know what you're dealing with, kid."

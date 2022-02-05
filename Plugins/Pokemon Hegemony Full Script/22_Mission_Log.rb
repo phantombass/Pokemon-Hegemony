@@ -21,6 +21,8 @@ def pbNewMission(num)
     $PokemonGlobal.quests.activateQuest(:Quest3,"56946F5A",false)
   when 4
     $PokemonGlobal.quests.activateQuest(:Quest4,"56946F5A",false)
+  when 5
+    $PokemonGlobal.quests.activateQuest(:Quest4,"56946F5A",false)
   end
 end
 
@@ -34,6 +36,8 @@ def pbCompleteMission(num)
   when 3
     $PokemonGlobal.quests.completeQuest(:Quest3,"56946F5A",false)
   when 4
+    $PokemonGlobal.quests.completeQuest(:Quest4,"56946F5A",false)
+  when 5
     $PokemonGlobal.quests.completeQuest(:Quest4,"56946F5A",false)
   end
 end

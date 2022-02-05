@@ -608,3 +608,16 @@ Outdoor = true
 ShowArea = true
 Weather = Rain,0
 SnapEdges = true
+#-------------------------------
+[118]
+# Mt. Nenox
+Outdoor = false
+ShowArea = true
+MapPosition = 0,11,4
+SnapEdges = true
+#-------------------------------
+[122]
+# Neonn Gym
+Outdoor = false
+MapPosition = 0,12,4
+SnapEdges = true
