@@ -616,8 +616,27 @@ ShowArea = true
 MapPosition = 0,11,4
 SnapEdges = true
 #-------------------------------
+[119]
+# Darkfire Cave
+ShowArea = true
+Weather = Rain,0
+SnapEdges = true
+#-------------------------------
+[120]
+# Darkfire Cave
+ShowArea = true
+Weather = Rain,0
+SnapEdges = true
+#-------------------------------
 [122]
 # Neonn Gym
 Outdoor = false
 MapPosition = 0,12,4
+SnapEdges = true
+#-------------------------------
+[124]
+# Abandoned DefCorp Building
+ShowArea = true
+MapPosition = 0,12,4
+DarkMap = true
 SnapEdges = true
