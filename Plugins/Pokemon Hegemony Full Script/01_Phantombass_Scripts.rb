@@ -3,27 +3,33 @@
 #===================================
 Events.onMapChange += proc {| sender, e |
   badges = $Trainer.badge_count
-    if badges == 0
-      if $game_switches[65] == true
-        if $game_switches[71] == true
-          $game_variables[106] = 21
-        else
-          $game_variables[106] = 15
-        end
+  if badges == 0
+    if $game_switches[65] == true
+      if $game_switches[71] == true
+        $game_variables[106] = 21
       else
-        $game_variables[106] = 9
+        $game_variables[106] = 15
       end
-    elsif badges == 1
-      if $game_switches[98] && $game_switches[95]
-        $game_variables[106] = 35
-      elsif $game_switches[95] && !$game_switches[98]
-        $game_variables[106] = 29
-      else
-        $game_variables[106] = 25
-      end
-    elsif badges == 2
+    else
+      $game_variables[106] = 9
+    end
+  elsif badges == 1
+    if $game_switches[98] && $game_switches[95]
+      $game_variables[106] = 35
+    elsif $game_switches[95] && !$game_switches[98]
+      $game_variables[106] = 29
+    else
+      $game_variables[106] = 25
+    end
+  elsif badges == 2
+    if $game_switches[109]
+      $game_variables[106] = 42
+    else
       $game_variables[106] = 38
     end
+  elsif badges == 3
+    $game_variables[106] = 46
+  end
     # Weather Setting
     time = pbGetTimeNow
 #    $game_variables[99] = time.day
@@ -55,7 +61,13 @@ Events.onStepTaken += proc {| sender, e |
         $game_variables[106] = 25
       end
     elsif badges == 2
-      $game_variables[106] = 38
+      if $game_switches[109]
+        $game_variables[106] = 42
+      else
+        $game_variables[106] = 38
+      end
+    elsif badges == 3
+      $game_variables[106] = 46
     end
 }
 

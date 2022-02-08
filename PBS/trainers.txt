@@ -253,6 +253,57 @@ Pokemon = SHUCKLE,30
 Pokemon = METANG,30
 	Moves = COMETSHARDS,BULLETPUNCH,ZENHEADBUTT,ICEPUNCH
 #-------------------------------
+# Route 4
+#-------------------------------
+[HIKER,Payne]
+LoseText = "Wow, awesome!"
+Pokemon = ONIX,28
+	Ability = STURDY
+	Moves = DRAGONBREATH,ROCKTOMB,BULLDOZE,GLARE
+Pokemon = SCIZOR,28
+	Ability = TECHNICIAN
+	Moves = BULLETPUNCH,SWORDSDANCE,ROOST,FURYCUTTER
+#-------------------------------
+[HIKER,Gaines]
+LoseText = "Wow, awesome!"
+Pokemon = MACHOKE,28
+	Ability = GUTS
+	Moves = BRICKBREAK,KNOCKOFF,ICEPUNCH,BULLETPUNCH
+Pokemon = GOLETT,28
+	Ability = IRONFIST
+	Moves = DRAINPUNCH,SHADOWPUNCH,STOMPINGTANTRUM,ICEPUNCH
+#-------------------------------
+[COOLTRAINER_F,Lisa]
+LoseText = "Hmmph"
+Pokemon = CHIMECHO,28
+	Ability = PRANKSTER
+	Moves = THUNDERWAVE,RECOVER,AURORABEAM,EXTRASENSORY
+Pokemon = CHATOT,30
+	Item = CHATOTITE
+	Ability = PUNKROCK
+	Moves = HYPERVOICE,WICKEDWIND,ROOST,CHATTER
+#-------------------------------
+# Neonn Gym
+#-------------------------------
+[CHANELLER,Doris]
+LoseText = "You're great!"
+Pokemon = MEDITITE,30
+	Moves = FAKEOUT,STARSAP,FORCEPALM,ICEPUNCH
+Pokemon = LUNATONE,30
+	Moves = MOONBLAST,AURORABEAM,POWERGEM,COSMICPOWER
+#-------------------------------
+[HIKER,Melvin]
+LoseText = "You're great!"
+Pokemon = SOLROCK,32
+	Moves = SWORDSDANCE,FLAREBLITZ,ROCKSLIDE,STARSAP
+#-------------------------------
+[CHANELLER,Aggie]
+LoseText = "You're great!"
+Pokemon = GOTHORITA,30
+	Moves = AURORABEAM,PSYSHOCK,DARKPULSE,COSMICPOWER
+Pokemon = CLEFABLE,30
+	Moves = MOONBLAST,AURORABEAM,SOFTBOILED,CALMMIND
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
@@ -314,6 +365,72 @@ Pokemon = LUCARIO,35
 	Item = LUCARIONITE
 	Nature = TIMID
 	Moves = VACUUMWAVE,AURASPHERE,FLASHCANNON,PSYCHIC
+#-------------------------------
+[LEADER_Erika,Astrid]
+LoseText = "Even the stars can't hold you back. Spectacular indeed."
+Pokemon = XATU,40
+	Ability = EQUINOX
+	Item = WEATHERROCK
+	Nature = TIMID
+	Moves = UTURN,ASTRALGALE,AIRSLASH,SCORCHINGSANDS
+Pokemon = MISMAGIUS,40
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	Nature = TIMID
+	Moves = SPECTRALSHRIEK,MOONBLAST,WEATHERBALL,NASTYPLOT
+Pokemon = SABLEYE,40
+	Ability = PRANKSTER
+	Item = LEFTOVERS
+	Nature = RELAXED
+	Moves = STARSAP,KNOCKOFF,RECOVER,WILLOWISP
+Pokemon = URSARING,40
+	Ability = STARSPRINT
+	Item = LIFEORB
+	Nature = ADAMANT
+	Moves = METEORMASH,BODYSLAM,EARTHQUAKE,CRUNCH
+Pokemon = SHARPEDO2,40
+	Ability = MAGICGUARD
+	Item = EXPERTBELT
+	Nature = JOLLY
+	Moves = LIQUIDATION,FIRELASH,SHADOWCLAW,SHADOWSNEAK
+Pokemon = CHIMECHO,42
+	Ability = PRANKSTER
+	Item = CHIMECHONITE
+	Nature = MODEST
+	Moves = HYPERVOICE,PSYSHOCK,CALMMIND,RECOVER
+#-------------------------------
+[LEADER_Erika,Astrid,1]
+LoseText = "Even the stars can't hold you back. Spectacular indeed."
+Pokemon = XATU,40
+	Ability = EQUINOX
+	Item = WEATHERROCK
+	Nature = TIMID
+	Moves = PROTECT,ASTRALGALE,ROOST,HEATWAVE
+Pokemon = ASTREON,40
+	Ability = MINDGAMES
+	Item = LEFTOVERS
+	Nature = BOLD
+	Moves = STARSAP,ASTRALGALE,PROTECT,CALMMIND
+Pokemon = MISMAGIUS,40
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	Nature = TIMID
+	Moves = SPECTRALSHRIEK,MOONBLAST,WEATHERBALL,PROTECT
+Pokemon = URSARING,40
+	Ability = STARSPRINT
+	Item = LIFEORB
+	Nature = ADAMANT
+	Moves = METEORMASH,BODYSLAM,HIGHHORSEPOWER,CRUNCH
+Pokemon = SHARPEDO2,40
+	Ability = MAGICGUARD
+	Item = EXPERTBELT
+	Nature = JOLLY
+	Moves = LIQUIDATION,FIRELASH,SHADOWCLAW,SHADOWSNEAK
+Pokemon = CHIMECHO,42
+	Ability = PRANKSTER
+	Item = CHIMECHONITE
+	Nature = MODEST
+	Moves = HYPERVOICE,EXPANDINGFORCE,CALMMIND,RECOVER
 #-------------------------------
 # Militia Battles
 #-------------------------------

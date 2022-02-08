@@ -3110,6 +3110,13 @@ BattlerPlayerX          = -10
 BattlerPlayerY          = 71
 BattlerEnemyX           = 4
 #-------------------------------
+[CHATOT,1]
+BattlerEnemyY           = 59
+BattlerAltitude         = 0
+BattlerPlayerX          = -10
+BattlerPlayerY          = 71
+BattlerEnemyX           = 4
+#-------------------------------
 [SPIRITOMB]
 BattlerEnemyY           = 63
 BattlerAltitude         = 14
@@ -9094,4 +9101,10 @@ BattlerAltitude         = 0
 BattlerPlayerX          = 0
 BattlerPlayerY          = 37
 BattlerEnemyX           = 0
+#-------------------------------
+[ASTREON]
+SpriteScaleEnemy = 1
+SpriteScalePlayer = 1
+BattlerEnemyY   = 26
+BattlerPlayerY = 26
 #-------------------------------

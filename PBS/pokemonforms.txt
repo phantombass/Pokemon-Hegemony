@@ -3066,3 +3066,41 @@ BaseStats = 95,95,120,95,125,120
 Abilities = LEVITATE
 HiddenAbility = DIMENSIONBLOCK
 #-------------------------------
+[CORVIKNIGHT,1]
+FormName = Mega Corviknight
+MegaStone = CORVITE
+Type1 = FLYING
+Type2 = STEEL
+BaseStats = 98,117,135,77,53,115
+Abilities = FILTER
+HiddenAbility = FILTER
+#-------------------------------
+[TORTERRA,1]
+FormName = Mega Torterra
+MegaStone = TORTERRANITE
+BaseStats = 95,119,105,76,125,105
+Abilities = THICKFAT
+#-------------------------------
+[INFERNAPE,1]
+FormName = Mega Infernape
+MegaStone = INFERNITE
+BaseStats = 76,119,111,98,119,111
+Abilities = MINDGAMES
+#-------------------------------
+[EMPOLEON,1]
+FormName = Mega Empoleon
+MegaStone = EMPOLEONITE
+Type1 = WATER
+Type2 = STEEL
+BaseStats = 84,121,73,120,146,86
+Abilities = MAGICBOUNCE
+#-------------------------------
+[CHATOT,1]
+FormName = Mega Chatot
+MegaStone = CHATOTITE
+Type1 = NORMAL
+Type2 = FLYING
+BaseStats = 76,45,85,101,122,82
+Abilities = PUNKROCK
+HiddenAbility = PUNKROCK
+#-------------------------------
