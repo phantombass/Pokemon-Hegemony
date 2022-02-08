@@ -713,6 +713,8 @@ class PokeBattle_Move_087 < PokeBattle_Move
       ret = :STEEL if GameData::Type.exists?(:STEEL)
     when :Borealis
       ret = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
+    when :Starstorm
+      ret = :COSMIC if GameData::Type.exists?(:COSMIC)
     end
     return ret
   end

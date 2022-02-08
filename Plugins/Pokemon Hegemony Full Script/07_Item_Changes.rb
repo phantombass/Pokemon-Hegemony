@@ -214,7 +214,7 @@ def pbSurf
     return false
   end
   if pbConfirmMessage(_INTL("The water is a deep blue...\nWould you like to surf on it?"))
-    pbMessage(_INTL("{1} used Surf!"))
+    pbMessage(_INTL("{1} used Surf!",$Trainer.name))
     pbCancelVehicles
     surfbgm = GameData::Metadata.get.surf_BGM
     pbCueBGM(surfbgm,0.5) if surfbgm
