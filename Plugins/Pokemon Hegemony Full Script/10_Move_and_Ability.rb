@@ -597,6 +597,10 @@ class PokeBattle_Move
        !user.hasActiveAbility?(:GUTS)
       multipliers[:final_damage_multiplier] /= 2
     end
+    #Frostbite
+    if user.status == :FREEZE && specialMove? && damageReducedByFreeze?
+      multipliers[:final_damage_multiplier] /= 2
+    end
     # Aurora Veil, Reflect, Light Screen
     if !ignoresReflect? && !target.damageState.critical &&
        !user.hasActiveAbility?(:INFILTRATOR)
@@ -1811,6 +1815,7 @@ end
 
 class PokeBattle_Move
     def beamMove?;          return @flags[/p/]; end
+    def damageReducedByFreeze?;  return true;  end   # For Facade
     def pbHitEffectivenessMessages(user,target,numTargets=1)
       return if target.damageState.disguise
       if target.damageState.substitute
@@ -3297,6 +3302,16 @@ class PokeBattle_Battle
       oldHP = b.hp
       dmg = (Settings::MECHANICS_GENERATION >= 7) ? b.totalhp/16 : b.totalhp/8
       dmg = (dmg/2.0).round if b.hasActiveAbility?(:HEATPROOF)
+      b.pbContinueStatus { b.pbReduceHP(dmg,false) }
+      b.pbItemHPHealCheck
+      b.pbAbilitiesOnDamageTaken(oldHP)
+      b.pbFaint if b.fainted?
+    end
+    #Damage from Frostbite
+    priority.each do |b|
+      next if b.status != :FROZEN || !b.takesIndirectDamage?
+      oldHP = b.hp
+      dmg = (Settings::MECHANICS_GENERATION >= 7) ? b.totalhp/16 : b.totalhp/8
       b.pbContinueStatus { b.pbReduceHP(dmg,false) }
       b.pbItemHPHealCheck
       b.pbAbilitiesOnDamageTaken(oldHP)

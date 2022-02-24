@@ -609,6 +609,11 @@ ShowArea = true
 Weather = Rain,0
 SnapEdges = true
 #-------------------------------
+[117]
+# Hidden Grotto - Route 4
+MapPosition = 0,12,2
+SnapEdges = true
+#-------------------------------
 [118]
 # Mt. Nenox
 Outdoor = false
@@ -639,4 +644,18 @@ SnapEdges = true
 ShowArea = true
 MapPosition = 0,12,4
 DarkMap = true
+SnapEdges = true
+#-------------------------------
+[126]
+# Nenox Peak
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,7,2
+SnapEdges = true
+#-------------------------------
+[127]
+# PsyCorp
+ShowArea = true
+MapPosition = 0,7,2
 SnapEdges = true
