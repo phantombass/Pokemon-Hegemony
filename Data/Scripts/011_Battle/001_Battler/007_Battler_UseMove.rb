@@ -324,7 +324,7 @@ class PokeBattle_Battler
     # Self-thawing due to the move
     if user.status == :FROZEN && move.thawsUser?
       user.pbCureStatus(false)
-      @battle.pbDisplay(_INTL("{1} melted the ice!",user.pbThis))
+      @battle.pbDisplay(_INTL("{1} cured the frostbite!",user.pbThis))
     end
     # Powder
     if user.effects[PBEffects::Powder] && move.calcType == :FIRE
@@ -445,7 +445,7 @@ class PokeBattle_Battler
         end
         realNumHits += 1
         break if user.fainted?
-        break if [:SLEEP, :FROZEN].include?(user.status)
+        #break if [:SLEEP, :FROZEN].include?(user.status)
         # NOTE: If a multi-hit move becomes disabled partway through doing those
         #       hits (e.g. by Cursed Body), the rest of the hits continue as
         #       normal.

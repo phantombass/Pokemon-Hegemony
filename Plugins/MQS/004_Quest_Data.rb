@@ -17,6 +17,7 @@ module QuestModule
     :Stage10 => "Investigate the abandoned DefCorp building.",
     :Stage11 => "Challenge the Gym.",
     :Stage12 => "Explore Mt. Nenox from the Neonn entrance.",
+    :Stage13 => "Find and explore the hidden cave.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -28,7 +29,8 @@ module QuestModule
     :Location9 => "Helum Tunnel",
     :Location10 => "Neonn Town",
     :Location11 => "Neonn Town",
-    :Location12 => "Mt. Nenox"
+    :Location12 => "Mt. Nenox",
+    :Location13 => "Darkfire Cave"
   }
 
 #====================================

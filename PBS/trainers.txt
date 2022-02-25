@@ -473,11 +473,43 @@ Pokemon = HAUNTER,25
 	Item = PAYAPABERRY
 	Moves = SLUDGE,HEX,WILLOWISP,THUNDERBOLT
 #-------------------------------
+[TEAMROCKET_M,Grunt,4]
+LoseText = "Ugh. Wasn't ready for that."
+Pokemon = HAUNTER, 44
+	Item = PAYAPABERRY
+	Moves = SHADOWBALL,SLUDGEBOMB,THUNDERBOLT,DAZZLINGGLEAM
+Pokemon = KLINKLANG,44
+	Ability = COMPOSURE
+	Item = AIRBALLOON
+	Moves = THUNDERBOLT,FLASHCANNON,AUTOTOMIZE,SIMPLERAY
+#-------------------------------
+[TEAMROCKET_M,Grunt,5]
+LoseText = "What do you think you're proving?"
+Pokemon = DOUBLADE,44
+	Item = EVIOLITE
+	Moves = SHADOWSNEAK,IRONHEAD,SWORDSDANCE,SACREDSWORD
+Pokemon = DRIFBLIM,44
+	Ability = FLAREBOOST
+	Item = FLAMEORB
+	Moves = HEX,WILLOWISP,DOLDRUMS,PROTECT
+#-------------------------------
+[TEAMROCKET_M,Grunt,6]
+LoseText = "What do you think you're proving?"
+Pokemon = GENGAR,25
+	Item = PAYAPABERRY
+	Moves = SLUDGEBOMB,HEX,WILLOWISP,THUNDERBOLT
+#-------------------------------
 [TEAMROCKET_F,Grunt]
 LoseText = "Get out of here, kid."
 Pokemon = METANG,25
 	Item = KASIBBERRY
 	Moves = BULLETPUNCH,BRICKBREAK,ZENHEADBUTT,ICEPUNCH
+#-------------------------------
+[TEAMROCKET_F,Grunt,1]
+LoseText = "Get out of here, kid."
+Pokemon = METAGROSS,45
+	Item = METAGROSSITE
+	Moves = BULLETPUNCH,IRONHEAD,METEORMASH,STOMPINGTANTRUM
 #-------------------------------
 [ROCKETBOSS,Armand]
 LoseText = "Hmm. Quite curious."
@@ -491,6 +523,23 @@ Pokemon = DRAKLOAK2,25
 	Ability = PUNKROCK
 	Item = SITRUSBERRY
 	Moves = MIRRORRUSH,HYPERVOICE,THUNDERWAVE,HEX
+#-------------------------------
+[ROCKETBOSS,Armand,1]
+LoseText = "Hmm. Defeated again..."
+Pokemon = METAGROSS,45
+	Item = KASIBBERRY
+	Moves = BULLETPUNCH,STEALTHROCK,ZENHEADBUTT,ICEPUNCH
+Pokemon = DRAGAPULT2,45
+	Ability = CLEARBODY
+	Item = SITRUSBERRY
+	Moves = SPIKECANNON,HEXCANNON,DRAGONDANCE,SUCKERPUNCH
+Pokemon = BISHARP,45
+	Ability = DEFIANT
+	Item = FOCUSSASH
+	Moves = SUCKERPUNCH,KNOCKOFF,IRONHEAD,PSYCHOCUT
+Pokemon = GENGAR,45
+	Item = GENGARITE
+	Moves = SHADOWBALL,DAZZLINGGLEAM,THUNDERBOLT,SLUDGEWAVE
 #-------------------------------
 # Rival Battles
 #-------------------------------
