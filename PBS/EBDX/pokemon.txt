@@ -8989,7 +8989,7 @@ BattlerEnemyY   = 36
 BattlerPlayerY = 26
 #-------------------------------
 [ASTREON]
-SpriteScaleEnemy = 1
+SpriteScaleEnemy = 0.75
 SpriteScalePlayer = 1
 BattlerEnemyY   = 36
 BattlerPlayerY = 26
@@ -9102,9 +9102,4 @@ BattlerPlayerX          = 0
 BattlerPlayerY          = 37
 BattlerEnemyX           = 0
 #-------------------------------
-[ASTREON]
-SpriteScaleEnemy = 1
-SpriteScalePlayer = 1
-BattlerEnemyY   = 26
-BattlerPlayerY = 26
-#-------------------------------
+
