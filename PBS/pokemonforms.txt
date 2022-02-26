@@ -1571,6 +1571,27 @@ BattlerPlayerY = 56
 BattlerEnemyY = 19
 BattlerShadowSize = 2
 #-------------------------------
+[ROTOM,6]
+FormName = Dex Rotom
+Type1 = ELECTRIC
+Type2 = STEEL
+BaseStats = 50,65,107,86,105,107
+Pokedex = This is Rotom after it's seized control of a Pokédex that has a special motherboard. It likes to make creepy Pokédex entries.
+BattlerPlayerY = 56
+BattlerEnemyY = 19
+BattlerShadowSize = 2
+#-------------------------------
+[ROTOM,7]
+FormName = Multitool Rotom
+Type1 = ELECTRIC
+Type2 = COSMIC
+Abilities = MULTITOOL
+BaseStats = 50,65,127,106,145,127
+Pokedex = This is Rotom after it's seized control of a special Rotom Multitool. It is said to have power equal to a Mega Evolution.
+BattlerPlayerY = 56
+BattlerEnemyY = 19
+BattlerShadowSize = 2
+#-------------------------------
 [GIRATINA,1]
 FormName = Origin Forme
 BaseStats = 150,120,100,90,120,100

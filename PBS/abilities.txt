@@ -329,3 +329,4 @@
 327,SLUDGERUSH,Sludge Rush,"Doubles Speed in Poison Terrain."
 328,HAUNTED,Haunted,"This Pokémon gains Ghost as a typing.",
 329,ASTRALCLOAK,Astral Cloak,"This Pokémon gains Cosmic as a typing."
+330,MULTITOOL,Multitool,"This Pokémon gains a third typing based on the best appliance matchup."

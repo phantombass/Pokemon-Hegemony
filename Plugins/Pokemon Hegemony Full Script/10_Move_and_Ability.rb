@@ -2005,6 +2005,49 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
   end
 end
 
+class PokeBattle_Move_087 < PokeBattle_Move
+  def pbBaseDamage(baseDmg,user,target)
+    baseDmg *= 2 if @battle.pbWeather != :None &&
+                    !([:Sun,:Rain,:HarshSun,:HeavyRain].include?(@battle.pbWeather) && user.hasUtilityUmbrella?)
+    return baseDmg
+  end
+
+  def pbBaseType(user)
+    ret = :NORMAL
+    case @battle.pbWeather
+    when :Sun, :HarshSun
+      ret = :FIRE if GameData::Type.exists?(:FIRE)
+    when :Rain, :HeavyRain
+      ret = :WATER if GameData::Type.exists?(:WATER)
+    when :Sandstorm
+      ret = :ROCK if GameData::Type.exists?(:ROCK)
+    when :Hail, :Sleet
+      ret = :ICE if GameData::Type.exists?(:ICE)
+    when :Starstorm
+      ret = :COSMIC if GameData::Type.exists?(:COSMIC)
+    when :Eclipse
+      ret = :DARK if GameData::Type.exists?(:DARK)
+    when :Fog
+      ret = :FAIRY if GameData::Type.exists?(:FAIRY)
+    when :Windy
+      ret = :FLYING if GameData::Type.exists?(:FLYING)
+    when :AcidRain
+      ret = :POISON if GameData::Type.exists?(:POISON)
+    end
+    ret = :NORMAL if user.hasUtilityUmbrella? && [:FIRE,:WATER].include?(ret)
+    return ret
+  end
+
+  def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
+    t = pbBaseType(user)
+    hitNum = 1 if t == :FIRE   # Type-specific anims
+    hitNum = 2 if t == :WATER
+    hitNum = 3 if t == :ROCK
+    hitNum = 4 if t == :ICE
+    super
+  end
+end
+
 
 class PokeBattle_Move_103 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
