@@ -34,7 +34,7 @@ BattleBGM        = BW-NeoPlasmaBattle.ogg
 BattleVS         = teamSkull
 #-------------------------------
 [ROCKETBOSS]
-BattleBGM        = B2W2-ColressBattle.ogg
+BattleBGM        = Goldeneye - Cradle.ogg
 BattleScript	 = MILITIA1
 BattleVS         = plasmaSM
 #-------------------------------
