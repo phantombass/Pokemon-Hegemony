@@ -8,6 +8,55 @@ MultipleForms.register(:CASTFORM,{
   }
 })
 
+MultipleForms.register(:ROTOM,{
+  "onSetForm" => proc { |pkmn, form, oldForm|
+    form_moves = [
+       :OVERHEAT,    # Heat, Microwave
+       :HYDROPUMP,   # Wash, Washing Machine
+       :BLIZZARD,    # Frost, Refrigerator
+       :AIRSLASH,    # Fan
+       :LEAFSTORM,    # Mow, Lawnmower
+       :FLASHCANNON,   #Dex
+       :ROTOBLAST    #Multitool
+    ]
+    move_index = -1
+    pkmn.moves.each_with_index do |move, i|
+      next if !form_moves.any? { |m| m == move.id }
+      move_index = i
+      break
+    end
+    if form == 0
+      # Turned back into the base form; forget form-specific moves
+      if move_index >= 0
+        move_name = pkmn.moves[move_index].name
+        pkmn.forget_move_at_index(move_index)
+        pbMessage(_INTL("{1} forgot {2}...", pkmn.name, move_name))
+        pbLearnMove(:THUNDERSHOCK) if pkmn.numMoves == 0
+      end
+    else
+      # Turned into an alternate form; try learning that form's unique move
+      new_move_id = form_moves[form - 1]
+      if move_index >= 0
+        # Knows another form's unique move; replace it
+        old_move_name = pkmn.moves[move_index].name
+        if GameData::Move.exists?(new_move_id)
+          pkmn.moves[move_index].id = new_move_id
+          new_move_name = pkmn.moves[move_index].name
+          pbMessage(_INTL("1,\\wt[16] 2, and\\wt[16]...\\wt[16] ...\\wt[16] ... Ta-da!\\se[Battle ball drop]\1"))
+          pbMessage(_INTL("{1} forgot how to use {2}.\\nAnd...\1", pkmn.name, old_move_name))
+          pbMessage(_INTL("\\se[]{1} learned {2}!\\se[Pkmn move learnt]", pkmn.name, new_move_name))
+        else
+          pkmn.forget_move_at_index(move_index)
+          pbMessage(_INTL("{1} forgot {2}...", pkmn.name, old_move_name))
+          pbLearnMove(:THUNDERSHOCK) if pkmn.numMoves == 0
+        end
+      else
+        # Just try to learn this form's unique move
+        pbLearnMove(pkmn, new_move_id, true)
+      end
+    end
+  }
+})
 
 
 class PokeBattle_Battler
@@ -25,7 +74,7 @@ class PokeBattle_Battler
           when :Eclipse then                    newForm = 7
           when :Windy then                      newForm = 8
           when :HeatLight then                  newForm = 9
-          when :StrongWinds then                newForm = 10
+          when :StrongWinds then                newForm = 8
           when :AcidRain then                   newForm = 11
           when :Sandstorm then                  newForm = 12
           when :Rainbow then                    newForm = 13

@@ -808,4 +808,4 @@
 969,ASTRALGALE,Astral Gale,000,80,COSMIC,Special,100,10,0,AllNearFoes,0,befk,"The user uses cosmic winds to damage the opponent's side of the field."
 970,SIMPLERAY,Simple Ray,000,90,NORMAL,Special,100,10,10,NearOther,0,befp,"A beam of energy is fired at the opponent."
 971,GLACIALLEECH,Glacial Leech,0DD,75,ICE,Physical,100,10,0,NearOther,0,abef,"The user drains the foe's energy with icy horns. The user's HP is restored by half the damage inflicted."
-
+972,ROTOBLAST,RotoBlast,000,85,NORMAL,Special,100,10,15,NearOther,0,befp,"Rotom adapts itself to the opponent, attacking the opponent with the best-suited appliance."
