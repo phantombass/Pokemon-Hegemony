@@ -66,7 +66,9 @@ module QuestModule
       :Name => "Shop til You Drop",
       :QuestDescription => "Find the lost child!",
       :Stage1 => "Go to Neonn PMC to find the woman's son.",
-      :Location1 => "Neonn Town"
+      :Stage2 => "Follow the boy.",
+      :Location1 => "Neonn Town",
+      :Location2 => "Route 4"
     }
 
 end

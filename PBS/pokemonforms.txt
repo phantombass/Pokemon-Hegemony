@@ -1158,35 +1158,37 @@ BattlerEnemyY = 6
 BattlerShadowSize = 3
 #-------------------------------
 [CASTFORM,1]
+FormName = Mega Castform
+MegaStone = CASTFORMITE
+Type1 = NORMAL
+Type2 = COSMIC
+BaseStats = 85,45,115,105,125,125
+Abilities = ACCLIMATE
+#-------------------------------
+[CASTFORM,2]
 FormName = Sunny Form
 Type1 = FIRE
 Type2 = COSMIC
 Color = Red
 Pokedex = This is the form Castform takes on the brightest of days. Its skin is unexpectedly hot to the touch, so approach with care.
 #-------------------------------
-[CASTFORM,2]
+[CASTFORM,3]
 FormName = Rainy Form
 Type1 = WATER
 Type2 = COSMIC
 Color = Blue
 Pokedex = This is the form Castform takes when soaked with rain. When its body is compressed, water will seep out as if from a sponge.
 #-------------------------------
-[CASTFORM,3]
+[CASTFORM,4]
 FormName = Snowy Form
 Type1 = ICE
 Type2 = COSMIC
 Color = White
 Pokedex = This is the form Castform takes when covered in snow. Its body becomes an ice-like material, with a temperature near -5 degrees Celsius.
 #-------------------------------
-[CASTFORM,4]
+[CASTFORM,5]
 FormName = Foggy Form
 Type1 = FAIRY
-Type2 = COSMIC
-BattlerEnemyY = 28
-#-------------------------------
-[CASTFORM,5]
-FormName = Overcast Form
-Type1 = GHOST
 Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
@@ -1208,55 +1210,21 @@ Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,9]
-FormName = Heat Lightning Form
-Type1 = ELECTRIC
+FormName = Delta Stream Form
+Type1 = FLYING
+Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
 [CASTFORM,10]
-FormName = Delta Stream Form
-Type1 = DRAGON
-BattlerEnemyY = 28
-#-------------------------------
-[CASTFORM,11]
 FormName = Acid Rain Form
 Type1 = POISON
 Type2 = COSMIC
 BattlerEnemyY = 28
 #-------------------------------
-[CASTFORM,12]
+[CASTFORM,11]
 FormName = Sandstorm Form
 Type1 = ROCK
 Type2 = COSMIC
-BattlerEnemyY = 28
-#-------------------------------
-[CASTFORM,13]
-FormName = Rainbow Form
-Type1 = GRASS
-BattlerEnemyY = 28
-#-------------------------------
-[CASTFORM,14]
-FormName = Dust Devil Form
-Type1 = GROUND
-BattlerEnemyY = 28
-#-------------------------------
-[CASTFORM,15]
-FormName = Distortion Ashfall Form
-Type1 = FIGHTING
-BattlerEnemyY = 28
-#-------------------------------
-[CASTFORM,16]
-FormName = Volcanic Ash Form
-Type1 = STEEL
-BattlerEnemyY = 28
-#-------------------------------
-[CASTFORM,17]
-FormName = Borealis Form
-Type1 = PSYCHIC
-BattlerEnemyY = 28
-#-------------------------------
-[CASTFORM,18]
-FormName = Humid Form
-Type1 = BUG
 BattlerEnemyY = 28
 #-------------------------------
 [BANETTE,1]
@@ -1314,6 +1282,8 @@ BattlerShadowSize = 3
 #-------------------------------
 [METAGROSS,1]
 FormName = Mega Metagross
+Type1 = STEEL
+Type2 = COSMIC
 MegaStone = METAGROSSITE
 BaseStats = 95,145,130,120,120,90
 Abilities = TOUGHCLAWS

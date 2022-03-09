@@ -27,6 +27,7 @@ EliteBattle.configProcess(:ENVIRONMENTS) do
   EliteBattle.add_data(:Puddle, :TerrainTag, :BACKDROP, TerrainEBDX::PUDDLE)
   # Sand
   EliteBattle.add_data(:Sand, :TerrainTag, :BACKDROP, TerrainEBDX::DIRT)
+  #EliteBattle.add_data(:Sandy, :TerrainTag, :BACKDROP, TerrainEBDX::DIRT)
   # Tall Grass
   EliteBattle.add_data(proc{ |terrain, environ|
     next [:Grass, :TallGrass].include?(terrain) && environ != :Underwater

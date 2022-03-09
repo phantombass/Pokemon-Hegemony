@@ -659,3 +659,81 @@ SnapEdges = true
 ShowArea = true
 MapPosition = 0,7,2
 SnapEdges = true
+#-------------------------------
+[128]
+# Route 5
+Outdoor = true
+ShowArea = true
+MapPosition = 0,13,4
+SnapEdges = true
+#-------------------------------
+[129]
+# Route 6
+Outdoor = true
+ShowArea = true
+MapPosition = 0,15,5
+SnapEdges = true
+#-------------------------------
+[130]
+# Secret Grove
+Outdoor = true
+ShowArea = true
+Bicycle = false
+MapPosition = 0,15,4
+SnapEdges = true
+#-------------------------------
+[131]
+# Sodum Town
+Outdoor = true
+ShowArea = true
+MapPosition = 0,16,5
+SnapEdges = true
+#-------------------------------
+[132]
+# Sodum PMC
+MapPosition = 0,16,5
+SnapEdges = true
+#-------------------------------
+[133]
+# Route 7
+Outdoor = true
+ShowArea = true
+MapPosition = 0,16,6
+SnapEdges = true
+#-------------------------------
+[134]
+# Cassim Desert
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,16,8
+SnapEdges = true
+#-------------------------------
+[135]
+# Cassim Desert
+Outdoor = true
+ShowArea = true
+Weather = Storm,0
+MapPosition = 0,21,9
+SnapEdges = true
+#-------------------------------
+[136]
+# Route 8
+Outdoor = true
+ShowArea = true
+MapPosition = 0,18,13
+SnapEdges = true
+#-------------------------------
+[137]
+# Krypto Quay
+Outdoor = true
+ShowArea = true
+MapPosition = 0,18,15
+SnapEdges = true
+#-------------------------------
+[139]
+# Cassim Caves
+Outdoor = false
+ShowArea = true
+MapPosition = 0,16,8
+SnapEdges = true

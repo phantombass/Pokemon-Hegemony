@@ -9102,4 +9102,24 @@ BattlerPlayerX          = 0
 BattlerPlayerY          = 37
 BattlerEnemyX           = 0
 #-------------------------------
-
+[SNIVY2]
+BattlerEnemyY           = 68
+BattlerAltitude         = 0
+BattlerPlayerX          = -1
+BattlerPlayerY          = 78
+BattlerEnemyX           = 4
+#-------------------------------
+[SERVINE2]
+BattlerEnemyY           = 48
+BattlerAltitude         = 0
+BattlerPlayerX          = 1
+BattlerPlayerY          = 60
+BattlerEnemyX           = 1
+#-------------------------------
+[SERPERIOR2]
+BattlerEnemyY           = 39
+BattlerAltitude         = 0
+BattlerPlayerX          = -2
+BattlerPlayerY          = 38
+BattlerEnemyX           = -2
+#-------------------------------

@@ -283,6 +283,15 @@ Pokemon = CHATOT,30
 	Ability = PUNKROCK
 	Moves = HYPERVOICE,WICKEDWIND,ROOST,CHATTER
 #-------------------------------
+[CUEBALL,Booli]
+LoseText = "Ugh. That fell apart."
+Pokemon = TOXICROAK,44
+	Ability = DRYSKIN
+	Moves = DRAINPUNCH,SUCKERPUNCH,ICEPUNCH,POISONJAB
+Pokemon = SEVIPER,44
+	Ability = DRAGONSMAW
+	Moves = SLUDGEBOMB,DRAGONPULSE,GLARE,DARKPULSE
+#-------------------------------
 # Neonn Gym
 #-------------------------------
 [CHANELLER,Doris]
