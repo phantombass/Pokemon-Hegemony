@@ -9123,3 +9123,24 @@ BattlerPlayerX          = -2
 BattlerPlayerY          = 38
 BattlerEnemyX           = -2
 #-------------------------------
+[GIBLE2]
+BattlerEnemyY           = 54
+BattlerAltitude         = 0
+BattlerPlayerX          = 1
+BattlerPlayerY          = 63
+BattlerEnemyX           = -4
+#-------------------------------
+[GABITE2]
+BattlerEnemyY           = 50
+BattlerAltitude         = 0
+BattlerPlayerX          = -1
+BattlerPlayerY          = 52
+BattlerEnemyX           = -4
+#-------------------------------
+[GARCHOMP2]
+BattlerEnemyY           = 32
+BattlerAltitude         = 0
+BattlerPlayerX          = 0
+BattlerPlayerY          = 36
+BattlerEnemyX           = 1
+#-------------------------------

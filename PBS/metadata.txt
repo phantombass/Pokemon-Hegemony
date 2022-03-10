@@ -646,6 +646,11 @@ MapPosition = 0,12,4
 DarkMap = true
 SnapEdges = true
 #-------------------------------
+[125]
+# Hidden Grotto - Helum
+MapPosition = 0,10,1
+SnapEdges = true
+#-------------------------------
 [126]
 # Nenox Peak
 Outdoor = true
@@ -736,4 +741,19 @@ SnapEdges = true
 Outdoor = false
 ShowArea = true
 MapPosition = 0,16,8
+SnapEdges = true
+#-------------------------------
+[140]
+# Hidden Grotto - Route 5
+MapPosition = 0,15,4
+SnapEdges = true
+#-------------------------------
+[141]
+# Hidden Grotto - Route 6
+MapPosition = 0,15,4
+SnapEdges = true
+#-------------------------------
+[142]
+# Hidden Grotto - Route 2
+MapPosition = 0,15,1
 SnapEdges = true
