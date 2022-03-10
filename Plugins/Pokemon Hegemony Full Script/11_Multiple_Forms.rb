@@ -4,7 +4,8 @@
 
 MultipleForms.register(:CASTFORM,{
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
-    next 0
+    next 0 if endBattle
+    next 1 if pkmn.form == 1
   }
 })
 
@@ -67,31 +68,56 @@ class PokeBattle_Battler
         if hasActiveAbility?(:FORECAST)
           newForm = 0
           case @battle.pbWeather
-          when :Fog then                        newForm = 4
-          when :Overcast then                   newForm = 5
+          when :Fog then                        newForm = 5
+#          when :Overcast then                   newForm = 6
           when :Starstorm then   			        	newForm = 6
-          when :DClear then 				          	newForm = 6
+#          when :DClear then 				          	newForm = 6
           when :Eclipse then                    newForm = 7
           when :Windy then                      newForm = 8
-          when :HeatLight then                  newForm = 9
-          when :StrongWinds then                newForm = 8
+#          when :HeatLight then                  newForm = 9
+          when :StrongWinds then                newForm = 9
           when :AcidRain then                   newForm = 11
           when :Sandstorm then                  newForm = 12
-          when :Rainbow then                    newForm = 13
-          when :DustDevil then                  newForm = 14
-          when :DAshfall then                   newForm = 15
-          when :VolcanicAsh then                newForm = 16
-          when :Borealis then                   newForm = 17
-          when :Humid then                      newForm = 18
-          when :Sun, :HarshSun then             newForm = 1
-          when :Rain, :Storm, :HeavyRain then   newForm = 2
-          when :Hail, :Sleet then               newForm = 3
+  #        when :Rainbow then                    newForm = 13
+  #        when :DustDevil then                  newForm = 14
+  #        when :DAshfall then                   newForm = 15
+  #        when :VolcanicAsh then                newForm = 16
+  #        when :Borealis then                   newForm = 17
+  #        when :Humid then                      newForm = 18
+          when :Sun, :HarshSun then             newForm = 2
+          when :Rain, :Storm, :HeavyRain then   newForm = 3
+          when :Hail, :Sleet then               newForm = 4
           end
           if @form!=newForm
             @battle.pbShowAbilitySplash(self,true)
             @battle.pbHideAbilitySplash(self)
             pbChangeForm(newForm,_INTL("{1} transformed!",pbThis))
           end
+        elsif hasActiveAbility?(:ACCLIMATE)
+          newType = nil
+          case @battle.pbWeather
+          when :Fog then                        newType = :FAIRY
+#          when :Overcast then                   newForm = 6
+          when :Starstorm then   			        	newType = :COSMIC
+#          when :DClear then 				          	newForm = 6
+          when :Eclipse then                    newType = :DARK
+          when :Windy then                      newType = :FLYING
+#          when :HeatLight then                  newForm = 9
+          when :StrongWinds then                newType = :FLYING
+          when :AcidRain then                   newType = :POISON
+          when :Sandstorm then                  newType = :ROCK
+  #        when :Rainbow then                    newForm = 13
+  #        when :DustDevil then                  newForm = 14
+  #        when :DAshfall then                   newForm = 15
+  #        when :VolcanicAsh then                newForm = 16
+  #        when :Borealis then                   newForm = 17
+  #        when :Humid then                      newForm = 18
+          when :Sun, :HarshSun then             newType = :FIRE
+          when :Rain, :Storm, :HeavyRain then   newType = :WATER
+          when :Hail, :Sleet then               newType = :ICE
+          when :None then                       newType = :NORMAL
+          end
+          self.type1 = newType
         else
           pbChangeForm(0,_INTL("{1} transformed!",pbThis))
       end

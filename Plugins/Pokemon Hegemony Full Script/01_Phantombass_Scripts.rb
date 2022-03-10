@@ -28,7 +28,9 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[106] = 38
     end
   elsif badges == 3
-    if $game_switches[116]
+    if $game_switches[120]
+      $game_variables[106] = 55
+    elsif $game_switches[116]
       $game_variables[106] = 50
     else
       $game_variables[106] = 46
@@ -71,7 +73,9 @@ Events.onStepTaken += proc {| sender, e |
         $game_variables[106] = 38
       end
     elsif badges == 3
-      if $game_switches[116]
+      if $game_switches[120] && $game_switches[116]
+        $game_variables[106] = 62
+      elsif $game_switches[116] && !$game_switches[120]
         $game_variables[106] = 50
       else
         $game_variables[106] = 46
@@ -133,6 +137,9 @@ module EnvironmentEBDX
       :oy => 100, :x => 96, :y => 98, :flat => false, :zoom => 0.5
     }
   }
+  DESERT = { #{}"base" => "Dirt",
+              "backdrop" => "Sand"
+              }
 end
 
 class PokeBattle_Battle

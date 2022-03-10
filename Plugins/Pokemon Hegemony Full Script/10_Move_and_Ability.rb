@@ -693,30 +693,14 @@ class PokeBattle_Move_087 < PokeBattle_Move
       ret = :ICE if GameData::Type.exists?(:ICE)
     when :Fog
       ret = :FAIRY if GameData::Type.exists?(:FAIRY)
-    when :Humid
-      ret = :BUG if GameData::Type.exists?(:BUG)
-    when :Overcast
-      ret = :GHOST if GameData::Type.exists?(:GHOST)
     when :Eclipse
       ret = :DARK if GameData::Type.exists?(:DARK)
     when :Windy
       ret = :FLYING if GameData::Type.exists?(:FLYING)
-    when :HeatLight
-      ret = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
     when :AcidRain
       ret = :POISON if GameData::Type.exists?(:POISON)
     when :StrongWinds
-      ret = :DRAGON if GameData::Type.exists?(:DRAGON)
-    when :Rainbow
-      ret = :GRASS if GameData::Type.exists?(:GRASS)
-    when :DustDevil
-      ret = :GROUND if GameData::Type.exists?(:GROUND)
-    when :DAshfall
-      ret = :FIGHTING if GameData::Type.exists?(:FIGHTING)
-    when :VolcanicAsh
-      ret = :STEEL if GameData::Type.exists?(:STEEL)
-    when :Borealis
-      ret = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
+      ret = :FLYING if GameData::Type.exists?(:FLYING)
     when :Starstorm
       ret = :COSMIC if GameData::Type.exists?(:COSMIC)
     end
@@ -1022,6 +1006,12 @@ BattleHandlers::SpeedCalcAbility.add(:SLUSHRUSH,
 BattleHandlers::SpeedCalcAbility.add(:STARSPRINT,
   proc { |ability,battler,mult|
     next mult * 2 if [:Starstorm].include?(battler.battle.pbWeather)
+  }
+)
+
+BattleHandlers::SpeedCalcAbility.add(:BACKDRAFT,
+  proc { |ability,battler,mult|
+    next mult * 2 if [:Windy,:StrongWinds].include?(battler.battle.pbWeather)
   }
 )
 
@@ -1340,6 +1330,650 @@ class PokeBattle_Battler
     @effects[PBEffects::WaterSport]          = false
     @effects[PBEffects::WeightChange]        = 0
     @effects[PBEffects::Yawn]                = 0
+  end
+  def pbUseMove(choice,specialUsage=false)
+    # NOTE: This is intentionally determined before a multi-turn attack can
+    #       set specialUsage to true.
+    skipAccuracyCheck = (specialUsage && choice[2]!=@battle.struggle)
+    # Start using the move
+    pbBeginTurn(choice)
+    # Force the use of certain moves if they're already being used
+    if usingMultiTurnAttack?
+      choice[2] = PokeBattle_Move.from_pokemon_move(@battle, Pokemon::Move.new(@currentMove))
+      specialUsage = true
+    elsif @effects[PBEffects::Encore]>0 && choice[1]>=0 &&
+       @battle.pbCanShowCommands?(@index)
+      idxEncoredMove = pbEncoredMoveIndex
+      if idxEncoredMove>=0 && @battle.pbCanChooseMove?(@index,idxEncoredMove,false)
+        if choice[1]!=idxEncoredMove   # Change move if battler was Encored mid-round
+          choice[1] = idxEncoredMove
+          choice[2] = @moves[idxEncoredMove]
+          choice[3] = -1   # No target chosen
+        end
+      end
+    end
+    # Labels the move being used as "move"
+    move = choice[2]
+    return if !move   # if move was not chosen somehow
+    # Try to use the move (inc. disobedience)
+    @lastMoveFailed = false
+    if !pbTryUseMove(choice,move,specialUsage,skipAccuracyCheck)
+      @lastMoveUsed     = nil
+      @lastMoveUsedType = nil
+      if !specialUsage
+        @lastRegularMoveUsed   = nil
+        @lastRegularMoveTarget = -1
+      end
+      @battle.pbGainExp   # In case self is KO'd due to confusion
+      pbCancelMoves
+      pbEndTurn(choice)
+      return
+    end
+    move = choice[2]   # In case disobedience changed the move to be used
+    return if !move   # if move was not chosen somehow
+    # Subtract PP
+    if !specialUsage
+      if !pbReducePP(move)
+        @battle.pbDisplay(_INTL("{1} used {2}!",pbThis,move.name))
+        @battle.pbDisplay(_INTL("But there was no PP left for the move!"))
+        @lastMoveUsed          = nil
+        @lastMoveUsedType      = nil
+        @lastRegularMoveUsed   = nil
+        @lastRegularMoveTarget = -1
+        @lastMoveFailed        = true
+        pbCancelMoves
+        pbEndTurn(choice)
+        return
+      end
+    end
+    # Stance Change
+    if isSpecies?(:AEGISLASH) && self.ability == :STANCECHANGE
+      if move.damagingMove?
+        pbChangeForm(1,_INTL("{1} changed to Blade Forme!",pbThis))
+      elsif move.id == :KINGSSHIELD
+        pbChangeForm(0,_INTL("{1} changed to Shield Forme!",pbThis))
+      end
+    end
+    # Calculate the move's type during this usage
+    move.calcType = move.pbCalcType(self)
+    # Start effect of Mold Breaker
+    @battle.moldBreaker = hasMoldBreaker?
+    # Remember that user chose a two-turn move
+    if move.pbIsChargingTurn?(self)
+      # Beginning the use of a two-turn attack
+      @effects[PBEffects::TwoTurnAttack] = move.id
+      @currentMove = move.id
+    else
+      @effects[PBEffects::TwoTurnAttack] = nil   # Cancel use of two-turn attack
+    end
+    # Add to counters for moves which increase them when used in succession
+    move.pbChangeUsageCounters(self,specialUsage)
+    # Charge up Metronome item
+    if hasActiveItem?(:METRONOME) && !move.callsAnotherMove?
+      if @lastMoveUsed && @lastMoveUsed==move.id && !@lastMoveFailed
+        @effects[PBEffects::Metronome] += 1
+      else
+        @effects[PBEffects::Metronome] = 0
+      end
+    end
+    # Record move as having been used
+    @lastMoveUsed     = move.id
+    @lastMoveUsedType = move.calcType   # For Conversion 2
+    if !specialUsage
+      @lastRegularMoveUsed   = move.id   # For Disable, Encore, Instruct, Mimic, Mirror Move, Sketch, Spite
+      @lastRegularMoveTarget = choice[3]   # For Instruct (remembering original target is fine)
+      @movesUsed.push(move.id) if !@movesUsed.include?(move.id)   # For Last Resort
+    end
+    @battle.lastMoveUsed = move.id   # For Copycat
+    @battle.lastMoveUser = @index   # For "self KO" battle clause to avoid draws
+    @battle.successStates[@index].useState = 1   # Battle Arena - assume failure
+    # Find the default user (self or Snatcher) and target(s)
+    user = pbFindUser(choice,move)
+    user = pbChangeUser(choice,move,user)
+    targets = pbFindTargets(choice,move,user)
+    targets = pbChangeTargets(move,user,targets)
+    # Pressure
+    if !specialUsage
+      targets.each do |b|
+        next unless b.opposes?(user) && b.hasActiveAbility?(:PRESSURE)
+        PBDebug.log("[Ability triggered] #{b.pbThis}'s #{b.abilityName}")
+        user.pbReducePP(move)
+      end
+      if move.pbTarget(user).affects_foe_side
+        @battle.eachOtherSideBattler(user) do |b|
+          next unless b.hasActiveAbility?(:PRESSURE)
+          PBDebug.log("[Ability triggered] #{b.pbThis}'s #{b.abilityName}")
+          user.pbReducePP(move)
+        end
+      end
+    end
+    # Dazzling/Queenly Majesty make the move fail here
+    @battle.pbPriority(true).each do |b|
+      next if !b || !b.abilityActive?
+      if BattleHandlers.triggerMoveBlockingAbility(b.ability,b,user,targets,move,@battle)
+        @battle.pbDisplayBrief(_INTL("{1} used {2}!",user.pbThis,move.name))
+        @battle.pbShowAbilitySplash(b)
+        @battle.pbDisplay(_INTL("{1} cannot use {2}!",user.pbThis,move.name))
+        @battle.pbHideAbilitySplash(b)
+        user.lastMoveFailed = true
+        pbCancelMoves
+        pbEndTurn(choice)
+        return
+      end
+    end
+    # "X used Y!" message
+    # Can be different for Bide, Fling, Focus Punch and Future Sight
+    # NOTE: This intentionally passes self rather than user. The user is always
+    #       self except if Snatched, but this message should state the original
+    #       user (self) even if the move is Snatched.
+    move.pbDisplayUseMessage(self)
+    # Snatch's message (user is the new user, self is the original user)
+    if move.snatched
+      @lastMoveFailed = true   # Intentionally applies to self, not user
+      @battle.pbDisplay(_INTL("{1} snatched {2}'s move!",user.pbThis,pbThis(true)))
+    end
+    # "But it failed!" checks
+    if move.pbMoveFailed?(user,targets)
+      PBDebug.log(sprintf("[Move failed] In function code %s's def pbMoveFailed?",move.function))
+      user.lastMoveFailed = true
+      pbCancelMoves
+      pbEndTurn(choice)
+      return
+    end
+    # Perform set-up actions and display messages
+    # Messages include Magnitude's number and Pledge moves' "it's a combo!"
+    move.pbOnStartUse(user,targets)
+    # Self-thawing due to the move
+    if user.status == :FROZEN && move.thawsUser?
+      user.pbCureStatus(false)
+      @battle.pbDisplay(_INTL("{1} cured the frostbite!",user.pbThis))
+    end
+    # Powder
+    if user.effects[PBEffects::Powder] && move.calcType == :FIRE
+      @battle.pbCommonAnimation("Powder",user)
+      @battle.pbDisplay(_INTL("When the flame touched the powder on the Pokémon, it exploded!"))
+      user.lastMoveFailed = true
+      if ![:Rain, :HeavyRain].include?(@battle.pbWeather) && user.takesIndirectDamage?
+        oldHP = user.hp
+        user.pbReduceHP((user.totalhp/4.0).round,false)
+        user.pbFaint if user.fainted?
+        @battle.pbGainExp   # In case user is KO'd by this
+        user.pbItemHPHealCheck
+        if user.pbAbilitiesOnDamageTaken(oldHP)
+          user.pbEffectsOnSwitchIn(true)
+        end
+      end
+      pbCancelMoves
+      pbEndTurn(choice)
+      return
+    end
+    # Primordial Sea, Desolate Land
+    if move.damagingMove?
+      case @battle.pbWeather
+      when :HeavyRain
+        if move.calcType == :FIRE
+          @battle.pbDisplay(_INTL("The Fire-type attack fizzled out in the heavy rain!"))
+          user.lastMoveFailed = true
+          pbCancelMoves
+          pbEndTurn(choice)
+          return
+        end
+      when :HarshSun
+        if move.calcType == :WATER
+          @battle.pbDisplay(_INTL("The Water-type attack evaporated in the harsh sunlight!"))
+          user.lastMoveFailed = true
+          pbCancelMoves
+          pbEndTurn(choice)
+          return
+        end
+      end
+    end
+    # Protean / Libero
+    if user.hasActiveAbility?([:PROTEAN,:LIBERO]) && !move.callsAnotherMove? && !move.snatched
+      if user.pbHasOtherType?(move.calcType) && !GameData::Type.get(move.calcType).pseudo_type
+        @battle.pbShowAbilitySplash(user)
+        user.pbChangeTypes(move.calcType)
+        typeName = GameData::Type.get(move.calcType).name
+        @battle.pbDisplay(_INTL("{1} transformed into the {2} type!",user.pbThis,typeName))
+        @battle.pbHideAbilitySplash(user)
+        # NOTE: The GF games say that if Curse is used by a non-Ghost-type
+        #       Pokémon which becomes Ghost-type because of Protean / Libero,
+        #       it should target and curse itself. I think this is silly, so
+        #       I'm making it choose a random opponent to curse instead.
+        if move.function == "10D" && targets.length == 0   # Curse
+          choice[3] = -1
+          targets = pbFindTargets(choice,move,user)
+        end
+      end
+    end
+    #Acclimate
+    if user.hasActiveAbility?(:ACCLIMATE) && move.function == "087"
+      oldWeather = @battle.pbWeather
+      newWeather = 0
+      weatherChange = nil
+      @battle.eachOtherSideBattler(user.index) do |b|
+        type1 = b.type1
+        type2 = b.type2
+        case type1
+        when :NORMAL
+          case type2
+          when :GHOST, :PSYCHIC; newWeather = 6
+          when :FAIRY; newWeather = 9
+          when :FLYING,:GROUND; newWeather = 3
+          when :BUG,:COSMIC,:ICE,:GRASS,:STEEL; newWeather = 1
+          when :FIGHTING,:DARK,:DRAGON; newWeather = 4
+          when :ROCK,:WATER; newWeather = 5
+          when :NORMAL,:POISON,:FIRE,:ELECTRIC; newWeather = 10
+          end
+        when :FIGHTING
+          case type2
+          when :POISON, :COSMIC; newWeather = 7
+          when :STEEL; newWeather = 5
+          when :FIRE; newWeather = 2
+          when :NORMAL,:FIGHTING,:FLYING,:GROUND,:ROCK,:BUG,:GHOST,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY; newWeather = 4
+          end
+        when :FLYING
+          case type2
+          when :GROUND, :DRAGON, :COSMIC, :GHOST, :GRASS; newWeather = 3
+          when :FIRE, :ICE, :ROCK, :POISON, :BUG, :ELECTRIC, :PSYCHIC, :NORMAL, type1; newWeather = 10
+          when :STEEL, :WATER; newWeather = 5
+          when :FIGHTING,:DARK,:FAIRY, type1; newWeather = 4
+          end
+        when :ROCK
+          case type2
+          when :ICE, :DARK, :FLYING, :BUG, :GROUND, :FAIRY, :FIRE, :POISON, :NORMAL, :FIGHTING, :POISON, type1; newWeather = 2
+          when :PSYCHIC, :GHOST; newWeather = 6
+          when :COSMIC, :STEEL, :ELECTRIC, :DRAGON, :GRASS, :WATER; newWeather = 5
+          end
+        when :GROUND
+          case type2
+          when :WATER,:ELECTRIC,:COSMIC,:DRAGON; newWeather = 5
+          when :DRAGON, :FLYING, :GRASS; newWeather = 3
+          when :NORMAL,:FIGHTING,:POISON,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY,:ROCK, type1; newWeather = 2
+          end
+        when :POISON
+          case type2
+          when :DARK, :STEEL, :ELECTRIC, :ROCK, :FIRE, :ICE, :FLYING,:BUG,type1,:NORMAL; newWeather = 10
+          when :PSYCHIC, :GHOST; newWeather = 6
+          when :FIGHTING, :GRASS; newWeather = 7
+          when :WATER,:DRAGON,:FAIRY; newWeather = 5
+          when :COSMIC; newWeather = 1
+          when :GROUND; newWeather = 2
+          end
+        when :BUG
+          case type2
+          when :GROUND, :WATER, :FIGHTING; newWeather = 7
+          when :GRASS, :STEEL, :COSMIC; newWeather = 1
+          when :NORMAL,:FLYING,:POISON,:ROCK,:GHOST,:FIRE,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY, type1; newWeather = 10
+          end
+        when :GHOST
+          case type2
+          when :FIGHTING, :DARK; newWeather = 4
+          when :FAIRY; newWeather = 5
+          when :BUG,:COSMIC; newWeather = 1
+          when :NORMAL,:FLYING,:POISON,:GROUND,:ROCK,:STEEL,:FIRE,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON, type1; newWeather = 7
+          end
+        when :STEEL
+          case type2
+          when :WATER,:DRAGON,:DARK,:NORMAL; newWeather = 5
+          when :FIRE, :ROCK,:GROUND; newWeather = 2
+          when :FLYING,:POISON,:BUG,:GHOST,:STEEL,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:FAIRY,:COSMIC, type1; newWeather = 1
+          end
+        when :GRASS
+          case type2
+          when :STEEL, :COSMIC, :ICE; newWeather = 1
+          when :FAIRY; newWeather = 9
+          when :DRAGON, :GROUND, :FLYING, :ELECTRIC; newWeather = 3
+          when :PSYCHIC; newWeather = 6
+          when :ROCK; newWeather = 5
+          when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :FIRE, :WATER, type1,:DARK; newWeather = 7
+          end
+        when :FIRE
+          case type2
+          when :GRASS; newWeather = 7
+          when :COSMIC,:FLYING,:DRAGON,:ELECTRIC; newWeather = 10
+          when :NORMAL,:POISON,:GROUND,:ROCK,:WATER,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY,:FIGHTING, type1; newWeather = 2
+          end
+        when :WATER
+          case type2
+          when :FIRE; newWeather = 2
+          when :GHOST,:PSYCHIC; newWeather = 6
+          when :NORMAL,:FIGHTING,:POISON,:BUG,:STEEL,:GRASS,:ELECTRIC,:ICE,:DRAGON,:DARK,:FAIRY,:COSMIC, type1,:FLYING,:GROUND,:ROCK; newWeather = 5
+          end
+        when :ELECTRIC
+          case type2
+          when :FLYING, :GRASS,:GROUND; newWeather = 3
+          when :WATER,:STEEL,:DRAGON,:FAIRY,:COSMIC,:FIGHTING,:ROCK; newWeather = 5
+          when :BUG,:ICE; newWeather = 1
+          when :GHOST,:PSYCHIC; newWeather = 6
+          when :NORMAL,:POISON,:FIRE,:DARK, type1; newWeather = 10
+          end
+        when :ICE
+          case type2
+          when :GHOST, :PSYCHIC; newWeather = 6
+          when :WATER; newWeather = 5
+          when :ROCK,:GROUND; newWeather = 2
+          when :FIRE, :FLYING, :POISON, :ELECTRIC; newWeather = 10
+          when :GRASS, :BUG, :STEEL, :COSMIC, :FAIRY, type1, :NORMAL; newWeather = 1
+          when :FIGHTING, :DRAGON, :DARK; newWeather = 4
+          end
+        when :PSYCHIC
+          case type2
+          when :FIGHTING,:DARK; newWeather = 4
+          when :FAIRY; newWeather = 10
+          when :NORMAL,:POISON,:GROUND,:ROCK,:BUG,:GHOST,:STEEL,:FIRE,:ELECTRIC,:DRAGON,:COSMIC,:ICE,:FLYING,:WATER,:GRASS, type1; newWeather = 6
+          end
+        when :DRAGON
+          case type2
+          when :GROUND, :FLYING, :GRASS; newWeather = 3
+          when :DARK, :FIGHTING, type1; newWeather = 4
+          when :FIRE; newWeather = 10
+          when :PSYCHIC; newWeather = 6
+          when :NORMAL,:POISON,:ROCK,:BUG,:GHOST,:STEEL,:WATER,:ELECTRIC,:ICE,:DRAGON,:FAIRY,:COSMIC; newWeather = 5
+          end
+        when :DARK
+          case type2
+          when :NORMAL,:FIGHTING,:FLYING,:GROUND,:BUG,:GHOST,:WATER,:ELECTRIC,:DRAGON,:FAIRY,:GRASS,:PSYCHIC,type1; newWeather = 4
+          when :POISON,:FIRE; newWeather = 10
+          when :COSMIC,:ICE; newWeather = 1
+          when :ROCK,:STEEL; newWeather = 5
+          end
+        when :FAIRY
+          case type2
+          when :FIRE; newWeather = 10
+          when :COSMIC,:ICE; newWeather = 1
+          when :GRASS; newWeather = 9
+          when :NORMAL,:FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:STEEL,:WATER,:GRASS,:ELECTRIC,:DRAGON,:DARK,:ROCK, type1; newWeather = 6
+          end
+        when :COSMIC
+          case type2
+          when :GROUND, newWeather = 3
+          when :GHOST; newWeather = 6
+          when :POISON, :FIGHTING; newWeather = 7
+          when :ICE, :GRASS, :BUG, :STEEL, :FAIRY; newWeather = 1
+          when :NORMAL,:FLYING,:ROCK,:FIRE,:WATER,:ELECTRIC,:PSYCHIC,:DRAGON,type1; newWeather = 5
+          end
+        end
+          case newWeather
+          when 1
+            weatherChange = :Sun
+            newType = :FIRE
+          when 2
+            weatherChange = :Rain
+            newType = :WATER
+          when 3
+            weatherChange = :Sleet
+            newType = :ICE
+          when 4
+            weatherChange = :Fog
+            newType = :FAIRY
+          when 5
+            weatherChange = :Starstorm
+            newType = :COSMIC
+          when 6
+            weatherChange = :Eclipse
+            newType = :DARK
+          when 7
+            weatherChange = :Windy
+            newType = :FLYING
+          when 8
+            weatherChange = :StrongWinds
+            newType = :FLYING
+          when 9
+            weatherChange = :AcidRain
+            newType = :POISON
+          when 10
+            weatherChange = :Sandstorm
+            newType = :ROCK
+          end
+        if oldWeather==weatherChange
+          weatherChange = @battle.pbWeather
+        else
+          @battle.pbShowAbilitySplash(user)
+          @battle.field.weather = weatherChange
+          @battle.field.weatherDuration = 5
+          case weatherChange
+          when :Starstorm then   @battle.pbDisplay(_INTL("Stars fill the sky."))
+          when :Thunder then     @battle.pbDisplay(_INTL("Lightning flashes in th sky."))
+          when :Humid then       @battle.pbDisplay(_INTL("The air is humid."))
+          when :Overcast then    @battle.pbDisplay(_INTL("The sky is overcast."))
+          when :Eclipse then     @battle.pbDisplay(_INTL("The sky is dark."))
+          when :Fog then         @battle.pbDisplay(_INTL("The fog is deep."))
+          when :AcidRain then    @battle.pbDisplay(_INTL("Acid rain is falling."))
+          when :VolcanicAsh then @battle.pbDisplay(_INTL("Volcanic Ash sprinkles down."))
+          when :Rainbow then     @battle.pbDisplay(_INTL("A rainbow crosses the sky."))
+          when :Borealis then    @battle.pbDisplay(_INTL("The sky is ablaze with color."))
+          when :TimeWarp then    @battle.pbDisplay(_INTL("Time has stopped."))
+          when :Reverb then      @battle.pbDisplay(_INTL("A dull echo hums."))
+          when :DClear then      @battle.pbDisplay(_INTL("The sky is distorted."))
+          when :DRain then       @battle.pbDisplay(_INTL("Rain is falling upward."))
+          when :DWind then       @battle.pbDisplay(_INTL("The wind is haunting."))
+          when :DAshfall then    @battle.pbDisplay(_INTL("Ash floats in midair."))
+          when :Sleet then       @battle.pbDisplay(_INTL("Sleet began to fall."))
+          when :Windy then       @battle.pbDisplay(_INTL("There is a slight breeze."))
+          when :HeatLight then   @battle.pbDisplay(_INTL("Static fills the air."))
+          when :DustDevil then   @battle.pbDisplay(_INTL("A dust devil approaches."))
+          when :Sun then         @battle.pbDisplay(_INTL("The sunlight is strong."))
+          when :Rain then        @battle.pbDisplay(_INTL("It is raining."))
+          when :Sandstorm then   @battle.pbDisplay(_INTL("A sandstorm is raging."))
+          when :Hail then        @battle.pbDisplay(_INTL("Hail is falling."))
+          when :HarshSun then    @battle.pbDisplay(_INTL("The sunlight is extremely harsh."))
+          when :HeavyRain then   @battle.pbDisplay(_INTL("It is raining heavily."))
+          when :StrongWinds then @battle.pbDisplay(_INTL("The wind is strong."))
+          when :ShadowSky then   @battle.pbDisplay(_INTL("The sky is shadowy."))
+          end
+          @battle.pbHideAbilitySplash(user)
+          user.type1 = newType
+          oldWeather = @battle.pbWeather
+        end
+      end
+    end
+    # Redirect Dragon Darts first hit if necessary
+    if move.function == "17C" && @battle.pbSideSize(targets[0].index) > 1
+      targets = pbChangeTargets(move,user,targets,0)
+    end
+    #---------------------------------------------------------------------------
+    magicCoater  = -1
+    magicBouncer = -1
+    if targets.length == 0 && move.pbTarget(user).num_targets > 0 && !move.worksWithNoTargets?
+      # def pbFindTargets should have found a target(s), but it didn't because
+      # they were all fainted
+      # All target types except: None, User, UserSide, FoeSide, BothSides
+      @battle.pbDisplay(_INTL("But there was no target..."))
+      user.lastMoveFailed = true
+    else   # We have targets, or move doesn't use targets
+      # Reset whole damage state, perform various success checks (not accuracy)
+      user.initialHP = user.hp
+      targets.each do |b|
+        b.damageState.reset
+        b.damageState.initialHP = b.hp
+        if !pbSuccessCheckAgainstTarget(move,user,b)
+          b.damageState.unaffected = true
+        end
+      end
+      # Magic Coat/Magic Bounce checks (for moves which don't target Pokémon)
+      if targets.length==0 && move.canMagicCoat?
+        @battle.pbPriority(true).each do |b|
+          next if b.fainted? || !b.opposes?(user)
+          next if b.semiInvulnerable?
+          if b.effects[PBEffects::MagicCoat]
+            magicCoater = b.index
+            b.effects[PBEffects::MagicCoat] = false
+            break
+          elsif b.hasActiveAbility?(:MAGICBOUNCE) && !@battle.moldBreaker &&
+             !b.effects[PBEffects::MagicBounce]
+            magicBouncer = b.index
+            b.effects[PBEffects::MagicBounce] = true
+            break
+          end
+        end
+      end
+      # Get the number of hits
+      numHits = move.pbNumHits(user,targets)
+      # Process each hit in turn
+      realNumHits = 0
+      for i in 0...numHits
+        break if magicCoater>=0 || magicBouncer>=0
+        success = pbProcessMoveHit(move,user,targets,i,skipAccuracyCheck)
+        if !success
+          if i==0 && targets.length>0
+            hasFailed = false
+            targets.each do |t|
+              next if t.damageState.protected
+              hasFailed = t.damageState.unaffected
+              break if !t.damageState.unaffected
+            end
+            user.lastMoveFailed = hasFailed
+          end
+          break
+        end
+        realNumHits += 1
+        break if user.fainted?
+        #break if [:SLEEP, :FROZEN].include?(user.status)
+        # NOTE: If a multi-hit move becomes disabled partway through doing those
+        #       hits (e.g. by Cursed Body), the rest of the hits continue as
+        #       normal.
+        # Don't stop using the move if Dragon Darts could still hit something
+        if move.function == "17C" && realNumHits < numHits
+          endMove = true
+          @battle.eachBattler do |b|
+            next if b == self
+            endMove = false
+          end
+          break if endMove
+        else
+          # All targets are fainted
+          break if targets.all? { |t| t.fainted? }
+        end
+      end
+      # Battle Arena only - attack is successful
+      @battle.successStates[user.index].useState = 2
+      if targets.length>0
+        @battle.successStates[user.index].typeMod = 0
+        targets.each do |b|
+          next if b.damageState.unaffected
+          @battle.successStates[user.index].typeMod += b.damageState.typeMod
+        end
+      end
+      # Effectiveness message for multi-hit moves
+      # NOTE: No move is both multi-hit and multi-target, and the messages below
+      #       aren't quite right for such a hypothetical move.
+      if numHits>1
+        if move.damagingMove?
+          targets.each do |b|
+            next if b.damageState.unaffected || b.damageState.substitute
+            move.pbEffectivenessMessage(user,b,targets.length)
+          end
+        end
+        if realNumHits==1
+          @battle.pbDisplay(_INTL("Hit 1 time!"))
+        elsif realNumHits>1
+          @battle.pbDisplay(_INTL("Hit {1} times!",realNumHits))
+        end
+      end
+      # Magic Coat's bouncing back (move has targets)
+      targets.each do |b|
+        next if b.fainted?
+        next if !b.damageState.magicCoat && !b.damageState.magicBounce
+        @battle.pbShowAbilitySplash(b) if b.damageState.magicBounce
+        @battle.pbDisplay(_INTL("{1} bounced the {2} back!",b.pbThis,move.name))
+        @battle.pbHideAbilitySplash(b) if b.damageState.magicBounce
+        newChoice = choice.clone
+        newChoice[3] = user.index
+        newTargets = pbFindTargets(newChoice,move,b)
+        newTargets = pbChangeTargets(move,b,newTargets)
+        success = pbProcessMoveHit(move,b,newTargets,0,false)
+        b.lastMoveFailed = true if !success
+        targets.each { |otherB| otherB.pbFaint if otherB && otherB.fainted? }
+        user.pbFaint if user.fainted?
+      end
+      # Magic Coat's bouncing back (move has no targets)
+      if magicCoater>=0 || magicBouncer>=0
+        mc = @battle.battlers[(magicCoater>=0) ? magicCoater : magicBouncer]
+        if !mc.fainted?
+          user.lastMoveFailed = true
+          @battle.pbShowAbilitySplash(mc) if magicBouncer>=0
+          @battle.pbDisplay(_INTL("{1} bounced the {2} back!",mc.pbThis,move.name))
+          @battle.pbHideAbilitySplash(mc) if magicBouncer>=0
+          success = pbProcessMoveHit(move,mc,[],0,false)
+          mc.lastMoveFailed = true if !success
+          targets.each { |b| b.pbFaint if b && b.fainted? }
+          user.pbFaint if user.fainted?
+        end
+      end
+      # Move-specific effects after all hits
+      targets.each { |b| move.pbEffectAfterAllHits(user,b) }
+      # Faint if 0 HP
+      targets.each { |b| b.pbFaint if b && b.fainted? }
+      user.pbFaint if user.fainted?
+      # External/general effects after all hits. Eject Button, Shell Bell, etc.
+      pbEffectsAfterMove(user,targets,move,realNumHits)
+    end
+    # End effect of Mold Breaker
+    @battle.moldBreaker = false
+    # Gain Exp
+    @battle.pbGainExp
+    # Battle Arena only - update skills
+    @battle.eachBattler { |b| @battle.successStates[b.index].updateSkill }
+    # Shadow Pokémon triggering Hyper Mode
+    pbHyperMode if @battle.choices[@index][0]!=:None   # Not if self is replaced
+    # End of move usage
+    pbEndTurn(choice)
+    # Instruct
+    @battle.eachBattler do |b|
+      next if !b.effects[PBEffects::Instruct] || !b.lastMoveUsed
+      b.effects[PBEffects::Instruct] = false
+      idxMove = -1
+      b.eachMoveWithIndex { |m,i| idxMove = i if m.id==b.lastMoveUsed }
+      next if idxMove<0
+      oldLastRoundMoved = b.lastRoundMoved
+      @battle.pbDisplay(_INTL("{1} used the move instructed by {2}!",b.pbThis,user.pbThis(true)))
+      PBDebug.logonerr{
+        b.effects[PBEffects::Instructed] = true
+        b.pbUseMoveSimple(b.lastMoveUsed,b.lastRegularMoveTarget,idxMove,false)
+        b.effects[PBEffects::Instructed] = false
+      }
+      b.lastRoundMoved = oldLastRoundMoved
+      @battle.pbJudge
+      return if @battle.decision>0
+    end
+    # Dancer
+    if !@effects[PBEffects::Dancer] && !user.lastMoveFailed && realNumHits>0 &&
+       !move.snatched && magicCoater<0 && @battle.pbCheckGlobalAbility(:DANCER) &&
+       move.danceMove?
+      dancers = []
+      @battle.pbPriority(true).each do |b|
+        dancers.push(b) if b.index!=user.index && b.hasActiveAbility?(:DANCER)
+      end
+      while dancers.length>0
+        nextUser = dancers.pop
+        oldLastRoundMoved = nextUser.lastRoundMoved
+        # NOTE: Petal Dance being used because of Dancer shouldn't lock the
+        #       Dancer into using that move, and shouldn't contribute to its
+        #       turn counter if it's already locked into Petal Dance.
+        oldOutrage = nextUser.effects[PBEffects::Outrage]
+        nextUser.effects[PBEffects::Outrage] += 1 if nextUser.effects[PBEffects::Outrage]>0
+        oldCurrentMove = nextUser.currentMove
+        preTarget = choice[3]
+        preTarget = user.index if nextUser.opposes?(user) || !nextUser.opposes?(preTarget)
+        @battle.pbShowAbilitySplash(nextUser,true)
+        @battle.pbHideAbilitySplash(nextUser)
+        if !PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+          @battle.pbDisplay(_INTL("{1} kept the dance going with {2}!",
+             nextUser.pbThis,nextUser.abilityName))
+        end
+        PBDebug.logonerr{
+          nextUser.effects[PBEffects::Dancer] = true
+          nextUser.pbUseMoveSimple(move.id,preTarget)
+          nextUser.effects[PBEffects::Dancer] = false
+        }
+        nextUser.lastRoundMoved = oldLastRoundMoved
+        nextUser.effects[PBEffects::Outrage] = oldOutrage
+        nextUser.currentMove = oldCurrentMove
+        @battle.pbJudge
+        return if @battle.decision>0
+      end
+    end
   end
   def pbProcessMoveHit(move,user,targets,hitNum,skipAccuracyCheck)
     return false if user.fainted?
@@ -1794,20 +2428,35 @@ class PokeBattle_Battler
     ]
     return ability_blacklist.include?(abil.id)
   end
+  def takesSandstormDamage?
+    return false if !takesIndirectDamage?
+    return false if pbHasType?(:GROUND) || pbHasType?(:ROCK) || pbHasType?(:STEEL)
+    return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
+    return false if hasActiveAbility?([:OVERCOAT,:SANDFORCE,:SANDRUSH,:SANDVEIL,:ACCLIMATE])
+    return false if hasActiveItem?(:SAFETYGOGGLES)
+    return true
+  end
+  def takesHailDamage?
+    return false if !takesIndirectDamage?
+    return false if pbHasType?(:ICE)
+    return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
+    return false if hasActiveAbility?([:OVERCOAT,:ICEBODY,:SNOWCLOAK,:ACCLIMATE])
+    return false if hasActiveItem?(:SAFETYGOGGLES)
+    return true
+  end
   def takesAcidRainDamage?
     return false if !takesIndirectDamage?
     return false if pbHasType?(:POISON) || pbHasType?(:STEEL)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
-    return false if hasActiveAbility?([:OVERCOAT,:SANDFORCE,:SANDRUSH,:SANDVEIL])
+    return false if hasActiveAbility?([:OVERCOAT,:ACIDDRAIN,:TOXICRUSH,:ACCLIMATE])
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
   def takesStarstormDamage?
-    return false if hasActiveAbility?(:BAROMETRIC)
     return false if !takesIndirectDamage?
     return false if pbHasType?(:COSMIC)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
-    return false if hasActiveAbility?([:OVERCOAT,:ICEBODY,:SNOWCLOAK])
+    return false if hasActiveAbility?([:OVERCOAT,:STARSPRINT,:ASTRALCLOAK,:ACCLIMATE])
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end

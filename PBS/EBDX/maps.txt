@@ -23,3 +23,9 @@ BattleEnv = SNOW
 [110]
 BattleEnv = TEMPLE
 #===================
+[134]
+BattleEnv = DESERT
+#===================
+[135]
+BattleEnv = DESERT
+#===================

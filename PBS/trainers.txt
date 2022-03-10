@@ -283,6 +283,15 @@ Pokemon = CHATOT,30
 	Ability = PUNKROCK
 	Moves = HYPERVOICE,WICKEDWIND,ROOST,CHATTER
 #-------------------------------
+[CUEBALL,Booli]
+LoseText = "Ugh. That fell apart."
+Pokemon = TOXICROAK,44
+	Ability = DRYSKIN
+	Moves = DRAINPUNCH,SUCKERPUNCH,ICEPUNCH,POISONJAB
+Pokemon = SEVIPER,44
+	Ability = DRAGONSMAW
+	Moves = SLUDGEBOMB,DRAGONPULSE,GLARE,DARKPULSE
+#-------------------------------
 # Neonn Gym
 #-------------------------------
 [CHANELLER,Doris]
@@ -303,6 +312,38 @@ Pokemon = GOTHORITA,30
 	Moves = AURORABEAM,PSYSHOCK,DARKPULSE,COSMICPOWER
 Pokemon = CLEFABLE,30
 	Moves = MOONBLAST,AURORABEAM,SOFTBOILED,CALMMIND
+#-------------------------------
+# Route 5
+#-------------------------------
+[LADY,Edith]
+LoseText = "Wow, awesome!"
+Pokemon = BELLOSSOM,46
+	Ability = UNSHAKEN
+	Moves = LEAFSTORM,GIGADRAIN,MOONBLAST,QUIVERDANCE
+Pokemon = GARDEVOIR,46
+	Item = GARDEVOIRITE
+	Ability = TRACE
+	Moves = HYPERVOICE,PSYSHOCK,MYSTICALFIRE,WISH
+#-------------------------------
+[LADY,Mary]
+LoseText = "Wow, awesome!"
+Pokemon = CLEFABLE,46
+	Ability = MAGICGUARD
+	Moves = MOONBLAST,COMETSHARDS,SOFTBOILED,FLAMETHROWER
+Pokemon = ALTARIA,46
+	Item = ALTARIANITE
+	Ability = CLOUDNINE
+	Moves = HYPERVOICE,FLAMETHROWER,ROOST,COTTONGUARD
+#-------------------------------
+[LADY,Sybil]
+LoseText = "Wow, awesome!"
+Pokemon = TOGEKISS,46
+	Ability = SERENEGRACE
+	Moves = MOONBLAST,AIRSLASH,SOFTBOILED,FLAMETHROWER
+Pokemon = MAWILE,46
+	Item = MAWILITE
+	Ability = INTIMIDATE
+	Moves = PLAYROUGH,KNOCKOFF,IRONHEAD,SUCKERPUNCH
 #-------------------------------
 # Gym Battles
 #-------------------------------
@@ -610,4 +651,68 @@ Pokemon = MARSHTOMP2,17
 	Item = BERRYJUICE
 	Moves = ROCKTHROW,TAUNT,BITE,BIDE
 #-------------------------------
-
+[RIVAL1,Blue,9]
+LoseText = "Awesome!"
+Pokemon = STARAPTOR,46
+	Ability = RECKLESS
+	Item = CHOICEBAND
+	Nature = JOLLY
+	Moves = BRAVEBIRD,DOUBLEEDGE,UTURN,CLOSECOMBAT
+Pokemon = GABITE2,46
+	Ability = SNOWCLOAK
+	Item = EVIOLITE
+	Nature = JOLLY
+	Moves = EARTHQUAKE,GLACIALLEECH,STEALTHROCK,BRICKBREAK
+Pokemon = MISMAGIUS,46
+	Item = LIFEORB
+	Ability = MAGICGUARD
+	Nature = TIMID
+	Moves = SPECTRALSHRIEK,MYSTICALFIRE,MOONBLAST,ASTRALGALE
+Pokemon = SCEPTILE2,50
+	Item = MUSCLEBAND
+	Nature = ADAMANT
+	Moves = DRAINPUNCH,THOUSANDARROWS,MACHPUNCH,BULKUP
+#-------------------------------
+[RIVAL1,Blue,10]
+LoseText = "Awesome!"
+Pokemon = STARAPTOR,46
+	Ability = RECKLESS
+	Item = CHOICEBAND
+	Nature = JOLLY
+	Moves = BRAVEBIRD,DOUBLEEDGE,UTURN,CLOSECOMBAT
+Pokemon = GABITE2,46
+	Ability = SNOWCLOAK
+	Item = EVIOLITE
+	Nature = JOLLY
+	Moves = EARTHQUAKE,GLACIALLEECH,STEALTHROCK,BRICKBREAK
+Pokemon = MISMAGIUS,46
+	Item = LIFEORB
+	Ability = MAGICGUARD
+	Nature = TIMID
+	Moves = SPECTRALSHRIEK,MYSTICALFIRE,MOONBLAST,ASTRALGALE
+Pokemon = BLAZIKEN2,50
+	Item = WISEGLASSES
+	Nature = TIMID
+	Moves = WINDDRILL,PSYCHIC,ROOST,ASTRALGALE
+#-------------------------------
+[RIVAL1,Blue,11]
+LoseText = "Awesome!"
+Pokemon = STARAPTOR,46
+	Ability = RECKLESS
+	Item = CHOICEBAND
+	Nature = JOLLY
+	Moves = BRAVEBIRD,DOUBLEEDGE,UTURN,CLOSECOMBAT
+Pokemon = GABITE2,46
+	Ability = SNOWCLOAK
+	Item = EVIOLITE
+	Nature = JOLLY
+	Moves = EARTHQUAKE,GLACIALLEECH,STEALTHROCK,BRICKBREAK
+Pokemon = MISMAGIUS,46
+	Item = LIFEORB
+	Ability = MAGICGUARD
+	Nature = TIMID
+	Moves = SPECTRALSHRIEK,MYSTICALFIRE,MOONBLAST,ASTRALGALE
+Pokemon = SWAMPERT2,46
+	Item = CHOPLEBERRY
+	Moves = ROCKSLIDE,KNOCKOFF,EARTHQUAKE,YAWN
+#-------------------------------

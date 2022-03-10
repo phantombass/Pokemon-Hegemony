@@ -377,7 +377,7 @@ def useMoveFly
 #    for i in 115..121
 #      $game_switches[i] = false
 #    end
-#    $game_switches[125] = false
+    $game_switches[119] = false
     $CanToggle = true
     $game_temp.player_new_direction = 2
     $PokemonTemp.flydata = nil

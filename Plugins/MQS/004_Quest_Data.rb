@@ -18,6 +18,7 @@ module QuestModule
     :Stage11 => "Challenge the Gym.",
     :Stage12 => "Explore Mt. Nenox from the Neonn entrance.",
     :Stage13 => "Find and explore the hidden cave.",
+    :Stage14 => "Go explore the Army Base.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -30,7 +31,8 @@ module QuestModule
     :Location10 => "Neonn Town",
     :Location11 => "Neonn Town",
     :Location12 => "Mt. Nenox",
-    :Location13 => "Darkfire Cave"
+    :Location13 => "Darkfire Cave",
+    :Location14 => "Sodum Town"
   }
 
 #====================================
@@ -66,7 +68,9 @@ module QuestModule
       :Name => "Shop til You Drop",
       :QuestDescription => "Find the lost child!",
       :Stage1 => "Go to Neonn PMC to find the woman's son.",
-      :Location1 => "Neonn Town"
+      :Stage2 => "Follow the boy.",
+      :Location1 => "Neonn Town",
+      :Location2 => "Route 4"
     }
 
 end
