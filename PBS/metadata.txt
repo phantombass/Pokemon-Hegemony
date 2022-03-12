@@ -767,3 +767,8 @@ SnapEdges = true
 # Army Base
 MapPosition = 0,16,5
 SnapEdges = true
+#-------------------------------
+[145]
+# Army Base
+MapPosition = 0,16,5
+SnapEdges = true
