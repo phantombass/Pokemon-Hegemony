@@ -19,6 +19,9 @@ module QuestModule
     :Stage12 => "Explore Mt. Nenox from the Neonn entrance.",
     :Stage13 => "Find and explore the hidden cave.",
     :Stage14 => "Go explore the Army Base.",
+    :Stage15 => "Go to the Army Main Office.",
+    :Stage16 => "Follow the Officer.",
+    :Stage17 => "Escape from Army Prison",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -32,7 +35,10 @@ module QuestModule
     :Location11 => "Neonn Town",
     :Location12 => "Mt. Nenox",
     :Location13 => "Darkfire Cave",
-    :Location14 => "Sodum Town"
+    :Location14 => "Sodum Town",
+    :Location15 => "Sodum Town",
+    :Location16 => "Army Base",
+    :Location17 => "Army Base"
   }
 
 #====================================
