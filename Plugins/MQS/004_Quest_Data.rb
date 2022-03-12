@@ -22,6 +22,7 @@ module QuestModule
     :Stage15 => "Go to the Army Main Office.",
     :Stage16 => "Follow the Officer.",
     :Stage17 => "Escape from Army Prison",
+    :Stage18 => "Challenge the Gym.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -38,7 +39,8 @@ module QuestModule
     :Location14 => "Sodum Town",
     :Location15 => "Sodum Town",
     :Location16 => "Army Base",
-    :Location17 => "Army Base"
+    :Location17 => "Army Base",
+    :Location18 => "Krypto Quay"
   }
 
 #====================================

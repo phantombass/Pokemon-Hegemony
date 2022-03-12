@@ -28,9 +28,11 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[106] = 38
     end
   elsif badges == 3
-    if $game_switches[120] && $game_switches[116]
-      $game_variables[106] = 57
-    elsif $game_switches[116] && !$game_switches[120]
+    if  $game_switches[120] && $game_switches[116] && $game_switches[125]
+      $game_variables[106] = 61
+    elsif $game_switches[120] && $game_switches[116] && !$game_switches[125]
+      $game_variables[106] = 53
+    elsif $game_switches[116] && !$game_switches[120] && !$game_switches[125]
       $game_variables[106] = 50
     else
       $game_variables[106] = 46
@@ -73,9 +75,11 @@ Events.onStepTaken += proc {| sender, e |
         $game_variables[106] = 38
       end
     elsif badges == 3
-      if $game_switches[120] && $game_switches[116]
-        $game_variables[106] = 57
-      elsif $game_switches[116] && !$game_switches[120]
+      if  $game_switches[120] && $game_switches[116] && $game_switches[125]
+        $game_variables[106] = 61
+      elsif $game_switches[120] && $game_switches[116] && !$game_switches[125]
+        $game_variables[106] = 53
+      elsif $game_switches[116] && !$game_switches[120] && !$game_switches[125]
         $game_variables[106] = 50
       else
         $game_variables[106] = 46

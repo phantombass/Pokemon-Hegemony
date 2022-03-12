@@ -18,4 +18,9 @@ module BattleScripts
     "afterLastOpp" => "You are quite good. How frustrating.",
     "turnStart0" => "You don't know what you're dealing with, kid."
   }
+
+  ARMY1 = {
+    "afterLastOpp" => "How interesting...",
+    "turnStart0" => "Stop while you can kid. You're way out of your depth."
+  }
 end

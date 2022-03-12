@@ -480,7 +480,7 @@ LoseText = "Ugh. Wasn't ready for that."
 Pokemon = HONEDGE,21
 	Item = COLBURBERRY
 	Moves = SHADOWSNEAK,SLASH,SWORDSDANCE,FURYCUTTER
-Pokemon = GASTLY, 21
+Pokemon = GASTLY,21
 	Item = BERRYJUICE
 	Moves = OMINOUSWIND,SLUDGE,HYPNOSIS,CURSE
 Pokemon = ARON,21
@@ -490,7 +490,7 @@ Pokemon = ARON,21
 #-------------------------------
 [TEAMROCKET_M,Grunt,1]
 LoseText = "Ugh. Wasn't ready for that."
-Pokemon = GASTLY, 22
+Pokemon = GASTLY,22
 	Item = PAYAPABERRY
 	Moves = OMINOUSWIND,SLUDGE,HYPNOSIS,CURSE
 Pokemon = KLINK,22
@@ -581,6 +581,72 @@ Pokemon = BISHARP,45
 Pokemon = GENGAR,45
 	Item = GENGARITE
 	Moves = SHADOWBALL,DAZZLINGGLEAM,THUNDERBOLT,SLUDGEWAVE
+#-------------------------------
+# Army Battles
+#-------------------------------
+[ARMY,Grunt]
+LoseText = "This can't be good."
+Pokemon = GOLEM,48
+	Item = CUSTAPBERRY
+	Ability = STURDY
+	Moves = STEALTHROCK,EXPLOSION,STONEEDGE,EARTHQUAKE
+Pokemon = ARMALDO,48
+	Item = SITRUSBERRY
+	Ability = BATTLEARMOR
+	Moves = SWORDSDANCE,XSCISSOR,STONEEDGE,KNOCKOFF
+Pokemon = MEDICHAM,48
+	Ability = PUREPOWER
+	Item = EXPERTBELT
+	Moves = DRAINPUNCH,ICEPUNCH,METEORMASH,FAKEOUT
+#-------------------------------
+[ARMY,Grunt,1]
+LoseText = "This can't be good."
+Pokemon = CRADILY,49
+	Item = LEFTOVERS
+	Ability = STORMDRAIN
+	Moves = RECOVER,GIGADRAIN,ANCIENTPOWER,STEALTHROCK
+Pokemon = SCRAFTY,49
+	Ability = INTIMIDATE
+	Item = ASSAULTVEST
+	Moves = DRAINPUNCH,ICEPUNCH,CRUNCH,KNOCKOFF
+#-------------------------------
+[ARMY,Grunt,2]
+LoseText = "This can't be good."
+Pokemon = AERODACTYL,48
+	Item = HEAVYDUTYBOOTS
+	Ability = UNNERVE
+	Moves = STEALTHROCK,HONECLAWS,WINGATTACK,STONEEDGE
+Pokemon = HAWLUCHA,48
+	Item = WHITEHERB
+	Ability = UNBURDEN
+	Moves = SWORDSDANCE,ACROBATICS,DRAINPUNCH,CLOSECOMBAT
+Pokemon = GALLADE,48
+	Ability = INNERFOCUS
+	Item = EXPERTBELT
+	Moves = DRAINPUNCH,ICEPUNCH,PSYCHOCUT,KNOCKOFF
+#-------------------------------
+[ARMYBOSS,Ahab]
+LoseText = "Hmm. How curious."
+Pokemon = MIENSHAO,51
+	Item = LIFEORB
+	Ability = REGENERATOR
+	Moves = FAKEOUT,UTURN,CLOSECOMBAT,KNOCKOFF
+Pokemon = LYCANROC,51
+	Form = 2
+	Ability = TOUGHCLAWS
+	Item = FOCUSSASH
+	Moves = ACCELEROCK,CRUNCH,CLOSECOMBAT,FIREFANG
+Pokemon = URSHIFU,51
+	Ability = UNSEENFIST
+	Item = CHOICEBAND
+	Moves = WICKEDBLOW,CLOSECOMBAT,UTURN,IRONHEAD
+Pokemon = SWAMPERT2,51
+	Ability = NIGHTFALL
+	Item = CHOPLEBERRY
+	Moves = KNOCKOFF,ROCKSLIDE,EARTHQUAKE,STEALTHROCK
+Pokemon = INFERNAPE,53
+	Item = INFERNITE
+	Moves = CALMMIND,FLAMETHROWER,SLACKOFF,AURASPHERE
 #-------------------------------
 # Rival Battles
 #-------------------------------

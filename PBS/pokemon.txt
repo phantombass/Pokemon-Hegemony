@@ -30632,7 +30632,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = GABITE,Level,24
+Evolutions = GABITE2,Level,24
 #-------------------------------
 [924]
 Name = Gabite
@@ -30664,7 +30664,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 12
 BattlerShadowX = 0
 BattlerShadowSize = 3
-Evolutions = GARCHOMP,Level,48
+Evolutions = GARCHOMP2,Level,48
 #-------------------------------
 [925]
 Name = Garchomp
