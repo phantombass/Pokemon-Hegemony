@@ -379,6 +379,8 @@ def pbStartOver(gameover=false)
         $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
         $scene.transfer_player if $scene.is_a?(Scene_Map)
         $game_map.refresh
+        $game_switches[119] = false
+        $game_switches[94] = false
       elsif ($game_map.map_id == 144 && $game_switches[73] == true) || ($game_map.map_id == 145 && $game_switches[73] == true)
         pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell after losing the Nuzlocke..."))
         pbCancelVehicles
@@ -391,6 +393,8 @@ def pbStartOver(gameover=false)
         $game_temp.player_new_y         = 6
         $scene.transfer_player if $scene.is_a?(Scene_Map)
         $game_map.refresh
+        $game_switches[119] = false
+        $game_switches[94] = false
       elsif !$game_switches[73] && ($game_map.map_id == 144 || $game_map.map_id == 145)
         pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell..."))
         pbCancelVehicles
@@ -403,6 +407,8 @@ def pbStartOver(gameover=false)
         $game_temp.player_new_y         = 6
         $scene.transfer_player if $scene.is_a?(Scene_Map)
         $game_map.refresh
+        $game_switches[119] = false
+        $game_switches[94] = false
       else
         pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
         pbCancelVehicles
@@ -416,6 +422,8 @@ def pbStartOver(gameover=false)
         $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
         $scene.transfer_player if $scene.is_a?(Scene_Map)
         $game_map.refresh
+        $game_switches[119] = false
+        $game_switches[94] = false
       end
     end
   else
@@ -448,6 +456,8 @@ def pbStartOver(gameover=false)
       $game_temp.player_new_direction = homedata[3]
       $scene.transfer_player if $scene.is_a?(Scene_Map)
       $game_map.refresh
+      $game_switches[119] = false
+      $game_switches[94] = false
     else
       $Trainer.heal_party
     end

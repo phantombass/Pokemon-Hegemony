@@ -345,6 +345,30 @@ Pokemon = MAWILE,46
 	Ability = INTIMIDATE
 	Moves = PLAYROUGH,KNOCKOFF,IRONHEAD,SUCKERPUNCH
 #-------------------------------
+# Route 7
+#-------------------------------
+[GENTLEMAN,Kirk]
+LoseText = "Very nicely done."
+Pokemon = ALAKAZAM,52
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	Moves = PSYSHOCK,DAZZLINGGLEAM,SHADOWBALL,FOCUSBLAST
+Pokemon = PARASECT2,52
+	Item = AIRBALLOON
+	Ability = TOUGHCLAWS
+	Moves = BULLETPUNCH,CRABHAMMER,CROSSPOISON,IRONHEAD
+#-------------------------------
+[RUINMANIAC,Darius]
+LoseText = "Very nicely done."
+Pokemon = PALOSSAND,52
+	Ability = WATERCOMPACTION
+	Item = LEFTOVERS
+	Moves = STEALTHROCK,EARTHPOWER,SHADOWBALL,SHOREUP
+Pokemon = SIGILYPH,52
+	Item = LIFEORB
+	Ability = MAGICGUARD
+	Moves = STARBEAM,WINDDRILL,ROOST,ICEBEAM
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
@@ -472,6 +496,96 @@ Pokemon = CHIMECHO,42
 	Item = CHIMECHONITE
 	Nature = MODEST
 	Moves = HYPERVOICE,EXPANDINGFORCE,CALMMIND,RECOVER
+#-------------------------------
+[LEADER_Brock,Gordon]
+LoseText = "Your ability to hold up under the pressure. So impressive. Kudos to you, my friend."
+Pokemon = LUXRAY,61
+	Ability = INTIMIDATE
+	Item = AIRBALLOON
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Moves = VOLTSWITCH,ZINGZAP,CRUNCH,ICEFANG
+Pokemon = SEVIPER,61
+	Ability = MEDUSOID
+	Item = BLACKSLUDGE
+	EVs = 252,252,0,4,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Moves = SUBSTITUTE,DRAGONDARTS,DRAGONDANCE,POISONJAB
+Pokemon = SANDACONDA,61
+	Ability = MEDUSOID
+	Item = LEFTOVERS
+	EVs = 252,4,0,0,0,252
+	IVs = 31,31,31,31,31,31
+	Nature = CAREFUL
+	Moves = GLARE,STEALTHROCK,EARTHQUAKE,ROCKSLIDE
+Pokemon = GYARADOS,61
+	Ability = INTIMIDATE
+	Item = LEFTOVERS
+	EVs = 252,4,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Moves = SUBSTITUTE,WATERFALL,DRAGONDANCE,TAUNT
+Pokemon = FEAROW2,61
+	Ability = INTIMIDATE
+	Item = CHOICEBAND
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Moves = EARTHQUAKE,IRONHEAD,UTURN,DRILLPECK
+Pokemon = CORVIKNIGHT,61
+	Ability = PRESSURE
+	Item = CORVITE
+	EVs = 252,4,0,0,0,252
+	IVs = 31,31,31,31,31,31
+	Nature = CAREFUL
+	Moves = BULKUP,BODYPRESS,DRILLPECK,ROOST
+#-------------------------------
+[LEADER_Brock,Gordon,1]
+LoseText = "Your ability to hold up under the pressure. So impressive. Kudos to you, my friend."
+Pokemon = MRMIME,61
+	Ability = MINDGAMES
+	Item = CHOICESPECS
+	EVs = 0,0,4,252,252,0
+	IVs = 31,31,31,31,31,31
+	Nature = TIMID
+	Moves = PSYCHIC,MOONBLAST,SHADOWBALL,BATONPASS
+Pokemon = SEVIPER,61
+	Ability = MEDUSOID
+	Item = BLACKSLUDGE
+	EVs = 252,252,0,4,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Moves = SUBSTITUTE,DRAGONDARTS,DRAGONDANCE,POISONJAB
+Pokemon = SANDACONDA,61
+	Ability = MEDUSOID
+	Item = LEFTOVERS
+	EVs = 252,4,0,0,0,252
+	IVs = 31,31,31,31,31,31
+	Nature = CAREFUL
+	Moves = GLARE,STEALTHROCK,EARTHQUAKE,ROCKSLIDE
+Pokemon = GRIMMSNARL,61
+	Ability = MINDGAMES
+	Item = ASSAULTVEST
+	EVs = 252,252,0,0,4,0
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Moves = DRAINPUNCH,SPIRITBREAK,DARKESTLARIAT,FIREPUNCH
+Pokemon = ARCANINE2,61
+	Ability = MINDGAMES
+	Item = LEFTOVERS
+	EVs = 252,4,252,0,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = IMPISH
+	Moves = FLIPTURN,ICEFANG,MORNINGSUN,TOXIC
+Pokemon = CORVIKNIGHT,61
+	Ability = PRESSURE
+	Item = CORVITE
+	EVs = 252,4,0,0,0,252
+	IVs = 31,31,31,31,31,31
+	Nature = CAREFUL
+	Moves = BULKUP,BODYPRESS,DRILLPECK,ROOST
 #-------------------------------
 # Militia Battles
 #-------------------------------
