@@ -757,3 +757,18 @@ SnapEdges = true
 # Hidden Grotto - Route 2
 MapPosition = 0,15,1
 SnapEdges = true
+#-------------------------------
+[143]
+# Army Main Office
+MapPosition = 0,16,5
+SnapEdges = true
+#-------------------------------
+[144]
+# Army Base
+MapPosition = 0,16,5
+SnapEdges = true
+#-------------------------------
+[145]
+# Army Base
+MapPosition = 0,16,5
+SnapEdges = true

@@ -29,12 +29,19 @@ BattleVS         = teamSkull
 BattleBGM        = BW-NeoPlasmaBattle.ogg
 BattleVS         = teamSkull
 #-------------------------------
+[ARMY]
+BattleBGM        = BW-NeoPlasmaBattle.ogg
+#-------------------------------
 [SCIENTIST]
 BattleBGM        = BW-NeoPlasmaBattle.ogg
-BattleVS         = teamSkull
 #-------------------------------
 [ROCKETBOSS]
 BattleBGM        = Goldeneye - Cradle.ogg
 BattleScript	 = MILITIA1
+BattleVS         = plasmaSM
+#-------------------------------
+[ARMYBOSS]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleScript	 = ARMY1
 BattleVS         = plasmaSM
 #-------------------------------

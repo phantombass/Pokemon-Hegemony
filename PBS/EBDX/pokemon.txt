@@ -9144,3 +9144,17 @@ BattlerPlayerX          = 0
 BattlerPlayerY          = 36
 BattlerEnemyX           = 1
 #-------------------------------
+[PARAS2]
+BattlerEnemyY           = 82
+BattlerAltitude         = 0
+BattlerPlayerX          = 2
+BattlerPlayerY          = 75
+BattlerEnemyX           = 10
+#-------------------------------
+[PARASECT2]
+BattlerEnemyY           = 56
+BattlerAltitude         = 0
+BattlerPlayerX          = 22
+BattlerPlayerY          = 61
+BattlerEnemyX           = -1
+#-------------------------------
