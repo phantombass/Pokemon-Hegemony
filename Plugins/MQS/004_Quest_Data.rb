@@ -23,6 +23,7 @@ module QuestModule
     :Stage16 => "Follow the Officer.",
     :Stage17 => "Escape from Army Prison",
     :Stage18 => "Challenge the Gym.",
+    :Stage19 => "Follow Gordon to the Naval Base.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -40,7 +41,8 @@ module QuestModule
     :Location15 => "Sodum Town",
     :Location16 => "Army Base",
     :Location17 => "Army Base",
-    :Location18 => "Krypto Quay"
+    :Location18 => "Krypto Quay",
+    :Location19 => "Hydro Island"
   }
 
 #====================================

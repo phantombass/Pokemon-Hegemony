@@ -369,6 +369,99 @@ Pokemon = SIGILYPH,52
 	Ability = MAGICGUARD
 	Moves = STARBEAM,WINDDRILL,ROOST,ICEBEAM
 #-------------------------------
+# Cassim Desert
+#-------------------------------
+[RUINMANIAC,Doug]
+LoseText = "Hmm."
+Pokemon = CLAYDOL,54
+	Ability = LEVITATE
+	Item = LEFTOVERS
+	Moves = COMETSHARDS,EARTHPOWER,STARBEAM,ICEBEAM
+Pokemon = RUNERIGUS,54
+	Item = COLBURBERRY
+	Moves = EARTHQUAKE,SHADOWCLAW,WILLOWISP,BODYPRESS
+#-------------------------------
+[RUINMANIAC,Andy]
+LoseText = "Hmm."
+Pokemon = HIPPOWDON,54
+	Ability = SANDSTREAM
+	Item = LEFTOVERS
+	Moves = EARTHQUAKE,STEALTHROCK,WHIRLWIND,SLACKOFF
+Pokemon = EXCADRILL,54
+	Ability = SANDRUSH
+	Item = AIRBALLOON
+	Moves = EARTHQUAKE,ROCKSLIDE,IRONHEAD,SWORDSDANCE
+#-------------------------------
+[RUINMANIAC,Carl]
+LoseText = "Hmm."
+Pokemon = GOLURK,55
+	Ability = IRONFIST
+	Item = LIFEORB
+	Moves = AUTOTOMIZE,EARTHQUAKE,SHADOWPUNCH,DRAINPUNCH
+Pokemon = SIGILYPH,55
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	Moves = STARBEAM,WINDDRILL,ICEBEAM,ROOST
+#-------------------------------
+# Cassim Caves
+#-------------------------------
+[RUINMANIAC,Fred]
+LoseText = "Hmm."
+Pokemon = CACTURNE,54
+	Ability = WATERABSORB
+	Item = EXPERTBELT
+	Moves = SEEDBOMB,SUCKERPUNCH,DRAINPUNCH,SPIKES
+Pokemon = CAMERUPT,55
+	Item = CAMERUPTITE
+	Moves = EARTHPOWER,FLAMETHROWER,ROCKSLIDE,WILLOWISP
+#-------------------------------
+[RUINMANIAC,Colton]
+LoseText = "Hmm."
+Pokemon = STUNFISK,54
+	Ability = WATERCOMPACTION
+	Item = LEFTOVERS
+	Moves = DISCHARGE,EARTHPOWER,SCALD,PROTECT
+Pokemon = FLYGON,55
+	Item = EXPERTBELT
+	Moves = DRAGONDANCE,EARTHQUAKE,DRAGONCLAW,FIREPUNCH
+#-------------------------------
+# Route 8
+#-------------------------------
+[GENTLEMAN,Cameron]
+LoseText = "Very nicely done."
+Pokemon = ARCANINE2,56
+	Ability = MINDGAMES
+	Item = LEFTOVERS
+	Moves = FLIPTURN,ICEFANG,CRUNCH,AQUAJET
+Pokemon = GALLADE,57
+	Item = GALLADITE
+	Ability = STEADFAST
+	Moves = PSYCHOCUT,KNOCKOFF,DRAINPUNCH,BULKUP
+#-------------------------------
+# Krypto Gym
+#-------------------------------
+[TAMER,Chris]
+LoseText = "Oh wow."
+Pokemon = ARBOK,58
+	Ability = MEDUSOID
+	Item = BLACKSLUDGE
+	Moves = GLARE,POISONJAB,CRUNCH,EARTHQUAKE
+Pokemon = SALAMENCE,58
+	Item = YACHEBERRY
+	Ability = INTIMIDATE
+	Moves = DRAGONDANCE,DRAGONCLAW,EARTHQUAKE,ROOST
+#-------------------------------
+[TAMER,Alex]
+LoseText = "Oh wow."
+Pokemon = ZWEILOUS,58
+	Ability = MEDUSOID
+	Item = CHOICEBAND
+	Moves = OUTRAGE,CRUNCH,HEADSMASH,FIREFANG
+Pokemon = ASTREON,58
+	Item = PAYAPABERRY
+	Ability = MINDGAMES
+	Moves = STARBEAM,POWERGEM,SHADOWBALL,MOONLIGHT
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
@@ -895,4 +988,20 @@ Pokemon = MISMAGIUS,46
 Pokemon = SWAMPERT2,46
 	Item = CHOPLEBERRY
 	Moves = ROCKSLIDE,KNOCKOFF,EARTHQUAKE,YAWN
+#-------------------------------
+#Level Trainer
+#-------------------------------
+[SCIENTIST1,Nivel]
+Pokemon = AUDINO,15
+	Moves = MEMENTO
+Pokemon = AUDINO,15
+	Moves = MEMENTO
+Pokemon = AUDINO,15
+	Moves = MEMENTO
+Pokemon = AUDINO,15
+	Moves = MEMENTO
+Pokemon = AUDINO,15
+	Moves = MEMENTO
+Pokemon = AUDINO,15
+	Moves = MEMENTO
 #-------------------------------

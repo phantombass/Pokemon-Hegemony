@@ -606,7 +606,7 @@ def pbRockSmashRandomItem
     pbExclaim(get_character(-1))
     pbWait(8)
     pbMessage(_INTL("Oh, there was an item!"))
-    randFossil = rand(12)
+    randFossil = rand(11)
       case randFossil
       when 0 then pbItemBall(:HELIXFOSSIL)
       when 1 then pbItemBall(:DOMEFOSSIL)
@@ -619,7 +619,6 @@ def pbRockSmashRandomItem
       when 8 then pbItemBall(:PLUMEFOSSIL)
       when 9 then pbItemBall(:JAWFOSSIL)
       when 10 then pbItemBall(:SAILFOSSIL)
-      when 11 then pbItemBall(:ODDKEYSTONE)
       end
     else
       pbExclaim(get_character(-1))

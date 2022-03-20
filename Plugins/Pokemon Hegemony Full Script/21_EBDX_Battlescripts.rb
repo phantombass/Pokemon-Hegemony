@@ -14,6 +14,19 @@ module BattleScripts
     "turnStart0" => "I hope you're ready to learn about the power of Cosmic-types."
   }
 
+  GORDON = {
+    "afterLastOpp" => proc do
+      pname = $Trainer.name
+      rname = $game_variables[12]
+      @scene.pbTrainerSpeak("Get ready #{pname}! Here's my trump card")
+    end,
+    "turnStart0" => proc do
+      pname = $Trainer.name
+      rname = $game_variables[12]
+      @scene.pbTrainerSpeak("I have heard good things about you from #{rname}! Let's see if he was right.")
+    end
+  }
+
   MILITIA1 = {
     "afterLastOpp" => "You are quite good. How frustrating.",
     "turnStart0" => "You don't know what you're dealing with, kid."

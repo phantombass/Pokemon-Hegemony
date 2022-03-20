@@ -6,7 +6,7 @@ WildBattleBGM = HGSS-110-BattleWild.ogg
 TrainerBattleBGM = HGSS-118-BattleTrainer.ogg
 WildVictoryME = Battle victory wild.ogg
 TrainerVictoryME = Battle victory trainer.ogg
-SurfBGM = Surfing.mid
+SurfBGM = HGSS-170-Surf.ogg
 BicycleBGM = Bicycle.mid
 PlayerA = POKEMONTRAINER_Red,trainer_POKEMONTRAINER_Red,boy_bike,boy_surf,boy_run,boy_surf,boy_fish_offset,boy_fish_offset
 PlayerB = POKEMONTRAINER_Leaf,trainer_POKEMONTRAINER_Leaf,girl_bike,girl_surf,girl_run,girl_surf,girl_fish_offset,girl_fish_offset
@@ -771,4 +771,15 @@ SnapEdges = true
 [145]
 # Army Base
 MapPosition = 0,16,5
+SnapEdges = true
+#-------------------------------
+[147]
+# Cassim Ruins
+ShowArea = true
+MapPosition = 0,18,8
+SnapEdges = true
+#-------------------------------
+[148]
+# Hidden Grotto - Route 8
+MapPosition = 0,18,3
 SnapEdges = true

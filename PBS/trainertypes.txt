@@ -84,3 +84,4 @@
 81,GUARD,Guard,32,,,HGSSEncounter-TeamRocket,Male,200,
 82,GUARDADMIN,Guard Admin,32,,,HGSSEncounter-TeamRocket,Female,200,
 83,GUARDBOSS,Guard General,100,,,,Male,200,
+84,SCIENTIST1,Level Trainer,0,,,,Male,1,
