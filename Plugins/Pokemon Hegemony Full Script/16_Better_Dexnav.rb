@@ -187,7 +187,14 @@ class NewDexNav
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
           encTerr = :OldRod
         else
-          encTerr = :Land
+          encTerr = :Land if $PokemonEncounters.has_land_encounters?
+          encTerr = :Cave if !$PokemonEncounters.has_land_encounters?
+        end
+      elsif GameData::TerrainTag.get(pLoc).id == :Rock
+        if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
+          encTerr = :OldRod
+        else
+          encTerr = :Cave
         end
       elsif GameData::TerrainTag.get(pLoc).id == :HighBridge
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
@@ -212,6 +219,8 @@ class NewDexNav
           encTerr = :OldRod
         else
           encTerr = :Sandy if $PokemonEncounters.has_sandy_encounters?
+          encTerr = :Cave if $PokemonEncounters.has_cave_encounters? && !$PokemonEncounters.has_sandy_encounters?
+          encTerr = :Land if !$PokemonEncounters.has_cave_encounters? && !$PokemonEncounters.has_sandy_encounters?
         end
       elsif GameData::TerrainTag.get(pLoc).can_surf
         encTerr = :OldRod
