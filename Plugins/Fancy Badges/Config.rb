@@ -13,9 +13,9 @@
 module FancyBadges
   NAMES = [
     "Corner Badge",
-    "Maelstrom Badge",
-    "Mortar Badge",
-    "Solar Badge",
+    "Hazard Badge",
+    "Stellar Badge",
+    "Mental Badge",
     "River Badge",
     "Opera Badge",
     "Epitaph Badge",

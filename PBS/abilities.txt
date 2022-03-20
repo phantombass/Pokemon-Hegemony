@@ -331,3 +331,4 @@
 329,ASTRALCLOAK,Astral Cloak,"This Pokémon gains Cosmic as a typing."
 330,MULTITOOL,Multitool,"This Pokémon gains a third typing based on the best appliance matchup."
 331,BACKDRAFT,Backdraft,"Doubles Speed in Wind-based weather."
+332,SPLINTER,Splinter,"When hit with a contact move, Stealth Rocks are set on the opposing side."

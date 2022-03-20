@@ -769,6 +769,20 @@ BattleHandlers::SpeedCalcAbility.add(:SLUDGERUSH,
   }
 )
 
+BattleHandlers::TargetAbilityOnHit.add(:SPLINTER,
+  proc { |ability,target,battler,move,battle|
+    next if battler.pbOpposingSide.effects[PBEffects::StealthRock] == 1
+    battle.pbShowAbilitySplash(battler)
+    if battle.field.pbWeather == :Windy
+      battle.pbDisplay(_INTL("The wind prevented {1}'s {2} from working!",battler.pbThis,battler.abilityName))
+    else
+      battler.pbOpposingSide.effects[PBEffects::StealthRock] = 1
+      battle.pbDisplay(_INTL("{1}'s {2} set Stealth Rocks!",battler.pbThis,battler.abilityName))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 class PokeBattle_Battle
   alias initialize_ex initialize
   def initialize(scene,p1,p2,player,opponent)

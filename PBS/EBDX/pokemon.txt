@@ -9158,3 +9158,10 @@ BattlerPlayerX          = 22
 BattlerPlayerY          = 61
 BattlerEnemyX           = -1
 #-------------------------------
+[SPIRITOMB2]
+BattlerEnemyY           = 63
+BattlerAltitude         = 14
+BattlerPlayerX          = -5
+BattlerPlayerY          = 66
+BattlerEnemyX           = 0
+#-------------------------------
