@@ -50,7 +50,7 @@ module ModularTitle
     #"background:rse", "intro:3", "misc3_x260_y236", "overlay4", "logoY:172", "logo:sparkle", "logo:shine", "effect3_y236", "bgm:title_rse"
 
     # Platinum Shade (gen 4)
-    #"background10", "intro:4", "overlay7", "bgm:title_dppt", "logoY:172"
+    "background10", "intro:4", "overlay7", "bgm:title_dppt", "logoY:172"
 
     # Dark Display (gen 5)
     #"background:bw", "overlay2", "logoY:172", "logo:shine", "misc4_s2_x284_y339", "effect6_y312", "bgm:title_bw"
@@ -59,7 +59,7 @@ module ModularTitle
     #"background4", "intro:6", "effect4", "effect5", "effect7", "overlay:static002", "bgm:title_xy"
 
     # Cosmic Vibes (gen 7)
-    "background3", "intro:7", "effect5", "effect6", "overlay6", "logo:shine", "bgm:title_sm"
+    #{}"background3", "intro:7", "effect5", "effect6", "overlay6", "logo:shine", "bgm:title_sm"
   #-------------------------------------------------------------------------------
   #                  V V     add your modifiers in here     V V
   #-------------------------------------------------------------------------------
