@@ -3111,7 +3111,7 @@ BattlerPlayerY          = 71
 BattlerEnemyX           = 4
 #-------------------------------
 [CHATOT,1]
-BattlerEnemyY           = 59
+BattlerEnemyY           = 28
 BattlerAltitude         = 0
 BattlerPlayerX          = -10
 BattlerPlayerY          = 71
