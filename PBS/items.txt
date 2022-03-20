@@ -346,7 +346,7 @@
 341,TM53,TM53,TM53s,4,10000,"The user attacks by hurling a blob of mud at the target. This also lowers the target's Speed stat.",3,0,0,MUDSHOT,
 342,TM54,TM54,TM54s,4,10000,"The user hurls hard rocks at the target. Two to five rocks are launched in a row.",3,0,0,ROCKBLAST,
 343,TM55,TM55,TM55s,4,10000,"If the target's HP is half or less, this attack will hit with double the power.",3,0,0,BRINE,
-344,TM56,TM56,TM56s,4,10000,"The user attacks in an uproar for three turns. During that time, no Pokémon can fall asleep.",3,0,0,UTURN,
+344,TM56,TM56,TM56s,4,10000,"After making its attack, the user rushes back to switch places with a party Pokémon in waiting.",3,0,0,UTURN,
 345,TM57,TM57,TM57s,4,10000,"The user stores power, then attacks. If the user moves after the target, this attack's power will be doubled.",3,0,0,PAYBACK,
 346,TM58,TM58,TM58s,4,10000,"If the target has already taken some damage in the same turn, this attack's power is doubled.",3,0,0,ASSURANCE,
 347,TM59,TM59,TM59s,4,100000,"The user flings its held item at the target to attack. This move's power and effects depend on the item.",3,0,0,FLING,
