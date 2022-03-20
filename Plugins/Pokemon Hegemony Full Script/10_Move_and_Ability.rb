@@ -933,6 +933,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:TOXICSURGE,
 BattleHandlers::AbilityOnSwitchIn.add(:GALEFORCE,
   proc { |ability,battler,battle|
     pbBattleWeatherAbility(:Windy, battler, battle)
+    battle.removeAllHazards
   }
 )
 

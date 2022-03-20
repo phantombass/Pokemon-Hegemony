@@ -235,6 +235,10 @@ class PokeBattle_Battle
       @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb]      = false
       @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb] = false
     end
+    if @battlers[0].pbOwnSide.effects[PBEffects::CometShards] || @battlers[0].pbOpposingSide.effects[PBEffects::CometShards]
+      @battlers[0].pbOwnSide.effects[PBEffects::CometShards]      = false
+      @battlers[0].pbOpposingSide.effects[PBEffects::CometShards] = false
+    end
   end
   def poisonAllPokemon
       for pkmn in $Trainer.ablePokemonParty
@@ -1395,7 +1399,7 @@ class PokeBattle_Battle
     # Entry hazards
     # Stealth Rock
     if battler.pbOwnSide.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
-       GameData::Type.exists?(:ROCK)
+       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage?
       bTypes = battler.pbTypes(true)
       eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
       if !Effectiveness.ineffective?(eff)
@@ -1409,9 +1413,25 @@ class PokeBattle_Battle
         end
       end
     end
+    #Comet Shards
+    if battler.pbOwnSide.effects[PBEffects::CometShards] && battler.takesIndirectDamage? &&
+       GameData::Type.exists?(:COSMIC) && battler.takesEntryHazardDamage?
+      bTypes = battler.pbTypes(true)
+      eff = Effectiveness.calculate(:COSMIC, bTypes[0], bTypes[1], bTypes[2])
+      if !Effectiveness.ineffective?(eff)
+        eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
+        oldHP = battler.hp
+        battler.pbReduceHP(battler.totalhp*eff/8,false)
+        pbDisplay(_INTL("Pointed stones dug into {1}!",battler.pbThis))
+        battler.pbItemHPHealCheck
+        if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+          return pbOnActiveOne(battler)   # For replacement battler
+        end
+      end
+    end
     # Spikes
     if battler.pbOwnSide.effects[PBEffects::Spikes]>0 && battler.takesIndirectDamage? &&
-       !battler.airborne?
+       !battler.airborne? && battler.takesEntryHazardDamage?
       spikesDiv = [8,6,4][battler.pbOwnSide.effects[PBEffects::Spikes]-1]
       oldHP = battler.hp
       battler.pbReduceHP(battler.totalhp/spikesDiv,false)
@@ -1427,7 +1447,7 @@ class PokeBattle_Battle
       if battler.pbHasType?(:POISON)
         battler.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
         pbDisplay(_INTL("{1} absorbed the poison spikes!",battler.pbThis))
-      elsif battler.pbCanPoison?(nil,false)
+      elsif battler.pbCanPoison?(nil,false) && battler.takesEntryHazardDamage?
         if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]==2
           battler.pbPoison(nil,_INTL("{1} was badly poisoned by the poison spikes!",battler.pbThis),true)
         else
@@ -1437,10 +1457,12 @@ class PokeBattle_Battle
     end
     # Sticky Web
     if battler.pbOwnSide.effects[PBEffects::StickyWeb] && !battler.fainted? &&
-       !battler.airborne?
+       !battler.airborne? && battler.takesEntryHazardDamage?
       pbDisplay(_INTL("{1} was caught in a sticky web!",battler.pbThis))
       if battler.pbCanLowerStatStage?(:SPEED)
-        battler.pbLowerStatStage(:SPEED,1,nil)
+        stickyuser = (battler.pbOwnSide.effects[PBEffects::StickyWebUser] > -1 ?
+          battlers[battler.pbOwnSide.effects[PBEffects::StickyWebUser]] : nil)
+        battler.pbLowerStatStage(:SPEED,1,stickyuser)
         battler.pbItemStatRestoreCheck
       end
     end
@@ -1582,12 +1604,38 @@ class PokeBattle_Battle
         b.pbFaint if b.fainted?
       when :Windy
         next if !b.pbOwnSide.effects[PBEffects::StealthRock] && b.pbOwnSide.effects[PBEffects::Spikes] == 0 && !b.pbOwnSide.effects[PBEffects::StickyWeb] && b.pbOwnSide.effects[PBEffects::ToxicSpikes] == 0
-        b.removeAllHazards
+        if b[0].pbOwnSide.effects[PBEffects::StealthRock] || b[0].pbOpposingSide.effects[PBEffects::StealthRock]
+          b[0].pbOwnSide.effects[PBEffects::StealthRock]      = false
+          b[0].pbOpposingSide.effects[PBEffects::StealthRock] = false
+        end
+        if b[0].pbOwnSide.effects[PBEffects::Spikes]>0 || b[0].pbOpposingSide.effects[PBEffects::Spikes]>0
+          b[0].pbOwnSide.effects[PBEffects::Spikes]      = 0
+          b[0].pbOpposingSide.effects[PBEffects::Spikes] = 0
+        end
+        if b[0].pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || b[0].pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
+          b[0].pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
+          b[0].pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
+        end
+        if b[0].pbOwnSide.effects[PBEffects::StickyWeb] || b[0].pbOpposingSide.effects[PBEffects::StickyWeb]
+          b[0].pbOwnSide.effects[PBEffects::StickyWeb]      = false
+          b[0].pbOpposingSide.effects[PBEffects::StickyWeb] = false
+        end
+        if b[0].pbOwnSide.effects[PBEffects::CometShards] || b[0].pbOpposingSide.effects[PBEffects::CometShards]
+          b[0].pbOwnSide.effects[PBEffects::CometShards]      = false
+          b[0].pbOpposingSide.effects[PBEffects::CometShards] = false
+        end
       end
     end
   end
 end
 class PokeBattle_Battler
+  def takesEntryHazardDamage?
+    if hasActiveItem?(:HEAVYDUTYBOOTS)
+      return false
+    else
+      return true
+    end
+  end
   def pbCanChooseMove?(move,commandPhase,showMessages=true,specialUsage=false)
     # Disable
     if @effects[PBEffects::DisableMove]==move.id && !specialUsage
