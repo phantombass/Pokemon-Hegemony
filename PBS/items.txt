@@ -6,7 +6,7 @@
 4,BLACKFLUTE,Black Flute,Black Flutes,1,200,"A black flute made from blown glass. Its melody makes wild Pokémon less likely to appear.",2,0,0,
 5,WHITEFLUTE,White Flute,White Flutes,1,500,"A white flute made from blown glass. Its melody makes wild Pokémon more likely to appear.",2,0,0,
 6,HONEY,Honey,Honey,1,900,"A sweet honey with an aroma that attracts wild Pokémon when used in grass, caves or on special trees.",2,0,0,
-7,ESCAPEROPE,Escape Rope,Escape Ropes,1,550,"A long, durable rope. Use it to escape instantly from a cave or a dungeon.",2,0,0,
+7,ESCAPEROPE,Escape Rope,Escape Ropes,8,0,"A long, durable rope. Use it to escape instantly from a cave or a dungeon.",2,0,6,
 8,REDSHARD,Red Shard,Red Shards,1,200,"A small red shard. It appears to be from some sort of implement made long ago.",0,0,0,
 9,YELLOWSHARD,Yellow Shard,Yellow Shards,1,200,"A small yellow shard. It appears to be from some sort of implement made long ago.",0,0,0,
 10,BLUESHARD,Blue Shard,Blue Shards,1,200,"A small blue shard. It appears to be from some sort of implement made long ago.",0,0,0,
