@@ -536,7 +536,8 @@ class PokeBattle_AI
 						preferredMoves.push(c) if user.hp <= (user.totalhp/3).floor
 					end
 					user.eachOpposing do |o|
-						superEffective = GameData::Type.get(o.damageState.typeMod).effectiveness(Effectiveness::SUPER_EFFECTIVE_ONE)
+						typeMatch = o.damageState.typeMod
+						superEffective = Effectiveness.super_effective?(typeMatch)
 						if superEffective
 							preferredMoves.push(c)
 						end
