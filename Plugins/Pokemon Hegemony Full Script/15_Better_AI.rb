@@ -524,7 +524,6 @@ class PokeBattle_AI
         choices.push(i)   # Move index, score, target
       end
 			memento = choices[0][0]
-			p memento
 			@battle.pbRegisterMove(idxBattler,memento,false)
 		end
 		if !wildBattler && skill>=PBTrainerAI.highSkill && maxScore>100
