@@ -74,35 +74,35 @@ MapPosition = 0,14,10
 #-------------------------------
 [013]
 # Game Corner
-MapPosition = 0,14,10
+MapPosition = 0,18,5
 #-------------------------------
 [014]
 # Cedolan Dept. 1F
-MapPosition = 0,13,10
+MapPosition = 0,18,5
 #-------------------------------
 [015]
 # Cedolan Dept. 2F
-MapPosition = 0,13,10
+MapPosition = 0,18,5
 #-------------------------------
 [016]
 # Cedolan Dept. 3F
-MapPosition = 0,13,10
+MapPosition = 0,18,5
 #-------------------------------
 [017]
 # Cedolan Dept. 4F
-MapPosition = 0,13,10
+MapPosition = 0,18,5
 #-------------------------------
 [018]
 # Cedolan Dept. 5F
-MapPosition = 0,13,10
+MapPosition = 0,18,5
 #-------------------------------
 [019]
 # Cedolan Dept. Rooftop
-MapPosition = 0,13,10
+MapPosition = 0,18,5
 #-------------------------------
 [020]
 # Cedolan Dept. Elevator
-MapPosition = 0,13,10
+MapPosition = 0,18,5
 #-------------------------------
 [021]
 # Route 2
@@ -736,6 +736,11 @@ ShowArea = true
 MapPosition = 0,18,15
 SnapEdges = true
 #-------------------------------
+[138]
+# Krypto PMC
+MapPosition = 0,18,5
+SnapEdges = true
+#-------------------------------
 [139]
 # Cassim Caves
 Outdoor = false
@@ -782,4 +787,9 @@ SnapEdges = true
 [148]
 # Hidden Grotto - Route 8
 MapPosition = 0,18,3
+SnapEdges = true
+#-------------------------------
+[150]
+# Krypto Gym
+MapPosition = 0,18,5
 SnapEdges = true

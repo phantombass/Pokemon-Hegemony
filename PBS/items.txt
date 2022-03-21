@@ -382,7 +382,7 @@
 377,TM89,TM89,TM89s,4,20000,"This protects Pokémon on the ground from status conditions and weakens Dragon-type moves for five turns.",3,0,0,MISTYTERRAIN,
 378,TM90,TM90,TM90s,4,20000,"The user electrifies the ground for five turns. Pokémon on the ground no longer fall asleep.",3,0,0,ELECTRICTERRAIN,
 379,TM91,TM91,TM91s,4,20000,"This protects Pokémon on the ground from priority moves for five turns.",3,0,0,PSYCHICTERRAIN,
-380,TM92,TM92,TM92s,4,100000,"The user attacks by breathing a special, hot fire. This also lowers the target's Sp. Atk stat.",3,0,0,MYSTICALFIRE,
+380,TM92,TM92,TM92s,4,10000,"The user attacks by breathing a special, hot fire. This also lowers the target's Sp. Atk stat.",3,0,0,MYSTICALFIRE,
 381,TM93,TM93,TM93s,4,10000,"The user's body generates an eerie impulse. This harshly lowers the target's Sp. Atk stat.",3,0,0,EERIEIMPULSE,
 382,TM94,TM94,TM94s,4,10000,"A restrained attack that prevents the target from fainting. The target is left with at least 1 HP.",3,0,0,FALSESWIPE,
 383,HM01,HM01,HM01s,4,0,"The target is cut with a scythe or claw. It can also be used to cut down thin trees.",4,0,0,CUT
