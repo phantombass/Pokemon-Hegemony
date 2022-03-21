@@ -598,7 +598,7 @@ class PokeBattle_Move
       multipliers[:final_damage_multiplier] /= 2
     end
     #Frostbite
-    if user.status == :FREEZE && specialMove? && damageReducedByFreeze?
+    if user.status == :FROZEN && specialMove? && damageReducedByFreeze?
       multipliers[:final_damage_multiplier] /= 2
     end
     # Aurora Veil, Reflect, Light Screen
@@ -773,7 +773,7 @@ BattleHandlers::TargetAbilityOnHit.add(:SPLINTER,
   proc { |ability,target,battler,move,battle|
     next if battler.pbOpposingSide.effects[PBEffects::StealthRock] == 1
     battle.pbShowAbilitySplash(battler)
-    if battle.field.pbWeather == :Windy
+    if battle.field.weather == :Windy
       battle.pbDisplay(_INTL("The wind prevented {1}'s {2} from working!",battler.pbThis,battler.abilityName))
     else
       battler.pbOpposingSide.effects[PBEffects::StealthRock] = 1
@@ -2248,11 +2248,11 @@ class PokeBattle_Battler
       if showMessages
         msg = ""
         case self.status
-        when :SLEEP     then msg = _INTL("{1} is already asleep!", pbThis)
+        when :SLEEP     then msg = _INTL("{1} is already drowsy!", pbThis)
         when :POISON    then msg = _INTL("{1} is already poisoned!", pbThis)
         when :BURN      then msg = _INTL("{1} already has a burn!", pbThis)
         when :PARALYSIS then msg = _INTL("{1} is already paralyzed!", pbThis)
-        when :FROZEN    then msg = _INTL("{1} is already frozen solid!", pbThis)
+        when :FROZEN    then msg = _INTL("{1} is already frostbitten!", pbThis)
         end
         @battle.pbDisplay(msg)
       end
@@ -2352,7 +2352,7 @@ class PokeBattle_Battler
           when :POISON    then msg = _INTL("{1} cannot be poisoned!", pbThis)
           when :BURN      then msg = _INTL("{1} cannot be burned!", pbThis)
           when :PARALYSIS then msg = _INTL("{1} cannot be paralyzed!", pbThis)
-          when :FROZEN    then msg = _INTL("{1} cannot be frozen solid!", pbThis)
+          when :FROZEN    then msg = _INTL("{1} cannot be frostbitten!", pbThis)
           end
         elsif immAlly
           case newStatus
