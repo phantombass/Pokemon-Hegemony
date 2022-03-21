@@ -520,10 +520,12 @@ class PokeBattle_AI
 		if skill == PBTrainerAI.minimumSkill
 			battler = @battle.battlers[idxBattler]
 			battler.eachMoveWithIndex do |_m,i|
-        next if !@battle.pbCanChooseMove?(idxBattler,i,false)
+        #next if !@battle.pbCanChooseMove?(idxBattler,i,false)
         choices.push(i)   # Move index, score, target
       end
-			@battle.pbRegisterMove(idxBattler,choices[0],false)
+			memento = choices[0][0]
+			p memento
+			@battle.pbRegisterMove(idxBattler,memento,false)
 		end
 		if !wildBattler && skill>=PBTrainerAI.highSkill && maxScore>100
 			stDev = pbStdDev(choices)
