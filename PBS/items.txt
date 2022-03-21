@@ -918,3 +918,13 @@
 893,TM109,TM109,TM109s,4,30000,"A powerful beam of stardust shot from the heavens. It may cause the opponent to fall asleep.",3,0,0,STARBEAM
 894,TM110,TM110,TM110s,4,30000,"The user uses cosmic winds to damage the opponent's side of the field.",3,0,0,ASTRALGALE
 895,CHATOTITE,Chatotite,Chatotites,1,0,"One variety of the mysterious Mega Stones. Have Chatot hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
+896,QUIRKYMINT,Quirky Mint,Quirky Mints,1,20,"When a Pokémon smells this mint, all of its stats will grow at an equal rate.",1,0,0,
+897,DOCILEMINT,Docile Mint,Docile Mints,1,20,"When a Pokémon smells this mint, all of its stats will grow at an equal rate.",1,0,0,
+898,BASHFULMINT,Bashful Mint,Bashful Mints,1,20,"When a Pokémon smells this mint, all of its stats will grow at an equal rate.",1,0,0,
+899,HARDYMINT,Hardy Mint,Hardy Mints,1,20,"When a Pokémon smells this mint, all of its stats will grow at an equal rate.",1,0,0,
+900,HEALTHWING,Health Wing,Health Wings,2,100,"An item for use on a Pokémon. It slightly increases the base HP of a single Pokémon.",1,0,0,
+901,MUSCLEWING,Muscle Wing,Muscle Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Attack stat of a single Pokémon.",1,0,0,
+902,RESISTWING,Resist Wing,Resist Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Defense stat of a single Pokémon.",1,0,0,
+903,GENIUSWING,Genius Wing,Genius Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Sp. Atk stat of a single Pokémon.",1,0,0,
+904,CLEVERWING,Clever Wing,Clever Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Sp. Def stat of a single Pokémon.",1,0,0,
+905,SWIFTWING,Swift Wing,Swift Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Speed stat of a single Pokémon.",1,0,0,
