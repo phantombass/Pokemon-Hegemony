@@ -993,15 +993,15 @@ Pokemon = SWAMPERT2,46
 #-------------------------------
 [SCIENTIST1,Nivel]
 Pokemon = AUDINO,15
-	Moves = MEMENTO
+	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
 Pokemon = AUDINO,15
-	Moves = MEMENTO
+	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
 Pokemon = AUDINO,15
-	Moves = MEMENTO
+	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
 Pokemon = AUDINO,15
-	Moves = MEMENTO
+	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
 Pokemon = AUDINO,15
-	Moves = MEMENTO
+	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
 Pokemon = AUDINO,15
-	Moves = MEMENTO
+	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
 #-------------------------------
