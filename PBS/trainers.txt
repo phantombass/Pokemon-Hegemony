@@ -462,6 +462,80 @@ Pokemon = ASTREON,58
 	Ability = MINDGAMES
 	Moves = STARBEAM,POWERGEM,SHADOWBALL,MOONLIGHT
 #-------------------------------
+# Route 9
+#-------------------------------
+[BLACKBELT,Hideki]
+LoseText = "Oh very good indeed."
+Pokemon = TOXICROAK,60
+	Ability = DRYSKIN
+	Item = BLACKSLUDGE
+	Nature = JOLLY
+	Moves = POISONJAB,DRAINPUNCH,ICEPUNCH,BULKUP
+Pokemon = SCRAFTY,60
+	Ability = INTIMIDATE
+	Item = ASSAULTVEST
+	Nature = ADAMANT
+	Moves = FAKEOUT,DRAINPUNCH,KNOCKOFF,ICEPUNCH
+Pokemon = HAWLUCHA,60
+	Ability = UNBURDEN
+	Item = FLYINGGEM
+	Nature = ADAMANT
+	Moves = SWORDSDANCE,ACROBATICS,DRAINPUNCH,CLOSECOMBAT
+#-------------------------------
+[SWIMMER2_F,Anna]
+LoseText = "Oh not cool."
+Pokemon = WAILORD,60
+	Ability = DRIZZLE
+	Item = WEATHERROCK
+	Nature = RELAXED
+	Moves = SCALD,ROAR,ICEBEAM,EARTHQUAKE
+Pokemon = KINGDRA,60
+	Ability = SWIFTSWIM
+	Item = LIFEORB
+	Nature = MODEST
+	Moves = SURF,DRACOMETEOR,ICEBEAM,STARBEAM
+Pokemon = OCTILLERY,60
+	Ability = TIGHTFOCUS
+	Item = EXPERTBELT
+	Nature = MODEST
+	Moves = OCTAZOOKA,ICEBEAM,STARBEAM,FLAMETHROWER
+#-------------------------------
+[SWIMMER2_F,Macy]
+LoseText = "Oh not cool."
+Pokemon = TENTACRUEL,60
+	Ability = CLEARBODY
+	Item = BLACKSLUDGE
+	Nature = TIMID
+	Moves = SCALD,SLUDGEWAVE,TOXICSPIKES,RAPIDSPIN
+Pokemon = LUDICOLO,60
+	Ability = SWIFTSWIM
+	Item = LIFEORB
+	Nature = MODEST
+	Moves = SURF,ICEBEAM,GIGADRAIN,LEECHSEED
+Pokemon = WALREIN,60
+	Ability = THICKFAT
+	Item = LEFTOVERS
+	Nature = MODEST
+	Moves = SURF,ICEBEAM,REST,SLEEPTALK
+#-------------------------------
+[BIRDKEEPER,Scott]
+LoseText = "Woohoo!"
+Pokemon = GLISCOR,60
+	Ability = POISONHEAL
+	Item = TOXICORB
+	Nature = JOLLY
+	Moves = PROTECT,FLING,ACROBATICS,EARTHQUAKE
+Pokemon = GYARADOS,60
+	Ability = INTIMIDATE
+	Item = WACANBERRY
+	Nature = JOLLY
+	Moves = DRAGONDANCE,LIQUIDATION,ICEFANG,EARTHQUAKE
+Pokemon = PIDGEOT,60
+	Ability = BIGPECKS
+	Item = PIDGEOTITE
+	Nature = TIMID
+	Moves = HURRICANE,HEATWAVE,ROOST,UTURN
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]

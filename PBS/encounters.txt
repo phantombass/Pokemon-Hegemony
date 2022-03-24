@@ -561,3 +561,21 @@ SuperRod
     15,CORSOLA_1,15,18
     5,STARYU,15,17
 #-------------------------------
+[151] # Route 9
+Water,2
+    60,TENTACOOL,14,40
+    30,TENTACRUEL,30,50
+    10,OCTILLERY,30,50
+OldRod
+    90,MAGIKARP,5,5
+	10,ARROKUDA,5,5
+GoodRod
+    60,CLAMPERL,17,18
+    20,KRABBY,15,16
+    20,HORSEA,16,19
+SuperRod
+    40,LANTURN,27,39
+    40,QWILFISH,27,39
+    15,BARRASKEWDA,27,39
+    5,RELICANTH,27,39
+#-------------------------------

@@ -77,31 +77,31 @@ MapPosition = 0,14,10
 MapPosition = 0,18,5
 #-------------------------------
 [014]
-# Cedolan Dept. 1F
+# Dept. 1F
 MapPosition = 0,18,5
 #-------------------------------
 [015]
-# Cedolan Dept. 2F
+# Dept. 2F
 MapPosition = 0,18,5
 #-------------------------------
 [016]
-# Cedolan Dept. 3F
+# Dept. 3F
 MapPosition = 0,18,5
 #-------------------------------
 [017]
-# Cedolan Dept. 4F
+# Dept. 4F
 MapPosition = 0,18,5
 #-------------------------------
 [018]
-# Cedolan Dept. 5F
+# Dept. 5F
 MapPosition = 0,18,5
 #-------------------------------
 [019]
-# Cedolan Dept. Rooftop
+# Dept. Rooftop
 MapPosition = 0,18,5
 #-------------------------------
 [020]
-# Cedolan Dept. Elevator
+# Dept. Elevator
 MapPosition = 0,18,5
 #-------------------------------
 [021]
@@ -770,11 +770,13 @@ SnapEdges = true
 #-------------------------------
 [144]
 # Army Base
+ShowArea = true
 MapPosition = 0,16,5
 SnapEdges = true
 #-------------------------------
 [145]
 # Army Base
+ShowArea = true
 MapPosition = 0,16,5
 SnapEdges = true
 #-------------------------------
@@ -792,4 +794,29 @@ SnapEdges = true
 [150]
 # Krypto Gym
 MapPosition = 0,18,5
+SnapEdges = true
+#-------------------------------
+[151]
+# Route 9
+Outdoor = true
+ShowArea = true
+MapPosition = 0,19,16
+SnapEdges = true
+#-------------------------------
+[152]
+# Hydro Island
+Outdoor = true
+ShowArea = true
+MapPosition = 0,22,16
+SnapEdges = true
+#-------------------------------
+[153]
+# Hydro PMC
+MapPosition = 0,22,16
+SnapEdges = true
+#-------------------------------
+[154]
+# Naval Base
+ShowArea = true
+MapPosition = 0,22,16
 SnapEdges = true
