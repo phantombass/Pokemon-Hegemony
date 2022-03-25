@@ -494,7 +494,6 @@ class PokemonPokegearScreen
     @scene.pbEndScene
   end
 end
-
 class PokemonSummary_Scene
   def change_Stats
     @sprites["nav"] = AnimatedSprite.new("Graphics/Pictures/rightarrow",8,40,28,2,@viewport)
@@ -1149,11 +1148,9 @@ class PokemonSummary_Scene
       commands[cmdGiveItem = commands.length] = _INTL("Give item")
       commands[cmdTakeItem = commands.length] = _INTL("Take item") if @pokemon.hasItem?
       commands[cmdPokedex = commands.length]  = _INTL("View Pokédex") if $Trainer.has_pokedex
-      if @page == 2 || @page == 3 || @page == 4
-        commands[cmdNature = commands.length] = _INTL("Change Nature") if $game_switches[73]
-      end
-      if @page == 3 || @page == 4
-        commands[cmdStatChange = commands.length] = _INTL("Change EVs/IVs") if $game_switches[73]
+      if $game_switches[73]
+        commands[cmdNature = commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
+        commands[cmdStatChange = commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
       end
     end
     commands[cmdMark = commands.length]       = _INTL("Mark")
@@ -1189,7 +1186,6 @@ class PokemonSummary_Scene
     return dorefresh
   end
 end
-
 class BattleSceneRoom
   def setWeather
     # loop once

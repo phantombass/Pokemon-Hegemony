@@ -781,7 +781,7 @@ MapPosition = 0,16,5
 SnapEdges = true
 #-------------------------------
 [147]
-# Cassim Ruins
+# Mercur Ruins
 ShowArea = true
 MapPosition = 0,18,8
 SnapEdges = true
@@ -818,5 +818,10 @@ SnapEdges = true
 [154]
 # Naval Base
 ShowArea = true
+MapPosition = 0,22,16
+SnapEdges = true
+#-------------------------------
+[157]
+# Naval Base
 MapPosition = 0,22,16
 SnapEdges = true

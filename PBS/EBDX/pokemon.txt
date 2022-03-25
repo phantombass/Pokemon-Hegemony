@@ -9144,6 +9144,13 @@ BattlerPlayerX          = 0
 BattlerPlayerY          = 36
 BattlerEnemyX           = 1
 #-------------------------------
+[GARCHOMP2,1]
+BattlerEnemyY           = 32
+BattlerAltitude         = 0
+BattlerPlayerX          = 0
+BattlerPlayerY          = 36
+BattlerEnemyX           = 1
+#-------------------------------
 [PARAS2]
 BattlerEnemyY           = 82
 BattlerAltitude         = 0

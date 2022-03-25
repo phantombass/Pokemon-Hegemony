@@ -1,4 +1,0 @@
-Name         = EV IV & Nature Modifier
-Version      = 1.0
-Website      = https://reliccastle.com/members/7217/
-Credits      = Phantombass

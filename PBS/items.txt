@@ -928,3 +928,4 @@
 903,GENIUSWING,Genius Wing,Genius Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Sp. Atk stat of a single Pokémon.",1,0,0,
 904,CLEVERWING,Clever Wing,Clever Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Sp. Def stat of a single Pokémon.",1,0,0,
 905,SWIFTWING,Swift Wing,Swift Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Speed stat of a single Pokémon.",1,0,0,
+906,WGARCHOMPITE,Wartime Garchompite,Wartime Garchompites,1,0,"One variety of the mysterious Mega Stones. Have Wartime Garchomp hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
