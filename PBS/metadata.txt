@@ -825,3 +825,15 @@ SnapEdges = true
 # Naval Base
 MapPosition = 0,22,16
 SnapEdges = true
+#-------------------------------
+[158]
+# Mt. Nenox
+MapPosition = 0,11,4
+SnapEdges = true
+#-------------------------------
+[159]
+# Route 10
+Outdoor = true
+ShowArea = true
+MapPosition = 0,10,6
+SnapEdges = true

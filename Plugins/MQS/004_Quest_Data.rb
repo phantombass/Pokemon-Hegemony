@@ -26,6 +26,7 @@ module QuestModule
     :Stage19 => "Follow Gordon to the Naval Base.",
     :Stage20 => "Investigate the Naval Base.",
     :Stage21 => "Meet up with Eugene.",
+    :Stage22 => "Challenge the Gym.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -46,7 +47,8 @@ module QuestModule
     :Location18 => "Krypto Quay",
     :Location19 => "Hydro Island",
     :Location20 => "Hydro Island",
-    :Location21 => "Krypto Quay"
+    :Location21 => "Krypto Quay",
+    :Location22 => "Chloros City"
   }
 
 #====================================

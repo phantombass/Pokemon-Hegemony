@@ -3069,7 +3069,7 @@ HiddenAbility = UNAWARE
 [TORTERRA,1]
 FormName = Mega Torterra
 MegaStone = TORTERRANITE
-BaseStats = 95,119,105,76,125,105
+BaseStats = 95,139,105,76,105,105
 Abilities = THICKFAT
 #-------------------------------
 [INFERNAPE,1]
@@ -3104,4 +3104,12 @@ HiddenAbility = REFRIGERATE
 Pokedex = Its vaunted wings become scythes, sending it mad with rage. It swings its scythes wildly and slices the ground to pieces.
 BattlerPlayerY = 16
 BattlerEnemyY = 13
+#-------------------------------
+[BEHEEYEM,1]
+FormName = Mega Beheeyem
+MegaStone = BEHEEYEMITE
+Type1 = PSYCHIC
+Type2 = BUG
+BaseStats = 75,75,130,20,145,140
+Abilities = DIMENSIONSHIFT
 #-------------------------------

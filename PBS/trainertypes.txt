@@ -85,3 +85,4 @@
 82,GUARDADMIN,Guard Admin,32,,,HGSSEncounter-TeamRocket,Female,200,
 83,GUARDBOSS,Guard General,100,,,,Male,200,
 84,SCIENTIST1,Level Trainer,0,,,,Male,1,
+85,LEADER_Winslow,Gym Leader,100,Battle Gym Leader,Battle victory leader,,Male,200,

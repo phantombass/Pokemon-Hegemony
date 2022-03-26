@@ -53,7 +53,6 @@ Events.onMapChange += proc {| sender, e |
 #      $game_variables[28] = $game_variables[99]
 #    end
 }
-
 Events.onStepTaken += proc {| sender, e |
   badges = $Trainer.badge_count
     if badges == 0
@@ -490,7 +489,6 @@ class Trainer
     end
   end
 end
-
 class PokemonTemp
   def pbPrepareBattle(battle)
     battleRules = $PokemonTemp.battleRules

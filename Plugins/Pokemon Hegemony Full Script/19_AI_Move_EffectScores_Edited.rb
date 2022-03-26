@@ -6,6 +6,9 @@ class PokeBattle_AI
     case move.function
     #---------------------------------------------------------------------------
     when "000"   # No extra effect
+      if $mPri > 0 && @battle.field.terrain == :PSYCHIC
+        score -= 90
+      end
     #---------------------------------------------------------------------------
     when "001"
       score -= 95
