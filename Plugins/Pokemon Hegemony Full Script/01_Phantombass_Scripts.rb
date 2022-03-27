@@ -53,6 +53,9 @@ Events.onMapChange += proc {| sender, e |
 #      $game_variables[28] = $game_variables[99]
 #    end
 }
+#Events.onMapCreate += proc {| sender, e |
+  #$game_switches[134] = true #Blocked until ready for Demo 2 release
+#}
 Events.onStepTaken += proc {| sender, e |
   badges = $Trainer.badge_count
     if badges == 0

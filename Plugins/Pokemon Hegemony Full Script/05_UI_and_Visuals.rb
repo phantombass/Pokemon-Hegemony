@@ -1148,7 +1148,7 @@ class PokemonSummary_Scene
       commands[cmdGiveItem = commands.length] = _INTL("Give item")
       commands[cmdTakeItem = commands.length] = _INTL("Take item") if @pokemon.hasItem?
       commands[cmdPokedex = commands.length]  = _INTL("View Pokédex") if $Trainer.has_pokedex
-      if $game_switches[73]
+      if $game_switches[75]
         commands[cmdNature = commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
         commands[cmdStatChange = commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
       end

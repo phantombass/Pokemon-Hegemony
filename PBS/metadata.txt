@@ -835,5 +835,26 @@ SnapEdges = true
 # Route 10
 Outdoor = true
 ShowArea = true
+Weather = Rain,0
 MapPosition = 0,10,6
+SnapEdges = true
+#-------------------------------
+[160]
+# Route 11
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,11,8
+SnapEdges = true
+#-------------------------------
+[161]
+# Chloros City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,11,10
+SnapEdges = true
+#-------------------------------
+[162]
+# Chloros PMC
+MapPosition = 0,11,10
 SnapEdges = true
