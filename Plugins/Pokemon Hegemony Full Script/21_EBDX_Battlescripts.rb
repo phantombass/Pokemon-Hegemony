@@ -36,4 +36,9 @@ module BattleScripts
     "afterLastOpp" => "How interesting...",
     "turnStart0" => "Stop while you can kid. You're way out of your depth."
   }
+
+  NAVY1 = {
+    "afterLastOpp" => "Ah, I see yer point. Well said, yungin.",
+    "turnStart0" => "Ye may as well be a criminal showing up at a time like this."
+  }
 end

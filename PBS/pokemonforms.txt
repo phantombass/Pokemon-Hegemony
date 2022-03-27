@@ -3063,13 +3063,13 @@ MegaStone = CORVITE
 Type1 = FLYING
 Type2 = STEEL
 BaseStats = 98,117,135,77,53,115
-Abilities = FILTER
-HiddenAbility = FILTER
+Abilities = UNAWARE
+HiddenAbility = UNAWARE
 #-------------------------------
 [TORTERRA,1]
 FormName = Mega Torterra
 MegaStone = TORTERRANITE
-BaseStats = 95,119,105,76,125,105
+BaseStats = 95,139,105,76,105,105
 Abilities = THICKFAT
 #-------------------------------
 [INFERNAPE,1]
@@ -3094,4 +3094,22 @@ Type2 = FLYING
 BaseStats = 76,45,85,101,122,82
 Abilities = PUNKROCK
 HiddenAbility = PUNKROCK
+#-------------------------------
+[GARCHOMP2,1]
+FormName = Wartime Mega Garchomp
+MegaStone = WGARCHOMPITE
+BaseStats = 108,150,115,112,120,95
+Abilities = REFRIGERATE
+HiddenAbility = REFRIGERATE
+Pokedex = Its vaunted wings become scythes, sending it mad with rage. It swings its scythes wildly and slices the ground to pieces.
+BattlerPlayerY = 16
+BattlerEnemyY = 13
+#-------------------------------
+[BEHEEYEM,1]
+FormName = Mega Beheeyem
+MegaStone = BEHEEYEMITE
+Type1 = PSYCHIC
+Type2 = BUG
+BaseStats = 75,75,130,20,145,140
+Abilities = DIMENSIONSHIFT
 #-------------------------------

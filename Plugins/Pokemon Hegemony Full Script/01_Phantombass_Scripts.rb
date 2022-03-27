@@ -38,7 +38,11 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[106] = 46
     end
   elsif badges == 4
-    $game_variables[106] == 66
+    if $game_switches[135]
+      $game_variables[106] = 69
+    else
+      $game_variables[106] = 66
+    end
   end
     # Weather Setting
     time = pbGetTimeNow
@@ -49,7 +53,9 @@ Events.onMapChange += proc {| sender, e |
 #      $game_variables[28] = $game_variables[99]
 #    end
 }
-
+#Events.onMapCreate += proc {| sender, e |
+  #$game_switches[134] = true #Blocked until ready for Demo 2 release
+#}
 Events.onStepTaken += proc {| sender, e |
   badges = $Trainer.badge_count
     if badges == 0
@@ -87,7 +93,11 @@ Events.onStepTaken += proc {| sender, e |
         $game_variables[106] = 46
       end
     elsif badges == 4
-      $game_variables[106] == 66
+      if $game_switches[135]
+        $game_variables[106] = 69
+      else
+        $game_variables[106] = 66
+      end
     end
 }
 
@@ -482,7 +492,6 @@ class Trainer
     end
   end
 end
-
 class PokemonTemp
   def pbPrepareBattle(battle)
     battleRules = $PokemonTemp.battleRules
