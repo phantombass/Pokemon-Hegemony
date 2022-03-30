@@ -27,6 +27,11 @@ module BattleScripts
     end
   }
 
+  WINSLOW = {
+    "afterLastOpp" => "Am I being played here? This is my last ditch Pokémon!",
+    "turnStart0" => "Things are about to get real twisted in here!"
+  }
+
   MILITIA1 = {
     "afterLastOpp" => "You are quite good. How frustrating.",
     "turnStart0" => "You don't know what you're dealing with, kid."

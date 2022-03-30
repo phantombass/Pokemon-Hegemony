@@ -27,6 +27,9 @@ module QuestModule
     :Stage20 => "Investigate the Naval Base.",
     :Stage21 => "Meet up with Eugene.",
     :Stage22 => "Challenge the Gym.",
+    :Stage23 => "Meet Winslow in the Potion Plant",
+    :Stage24 => "Follow Winslow through the hidden lab",
+    :Stage25 => "Pass through Mangan Village to go toward Nitro City",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -48,7 +51,10 @@ module QuestModule
     :Location19 => "Hydro Island",
     :Location20 => "Hydro Island",
     :Location21 => "Krypto Quay",
-    :Location22 => "Chloros City"
+    :Location22 => "Chloros City",
+    :Location23 => "Potion Plant",
+    :Location24 => "Potion Plant",
+    :Location25 => "Mangan Village"
   }
 
 #====================================

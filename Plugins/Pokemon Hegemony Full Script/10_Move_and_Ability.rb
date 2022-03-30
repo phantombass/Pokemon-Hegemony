@@ -967,9 +967,12 @@ BattleHandlers::AbilityOnSwitchIn.add(:DIMENSIONSHIFT,
     if battle.field.effects[PBEffects::TrickRoom] > 0
       battle.field.effects[PBEffects::TrickRoom] = 0
       battle.pbDisplay(_INTL("{1} reverted the dimensions!",battler.pbThis))
+      battle.pbCalculatePriority
+    else
+      battle.field.effects[PBEffects::TrickRoom] = 5
+      battle.pbDisplay(_INTL("{1} twisted the dimensions!",battler.pbThis))
+      battle.pbCalculatePriority
     end
-    battle.field.effects[PBEffects::TrickRoom] = 5
-    battle.pbDisplay(_INTL("{1} twisted the dimensions!",battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
 )
@@ -1167,6 +1170,46 @@ BattleHandlers::DamageCalcTargetAbility.add(:ICESCALES,
 )
 
 class PokeBattle_Battler
+
+  def pbCanLowerStatStage?(stat,user=nil,move=nil,showFailMsg=false,ignoreContrary=false)
+    return false if fainted?
+    return false if hasActiveAbility?(:UNSHAKEN)
+    # Contrary
+    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
+      return pbCanRaiseStatStage?(stat,user,move,showFailMsg,true)
+    end
+    if !user || user.index!=@index   # Not self-inflicted
+      if @effects[PBEffects::Substitute]>0 && !(move && move.ignoresSubstitute?(user))
+        @battle.pbDisplay(_INTL("{1} is protected by its substitute!",pbThis)) if showFailMsg
+        return false
+      end
+      if pbOwnSide.effects[PBEffects::Mist]>0 &&
+         !(user && user.hasActiveAbility?(:INFILTRATOR))
+        @battle.pbDisplay(_INTL("{1} is protected by Mist!",pbThis)) if showFailMsg
+        return false
+      end
+      if abilityActive?
+        return false if BattleHandlers.triggerStatLossImmunityAbility(
+           self.ability,self,stat,@battle,showFailMsg) if !@battle.moldBreaker
+        return false if BattleHandlers.triggerStatLossImmunityAbilityNonIgnorable(
+           self.ability,self,stat,@battle,showFailMsg)
+      end
+      if !@battle.moldBreaker
+        eachAlly do |b|
+          next if !b.abilityActive?
+          return false if BattleHandlers.triggerStatLossImmunityAllyAbility(
+             b.ability,b,self,stat,@battle,showFailMsg)
+        end
+      end
+    end
+    # Check the stat stage
+    if statStageAtMin?(stat)
+      @battle.pbDisplay(_INTL("{1}'s {2} won't go any lower!",
+         pbThis, GameData::Stat.get(stat).name)) if showFailMsg
+      return false
+    end
+    return true
+  end
   def pbInitEffects(batonPass)
     if batonPass
       # These effects are passed on if Baton Pass is used, but they need to be

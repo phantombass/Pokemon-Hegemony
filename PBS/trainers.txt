@@ -536,6 +536,85 @@ Pokemon = PIDGEOT,60
 	Nature = TIMID
 	Moves = HURRICANE,HEATWAVE,ROOST,UTURN
 #-------------------------------
+# Route 10
+#-------------------------------
+[HIKER,Tucker]
+LoseText = "I'm too worn out to care."
+Pokemon = SKARMORY,66
+	Ability = STURDY
+	Nature = CAREFUL
+	Item = LEFTOVERS
+	Moves = DRILLPECK,ROOST,STEALTHROCK,WHIRLWIND
+Pokemon = RHYPERIOR,67
+	Item = PASSHOBERRY
+	Nature = ADAMANT
+	Ability = SOLIDROCK
+	Moves = ROCKPOLISH,SWORDSDANCE,EARTHQUAKE,RUBBLERAZE
+#-------------------------------
+[HIKER,Chester]
+LoseText = "It really freaks me out!"
+Pokemon = GOLEM,66
+	Form = 1
+	Ability = STURDY
+	Nature = ADAMANT
+	Item = AIRBALLOON
+	Moves = ROCKPOLISH,THUNDERPUNCH,STONEEDGE,FIREPUNCH
+Pokemon = LYCANROC,67
+	Form = 2
+	Item = LIFEORB
+	Nature = JOLLY
+	Ability = TOUGHCLAWS
+	Moves = ACCELEROCK,CRUNCH,DRILLRUN,FIREFANG
+#-------------------------------
+# Route 11
+#-------------------------------
+[HIKER,Quenton]
+LoseText = "Please tell me I healed in Chloros..."
+Pokemon = QUAGSIRE,68
+	Ability = WATERABSORB
+	Nature = SASSY
+	Item = RINDOBERRY
+	Moves = CURSE,AMNESIA,RECOVER,WATERFALL
+#-------------------------------
+# Chloros Gym
+#-------------------------------
+[COOLTRAINER_F,Erin]
+LoseText = "Oh wow."
+Pokemon = DUSKNOIR,67
+	Nature = BRAVE
+	Ability = IRONFIST
+	Item = COLBURBERRY
+	Moves = TRICKROOM,SHADOWPUNCH,DRAINPUNCH,EARTHQUAKE
+Pokemon = GOGOAT,67
+	Nature = SASSY
+	Ability = GRASSYSURGE
+	Item = TERRAINEXTENDER
+	Moves = HORNLEECH,ROCKSLIDE,MILKDRINK,BULKUP
+Pokemon = CAMERUPT,67
+	Nature = QUIET
+	Item = CAMERUPTITE
+	Ability = SOLIDROCK
+	Moves = FLAMETHROWER,EARTHPOWER,NATUREPOWER,ANCIENTPOWER
+#-------------------------------
+[COOLTRAINER_M,Keith]
+LoseText = "Oh wow."
+Pokemon = REUNICLUS,67
+	Nature = QUIET
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	Moves = TRICKROOM,PSYSHOCK,SHADOWBALL,FOCUSBLAST
+Pokemon = MAROWAK,67
+	Form = 1
+	Nature = BRAVE
+	Ability = ROCKHEAD
+	Item = THICKCLUB
+	Moves = FLAREBLITZ,SHADOWBONE,SWORDSDANCE,BONEMERANG
+Pokemon = AMPHAROS,67
+	Nature = QUIET
+	Item = AMPHAROSITE
+	Ability = THICKFAT
+	Moves = THUNDERBOLT,DRAGONPULSE,FOCUSBLAST,MAGNETRISE
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
@@ -756,13 +835,6 @@ Pokemon = CORVIKNIGHT,61
 #-------------------------------
 [LEADER_Winslow,Winslow]
 LoseText = "Even as twisted as things got, you never lost your cool. Well done!"
-Pokemon = BEHEEYEM,69
-	Ability = ANALYTIC
-	Item = BEHEEYEMITE
-	EVs = 252,0,252,0,4,0
-	IVs = 31,0,31,0,31,31
-	Nature = RELAXED
-	Moves = PSYCHIC,BUGBUZZ,CALMMIND,RECOVER
 Pokemon = BRONZONG,69
 	Ability = DIMENSIONSHIFT
 	Item = LEFTOVERS
@@ -770,13 +842,13 @@ Pokemon = BRONZONG,69
 	IVs = 31,31,31,0,31,31
 	Nature = SASSY
 	Moves = GYROBALL,EARTHQUAKE,STEALTHROCK,TOXIC
-Pokemon = AROMATISSE,69
-	Ability = AROMAVEIL
-	Item = KEBIABERRY
-	EVs = 252,0,252,0,4,0
+Pokemon = MUSHARNA,69
+	Ability = UNSHAKEN
+	Item = EXPERTBELT
+	EVs = 252,0,0,0,252,4
 	IVs = 31,31,31,0,31,31
-	Nature = RELAXED
-	Moves = MOONBLAST,PSYCHIC,WISH,PROTECT
+	Nature = QUIET
+	Moves = PSYSHOCK,ASTROBOMB,MOONLIGHT,SHADOWBALL
 Pokemon = GRANBULL,69
 	Ability = INTIMIDATE
 	Item = ASSAULTVEST
@@ -798,16 +870,16 @@ Pokemon = SPIRITOMB2,61
 	IVs = 31,31,31,0,31,31
 	Nature = QUIET
 	Moves = PALEOBEAM,SPECTRALSHRIEK,RECOVER,NASTYPLOT
-#-------------------------------
-[LEADER_Winslow,Winslow,1]
-LoseText = "Even as twisted as things got, you never lost your cool. Well done!"
 Pokemon = BEHEEYEM,69
 	Ability = ANALYTIC
 	Item = BEHEEYEMITE
 	EVs = 252,0,252,0,4,0
 	IVs = 31,0,31,0,31,31
 	Nature = RELAXED
-	Moves = EXPANDINGFORCE,BUGBUZZ,PROTECT,RECOVER
+	Moves = PSYCHIC,BUGBUZZ,CALMMIND,RECOVER
+#-------------------------------
+[LEADER_Winslow,Winslow,1]
+LoseText = "Even as twisted as things got, you never lost your cool. Well done!"
 Pokemon = MUSHARNA,69
 	Ability = PSYCHICSURGE
 	Item = TERRAINEXTENDER
@@ -843,6 +915,13 @@ Pokemon = SPIRITOMB2,61
 	IVs = 31,31,31,0,31,31
 	Nature = QUIET
 	Moves = PALEOBEAM,SPECTRALSHRIEK,RECOVER,PROTECT
+Pokemon = BEHEEYEM,69
+	Ability = ANALYTIC
+	Item = BEHEEYEMITE
+	EVs = 252,0,252,0,4,0
+	IVs = 31,0,31,0,31,31
+	Nature = RELAXED
+	Moves = EXPANDINGFORCE,BUGBUZZ,PROTECT,RECOVER
 #-------------------------------
 # Militia Battles
 #-------------------------------
@@ -1273,6 +1352,116 @@ Pokemon = MISMAGIUS,46
 	Nature = TIMID
 	Moves = SPECTRALSHRIEK,MYSTICALFIRE,MOONBLAST,ASTRALGALE
 Pokemon = SWAMPERT2,46
+	Item = CHOPLEBERRY
+	Moves = ROCKSLIDE,KNOCKOFF,EARTHQUAKE,YAWN
+#-------------------------------
+[RIVAL1,Blue,12]
+LoseText = "You just keep getting better."
+Pokemon = STARAPTOR,67
+	Ability = RECKLESS
+	Item = CHOICEBAND
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = BRAVEBIRD,DOUBLEEDGE,UTURN,CLOSECOMBAT
+Pokemon = GARCHOMP2,68
+	Ability = SNOWCLOAK
+	Item = LIFEORB
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = EARTHQUAKE,GLACIALLANCE,STEALTHROCK,BRICKBREAK
+Pokemon = MISMAGIUS,67
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Item = LIFEORB
+	Ability = MAGICGUARD
+	Nature = TIMID
+	Moves = SPECTRALSHRIEK,MYSTICALFIRE,MOONBLAST,STARBEAM
+Pokemon = MAGNEZONE,67
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Item = AIRBALLOON
+	Ability = STURDY
+	Nature = MODEST
+	Moves = POLARITYPULSE,THUNDERBOLT,VOLTSWITCH,BODYPRESS
+Pokemon = SCEPTILE2,50
+	Item = MUSCLEBAND
+	Nature = ADAMANT
+	EVs = 4,252,0,252,0,0
+	IVs = 31,252,31,31,31,31
+	Moves = DRAINPUNCH,THOUSANDARROWS,MACHPUNCH,BULKUP
+#-------------------------------
+[RIVAL1,Blue,13]
+LoseText = "You just keep getting better."
+Pokemon = STARAPTOR,67
+	Ability = RECKLESS
+	Item = CHOICEBAND
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = BRAVEBIRD,DOUBLEEDGE,UTURN,CLOSECOMBAT
+Pokemon = GARCHOMP2,68
+	Ability = SNOWCLOAK
+	Item = LIFEORB
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = EARTHQUAKE,GLACIALLANCE,STEALTHROCK,BRICKBREAK
+Pokemon = MISMAGIUS,67
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Item = LIFEORB
+	Ability = MAGICGUARD
+	Nature = TIMID
+	Moves = SPECTRALSHRIEK,MYSTICALFIRE,MOONBLAST,STARBEAM
+Pokemon = MAGNEZONE,67
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Item = AIRBALLOON
+	Ability = STURDY
+	Nature = MODEST
+	Moves = POLARITYPULSE,THUNDERBOLT,VOLTSWITCH,BODYPRESS
+Pokemon = BLAZIKEN2,50
+	Item = WISEGLASSES
+	Nature = TIMID
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = HURRICANE,PSYCHIC,ROOST,STARBEAM
+#-------------------------------
+[RIVAL1,Blue,14]
+LoseText = "You just keep getting better."
+Pokemon = STARAPTOR,67
+	Ability = RECKLESS
+	Item = CHOICEBAND
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = BRAVEBIRD,DOUBLEEDGE,UTURN,CLOSECOMBAT
+Pokemon = GARCHOMP2,68
+	Ability = SNOWCLOAK
+	Item = LIFEORB
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = EARTHQUAKE,GLACIALLANCE,STEALTHROCK,BRICKBREAK
+Pokemon = MISMAGIUS,67
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Item = LIFEORB
+	Ability = MAGICGUARD
+	Nature = TIMID
+	Moves = SPECTRALSHRIEK,MYSTICALFIRE,MOONBLAST,STARBEAM
+Pokemon = MAGNEZONE,67
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Item = AIRBALLOON
+	Ability = STURDY
+	Nature = MODEST
+	Moves = POLARITYPULSE,THUNDERBOLT,VOLTSWITCH,BODYPRESS
+Pokemon = SWAMPERT2,69
+	EVs = 252,252,0,4,0,0
+	IVs = 31,31,31,31,31,31
 	Item = CHOPLEBERRY
 	Moves = ROCKSLIDE,KNOCKOFF,EARTHQUAKE,YAWN
 #-------------------------------
