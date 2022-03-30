@@ -27,6 +27,12 @@ BattleVS         = plasmaSM
 BattleScript	 = GORDON
 Ace				 = 6
 #-------------------------------
+[LEADER_Winslow]
+BattleBGM        = Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = WINSLOW
+Ace				 = 6
+#-------------------------------
 [TEAMROCKET_M]
 BattleBGM        = BW-NeoPlasmaBattle.ogg
 BattleVS         = teamSkull

@@ -858,3 +858,41 @@ SnapEdges = true
 # Chloros PMC
 MapPosition = 0,11,10
 SnapEdges = true
+#-------------------------------
+[163]
+# Potion Plant
+ShowArea = false
+MapPosition = 0,11,10
+SnapEdges = true
+#-------------------------------
+[166]
+# Chloros Gym
+MapPosition = 0,11,10
+SnapEdges = true
+#-------------------------------
+[167]
+# Lake Chloros
+Outdoor = true
+ShowArea = true
+MapPosition = 0,11,13
+SnapEdges = true
+#-------------------------------
+[168]
+# Dread Forest
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 0,12,9
+SnapEdges = true
+#-------------------------------
+[169]
+# Haunted Tower
+ShowArea = true
+MapPosition = 0,12,9
+SnapEdges = true
+#-------------------------------
+[170]
+# Hidden Lab
+Outdoor = false
+MapPosition = 0,11,10
+SnapEdges = true

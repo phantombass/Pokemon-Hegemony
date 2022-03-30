@@ -23,7 +23,7 @@ class PokeBattle_Battle
         battler = @battlers[idxPkmn]
         pkmn    = battler.pokemon if battler
       when 5, 10   # No target (Poké Doll, Guard Spec., Launcher items)
-        pbDisplay(_INTL("Boosin items can't be used here."))
+        pbDisplay(_INTL("Boosting items can't be used here."))
         next false
       else
         next false
@@ -38,6 +38,82 @@ class PokeBattle_Battle
     return ret
   end
 end
+
+ItemHandlers::UseInField.add(:SACREDASH,proc { |item|
+  if $game_switches[73] ==  true
+    canrevive = false
+  end
+  if $Trainer.pokemon_count == 0
+    pbMessage(_INTL("There is no Pokémon."))
+    next 0
+  end
+  canrevive = false
+  for i in $Trainer.pokemon_party
+    next if !i.fainted?
+    canrevive = true; break
+  end
+  if !canrevive
+    pbMessage(_INTL("It won't have any effect."))
+    next 0
+  end
+  revived = 0
+  pbFadeOutIn {
+    scene = PokemonParty_Scene.new
+    screen = PokemonPartyScreen.new(scene,$Trainer.party)
+    screen.pbStartScene(_INTL("Using item..."),false)
+    for i in 0...$Trainer.party.length
+      if $Trainer.party[i].fainted?
+        revived += 1
+        $Trainer.party[i].heal
+        screen.pbRefreshSingle(i)
+        screen.pbDisplay(_INTL("{1}'s HP was restored.",$Trainer.party[i].name))
+      end
+    end
+    if revived==0
+      screen.pbDisplay(_INTL("It won't have any effect."))
+    end
+    screen.pbEndScene
+  }
+  next (revived==0) ? 0 : 3
+})
+
+ItemHandlers::UseOnPokemon.add(:REVIVE,proc { |item,pkmn,scene|
+  if !pkmn.fainted? || $game_switches[73]
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  pkmn.hp = (pkmn.totalhp/2).floor
+  pkmn.hp = 1 if pkmn.hp<=0
+  pkmn.heal_status
+  scene.pbRefresh
+  scene.pbDisplay(_INTL("{1}'s HP was restored.",pkmn.name))
+  next true
+})
+
+ItemHandlers::UseOnPokemon.add(:MAXREVIVE,proc { |item,pkmn,scene|
+  if !pkmn.fainted? || $game_switches[73]
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  pkmn.heal_HP
+  pkmn.heal_status
+  scene.pbRefresh
+  scene.pbDisplay(_INTL("{1}'s HP was restored.",pkmn.name))
+  next true
+})
+
+ItemHandlers::UseOnPokemon.add(:REVIVALHERB,proc { |item,pkmn,scene|
+  if !pkmn.fainted? || $game_switches[73]
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  pkmn.heal_HP
+  pkmn.heal_status
+  pkmn.changeHappiness("revivalherb")
+  scene.pbRefresh
+  scene.pbDisplay(_INTL("{1}'s HP was restored.",pkmn.name))
+  next true
+})
 
 class PokeBattle_Battler
   def hasActiveItem?(check_item, ignore_fainted = false)

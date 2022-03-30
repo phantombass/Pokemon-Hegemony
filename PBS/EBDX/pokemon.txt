@@ -5422,7 +5422,7 @@ BattlerPlayerY          = 64
 BattlerEnemyX           = -2
 #-------------------------------
 [GOLEM,1]
-BattlerEnemyY           = 17
+BattlerEnemyY           = 32
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
 BattlerPlayerY          = 0
@@ -9170,5 +9170,26 @@ BattlerEnemyY           = 63
 BattlerAltitude         = 14
 BattlerPlayerX          = -5
 BattlerPlayerY          = 66
+BattlerEnemyX           = 0
+#-------------------------------
+[TEPIG2]
+BattlerEnemyY           = 66
+BattlerAltitude         = 0
+BattlerPlayerX          = 10
+BattlerPlayerY          = 77
+BattlerEnemyX           = 1
+#-------------------------------
+[PIGNITE2]
+BattlerEnemyY           = 55
+BattlerAltitude         = 0
+BattlerPlayerX          = 11
+BattlerPlayerY          = 66
+BattlerEnemyX           = 6
+#-------------------------------
+[EMBOAR2]
+BattlerEnemyY           = 43
+BattlerAltitude         = 0
+BattlerPlayerX          = -3
+BattlerPlayerY          = 47
 BattlerEnemyX           = 0
 #-------------------------------
