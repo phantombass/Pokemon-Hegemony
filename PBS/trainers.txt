@@ -615,6 +615,56 @@ Pokemon = AMPHAROS,67
 	Ability = THICKFAT
 	Moves = THUNDERBOLT,DRAGONPULSE,FOCUSBLAST,MAGNETRISE
 #-------------------------------
+#Lake Chloros
+#-------------------------------
+[FISHERMAN,Norman]
+LoseText = "Sigh..."
+Pokemon = TOXAPEX,69
+	Item = BLACKSLUDGE
+	Ability = REGENERATOR
+	Nature = SASSY
+	EVs = 252,0,4,0,0,252
+	IVs = 31,31,31,31,31,31
+	Moves = TOXICSPIKES,RECOVER,LIQUIDATION,KNOCKOFF
+Pokemon = PELIPPER,69
+	Item = WEATHERROCK
+	Ability = DRIZZLE
+	Nature = BOLD
+	EVs = 252,0,252,4,0,0
+	IVs = 31,0,31,31,31,31
+	Moves = SURF,ROOST,UTURN,HURRICANE
+Pokemon = SHARPEDO,69
+	Item = SHARPEDONITE
+	Ability = SPEEDBOOST
+	Nature = ADAMANT
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = AQUAJET,FISHIOUSREND,CRUNCH,ICEFANG
+#-------------------------------
+[FISHERMAN,Dexter]
+LoseText = "Oh my..."
+Pokemon = TENTACRUEL,69
+	Item = BLACKSLUDGE
+	Ability = CLEARBODY
+	Nature = TIMID
+	EVs = 252,0,0,252,4,0
+	IVs = 31,31,31,31,31,31
+	Moves = TOXICSPIKES,KNOCKOFF,SURF,VENOSHOCK
+Pokemon = WAILORD,69
+	Item = CHOICESPECS
+	Ability = DRIZZLE
+	Nature = MODEST
+	EVs = 252,0,4,0,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = SURF,WATERSPOUT,ICEBEAM,HYPERVOICE
+Pokemon = GYARADOS,69
+	Item = GYARADOSITE
+	Ability = INTIMIDATE
+	Nature = ADAMANT
+	EVs = 252,68,0,188,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = WATERFALL,CRUNCH,SUBSTITUTE,DRAGONDANCE
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]

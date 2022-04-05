@@ -3113,3 +3113,42 @@ Type2 = BUG
 BaseStats = 75,75,130,20,145,140
 Abilities = DIMENSIONSHIFT
 #-------------------------------
+[SCEPTILE2,1]
+FormName = Wartime Mega Sceptile
+MegaStone = WSCEPTILITE
+BaseStats = 70,135,110,145,65,105
+Abilities = SANDFORCE
+HiddenAbility = SANDFORCE
+#-------------------------------
+[BLAZIKEN2,1]
+FormName = Wartime Mega Blaziken
+MegaStone = WBLAZIKENITE
+BaseStats = 80,65,85,150,165,85
+Abilities = SCREENCLEANER
+HiddenAbility = SCREENCLEANER
+#-------------------------------
+[SWAMPERT2,1]
+FormName = Wartime Mega Swampert
+MegaStone = WSWAMPERTITE
+Type1 = WATER
+Type2 = STEEL
+BaseStats = 110,150,120,70,65,120
+Abilities = SOLIDROCK
+HiddenAbility = SOLIDROCK
+#-------------------------------
+[FLYGON,1]
+FormName = Mega Flygon X
+MegaStone = FLYGONITEX
+Type1 = GROUND
+Type2 = DRAGON
+BaseStats = 80,120,130,80,80,130
+Abilities = DAZZLING
+#-------------------------------
+[FLYGON,2]
+FormName = Mega Flygon Y
+MegaStone = FLYGONITEY
+Type1 = BUG
+Type2 = DRAGON
+BaseStats = 80,70,110,130,140,110
+Abilities = ENTYMATE
+#-------------------------------
