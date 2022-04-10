@@ -164,6 +164,8 @@ MapSize = 2,1101
 # Garon Town
 Outdoor = true
 ShowArea = true
+Bicycle = false
+MapPosition = 0,20,1
 SnapEdges = true
 #-------------------------------
 [034]
@@ -895,4 +897,11 @@ SnapEdges = true
 # Hidden Lab
 Outdoor = false
 MapPosition = 0,11,10
+SnapEdges = true
+#-------------------------------
+[172]
+# Cobalt Cave
+Outdoor = false
+ShowArea = true
+MapPosition = 0,20,0
 SnapEdges = true

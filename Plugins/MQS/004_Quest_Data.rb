@@ -29,7 +29,9 @@ module QuestModule
     :Stage22 => "Challenge the Gym.",
     :Stage23 => "Meet Winslow in the Potion Plant",
     :Stage24 => "Follow Winslow through the hidden lab",
-    :Stage25 => "Pass through Mangan Village to go toward Nitro City",
+    :Stage25 => "Pass through Lake Chloros to go toward Nitro City",
+    :Stage26 => "Meet with Turner in Trainer's Institute",
+    :Stage27 => "Make your way to Carbo Valley",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -54,7 +56,9 @@ module QuestModule
     :Location22 => "Chloros City",
     :Location23 => "Potion Plant",
     :Location24 => "Potion Plant",
-    :Location25 => "Mangan Village"
+    :Location25 => "Lake Chloros",
+    :Location26 => "Garon Town",
+    :Location27 => "Carbo Valley"
   }
 
 #====================================

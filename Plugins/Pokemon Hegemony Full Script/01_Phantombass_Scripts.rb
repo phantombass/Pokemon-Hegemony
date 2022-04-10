@@ -44,7 +44,11 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[106] = 66
     end
   elsif badges == 5
-    $game_variables[106] = 72
+    if $game_switches[149]
+      $game_variables[106] = 75
+    else
+      $game_variables[106] = 72
+    end
   end
     # Weather Setting
     time = pbGetTimeNow
@@ -101,7 +105,11 @@ Events.onStepTaken += proc {| sender, e |
         $game_variables[106] = 66
       end
     elsif badges == 5
-      $game_variables[106] = 72
+      if $game_switches[149]
+        $game_variables[106] = 75
+      else
+        $game_variables[106] = 72
+      end
     end
 }
 

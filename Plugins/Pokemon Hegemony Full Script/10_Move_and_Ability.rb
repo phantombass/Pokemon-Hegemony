@@ -674,6 +674,44 @@ module BattleHandlers
   end
 end
 
+class PokeBattle_Move_00D < PokeBattle_FreezeMove
+  def pbBaseAccuracy(user,target)
+    return 0 if @battle.pbWeather == :Hail
+    return 0 if @battle.pbWeather == :Sleet
+    return super
+  end
+end
+
+class PokeBattle_Move_015 < PokeBattle_ConfuseMove
+  def hitsFlyingTargets?; return true; end
+
+  def pbBaseAccuracy(user,target)
+    return super if target.hasUtilityUmbrella?
+    case @battle.pbWeather
+    when :Sun, :HarshSun
+      return 50
+    when :Rain, :HeavyRain, :Storm
+      return 0
+    end
+    return super
+  end
+end
+
+class PokeBattle_Move_008 < PokeBattle_ParalysisMove
+  def hitsFlyingTargets?; return true; end
+
+  def pbBaseAccuracy(user,target)
+    return super if target.hasUtilityUmbrella?
+    case @battle.pbWeather
+    when :Sun, :HarshSun
+      return 50
+    when :Rain, :HeavyRain, :Storm
+      return 0
+    end
+    return super
+  end
+end
+
 class PokeBattle_Move_087 < PokeBattle_Move
   def pbBaseDamage(baseDmg,user,target)
     baseDmg *= 2 if @battle.pbWeather != :None
@@ -4480,7 +4518,7 @@ class PokeBattle_Battle
         next if !b.takesStarstormDamage? ||  b.isSpecies?(:ALTEMPER)
         pbDisplay(_INTL("{1} is hurt by the Starstorm!",b.pbThis))
         @scene.pbDamageAnimation(b)
-        b.pbReduceHP(b.totalhp/8,false)
+        b.pbReduceHP(b.totalhp/16,false)
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :ShadowSky
