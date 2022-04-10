@@ -3136,19 +3136,3 @@ BaseStats = 110,150,120,70,65,120
 Abilities = SOLIDROCK
 HiddenAbility = SOLIDROCK
 #-------------------------------
-[FLYGON,1]
-FormName = Mega Flygon X
-MegaStone = FLYGONITEX
-Type1 = GROUND
-Type2 = DRAGON
-BaseStats = 80,120,130,80,80,130
-Abilities = DAZZLING
-#-------------------------------
-[FLYGON,2]
-FormName = Mega Flygon Y
-MegaStone = FLYGONITEY
-Type1 = BUG
-Type2 = DRAGON
-BaseStats = 80,70,110,130,140,110
-Abilities = ENTYMATE
-#-------------------------------
