@@ -1685,6 +1685,14 @@ TutorMoves = AQUATAIL,ATTRACT,BOUNCE,CONFIDE,CUT,DIVE,DOUBLETEAM,ENDEAVOR,ENDURE
 Pokedex = Known for their violence, these Pokémon have the most fights with schools of red-striped Basculin.
 WildItemUncommon = DEEPSEASCALE
 #-------------------------------
+[BASCULIN,2]
+FormName = White-Striped
+Abilities = RATTLED,ADAPTABILITY
+TutorMoves = AQUATAIL,ATTRACT,BOUNCE,CONFIDE,CUT,DIVE,DOUBLETEAM,ENDEAVOR,ENDURE,FACADE,FRUSTRATION,HAIL,HIDDENPOWER,ICEBEAM,ICYWIND,LIQUIDATION,PROTECT,RAINDANCE,REST,RETURN,ROUND,SCALD,SLEEPTALK,SNORE,SUBSTITUTE,SUPERPOWER,SURF,SWAGGER,TAUNT,TOXIC,UPROAR,WATERFALL,ZENHEADBUTT
+Pokedex = Though it differs from other Basculin in several respects, including demeanor—this one is gentle—it is categorized as a regional form given the vast array of shared qualities.
+WildItemUncommon = DEEPSEASCALE
+Evolutions = BASCULEGION,Item,SPELLTAG,BASCULEGION,HoldItem,SPELLTAG
+#-------------------------------
 [DARUMAKA,1]
 FormName = Galarian Form
 Type1 = ICE
@@ -1748,7 +1756,7 @@ Generation = 8
 WildItemRare = SPELLTAG
 BattlerPlayerX = -1
 BattlerEnemyX = 0
-Evolutions = RUNERIGUS,DamageDone,49
+Evolutions = RUNERIGUS,Location,147
 #-------------------------------
 [DEERLING,1]
 FormName = Summer Form

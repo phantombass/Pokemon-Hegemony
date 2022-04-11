@@ -9193,3 +9193,17 @@ BattlerPlayerX          = -3
 BattlerPlayerY          = 47
 BattlerEnemyX           = 0
 #-------------------------------
+[KLEAVOR]
+BattlerEnemyY           = 48
+BattlerAltitude         = 0
+BattlerPlayerX          = 27
+BattlerPlayerY          = 51
+BattlerEnemyX           = 0
+#-------------------------------
+[TOGEDEMARU2]
+BattlerEnemyY           = 69
+BattlerAltitude         = 0
+BattlerPlayerX          = 1
+BattlerPlayerY          = 75
+BattlerEnemyX           = 10
+#-------------------------------

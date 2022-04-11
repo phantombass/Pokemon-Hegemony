@@ -46,4 +46,9 @@ module BattleScripts
     "afterLastOpp" => "Ah, I see yer point. Well said, yungin.",
     "turnStart0" => "Ye may as well be a criminal showing up at a time like this."
   }
+
+  AIRFORCE1 = {
+    "afterLastOpp" => "I do believe we are getting to the best part of this match!",
+    "turnStart0" => "It's not that I don't trust you kiddo. I've just got to do my due diligence."
+  }
 end

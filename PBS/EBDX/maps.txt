@@ -29,3 +29,6 @@ BattleEnv = DESERT
 [135]
 BattleEnv = DESERT
 #===================
+[172]
+BattleEnv = CAVE
+#===================

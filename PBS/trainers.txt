@@ -1266,10 +1266,54 @@ Pokemon = MANAPHY,65
 	Moves = TAILGLOW,SURF,ENERGYBALL,ICEBEAM
 Pokemon = GARCHOMP2,66
 	EVs = 4,252,0,252,0,0
-	IVs = 31,0,31,31,31,31
+	IVs = 31,31,31,31,31,31
 	Nature = JOLLY
 	Item = WGARCHOMPITE
 	Moves = SWORDSDANCE,BODYSLAM,EARTHQUAKE,BRICKBREAK
+#-------------------------------
+# Air Force Battles
+#-------------------------------
+[AIRFORCEBOSS,Winston]
+LoseText = "Well, I guess that settles it, then."
+Pokemon = GLISCOR,73
+	EVs = 252,4,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Item = TOXICORB
+	Ability = POISONHEAL
+	Moves = EARTHQUAKE,STEALTHROCK,PROTECT,KNOCKOFF
+Pokemon = KLEAVOR,73
+	EVs = 0,252,0,0,252,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Ability = STEADFAST
+	Item = HEAVYDUTYBOOTS
+	Moves = ROCKSLIDE,XSCISSOR,UTURN,CLOSECOMBAT
+Pokemon = HAWLUCHA,73
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Ability = UNBURDEN
+	Item = FLYINGGEM
+	Moves = ACROBATICS,SUBSTITUTE,BULKUP,DRAINPUNCH
+Pokemon = LUMINEON2,73
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	Moves = BUGBUZZ,ICEBEAM,GIGADRAIN,SURF
+Pokemon = GENESECT,74
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Item = CHOICESCARF
+	Moves = UTURN,BUGBUZZ,ICEBEAM,POLARITYPULSE
+Pokemon = CHATOT,75
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = CHATOTITE
+	Moves = CHATTER,BOOMBURST,WICKEDWIND,NASTYPLOT
 #-------------------------------
 # Rival Battles
 #-------------------------------

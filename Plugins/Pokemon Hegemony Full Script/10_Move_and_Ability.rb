@@ -3798,6 +3798,27 @@ class PokeBattle_Move_511 < PokeBattle_StatUpMove
   end
 end
 
+class PokeBattle_Move_512 < PokeBattle_Move
+  def pbEffectGeneral(user)
+    if user.pbOpposingSide.effects[PBEffects::StealthRock] == false
+      user.pbOpposingSide.effects[PBEffects::StealthRock] = true
+      @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",
+         user.pbOpposingTeam(true)))
+    end
+  end
+end
+
+class PokeBattle_Move_513 < PokeBattle_StatUpMove
+  def initialize(battle,move)
+    super
+    @statUp = [:SPEED,1]
+  end
+  
+  def pbRecoilDamage(user,target)
+    return (target.damageState.totalHPLost/3.0).round
+  end
+end
+
 class PokeBattle_Move
   def pbRecordDamageLost(user,target)
     damage = target.damageState.hpLost

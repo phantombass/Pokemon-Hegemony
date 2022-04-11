@@ -62,3 +62,8 @@ BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = NAVY1
 BattleVS         = plasmaSM
 #-------------------------------
+[AIRFORCEBOSS]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleScript	 = AIRFORCE1
+BattleVS         = plasmaSM
+#-------------------------------

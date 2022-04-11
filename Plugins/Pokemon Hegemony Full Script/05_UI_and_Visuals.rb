@@ -2057,6 +2057,9 @@ class Scene_Credits
   Regional Variant and Fakemon Sprites:
   Phantombass
 
+  Legends Arceus Front Sprites:
+  KingOfThe-X-Roads on Deviantart
+
   Mapping: Phantombass
 
   Eventing: Phantombass
