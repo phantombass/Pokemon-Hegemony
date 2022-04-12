@@ -1273,6 +1273,43 @@ Pokemon = GARCHOMP2,66
 #-------------------------------
 # Air Force Battles
 #-------------------------------
+[AIRFORCE,Grunt]
+LoseText = "This can't be good."
+Pokemon = SCYTHER,73
+	EVs = 0,252,0,252,0,4
+	IVs = 31,0,31,31,31,31
+	Nature = JOLLY
+	Item = EVIOLITE
+	Ability = TECHNICIAN
+	Moves = SWORDSDANCE,DUALWINGBEAT,BUGBITE,ROOST
+#-------------------------------
+[AIRFORCE,Grunt,1]
+LoseText = "This can't be good."
+Pokemon = GYARADOS,72
+	EVs = 0,252,0,252,0,4
+	IVs = 31,0,31,31,31,31
+	Nature = JOLLY
+	Item = WACANBERRY
+	Ability = MOXIE
+	Moves = DRAGONDANCE,WATERFALL,EARTHQUAKE,ICEFANG
+Pokemon = VOLCARONA,72
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = HEAVYDUTYBOOTS
+	Ability = SWARM
+	Moves = QUIVERDANCE,FIERYDANCE,BUGBUZZ,GIGADRAIN
+#-------------------------------
+[AIRFORCECAPTAIN,Gavin]
+LoseText = "Oh boy."
+Pokemon = SCIZOR,74
+	EVs = 252,16,0,0,0,240
+	IVs = 31,0,31,31,31,31
+	Nature = ADAMANT
+	Item = SCIZORITE
+	Ability = TECHNICIAN
+	Moves = SWORDSDANCE,BULLETPUNCH,ROOST,KNOCKOFF
+#-------------------------------
 [AIRFORCEBOSS,Winston]
 LoseText = "Well, I guess that settles it, then."
 Pokemon = GLISCOR,73
@@ -1281,20 +1318,20 @@ Pokemon = GLISCOR,73
 	Nature = JOLLY
 	Item = TOXICORB
 	Ability = POISONHEAL
-	Moves = EARTHQUAKE,STEALTHROCK,PROTECT,KNOCKOFF
+	Moves = EARTHQUAKE,UTURN,PROTECT,KNOCKOFF
 Pokemon = KLEAVOR,73
 	EVs = 0,252,0,0,252,4
 	IVs = 31,31,31,31,31,31
 	Nature = ADAMANT
 	Ability = STEADFAST
 	Item = HEAVYDUTYBOOTS
-	Moves = ROCKSLIDE,XSCISSOR,UTURN,CLOSECOMBAT
+	Moves = STONEAXE,XSCISSOR,UTURN,CLOSECOMBAT
 Pokemon = HAWLUCHA,73
 	EVs = 0,252,0,252,0,4
 	IVs = 31,31,31,31,31,31
 	Nature = ADAMANT
 	Ability = UNBURDEN
-	Item = FLYINGGEM
+	Item = SITRUSBERRY
 	Moves = ACROBATICS,SUBSTITUTE,BULKUP,DRAINPUNCH
 Pokemon = LUMINEON2,73
 	EVs = 4,0,0,252,252,0

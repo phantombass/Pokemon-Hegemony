@@ -1,4 +1,4 @@
-{"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"LEADER_Blaine{@{	@
+{"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"LEADER_Blaine{@{	@
 ["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"Ace[i"LEADER_Sabrina{@{	@
 ["Gym Leader.ogg@["plasmaSM@["
 HAZEL@[i"LEADER_Erika{@{	@
@@ -8,6 +8,9 @@ HAZEL@[i"LEADER_Erika{@{	@
 ["BW-NeoPlasmaBattle.ogg@["teamSkull"TEAMROCKET_F{@{@
 ["BW-NeoPlasmaBattle.ogg@["teamSkull"	ARMY{@{@
 ["BW-NeoPlasmaBattle.ogg"SCIENTIST{@{@
+["BW-NeoPlasmaBattle.ogg"	NAVY{@{@
+["BW-NeoPlasmaBattle.ogg"AIRFORCECAPTAIN{@{@
+["BW-NeoPlasmaBattle.ogg"AIRFORCE{@{@
 ["BW-NeoPlasmaBattle.ogg"ROCKETBOSS{@{@
 ["Goldeneye - Cradle.ogg@["MILITIA1@["plasmaSM"ARMYBOSS{@{@
 ["Goldeneye - Silo.ogg@["

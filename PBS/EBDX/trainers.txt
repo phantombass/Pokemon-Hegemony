@@ -47,6 +47,15 @@ BattleBGM        = BW-NeoPlasmaBattle.ogg
 [SCIENTIST]
 BattleBGM        = BW-NeoPlasmaBattle.ogg
 #-------------------------------
+[NAVY]
+BattleBGM        = BW-NeoPlasmaBattle.ogg
+#-------------------------------
+[AIRFORCECAPTAIN]
+BattleBGM        = BW-NeoPlasmaBattle.ogg
+#-------------------------------
+[AIRFORCE]
+BattleBGM        = BW-NeoPlasmaBattle.ogg
+#-------------------------------
 [ROCKETBOSS]
 BattleBGM        = Goldeneye - Cradle.ogg
 BattleScript	 = MILITIA1

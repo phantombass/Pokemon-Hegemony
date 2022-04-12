@@ -44,7 +44,9 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[106] = 66
     end
   elsif badges == 5
-    if $game_switches[149]
+    if $game_switches[149] && $game_switches[158]
+      $game_variables[106] = 78
+    elsif $game_variables[149] && !$game_switches[158]
       $game_variables[106] = 75
     else
       $game_variables[106] = 72
@@ -105,7 +107,9 @@ Events.onStepTaken += proc {| sender, e |
         $game_variables[106] = 66
       end
     elsif badges == 5
-      if $game_switches[149]
+      if $game_switches[149] && $game_switches[158]
+        $game_variables[106] = 78
+      elsif $game_variables[149] && !$game_switches[158]
         $game_variables[106] = 75
       else
         $game_variables[106] = 72

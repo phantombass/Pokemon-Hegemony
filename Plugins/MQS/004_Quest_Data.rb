@@ -32,6 +32,7 @@ module QuestModule
     :Stage25 => "Pass through Lake Chloros to go toward Nitro City",
     :Stage26 => "Meet with Turner in Trainer's Institute",
     :Stage27 => "Make your way to Carbo Valley",
+    :Stage28 => "Go to Mangan Village",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -58,7 +59,8 @@ module QuestModule
     :Location24 => "Potion Plant",
     :Location25 => "Lake Chloros",
     :Location26 => "Garon Town",
-    :Location27 => "Carbo Valley"
+    :Location27 => "Carbo Valley",
+    :Location28 => "Mangan Village"
   }
 
 #====================================

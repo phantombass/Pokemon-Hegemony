@@ -2060,6 +2060,9 @@ class Scene_Credits
   Legends Arceus Front Sprites:
   KingOfThe-X-Roads on Deviantart
 
+  Other Legends Arceus Sprites:
+  Anarlaurendil on Deviantart
+
   Mapping: Phantombass
 
   Eventing: Phantombass
