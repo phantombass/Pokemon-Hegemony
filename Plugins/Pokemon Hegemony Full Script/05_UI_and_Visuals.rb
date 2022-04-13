@@ -2057,11 +2057,10 @@ class Scene_Credits
   Regional Variant and Fakemon Sprites:
   Phantombass
 
-  Legends Arceus Front Sprites:
+  Legends Arceus Sprites:
   KingOfThe-X-Roads on Deviantart
-
-  Other Legends Arceus Sprites:
   Anarlaurendil on Deviantart
+  @_zerudez on nitter.net
 
   Mapping: Phantombass
 
