@@ -2061,6 +2061,7 @@ class Scene_Credits
   KingOfThe-X-Roads on Deviantart
   Anarlaurendil on Deviantart
   @_zerudez on nitter.net
+  Some back sprites by Phantombass using the art mentioned above
 
   Mapping: Phantombass
 

@@ -699,14 +699,15 @@ OldRod
     90,MAGIKARP,5,5
 	10,BRUXISH,5,5
 GoodRod
-    60,GOLDEEN,17,18
+    60,FRILLISH,17,18
     20,POLIWAG,15,16
     20,CORPHISH,16,19
 SuperRod
-    65,SEAKING,48,60
+    65,JELLICENT,48,60
     15,POLIWRATH,48,60
     15,POLITOED,48,60
-    5,CRAWDAUNT,48,60
+    4,CRAWDAUNT,48,60
+	1,BASCULIN_2,48,60
 #-------------------------------
 [169] # Haunted Tower
 Cave,5
