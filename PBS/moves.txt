@@ -813,3 +813,5 @@
 974,PSYSHIELDBASH,Psyshield Bash,01D,70,PSYCHIC,Physical,90,25,10,NearOther,0,abef,"Cloaking itself in psychic energy, the user slams into the target. It may also raise the user's Defense stat."
 975,HEADLONGRUSH,Headlong Rush,03C,120,GROUND,Physical,100,5,0,NearOther,0,abef,"The user smashes into the target in a full-body tackle. It also cuts the user's Defense and Sp. Def."
 976,WAVECRASH,Wave Crash,513,90,WATER,Physical,100,15,0,NearOther,0,abef,"The user shrouds itself in water and slams into the target. This also damages the user and raises the user's Speed."
+977,DIRECLAW,Dire Claw,017,60,POISON,Physical,100,15,20,NearOther,0,befh,"The user lashes out with ruinous claws, aiming to land a critical hit. This may also poison, paralyze or make the target drowsy."
+978,BARBBARRAGE,Barb Barrage,515,60,POISON,Physical,100,15,30,NearOther,0,abef,"The user launches countless toxic barbs that may also poison the target. Power is doubled if the target has a status condition."

@@ -3813,9 +3813,30 @@ class PokeBattle_Move_513 < PokeBattle_StatUpMove
     super
     @statUp = [:SPEED,1]
   end
-  
+
   def pbRecoilDamage(user,target)
     return (target.damageState.totalHPLost/3.0).round
+  end
+end
+
+class PokeBattle_Move_514 < PokeBattle_Move
+  def pbAdditionalEffect(user,target)
+    return if target.damageState.substitute
+    case @battle.pbRandom(3)
+    when 0 then target.pbPoison(user) if target.pbCanPoison?(user, false, self)
+    when 1 then target.pbSleep if target.pbCanSleep?(user, false, self)
+    when 2 then target.pbParalyze(user) if target.pbCanParalyze?(user, false, self)
+    end
+  end
+end
+
+class PokeBattle_Move_515 < PokeBattle_PoisonMove
+  def pbBaseDamage(baseDmg,user,target)
+    if target.pbHasAnyStatus? &&
+       (target.effects[PBEffects::Substitute]==0 || ignoresSubstitute?(user))
+      baseDmg *= 2
+    end
+    return baseDmg
   end
 end
 

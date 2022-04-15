@@ -32,7 +32,7 @@ module QuestModule
     :Stage25 => "Pass through Lake Chloros to go toward Nitro City",
     :Stage26 => "Meet with Turner in Trainer's Institute",
     :Stage27 => "Make your way to Carbo Valley",
-    :Stage28 => "Go to Mangan Village",
+    :Stage28 => "Speak to Joseph",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",

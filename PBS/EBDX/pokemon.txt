@@ -9207,3 +9207,10 @@ BattlerPlayerX          = 1
 BattlerPlayerY          = 75
 BattlerEnemyX           = 10
 #-------------------------------
+[OVERQWIL]
+BattlerEnemyY           = 43
+BattlerAltitude         = 12
+BattlerPlayerX          = 22
+BattlerPlayerY          = 47
+BattlerEnemyX           = -3
+#-------------------------------

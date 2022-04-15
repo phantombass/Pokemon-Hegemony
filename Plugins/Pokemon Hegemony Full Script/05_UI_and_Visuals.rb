@@ -2057,6 +2057,12 @@ class Scene_Credits
   Regional Variant and Fakemon Sprites:
   Phantombass
 
+  Rotom Dex Front Sprite:
+  Profkrd on Deviantart
+
+  Rotom Dex Icon:
+  ZekzyBwoy on Reddit
+
   Legends Arceus Sprites:
   KingOfThe-X-Roads on Deviantart
   Anarlaurendil on Deviantart

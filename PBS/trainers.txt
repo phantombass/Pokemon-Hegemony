@@ -973,6 +973,51 @@ Pokemon = BEHEEYEM,69
 	Nature = RELAXED
 	Moves = EXPANDINGFORCE,BUGBUZZ,PROTECT,RECOVER
 #-------------------------------
+[LEADER_Misty,Gail]
+LoseText = "No amount of confusion can hold you down. Splendid job."
+Pokemon = OVERQWIL,77
+	Ability = INTIMIDATE
+	Item = BLACKSLUDGE
+	EVs = 252,4,0,252,0,0
+	IVs = 31,31,31,0,31,31
+	Nature = JOLLY
+	Moves = TOXICSPIKES,BARBBARRAGE,FLIPTURN,NIGHTRUSH
+Pokemon = CLAYDOL,77
+	Ability = LEVITATE
+	Item = LEFTOVERS
+	EVs = 252,0,0,0,4,252
+	IVs = 31,0,31,0,31,31
+	Nature = CALM
+	Moves = STEALTHROCK,SHOREUP,STARBEAM,EARTHPOWER
+Pokemon = BRELOOM,77
+	Ability = TECHNICIAN
+	Item = LIFEORB
+	EVs = 0,252,4,252,0,0
+	IVs = 31,0,31,0,31,31
+	Nature = ADAMANT
+	Moves = SWORDSDANCE,SPORE,MACHPUNCH,BULLETSEED
+Pokemon = FROSMOTH,77
+	Ability = ICESCALES
+	Item = EXPERTBELT
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,0,31,31
+	Nature = TIMID
+	Moves = QUIVERDANCE,BUGBUZZ,ICEBEAM,STARBEAM
+Pokemon = TOGEDEMARU2,77
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,0,31,31
+	Nature = ADAMANT
+	Moves = UTURN,SPIRITBREAK,RUBBLERAZE,ACCELEROCK
+Pokemon = KANGASKHAN,78
+	Ability = SCRAPPY
+	Item = KANGASKHANITE
+	EVs = 252,252,0,4,0,0
+	IVs = 31,0,31,0,31,31
+	Nature = ADAMANT
+	Moves = POWERUPPUNCH,BODYSLAM,EARTHQUAKE,WISH
+#-------------------------------
 # Militia Battles
 #-------------------------------
 [TEAMROCKET_M,Grunt]

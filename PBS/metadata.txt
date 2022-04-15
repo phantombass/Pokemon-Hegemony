@@ -931,3 +931,31 @@ SnapEdges = true
 # Air Force Main Office
 MapPosition = 0,24,3
 SnapEdges = true
+#-------------------------------
+[184]
+# Route 12
+Outdoor = true
+ShowArea = true
+MapPosition = 0,11,17
+SnapEdges = true
+#-------------------------------
+[185]
+# Mangan Village
+Outdoor = true
+ShowArea = true
+MapPosition = 0,7,17
+SnapEdges = true
+#-------------------------------
+[187]
+# Route 13
+Outdoor = true
+ShowArea = true
+MapPosition = 0,6,16
+SnapEdges = true
+#-------------------------------
+[188]
+# Nitro City
+Outdoor = true
+ShowArea = true
+MapPosition = 0,4,14
+SnapEdges = true
