@@ -16,8 +16,8 @@ module FancyBadges
     "Hazard Badge",
     "Stellar Badge",
     "Mental Badge",
-    "River Badge",
-    "Opera Badge",
+    "Patience Badge",
+    "Renege Badge",
     "Epitaph Badge",
     "New Life Badge",
   ]

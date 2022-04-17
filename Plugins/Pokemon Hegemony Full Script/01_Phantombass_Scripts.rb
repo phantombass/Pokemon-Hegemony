@@ -327,6 +327,26 @@ class PokeBattle_Battler
       return true
     end
   end
+  def unlosableItem?(check_item)
+    return false if !check_item
+    return true if GameData::Item.get(check_item).is_mail?
+    return false if @effects[PBEffects::Transform]
+    #return true if itemCorroded?
+    # Items that change a Pokémon's form
+    if mega?   # Check if item was needed for this Mega Evolution
+      return true if @pokemon.species_data.mega_stone == check_item
+    else   # Check if item could cause a Mega Evolution
+      GameData::Species.each do |data|
+        next if data.species != @species || data.unmega_form != @form
+        return true if data.mega_stone == check_item
+      end
+    end
+    if check_item == :WBLAZIKENITE || check_item == :WGARCHOMPITE || check_item == :WSCEPTILITE || check_item == :WSWAMPERTITE || check_item == :WCHIMECHONITE || check_item == :CHATOTITE || check_item == :CORVITE || check_item == :EMPOLEONITE || check_item == :TORTERRANITE || check_item == :INFERNITE || check_item == :CHIMECHONITE || check_item == :BEHEEYEMITE || check_item == :CASTFORMITE
+      return true
+    end
+    # Other unlosable items
+    return GameData::Item.get(check_item).unlosable?(@species, self.ability)
+  end
 end
 
 class Pokemon

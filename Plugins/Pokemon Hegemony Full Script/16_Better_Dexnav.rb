@@ -185,50 +185,50 @@ class NewDexNav
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
       if GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          encTerr = :OldRod
+          $encTerr = :OldRod
         else
-          encTerr = :Land if $PokemonEncounters.has_land_encounters?
-          encTerr = :Cave if !$PokemonEncounters.has_land_encounters?
+          $encTerr = :Land if $PokemonEncounters.has_land_encounters?
+          $encTerr = :Cave if !$PokemonEncounters.has_land_encounters?
         end
       elsif GameData::TerrainTag.get(pLoc).id == :Rock
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          encTerr = :OldRod
+          $encTerr = :OldRod
         else
-          encTerr = :Cave
+          $encTerr = :Cave
         end
       elsif GameData::TerrainTag.get(pLoc).id == :HighBridge
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          encTerr = :OldRod
+          $encTerr = :OldRod
         else
-          encTerr = :HighBridge
+          $encTerr = :HighBridge
         end
       elsif GameData::TerrainTag.get(pLoc).id == :Graveyard
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          encTerr = :OldRod
+          $encTerr = :OldRod
         else
-          encTerr = :Graveyard
+          $encTerr = :Graveyard
         end
       elsif GameData::TerrainTag.get(pLoc).id == :Snow
         if $MapFactory.getFacingTerrainTag== :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          encTerr = :OldRod
+          $encTerr = :OldRod
         else
-          encTerr = :Snow if $PokemonEncounters.has_snow_encounters?
+          $encTerr = :Snow if $PokemonEncounters.has_snow_encounters?
         end
       elsif GameData::TerrainTag.get(pLoc).id == :Sandy || GameData::TerrainTag.get(pLoc).id == :Sand
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          encTerr = :OldRod
+          $encTerr = :OldRod
         else
-          encTerr = :Sandy if $PokemonEncounters.has_sandy_encounters?
-          encTerr = :Cave if $PokemonEncounters.has_cave_encounters? && !$PokemonEncounters.has_sandy_encounters?
-          encTerr = :Land if !$PokemonEncounters.has_cave_encounters? && !$PokemonEncounters.has_sandy_encounters?
+          $encTerr = :Sandy if $PokemonEncounters.has_sandy_encounters?
+          $encTerr = :Cave if $PokemonEncounters.has_cave_encounters? && !$PokemonEncounters.has_sandy_encounters?
+          $encTerr = :Land if !$PokemonEncounters.has_cave_encounters? && !$PokemonEncounters.has_sandy_encounters?
         end
       elsif GameData::TerrainTag.get(pLoc).can_surf
-        encTerr = :OldRod
+        $encTerr = :OldRod
       elsif GameData::TerrainTag.get(pLoc).id == :Bridge
-        encTerr = :Water
+        $encTerr = :Water
       end
       terr = 0
-      case encTerr
+      case $encTerr
       when enc_type
         terr = 0
       when enc_type2
@@ -240,7 +240,7 @@ class NewDexNav
       when enc_type5
         terr = 4
       end
-      if encTerr == :OldRod
+      if $encTerr == :OldRod
         terr += 4
       end
       case terr
@@ -262,7 +262,7 @@ class NewDexNav
       encdata = encdata.uniq
       encdata = encdata.compact
 
-      if encTerr == nil
+      if $encTerr == nil
         @encarray = [7]
       else
         @encarray = encdata
@@ -469,6 +469,8 @@ Events.onWildPokemonCreate+=proc {|sender,e|
     pokemon=e[0]
     # Checks current search value, if it exists, sets the Pokemon to it
     if $currentDexSearch != nil && $currentDexSearch.is_a?(Array)
+      pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
+      if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) ||((GameData::TerrainTag.get(pLoc).id == :Water || GameData::TerrainTag.get(pLoc).id == :StillWater || GameData::TerrainTag.get(pLoc).id == :DeepWater) && $encTerr == :OldRod) 
         pokemon.species=$currentDexSearch[0]
         $chainNav = [$currentDexSearch[0],0] if $chain == nil
         $chain = 0 if $chain == nil
@@ -544,6 +546,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
         if rand(tempInt)<=1+($chain/5).floor && $chain<46
          pokemon.makeShiny
         end
+      end
         $currentDexSearch = nil
     end
 }

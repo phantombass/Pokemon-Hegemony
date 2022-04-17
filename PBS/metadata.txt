@@ -959,3 +959,14 @@ Outdoor = true
 ShowArea = true
 MapPosition = 0,4,14
 SnapEdges = true
+#-------------------------------
+[191]
+# Nitro Gym
+MapPosition = 0,4,14
+SnapEdges = true
+#-------------------------------
+[192]
+# Underground Village
+ShowArea = true
+MapPosition = 0,4,14
+SnapEdges = true

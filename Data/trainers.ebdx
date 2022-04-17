@@ -1,4 +1,4 @@
-{"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"LEADER_Blaine{@{	@
+{"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"LEADER_Blaine{@{	@
 ["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"Ace[i"LEADER_Sabrina{@{	@
 ["Gym Leader.ogg@["plasmaSM@["
 HAZEL@[i"LEADER_Erika{@{	@
@@ -12,9 +12,11 @@ HAZEL@[i"LEADER_Erika{@{	@
 ["BW-NeoPlasmaBattle.ogg"AIRFORCECAPTAIN{@{@
 ["BW-NeoPlasmaBattle.ogg"AIRFORCE{@{@
 ["BW-NeoPlasmaBattle.ogg"ROCKETBOSS{@{@
-["Goldeneye - Cradle.ogg@["MILITIA1@["plasmaSM"ARMYBOSS{@{@
+["Goldeneye - Cradle.ogg@["MILITIA1@["plasmaSM"ARMYBOSS,Ahab{@{@
 ["Goldeneye - Silo.ogg@["
-ARMY1@["plasmaSM"NAVYBOSS{@{@
+ARMY1@["plasmaSM"ARMYBOSS,Ahab,1{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"NAVYBOSS{@{@
 ["Goldeneye - Silo.ogg@["
 NAVY1@["plasmaSM"AIRFORCEBOSS{@{@
-["Goldeneye - Silo.ogg@["AIRFORCE1@["plasmaSM
+["Goldeneye - Silo.ogg@["AIRFORCE1@["plasmaSM"OFFCORP{@{@
+["Goldeneye - Cradle.ogg@["plasmaSM

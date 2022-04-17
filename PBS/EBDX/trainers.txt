@@ -61,9 +61,13 @@ BattleBGM        = Goldeneye - Cradle.ogg
 BattleScript	 = MILITIA1
 BattleVS         = plasmaSM
 #-------------------------------
-[ARMYBOSS]
+[ARMYBOSS,Ahab]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = ARMY1
+BattleVS         = plasmaSM
+#-------------------------------
+[ARMYBOSS,Ahab,1]
+BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
 #-------------------------------
 [NAVYBOSS]
@@ -74,5 +78,9 @@ BattleVS         = plasmaSM
 [AIRFORCEBOSS]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = AIRFORCE1
+BattleVS         = plasmaSM
+#-------------------------------
+[OFFCORP]
+BattleBGM        = Goldeneye - Cradle.ogg
 BattleVS         = plasmaSM
 #-------------------------------

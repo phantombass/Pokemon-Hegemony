@@ -2063,6 +2063,9 @@ class Scene_Credits
   Rotom Dex Icon:
   ZekzyBwoy on Reddit
 
+  Bill Sprite:
+  theboyzz0111 on Reddit
+
   Legends Arceus Sprites:
   KingOfThe-X-Roads on Deviantart
   Anarlaurendil on Deviantart
