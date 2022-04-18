@@ -51,6 +51,8 @@ Events.onMapChange += proc {| sender, e |
     else
       $game_variables[106] = 72
     end
+  elsif badges == 6
+    $game_variables[106] = 80
   end
     # Weather Setting
     time = pbGetTimeNow
@@ -114,6 +116,8 @@ Events.onStepTaken += proc {| sender, e |
       else
         $game_variables[106] = 72
       end
+    elsif badges == 6
+      $game_variables[106] = 80
     end
 }
 
@@ -173,6 +177,21 @@ module EnvironmentEBDX
   }
   DESERT = { #{}"base" => "Dirt",
               "backdrop" => "Sand"
+              }
+  ELECTRIC = { #{}"base" => "Dirt",
+              "backdrop" => "Electric"
+              }
+  GRASSY = { #{}"base" => "Dirt",
+              "backdrop" => "Grassy"
+              }
+  MISTY = { #{}"base" => "Dirt",
+              "backdrop" => "Misty"
+              }
+  PSYCHIC = { #{}"base" => "Dirt",
+              "backdrop" => "Psychic"
+              }
+  POISON = { #{}"base" => "Dirt",
+              "backdrop" => "Poison"
               }
 end
 
@@ -408,6 +427,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
 Events.onEndBattle += proc { |_sender,e|
   $game_switches[89] = false
   $CanToggle = true
+  $viewport.dispose
 }
 
 def pbStartOver(gameover=false)

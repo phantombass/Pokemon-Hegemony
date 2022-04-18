@@ -9249,3 +9249,11 @@ BattlerPlayerX          = 7
 BattlerPlayerY          = 47
 BattlerEnemyX           = 0
 #-------------------------------
+[KYUREM,5]
+SpriteScaleEnemy  		= 1
+BattlerEnemyY           = 21
+BattlerAltitude         = 0
+BattlerPlayerX          = 0
+BattlerPlayerY          = 46
+BattlerEnemyX           = 5
+#-------------------------------

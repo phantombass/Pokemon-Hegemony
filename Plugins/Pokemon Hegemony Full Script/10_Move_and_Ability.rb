@@ -912,7 +912,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:ASTRALCLOAK,
   proc { |ability,battler,battle|
     battler.effects[PBEffects::Type3] = :COSMIC
     battle.pbShowAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1} is shrouded in the shadows!",battler.pbThis))
+    battle.pbDisplay(_INTL("{1} is cloaked in cosmic energy!",battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
 )
@@ -3971,6 +3971,7 @@ class PokeBattle_Battle
         pbDisplay(_INTL("The toxic waste disappeared from the battlefield!"))
       end
       @field.terrain = :None
+      $terrain = 0
       # Start up the default terrain
       pbStartTerrain(nil, @field.defaultTerrain, false) if @field.defaultTerrain != :None
       return if @field.terrain == :None

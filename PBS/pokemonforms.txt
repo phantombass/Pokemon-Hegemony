@@ -1912,6 +1912,18 @@ BattlerPlayerY = 38
 BattlerEnemyX = 9
 BattlerEnemyY = 4
 #-------------------------------
+[KYUREM,5]
+FormName = Perfect Kyurem
+BaseStats = 125,170,110,105,170,110
+EffortPoints = 0,3,0,0,0,0
+Abilities = MOLDBREAKER
+Moves = 1,PERFECTIONPULSE,1,DRAGONBREATH,1,NOBLEROAR,1,ANCIENTPOWER,1,FREEZEDRY,8,SLASH,16,ENDEAVOR,24,DRAGONPULSE,32,ICEBEAM,40,HYPERVOICE,48,FUSIONBOLT,48,FUSIONFLARE,48,GLACIATE,56,BLIZZARD,64,IMPRISON,72,OUTRAGE,80,FREEZESHOCK,80,ICEBURN,88,PERFECTIONPULSE
+Height = 3.3
+Pokedex = It's said that this Pokémon battles in order to protect the ideal world that will exist in the future for people and Pokémon.
+BattlerPlayerY = 38
+BattlerEnemyX = 9
+BattlerEnemyY = 4
+#-------------------------------
 [KELDEO,1]
 FormName = Resolute Form
 Pokedex = The power that lay hidden in its body now covers its horn, turning it into a sword that can slice through anything.

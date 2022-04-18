@@ -1187,6 +1187,173 @@ class PokemonSummary_Scene
   end
 end
 class BattleSceneRoom
+  alias initialize_ter initialize
+  def initialize(viewport, scene, data)
+    $viewport = viewport
+    return initialize_ter(viewport, scene, data)
+  end
+  def refresh(*args)
+    unless args[0].is_a?(Hash)
+      @sprites[args[0]] = args[1] if args[0].is_a?(String) && args.length > 1
+      return
+    end
+    @fpIndex = 0
+    # disposes sprites if they exist
+    pbDisposeSpriteHash(@sprites)
+    sx, sy = @scene.vector.spoof(@defaultvector)
+    # void sprite
+    @sprites["void"] = Sprite.new(@viewport)
+    @sprites["void"].z = -10
+    @sprites["void"].bitmap = Bitmap.new(@viewport.width, @viewport.height)
+    # draws backdrop
+    @sprites["bg"] = Sprite.new(@viewport)
+    @sprites["bg"].z = 0
+    # draws base
+    @baseBmp = nil
+    # draws elements from data block (prority added to predefined modules)
+    for key in ["backdrop", "base", "water", "spinningLights", "outdoor", "sky", "trees", "tallGrass", "spinLights",
+               "lightsA", "lightsB", "lightsC", "vacuum", "bubbles"] # to sort the order
+      next if !@data.has_key?(key)
+      case key
+      when "backdrop" # adds custom background image
+        path = pbResolveBitmap(@data["backdrop"]) ? @data["backdrop"] : "Graphics/EBDX/Battlebacks/battlebg/" + @data["backdrop"]
+        $initPath = path
+        tbmp = pbBitmap(path)
+        @sprites["bg"].bitmap = Bitmap.new(tbmp.width, tbmp.height)
+        @sprites["bg"].bitmap.blt(0, 0, tbmp, tbmp.rect)
+        tbmp.dispose
+      when "base" # blt base onto backdrop
+        str = pbResolveBitmap(@data["base"]) ? @data["base"] : "Graphics/EBDX/Battlebacks/base/" + @data["base"]
+        @baseBmp = pbBitmap(str) if str
+      when "sky" # adds dynamic sky to scene
+        self.drawSky
+      when "trees" # adds array of trees to scene
+        self.drawTrees
+      when "tallGrass" # adds array of tall grass to scene
+        self.drawGrass
+      when "spinLights" # adds PWT styled spinning base lights
+        self.drawSpinLights
+      when "lightsA" # adds PWT styled stage lights
+        self.drawLightsA
+      when "lightsB" # adds disco styled stage lights
+        self.drawLightsB
+      when "lightsC" # adds ambiental scene lights
+        self.drawLightsC
+      when "water" # adds water animation effect
+        self.drawWater
+      when "vacuum"
+        self.vacuumWaves(@data[key]) # draws vacuum waves
+      when "bubbles"
+        self.bubbleStream(@data[key]) # draws bubble particles
+      end
+    end
+    # draws additional modules where sequencing is disregarded
+    for key in @data.keys
+      if key.include?("img")
+        self.drawImg(key)
+      end
+    end
+    # applies backdrop positioning
+    if @sprites["bg"].bitmap
+      @sprites["bg"].center!
+      @sprites["bg"].ox = sx/1.5 - 16
+      @sprites["bg"].oy = sy/1.5 + 16
+      if @baseBmp
+        @sprites["bg"].bitmap.blt(0, @sprites["bg"].bitmap.height - @baseBmp.height, @baseBmp, @baseBmp.rect)
+      end
+      c1 = @sprites["bg"].bitmap.get_pixel(0, 0)
+      c2 = @sprites["bg"].bitmap.get_pixel(0, @sprites["bg"].bitmap.height-1)
+      @sprites["void"].bitmap.fill_rect(0, 0, @viewport.width, @viewport.height/2, c1)
+      @sprites["void"].bitmap.fill_rect(0, @viewport.height/2, @viewport.width, @viewport.height/2, c2)
+    end
+    # battler sprite positioning
+    self.adjustMetrics
+    # applies daylight tinting
+    self.daylightTint
+  end
+  def update
+    return if self.disposed?
+    # updates to the spatial warping with respect to the scene vector
+    @sprites["bg"].x = @scene.vector.x2
+    @sprites["bg"].y = @scene.vector.y2
+    sx, sy = @scene.vector.spoof(@defaultvector)
+    @sprites["bg"].zoom_x = @scale*((@scene.vector.x2 - @scene.vector.x)*1.0/(sx - @defaultvector[0])*1.0)**0.6
+    @sprites["bg"].zoom_y = @scale*((@scene.vector.y2 - @scene.vector.y)*1.0/(sy - @defaultvector[1])*1.0)**0.6
+    # updates the vacuum waves
+    for j in 0...3
+      next if j > @fpIndex/50 || !@sprites["ec#{j}"]
+      if @sprites["ec#{j}"].param <= 0
+        @sprites["ec#{j}"].param = 1.5
+        @sprites["ec#{j}"].opacity = 0
+        @sprites["ec#{j}"].ex = 234
+      end
+      @sprites["ec#{j}"].opacity += (@sprites["ec#{j}"].param < 0.75 ? -4 : 4)/self.delta
+      @sprites["ec#{j}"].ex += [1, 2/self.delta].max if (@fpIndex*self.delta)%4 == 0 && @sprites["ec#{j}"].ex < 284
+      @sprites["ec#{j}"].ey -= [1, 2/self.delta].min if (@fpIndex*self.delta)%4 == 0 && @sprites["ec#{j}"].ey > 108
+      @sprites["ec#{j}"].param -= 0.01/self.delta
+    end
+    # updates bubble particles
+    for j in 0...18
+      next if !@sprites["bubble#{j}"]
+      if @sprites["bubble#{j}"].ey <= -32
+        r = rand(5) + 2
+        @sprites["bubble#{j}"].param = 0.16 + 0.01*rand(32)
+        @sprites["bubble#{j}"].ey = @sprites["bg"].bitmap.height*0.25 + rand(@sprites["bg"].bitmap.height*0.75)
+        @sprites["bubble#{j}"].ex = 32 + rand(@sprites["bg"].bitmap.width - 64)
+        @sprites["bubble#{j}"].end_y = 64 + rand(72)
+        @sprites["bubble#{j}"].end_x = @sprites["bubble#{j}"].ex
+        @sprites["bubble#{j}"].toggle = rand(2) == 0 ? 1 : -1
+        @sprites["bubble#{j}"].speed = 1 + 2/((r + 1)*0.4)
+        @sprites["bubble#{j}"].z = [2,15,25][rand(3)] + rand(6) - (@focused ? 0 : 100)
+        @sprites["bubble#{j}"].opacity = 0
+      end
+      min = @sprites["bg"].bitmap.height/4
+      max = @sprites["bg"].bitmap.height/2
+      scale = (2*Math::PI)/((@sprites["bubble#{j}"].bitmap.width/64.0)*(max - min) + min)
+      @sprites["bubble#{j}"].opacity += 4 if @sprites["bubble#{j}"].opacity < @sprites["bubble#{j}"].end_y
+      @sprites["bubble#{j}"].ey -= [1, @sprites["bubble#{j}"].speed/self.delta].max
+      @sprites["bubble#{j}"].ex = @sprites["bubble#{j}"].end_x + @sprites["bubble#{j}"].bitmap.width*0.25*Math.sin(@sprites["bubble#{j}"].ey*scale)*@sprites["bubble#{j}"].toggle
+    end
+    # update weather particles
+    self.updateWeather
+    self.updateTerrain
+    # positions all elements according to the battle backdrop
+    self.position
+    # updates skyline
+    self.updateSky
+    # turn off shadows if appropriate
+    if @data.has_key?("noshadow") && @data["noshadow"] == true
+      # for battler sprites
+      @battle.battlers.each_with_index do |b, i|
+        next if !b || !@scene.sprites["pokemon_#{i}"]
+        @scene.sprites["pokemon_#{i}"].noshadow = true
+      end
+      # for trainer sprites
+      if @battle.opponent
+        for t in 0...@battle.opponent.length
+          next if !@scene.sprites["trainer_#{t}"]
+          @scene.sprites["trainer_#{t}"].noshadow = true
+        end
+      end
+    end
+    # adjusts for wind affected elements
+    if @strongwind
+      @wind -= @toggle*2
+      @toggle *= -1 if @wind < 65 || (@wind >= 70 && @toggle < 0)
+    else
+      @wWait += 1
+      if @wWait > Graphics.frame_rate*5
+        mod = @toggle*(2 + (@wind >= 88 && @wind <= 92 ? 2 : 0))
+        @wind -= mod
+        @toggle *= -1 if @wind <= 80 || @wind >= 100
+        @wWait = 0 if @wWait > Graphics.frame_rate*5 + 33
+      end
+    end
+    # additional metrics
+    @fpIndex += 1
+    @fpIndex = 150 if @fpIndex > 255*self.delta
+  end
+
   def setWeather
     # loop once
     for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain,]],["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]],["Overcast", [:Overcast,:Eclipse]],["Starstorm", [:Starstorm]],["VolcanicAsh", [:VolcanicAsh, :DAshfall]]]
@@ -1196,6 +1363,201 @@ class BattleSceneRoom
       end
       eval("delete" + wth[0]) unless proceed
       eval("draw"  + wth[0]) if proceed
+    end
+  end
+
+  def setTerrain
+    for ter in [["Electric",[:Electric]],["Grassy",[:Grassy]],["Misty",[:Misty]],["Psychic",[:Psychic]],["Poison",[:Poison]]]
+      proceed = false
+      for cond in (ter[1].is_a?(Array) ? ter[1] : [ter[1]])
+        proceed = true if @battle.field.terrain == cond
+      end
+      eval("delete" + ter[0]) unless proceed
+      eval("draw"  + ter[0]) if proceed
+    end
+  end
+
+  def updateTerrain
+    self.setTerrain
+    for j in 0...3
+      next if !@sprites["t_grassy#{j}"]
+      @sprites["t_grassy#{j}"].update
+    end
+    for j in 0...2
+      next if !@sprites["t_misty#{j}"]
+      @sprites["t_misty#{j}"].update
+    end
+    for j in 0...2
+      next if !@sprites["t_tox#{j}"]
+      @sprites["t_tox#{j}"].update
+    end
+    for j in 0...2
+      next if !@sprites["t_ele#{j}"]
+      @sprites["t_ele#{j}"].update
+    end
+    for j in 0...2
+      next if !@sprites["t_psy#{j}"]
+      @sprites["t_psy#{j}"].update
+    end
+  end
+
+  def drawElectric
+    for j in 0...2
+      next if @sprites["t_ele#{j}"]
+      @sprites["t_ele#{j}"] = ScrollingSprite.new(@viewport)
+      @sprites["t_ele#{j}"].default!
+      @sprites["t_ele#{j}"].z = 150
+      @sprites["t_ele#{j}"].y = 200
+      @sprites["t_ele#{j}"].setBitmap("Graphics/EBDX/Animations/Weather/electricTerrain")
+      @sprites["t_ele#{j}"].speed = 1
+      @sprites["t_ele#{j}"].direction = j == 0 ? 1 : -1
+    end
+  end
+  def drawGrassy
+    $drawGrass = 1
+    for j in 0...3
+      @sprites["t_grassy#{j}"] = Sprite.new(@viewport)
+      @sprites["t_grassy#{j}"].bitmap = pbBitmap("Graphics/EBDX/Battlebacks/Elements/tallGrass")
+      @sprites["t_grassy#{j}"].bottom!
+      @sprites["t_grassy#{j}"].x = rand(600)+20
+      @sprites["t_grassy#{j}"].y = rand(350)+150
+      @sprites["t_grassy#{j}"].color = Color.green
+    end
+  end
+  def drawMisty
+    for j in 0...2
+      next if @sprites["t_misty#{j}"]
+      @sprites["t_misty#{j}"] = ScrollingSprite.new(@viewport)
+      @sprites["t_misty#{j}"].default!
+      @sprites["t_misty#{j}"].z = 150
+      @sprites["t_misty#{j}"].y = 200
+      @sprites["t_misty#{j}"].setBitmap("Graphics/EBDX/Animations/Weather/forestShade")
+      @sprites["t_misty#{j}"].speed = 1
+      @sprites["t_misty#{j}"].opacity = 64
+      @sprites["t_misty#{j}"].direction = j == 0 ? 1 : -1
+    end
+  end
+  def drawPsychic
+    for j in 0...2
+      next if @sprites["t_psy#{j}"]
+      @sprites["t_psy#{j}"] = ScrollingSprite.new(@viewport)
+      @sprites["t_psy#{j}"].default!
+      @sprites["t_psy#{j}"].z = 150
+      @sprites["t_psy#{j}"].y = 200
+      @sprites["t_psy#{j}"].setBitmap("Graphics/EBDX/Animations/Weather/Psychic")
+      @sprites["t_psy#{j}"].speed = 1
+      @sprites["t_psy#{j}"].direction = j == 0 ? 1 : -1
+    end
+  end
+  def drawPoison
+    for j in 0...2
+      next if @sprites["t_tox#{j}"]
+      @sprites["t_tox#{j}"] = ScrollingSprite.new(@viewport)
+      @sprites["t_tox#{j}"].default!
+      @sprites["t_tox#{j}"].z = 150
+      @sprites["t_tox#{j}"].y = 200
+      @sprites["t_tox#{j}"].opacity = 50
+      @sprites["t_tox#{j}"].setBitmap("Graphics/EBDX/Battlebacks/elements/poisonTerrain")
+      @sprites["t_tox#{j}"].speed = 1
+      @sprites["t_tox#{j}"].direction = j == 0 ? 1 : -1
+    end
+  end
+  def deleteElectric
+    for j in 0...2
+      next if !@sprites["t_ele#{j}"]
+      @sprites["t_ele#{j}"].dispose
+      @sprites.delete("t_ele#{j}")
+    end
+  end
+  def deleteGrassy
+    $drawGrass = 0
+    for j in 0...3
+      next if !@sprites["t_grassy#{j}"]
+      @sprites["t_grassy#{j}"].dispose
+      @sprites.delete("t_grassy#{j}")
+    end
+  end
+  def deleteMisty
+    for j in 0...2
+      next if !@sprites["t_misty#{j}"]
+      @sprites["t_misty#{j}"].dispose
+      @sprites.delete("t_misty#{j}")
+    end
+  end
+  def deletePsychic
+    for j in 0...2
+      next if !@sprites["t_psy#{j}"]
+      @sprites["t_psy#{j}"].dispose
+      @sprites.delete("t_psy#{j}")
+    end
+  end
+  def deletePoison
+    for j in 0...2
+      next if !@sprites["t_tox#{j}"]
+      @sprites["t_tox#{j}"].dispose
+      @sprites.delete("t_tox#{j}")
+    end
+  end
+  def position
+    for key in @sprites.keys
+      next if key == "bg" || key == "0" || key == "void" || key.include?("w_sunny") || key.include?("w_sand") || key.include?("w_fog")
+      # updates fancy light effects
+      if key.include?("sLight")
+        i = key.gsub("sLight","").to_i
+        if @sprites["sLight#{i}"] && @scene.vector
+          x, y = self.stageLightPos(i)
+          @sprites["sLight#{i}"].ex = x
+          @sprites["sLight#{i}"].ey = y
+          @sprites["sLight#{i}"].update
+        end
+      end
+    #  p key
+      if $drawGrass == 1
+        x = @sprites["bg"].x - @sprites["bg"].zoom_x
+        y = @sprites["bg"].y - @sprites["bg"].zoom_y
+        z = @sprites["bg"].zoom_x
+      else
+        x = @sprites["bg"].x - (@sprites["bg"].ox - @sprites[key].ex)*@sprites["bg"].zoom_x
+        y = @sprites["bg"].y - (@sprites["bg"].oy - @sprites[key].ey)*@sprites["bg"].zoom_y
+        z = @sprites[key].param * @sprites["bg"].zoom_x
+        @sprites[key].x = x
+        @sprites[key].y = y
+      end
+      if ["sky", "base", "water"].string_include?(key) || (key.include?("img") && @data[key].try_key?(:flat))
+        @sprites[key].zoom_x = @sprites["bg"].zoom_x * (@sprites[key].zx ? @sprites[key].zx : 1)
+        @sprites[key].zoom_y = @sprites["bg"].zoom_y * (@sprites[key].zy ? @sprites[key].zy : 1)
+      elsif key.include?("sLight") && @sprites[key] && @scene.vector
+        z = ((@scene.vector.zoom1**0.6) * ((i%2 == 0) ? 2 : 1) * 1.25)
+        @sprites[key].zoom_x = z * @sprites["bg"].zoom_x * @sprites[key].zx
+        @sprites[key].zoom_y = z * @sprites["bg"].zoom_y * @sprites[key].zy
+      else
+        @sprites[key].zoom = z
+      end
+      # effect for elements blowing side to side with wind
+      if (key.include?("grass") || key.include?("tree") || key.include?("img"))
+        if key.include?("grass") || key.include?("tree") || (@data[key] && @data[key].has_key?(:effect) && @data[key][:effect] == "wind")
+          w = key.include?("tree") ? ((@wind-90)*0.25).to_i + 90 : @wind
+          @sprites[key].skew(w)
+          @sprites[key].ox = @sprites[key].x_mid
+        end
+      end
+      # effect for rotating elements
+      if key.include?("img") && (@data[key].has_key?(:effect) && @data[key][:effect] == "rotate")
+        @sprites[key].angle += @sprites[key].direction * @sprites[key].speed/self.delta
+      end
+      # effect for lighting updates
+      if key.include?("aLight") || key.include?("cLight")
+        @sprites[key].opacity -= @sprites[key].toggle*@sprites[key].speed/self.delta
+        @sprites[key].toggle *= -1 if @sprites[key].opacity <= 95 || @sprites[key].opacity >= @sprites[key].end_x*255
+      end
+      if key.include?("bLight")
+        if @wWait*self.delta % @sprites[key].speed == 0
+          @sprites[key].bitmap = @sprites[key].storedBitmap.clone
+          @sprites[key].bitmap.hue_change((rand(8)*45/self.delta).round)
+          @sprites[key].opacity = (rand(4) < 2 ? 192 : 0)
+        end
+      end
+      @sprites[key].update
     end
   end
   #-----------------------------------------------------------------------------
@@ -1537,7 +1899,6 @@ class BattleSceneRoom
     end
   end
 end
-
 
 class PokemonOption_Scene
   def pbStartScene(inloadscreen=false)
