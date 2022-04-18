@@ -9193,3 +9193,67 @@ BattlerPlayerX          = -3
 BattlerPlayerY          = 47
 BattlerEnemyX           = 0
 #-------------------------------
+[KLEAVOR]
+BattlerEnemyY           = 48
+BattlerAltitude         = 0
+BattlerPlayerX          = 27
+BattlerPlayerY          = 51
+BattlerEnemyX           = 0
+#-------------------------------
+[TOGEDEMARU2]
+BattlerEnemyY           = 69
+BattlerAltitude         = 0
+BattlerPlayerX          = 1
+BattlerPlayerY          = 75
+BattlerEnemyX           = 10
+#-------------------------------
+[QWILFISH,1]
+BattlerEnemyY           = 43
+BattlerAltitude         = 12
+BattlerPlayerX          = 22
+BattlerPlayerY          = 47
+BattlerEnemyX           = -3
+#-------------------------------
+[OVERQWIL]
+BattlerEnemyY           = 43
+BattlerAltitude         = 12
+BattlerPlayerX          = 22
+BattlerPlayerY          = 47
+BattlerEnemyX           = -3
+#-------------------------------
+[REMORAID2]
+BattlerEnemyY           = 44
+BattlerAltitude         = 11
+BattlerPlayerX          = 8
+BattlerPlayerY          = 35
+BattlerEnemyX           = -7
+#-------------------------------
+[OCTILLERY2]
+BattlerEnemyY           = 60
+BattlerAltitude         = 0
+BattlerPlayerX          = 14
+BattlerPlayerY          = 60
+BattlerEnemyX           = 4
+#-------------------------------
+[SNEASLER]
+BattlerEnemyY           = 58
+BattlerAltitude         = 0
+BattlerPlayerX          = -5
+BattlerPlayerY          = 62
+BattlerEnemyX           = 6
+#-------------------------------
+[WYRDEER]
+BattlerEnemyY           = 35
+BattlerAltitude         = 0
+BattlerPlayerX          = 7
+BattlerPlayerY          = 47
+BattlerEnemyX           = 0
+#-------------------------------
+[KYUREM,5]
+SpriteScaleEnemy  		= 1
+BattlerEnemyY           = 21
+BattlerAltitude         = 0
+BattlerPlayerX          = 0
+BattlerPlayerY          = 46
+BattlerEnemyX           = 5
+#-------------------------------

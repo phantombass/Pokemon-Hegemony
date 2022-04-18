@@ -912,7 +912,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:ASTRALCLOAK,
   proc { |ability,battler,battle|
     battler.effects[PBEffects::Type3] = :COSMIC
     battle.pbShowAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1} is shrouded in the shadows!",battler.pbThis))
+    battle.pbDisplay(_INTL("{1} is cloaked in cosmic energy!",battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
 )
@@ -3798,6 +3798,48 @@ class PokeBattle_Move_511 < PokeBattle_StatUpMove
   end
 end
 
+class PokeBattle_Move_512 < PokeBattle_Move
+  def pbEffectGeneral(user)
+    if user.pbOpposingSide.effects[PBEffects::StealthRock] == false
+      user.pbOpposingSide.effects[PBEffects::StealthRock] = true
+      @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",
+         user.pbOpposingTeam(true)))
+    end
+  end
+end
+
+class PokeBattle_Move_513 < PokeBattle_StatUpMove
+  def initialize(battle,move)
+    super
+    @statUp = [:SPEED,1]
+  end
+
+  def pbRecoilDamage(user,target)
+    return (target.damageState.totalHPLost/3.0).round
+  end
+end
+
+class PokeBattle_Move_514 < PokeBattle_Move
+  def pbAdditionalEffect(user,target)
+    return if target.damageState.substitute
+    case @battle.pbRandom(3)
+    when 0 then target.pbPoison(user) if target.pbCanPoison?(user, false, self)
+    when 1 then target.pbSleep if target.pbCanSleep?(user, false, self)
+    when 2 then target.pbParalyze(user) if target.pbCanParalyze?(user, false, self)
+    end
+  end
+end
+
+class PokeBattle_Move_515 < PokeBattle_PoisonMove
+  def pbBaseDamage(baseDmg,user,target)
+    if target.pbHasAnyStatus? &&
+       (target.effects[PBEffects::Substitute]==0 || ignoresSubstitute?(user))
+      baseDmg *= 2
+    end
+    return baseDmg
+  end
+end
+
 class PokeBattle_Move
   def pbRecordDamageLost(user,target)
     damage = target.damageState.hpLost
@@ -3880,6 +3922,37 @@ class PokeBattle_Battle
     pbEndPrimordialWeather
   end
 
+  def pbStartTerrain(user,newTerrain,fixedDuration=true)
+    return if @field.terrain==newTerrain
+    @field.terrain = newTerrain
+    duration = (fixedDuration) ? 5 : -1
+    if duration>0 && user && user.itemActive?
+      duration = BattleHandlers.triggerTerrainExtenderItem(user.item,
+         newTerrain,duration,user,self)
+    end
+    @field.terrainDuration = duration
+    terrain_data = GameData::BattleTerrain.try_get(@field.terrain)
+    pbCommonAnimation(terrain_data.animation) if terrain_data
+    pbHideAbilitySplash(user) if user
+    case @field.terrain
+    when :Electric
+      pbDisplay(_INTL("An electric current runs across the battlefield!"))
+    when :Grassy
+      pbDisplay(_INTL("Grass grew to cover the battlefield!"))
+    when :Misty
+      pbDisplay(_INTL("Mist swirled about the battlefield!"))
+    when :Psychic
+      pbDisplay(_INTL("The battlefield got weird!"))
+    when :Poison
+      pbDisplay(_INTL("Toxic waste covered the battlefield!"))
+    end
+    # Check for terrain seeds that boost stats in a terrain
+    eachBattler { |b|
+	  b.pbCheckFormOnTerrainChange
+	  b.pbItemTerrainStatBoostCheck
+	}
+  end
+
   def pbEORTerrain
     # Count down terrain duration
     @field.terrainDuration -= 1 if @field.terrainDuration>0
@@ -3898,6 +3971,7 @@ class PokeBattle_Battle
         pbDisplay(_INTL("The toxic waste disappeared from the battlefield!"))
       end
       @field.terrain = :None
+      $terrain = 0
       # Start up the default terrain
       pbStartTerrain(nil, @field.defaultTerrain, false) if @field.defaultTerrain != :None
       return if @field.terrain == :None

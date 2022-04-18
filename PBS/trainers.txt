@@ -973,6 +973,51 @@ Pokemon = BEHEEYEM,69
 	Nature = RELAXED
 	Moves = EXPANDINGFORCE,BUGBUZZ,PROTECT,RECOVER
 #-------------------------------
+[LEADER_Misty,Gail]
+LoseText = "No amount of confusion can hold you down. Splendid job."
+Pokemon = OVERQWIL,77
+	Ability = INTIMIDATE
+	Item = BLACKSLUDGE
+	EVs = 252,4,0,252,0,0
+	IVs = 31,31,31,0,31,31
+	Nature = JOLLY
+	Moves = TOXICSPIKES,BARBBARRAGE,FLIPTURN,NIGHTRUSH
+Pokemon = CLAYDOL,77
+	Ability = LEVITATE
+	Item = LEFTOVERS
+	EVs = 252,0,0,0,4,252
+	IVs = 31,0,31,0,31,31
+	Nature = CALM
+	Moves = STEALTHROCK,SHOREUP,STARBEAM,EARTHPOWER
+Pokemon = BRELOOM,77
+	Ability = TECHNICIAN
+	Item = LIFEORB
+	EVs = 0,252,4,252,0,0
+	IVs = 31,0,31,0,31,31
+	Nature = ADAMANT
+	Moves = SWORDSDANCE,SPORE,MACHPUNCH,BULLETSEED
+Pokemon = FROSMOTH,77
+	Ability = ICESCALES
+	Item = EXPERTBELT
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,0,31,31
+	Nature = TIMID
+	Moves = QUIVERDANCE,BUGBUZZ,ICEBEAM,STARBEAM
+Pokemon = TOGEDEMARU2,77
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,0,31,31
+	Nature = ADAMANT
+	Moves = UTURN,SPIRITBREAK,RUBBLERAZE,ACCELEROCK
+Pokemon = KANGASKHAN,78
+	Ability = SCRAPPY
+	Item = KANGASKHANITE
+	EVs = 252,252,0,4,0,0
+	IVs = 31,0,31,0,31,31
+	Nature = ADAMANT
+	Moves = POWERUPPUNCH,BODYSLAM,EARTHQUAKE,WISH
+#-------------------------------
 # Militia Battles
 #-------------------------------
 [TEAMROCKET_M,Grunt]
@@ -1153,6 +1198,148 @@ Pokemon = INFERNAPE,53
 	Item = INFERNITE
 	Moves = CALMMIND,FLAMETHROWER,SLACKOFF,AURASPHERE
 #-------------------------------
+[ARMYBOSS,Ahab,1]
+LoseText = "Hmmph."
+Pokemon = STAKATAKA,79
+	Nature = LONELY
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,0,0,31,31
+	Ability = BEASTBOOST
+	Item = CHOPLEBERRY
+	Moves = TRICKROOM,GYROBALL,ROCKSLIDE,PROTECT
+Pokemon = URSHIFU,79
+	Nature = ADAMANT
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = UNSEENFIST
+	Item = CHOICEBAND
+	Moves = WICKEDBLOW,CLOSECOMBAT,UTURN,IRONHEAD
+Pokemon = INFERNAPE,80
+	Nature = TIMID
+	EVs = 0,0,0,252,252,4
+	IVs = 31,31,31,31,31,31
+	Item = INFERNITE
+	Moves = CALMMIND,HEATWAVE,SLACKOFF,AURASPHERE
+#-------------------------------
+[ARMYBOSS,Ahab,2]
+LoseText = "Hmmph."
+Pokemon = MIENSHAO,87
+	Nature = JOLLY
+	Item = LIFEORB
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = REGENERATOR
+	Moves = FAKEOUT,UTURN,CLOSECOMBAT,KNOCKOFF
+Pokemon = LYCANROC,87
+	Nature = JOLLY
+	Form = 2
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = TOUGHCLAWS
+	Item = FOCUSSASH
+	Moves = ACCELEROCK,CRUNCH,CLOSECOMBAT,PROTECT
+Pokemon = STAKATAKA,88
+	Nature = LONELY
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,0,0,31,31
+	Ability = BEASTBOOST
+	Item = CHOPLEBERRY
+	Moves = TRICKROOM,GYROBALL,ROCKSLIDE,PROTECT
+Pokemon = URSHIFU,88
+	Nature = ADAMANT
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = UNSEENFIST
+	Item = CHOICEBAND
+	Moves = WICKEDBLOW,CLOSECOMBAT,UTURN,IRONHEAD
+Pokemon = SWAMPERT2,89
+	Nature = CAREFUL
+	EVs = 252,4,0,0,0,252
+	IVs = 31,31,31,31,31,31
+	Ability = NIGHTFALL
+	Item = CHOPLEBERRY
+	Moves = KNOCKOFF,ROCKSLIDE,CRUNCH,PROTECT
+Pokemon = INFERNAPE,90
+	Nature = TIMID
+	EVs = 0,0,0,252,252,4
+	IVs = 31,31,31,31,31,31
+	Item = INFERNITE
+	Moves = CALMMIND,HEATWAVE,SLACKOFF,AURASPHERE
+#-------------------------------
+[OFFCORP,Bruce]
+LoseText = "Oh. That's unfortunate."
+Pokemon = OCTILLERY2,79
+	Nature = MODEST
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Ability = TIGHTFOCUS
+	Item = AIRBALLOON
+	Moves = CHARGEBEAM,SEARINGSHOT,ICEBEAM,OVERCHARGE
+Pokemon = KYUREM,79
+	Form = 1
+	Nature = TIMID
+	EVs = 0,0,4,252,252,0
+	IVs = 31,31,31,31,31,31
+	Ability = TURBOBLAZE
+	Item = LIFEORB
+	Moves = CHILLINGCRY,ROOST,FUSIONFLARE,DRACOMETEOR
+Pokemon = LOPUNNY,80
+	Nature = ADAMANT
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = GUTS
+	Happiness = 255
+	Item = LOPUNNITE
+	Moves = FAKEOUT,RETURN,DRAINPUNCH,ICEPUNCH
+#-------------------------------
+[OFFCORP,Bruce,1]
+LoseText = "Oh. That's unfortunate."
+Pokemon = DARMANITAN,88
+	Form = 1
+	Nature = JOLLY
+	Item = CHOICESCARF
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = GORILLATACTICS
+	Moves = ICICLECRASH,FLAREBLITZ,EARTHQUAKE,UTURN
+Pokemon = WYRDEER,88
+	Nature = JOLLY
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = ASTRALCLOAK
+	Item = LEFTOVERS
+	Moves = PSYSHIELDBASH,COSMICFURY,MOONLIGHT,PROTECT
+Pokemon = OCTILLERY2,89
+	Nature = MODEST
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Ability = TIGHTFOCUS
+	Item = AIRBALLOON
+	Moves = CHARGEBEAM,FLAMETHROWER,ICEBEAM,OVERCHARGE
+Pokemon = BUZZWOLE,89
+	Nature = ADAMANT
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = BEASTBOOST
+	Item = LEFTOVERS
+	Moves = LEECHLIFE,DRAINPUNCH,ROOST,ICEPUNCH
+Pokemon = KYUREM,90
+	Nature = TIMID
+	Form = 5
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Ability = MOLDBREAKER
+	Item = EXPERTBELT
+	Moves = ICEBEAM,PERFECTIONPULSE,FUSIONFLARE,THUNDERBOLT
+Pokemon = LOPUNNY,90
+	Nature = ADAMANT
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Ability = GUTS
+	Happiness = 255
+	Item = LOPUNNITE
+	Moves = FAKEOUT,RETURN,DRAINPUNCH,ICEPUNCH
+#-------------------------------
 # Navy Battles
 #-------------------------------
 [NAVY,Grunt]
@@ -1266,10 +1453,91 @@ Pokemon = MANAPHY,65
 	Moves = TAILGLOW,SURF,ENERGYBALL,ICEBEAM
 Pokemon = GARCHOMP2,66
 	EVs = 4,252,0,252,0,0
-	IVs = 31,0,31,31,31,31
+	IVs = 31,31,31,31,31,31
 	Nature = JOLLY
 	Item = WGARCHOMPITE
 	Moves = SWORDSDANCE,BODYSLAM,EARTHQUAKE,BRICKBREAK
+#-------------------------------
+# Air Force Battles
+#-------------------------------
+[AIRFORCE,Grunt]
+LoseText = "This can't be good."
+Pokemon = SCYTHER,73
+	EVs = 0,252,0,252,0,4
+	IVs = 31,0,31,31,31,31
+	Nature = JOLLY
+	Item = EVIOLITE
+	Ability = TECHNICIAN
+	Moves = SWORDSDANCE,DUALWINGBEAT,BUGBITE,ROOST
+#-------------------------------
+[AIRFORCE,Grunt,1]
+LoseText = "This can't be good."
+Pokemon = GYARADOS,72
+	EVs = 0,252,0,252,0,4
+	IVs = 31,0,31,31,31,31
+	Nature = JOLLY
+	Item = WACANBERRY
+	Ability = MOXIE
+	Moves = DRAGONDANCE,WATERFALL,EARTHQUAKE,ICEFANG
+Pokemon = VOLCARONA,72
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = HEAVYDUTYBOOTS
+	Ability = SWARM
+	Moves = QUIVERDANCE,FIERYDANCE,BUGBUZZ,GIGADRAIN
+#-------------------------------
+[AIRFORCECAPTAIN,Gavin]
+LoseText = "Oh boy."
+Pokemon = SCIZOR,74
+	EVs = 252,16,0,0,0,240
+	IVs = 31,0,31,31,31,31
+	Nature = ADAMANT
+	Item = SCIZORITE
+	Ability = TECHNICIAN
+	Moves = SWORDSDANCE,BULLETPUNCH,ROOST,KNOCKOFF
+#-------------------------------
+[AIRFORCEBOSS,Winston]
+LoseText = "Well, I guess that settles it, then."
+Pokemon = GLISCOR,73
+	EVs = 252,4,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Item = TOXICORB
+	Ability = POISONHEAL
+	Moves = EARTHQUAKE,UTURN,PROTECT,KNOCKOFF
+Pokemon = KLEAVOR,73
+	EVs = 0,252,0,0,252,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Ability = STEADFAST
+	Item = HEAVYDUTYBOOTS
+	Moves = STONEAXE,XSCISSOR,UTURN,CLOSECOMBAT
+Pokemon = HAWLUCHA,73
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Ability = UNBURDEN
+	Item = SITRUSBERRY
+	Moves = ACROBATICS,SUBSTITUTE,BULKUP,DRAINPUNCH
+Pokemon = LUMINEON2,73
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	Moves = BUGBUZZ,ICEBEAM,GIGADRAIN,SURF
+Pokemon = GENESECT,74
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Item = CHOICESCARF
+	Moves = UTURN,BUGBUZZ,ICEBEAM,POLARITYPULSE
+Pokemon = CHATOT,75
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = CHATOTITE
+	Moves = CHATTER,BOOMBURST,WICKEDWIND,NASTYPLOT
 #-------------------------------
 # Rival Battles
 #-------------------------------
@@ -1512,8 +1780,78 @@ Pokemon = MAGNEZONE,67
 Pokemon = SWAMPERT2,69
 	EVs = 252,252,0,4,0,0
 	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
 	Item = CHOPLEBERRY
 	Moves = ROCKSLIDE,KNOCKOFF,EARTHQUAKE,YAWN
+#-------------------------------
+#Multi Battle Partners
+#-------------------------------
+[POKEMONTRAINER_Joseph,Joseph]
+LoseText = "You just keep getting better."
+Pokemon = GRIMMSNARL,78
+	Ability = PRANKSTER
+	Item = LIGHTCLAY
+	Nature = IMPISH
+	EVs = 252,4,252,0,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = FAKEOUT,LIGHTSCREEN,REFLECT,SPIRITBREAK
+Pokemon = MEW,79
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Item = COLBURBERRY
+	Ability = SYNCHRONIZE
+	Nature = MODEST
+	Moves = PSYCHIC,STARBEAM,AURASPHERE,SOFTBOILED
+Pokemon = SHARPEDO2,80
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Item = WSHARPEDONITE
+	Nature = JOLLY
+	Moves = FLAREBLITZ,SPECTRALTHIEF,CLOSECOMBAT,LIQUIDATION
+#-------------------------------
+[POKEMONTRAINER_Joseph,Joseph,1]
+LoseText = "You just keep getting better."
+Pokemon = GRIMMSNARL,78
+	Ability = PRANKSTER
+	Item = LIGHTCLAY
+	Nature = IMPISH
+	EVs = 252,4,252,0,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = FAKEOUT,LIGHTSCREEN,REFLECT,SPIRITBREAK
+Pokemon = SNEASLER,78
+	Ability = PRESSURE
+	Item = LIFEORB
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = POISONJAB,CLOSECOMBAT,KNOCKOFF,SWORDSDANCE
+Pokemon = SUNFLORA,79
+	Ability = WONDERGUARD
+	Item = FOCUSSASH
+	Nature = JOLLY
+	EVs = 252,0,4,0,252,0
+	IVs = 31,31,31,31,31,31
+	Moves = GIGADRAIN,FLAMETHROWER,EARTHPOWER,SYNTHESIS
+Pokemon = DRACOVISH,79
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Item = CHOICESCARF
+	Ability = STRONGJAW
+	Nature = JOLLY
+	Moves = FISHIOUSREND,DRACOFANGS,CRUNCH,ROCKSLIDE
+Pokemon = MEW,79
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Item = COLBURBERRY
+	Ability = SYNCHRONIZE
+	Nature = MODEST
+	Moves = PSYCHIC,STARBEAM,AURASPHERE,SOFTBOILED
+Pokemon = SHARPEDO2,80
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Item = WSHARPEDONITE
+	Nature = JOLLY
+	Moves = FLAREBLITZ,SPECTRALTHIEF,CLOSECOMBAT,LIQUIDATION
 #-------------------------------
 #Level Trainer
 #-------------------------------
