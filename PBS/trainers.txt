@@ -665,6 +665,171 @@ Pokemon = GYARADOS,69
 	IVs = 31,31,31,31,31,31
 	Moves = WATERFALL,CRUNCH,SUBSTITUTE,DRAGONDANCE
 #-------------------------------
+# Route 12
+#-------------------------------
+[COOLTRAINER_F,Marge]
+LoseText = "Oh wow."
+Pokemon = CROBAT,76
+	Nature = MODEST
+	Ability = INNERFOCUS
+	Item = BLACKSLUDGE
+	EVs = 252,0,4,252,0,0
+	IVs = 31,0,31,31,31,31
+	Moves = NASTYPLOT,SLUDGEBOMB,GIGADRAIN,WINDDRILL
+Pokemon = DARMANITAN,76
+	Nature = JOLLY
+	Ability = SHEERFORCE
+	Item = CHOICEBAND
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = FIREPUNCH,ROCKSLIDE,EARTHQUAKE,UTURN
+Pokemon = INTELEON,77
+	Nature = MODEST
+	Item = INTELEONITE
+	Ability = TIGHTFOCUS
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = SNIPESHOT,ICEBEAM,STARBEAM,SUCKERPUNCH
+#-------------------------------
+[COOLTRAINER_M,Stefan]
+LoseText = "Oh wow."
+Pokemon = TOXTRICITY,76
+	Nature = MODEST
+	Ability = PUNKROCK
+	Item = CHOICESPECS
+	EVs = 252,0,4,252,0,0
+	IVs = 31,0,31,31,31,31
+	Moves = DEATHTOLL,BOOMBURST,OVERDRIVE,VOLTSWITCH
+Pokemon = MANDIBUZZ,76
+	Nature = CAREFUL
+	Ability = OVERCOAT
+	Item = HEAVYDUTYBOOTS
+	EVs = 252,0,0,20,0,236
+	IVs = 31,31,31,31,31,31
+	Moves = FOULPLAY,ROOST,UTURN,DEFOG
+Pokemon = CHARIZARD,77
+	Nature = JOLLY
+	Item = CHARIZARDITEX
+	EVs = 216,40,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = DRAGONDANCE,ROOST,FIREPUNCH,DRAGONCLAW
+#-------------------------------
+# Route 13
+#-------------------------------
+[COOLTRAINER_M,Ashton]
+LoseText = "Oh wow."
+Pokemon = CINDERACE,78
+	Nature = ADAMANT
+	Item = CINDERITE
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = PYROBALL,ZENHEADBUTT,SUCKERPUNCH,HIGHJUMPKICK
+#-------------------------------
+[COOLTRAINER_M,Zack]
+LoseText = "Oh wow."
+Pokemon = MAROWAK,76
+	Form = 1
+	Nature = ADAMANT
+	Ability = ROCKHEAD
+	Item = THICKCLUB
+	EVs = 252,252,4,0,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = SHADOWBONE,BONEMERANG,FLAREBLITZ,STEALTHROCK
+Pokemon = STARMIE,76
+	Nature = TIMID
+	Ability = REGENERATOR
+	Item = LIFEORB
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = SURF,STARBEAM,ICEBEAM,RECOVER
+Pokemon = GARCHOMP,77
+	Nature = JOLLY
+	Item = GARCHOMPITE
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = SWORDSDANCE,SCALESHOT,EARTHQUAKE,FIREFANG
+#-------------------------------
+[COOLTRAINER_F,Sarah]
+LoseText = "Oh wow."
+Pokemon = BISHARP,76
+	Nature = ADAMANT
+	Ability = DEFIANT
+	Item = AIRBALLOON
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = SUCKERPUNCH,IRONHEAD,KNOCKOFF,SWORDSDANCE
+Pokemon = GYARADOS,76
+	Nature = JOLLY
+	Ability = INTIMIDATE
+	Item = WACANBERRY
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = DRAGONDANCE,WATERFALL,EARTHQUAKE,ICEFANG
+Pokemon = GARDEVOIR,77
+	Nature = TIMID
+	Item = GARDEVOIRITE
+	Ability = TRACE
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = HYPERVOICE,PSYCHIC,MYSTICALFIRE,STARBEAM
+#-------------------------------
+# Nitro Gym
+#-------------------------------
+[COOLTRAINER_F,Molly]
+LoseText = "Oh wow."
+Pokemon = SEVIPER,76
+	Nature = ADAMANT
+	Ability = MEDUSOID
+	Item = BLACKSLUDGE
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = COIL,EARTHQUAKE,POISONJAB,DRACOFANGS
+Pokemon = ZANGOOSE,76
+	Nature = JOLLY
+	Ability = TOXICBOOST
+	Item = TOXICORB
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = SWORDSDANCE,FEINT,CLOSECOMBAT,XSCISSOR
+#-------------------------------
+[COOLTRAINER_F,Carrie]
+LoseText = "Oh wow."
+Pokemon = TOXICROAK,77
+	Nature = JOLLY
+	Ability = DRYSKIN
+	Item = BLACKSLUDGE
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = SWORDSDANCE,DRAINPUNCH,POISONJAB,BULLETPUNCH
+#-------------------------------
+[COOLTRAINER_F,Hellen]
+LoseText = "Oh wow."
+Pokemon = PELIPPER,76
+	Nature = TIMID
+	Ability = DRIZZLE
+	Item = WEATHERROCK
+	EVs = 252,0,0,252,4,0
+	IVs = 31,0,31,31,31,31
+	Moves = SCALD,HURRICANE,ROOST,UTURN
+Pokemon = QWILFISH,76
+	Form = 1
+	Nature = JOLLY
+	Ability = SWIFTSWIM
+	Item = EVIOLITE
+	EVs = 252,0,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = SWORDSDANCE,NIGHTSLASH,BARBBARRAGE,LIQUIDATION
+#-------------------------------
+[COOLTRAINER_F,Robin]
+LoseText = "Oh wow."
+Pokemon = RILLABOOM,77
+	Nature = JOLLY
+	Ability = GRASSYSURGE
+	Item = RILLABOOMITE
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = GRASSYGLIDE,DRAINPUNCH,WOODHAMMER,HIGHHORSEPOWER
+#-------------------------------
 # Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
