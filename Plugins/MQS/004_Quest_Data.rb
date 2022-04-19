@@ -35,6 +35,7 @@ module QuestModule
     :Stage28 => "Speak to Joseph.",
     :Stage29 => "Challenge the Gym.",
     :Stage30 => "Help save the Underground Village.",
+    :Stage31 => "Investigate Abandoned Warehouse",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -64,7 +65,8 @@ module QuestModule
     :Location27 => "Carbo Valley",
     :Location28 => "Mangan Village",
     :Location29 => "Nitro City",
-    :Location30 => "Underground Village"
+    :Location30 => "Underground Village",
+    :Location31 => "Underground Village"
   }
 
 #====================================

@@ -14,6 +14,11 @@ module BattleScripts
     "turnStart0" => "I hope you're ready to learn about the power of Cosmic-types."
   }
 
+  GAIL = {
+    "afterLastOpp" => "I see you've picked up rather fast. Think you can handle this one, though?",
+    "turnStart0" => "You'll be so confused in this battle. It's ok, you'll learn."
+  }
+
   GORDON = {
     "afterLastOpp" => proc do
       pname = $Trainer.name
@@ -40,6 +45,16 @@ module BattleScripts
   ARMY1 = {
     "afterLastOpp" => "How interesting...",
     "turnStart0" => "Stop while you can kid. You're way out of your depth."
+  }
+
+  ARMY2 = {
+    "afterLastOpp" => "How infuriating...",
+    "turnStart0" => "Don't think you can beat my team again like you did last time."
+  }
+
+  OFFCORP1 = {
+    "afterLastOpp" => "I can't say I was expecting this.",
+    "turnStart0" => "Prepare to be overrun."
   }
 
   NAVY1 = {

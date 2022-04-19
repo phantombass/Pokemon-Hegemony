@@ -9257,3 +9257,24 @@ BattlerPlayerX          = 0
 BattlerPlayerY          = 46
 BattlerEnemyX           = 5
 #-------------------------------
+[OSHAWOTT2]
+BattlerEnemyY           = 64
+BattlerAltitude         = 0
+BattlerPlayerX          = 7
+BattlerPlayerY          = 72
+BattlerEnemyX           = -1
+#-------------------------------
+[DEWOTT2]
+BattlerEnemyY           = 52
+BattlerAltitude         = 0
+BattlerPlayerX          = 6
+BattlerPlayerY          = 62
+BattlerEnemyX           = 5
+#-------------------------------
+[SAMUROTT2]
+BattlerEnemyY           = 29
+BattlerAltitude         = 0
+BattlerPlayerX          = 2
+BattlerPlayerY          = 40
+BattlerEnemyX           = -1
+#-------------------------------

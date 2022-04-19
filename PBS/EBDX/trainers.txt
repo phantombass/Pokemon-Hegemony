@@ -3,6 +3,10 @@
 BattleBGM        = B2W2-RivalTheme.ogg
 BattleVS         = classicVS
 #-------------------------------
+[RIVAL2]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = classicVS
+#-------------------------------
 [LEADER_Blaine]
 BattleBGM        = Gym Leader.ogg
 BattleVS         = plasmaSM
@@ -19,6 +23,12 @@ Ace				 = 6
 BattleBGM        = Gym Leader.ogg
 BattleVS         = plasmaSM
 BattleScript	 = ASTRID
+Ace				 = 6
+#-------------------------------
+[LEADER_Misty]
+BattleBGM        = Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = GAIL
 Ace				 = 6
 #-------------------------------
 [LEADER_Brock]
@@ -68,6 +78,7 @@ BattleVS         = plasmaSM
 #-------------------------------
 [ARMYBOSS,Ahab,1]
 BattleBGM        = Goldeneye - Silo.ogg
+BattleScript	 = ARMY2
 BattleVS         = plasmaSM
 #-------------------------------
 [NAVYBOSS]
@@ -81,6 +92,7 @@ BattleScript	 = AIRFORCE1
 BattleVS         = plasmaSM
 #-------------------------------
 [OFFCORP]
-BattleBGM        = Goldeneye - Cradle.ogg
+BattleBGM        = Goldeneye - Silo.ogg
+BattleScript	 = OFFCORP1
 BattleVS         = plasmaSM
 #-------------------------------
