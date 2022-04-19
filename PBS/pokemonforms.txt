@@ -3272,3 +3272,47 @@ Generation = 6
 BattlerPlayerY = 50
 BattlerEnemyY = 10
 #-------------------------------
+[ETERNATUS,1]
+FormName = Mega Eternatus
+MegaStone = ETERNATITE
+Type1 = POISON
+Type2 = DRAGON
+BaseStats = 140,85,115,150,175,115
+EffortPoints = 3,0,0,0,0,0
+Happiness = 0
+Abilities = ASTRALCLOAK
+HiddenAbility = ASTRALCLOAK
+Height = 20.0
+Weight = 950.0
+Generation = 8
+BattlerPlayerX = 0
+BattlerPlayerY = 48
+BattlerEnemyX = 4
+BattlerEnemyY = 4
+BattlerShadowX = 0
+BattlerShadowSize = 3
+#-------------------------------
+[RILLABOOM,1]
+FormName = Mega Rillaboom
+MegaStone = RILLABOOMITE
+BaseStats = 100,155,115,85,60,115
+Abilities = GRASSYSURGE
+HiddenAbility = GRASSYSURGE
+Generation = 8
+#-------------------------------
+[CINDERACE,1]
+FormName = Mega Cinderace
+MegaStone = CINDERITE
+BaseStats = 80,141,95,144,75,95
+Abilities = LIBERO
+HiddenAbility = LIBERO
+Generation = 8
+#-------------------------------
+[INTELEON,1]
+FormName = Mega Inteleon
+MegaStone = INTELEONITE
+BaseStats = 70,105,75,145,160,75
+Abilities = TIGHTFOCUS
+HiddenAbility = TIGHTFOCUS
+Generation = 8
+#-------------------------------

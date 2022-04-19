@@ -35,6 +35,8 @@ module QuestModule
     :Stage28 => "Speak to Joseph.",
     :Stage29 => "Challenge the Gym.",
     :Stage30 => "Help save the Underground Village.",
+    :Stage31 => "Investigate Abandoned Warehouse.",
+    :Stage21 => "Speak to Joseph.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -64,7 +66,9 @@ module QuestModule
     :Location27 => "Carbo Valley",
     :Location28 => "Mangan Village",
     :Location29 => "Nitro City",
-    :Location30 => "Underground Village"
+    :Location30 => "Underground Village",
+    :Location31 => "Underground Village",
+    :Location32 => "Underground Village"
   }
 
 #====================================
@@ -104,5 +108,22 @@ module QuestModule
       :Location1 => "Neonn Town",
       :Location2 => "Route 4"
     }
-
+    #====================================
+    Quest6 = {
+      :ID => "6",
+      :Name => "Her Precious",
+      :QuestDescription => "Find the lost Riolu!",
+      :Stage1 => "Find the woman's Riolu.",
+      :Location1 => "Route 12 or 13"
+    }
+    #====================================
+    Quest7 = {
+      :ID => "7",
+      :Name => "The Secret Stone",
+      :QuestDescription => "Find the Rare Stone!",
+      :Stage1 => "Find the Rare Stone.",
+      :Stage2 => "Take Rare Stone back to Scientist.",
+      :Location1 => "Cobalt Cave",
+      :Location2 => "Nitro City"
+    }
 end

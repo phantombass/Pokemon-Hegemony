@@ -933,3 +933,7 @@
 908,WBLAZIKENITE,Wartime Blazikenite,Blazikenites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Blaziken hold it, and it will be able to Mega Evolve.",0,0,12,
 909,WSWAMPERTITE,Wartime Swampertite,Swampertites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Swampert hold it, and it will be able to Mega Evolve.",0,0,12,
 910,WSHARPEDONITE,Wartime Sharpedonite,Wartime Sharpedonites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Sharpedo hold it, and it will be able to Mega Evolve.",0,0,12,
+911,ETERNATITE,Eternatite,Eternatites,1,0,"One of a variety of mysterious Mega Stones. Have Eternatus hold it, and it will be able to Mega Evolve.",0,0,12,
+912,RILLABOOMITE,Rillaboomite,Rillaboomites,1,0,"One of a variety of mysterious Mega Stones. Have Rillaboom hold it, and it will be able to Mega Evolve.",0,0,12,
+913,CINDERITE,Cinderite,Cinderites,1,0,"One of a variety of mysterious Mega Stones. Have Cinderace hold it, and it will be able to Mega Evolve.",0,0,12,
+914,INTELEONITE,Inteleonite,Inteleonites,1,0,"One of a variety of mysterious Mega Stones. Have Inteleon hold it, and it will be able to Mega Evolve.",0,0,12,

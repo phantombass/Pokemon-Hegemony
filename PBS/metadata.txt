@@ -970,3 +970,28 @@ SnapEdges = true
 ShowArea = true
 MapPosition = 0,4,14
 SnapEdges = true
+#-------------------------------
+[202]
+# Hidden Grotto - Route 12
+MapPosition = 0,9,17
+SnapEdges = true
+#-------------------------------
+[203]
+# Hidden Grotto - Route 13
+MapPosition = 0,6,16
+SnapEdges = true
+#-------------------------------
+[204]
+# Hidden Grotto - Weather
+MapPosition = 0,6,16
+SnapEdges = true
+#-------------------------------
+[205]
+# Abandoned Weather Station
+MapPosition = 0,6,16
+SnapEdges = true
+#-------------------------------
+[206]
+# Inactive Power Plant
+MapPosition = 0,4,14
+SnapEdges = true
