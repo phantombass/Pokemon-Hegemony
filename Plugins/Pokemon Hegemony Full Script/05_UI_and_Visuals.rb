@@ -793,6 +793,30 @@ class PokemonSummary_Scene
     end
   end
 
+  def change_Ability
+    commands = []
+    ids = []
+    pkmn = @pokemon
+    loop do
+      abils = pkmn.getAbilityList
+      ability_commands = []
+      abil_cmd = 0
+      for i in abils
+        ability_commands.push(((i[1] < 2) ? "" : "(H) ") + GameData::Ability.get(i[0]).name)
+        abil_cmd = ability_commands.length - 1 if pkmn.ability_id == i[0]
+      end
+      abil_cmd = pbShowCommands(ability_commands, abil_cmd)
+      next if abil_cmd < 0
+      pkmn.ability_index = abils[abil_cmd][1]
+      pkmn.ability = nil
+      dorefresh = true
+      if dorefresh
+        drawPage(@page)
+        break
+      end
+    end
+  end
+
   def drawPage(page)
     if @pokemon.egg?
       drawPageOneEgg
@@ -1143,6 +1167,7 @@ class PokemonSummary_Scene
     cmdPokedex  = -1
     cmdNature = -1
     cmdStatChange = -1
+    cmdAbility = -1
     cmdMark     = -1
     if !@pokemon.egg?
       commands[cmdGiveItem = commands.length] = _INTL("Give item")
@@ -1151,6 +1176,7 @@ class PokemonSummary_Scene
       if $game_switches[75]
         commands[cmdNature = commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
         commands[cmdStatChange = commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
+        commands[cmdAbility = commands.length] = _INTL("Change Ability") if @page == 2 || @page == 3 || @page == 4
       end
     end
     commands[cmdMark = commands.length]       = _INTL("Mark")
@@ -1180,6 +1206,8 @@ class PokemonSummary_Scene
       change_Nature
     elsif cmdStatChange>=0 && command==cmdStatChange
       change_Stats
+    elsif cmdAbility>=0 && command==cmdAbility
+      change_Ability
     elsif cmdMark>=0 && command==cmdMark
       dorefresh = pbMarking(@pokemon)
     end
@@ -1379,9 +1407,9 @@ class BattleSceneRoom
 
   def updateTerrain
     self.setTerrain
-    for j in 0...3
-      next if !@sprites["t_grassy#{j}"]
-      @sprites["t_grassy#{j}"].update
+    for j in 0...2
+      next if !@sprites["t_gr#{j}"]
+      @sprites["t_gr#{j}"].update
     end
     for j in 0...2
       next if !@sprites["t_misty#{j}"]
@@ -1414,14 +1442,15 @@ class BattleSceneRoom
     end
   end
   def drawGrassy
-    $drawGrass = 1
-    for j in 0...3
-      @sprites["t_grassy#{j}"] = Sprite.new(@viewport)
-      @sprites["t_grassy#{j}"].bitmap = pbBitmap("Graphics/EBDX/Battlebacks/Elements/tallGrass")
-      @sprites["t_grassy#{j}"].bottom!
-      @sprites["t_grassy#{j}"].x = rand(600)+20
-      @sprites["t_grassy#{j}"].y = rand(350)+150
-      @sprites["t_grassy#{j}"].color = Color.green
+    for j in 0...2
+      next if @sprites["t_gr#{j}"]
+      @sprites["t_gr#{j}"] = ScrollingSprite.new(@viewport)
+      @sprites["t_gr#{j}"].default!
+      @sprites["t_gr#{j}"].z = 150
+      @sprites["t_gr#{j}"].y = 200
+      @sprites["t_gr#{j}"].setBitmap("Graphics/EBDX/Animations/Weather/Grassy")
+      @sprites["t_gr#{j}"].speed = 1
+      @sprites["t_gr#{j}"].direction = j == 0 ? 1 : -1
     end
   end
   def drawMisty
@@ -1470,11 +1499,10 @@ class BattleSceneRoom
     end
   end
   def deleteGrassy
-    $drawGrass = 0
-    for j in 0...3
-      next if !@sprites["t_grassy#{j}"]
-      @sprites["t_grassy#{j}"].dispose
-      @sprites.delete("t_grassy#{j}")
+    for j in 0...2
+      next if !@sprites["t_gr#{j}"]
+      @sprites["t_gr#{j}"].dispose
+      @sprites.delete("t_gr#{j}")
     end
   end
   def deleteMisty
@@ -1496,68 +1524,6 @@ class BattleSceneRoom
       next if !@sprites["t_tox#{j}"]
       @sprites["t_tox#{j}"].dispose
       @sprites.delete("t_tox#{j}")
-    end
-  end
-  def position
-    for key in @sprites.keys
-      next if key == "bg" || key == "0" || key == "void" || key.include?("w_sunny") || key.include?("w_sand") || key.include?("w_fog")
-      # updates fancy light effects
-      if key.include?("sLight")
-        i = key.gsub("sLight","").to_i
-        if @sprites["sLight#{i}"] && @scene.vector
-          x, y = self.stageLightPos(i)
-          @sprites["sLight#{i}"].ex = x
-          @sprites["sLight#{i}"].ey = y
-          @sprites["sLight#{i}"].update
-        end
-      end
-    #  p key
-      if $drawGrass == 1
-        x = @sprites["bg"].x - @sprites["bg"].zoom_x
-        y = @sprites["bg"].y - @sprites["bg"].zoom_y
-        z = @sprites["bg"].zoom_x
-      else
-        x = @sprites["bg"].x - (@sprites["bg"].ox - @sprites[key].ex)*@sprites["bg"].zoom_x
-        y = @sprites["bg"].y - (@sprites["bg"].oy - @sprites[key].ey)*@sprites["bg"].zoom_y
-        z = @sprites[key].param * @sprites["bg"].zoom_x
-        @sprites[key].x = x
-        @sprites[key].y = y
-      end
-      if ["sky", "base", "water"].string_include?(key) || (key.include?("img") && @data[key].try_key?(:flat))
-        @sprites[key].zoom_x = @sprites["bg"].zoom_x * (@sprites[key].zx ? @sprites[key].zx : 1)
-        @sprites[key].zoom_y = @sprites["bg"].zoom_y * (@sprites[key].zy ? @sprites[key].zy : 1)
-      elsif key.include?("sLight") && @sprites[key] && @scene.vector
-        z = ((@scene.vector.zoom1**0.6) * ((i%2 == 0) ? 2 : 1) * 1.25)
-        @sprites[key].zoom_x = z * @sprites["bg"].zoom_x * @sprites[key].zx
-        @sprites[key].zoom_y = z * @sprites["bg"].zoom_y * @sprites[key].zy
-      else
-        @sprites[key].zoom = z
-      end
-      # effect for elements blowing side to side with wind
-      if (key.include?("grass") || key.include?("tree") || key.include?("img"))
-        if key.include?("grass") || key.include?("tree") || (@data[key] && @data[key].has_key?(:effect) && @data[key][:effect] == "wind")
-          w = key.include?("tree") ? ((@wind-90)*0.25).to_i + 90 : @wind
-          @sprites[key].skew(w)
-          @sprites[key].ox = @sprites[key].x_mid
-        end
-      end
-      # effect for rotating elements
-      if key.include?("img") && (@data[key].has_key?(:effect) && @data[key][:effect] == "rotate")
-        @sprites[key].angle += @sprites[key].direction * @sprites[key].speed/self.delta
-      end
-      # effect for lighting updates
-      if key.include?("aLight") || key.include?("cLight")
-        @sprites[key].opacity -= @sprites[key].toggle*@sprites[key].speed/self.delta
-        @sprites[key].toggle *= -1 if @sprites[key].opacity <= 95 || @sprites[key].opacity >= @sprites[key].end_x*255
-      end
-      if key.include?("bLight")
-        if @wWait*self.delta % @sprites[key].speed == 0
-          @sprites[key].bitmap = @sprites[key].storedBitmap.clone
-          @sprites[key].bitmap.hue_change((rand(8)*45/self.delta).round)
-          @sprites[key].opacity = (rand(4) < 2 ? 192 : 0)
-        end
-      end
-      @sprites[key].update
     end
   end
   #-----------------------------------------------------------------------------
