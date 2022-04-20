@@ -1253,7 +1253,7 @@ Pokemon = GENGAR,25
 [TEAMROCKET_F,Grunt]
 LoseText = "Get out of here, kid."
 Pokemon = METANG,25
-	Item = KASIBBERRY
+	Item = OCCABERRY
 	Moves = BULLETPUNCH,BRICKBREAK,ZENHEADBUTT,ICEPUNCH
 #-------------------------------
 [TEAMROCKET_F,Grunt,1]
@@ -1265,7 +1265,7 @@ Pokemon = METAGROSS,45
 [ROCKETBOSS,Armand]
 LoseText = "Hmm. Quite curious."
 Pokemon = METANG,25
-	Item = KASIBBERRY
+	Item = OCCABERRY
 	Moves = BULLETPUNCH,STEALTHROCK,ZENHEADBUTT,ICEPUNCH
 Pokemon = HAUNTER,25
 	Item = FOCUSSASH
@@ -1278,7 +1278,7 @@ Pokemon = DRAKLOAK2,25
 [ROCKETBOSS,Armand,1]
 LoseText = "Hmm. Defeated again..."
 Pokemon = METAGROSS,45
-	Item = KASIBBERRY
+	Item = OCCABERRY
 	Moves = BULLETPUNCH,STEALTHROCK,ZENHEADBUTT,ICEPUNCH
 Pokemon = DRAGAPULT2,45
 	Ability = CLEARBODY
