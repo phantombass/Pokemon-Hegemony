@@ -793,6 +793,30 @@ class PokemonSummary_Scene
     end
   end
 
+  def change_Ability
+    commands = []
+    ids = []
+    pkmn = @pokemon
+    loop do
+      abils = pkmn.getAbilityList
+      ability_commands = []
+      abil_cmd = 0
+      for i in abils
+        ability_commands.push(((i[1] < 2) ? "" : "(H) ") + GameData::Ability.get(i[0]).name)
+        abil_cmd = ability_commands.length - 1 if pkmn.ability_id == i[0]
+      end
+      abil_cmd = pbShowCommands(ability_commands, abil_cmd)
+      next if abil_cmd < 0
+      pkmn.ability_index = abils[abil_cmd][1]
+      pkmn.ability = nil
+      dorefresh = true
+      if dorefresh
+        drawPage(@page)
+        break
+      end
+    end
+  end
+
   def drawPage(page)
     if @pokemon.egg?
       drawPageOneEgg
@@ -1143,6 +1167,7 @@ class PokemonSummary_Scene
     cmdPokedex  = -1
     cmdNature = -1
     cmdStatChange = -1
+    cmdAbility = -1
     cmdMark     = -1
     if !@pokemon.egg?
       commands[cmdGiveItem = commands.length] = _INTL("Give item")
@@ -1151,6 +1176,7 @@ class PokemonSummary_Scene
       if $game_switches[75]
         commands[cmdNature = commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
         commands[cmdStatChange = commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
+        commands[cmdAbility = commands.length] = _INTL("Change Ability") if @page == 2 || @page == 3 || @page == 4
       end
     end
     commands[cmdMark = commands.length]       = _INTL("Mark")
@@ -1180,6 +1206,8 @@ class PokemonSummary_Scene
       change_Nature
     elsif cmdStatChange>=0 && command==cmdStatChange
       change_Stats
+    elsif cmdAbility>=0 && command==cmdAbility
+      change_Ability
     elsif cmdMark>=0 && command==cmdMark
       dorefresh = pbMarking(@pokemon)
     end
