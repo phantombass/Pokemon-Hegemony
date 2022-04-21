@@ -36,7 +36,7 @@ module QuestModule
     :Stage29 => "Challenge the Gym.",
     :Stage30 => "Help save the Underground Village.",
     :Stage31 => "Investigate Abandoned Warehouse.",
-    :Stage21 => "Speak to Joseph.",
+    :Stage32 => "Speak to Joseph.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",

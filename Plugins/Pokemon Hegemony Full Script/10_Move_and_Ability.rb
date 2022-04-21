@@ -5,7 +5,7 @@
 class Pokemon
   def getEggMovesList
     baby = GameData::Species.get(species).get_baby_species
-    form = baby.form
+    form = GameData::Species.get(baby).form
     egg = GameData::Species.get_species_form(baby,form).egg_moves
     return egg
   end

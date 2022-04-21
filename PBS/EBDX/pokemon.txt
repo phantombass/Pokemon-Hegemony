@@ -8844,6 +8844,13 @@ BattlerPlayerX          = -4
 BattlerPlayerY          = 54
 BattlerEnemyX           = -12
 #-------------------------------
+[CALYREX,3]
+BattlerEnemyY           = 29
+BattlerAltitude         = 0
+BattlerPlayerX          = -4
+BattlerPlayerY          = 54
+BattlerEnemyX           = -12
+#-------------------------------
 [HOPPALM]
 SpriteScaleEnemy = 1
 SpriteScalePlayer = 1

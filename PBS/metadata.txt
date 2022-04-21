@@ -899,11 +899,22 @@ Outdoor = false
 MapPosition = 0,11,10
 SnapEdges = true
 #-------------------------------
+[171]
+# Hidden Grotto - Route 11
+MapPosition = 0,11,8
+SnapEdges = true
+#-------------------------------
 [172]
 # Cobalt Cave
 Outdoor = false
 ShowArea = true
 MapPosition = 0,20,0
+SnapEdges = true
+#-------------------------------
+[173]
+# Canyon Cave
+ShowArea = true
+MapPosition = 0,9,1
 SnapEdges = true
 #-------------------------------
 [174]
@@ -932,6 +943,12 @@ SnapEdges = true
 MapPosition = 0,24,3
 SnapEdges = true
 #-------------------------------
+[183]
+# Hidden Grotto - Route 16
+Outdoor = false
+MapPosition = 0,22,1
+SnapEdges = true
+#-------------------------------
 [184]
 # Route 12
 Outdoor = true
@@ -957,6 +974,7 @@ SnapEdges = true
 # Nitro City
 Outdoor = true
 ShowArea = true
+Weather = Rain,0
 MapPosition = 0,4,14
 SnapEdges = true
 #-------------------------------
@@ -994,4 +1012,9 @@ SnapEdges = true
 [206]
 # Inactive Power Plant
 MapPosition = 0,4,14
+SnapEdges = true
+#-------------------------------
+[207]
+# Hidden Grotto - Lake Chloros
+MapPosition = 0,11,13
 SnapEdges = true

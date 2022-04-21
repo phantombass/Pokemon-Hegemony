@@ -937,3 +937,4 @@
 912,RILLABOOMITE,Rillaboomite,Rillaboomites,1,0,"One of a variety of mysterious Mega Stones. Have Rillaboom hold it, and it will be able to Mega Evolve.",0,0,12,
 913,CINDERITE,Cinderite,Cinderites,1,0,"One of a variety of mysterious Mega Stones. Have Cinderace hold it, and it will be able to Mega Evolve.",0,0,12,
 914,INTELEONITE,Inteleonite,Inteleonites,1,0,"One of a variety of mysterious Mega Stones. Have Inteleon hold it, and it will be able to Mega Evolve.",0,0,12,
+915,ROTOMMULTITOOL,Rotom Multitool,Rotom Multitools,1,0,"A glowing orb to be held by Rotom. It contains the power of all its possible appliances.",0,0,0,
