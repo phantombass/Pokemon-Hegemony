@@ -1,15 +1,24 @@
-Script error in event 12 (coords 13,3), map 166 (Chloros Gym):
-Exception: SyntaxError
-Message: (eval):1: unterminated string meets end of file
-vRI("TM70,1)
-            ^
-(eval):1: syntax error, unexpected end-of-input, expecting ')'
+Script error in event 2 (coords 3,5), map 200 (Underground Lab):
+Exception: NoMethodError
+Message: undefined method `form' for :CHINGLING2:Symbol
 
 ***Full script:
-vRI("TM70,1)
+pbChoosePokemon(1,3,proc{|pkmn|
+ pkmn.has_egg_move?
+},true)
 
 
 Backtrace:
+[Pokemon Hegemony Full Script] 10_Move_and_Ability.rb:8:in `getEggMovesList'
+[Pokemon Hegemony Full Script] 10_Move_and_Ability.rb:14:in `has_egg_move?'
+(eval):2:in `block in execute_script'
+005_UI_Party.rb:1093:in `block in pbChooseAblePokemon'
+005_UI_Party.rb:1092:in `each'
+005_UI_Party.rb:1092:in `pbChooseAblePokemon'
+005_UI_Party.rb:1408:in `block in pbChoosePokemon'
+002_MessageConfig.rb:566:in `pbFadeOutIn'
+005_UI_Party.rb:1404:in `pbChoosePokemon'
+(eval):1:in `execute_script'
 
 
 003_Interpreter.rb:189:in `rescue in execute_script'
@@ -30,12 +39,12 @@ Backtrace:
 999_Main.rb:47:in `block (2 levels) in load_scripts_from_folder'
 999_Main.rb:46:in `loop'
 999_Main.rb:46:in `block in load_scripts_from_folder'
-000:Main:34:in `eval'
-000:Main:34:in `block in load_scripts_from_folder'
-000:Main:31:in `each'
-000:Main:31:in `load_scripts_from_folder'
-000:Main:44:in `block in load_scripts_from_folder'
-000:Main:43:in `each'
-000:Main:43:in `load_scripts_from_folder'
-000:Main:48:in `<main>'
+Section000:34:in `eval'
+Section000:34:in `block in load_scripts_from_folder'
+Section000:31:in `each'
+Section000:31:in `load_scripts_from_folder'
+Section000:44:in `block in load_scripts_from_folder'
+Section000:43:in `each'
+Section000:43:in `load_scripts_from_folder'
+Section000:48:in `<main>'
 -e:in `eval'

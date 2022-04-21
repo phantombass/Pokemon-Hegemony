@@ -10,6 +10,15 @@ MultipleForms.register(:CASTFORM,{
 })
 
 MultipleForms.register(:ROTOM,{
+  "getForm" => proc { |pkmn|
+    if pkmn.hasItem?(:ROTOMMULTITOOL)
+      next 7
+    end
+    next 0
+  }
+})
+
+MultipleForms.register(:ROTOM,{
   "onSetForm" => proc { |pkmn, form, oldForm|
     form_moves = [
        :OVERHEAT,    # Heat, Microwave

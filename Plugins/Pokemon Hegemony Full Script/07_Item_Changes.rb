@@ -962,6 +962,40 @@ Events.onStepTaken += proc {
   end
 }
 
+ItemHandlers::UseOnPokemon.add(:ROTOMCATALOG,proc{|item,pkmn,scene|
+  if pkmn.isSpecies?(:ROTOM)
+    if pkmn.hp>0
+      scene.pbDisplay(_INTL("The Catalogue contains a list of appliances for {1} to possess!",pkmn.name))
+      cmd=0
+      msg = _INTL("Which appliance would you like to order?")
+      cmd = scene.pbShowCommands(msg,[
+        _INTL("Light Bulb"),
+        _INTL("Microwave Oven"),
+        _INTL("Washing Machine"),
+        _INTL("Refrigerator"),
+        _INTL("Electric Fan"),
+        _INTL("Lawn Mower"),
+        _INTL("Pokédex"),
+        _INTL("Cancel")],cmd)
+      if cmd>=0 && cmd<7
+        scene.pbDisplay(_INTL("{1} transformed!",pkmn.name))
+        scene.pbRefresh
+        pkmn.form = cmd
+        scene.pbRefresh
+      else
+        scene.pbDisplay(_INTL("No appliance was ordered"))
+      end
+      scene.pbRefresh
+      next true
+    else
+      scene.pbDisplay(_INTL("This can't be used on the fainted Pokémon."))
+    end
+  else
+    scene.pbDisplay(_INTL("It had no effect."))
+    next false
+  end
+})
+
 BattleHandlers::WeatherExtenderItem.add(:WEATHERROCK,
   proc { |item,weather,duration,battler,battle|
     next 8 if weather != :None

@@ -2030,7 +2030,7 @@ Pokemon = ETERNATUS,82
 	EVs = 0,252,0,252,0,4
 	IVs = 31,31,31,31,31,31
 	Item = ETERNATITE
-	Nature = MODEST
+	Nature = TIMID
 	Moves = DYNAMAXCANNON,STARBEAM,SLUDGEBOMB,RECOVER
 #-------------------------------
 [RIVAL2,Blue,1]
@@ -2066,6 +2066,7 @@ Pokemon = MAGNEZONE,80
 Pokemon = BLAZIKEN2,81
 	Item = WISEGLASSES
 	Nature = TIMID
+	Ability = GALEFORCE
 	EVs = 4,0,0,252,252,0
 	IVs = 31,0,31,31,31,31
 	Moves = HURRICANE,PSYCHIC,ROOST,STARBEAM
@@ -2073,7 +2074,7 @@ Pokemon = ETERNATUS,82
 	EVs = 0,252,0,252,0,4
 	IVs = 31,31,31,31,31,31
 	Item = ETERNATITE
-	Nature = MODEST
+	Nature = TIMID
 	Moves = DYNAMAXCANNON,STARBEAM,SLUDGEBOMB,RECOVER
 #-------------------------------
 [RIVAL2,Blue,2]
@@ -2110,13 +2111,14 @@ Pokemon = SWAMPERT2,81
 	EVs = 252,252,0,4,0,0
 	IVs = 31,31,31,31,31,31
 	Nature = ADAMANT
+	Ability = NIGHTFALL
 	Item = CHOPLEBERRY
 	Moves = ROCKSLIDE,KNOCKOFF,EARTHQUAKE,YAWN
 Pokemon = ETERNATUS,82
 	EVs = 0,252,0,252,0,4
 	IVs = 31,31,31,31,31,31
 	Item = ETERNATITE
-	Nature = MODEST
+	Nature = TIMID
 	Moves = DYNAMAXCANNON,STARBEAM,SLUDGEBOMB,RECOVER
 #-------------------------------
 #Multi Battle Partners
