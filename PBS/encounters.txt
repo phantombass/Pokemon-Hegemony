@@ -45,6 +45,24 @@ SuperRod
     15,CORSOLA,15,18
     5,STARYU,15,17
 #-------------------------------
+[083] # Boro Town
+Water,2
+    60,TENTACOOL,14,19
+    30,MANTYKE,15,16
+    10,REMORAID,14,16
+OldRod
+    90,MAGIKARP,5,5
+	10,QWILFISH_1,5,5
+GoodRod
+    60,BARBOACH,17,18
+    20,KRABBY,15,16
+    20,SHELLDER,16,19
+SuperRod
+    40,CHINCHOU,17,19
+    40,QWILFISH,16,19
+    15,CORSOLA,15,18
+    5,STARYU,15,17
+#-------------------------------
 [088] # Route 2
 Land,21
     20,TAILLOW,9,12
@@ -64,8 +82,8 @@ Water,2
     30,MANTYKE,15,16
     10,REMORAID,14,16
 OldRod
-    90,STARYU,5,5
-	10,MAREANIE,5,5
+    90,MAGIKARP,5,5
+	10,MAGIKARP,15,15
 GoodRod
     60,BARBOACH,17,18
     20,KRABBY,15,16
@@ -95,8 +113,8 @@ Water,2
     30,MANTYKE,15,16
     10,REMORAID,14,16
 OldRod
-    90,MAGIKARP,5,5
-	10,TENTACOOL,5,5
+    90,STARYU,5,5
+	10,MAREANIE,5,5
 GoodRod
     60,BARBOACH,17,18
     20,KRABBY,15,16

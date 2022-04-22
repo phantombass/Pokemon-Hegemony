@@ -39,6 +39,13 @@ class PokeBattle_Battle
   end
 end
 
+BattleHandlers::DamageCalcTargetItem.add(:TARFRUBERRY,
+  proc { |item,user,target,move,mults,baseDmg,type|
+    pbBattleTypeWeakingBerry(:COSMIC,type,target,mults)
+  }
+)
+
+
 ItemHandlers::UseInField.add(:SACREDASH,proc { |item|
   if $game_switches[73] ==  true
     canrevive = false
