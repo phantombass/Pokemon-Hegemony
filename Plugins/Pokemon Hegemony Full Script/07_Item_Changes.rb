@@ -909,7 +909,7 @@ ItemHandlers::UseInField.add(:ESCAPEROPE,proc { |item|
 
 Events.onStepTaken += proc {
   if $PokemonGlobal.repel > 0 && !$game_player.terrain_tag.ice   # Shouldn't count down if on ice
-    #$PokemonGlobal.repel -= 1
+    $PokemonGlobal.repel -= 1
     if $PokemonGlobal.repel <= 0
       if $PokemonBag.pbHasItem?(:REPEL) ||
          $PokemonBag.pbHasItem?(:SUPERREPEL) ||
