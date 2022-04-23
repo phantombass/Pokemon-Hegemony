@@ -36,6 +36,8 @@ class PokemonPauseMenu_Scene
     @viewport.z = 99999
     capColor = "90F090,000000"
     levelCap = pbGet(106)
+    quest_stage = $PokemonGlobal.quests.active_quests[0].stage
+    quest_info = $quest_data.getStageDescription(:Quest1,quest_stage)
     @sprites = {}
     @sprites["cmdwindow"] = Window_CommandPokemon.new([])
     @sprites["cmdwindow"].visible = false
@@ -44,8 +46,12 @@ class PokemonPauseMenu_Scene
     @sprites["infowindow"].visible = false
     @sprites["helpwindow"] = Window_UnformattedTextPokemon.newWithSize("",0,0,32,32,@viewport)
     @sprites["helpwindow"].visible = false
-    @sprites["levelcapwindow"] = Window_UnformattedTextPokemon.newWithSize("Level Cap: #{levelCap}",0,0,208,64,@viewport)
+    @sprites["levelcapwindow"] = Window_UnformattedTextPokemon.newWithSize("Level Cap: #{levelCap}",0,64,208,64,@viewport)
     @sprites["levelcapwindow"].visible = true
+    @sprites["questwindow"] = Window_UnformattedTextPokemon.newWithSize("#{quest_info}",0,208,306,222,@viewport)
+    pbSetSmallFont(@sprites["questwindow"].contents)
+    @sprites["questwindow"].resizeToFit("#{quest_info}",306)
+    @sprites["questwindow"].visible = true
     @infostate = false
     @helpstate = false
     $viewport4 = @viewport
