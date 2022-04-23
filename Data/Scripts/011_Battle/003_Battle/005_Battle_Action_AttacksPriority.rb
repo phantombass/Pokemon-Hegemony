@@ -96,6 +96,7 @@ class PokeBattle_Battle
 
   def pbRegisterTarget(idxBattler,idxTarget)
     @choices[idxBattler][3] = idxTarget   # Set target of move
+    $target = idxTarget
   end
 
   # Returns whether the idxTarget will be targeted by a move with target_data

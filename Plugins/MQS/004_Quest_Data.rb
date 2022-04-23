@@ -37,6 +37,7 @@ module QuestModule
     :Stage30 => "Help save the Underground Village.",
     :Stage31 => "Investigate Abandoned Warehouse.",
     :Stage32 => "Speak to Joseph.",
+    :Stage33 => "Go after Rotom! \\v[12] is taking it to the Capitol!",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -68,7 +69,8 @@ module QuestModule
     :Location29 => "Nitro City",
     :Location30 => "Underground Village",
     :Location31 => "Underground Village",
-    :Location32 => "Underground Village"
+    :Location32 => "Underground Village",
+    :Location33 => "Rubid Outpost"
   }
 
 #====================================
