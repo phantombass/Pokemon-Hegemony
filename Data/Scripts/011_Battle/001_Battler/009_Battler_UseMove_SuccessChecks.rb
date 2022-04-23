@@ -229,7 +229,6 @@ class PokeBattle_Battler
       self.statusCount -= 1
       if @battle.pbRandom(100)<20
         pbCureStatus
-        @battle.pbDisplay(_INTL("{1} shook off the drowsiness.",pbThis))
       else
         pbContinueStatus
         if @battle.pbRandom(100)<50
