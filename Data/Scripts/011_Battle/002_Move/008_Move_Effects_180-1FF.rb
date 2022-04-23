@@ -328,7 +328,7 @@ end
 class PokeBattle_Move_18C < PokeBattle_Move
   def priority
     ret = super
-    ret += 1 if @battle.field.terrain == :Electric
+    ret += 1 if @battle.field.terrain == :Grassy
     return ret
   end
 end

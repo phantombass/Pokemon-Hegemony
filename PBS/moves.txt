@@ -801,7 +801,7 @@
 956,IRONFANGS,Iron Fangs,00F,65,STEEL,Physical,100,10,0,NearOther,0,abefi,"The user charges the target with teeth as sharp as knives. This may cause the target to flinch."
 957,DRACOFANGS,Draco Fangs,00F,85,DRAGON,Physical,100,10,0,NearOther,0,abefi,"The user charges the target with teeth as sharp as knives. This may cause the target to flinch."
 964,WEATHERSHOT,Weather Shot,087,30,NORMAL,Special,100,25,0,NearOther,0,befn,"An attack move that varies in power and type depending on the weather."
-965,TEMPESTRAGE,Tempest Rage,087,85,NORMAL,Special,100,15,0,NearOther,0,befn,"An attack move that varies in power and type depending on the weather."
+965,TEMPESTRAGE,Tempest Rage,087,65,NORMAL,Special,100,5,0,NearOther,0,befn,"An attack move that varies in power and type depending on the weather."
 966,SEPTICSHOT,Septic Shot,000,40,POISON,Physical,100,30,0,NearOther,1,abef,"The user shoots a dart laced with poison. This move usually goes first."
 967,CHILLINGCRY,Chilling Cry,000,85,ICE,Special,100,10,0,AllNearFoes,0,befk,"The user looses a cold shriek with the power to inflict damage."
 968,SNEAKATTACK,Sneak Attack,000,40,DARK,Physical,100,30,0,NearOther,1,abef,"The user sneaks up behind the target before they notice. This move usually goes first."
