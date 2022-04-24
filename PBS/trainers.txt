@@ -2125,7 +2125,7 @@ Pokemon = ETERNATUS,82
 #-------------------------------
 [POKEMONTRAINER_Joseph,Joseph]
 LoseText = "You just keep getting better."
-Pokemon = GRIMMSNARL,78
+Pokemon = GRIMMSNARL,80
 	Ability = PRANKSTER
 	Item = LIGHTCLAY
 	Nature = IMPISH
@@ -2143,7 +2143,7 @@ Pokemon = CASTFORM,80
 	EVs = 0,0,0,252,252,4
 	IVs = 31,0,31,31,31,31
 	Item = CASTFORMITE
-	Nature = MODEST
+	Nature = TIMID
 	Moves = TEMPESTRAGE,STARBEAM,COSMICPOWER,RECOVER
 #-------------------------------
 [POKEMONTRAINER_Joseph,Joseph,1]

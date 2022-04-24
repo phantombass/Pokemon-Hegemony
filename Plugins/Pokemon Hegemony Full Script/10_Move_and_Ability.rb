@@ -712,49 +712,6 @@ class PokeBattle_Move_008 < PokeBattle_ParalysisMove
   end
 end
 
-class PokeBattle_Move_087 < PokeBattle_Move
-  def pbBaseDamage(baseDmg,user,target)
-    baseDmg *= 2 if @battle.pbWeather != :None
-    return baseDmg
-  end
-
-  def pbBaseType(user)
-    ret = :NORMAL
-    case @battle.pbWeather
-    when :Sun, :HarshSun
-      ret = :FIRE if GameData::Type.exists?(:FIRE)
-    when :Rain, :HeavyRain, :Storm
-      ret = :WATER if GameData::Type.exists?(:WATER)
-    when :Sandstorm
-      ret = :ROCK if GameData::Type.exists?(:ROCK)
-    when :Hail, :Sleet
-      ret = :ICE if GameData::Type.exists?(:ICE)
-    when :Fog
-      ret = :FAIRY if GameData::Type.exists?(:FAIRY)
-    when :Eclipse
-      ret = :DARK if GameData::Type.exists?(:DARK)
-    when :Windy
-      ret = :FLYING if GameData::Type.exists?(:FLYING)
-    when :AcidRain
-      ret = :POISON if GameData::Type.exists?(:POISON)
-    when :StrongWinds
-      ret = :FLYING if GameData::Type.exists?(:FLYING)
-    when :Starstorm
-      ret = :COSMIC if GameData::Type.exists?(:COSMIC)
-    end
-    return ret
-  end
-
-  def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
-    t = pbBaseType(user)
-    hitNum = 1 if t == :FIRE   # Type-specific anims
-    hitNum = 2 if t == :WATER
-    hitNum = 3 if t == :ROCK
-    hitNum = 4 if t == :ICE
-    super
-  end
-end
-
 BattleHandlers::EORHealingAbility.add(:RESURGENCE,
   proc { |ability,battler,battle|
     next if !battler.canHeal?
@@ -1025,7 +982,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:CACOPHONY,
 
 BattleHandlers::DamageCalcUserAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
+    if move.physicalMove? && [:Sun, :HarshSun,:Rainbow].include?(user.battle.pbWeather)
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1488,6 +1445,229 @@ class PokeBattle_Battler
         pbChangeForm(1,_INTL("{1} changed to Blade Forme!",pbThis))
       elsif move.id == :KINGSSHIELD
         pbChangeForm(0,_INTL("{1} changed to Shield Forme!",pbThis))
+      end
+    end
+    if hasActiveAbility?(:ACCLIMATE) && move.function == "087"
+      oldWeather = @battle.pbWeather
+      newWeather = 0
+      weatherChange = nil
+      choice = @battle.choices[self.index]
+      target = @battle.battlers[choice[3]]
+      if target != nil && !target.fainted?
+        type1 = target.type1
+        type2 = target.type2
+        case type1
+        when :NORMAL
+          case type2
+          when :GHOST, :PSYCHIC; newWeather = 6
+          when :FAIRY; newWeather = 9
+          when :FLYING,:GROUND; newWeather = 3
+          when :BUG,:COSMIC,:ICE,:GRASS,:STEEL; newWeather = 1
+          when :FIGHTING,:DARK,:DRAGON; newWeather = 4
+          when :ROCK,:WATER; newWeather = 5
+          when :NORMAL,:POISON,:FIRE,:ELECTRIC; newWeather = 10
+          end
+        when :FIGHTING
+          case type2
+          when :POISON, :COSMIC; newWeather = 7
+          when :STEEL; newWeather = 5
+          when :FIRE; newWeather = 2
+          when :NORMAL,:FIGHTING,:FLYING,:GROUND,:ROCK,:BUG,:GHOST,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY; newWeather = 4
+          end
+        when :FLYING
+          case type2
+          when :GROUND, :DRAGON, :COSMIC, :GHOST, :GRASS; newWeather = 3
+          when :FIRE, :ICE, :ROCK, :POISON, :BUG, :ELECTRIC, :PSYCHIC, :NORMAL, type1; newWeather = 10
+          when :STEEL, :WATER; newWeather = 5
+          when :FIGHTING,:DARK,:FAIRY, type1; newWeather = 4
+          end
+        when :ROCK
+          case type2
+          when :ICE, :DARK, :FLYING, :BUG, :GROUND, :FAIRY, :FIRE, :POISON, :NORMAL, :FIGHTING, :POISON, type1; newWeather = 2
+          when :PSYCHIC, :GHOST; newWeather = 6
+          when :COSMIC, :STEEL, :ELECTRIC, :DRAGON, :GRASS, :WATER; newWeather = 5
+          end
+        when :GROUND
+          case type2
+          when :WATER,:ELECTRIC,:COSMIC,:DRAGON; newWeather = 5
+          when :DRAGON, :FLYING, :GRASS; newWeather = 3
+          when :NORMAL,:FIGHTING,:POISON,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY,:ROCK, type1; newWeather = 2
+          end
+        when :POISON
+          case type2
+          when :DARK, :STEEL, :ELECTRIC, :ROCK, :FIRE, :ICE, :FLYING,:BUG,type1,:NORMAL; newWeather = 10
+          when :PSYCHIC, :GHOST; newWeather = 6
+          when :FIGHTING, :GRASS; newWeather = 7
+          when :WATER,:DRAGON,:FAIRY; newWeather = 5
+          when :COSMIC; newWeather = 1
+          when :GROUND; newWeather = 2
+          end
+        when :BUG
+          case type2
+          when :GROUND, :WATER, :FIGHTING; newWeather = 7
+          when :GRASS, :STEEL, :COSMIC; newWeather = 1
+          when :NORMAL,:FLYING,:POISON,:ROCK,:GHOST,:FIRE,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY, type1; newWeather = 10
+          end
+        when :GHOST
+          case type2
+          when :FIGHTING, :DARK; newWeather = 4
+          when :FAIRY; newWeather = 5
+          when :BUG,:COSMIC; newWeather = 1
+          when :NORMAL,:FLYING,:POISON,:GROUND,:ROCK,:STEEL,:FIRE,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON, type1; newWeather = 7
+          end
+        when :STEEL
+          case type2
+          when :WATER,:DRAGON,:DARK,:NORMAL; newWeather = 5
+          when :FIRE, :ROCK,:GROUND; newWeather = 2
+          when :FLYING,:POISON,:BUG,:GHOST,:STEEL,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:FAIRY,:COSMIC, type1; newWeather = 1
+          end
+        when :GRASS
+          case type2
+          when :STEEL, :COSMIC, :ICE; newWeather = 1
+          when :FAIRY; newWeather = 9
+          when :DRAGON, :GROUND, :FLYING, :ELECTRIC; newWeather = 3
+          when :PSYCHIC; newWeather = 6
+          when :ROCK; newWeather = 5
+          when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :FIRE, :WATER, type1,:DARK; newWeather = 7
+          end
+        when :FIRE
+          case type2
+          when :GRASS; newWeather = 7
+          when :COSMIC,:FLYING,:DRAGON,:ELECTRIC; newWeather = 10
+          when :NORMAL,:POISON,:GROUND,:ROCK,:WATER,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY,:FIGHTING, type1; newWeather = 2
+          end
+        when :WATER
+          case type2
+          when :FIRE; newWeather = 2
+          when :GHOST,:PSYCHIC; newWeather = 6
+          when :NORMAL,:FIGHTING,:POISON,:BUG,:STEEL,:GRASS,:ELECTRIC,:ICE,:DRAGON,:DARK,:FAIRY,:COSMIC, type1,:FLYING,:GROUND,:ROCK; newWeather = 5
+          end
+        when :ELECTRIC
+          case type2
+          when :FLYING, :GRASS,:GROUND; newWeather = 3
+          when :WATER,:STEEL,:DRAGON,:FAIRY,:COSMIC,:FIGHTING,:ROCK; newWeather = 5
+          when :BUG,:ICE; newWeather = 1
+          when :GHOST,:PSYCHIC; newWeather = 6
+          when :NORMAL,:POISON,:FIRE,:DARK, type1; newWeather = 10
+          end
+        when :ICE
+          case type2
+          when :GHOST, :PSYCHIC; newWeather = 6
+          when :WATER; newWeather = 5
+          when :ROCK,:GROUND; newWeather = 2
+          when :FIRE, :FLYING, :POISON, :ELECTRIC; newWeather = 10
+          when :GRASS, :BUG, :STEEL, :COSMIC, :FAIRY, type1, :NORMAL; newWeather = 1
+          when :FIGHTING, :DRAGON, :DARK; newWeather = 4
+          end
+        when :PSYCHIC
+          case type2
+          when :FIGHTING,:DARK; newWeather = 4
+          when :FAIRY; newWeather = 10
+          when :NORMAL,:POISON,:GROUND,:ROCK,:BUG,:GHOST,:STEEL,:FIRE,:ELECTRIC,:DRAGON,:COSMIC,:ICE,:FLYING,:WATER,:GRASS, type1; newWeather = 6
+          end
+        when :DRAGON
+          case type2
+          when :GROUND, :FLYING, :GRASS; newWeather = 3
+          when :DARK, :FIGHTING, type1; newWeather = 4
+          when :FIRE; newWeather = 10
+          when :PSYCHIC; newWeather = 6
+          when :NORMAL,:POISON,:ROCK,:BUG,:GHOST,:STEEL,:WATER,:ELECTRIC,:ICE,:DRAGON,:FAIRY,:COSMIC; newWeather = 5
+          end
+        when :DARK
+          case type2
+          when :NORMAL,:FIGHTING,:FLYING,:GROUND,:BUG,:GHOST,:WATER,:ELECTRIC,:DRAGON,:FAIRY,:GRASS,:PSYCHIC,type1; newWeather = 4
+          when :POISON,:FIRE; newWeather = 10
+          when :COSMIC,:ICE; newWeather = 1
+          when :ROCK,:STEEL; newWeather = 5
+          end
+        when :FAIRY
+          case type2
+          when :FIRE; newWeather = 10
+          when :COSMIC,:ICE; newWeather = 1
+          when :GRASS; newWeather = 9
+          when :NORMAL,:FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:STEEL,:WATER,:GRASS,:ELECTRIC,:DRAGON,:DARK,:ROCK, type1; newWeather = 6
+          end
+        when :COSMIC
+          case type2
+          when :GROUND, newWeather = 3
+          when :GHOST; newWeather = 6
+          when :POISON, :FIGHTING; newWeather = 7
+          when :ICE, :GRASS, :BUG, :STEEL, :FAIRY; newWeather = 1
+          when :NORMAL,:FLYING,:ROCK,:FIRE,:WATER,:ELECTRIC,:PSYCHIC,:DRAGON,type1; newWeather = 5
+          end
+        end
+          case newWeather
+          when 1
+            weatherChange = :Sun
+            newType = :FIRE
+          when 2
+            weatherChange = :Rain
+            newType = :WATER
+          when 3
+            weatherChange = :Sleet
+            newType = :ICE
+          when 4
+            weatherChange = :Fog
+            newType = :FAIRY
+          when 5
+            weatherChange = :Starstorm
+            newType = :COSMIC
+          when 6
+            weatherChange = :Eclipse
+            newType = :DARK
+          when 7
+            weatherChange = :Windy
+            newType = :FLYING
+          when 8
+            weatherChange = :StrongWinds
+            newType = :FLYING
+          when 9
+            weatherChange = :AcidRain
+            newType = :POISON
+          when 10
+            weatherChange = :Sandstorm
+            newType = :ROCK
+          end
+        if oldWeather==weatherChange
+          weatherChange = @battle.pbWeather
+        else
+          @battle.pbShowAbilitySplash(self)
+          @battle.field.weather = weatherChange
+          @battle.field.weatherDuration = 5
+          case weatherChange
+          when :Starstorm then   @battle.pbDisplay(_INTL("Stars fill the sky."))
+          when :Thunder then     @battle.pbDisplay(_INTL("Lightning flashes in th sky."))
+          when :Humid then       @battle.pbDisplay(_INTL("The air is humid."))
+          when :Overcast then    @battle.pbDisplay(_INTL("The sky is overcast."))
+          when :Eclipse then     @battle.pbDisplay(_INTL("The sky is dark."))
+          when :Fog then         @battle.pbDisplay(_INTL("The fog is deep."))
+          when :AcidRain then    @battle.pbDisplay(_INTL("Acid rain is falling."))
+          when :VolcanicAsh then @battle.pbDisplay(_INTL("Volcanic Ash sprinkles down."))
+          when :Rainbow then     @battle.pbDisplay(_INTL("A rainbow crosses the sky."))
+          when :Borealis then    @battle.pbDisplay(_INTL("The sky is ablaze with color."))
+          when :TimeWarp then    @battle.pbDisplay(_INTL("Time has stopped."))
+          when :Reverb then      @battle.pbDisplay(_INTL("A dull echo hums."))
+          when :DClear then      @battle.pbDisplay(_INTL("The sky is distorted."))
+          when :DRain then       @battle.pbDisplay(_INTL("Rain is falling upward."))
+          when :DWind then       @battle.pbDisplay(_INTL("The wind is haunting."))
+          when :DAshfall then    @battle.pbDisplay(_INTL("Ash floats in midair."))
+          when :Sleet then       @battle.pbDisplay(_INTL("Sleet began to fall."))
+          when :Windy then       @battle.pbDisplay(_INTL("There is a slight breeze."))
+          when :HeatLight then   @battle.pbDisplay(_INTL("Static fills the air."))
+          when :DustDevil then   @battle.pbDisplay(_INTL("A dust devil approaches."))
+          when :Sun then         @battle.pbDisplay(_INTL("The sunlight is strong."))
+          when :Rain then        @battle.pbDisplay(_INTL("It is raining."))
+          when :Sandstorm then   @battle.pbDisplay(_INTL("A sandstorm is raging."))
+          when :Hail then        @battle.pbDisplay(_INTL("Hail is falling."))
+          when :HarshSun then    @battle.pbDisplay(_INTL("The sunlight is extremely harsh."))
+          when :HeavyRain then   @battle.pbDisplay(_INTL("It is raining heavily."))
+          when :StrongWinds then @battle.pbDisplay(_INTL("The wind is strong."))
+          when :ShadowSky then   @battle.pbDisplay(_INTL("The sky is shadowy."))
+          end
+          @battle.pbHideAbilitySplash(self)
+          self.type1 = newType
+          oldWeather = @battle.pbWeather
+        end
       end
     end
     # Calculate the move's type during this usage
@@ -2538,227 +2718,6 @@ class PokeBattle_Move_087 < PokeBattle_Move
   end
 
   def pbBaseType(user)
-    if user.hasActiveAbility?(:ACCLIMATE)
-      oldWeather = @battle.pbWeather
-      newWeather = 0
-      weatherChange = nil
-      choice = @battle.choices[user.index]
-      target = @battle.battlers[choice[3]]
-        type1 = target.type1
-        type2 = target.type2
-        case type1
-        when :NORMAL
-          case type2
-          when :GHOST, :PSYCHIC; newWeather = 6
-          when :FAIRY; newWeather = 9
-          when :FLYING,:GROUND; newWeather = 3
-          when :BUG,:COSMIC,:ICE,:GRASS,:STEEL; newWeather = 1
-          when :FIGHTING,:DARK,:DRAGON; newWeather = 4
-          when :ROCK,:WATER; newWeather = 5
-          when :NORMAL,:POISON,:FIRE,:ELECTRIC; newWeather = 10
-          end
-        when :FIGHTING
-          case type2
-          when :POISON, :COSMIC; newWeather = 7
-          when :STEEL; newWeather = 5
-          when :FIRE; newWeather = 2
-          when :NORMAL,:FIGHTING,:FLYING,:GROUND,:ROCK,:BUG,:GHOST,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY; newWeather = 4
-          end
-        when :FLYING
-          case type2
-          when :GROUND, :DRAGON, :COSMIC, :GHOST, :GRASS; newWeather = 3
-          when :FIRE, :ICE, :ROCK, :POISON, :BUG, :ELECTRIC, :PSYCHIC, :NORMAL, type1; newWeather = 10
-          when :STEEL, :WATER; newWeather = 5
-          when :FIGHTING,:DARK,:FAIRY, type1; newWeather = 4
-          end
-        when :ROCK
-          case type2
-          when :ICE, :DARK, :FLYING, :BUG, :GROUND, :FAIRY, :FIRE, :POISON, :NORMAL, :FIGHTING, :POISON, type1; newWeather = 2
-          when :PSYCHIC, :GHOST; newWeather = 6
-          when :COSMIC, :STEEL, :ELECTRIC, :DRAGON, :GRASS, :WATER; newWeather = 5
-          end
-        when :GROUND
-          case type2
-          when :WATER,:ELECTRIC,:COSMIC,:DRAGON; newWeather = 5
-          when :DRAGON, :FLYING, :GRASS; newWeather = 3
-          when :NORMAL,:FIGHTING,:POISON,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY,:ROCK, type1; newWeather = 2
-          end
-        when :POISON
-          case type2
-          when :DARK, :STEEL, :ELECTRIC, :ROCK, :FIRE, :ICE, :FLYING,:BUG,type1,:NORMAL; newWeather = 10
-          when :PSYCHIC, :GHOST; newWeather = 6
-          when :FIGHTING, :GRASS; newWeather = 7
-          when :WATER,:DRAGON,:FAIRY; newWeather = 5
-          when :COSMIC; newWeather = 1
-          when :GROUND; newWeather = 2
-          end
-        when :BUG
-          case type2
-          when :GROUND, :WATER, :FIGHTING; newWeather = 7
-          when :GRASS, :STEEL, :COSMIC; newWeather = 1
-          when :NORMAL,:FLYING,:POISON,:ROCK,:GHOST,:FIRE,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON,:DARK,:FAIRY, type1; newWeather = 10
-          end
-        when :GHOST
-          case type2
-          when :FIGHTING, :DARK; newWeather = 4
-          when :FAIRY; newWeather = 5
-          when :BUG,:COSMIC; newWeather = 1
-          when :NORMAL,:FLYING,:POISON,:GROUND,:ROCK,:STEEL,:FIRE,:WATER,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:DRAGON, type1; newWeather = 7
-          end
-        when :STEEL
-          case type2
-          when :WATER,:DRAGON,:DARK,:NORMAL; newWeather = 5
-          when :FIRE, :ROCK,:GROUND; newWeather = 2
-          when :FLYING,:POISON,:BUG,:GHOST,:STEEL,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:FAIRY,:COSMIC, type1; newWeather = 1
-          end
-        when :GRASS
-          case type2
-          when :STEEL, :COSMIC, :ICE; newWeather = 1
-          when :FAIRY; newWeather = 9
-          when :DRAGON, :GROUND, :FLYING, :ELECTRIC; newWeather = 3
-          when :PSYCHIC; newWeather = 6
-          when :ROCK; newWeather = 5
-          when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :FIRE, :WATER, type1,:DARK; newWeather = 7
-          end
-        when :FIRE
-          case type2
-          when :GRASS; newWeather = 7
-          when :COSMIC,:FLYING,:DRAGON,:ELECTRIC; newWeather = 10
-          when :NORMAL,:POISON,:GROUND,:ROCK,:WATER,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY,:FIGHTING, type1; newWeather = 2
-          end
-        when :WATER
-          case type2
-          when :FIRE; newWeather = 2
-          when :GHOST,:PSYCHIC; newWeather = 6
-          when :NORMAL,:FIGHTING,:POISON,:BUG,:STEEL,:GRASS,:ELECTRIC,:ICE,:DRAGON,:DARK,:FAIRY,:COSMIC, type1,:FLYING,:GROUND,:ROCK; newWeather = 5
-          end
-        when :ELECTRIC
-          case type2
-          when :FLYING, :GRASS,:GROUND; newWeather = 3
-          when :WATER,:STEEL,:DRAGON,:FAIRY,:COSMIC,:FIGHTING,:ROCK; newWeather = 5
-          when :BUG,:ICE; newWeather = 1
-          when :GHOST,:PSYCHIC; newWeather = 6
-          when :NORMAL,:POISON,:FIRE,:DARK, type1; newWeather = 10
-          end
-        when :ICE
-          case type2
-          when :GHOST, :PSYCHIC; newWeather = 6
-          when :WATER; newWeather = 5
-          when :ROCK,:GROUND; newWeather = 2
-          when :FIRE, :FLYING, :POISON, :ELECTRIC; newWeather = 10
-          when :GRASS, :BUG, :STEEL, :COSMIC, :FAIRY, type1, :NORMAL; newWeather = 1
-          when :FIGHTING, :DRAGON, :DARK; newWeather = 4
-          end
-        when :PSYCHIC
-          case type2
-          when :FIGHTING,:DARK; newWeather = 4
-          when :FAIRY; newWeather = 10
-          when :NORMAL,:POISON,:GROUND,:ROCK,:BUG,:GHOST,:STEEL,:FIRE,:ELECTRIC,:DRAGON,:COSMIC,:ICE,:FLYING,:WATER,:GRASS, type1; newWeather = 6
-          end
-        when :DRAGON
-          case type2
-          when :GROUND, :FLYING, :GRASS; newWeather = 3
-          when :DARK, :FIGHTING, type1; newWeather = 4
-          when :FIRE; newWeather = 10
-          when :PSYCHIC; newWeather = 6
-          when :NORMAL,:POISON,:ROCK,:BUG,:GHOST,:STEEL,:WATER,:ELECTRIC,:ICE,:DRAGON,:FAIRY,:COSMIC; newWeather = 5
-          end
-        when :DARK
-          case type2
-          when :NORMAL,:FIGHTING,:FLYING,:GROUND,:BUG,:GHOST,:WATER,:ELECTRIC,:DRAGON,:FAIRY,:GRASS,:PSYCHIC,type1; newWeather = 4
-          when :POISON,:FIRE; newWeather = 10
-          when :COSMIC,:ICE; newWeather = 1
-          when :ROCK,:STEEL; newWeather = 5
-          end
-        when :FAIRY
-          case type2
-          when :FIRE; newWeather = 10
-          when :COSMIC,:ICE; newWeather = 1
-          when :GRASS; newWeather = 9
-          when :NORMAL,:FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:STEEL,:WATER,:GRASS,:ELECTRIC,:DRAGON,:DARK,:ROCK, type1; newWeather = 6
-          end
-        when :COSMIC
-          case type2
-          when :GROUND, newWeather = 3
-          when :GHOST; newWeather = 6
-          when :POISON, :FIGHTING; newWeather = 7
-          when :ICE, :GRASS, :BUG, :STEEL, :FAIRY; newWeather = 1
-          when :NORMAL,:FLYING,:ROCK,:FIRE,:WATER,:ELECTRIC,:PSYCHIC,:DRAGON,type1; newWeather = 5
-          end
-        end
-          case newWeather
-          when 1
-            weatherChange = :Sun
-            newType = :FIRE
-          when 2
-            weatherChange = :Rain
-            newType = :WATER
-          when 3
-            weatherChange = :Sleet
-            newType = :ICE
-          when 4
-            weatherChange = :Fog
-            newType = :FAIRY
-          when 5
-            weatherChange = :Starstorm
-            newType = :COSMIC
-          when 6
-            weatherChange = :Eclipse
-            newType = :DARK
-          when 7
-            weatherChange = :Windy
-            newType = :FLYING
-          when 8
-            weatherChange = :StrongWinds
-            newType = :FLYING
-          when 9
-            weatherChange = :AcidRain
-            newType = :POISON
-          when 10
-            weatherChange = :Sandstorm
-            newType = :ROCK
-          end
-        if oldWeather==weatherChange
-          weatherChange = @battle.pbWeather
-        else
-          @battle.pbShowAbilitySplash(user)
-          @battle.field.weather = weatherChange
-          @battle.field.weatherDuration = 5
-          case weatherChange
-          when :Starstorm then   @battle.pbDisplay(_INTL("Stars fill the sky."))
-          when :Thunder then     @battle.pbDisplay(_INTL("Lightning flashes in th sky."))
-          when :Humid then       @battle.pbDisplay(_INTL("The air is humid."))
-          when :Overcast then    @battle.pbDisplay(_INTL("The sky is overcast."))
-          when :Eclipse then     @battle.pbDisplay(_INTL("The sky is dark."))
-          when :Fog then         @battle.pbDisplay(_INTL("The fog is deep."))
-          when :AcidRain then    @battle.pbDisplay(_INTL("Acid rain is falling."))
-          when :VolcanicAsh then @battle.pbDisplay(_INTL("Volcanic Ash sprinkles down."))
-          when :Rainbow then     @battle.pbDisplay(_INTL("A rainbow crosses the sky."))
-          when :Borealis then    @battle.pbDisplay(_INTL("The sky is ablaze with color."))
-          when :TimeWarp then    @battle.pbDisplay(_INTL("Time has stopped."))
-          when :Reverb then      @battle.pbDisplay(_INTL("A dull echo hums."))
-          when :DClear then      @battle.pbDisplay(_INTL("The sky is distorted."))
-          when :DRain then       @battle.pbDisplay(_INTL("Rain is falling upward."))
-          when :DWind then       @battle.pbDisplay(_INTL("The wind is haunting."))
-          when :DAshfall then    @battle.pbDisplay(_INTL("Ash floats in midair."))
-          when :Sleet then       @battle.pbDisplay(_INTL("Sleet began to fall."))
-          when :Windy then       @battle.pbDisplay(_INTL("There is a slight breeze."))
-          when :HeatLight then   @battle.pbDisplay(_INTL("Static fills the air."))
-          when :DustDevil then   @battle.pbDisplay(_INTL("A dust devil approaches."))
-          when :Sun then         @battle.pbDisplay(_INTL("The sunlight is strong."))
-          when :Rain then        @battle.pbDisplay(_INTL("It is raining."))
-          when :Sandstorm then   @battle.pbDisplay(_INTL("A sandstorm is raging."))
-          when :Hail then        @battle.pbDisplay(_INTL("Hail is falling."))
-          when :HarshSun then    @battle.pbDisplay(_INTL("The sunlight is extremely harsh."))
-          when :HeavyRain then   @battle.pbDisplay(_INTL("It is raining heavily."))
-          when :StrongWinds then @battle.pbDisplay(_INTL("The wind is strong."))
-          when :ShadowSky then   @battle.pbDisplay(_INTL("The sky is shadowy."))
-          end
-          @battle.pbHideAbilitySplash(user)
-          user.type1 = newType
-          oldWeather = @battle.pbWeather
-        end
-      end
     ret = :NORMAL
     case @battle.pbWeather
     when :Sun, :HarshSun

@@ -363,7 +363,7 @@ class PokeBattle_Battler
         return true if data.mega_stone == check_item
       end
     end
-    if check_item == :WBLAZIKENITE || check_item == :WGARCHOMPITE || check_item == :WSCEPTILITE || check_item == :WSWAMPERTITE || check_item == :WCHIMECHONITE || check_item == :CHATOTITE || check_item == :CORVITE || check_item == :EMPOLEONITE || check_item == :TORTERRANITE || check_item == :INFERNITE || check_item == :CHIMECHONITE || check_item == :BEHEEYEMITE || check_item == :CASTFORMITE
+    if check_item == :WSHARPEDONITE || check_item == :WBLAZIKENITE || check_item == :WGARCHOMPITE || check_item == :WSCEPTILITE || check_item == :WSWAMPERTITE || check_item == :WCHIMECHONITE || check_item == :CHATOTITE || check_item == :CORVITE || check_item == :EMPOLEONITE || check_item == :TORTERRANITE || check_item == :INFERNITE || check_item == :CHIMECHONITE || check_item == :BEHEEYEMITE || check_item == :CASTFORMITE
       return true
     end
     # Other unlosable items
@@ -1183,6 +1183,7 @@ class PokeBattle_Battle
   end
 
   def pbEndOfBattle
+    $mega_flag = 0
     oldDecision = @decision
     @decision = 4 if @decision==1 && wildBattle? && @caughtPokemon.length>0
     case oldDecision
@@ -1697,6 +1698,42 @@ class PokeBattle_Battle
   end
 end
 class PokeBattle_Battler
+  def pbFaint(showMessage=true)
+    if !fainted?
+      PBDebug.log("!!!***Can't faint with HP greater than 0")
+      return
+    end
+    return if @fainted   # Has already fainted properly
+    @battle.pbDisplayBrief(_INTL("{1} fainted!",pbThis)) if showMessage
+    PBDebug.log("[Pokémon fainted] #{pbThis} (#{@index})") if !showMessage
+    @battle.scene.pbFaintBattler(self)
+    pbInitEffects(false)
+    # Reset status
+    self.status      = :NONE
+    self.statusCount = 0
+    # Lose happiness
+    if @pokemon && @battle.internalBattle
+      badLoss = false
+      @battle.eachOtherSideBattler(@index) do |b|
+        badLoss = true if b.level>=self.level+30
+      end
+      @pokemon.changeHappiness((badLoss) ? "faintbad" : "faint")
+    end
+    # Reset form
+    @battle.peer.pbOnLeavingBattle(@battle,@pokemon,@battle.usedInBattle[idxOwnSide][@index/2])
+    $mega_flag = 1 if mega?
+    @pokemon.makeUnmega if mega?
+    @pokemon.makeUnprimal if primal?
+    self.damage_done = 0 # Yamask
+    # Do other things
+    @battle.pbClearChoice(@index)   # Reset choice
+    pbOwnSide.effects[PBEffects::LastRoundFainted] = @battle.turnCount
+    # Check other battlers' abilities that trigger upon a battler fainting
+    pbAbilitiesOnFainting
+    # Check for end of primordial weather
+    @battle.pbEndPrimordialWeather
+    @battle.pbSetBattled(self)
+  end
   def takesEntryHazardDamage?
     if hasActiveItem?(:HEAVYDUTYBOOTS)
       return false
@@ -1828,6 +1865,18 @@ class PokeBattle_Battler
   end
 end
 class PokeBattle_Battle
+  def pbCanMegaEvolve?(idxBattler)
+    return false if $game_switches[Settings::NO_MEGA_EVOLUTION]
+    return false if !@battlers[idxBattler].hasMega?
+    return false if wildBattle? && opposes?(idxBattler)
+    return true if $DEBUG && Input.press?(Input::CTRL)
+    return false if @battlers[idxBattler].effects[PBEffects::SkyDrop]>=0
+    return false if !pbHasMegaRing?(idxBattler)
+    return false if $mega_flag == 1
+    side  = @battlers[idxBattler].idxOwnSide
+    owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
+    return @megaEvolution[side][owner]==-1
+  end
   def pbRun(idxBattler,duringBattle=false)
     battler = @battlers[idxBattler]
     if battler.opposes?
