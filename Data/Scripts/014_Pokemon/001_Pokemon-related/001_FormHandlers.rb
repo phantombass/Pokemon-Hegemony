@@ -614,6 +614,9 @@ MultipleForms.register(:MIMIKYU,{
 })
 
 MultipleForms.register(:NECROZMA,{
+  "getFormOnEnteringBattle" => proc { |pkmn,wild|
+    next pkmn.form+2 if pkmn.item == :ULTRANECROZIUMZ && (pkmn.form==1 || pkmn.form==2)
+  },
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
     # Fused forms are 1 and 2, Ultra form is 3 or 4 depending on which fusion
     next pkmn.form-2 if pkmn.form>=3 && (pkmn.fainted? || endBattle)

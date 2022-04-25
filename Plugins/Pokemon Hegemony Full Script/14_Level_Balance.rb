@@ -57,10 +57,11 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = levelcap
       end
       party[i].level = level
-      if $game_switches[LvlCap::Hard]
+      if $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Trainers] == false
         level += 2
       end
       #now we evolve the pokémon, if applicable
+      #unused
       species = party[i].species
       if badges > 8
       newspecies = GameData::Species.get(species).get_baby_species # revert to the first evolution
@@ -120,5 +121,5 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       end
       end #end of for
      end
-     end
+   end
 }

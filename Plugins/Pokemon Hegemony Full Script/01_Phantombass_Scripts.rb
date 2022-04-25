@@ -65,6 +65,7 @@ Events.onMapChange += proc {| sender, e |
 }
 Events.onMapCreate += proc {| sender, e |
   $game_switches[134] = true #Blocked until ready for Demo 2 release
+  #$game_switches[175] = true #Blocked until ready for Full release
   if !$game_switches[134]
     $game_switches[141] = false
   end
