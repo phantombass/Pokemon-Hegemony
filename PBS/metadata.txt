@@ -1018,3 +1018,17 @@ SnapEdges = true
 # Hidden Grotto - Lake Chloros
 MapPosition = 0,11,13
 SnapEdges = true
+#-------------------------------
+[208]
+# Rubid Outpost
+Outdoor = true
+ShowArea = true
+MapPosition = 0,24,9
+SnapEdges = true
+#-------------------------------
+[212]
+# Route 14
+Outdoor = true
+ShowArea = true
+MapPosition = 0,4,12
+SnapEdges = true

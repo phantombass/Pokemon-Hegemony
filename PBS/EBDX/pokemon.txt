@@ -4910,6 +4910,13 @@ BattlerPlayerX          = 11
 BattlerPlayerY          = 51
 BattlerEnemyX           = -2
 #-------------------------------
+[ROTOM,6]
+BattlerEnemyY           = 49
+BattlerAltitude         = 10
+BattlerPlayerX          = 11
+BattlerPlayerY          = 51
+BattlerEnemyX           = -2
+#-------------------------------
 [GIRATINA,1]
 BattlerEnemyY           = 26
 BattlerAltitude         = 10
@@ -9284,4 +9291,11 @@ BattlerAltitude         = 0
 BattlerPlayerX          = 2
 BattlerPlayerY          = 40
 BattlerEnemyX           = -1
+#-------------------------------
+[QWILFISH2]
+BattlerEnemyY           = 43
+BattlerAltitude         = 12
+BattlerPlayerX          = 22
+BattlerPlayerY          = 47
+BattlerEnemyX           = -3
 #-------------------------------

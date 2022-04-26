@@ -37,6 +37,11 @@ module BattleScripts
     "turnStart0" => "Things are about to get real twisted in here!"
   }
 
+  WINSLOW = {
+    "afterLastOpp" => "Looks like it's closing time. Last call!",
+    "turnStart0" => "Let's march."
+  }
+
   MILITIA1 = {
     "afterLastOpp" => "You are quite good. How frustrating.",
     "turnStart0" => "You don't know what you're dealing with, kid."

@@ -1571,6 +1571,8 @@ class PokeBattle_AI
     when "075"
     #---------------------------------------------------------------------------
     when "076"
+      score -= 60 if target.hasActiveAbility?(:MULTITOOL)
+      score -= 60 if target.hasActiveAbility?(:LEVITATE)
     #---------------------------------------------------------------------------
     when "077"
     #---------------------------------------------------------------------------
@@ -2399,6 +2401,7 @@ class PokeBattle_AI
         score -= 20 if user.effects[PBEffects::Telekinesis]>0
         score -= 20 if user.pbHasType?(:FLYING)
         score -= 20 if user.hasActiveAbility?(:LEVITATE)
+        score -= 20 if user.hasActiveAbility?(:MULTITOOL)
         score -= 20 if user.hasActiveItem?(:AIRBALLOON)
         score += 20 if target.effects[PBEffects::SkyDrop]>=0
         score += 20 if target.effects[PBEffects::MagnetRise]>0
@@ -2406,6 +2409,7 @@ class PokeBattle_AI
         score += 20 if target.inTwoTurnAttack?("0C9","0CC","0CE")   # Fly, Bounce, Sky Drop
         score += 20 if target.pbHasType?(:FLYING)
         score += 20 if target.hasActiveAbility?(:LEVITATE)
+        score += 20 if target.hasActiveAbility?(:MULTITOOL)
         score += 20 if target.hasActiveItem?(:AIRBALLOON)
       end
     #---------------------------------------------------------------------------
@@ -2432,6 +2436,7 @@ class PokeBattle_AI
         score += 20 if target.inTwoTurnAttack?("0C9","0CC")   # Fly, Bounce
         score += 20 if target.pbHasType?(:FLYING)
         score += 20 if target.hasActiveAbility?(:LEVITATE)
+        score += 20 if target.hasActiveAbility?(:MULTITOOL)
         score += 20 if target.hasActiveItem?(:AIRBALLOON)
       end
     #---------------------------------------------------------------------------

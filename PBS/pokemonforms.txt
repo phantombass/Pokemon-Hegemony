@@ -1562,6 +1562,72 @@ BattlerPlayerY = 56
 BattlerEnemyY = 19
 BattlerShadowSize = 2
 #-------------------------------
+[ROTOM,8]
+FormName = Heat Rotom Multitool
+Type1 = ELECTRIC
+Type2 = COSMIC
+Abilities = MULTITOOL
+BaseStats = 50,65,127,106,145,127
+Pokedex = This Rotom has possessed a convection microwave oven that uses a special motor. It also has a flair for manipulating flames.
+BattlerPlayerY = 56
+BattlerEnemyY = 16
+BattlerShadowSize = 2
+#-------------------------------
+[ROTOM,9]
+FormName = Wash Rotom Multitool
+Type1 = ELECTRIC
+Type2 = COSMIC
+Abilities = MULTITOOL
+BaseStats = 50,65,127,106,145,127
+Pokedex = This Rotom has possessed a washing machine that uses a special motor. It blasts out water to get enemies to back down.
+BattlerPlayerY = 52
+BattlerEnemyY = 22
+BattlerShadowSize = 2
+#-------------------------------
+[ROTOM,10]
+FormName = Frost Rotom Multitool
+Type1 = ELECTRIC
+Type2 = COSMIC
+Abilities = MULTITOOL
+BaseStats = 50,65,127,106,145,127
+Pokedex = When it's like this, Rotom likes to play pranks that are freezing cold. You may find it's turned the bath you just filled to solid ice!
+BattlerPlayerY = 52
+BattlerEnemyY = 18
+BattlerShadowSize = 2
+#-------------------------------
+[ROTOM,11]
+FormName = Fan Rotom Multitool
+Type1 = ELECTRIC
+Type2 = COSMIC
+Abilities = MULTITOOL
+BaseStats = 50,65,127,106,145,127
+Pokedex = In this form, Rotom applies its new power over wind to its love of pranks. It will happily blow away any important documents it can find.
+BattlerPlayerY = 58
+BattlerEnemyY = 12
+BattlerShadowSize = 2
+#-------------------------------
+[ROTOM,12]
+FormName = Mow Rotom Multitool
+Type1 = ELECTRIC
+Type2 = COSMIC
+Abilities = MULTITOOL
+BaseStats = 50,65,127,106,145,127
+Pokedex = This is Rotom after it's seized control of a lawn mower that has a special motor. As it mows down grass, it scatters the clippings everywhere.
+BattlerPlayerY = 56
+BattlerEnemyY = 19
+BattlerShadowSize = 2
+#-------------------------------
+[ROTOM,13]
+FormName = Dex Rotom Multitool
+Type1 = ELECTRIC
+Type2 = COSMIC
+Abilities = MULTITOOL
+BaseStats = 50,65,127,106,145,127
+Pokedex = This is Rotom after it's seized control of a Pokédex that has a special motherboard. It likes to make creepy Pokédex entries.
+BattlerPlayerY = 56
+BattlerEnemyY = 19
+BattlerShadowSize = 2
+#-------------------------------
 [GIRATINA,1]
 FormName = Origin Forme
 BaseStats = 150,120,100,90,120,100

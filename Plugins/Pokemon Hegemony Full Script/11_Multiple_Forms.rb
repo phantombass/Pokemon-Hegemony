@@ -10,21 +10,26 @@ MultipleForms.register(:CASTFORM,{
 })
 
 MultipleForms.register(:ROTOM,{
+  "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
+    $appliance = 7 if endBattle
+    next $appliance
+  },
   "getForm" => proc { |pkmn|
     if pkmn.hasItem?(:ROTOMMULTITOOL)
-      next 7
+      if $appliance == nil
+        next 7
+      else
+        next $appliance
+      end
     end
     next 0
-  }
-})
-
-MultipleForms.register(:ROTOM,{
+  },
   "onSetForm" => proc { |pkmn, form, oldForm|
     form_moves = [
        :OVERHEAT,    # Heat, Microwave
        :HYDROPUMP,   # Wash, Washing Machine
        :BLIZZARD,    # Frost, Refrigerator
-       :AIRSLASH,    # Fan
+       :WINDDRILL,    # Fan
        :LEAFSTORM,    # Mow, Lawnmower
        :FLASHCANNON,   #Dex
        :ROTOBLAST    #Multitool
@@ -43,7 +48,7 @@ MultipleForms.register(:ROTOM,{
         pbMessage(_INTL("{1} forgot {2}...", pkmn.name, move_name))
         pbLearnMove(:THUNDERSHOCK) if pkmn.numMoves == 0
       end
-    else
+    elsif form < 7
       # Turned into an alternate form; try learning that form's unique move
       new_move_id = form_moves[form - 1]
       if move_index >= 0
@@ -56,13 +61,15 @@ MultipleForms.register(:ROTOM,{
           pbMessage(_INTL("{1} forgot how to use {2}.\\nAnd...\1", pkmn.name, old_move_name))
           pbMessage(_INTL("\\se[]{1} learned {2}!\\se[Pkmn move learnt]", pkmn.name, new_move_name))
         else
-          pkmn.forget_move_at_index(move_index)
-          pbMessage(_INTL("{1} forgot {2}...", pkmn.name, old_move_name))
-          pbLearnMove(:THUNDERSHOCK) if pkmn.numMoves == 0
+            pkmn.forget_move_at_index(move_index)
+            pbMessage(_INTL("{1} forgot {2}...", pkmn.name, old_move_name))
+            pbLearnMove(:THUNDERSHOCK) if pkmn.numMoves == 0
         end
       else
         # Just try to learn this form's unique move
-        pbLearnMove(pkmn, new_move_id, true)
+        if form < 7
+          pbLearnMove(pkmn, new_move_id, true)
+        end
       end
     end
   }

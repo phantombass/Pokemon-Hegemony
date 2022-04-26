@@ -38,6 +38,7 @@ module QuestModule
     :Stage31 => "Investigate Abandoned Warehouse.",
     :Stage32 => "Speak to Joseph.",
     :Stage33 => "Go after Rotom! It's being taken to the Capitol!",
+    :Stage34 => "Go to the Guard Base.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -70,7 +71,8 @@ module QuestModule
     :Location30 => "Underground Village",
     :Location31 => "Underground Village",
     :Location32 => "Underground Village",
-    :Location33 => "Rubid Outpost"
+    :Location33 => "Rubid Outpost",
+    :Location34 => "Oxy Town"
   }
 
 #====================================
