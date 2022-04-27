@@ -39,6 +39,8 @@ module QuestModule
     :Stage32 => "Speak to Joseph.",
     :Stage33 => "Go after Rotom! It's being taken to the Capitol!",
     :Stage34 => "Go to the Guard Base.",
+    :Stage35 => "Follow Sunni to the Secret Lab.",
+    :Stage36 => "Challenge the Gym.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -72,7 +74,9 @@ module QuestModule
     :Location31 => "Underground Village",
     :Location32 => "Underground Village",
     :Location33 => "Rubid Outpost",
-    :Location34 => "Oxy Town"
+    :Location34 => "Oxy Town",
+    :Location35 => "Lake Chloros",
+    :Location36 => "The Capitol"
   }
 
 #====================================

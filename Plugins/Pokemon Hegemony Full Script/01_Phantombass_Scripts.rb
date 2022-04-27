@@ -52,7 +52,17 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[106] = 72
     end
   elsif badges == 6
-    $game_variables[106] = 80
+    if $game_switches[177] && $game_switches[178]
+      $game_variables[106] = 89
+    elsif $game_switches[177] && !$game_switches[178]
+      $game_variables[106] = 85
+    else
+      $game_variables[106] = 80
+    end
+  elsif badges == 7
+    $game_variables[106] = 91
+  elsif badges == 8
+    $game_variables[106] = 95
   end
     # Weather Setting
     time = pbGetTimeNow
@@ -121,7 +131,17 @@ Events.onStepTaken += proc {| sender, e |
         $game_variables[106] = 72
       end
     elsif badges == 6
-      $game_variables[106] = 80
+      if $game_switches[177] && $game_switches[178]
+        $game_variables[106] = 89
+      elsif $game_switches[177] && !$game_switches[178]
+        $game_variables[106] = 85
+      else
+        $game_variables[106] = 80
+      end
+    elsif badges == 7
+      $game_variables[106] = 91
+    elsif badges == 8
+      $game_variables[106] = 95
     end
 }
 
@@ -419,8 +439,11 @@ Events.onWildPokemonCreate+=proc {|sender,e|
   if abilRand > 80 && $game_map.map_id == 91 && $currentDexSearch == nil
     pokemon.ability_index = 2
   end
-  if $game_map.map_id == 78
+  if $game_map.map_id == 78 || $game_map.map_id == 223 || $game_map.map_id == 226
     pokemon.form = 1
+    if abilRand > 80
+      pokemon.ability_index = 2
+    end
   end
   if $game_map.map_id == 110
     formRand = rand(29)

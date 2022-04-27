@@ -2010,13 +2010,59 @@ Pokemon = GENESECT,74
 	EVs = 0,0,0,252,252,4
 	IVs = 31,0,31,31,31,31
 	Item = CHOICESCARF
+	Nature = TIMID
 	Moves = UTURN,BUGBUZZ,ICEBEAM,POLARITYPULSE
-Pokemon = CHATOT,75
+Pokemon = PIDGEOT,75
 	EVs = 4,0,0,252,252,0
 	IVs = 31,0,31,31,31,31
 	Nature = TIMID
-	Item = CHATOTITE
-	Moves = CHATTER,BOOMBURST,WICKEDWIND,NASTYPLOT
+	Item = PIDGEOTITE
+	Moves = HURRICANE,HEATWAVE,UTURN,SCORCHINGSANDS
+#-------------------------------
+# Guard Battles
+#-------------------------------
+[GUARDBOSS,Sunni]
+LoseText = "Well, I guess that settles it, then."
+Pokemon = STEELIX,85
+	EVs = 252,4,0,0,252,0
+	IVs = 31,31,31,0,31,31
+	Nature = SASSY
+	Item = LEFTOVERS
+	Ability = STRONGJAW
+	Moves = GYROBALL,STEALTHROCK,DRACOFANGS,TOXIC
+Pokemon = GARCHOMP,85
+	EVs = 0,252,0,0,252,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Ability = STEADFAST
+	Item = YACHEBERRY
+	Moves = EARTHQUAKE,DRAGONCLAW,FIREFANG,SWORDSDANCE
+Pokemon = HYDREIGON,85
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Ability = LEVITATE
+	Item = DREADPLATE
+	Moves = DRAGONPULSE,DARKPULSE,TAUNT,ROOST
+Pokemon = SERPERIOR2,85
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Ability = CONTRARY
+	Item = AIRBALLOON
+	Moves = FLEURCANNON,TOXOPLASM,STARBEAM,TOXICSPIKES
+Pokemon = MAGEARNA,85
+	EVs = 180,0,0,76,252,0
+	IVs = 31,0,31,31,31,31
+	Nature = MODEST
+	Item = TARFRUBERRY
+	Moves = SHIFTGEAR,POLARITYPULSE,DAZZLINGGLEAM,STARBEAM
+Pokemon = DIANCIE,85
+	EVs = 0,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = DIANCITE
+	Moves = MOONBLAST,PALEOBEAM,EARTHPOWER,MYSTICALFIRE
 #-------------------------------
 # Rival Battles
 #-------------------------------

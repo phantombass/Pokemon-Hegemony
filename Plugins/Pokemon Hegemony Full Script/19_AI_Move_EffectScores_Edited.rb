@@ -212,7 +212,7 @@ class PokeBattle_AI
       if statuses==0
         score -= 80
       else
-        score += 20*statuses
+        score += 80
       end
     #---------------------------------------------------------------------------
     when "01A"

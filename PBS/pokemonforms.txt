@@ -531,7 +531,7 @@ WildItemCommon = LEEK
 BattlerPlayerX = -2
 BattlerPlayerY = 58
 BattlerEnemyX = 6
-Evolutions = SIRFETCHD,CriticalHits,3
+Evolutions = SIRFETCHD,Item,LEEK,SIRFETCHD,HoldItem,LEEK
 #-------------------------------
 [GRIMER,1]
 FormName = Alolan Form
@@ -599,7 +599,7 @@ BattlerEnemyX = -7
 BattlerEnemyY = 4
 #-------------------------------
 [CUBONE,1]
-Evolutions = MAROWAK,LevelNight,28
+Evolutions = MAROWAK,Item,DUSKSTONE
 #-------------------------------
 [MAROWAK,1]
 FormName = Alolan Form

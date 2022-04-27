@@ -97,6 +97,11 @@ BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = AIRFORCE1
 BattleVS         = plasmaSM
 #-------------------------------
+[GUARDBOSS]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleScript	 = GUARD1
+BattleVS         = plasmaSM
+#-------------------------------
 [OFFCORP]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = OFFCORP1
