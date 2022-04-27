@@ -1032,3 +1032,30 @@ Outdoor = true
 ShowArea = true
 MapPosition = 0,4,12
 SnapEdges = true
+#-------------------------------
+[214]
+# Route 15
+Outdoor = true
+ShowArea = true
+MapPosition = 0,4,8
+SnapEdges = true
+#-------------------------------
+[215]
+# Oxy Town
+Outdoor = true
+ShowArea = true
+MapPosition = 0,2,8
+SnapEdges = true
+#-------------------------------
+[218]
+# War Path Ruins
+Outdoor = true
+ShowArea = true
+MapPosition = 0,5,7
+SnapEdges = true
+#-------------------------------
+[219]
+# Ruins Cave
+ShowArea = true
+MapPosition = 0,5,7
+SnapEdges = true
