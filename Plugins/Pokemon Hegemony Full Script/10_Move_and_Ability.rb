@@ -838,6 +838,14 @@ BattleHandlers::AbilityOnSwitchIn.add(:GAIAFORCE,
   }
 )
 
+BattleHandlers::AbilityOnSwitchIn.add(:FEVERPITCH,
+  proc { |ability,battler,battle|
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1} gathers an armor of toxic waste!",battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 BattleHandlers::AbilityOnSwitchIn.add(:DUAT,
   proc { |ability,battler,battle|
     battler.effects[PBEffects::Type3] = :TIME

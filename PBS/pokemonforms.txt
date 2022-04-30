@@ -893,6 +893,8 @@ FormName = !
 [STEELIX,1]
 FormName = Mega Steelix
 MegaStone = STEELIXITE
+Type1 = STEEL
+Type2 = DRAGON
 BaseStats = 75,125,230,30,55,95
 Abilities = SANDFORCE
 HiddenAbility = SANDFORCE
@@ -3198,6 +3200,15 @@ Type2 = STEEL
 BaseStats = 98,117,135,77,53,115
 Abilities = UNAWARE
 HiddenAbility = UNAWARE
+#-------------------------------
+[DURALUDON,1]
+FormName = Mega Duraludon
+MegaStone = DURALUDONITE
+Type1 = STEEL
+Type2 = DRAGON
+BaseStats = 70,95,135,95,150,90
+Abilities = MEGALAUNCHER
+HiddenAbility = DIMENSIONBLOCK
 #-------------------------------
 [TORTERRA,1]
 FormName = Mega Torterra

@@ -156,7 +156,7 @@ EliteBattle::TRAINER_SPRITE_SCALE = 1
 EliteBattle::CUSTOM_MOVE_ANIM = true
 
 def poisonAllPokemon(event=nil)
-    for pkmn in $Trainer.ablePokemonParty
+    for pkmn in $Trainer.able_party
        next if pkmn.can_poison == false
        pkmn.status = :POISON
        pkmn.statusCount = 1
@@ -164,7 +164,7 @@ def poisonAllPokemon(event=nil)
 end
 
 def paralyzeAllPokemon(event=nil)
-    for pkmn in $Trainer.ablePokemonParty
+    for pkmn in $Trainer.able_party
        next if pkmn.hasType?(:ELECTRIC) ||
           pkmn.hasAbility?(:COMATOSE)  || pkmn.hasAbility?(:SHIELDSDOWN) || pkmn.hasAbility?(:LIMBER)
           pkmn.status!=0
@@ -173,7 +173,7 @@ def paralyzeAllPokemon(event=nil)
 end
 
 def burnAllPokemon(event=nil)
-    for pkmn in $Trainer.ablePokemonParty
+    for pkmn in $Trainer.able_party
       next if pkmn.can_burn == false
       pkmn.status = :BURN
     end
@@ -317,7 +317,7 @@ class PokeBattle_Battle
     end
   end
   def poisonAllPokemon
-      for pkmn in $Trainer.ablePokemonParty
+      for pkmn in $Trainer.able_party
          next if pkmn.hasType?(:POISON)  || pkmn.hasType?(:STEEL) || pkmn.hasAbility?(:COMATOSE)  || pkmn.hasAbility?(:SHIELDSDOWN) || pkmn.hasAbility?(:IMMUNITY) || pkmn.status!=0
          pkmn.status = :POISON
          pkmn.statusCount = 1
@@ -325,7 +325,7 @@ class PokeBattle_Battle
   end
 
   def paralyzeAllPokemon
-      for pkmn in $Trainer.ablePokemonParty
+      for pkmn in $Trainer.able_party
          next if pkmn.hasType?(:ELECTRIC) ||
             pkmn.hasAbility?(:COMATOSE)  || pkmn.hasAbility?(:SHIELDSDOWN) || pkmn.hasAbility?(:LIMBER)
             pkmn.status!=0
@@ -334,7 +334,7 @@ class PokeBattle_Battle
   end
 
   def burnAllPokemon
-      for pkmn in $Trainer.ablePokemonParty
+      for pkmn in $Trainer.able_party
          next if pkmn.can_burn == false
          pkmn.status = :BURN
        end
@@ -408,7 +408,7 @@ class Pokemon
     end
   end
   def can_poison
-    if self.type1 == :POISON || self.type2 == :POISON || self.type1 == :STEEL || self.type2 == :POISON || self.ability == :COMATOSE || self.ability == :SHIELDSDOWN || self.ability == :IMMUNITY || self.status != :NONE
+    if self.type1 == :POISON || self.type2 == :POISON || self.type1 == :STEEL || self.type2 == :STEEL || self.ability == :COMATOSE || self.ability == :SHIELDSDOWN || self.ability == :IMMUNITY || self.status != :NONE
       return false
     else
       return true
@@ -434,6 +434,29 @@ class Pokemon
     else
       return true
     end
+  end
+  def poisonAllPokemon
+      for pkmn in $Trainer.able_party
+        next if !pkmn.can_poison
+        pkmn.status = :POISON
+        pkmn.statusCount = 1
+      end
+  end
+
+  def paralyzeAllPokemon
+      for pkmn in $Trainer.able_party
+         next if pkmn.hasType?(:ELECTRIC) ||
+            pkmn.hasAbility?(:COMATOSE)  || pkmn.hasAbility?(:SHIELDSDOWN) || pkmn.hasAbility?(:LIMBER)
+            pkmn.status!=0
+         pkmn.status = :PARALYSIS
+       end
+  end
+
+  def burnAllPokemon
+      for pkmn in $Trainer.able_party
+         next if pkmn.can_burn == false
+         pkmn.status = :BURN
+       end
   end
 end
 

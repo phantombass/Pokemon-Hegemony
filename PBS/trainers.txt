@@ -830,6 +830,167 @@ Pokemon = RILLABOOM,77
 	IVs = 31,31,31,31,31,31
 	Moves = GRASSYGLIDE,DRAINPUNCH,WOODHAMMER,HIGHHORSEPOWER
 #-------------------------------
+# Route 14
+#-------------------------------
+[COOLTRAINER_M,Dylan]
+LoseText = "Oh wow."
+Pokemon = MEDICHAM,84
+	Nature = ADAMANT
+	Item = MEDICHAMITE
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = FAKEOUT,DRAINPUNCH,METEORMASH,ICEPUNCH
+#-------------------------------
+[COOLTRAINER_M,Matt]
+LoseText = "Oh wow."
+Pokemon = LAPRAS,83
+	Nature = MODEST
+	Ability = WATERABSORB
+	Item = CHOICESPECS
+	EVs = 252,0,4,252,0,0
+	IVs = 31,0,31,31,31,31
+	Moves = SURF,ICEBEAM,FREEZEDRY,PSYCHIC
+Pokemon = CORVIKNIGHT,83
+	Nature = CAREFUL
+	Ability = PRESSURE
+	Item = LEFTOVERS
+	EVs = 252,0,4,0,0,252
+	IVs = 31,31,31,31,31,31
+	Moves = BULKUP,ROOST,BRAVEBIRD,BODYPRESS
+Pokemon = TYRANITAR,83
+	Nature = ADAMANT
+	Item = TYRANITARITE
+	EVs = 252,4,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = DRAGONDANCE,ROCKSLIDE,EARTHQUAKE,CRUNCH
+#-------------------------------
+[COOLTRAINER_F,Evangeline]
+LoseText = "Oh wow."
+Pokemon = GRENINJA,83
+	Nature = TIMID
+	Ability = PROTEAN
+	Item = FOCUSSASH
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = SCALD,DARKPULSE,ICEBEAM,UTURN
+Pokemon = MAGMORTAR,83
+	Nature = TIMID
+	Ability = FEVERPITCH
+	Item = AIRBALLOON
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = FLAMECHARGE,SLUDGEBOMB,FLAMETHROWER,THUNDERBOLT
+Pokemon = SCEPTILE,83
+	Nature = ADAMANT
+	Item = SCEPTILITE
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = SWORDSDANCE,LEAFBLADE,DRAGONCLAW,EARTHQUAKE
+#-------------------------------
+# Route 15
+#-------------------------------
+[COOLTRAINER_M,Tony]
+LoseText = "Oh wow."
+Pokemon = DELPHOX,83
+	Nature = MODEST
+	Ability = MAGICGUARD
+	Item = LIFEORB
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = MINDBLOWN,PSYCHIC,DAZZLINGGLEAM,TELEPORT
+Pokemon = LUDICOLO,83
+	Nature = TIMID
+	Ability = OWNTEMPO
+	Item = SITRUSBERRY
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = SCALD,GIGADRAIN,ICEBEAM,LEECHSEED
+Pokemon = AGGRON,83
+	Nature = CAREFUL
+	Item = AGGRONITE
+	EVs = 252,4,0,0,0,252
+	IVs = 31,31,31,31,31,31
+	Moves = HEAVYSLAM,TOXIC,EARTHQUAKE,BODYPRESS
+#-------------------------------
+[COOLTRAINER_M,Axle]
+LoseText = "Oh wow."
+Pokemon = HIPPOWDON,83
+	Nature = CAREFUL
+	Ability = SANDSTREAM
+	Item = WEATHERROCK
+	EVs = 252,0,148,0,0,108
+	IVs = 31,31,31,31,31,31
+	Moves = EARTHQUAKE,STEALTHROCK,SLACKOFF,WHIRLWIND
+Pokemon = DRACOZOLT,83
+	Nature = ADAMANT
+	Ability = SANDRUSH
+	Item = LIFEORB
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = BOLTBEAK,DRAGONCLAW,EARTHQUAKE,LOWKICK
+Pokemon = STEELIX,83
+	Nature = BRAVE
+	Item = STEELIXITE
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,31,0,31,31
+	Moves = GYROBALL,CURSE,BODYPRESS,DRACOFANGS
+#-------------------------------
+# Capitol Gym
+#-------------------------------
+[COOLTRAINER_F,Liz]
+LoseText = "Oh wow."
+Pokemon = NIDOQUEEN,88
+	Nature = MODEST
+	Ability = URBANCLOUD
+	Item = WEATHERROCK
+	EVs = 252,0,0,4,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = SLUDGEWAVE,EARTHPOWER,TOXICSPIKES,FLAMETHROWER
+Pokemon = NIDOKING,88
+	Nature = TIMID
+	Ability = TOXICRUSH
+	Item = LIFEORB
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = SLUDGEWAVE,EARTHPOWER,ICEBEAM,THUNDERBOLT
+#-------------------------------
+[COOLTRAINER_F,Keziah]
+LoseText = "Oh wow."
+Pokemon = GENGAR,88
+	Nature = TIMID
+	Ability = CURSEDBODY
+	Item = GENGARITE
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = NASTYPLOT,SHADOWBALL,SLUDGEWAVE,DAZZLINGGLEAM
+#-------------------------------
+[COOLTRAINER_F,Shannon]
+LoseText = "Oh wow."
+Pokemon = CROBAT,87
+	Nature = MODEST
+	Ability = NITRIC
+	Item = EXPERTBELT
+	EVs = 0,0,4,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = SLUDGEBOMB,AIRSLASH,GIGADRAIN,ROOST
+Pokemon = OVERQWIL,87
+	Nature = ADAMANT
+	Ability = TOXICSURGE
+	Item = BLACKSLUDGE
+	EVs = 0,252,4,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = SWORDSDANCE,SPAMRAID,BARBBARRAGE,LIQUIDATION
+#-------------------------------
+[COOLTRAINER_F,Kathy]
+LoseText = "Oh wow."
+Pokemon = VENUSAUR,88
+	Nature = BOLD
+	Ability = OVERGROW
+	Item = VENUSAURITE
+	EVs = 252,0,252,0,4,0
+	IVs = 31,0,31,31,31,31
+	Moves = SYNTHESIS,GIGADRAIN,EARTHPOWER,SLUDGEBOMB
+#-------------------------------
 # Normal Mode Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
@@ -1943,7 +2104,7 @@ Pokemon = GARCHOMP2,66
 LoseText = "This can't be good."
 Pokemon = SCYTHER,73
 	EVs = 0,252,0,252,0,4
-	IVs = 31,0,31,31,31,31
+	IVs = 31,31,31,31,31,31
 	Nature = JOLLY
 	Item = EVIOLITE
 	Ability = TECHNICIAN
@@ -1953,7 +2114,7 @@ Pokemon = SCYTHER,73
 LoseText = "This can't be good."
 Pokemon = GYARADOS,72
 	EVs = 0,252,0,252,0,4
-	IVs = 31,0,31,31,31,31
+	IVs = 31,31,31,31,31,31
 	Nature = JOLLY
 	Item = WACANBERRY
 	Ability = MOXIE
@@ -1970,7 +2131,7 @@ Pokemon = VOLCARONA,72
 LoseText = "Oh boy."
 Pokemon = SCIZOR,74
 	EVs = 252,16,0,0,0,240
-	IVs = 31,0,31,31,31,31
+	IVs = 31,31,31,31,31,31
 	Nature = ADAMANT
 	Item = SCIZORITE
 	Ability = TECHNICIAN
@@ -2020,6 +2181,201 @@ Pokemon = PIDGEOT,75
 	Moves = HURRICANE,HEATWAVE,UTURN,SCORCHINGSANDS
 #-------------------------------
 # Guard Battles
+#-------------------------------
+[GUARD,Grunt]
+LoseText = "This can't be good."
+Pokemon = CLEFABLE,83
+	EVs = 252,0,252,0,0,4
+	IVs = 31,0,31,31,31,31
+	Nature = BOLD
+	Item = LEFTOVERS
+	Ability = UNAWARE
+	Moves = MOONBLAST,SOFTBOILED,AROMATHERAPY,CALMMIND
+Pokemon = HYDREIGON,83
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = LIFEORB
+	Ability = MEDUSOID
+	Moves = DARKPULSE,DRACOMETEOR,FLAMETHROWER,ROOST
+#-------------------------------
+[GUARD,Grunt,1]
+LoseText = "This can't be good."
+Pokemon = GARCHOMP,83
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Item = YACHEBERRY
+	Ability = ROUGHSKIN
+	Moves = SWORDSDANCE,DRAGONCLAW,EARTHQUAKE,FIREFANG
+#-------------------------------
+[GUARD,Grunt,2]
+LoseText = "This can't be good."
+Pokemon = TOGEKISS,83
+	EVs = 252,0,0,252,4,0
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = LEFTOVERS
+	Ability = SERENEGRACE
+	Moves = NASTYPLOT,AIRSLASH,ROOST,THUNDERWAVE
+#-------------------------------
+[GUARD,Grunt,3]
+LoseText = "This can't be good."
+Pokemon = AZUMARILL,83
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Item = SITRUSBERRY
+	Ability = HUGEPOWER
+	Moves = BELLYDRUM,AQUAJET,PLAYROUGH,LIQUIDATION
+Pokemon = SALAMENCE,83
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Item = YACHEBERRY
+	Ability = MOXIE
+	Moves = DRAGONDANCE,DRAGONCLAW,EARTHQUAKE,ROOST
+#-------------------------------
+[GUARD,Grunt,4]
+LoseText = "This can't be good."
+Pokemon = KOMMOO,83
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = MODEST
+	Item = THROATSPRAY
+	Ability = SOUNDPROOF
+	Moves = CLANGOROUSSOUL,AURASPHERE,CLANGINGSCALES,BOOMBURST
+Pokemon = GRANBULL,83
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Item = ASSAULTVEST
+	Ability = INTIMIDATE
+	Moves = CLOSECOMBAT,PLAYROUGH,EARTHQUAKE,FIREPUNCH
+#-------------------------------
+[GUARD,Grunt,5]
+LoseText = "This can't be good."
+Pokemon = GOODRA,83
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = MODEST
+	Item = ASSAULTVEST
+	Ability = GOOEY
+	Moves = DRAGONPULSE,FLAMETHROWER,ICEBEAM,SLUDGEWAVE
+Pokemon = DEDENNE,83
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Item = LIFEORB
+	Ability = HUGEPOWER
+	Moves = ZINGZAP,PLAYROUGH,FACADE,VOLTSWITCH
+#-------------------------------
+[GUARDADMIN,Admin]
+LoseText = "This can't be good."
+Pokemon = DURALUDON,84
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = DURALUDONITE
+	Ability = MEGALAUNCHER
+	Moves = FLASHCANNON,DRAGONPULSE,THUNDERBOLT,DARKPULSE
+#-------------------------------
+[GUARD,Grunt,6]
+LoseText = "This can't be good."
+Pokemon = CLEFABLE,87
+	EVs = 252,0,252,0,0,4
+	IVs = 31,0,31,31,31,31
+	Nature = BOLD
+	Item = LEFTOVERS
+	Ability = UNAWARE
+	Moves = MOONBLAST,SOFTBOILED,AROMATHERAPY,CALMMIND
+Pokemon = HYDREIGON,87
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = LIFEORB
+	Ability = MEDUSOID
+	Moves = DARKPULSE,DRACOMETEOR,FLAMETHROWER,ROOST
+#-------------------------------
+[GUARD,Grunt,7]
+LoseText = "This can't be good."
+Pokemon = TOGEKISS,87
+	EVs = 252,0,0,252,4,0
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = LEFTOVERS
+	Ability = SERENEGRACE
+	Moves = NASTYPLOT,AIRSLASH,ROOST,THUNDERWAVE
+#-------------------------------
+[GUARD,Grunt,8]
+LoseText = "This can't be good."
+Pokemon = AZUMARILL,87
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Item = SITRUSBERRY
+	Ability = HUGEPOWER
+	Moves = BELLYDRUM,AQUAJET,PLAYROUGH,LIQUIDATION
+Pokemon = GARCHOMP,87
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Item = YACHEBERRY
+	Ability = ROUGHSKIN
+	Moves = SWORDSDANCE,DRAGONCLAW,EARTHQUAKE,FIREFANG
+#-------------------------------
+[GUARD,Grunt,9]
+LoseText = "This can't be good."
+Pokemon = KOMMOO,87
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = MODEST
+	Item = THROATSPRAY
+	Ability = SOUNDPROOF
+	Moves = CLANGOROUSSOUL,AURASPHERE,CLANGINGSCALES,BOOMBURST
+Pokemon = GRANBULL,87
+	EVs = 252,252,0,0,0,4
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Item = ASSAULTVEST
+	Ability = INTIMIDATE
+	Moves = CLOSECOMBAT,PLAYROUGH,EARTHQUAKE,FIREPUNCH
+#-------------------------------
+[GUARD,Grunt,10]
+LoseText = "This can't be good."
+Pokemon = GOODRA,87
+	EVs = 252,0,0,0,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = MODEST
+	Item = ASSAULTVEST
+	Ability = GOOEY
+	Moves = DRAGONPULSE,FLAMETHROWER,ICEBEAM,SLUDGEWAVE
+Pokemon = GRIMMSNARL,87
+	EVs = 252,4,0,0,0,252
+	IVs = 31,31,31,31,31,31
+	Nature = CAREFUL
+	Item = LEFTOVERS
+	Ability = PRANKSTER
+	Moves = BULKUP,SPIRITBREAK,DRAINPUNCH,DARKESTLARIAT
+#-------------------------------
+[GUARD,Grunt,11]
+LoseText = "This can't be good."
+Pokemon = MIMIKYU,83
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = JOLLY
+	Item = LIFEORB
+	Moves = SWORDSDANCE,SHADOWCLAW,DRAINPUNCH,PLAYROUGH
+#-------------------------------
+[GUARDADMIN,Admin,1]
+LoseText = "This can't be good."
+Pokemon = DURALUDON,88
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Nature = TIMID
+	Item = DURALUDONITE
+	Ability = MEGALAUNCHER
+	Moves = FLASHCANNON,DRAGONPULSE,THUNDERBOLT,DARKPULSE
 #-------------------------------
 [GUARDBOSS,Sunni]
 LoseText = "Well, I guess that settles it, then."

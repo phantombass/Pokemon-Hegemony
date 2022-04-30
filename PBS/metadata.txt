@@ -877,6 +877,7 @@ SnapEdges = true
 Outdoor = true
 ShowArea = true
 MapPosition = 0,11,13
+DiveMap = 190
 SnapEdges = true
 #-------------------------------
 [168]
@@ -1033,6 +1034,11 @@ ShowArea = true
 MapPosition = 0,4,12
 SnapEdges = true
 #-------------------------------
+[213]
+# Hidden Grotto - Route 14
+MapPosition = 0,4,12
+SnapEdges = true
+#-------------------------------
 [214]
 # Route 15
 Outdoor = true
@@ -1058,4 +1064,28 @@ SnapEdges = true
 # Ruins Cave
 ShowArea = true
 MapPosition = 0,5,7
+SnapEdges = true
+#-------------------------------
+[220]
+# Government Secret Lab
+MapPosition = 0,11,13
+DiveMap = 230
+#-------------------------------
+[223]
+# Hidden Grotto - Route 15
+MapPosition = 0,25,11
+SnapEdges = true
+#-------------------------------
+[225]
+# Route 20
+Outdoor = true
+ShowArea = true
+MapPosition = 0,25,11
+SnapEdges = true
+#-------------------------------
+[227]
+# The Capitol
+Outdoor = true
+ShowArea = true
+MapPosition = 0,27,12
 SnapEdges = true
