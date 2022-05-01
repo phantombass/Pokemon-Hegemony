@@ -18,7 +18,7 @@ module FancyBadges
     "Mental Badge",
     "Patience Badge",
     "Renege Badge",
-    "Epitaph Badge",
-    "New Life Badge",
+    "Infirm Badge",
+    "Deep Space Badge",
   ]
 end

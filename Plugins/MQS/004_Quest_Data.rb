@@ -41,6 +41,10 @@ module QuestModule
     :Stage34 => "Go to the Guard Base.",
     :Stage35 => "Follow Sunni to the Secret Lab.",
     :Stage36 => "Challenge the Gym.",
+    :Stage37 => "Speak to Armand.",
+    :Stage38 => "Infiltrate the Capitol and find Joseph.",
+    :Stage39 => "Meet with Armand.",
+    :Stage40 => "Challenge the Gym.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -76,7 +80,11 @@ module QuestModule
     :Location33 => "Rubid Outpost",
     :Location34 => "Oxy Town",
     :Location35 => "Lake Chloros",
-    :Location36 => "The Capitol"
+    :Location36 => "The Capitol",
+    :Location37 => "The Capitol",
+    :Location38 => "The Capitol",
+    :Location39 => "Rubid Outpost",
+    :Location40 => "Zirco Mountain"
   }
 
 #====================================

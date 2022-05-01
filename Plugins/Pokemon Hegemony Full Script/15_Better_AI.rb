@@ -93,53 +93,53 @@ class PokeBattle_AI
 	#=============================================================================
 	# Decide whether the opponent should Mega Evolve their Pokémon
 	#=============================================================================
-	def pbEnemyShouldMegaEvolve?(idxBattler)
-		return false if @battle.wildBattle?
-		battler = @battle.battlers[idxBattler]
-		$opposing = []
-    for i in @battle.battlers
-      if i != battler
-        if not(i.fainted?)
-          if i.opposes?
-            $opposing.push(i)
-          end
-        end
-      end
-    end
-		moves = battler.moves
-		should = (MEGAEVOMETHOD==1)
-		move   = false
-		skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill
-		battler.moves do |move|
-			opposing do |o|
-				baseDmg = pbMoveBaseDamage(move,battler,o,skill)
-				if pbRoughDamage(move,battler,o,skill,baseDmg) >= o.hp
-					move = false
-					$nextTarget = o
-					$nextMove = move
-					$nextQue = 1
-				end
-			end
-		end
-		for o in $opposing
-			if isSuperEffective?(battler,o)
-				move = true
-			end
-		end
-		for o in $opposing
-			if o.hp <= (o.totalhp/3).floor
-				should = true
-			end
-		end
-		if move
-			should = true
-		end
-		if should && @battle.pbCanMegaEvolve?(idxBattler)
-			PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
-			return true
-		end
-		return false
-	end
+#	def pbEnemyShouldMegaEvolve?(idxBattler)
+#		return false if @battle.wildBattle?
+#		battler = @battle.battlers[idxBattler]
+#		$opposing = []
+#    for i in @battle.battlers
+#      if i != battler
+#        if not(i.fainted?)
+#          if i.opposes?
+#            $opposing.push(i)
+#          end
+#        end
+#      end
+#    end
+#		moves = battler.moves
+#		should = (MEGAEVOMETHOD==1)
+#		move   = false
+#		skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill
+#		battler.moves do |move|
+#			opposing do |o|
+#				baseDmg = pbMoveBaseDamage(move,battler,o,skill)
+#				if pbRoughDamage(move,battler,o,skill,baseDmg) >= o.hp
+#					move = false
+#					$nextTarget = o
+#					$nextMove = move
+#					$nextQue = 1
+#				end
+#			end
+#		end
+#		for o in $opposing
+#			if isSuperEffective?(battler,o)
+#				move = true
+#			end
+#		end
+#		for o in $opposing
+#			if o.hp <= (o.totalhp/3).floor
+#				should = true
+#			end
+#		end
+#		if move
+#			should = true
+#		end
+#		if should && @battle.pbCanMegaEvolve?(idxBattler)
+#			PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
+#			return true
+#		end
+#		return false
+#	end
 
 	#=============================================================================
 	# Choose an action
@@ -148,7 +148,7 @@ class PokeBattle_AI
 		return if pbEnemyShouldUseItem?(idxBattler)
 		return if pbEnemyShouldWithdraw?(idxBattler)
 		return if @battle.pbAutoFightMenu(idxBattler)
-		@battle.pbRegisterMegaEvolution(idxBattler) if pbEnemyShouldMegaEvolve?(idxBattler)
+		@battle.pbRegisterMegaEvolution(idxBattler) #if pbEnemyShouldMegaEvolve?(idxBattler)
 		if SPIRIT_POWERS
 			@battle.pbRegisterSpiritPower(idxBattler) if pbEnemyShouldUseSpiritPower?(idxBattler)
 		end
