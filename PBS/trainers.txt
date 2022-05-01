@@ -2821,8 +2821,101 @@ Pokemon = CASTFORM,80
 	Nature = TIMID
 	Moves = TEMPESTRAGE,STARBEAM,COSMICPOWER,RECOVER
 #-------------------------------
+#1v2 Enemies
+#-------------------------------
+[RIVAL2,Blue,3]
+LoseText = "It doesn't matter. We have what we came for."
+Pokemon = STARAPTOR,92
+	Ability = RECKLESS
+	Item = CHOICEBAND
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = BRAVEBIRD,DOUBLEEDGE,UTURN,CLOSECOMBAT
+Pokemon = SCEPTILE2,92
+	Item = MUSCLEBAND
+	Nature = ADAMANT
+	EVs = 4,252,0,252,0,0
+	IVs = 31,252,31,31,31,31
+	Moves = DRAINPUNCH,THOUSANDARROWS,MACHPUNCH,BULKUP
+Pokemon = ETERNATUS,94
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Item = ETERNATITE
+	Nature = TIMID
+	Moves = DYNAMAXCANNON,STARBEAM,SLUDGEBOMB,RECOVER
+#-------------------------------
+[RIVAL2,Blue,4]
+LoseText = "It doesn't matter. We have what we came for."
+Pokemon = GARCHOMP2,92
+	Ability = SNOWCLOAK
+	Item = LIFEORB
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = EARTHQUAKE,GLACIALLANCE,SWORDSDANCE,BRICKBREAK
+Pokemon = BLAZIKEN2,92
+	Item = WISEGLASSES
+	Nature = TIMID
+	Ability = GALEFORCE
+	EVs = 4,0,0,252,252,0
+	IVs = 31,0,31,31,31,31
+	Moves = HURRICANE,PSYCHIC,ROOST,STARBEAM
+Pokemon = ETERNATUS,94
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Item = ETERNATITE
+	Nature = TIMID
+	Moves = DYNAMAXCANNON,STARBEAM,SLUDGEBOMB,RECOVER
+#-------------------------------
+[RIVAL2,Blue,5]
+LoseText = "It doesn't matter. We have what we came for."
+Pokemon = STARAPTOR,92
+	Ability = RECKLESS
+	Item = CHOICEBAND
+	Nature = JOLLY
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Moves = BRAVEBIRD,DOUBLEEDGE,UTURN,CLOSECOMBAT
+Pokemon = SWAMPERT2,92
+	EVs = 252,252,0,4,0,0
+	IVs = 31,31,31,31,31,31
+	Nature = ADAMANT
+	Ability = NIGHTFALL
+	Item = CHOPLEBERRY
+	Moves = ROCKSLIDE,KNOCKOFF,EARTHQUAKE,YAWN
+Pokemon = ETERNATUS,94
+	EVs = 0,252,0,252,0,4
+	IVs = 31,31,31,31,31,31
+	Item = ETERNATITE
+	Nature = TIMID
+	Moves = DYNAMAXCANNON,STARBEAM,SLUDGEBOMB,RECOVER
+#-------------------------------
 [POKEMONTRAINER_Joseph,Joseph,1]
-LoseText = "You just keep getting better."
+LoseText = "..."
+Pokemon = SUNFLORA,92
+	Ability = WONDERGUARD
+	Item = FOCUSSASH
+	Nature = MODEST
+	EVs = 252,0,4,0,252,0
+	IVs = 31,31,31,31,31,31
+	Moves = GIGADRAIN,FLAMETHROWER,EARTHPOWER,SYNTHESIS
+Pokemon = DRACOVISH,92
+	EVs = 4,252,0,252,0,0
+	IVs = 31,31,31,31,31,31
+	Item = CHOICESCARF
+	Ability = STRONGJAW
+	Nature = JOLLY
+	Moves = FISHIOUSREND,DRACOFANGS,CRUNCH,ROCKSLIDE
+Pokemon = CASTFORM,94
+	EVs = 0,0,0,252,252,4
+	IVs = 31,0,31,31,31,31
+	Item = CASTFORMITE
+	Nature = TIMID
+	Moves = TEMPESTRAGE,STARBEAM,COSMICPOWER,RECOVER
+#-------------------------------
+[POKEMONTRAINER_Joseph,Joseph,2]
+LoseText = "Ugh...what happened?"
 Pokemon = GRIMMSNARL,92
 	Ability = PRANKSTER
 	Item = LIGHTCLAY
@@ -2840,7 +2933,7 @@ Pokemon = SNEASLER,92
 Pokemon = SUNFLORA,92
 	Ability = WONDERGUARD
 	Item = FOCUSSASH
-	Nature = JOLLY
+	Nature = MODEST
 	EVs = 252,0,4,0,252,0
 	IVs = 31,31,31,31,31,31
 	Moves = GIGADRAIN,FLAMETHROWER,EARTHPOWER,SYNTHESIS
