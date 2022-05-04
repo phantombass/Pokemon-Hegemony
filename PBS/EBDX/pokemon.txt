@@ -153,6 +153,20 @@ BattlerPlayerX          = 48
 BattlerPlayerY          = 22
 BattlerEnemyX           = 2
 #-------------------------------
+[SPEAROW2]
+BattlerEnemyY           = 72
+BattlerAltitude         = 0
+BattlerPlayerX          = -1
+BattlerPlayerY          = 73
+BattlerEnemyX           = 5
+#-------------------------------
+[FEAROW2]
+BattlerEnemyY           = 34
+BattlerAltitude         = 14
+BattlerPlayerX          = 48
+BattlerPlayerY          = 22
+BattlerEnemyX           = 2
+#-------------------------------
 [EKANS]
 BattlerEnemyY           = 67
 BattlerAltitude         = 0
@@ -394,6 +408,20 @@ BattlerPlayerY          = 59
 BattlerEnemyX           = -3
 #-------------------------------
 [PRIMEAPE]
+BattlerEnemyY           = 46
+BattlerAltitude         = 0
+BattlerPlayerX          = 20
+BattlerPlayerY          = 57
+BattlerEnemyX           = 3
+#-------------------------------
+[MANKEY2]
+BattlerEnemyY           = 54
+BattlerAltitude         = 0
+BattlerPlayerX          = -5
+BattlerPlayerY          = 59
+BattlerEnemyX           = -3
+#-------------------------------
+[PRIMEAPE2]
 BattlerEnemyY           = 46
 BattlerAltitude         = 0
 BattlerPlayerX          = 20
@@ -2282,6 +2310,20 @@ BattlerPlayerY          = 58
 BattlerEnemyX           = -1
 #-------------------------------
 [GRUMPIG]
+BattlerEnemyY           = 48
+BattlerAltitude         = 0
+BattlerPlayerX          = 9
+BattlerPlayerY          = 45
+BattlerEnemyX           = 4
+#-------------------------------
+[SPOINK2]
+BattlerEnemyY           = 58
+BattlerAltitude         = 12
+BattlerPlayerX          = -5
+BattlerPlayerY          = 58
+BattlerEnemyX           = -1
+#-------------------------------
+[GRUMPIG2]
 BattlerEnemyY           = 48
 BattlerAltitude         = 0
 BattlerPlayerX          = 9

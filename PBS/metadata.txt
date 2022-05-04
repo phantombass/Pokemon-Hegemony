@@ -1089,3 +1089,35 @@ Outdoor = true
 ShowArea = true
 MapPosition = 0,27,12
 SnapEdges = true
+#-------------------------------
+[246]
+# Victory Road
+ShowArea = true
+MapPosition = 0,28,4
+SnapEdges = true
+#-------------------------------
+[247]
+# Abandoned Space Station
+ShowArea = true
+MapPosition = 0,29,4
+SnapEdges = true
+#-------------------------------
+[248]
+# Pokémon League
+Outdoor = true
+ShowArea = true
+MapPosition = 0,28,0
+SnapEdges = true
+#-------------------------------
+[249]
+# Pokémon League
+Outdoor = true
+ShowArea = true
+MapPosition = 0,28,0
+SnapEdges = true
+#-------------------------------
+[250]
+# Pokémon League
+ShowArea = true
+MapPosition = 0,28,0
+SnapEdges = true

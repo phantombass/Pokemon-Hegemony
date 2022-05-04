@@ -71,4 +71,9 @@ module BattleScripts
     "afterLastOpp" => "I do believe we are getting to the best part of this match!",
     "turnStart0" => "It's not that I don't trust you kiddo. I've just got to do my due diligence."
   }
+
+  CHANCELLOR1 = {
+    "afterLastOpp" => "I will not accept this. I WILL MAINTAIN CONTROL!",
+    "turnStart0" => "You can't seem to comprehend. I control EVERYTHING."
+  }
 end

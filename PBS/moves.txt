@@ -815,3 +815,4 @@
 976,WAVECRASH,Wave Crash,513,90,WATER,Physical,100,15,0,NearOther,0,abef,"The user shrouds itself in water and slams into the target. This also damages the user and raises the user's Speed."
 977,DIRECLAW,Dire Claw,017,60,POISON,Physical,100,15,20,NearOther,0,befh,"The user lashes out with ruinous claws, aiming to land a critical hit. This may also poison, paralyze or make the target drowsy."
 978,BARBBARRAGE,Barb Barrage,515,60,POISON,Physical,100,15,30,NearOther,0,abef,"The user launches countless toxic barbs that may also poison the target. Power is doubled if the target has a status condition."
+979,INFERNALPARADE,Infernal Parade,516,60,GHOST,Special,100,15,30,NearOther,0,abef,"The user launches mystical fireballs that may also burn the target. Power is doubled if the target has a status condition."
