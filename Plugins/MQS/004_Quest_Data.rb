@@ -45,6 +45,11 @@ module QuestModule
     :Stage38 => "Infiltrate the Capitol and find Joseph.",
     :Stage39 => "Meet with Armand.",
     :Stage40 => "Challenge the Gym.",
+    :Stage41 => "Make your way to Route 18.",
+    :Stage42 => "Check in with Winston's friends.",
+    :Stage43 => "Meet Rotom at the Abandoned Space Station.",
+    :Stage44 => "Battle Rotom.",
+    :Stage45 => "Stop the Chancellor.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -84,7 +89,12 @@ module QuestModule
     :Location37 => "The Capitol",
     :Location38 => "The Capitol",
     :Location39 => "Rubid Outpost",
-    :Location40 => "Zirco Mountain"
+    :Location40 => "Zirco Mountain",
+    :Location41 => "Carbo Valley",
+    :Location42 => "Rado Foothills",
+    :Location43 => "Victory Road",
+    :Location44 => "Abandoned Space Station",
+    :Location45 => "Pokémon League"
   }
 
 #====================================

@@ -24,7 +24,7 @@
 21,PAINTER,Painter,16,,,HGSSEncounter-Lass,Female,200,
 22,POKEMANIAC,Poké Maniac,64,,,HGSSEncounter-SuspiciousPerson,Male,200,
 23,POKEMONBREEDER,Pokemon Breeder,48,,,HGSSEncounter-Lass,Female,200,
-24,PROFESSOR,Professor,100,DP-GalacticBattle,,,Male,200,
+24,CHANCELLOR,Chancellor,100,B2W2-ColressBattle,,,Male,200,
 25,ROCKER,Rocker,24,,,HGSSEncounter-ToughGuy,Male,200,
 26,RUINMANIAC,Ruin Maniac,48,,,HGSSEncounter-ToughGuy,Male,200,
 27,SAILOR,Sailor,32,,,HGSSEncounter-ToughGuy,Male,200,
@@ -90,3 +90,4 @@
 87,OFFCORP,OffCorp Leader,100,,,,Male,200,
 88,DEFCORP,DefCorp Leader,100,,,,Male,200,
 89,PSYCORP,PsyCorp Leader,100,,,,Male,200,
+90,LEADER_Jackson,Gym Leader,100,Battle Gym Leader,Battle victory leader,,Male,200,

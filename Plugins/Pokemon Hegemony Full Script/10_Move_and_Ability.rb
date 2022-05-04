@@ -3980,6 +3980,16 @@ class PokeBattle_Move_515 < PokeBattle_PoisonMove
   end
 end
 
+class PokeBattle_Move_516 < PokeBattle_BurnMove
+  def pbBaseDamage(baseDmg,user,target)
+    if target.pbHasAnyStatus? &&
+       (target.effects[PBEffects::Substitute]==0 || ignoresSubstitute?(user))
+      baseDmg *= 2
+    end
+    return baseDmg
+  end
+end
+
 class PokeBattle_Move
   def pbRecordDamageLost(user,target)
     damage = target.damageState.hpLost

@@ -9,6 +9,25 @@ MultipleForms.register(:CASTFORM,{
   }
 })
 
+
+MultipleForms.register(:DIALGA,{
+  "getForm" => proc { |pkmn|
+    if pkmn.hasItem?(:ADAMANTORB)
+      next 1
+    end
+    next 0
+  }
+})
+
+MultipleForms.register(:PALKIA,{
+  "getForm" => proc { |pkmn|
+    if pkmn.hasItem?(:LUSTROUSORB)
+      next 1
+    end
+    next 0
+  }
+})
+
 MultipleForms.register(:ROTOM,{
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
     $appliance = 7 if endBattle

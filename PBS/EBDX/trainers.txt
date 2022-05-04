@@ -49,6 +49,12 @@ BattleVS         = plasmaSM
 BattleScript	 = VINCENT
 Ace				 = 6
 #-------------------------------
+[LEADER_Jackson]
+BattleBGM        = Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = JACKSON
+Ace				 = 6
+#-------------------------------
 [TEAMROCKET_M]
 BattleBGM        = BW-NeoPlasmaBattle.ogg
 BattleVS         = teamSkull
@@ -77,6 +83,10 @@ BattleBGM        = Goldeneye - Cradle.ogg
 BattleScript	 = MILITIA1
 BattleVS         = plasmaSM
 #-------------------------------
+[ROCKETBOSS,Armand,2]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+#-------------------------------
 [ARMYBOSS,Ahab]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = ARMY1
@@ -87,9 +97,17 @@ BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = ARMY2
 BattleVS         = plasmaSM
 #-------------------------------
+[ARMYBOSS,Ahab,2]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+#-------------------------------
 [NAVYBOSS]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = NAVY1
+BattleVS         = plasmaSM
+#-------------------------------
+[NAVYBOSS,Eugene,1]
+BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
 #-------------------------------
 [AIRFORCEBOSS]
@@ -102,8 +120,33 @@ BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = GUARD1
 BattleVS         = plasmaSM
 #-------------------------------
+[GUARDBOSS,Sunni,1]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+#-------------------------------
 [OFFCORP]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = OFFCORP1
+BattleVS         = plasmaSM
+#-------------------------------
+[OFFCORP,Bruce,1]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+#-------------------------------
+[DEFCORP]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+#-------------------------------
+[PSYCORP]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+#-------------------------------
+[CHANCELLOR]
+BattleBGM        = B2W2-ColressBattle.ogg
+BattleScript	 = CHANCELLOR1
+BattleVS         = plasmaSM
+#-------------------------------
+[POKEMONTRAINER_Joseph]
+BattleBGM        = HGSS-278-BattleChampion.ogg
 BattleVS         = plasmaSM
 #-------------------------------

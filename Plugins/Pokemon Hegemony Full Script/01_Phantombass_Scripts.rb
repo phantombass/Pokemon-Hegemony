@@ -497,62 +497,64 @@ def pbStartOver(gameover=false)
     if gameover
       pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back to a Pokémon Center."))
     else
-      if $game_switches[73] == true && !$game_map.map_id == 144 && !$game_map.map_id == 145
-        pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After losing the Nuzlocke, you scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
-        pbCancelVehicles
-        pbRemoveDependencies
-        $game_switches[Settings::STARTING_OVER_SWITCH] = true
-        $game_switches[73] = false
-        $CanToggle = true
-        $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
-        $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
-        $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
-        $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
-        $scene.transfer_player if $scene.is_a?(Scene_Map)
-        $game_map.refresh
-        $game_switches[119] = false
-        $game_switches[94] = false
-      elsif ($game_map.map_id == 144 && $game_switches[73] == true) || ($game_map.map_id == 145 && $game_switches[73] == true)
-        pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell after losing the Nuzlocke..."))
-        pbCancelVehicles
-        pbRemoveDependencies
-        $game_switches[Settings::STARTING_OVER_SWITCH] = true
-        $game_switches[73] = false
-        $CanToggle = true
-        $game_temp.player_new_map_id    = 144
-        $game_temp.player_new_x         = 45
-        $game_temp.player_new_y         = 6
-        $scene.transfer_player if $scene.is_a?(Scene_Map)
-        $game_map.refresh
-        $game_switches[119] = false
-        $game_switches[94] = false
-      elsif !$game_switches[73] && ($game_map.map_id == 144 || $game_map.map_id == 145)
-        pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell..."))
-        pbCancelVehicles
-        pbRemoveDependencies
-        $game_switches[Settings::STARTING_OVER_SWITCH] = true
-        $CanToggle = true
-        $game_temp.player_new_map_id    = 144
-        $game_temp.player_new_x         = 45
-        $game_temp.player_new_y         = 6
-        $scene.transfer_player if $scene.is_a?(Scene_Map)
-        $game_map.refresh
-        $game_switches[119] = false
-        $game_switches[94] = false
+      if $game_switches[73] == true
+        if $game_map.map_id != 144 && $game_map.map_id != 145
+          pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After losing the Nuzlocke, you scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
+          pbCancelVehicles
+          pbRemoveDependencies
+          $game_switches[Settings::STARTING_OVER_SWITCH] = true
+          $CanToggle = true
+          $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
+          $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
+          $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
+          $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
+          $scene.transfer_player if $scene.is_a?(Scene_Map)
+          $game_map.refresh
+          $game_switches[119] = false
+          $game_switches[94] = false
+        elsif $game_map.map_id == 144 || $game_map.map_id == 145
+          pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell after losing the Nuzlocke..."))
+          pbCancelVehicles
+          pbRemoveDependencies
+          $game_switches[Settings::STARTING_OVER_SWITCH] = true
+          $CanToggle = true
+          $game_temp.player_new_map_id    = 144
+          $game_temp.player_new_x         = 45
+          $game_temp.player_new_y         = 6
+          $scene.transfer_player if $scene.is_a?(Scene_Map)
+          $game_map.refresh
+          $game_switches[119] = false
+          $game_switches[94] = false
+        end
       else
-        pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
-        pbCancelVehicles
-        pbRemoveDependencies
-        $game_switches[Settings::STARTING_OVER_SWITCH] = true
-        $CanToggle = true
-        $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
-        $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
-        $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
-        $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
-        $scene.transfer_player if $scene.is_a?(Scene_Map)
-        $game_map.refresh
-        $game_switches[119] = false
-        $game_switches[94] = false
+        if $game_map.map_id == 144 || $game_map.map_id == 145
+          pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell..."))
+          pbCancelVehicles
+          pbRemoveDependencies
+          $game_switches[Settings::STARTING_OVER_SWITCH] = true
+          $CanToggle = true
+          $game_temp.player_new_map_id    = 144
+          $game_temp.player_new_x         = 45
+          $game_temp.player_new_y         = 6
+          $scene.transfer_player if $scene.is_a?(Scene_Map)
+          $game_map.refresh
+          $game_switches[119] = false
+          $game_switches[94] = false
+        else
+          pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
+          pbCancelVehicles
+          pbRemoveDependencies
+          $game_switches[Settings::STARTING_OVER_SWITCH] = true
+          $CanToggle = true
+          $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
+          $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
+          $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
+          $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
+          $scene.transfer_player if $scene.is_a?(Scene_Map)
+          $game_map.refresh
+          $game_switches[119] = false
+          $game_switches[94] = false
+        end
       end
     end
   else
