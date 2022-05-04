@@ -1,4 +1,4 @@
-{&"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
+{'"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
 ["Goldeneye - Cradle.ogg@["classicVS"LEADER_Blaine{@{	@
 ["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"Ace[i"LEADER_Sabrina{@{	@
 ["Gym Leader.ogg@["plasmaSM@["
@@ -33,5 +33,6 @@ NAVY1@["plasmaSM"NAVYBOSS,Eugene,1{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"DEFCORP{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"PSYCORP{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"CHANCELLOR{@{@
-["B2W2-ColressBattle.ogg@["CHANCELLOR1@["plasmaSM"POKEMONTRAINER_Joseph{@{@
+["B2W2-ColressBattle.ogg@["CHANCELLOR1@["plasmaSM"#POKEMONTRAINER_Joseph,Joseph,1{@{@
+["Goldeneye - Cradle.ogg@["plasmaSM"#POKEMONTRAINER_Joseph,Joseph,2{@{@
 [" HGSS-278-BattleChampion.ogg@["plasmaSM

@@ -1090,6 +1090,28 @@ ShowArea = true
 MapPosition = 0,27,12
 SnapEdges = true
 #-------------------------------
+[236]
+# Zirco Mountain
+ShowArea = true
+MapPosition = 0,21,8
+SnapEdges = true
+#-------------------------------
+[237]
+# Zirco Mountain
+ShowArea = true
+MapPosition = 0,21,8
+SnapEdges = true
+#-------------------------------
+[238]
+# Zirco Mountain
+ShowArea = true
+MapPosition = 0,21,8
+SnapEdges = true
+#-------------------------------
+[239]
+# Zirco Gym
+MapPosition = 0,21,8
+#-------------------------------
 [246]
 # Victory Road
 ShowArea = true

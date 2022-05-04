@@ -146,7 +146,11 @@ BattleBGM        = B2W2-ColressBattle.ogg
 BattleScript	 = CHANCELLOR1
 BattleVS         = plasmaSM
 #-------------------------------
-[POKEMONTRAINER_Joseph]
+[POKEMONTRAINER_Joseph,Joseph,1]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+#-------------------------------
+[POKEMONTRAINER_Joseph,Joseph,2]
 BattleBGM        = HGSS-278-BattleChampion.ogg
 BattleVS         = plasmaSM
 #-------------------------------
