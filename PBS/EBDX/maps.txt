@@ -32,3 +32,6 @@ BattleEnv = DESERT
 [172]
 BattleEnv = CAVE
 #===================
+[251]
+BattleEnv = CHAMPION
+#===================

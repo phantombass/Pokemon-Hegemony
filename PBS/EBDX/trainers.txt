@@ -80,14 +80,16 @@ BattleBGM        = BW-NeoPlasmaBattle.ogg
 #-------------------------------
 [ROCKETBOSS]
 BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+#-------------------------------
+[ROCKETBOSS,Armand,0]
 BattleScript	 = MILITIA1
+#-------------------------------
+[ARMYBOSS]
+BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
 #-------------------------------
-[ROCKETBOSS,Armand,2]
-BattleBGM        = Goldeneye - Cradle.ogg
-BattleVS         = plasmaSM
-#-------------------------------
-[ARMYBOSS,Ahab]
+[ARMYBOSS,Ahab,0]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = ARMY1
 BattleVS         = plasmaSM
@@ -97,14 +99,12 @@ BattleBGM        = Goldeneye - Silo.ogg
 BattleScript	 = ARMY2
 BattleVS         = plasmaSM
 #-------------------------------
-[ARMYBOSS,Ahab,2]
+[NAVYBOSS]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
 #-------------------------------
-[NAVYBOSS]
-BattleBGM        = Goldeneye - Silo.ogg
+[NAVYBOSS,Eugene,0]
 BattleScript	 = NAVY1
-BattleVS         = plasmaSM
 #-------------------------------
 [NAVYBOSS,Eugene,1]
 BattleBGM        = Goldeneye - Silo.ogg
@@ -117,20 +117,18 @@ BattleVS         = plasmaSM
 #-------------------------------
 [GUARDBOSS]
 BattleBGM        = Goldeneye - Silo.ogg
-BattleScript	 = GUARD1
 BattleVS         = plasmaSM
 #-------------------------------
-[GUARDBOSS,Sunni,1]
-BattleBGM        = Goldeneye - Silo.ogg
-BattleVS         = plasmaSM
+[GUARDBOSS,Sunni,0]
+BattleScript	 = GUARD1
 #-------------------------------
 [OFFCORP]
 BattleBGM        = Goldeneye - Silo.ogg
-BattleScript	 = OFFCORP1
 BattleVS         = plasmaSM
 #-------------------------------
-[OFFCORP,Bruce,1]
+[OFFCORP,Bruce,0]
 BattleBGM        = Goldeneye - Silo.ogg
+BattleScript	 = OFFCORP1
 BattleVS         = plasmaSM
 #-------------------------------
 [DEFCORP]

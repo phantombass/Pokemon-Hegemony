@@ -2495,7 +2495,7 @@ Pokemon = GARCHOMP2,66
 	Moves = SWORDSDANCE,BODYSLAM,EARTHQUAKE,BRICKBREAK
 #-------------------------------
 [NAVYBOSS,Eugene,1]
-LoseText = "So ye're pretty solid then, eh? Good."
+LoseText = "..."
 Pokemon = PELIPPER,94
 	EV = 252,0,0,252,4,0
 	IV = 31,0,31,31,31,31
@@ -3606,7 +3606,7 @@ Pokemon = CASTFORM,95
 	Moves = TEMPESTRAGE,STARBEAM,COSMICPOWER,RECOVER
 #-------------------------------
 [RIVAL2,Blue,6]
-LoseText = "It doesn't matter. We have what we came for."
+LoseText = "Sigh...ok, I see your point."
 Pokemon = TAPUKOKO,96
 	Item = SHUCABERRY
 	Nature = TIMID
@@ -3648,7 +3648,7 @@ Pokemon = ETERNATUS,96
 	Moves = DYNAMAXCANNON,STARBEAM,DEATHTOLL,RECOVER
 #-------------------------------
 [RIVAL2,Blue,7]
-LoseText = "It doesn't matter. We have what we came for."
+LoseText = "Sigh...ok, I see your point."
 Pokemon = TAPUKOKO,96
 	Item = SHUCABERRY
 	Nature = TIMID
@@ -3691,7 +3691,7 @@ Pokemon = ETERNATUS,94
 	Moves = DYNAMAXCANNON,STARBEAM,DEATHTOLL,RECOVER
 #-------------------------------
 [RIVAL2,Blue,8]
-LoseText = "It doesn't matter. We have what we came for."
+LoseText = "Sigh...ok, I see your point."
 Pokemon = TAPUKOKO,96
 	Item = SHUCABERRY
 	Nature = TIMID
