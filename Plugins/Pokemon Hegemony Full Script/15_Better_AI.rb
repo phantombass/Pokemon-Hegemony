@@ -93,7 +93,7 @@ class PokeBattle_AI
 	#=============================================================================
 	# Decide whether the opponent should Mega Evolve their Pokémon
 	#=============================================================================
-#	def pbEnemyShouldMegaEvolve?(idxBattler)
+	def pbEnemyShouldMegaEvolve?(idxBattler)
 #		return false if @battle.wildBattle?
 #		battler = @battle.battlers[idxBattler]
 #		$opposing = []
@@ -134,12 +134,13 @@ class PokeBattle_AI
 #		if move
 #			should = true
 #		end
-#		if should && @battle.pbCanMegaEvolve?(idxBattler)
-#			PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
-#			return true
-#		end
-#		return false
-#	end
+		if @battle.pbCanMegaEvolve?(idxBattler)
+			PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
+			return true
+		else
+			return false
+		end
+	end
 
 	#=============================================================================
 	# Choose an action

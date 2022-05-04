@@ -1090,6 +1090,56 @@ ShowArea = true
 MapPosition = 0,27,12
 SnapEdges = true
 #-------------------------------
+[236]
+# Zirco Mountain
+ShowArea = true
+MapPosition = 0,21,8
+SnapEdges = true
+#-------------------------------
+[237]
+# Zirco Mountain
+ShowArea = true
+MapPosition = 0,21,8
+SnapEdges = true
+#-------------------------------
+[238]
+# Zirco Mountain
+Outdoor = true
+ShowArea = true
+MapPosition = 0,21,8
+SnapEdges = true
+#-------------------------------
+[239]
+# Zirco Gym
+MapPosition = 0,21,8
+#-------------------------------
+[240]
+# Route 18
+Outdoor = true
+ShowArea = true
+MapPosition = 0,26,3
+SnapEdges = true
+#-------------------------------
+[241]
+# Route 19
+Outdoor = true
+ShowArea = true
+MapPosition = 0,27,5
+SnapEdges = true
+#-------------------------------
+[242]
+# Rado Foothills
+Outdoor = true
+ShowArea = true
+MapPosition = 0,28,7
+SnapEdges = true
+#-------------------------------
+[245]
+# Hidden Grotto - Route 19
+ShowArea = true
+MapPosition = 0,27,4
+SnapEdges = true
+#-------------------------------
 [246]
 # Victory Road
 ShowArea = true
