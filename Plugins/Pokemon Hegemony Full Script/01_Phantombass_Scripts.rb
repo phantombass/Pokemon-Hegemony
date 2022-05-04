@@ -79,7 +79,9 @@ Events.onMapCreate += proc {| sender, e |
   if !$game_switches[73] && $game_switches[75]
     item = :RARECANDY
     qty = $PokemonBag.pbQuantity(item)
-    $PokemonBag.pbDeleteItem(item,qty-5)
+    if qty > 5
+      $PokemonBag.pbDeleteItem(item,qty-5)
+    end
     $game_switches[901] = true
     $game_switches[75] = false
   end
