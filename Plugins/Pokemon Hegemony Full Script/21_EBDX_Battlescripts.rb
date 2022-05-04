@@ -37,9 +37,14 @@ module BattleScripts
     "turnStart0" => "Things are about to get real twisted in here!"
   }
 
-  WINSLOW = {
+  VINCENT = {
     "afterLastOpp" => "Looks like it's closing time. Last call!",
     "turnStart0" => "Let's march."
+  }
+
+  JACKSON = {
+    "afterLastOpp" => "Don't think we've given up!",
+    "turnStart0" => "I don't plan on losing to some punk."
   }
 
   MILITIA1 = {
