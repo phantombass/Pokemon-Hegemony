@@ -2177,6 +2177,7 @@ class PokemonPartyScreen
       cmdDebug   = -1
       cmdMoves   = [-1] * pkmn.numMoves
       cmdSwitch  = -1
+      cmdEvolve  = -1
       cmdName    = -1
       cmdMail    = -1
       cmdItem    = -1
@@ -2196,9 +2197,11 @@ class PokemonPartyScreen
       if !pkmn.egg?
         if pkmn.mail
           commands[cmdMail = commands.length]     = _INTL("Mail")
+          commands[cmdEvolve = commands.length]   = _INTL("Evolve")
           commands[cmdName = commands.length]     = _INTL("Nickname")
         else
           commands[cmdItem = commands.length]     = _INTL("Item")
+          commands[cmdEvolve = commands.length]   = _INTL("Evolve")
           commands[cmdName = commands.length]     = _INTL("Nickname")
         end
       end
@@ -2272,6 +2275,45 @@ class PokemonPartyScreen
         if pkmnid>=0 && pkmnid!=oldpkmnid
           pbSwitch(oldpkmnid,pkmnid)
         end
+      elsif cmdEvolve>=0 && command==cmdEvolve
+        evoreqs = {}
+        GameData::Species.get(pkmn.species).get_evolutions(true).each do |evo|   # [new_species, method, parameter, boolean]
+          if evo[1].to_s.start_with?('Item')
+            evoreqs[evo[0]] = evo[2] if $PokemonBag.pbHasItem?(evo[2]) && pkmn.check_evolution_on_use_item(evo[2])
+          elsif evo[1].to_s.start_with?('Trade')
+            evoreqs[evo[0]] = evo[2] if $Trainer.has_species?(evo[2]) || pkmn.check_evolution_on_trade(evo[2])
+          elsif evo[1].to_s.start_with?('Happiness')
+            evoreqs[evo[0]] = nil
+          elsif pkmn.check_evolution_on_level_up
+            evoreqs[evo[0]] = nil
+          end
+        end
+        case evoreqs.length
+        when 0
+          pbDisplay(_INTL("This Pokémon can't evolve."))
+          next
+        when 1
+          newspecies = evoreqs.keys[0]
+        else
+          newspecies = evoreqs.keys[@scene.pbShowCommands(
+            _INTL("Which species would you like to evolve into?"),
+            evoreqs.keys.map { |id| _INTL(GameData::Species.get(id).real_name) }
+          )]
+        end
+        if evoreqs[newspecies] # requires an item
+          next unless @scene.pbConfirmMessage(_INTL(
+            "This will consume a {1}. Do you want to continue?",
+            GameData::Item.get(evoreqs[newspecies]).name
+          ))
+          $PokemonBag.pbDeleteItem(evoreqs[newspecies])
+        end
+        pbFadeOutInWithMusic {
+          evo = PokemonEvolutionScene.new
+          evo.pbStartScreen(pkmn,newspecies)
+          evo.pbEvolution
+          evo.pbEndScreen
+          scene.pbRefresh
+        }
       elsif cmdName>=0 && command==cmdName
         speciesname = pkmn.speciesName
         nickname = pbEnterPokemonName(_INTL("{1}'s nickname?", speciesname),
