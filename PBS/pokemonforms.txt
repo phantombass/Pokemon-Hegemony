@@ -1857,7 +1857,7 @@ Generation = 8
 WildItemRare = SPELLTAG
 BattlerPlayerX = -1
 BattlerEnemyX = 0
-Evolutions = RUNERIGUS,Location,147
+Evolutions = RUNERIGUS,Level,35
 #-------------------------------
 [DEERLING,1]
 FormName = Summer Form
