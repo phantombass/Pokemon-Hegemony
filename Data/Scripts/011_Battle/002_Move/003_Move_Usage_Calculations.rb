@@ -159,7 +159,7 @@ class PokeBattle_Move
     end
     modifiers[:evasion_stage] = 0 if target.effects[PBEffects::Foresight] && modifiers[:evasion_stage] > 0
     modifiers[:evasion_stage] = 0 if target.effects[PBEffects::MiracleEye] && modifiers[:evasion_stage] > 0
-    modifiers[:accuracy_multiplier] *= 0.6 if @battle.pbWeather == :Fog
+    #modifiers[:accuracy_multiplier] *= 0.6 if @battle.pbWeather == :Fog
   end
 
   #=============================================================================
