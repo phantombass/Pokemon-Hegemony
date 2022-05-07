@@ -470,7 +470,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
     # Checks current search value, if it exists, sets the Pokemon to it
     if $currentDexSearch != nil && $currentDexSearch.is_a?(Array)
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
-      if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) ||((GameData::TerrainTag.get(pLoc).id == :Water || GameData::TerrainTag.get(pLoc).id == :StillWater || GameData::TerrainTag.get(pLoc).id == :DeepWater) && $encTerr == :OldRod) 
+      if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) ||((GameData::TerrainTag.get(pLoc).id == :Water || GameData::TerrainTag.get(pLoc).id == :StillWater || GameData::TerrainTag.get(pLoc).id == :DeepWater) && $encTerr == :OldRod)
         pokemon.species=$currentDexSearch[0]
         $chainNav = [$currentDexSearch[0],0] if $chain == nil
         $chain = 0 if $chain == nil
@@ -487,6 +487,9 @@ Events.onWildPokemonCreate+=proc {|sender,e|
         lvl = rand(100)
         if lvl > 80
           pokemon.level = pokemon.level + 10
+          if pokemon.level > $game_variables[106]
+            $game_switches[89] = true
+          end
         else
           pokemon.level = pokemon.level
         end
