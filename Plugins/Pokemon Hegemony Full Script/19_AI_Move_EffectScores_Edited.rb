@@ -1942,6 +1942,8 @@ class PokeBattle_AI
       foes     = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
       if @battle.pbCheckGlobalAbility(:DAMP)
         score -= 100
+      elsif skill>=PBTrainerAI.highSkill && user.hp < user.totalhp/4 && user.hasActiveItem?(:CUSTAPBERRY)
+        score += 100
       elsif skill>=PBTrainerAI.mediumSkill && reserves==0 && foes>0
         score -= 100   # don't want to lose
       elsif skill>=PBTrainerAI.highSkill && reserves==0 && foes==0
