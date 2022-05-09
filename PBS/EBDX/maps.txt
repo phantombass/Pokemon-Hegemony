@@ -5,6 +5,12 @@ BattleEnv = OUTDOOR
 [43]
 BattleEnv = OUTDOOR
 #===================
+[78]
+BattleEnv = FOREST
+#===================
+[81]
+BattleEnv = FOREST
+#===================
 [88]
 BattleEnv = OUTDOOR
 #===================
@@ -29,8 +35,26 @@ BattleEnv = DESERT
 [135]
 BattleEnv = DESERT
 #===================
+[142]
+BattleEnv = FOREST
+#===================
+[169]
+BattleEnv = DARKNESS
+#===================
 [172]
 BattleEnv = CAVE
+#===================
+[203]
+BattleEnv = FOREST
+#===================
+[223]
+BattleEnv = FOREST
+#===================
+[226]
+BattleEnv = FOREST
+#===================
+[245]
+BattleEnv = FOREST
 #===================
 [251]
 BattleEnv = CHAMPION

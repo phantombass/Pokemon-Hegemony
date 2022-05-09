@@ -1774,7 +1774,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 26
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = PERSIAN,Level,28,PERRSERKER,None,
+Evolutions = PERSIAN,Level,28
 #-------------------------------
 [53]
 Name = Persian
@@ -2842,7 +2842,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 27
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = SIRFETCHD,None,
+Evolutions = 
 #-------------------------------
 [84]
 Name = Doduo
@@ -4173,7 +4173,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 26
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = MRRIME,None,
+Evolutions = 
 #-------------------------------
 [123]
 Name = Scyther
@@ -7556,7 +7556,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 31
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = CURSOLA,None,
+Evolutions = 
 #-------------------------------
 [223]
 Name = Remoraid
@@ -8974,7 +8974,7 @@ BattlerEnemyX = 7
 BattlerEnemyY = 35
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = OBSTAGOON,None,
+Evolutions =
 #-------------------------------
 [265]
 Name = Wurmple
@@ -18886,7 +18886,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = COFAGRIGUS,Level,34,RUNERIGUS,None,
+Evolutions = COFAGRIGUS,Level,34,RUNERIGUS,None
 #-------------------------------
 [563]
 Name = Cofagrigus

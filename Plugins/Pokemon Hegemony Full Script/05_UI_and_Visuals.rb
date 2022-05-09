@@ -2277,9 +2277,11 @@ class PokemonPartyScreen
         end
       elsif cmdEvolve>=0 && command==cmdEvolve
         evoreqs = {}
-        GameData::Species.get(pkmn.species).get_evolutions(true).each do |evo|   # [new_species, method, parameter, boolean]
+        GameData::Species.get_species_form(pkmn.species,pkmn.form).get_evolutions(true).each do |evo|   # [new_species, method, parameter, boolean]
           if evo[1].to_s.start_with?('Item')
             evoreqs[evo[0]] = evo[2] if $PokemonBag.pbHasItem?(evo[2]) && pkmn.check_evolution_on_use_item(evo[2])
+          elsif evo[1].to_s.start_with?('Location')
+            evoreqs[evo[0]] = nil if $game_map.map_id == evo[2]
           elsif evo[1].to_s.start_with?('Trade')
             evoreqs[evo[0]] = evo[2] if $Trainer.has_species?(evo[2]) || pkmn.check_evolution_on_trade(evo[2])
           elsif evo[1].to_s.start_with?('Happiness')
