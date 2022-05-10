@@ -55,9 +55,9 @@ Settings::MENU_WINDOWSKINS = [
 #    "choice 28",
     "frlgtextskin"
   ]
-Settings::FIELD_MOVES_COUNT_BADGES = true
-Settings::MAXIMUM_LEVEL = 100
-Settings::GAME_VERSION = "0.1.6"
+Settings::FIELD_MOVES_COUNT_BADGES = false
+Settings::MAXIMUM_LEVEL = 120
+Settings::GAME_VERSION = "1.0.10"
 
 module Settings
   def self.storage_creator_name

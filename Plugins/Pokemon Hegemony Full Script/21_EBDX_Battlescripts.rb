@@ -52,6 +52,11 @@ module BattleScripts
     "turnStart0" => "You don't know what you're dealing with, kid."
   }
 
+  MILITIA2 = {
+    "afterLastOpp" => "...",
+    "turnStart0" => "..."
+  }
+
   ARMY1 = {
     "afterLastOpp" => "How interesting...",
     "turnStart0" => "Stop while you can kid. You're way out of your depth."
@@ -70,6 +75,11 @@ module BattleScripts
   NAVY1 = {
     "afterLastOpp" => "Ah, I see yer point. Well said, yungin.",
     "turnStart0" => "Ye may as well be a criminal showing up at a time like this."
+  }
+
+  NAVY2 = {
+    "afterLastOpp" => "...",
+    "turnStart0" => "..."
   }
 
   AIRFORCE1 = {
