@@ -411,7 +411,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "026"
-      score += 40 if user.turnCount==0   # Dragon Dance tends to be popular
+      score += 60 if user.turnCount==0   # Dragon Dance tends to be popular
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:SPEED)
         score -= 90
@@ -1597,7 +1597,10 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "07E"
     #---------------------------------------------------------------------------
-    when "07F"
+  when "07F", "515", "516"
+      if target.status != :NONE
+        score += 50
+      end
     #---------------------------------------------------------------------------
     when "080"
     #---------------------------------------------------------------------------
@@ -1625,6 +1628,9 @@ class PokeBattle_AI
     when "085"
     #---------------------------------------------------------------------------
     when "086"
+      if user.hasActiveAbility?(:UNBURDEN) && user.hasActiveItem?(:FLYINGGEM)
+        score += 60
+      end
     #---------------------------------------------------------------------------
     when "087"
       if user.hasActiveAbility?(:ACCLIMATE)
@@ -1867,7 +1873,11 @@ class PokeBattle_AI
       if user.hp==user.totalhp || (skill>=PBTrainerAI.mediumSkill && !user.canHeal?)
         score -= 90
       else
-        score += 50
+        if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
+          score += 80
+        else
+          score += 50
+        end
         score -= user.hp*100/user.totalhp
       end
     #---------------------------------------------------------------------------
@@ -2544,6 +2554,9 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "130"
       score += 20   # Shadow moves are more preferable
+      if user.hasActiveAbility?(:CONTRARY)
+        score += 30
+      end
       score -= 40
     #---------------------------------------------------------------------------
     when "131"
@@ -2579,6 +2592,7 @@ class PokeBattle_AI
         score += 30
         if skill>=PBTrainerAI.highSkill
           score -= 20 if target.hasActiveAbility?(:MARVELSCALE)
+          score += 50 if target.pbHasType?(:WATER)
         end
       end
     #---------------------------------------------------------------------------
