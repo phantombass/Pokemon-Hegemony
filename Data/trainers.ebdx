@@ -1,4 +1,4 @@
-{("RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
+{+"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
 ["Goldeneye - Cradle.ogg@["classicVS"LEADER_Blaine{@{	@
 ["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"Ace[i"LEADER_Sabrina{@{	@
 ["Gym Leader.ogg@["plasmaSM@["
@@ -16,19 +16,19 @@ HAZEL@![i"LEADER_Erika{@{	@
 ["BW-NeoPlasmaBattle.ogg"AIRFORCECAPTAIN{@{@
 ["BW-NeoPlasmaBattle.ogg"AIRFORCE{@{@
 ["BW-NeoPlasmaBattle.ogg"ROCKETBOSS{@{@
-["Goldeneye - Cradle.ogg@["plasmaSM"ROCKETBOSS,Armand,0{@{@["MILITIA1"ARMYBOSS{@{@
-["Goldeneye - Silo.ogg@["plasmaSM"ARMYBOSS,Ahab,0{@{@
-["Goldeneye - Silo.ogg@["
-ARMY1@["plasmaSM"ARMYBOSS,Ahab,1{@{@
-["Goldeneye - Silo.ogg@["
-ARMY2@["plasmaSM"NAVYBOSS{@{@
-["Goldeneye - Silo.ogg@["plasmaSM"NAVYBOSS,Eugene,0{@{@["
-NAVY1"NAVYBOSS,Eugene,1{@{@
-["Goldeneye - Silo.ogg@["plasmaSM"AIRFORCEBOSS{@{@
+["Goldeneye - Cradle.ogg@["plasmaSM"ROCKETBOSS,Armand{@{@["MILITIA1"ROCKETBOSS,Armand,2{@{@["MILITIA2"ARMYBOSS{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"ARMYBOSS,Ahab,0{@{@["
+ARMY1"ARMYBOSS,Ahab,1{@{@["
+ARMY2"NAVYBOSS{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"NAVYBOSS,Eugene{@{@["
+NAVY1"NAVYBOSS,Eugene,1{@{@["
+NAVY2"AIRFORCEBOSS{@{@
 ["Goldeneye - Silo.ogg@["AIRFORCE1@["plasmaSM"GUARDBOSS{@{@
-["Goldeneye - Silo.ogg@["plasmaSM"GUARDBOSS,Sunni,0{@{@["GUARD1"OFFCORP{@{@
-["Goldeneye - Silo.ogg@["plasmaSM"OFFCORP,Bruce,0{@{@
-["Goldeneye - Silo.ogg@["OFFCORP1@["plasmaSM"DEFCORP{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"GUARDBOSS,Sunni{@{@["GUARD1"GUARDBOSS,Sunni,1{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"OFFCORP{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"OFFCORP,Bruce{@{@
+["Goldeneye - Silo.ogg@["OFFCORP1@["plasmaSM"OFFCORP,Bruce,1{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"DEFCORP{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"PSYCORP{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"CHANCELLOR{@{@
 ["B2W2-ColressBattle.ogg@["CHANCELLOR1@["plasmaSM"#POKEMONTRAINER_Joseph,Joseph,1{@{@

@@ -16,6 +16,7 @@ module LvlCap
   Trainers = 72              #Switch for Trainers
   Ace = 129                  #Switch for Ace Trainer Battles
   Hard = 900
+  Insane = 902
 end
 
 
@@ -45,12 +46,17 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = party[i].level
       elsif $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Rival] == true
         level = party[i].level + 3
+      elsif $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Rival] == true
+        level = party[i].level + 5
       else
         level = levelcap
       end
       party[i].level = level
       if $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Trainers] == false
         level += 2
+      end
+      if $game_switches[LvlCap::Insane] && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Trainers] == false
+        level += 4
       end
       #now we evolve the pokémon, if applicable
       #unused
