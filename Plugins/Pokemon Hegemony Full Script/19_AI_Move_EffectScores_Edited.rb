@@ -2070,7 +2070,7 @@ class PokeBattle_AI
       aspeed = pbRoughStat(user,:SPEED,skill)
       ospeed = pbRoughStat(target,:SPEED,skill)
       score +=30 if aspeed>ospeed
-      score +=60 if ospeed>aspeed & user.hasActiveItem?(:CHOICESCARF)
+      score +=60 if ospeed>aspeed && user.hasActiveItem?(:CHOICESCARF)
     #---------------------------------------------------------------------------
     when "0EF"
       score -= 90 if target.effects[PBEffects::MeanLook]>=0
