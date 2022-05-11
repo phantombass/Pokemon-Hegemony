@@ -9,6 +9,7 @@ class PokeBattle_AI
       if ($mPri == 1 || $mPri == 2|| $mPri == 3) && @battle.field.terrain == :PSYCHIC
         score -= 90
       end
+      score += 70 if move.soundMove? && target.effects[PBEffects::Substitute]>0
     #---------------------------------------------------------------------------
     when "001"
       score -= 95
@@ -136,8 +137,7 @@ class PokeBattle_AI
       if user.asleep?
         score += 100   # Because it can only be used while asleep
         if skill>=PBTrainerAI.highSkill
-          score += 30 if !target.hasActiveAbility?(:INNERFOCUS) &&
-                         target.effects[PBEffects::Substitute]==0
+          score += 30 if !target.hasActiveAbility?(:INNERFOCUS)
         end
       else
         score -= 90   # Because it will fail here
@@ -147,8 +147,7 @@ class PokeBattle_AI
     when "012"
       if user.turnCount==0
         if skill>=PBTrainerAI.highSkill
-          score += 30 if !target.hasActiveAbility?(:INNERFOCUS) &&
-                         target.effects[PBEffects::Substitute]==0
+          score += 30 if !target.hasActiveAbility?(:INNERFOCUS) && !target.hasActiveAbility?(:STEADFAST) && target.effects[PBEffects::Substitute]==0
           score += 70 if target.status == :POISON
         end
       else
@@ -369,6 +368,7 @@ class PokeBattle_AI
          user.statStageAtMax?(:DEFENSE)
         score -= 90
       else
+        score += 60 if user.turnCount==0
         score -= user.stages[:ATTACK]*10
         score -= user.stages[:DEFENSE]*10
         if skill>=PBTrainerAI.mediumSkill
@@ -500,6 +500,7 @@ class PokeBattle_AI
          user.statStageAtMax?(:SPECIAL_DEFENSE)
         score -= 90
       else
+        score += 60 if user.turnCount==0
         score -= user.stages[:SPECIAL_ATTACK]*10
         score -= user.stages[:SPECIAL_DEFENSE]*10
         score -= user.stages[:SPEED]*10
@@ -530,7 +531,7 @@ class PokeBattle_AI
          user.statStageAtMax?(:SPECIAL_DEFENSE)
         score -= 90
       else
-        score += 40 if user.turnCount==0   # Calm Mind tends to be popular
+        score += 60 if user.turnCount==0   # Calm Mind tends to be popular
         score -= user.stages[:SPECIAL_ATTACK]*10
         score -= user.stages[:SPECIAL_DEFENSE]*10
         if skill>=PBTrainerAI.mediumSkill
@@ -565,7 +566,7 @@ class PokeBattle_AI
         if user.statStageAtMax?(:ATTACK)
           score -= 90
         else
-          score += 40 if user.turnCount==0
+          score += 60 if user.turnCount==0
           score -= user.stages[:ATTACK]*20
           if skill>=PBTrainerAI.mediumSkill
             hasPhysicalAttack = false
@@ -951,6 +952,7 @@ class PokeBattle_AI
         end
       else
         score += 20 if target.stages[:SPECIAL_DEFENSE]>0
+        score += 70 if move.soundMove? && target.effects[PBEffects::Substitute]>0
       end
     #---------------------------------------------------------------------------
     when "047"
@@ -2065,6 +2067,10 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "0EE"
+      aspeed = pbRoughStat(user,:SPEED,skill)
+      ospeed = pbRoughStat(target,:SPEED,skill)
+      score +=30 if aspeed>ospeed
+      score +=60 if ospeed>aspeed & user.hasActiveItem?(:CHOICESCARF)
     #---------------------------------------------------------------------------
     when "0EF"
       score -= 90 if target.effects[PBEffects::MeanLook]>=0
@@ -3085,7 +3091,7 @@ class PokeBattle_AI
     when "173"
     #---------------------------------------------------------------------------
     when "174"
-      score -= 90 if user.turnCount > 0
+      score = 0 if user.turnCount > 0
     #---------------------------------------------------------------------------
     when "175"
       score += 30 if target.effects[PBEffects::Minimize]
