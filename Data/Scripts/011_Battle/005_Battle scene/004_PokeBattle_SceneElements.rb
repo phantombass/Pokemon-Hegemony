@@ -254,6 +254,8 @@ class PokemonDataBox < SpriteWrapper
       imagePos.push(["Graphics/Pictures/Battle/icon_statuses",@spriteBaseX+24,36,
          0,(s-1)*STATUS_ICON_HEIGHT,-1,STATUS_ICON_HEIGHT])
     end
+    #@stat_path = "Graphics/EBDX/Pictures/UI"
+
     pbDrawImagePositions(self.bitmap,imagePos)
     refreshHP
     refreshExp
