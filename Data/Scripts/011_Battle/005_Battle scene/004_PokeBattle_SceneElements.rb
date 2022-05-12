@@ -256,7 +256,7 @@ class PokemonDataBox < SpriteWrapper
     end
   #  @stat_path = "Graphics/EBDX/Pictures/UI"
   #  if @battler.stages[:ATTACK] != 0
-  #    imagePos.push([@stat_path + "Atk#{i}",@spriteBaseX+64,36,0,STATUS_ICON_HEIGHT,-1,STATUS_ICON_HEIGHT])
+  #    imagePos.push([@stat_path + "Atk#{i}",@spriteBaseX+64,-40,0,STATUS_ICON_HEIGHT,-1,STATUS_ICON_HEIGHT])
   #  end
 
     pbDrawImagePositions(self.bitmap,imagePos)
