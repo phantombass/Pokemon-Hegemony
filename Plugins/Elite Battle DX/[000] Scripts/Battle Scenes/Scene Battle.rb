@@ -361,6 +361,7 @@ class PokeBattle_Scene
   def pbHideAllDataboxes(side = nil)
     return if @dataBoxesHidden
     # remove databox visibility
+
     @battlers.each_with_index do |b, i|
       next if !b || (!side.nil? && i%2 != side)
       @sprites["dataBox_#{i}"].visible = false
@@ -369,6 +370,7 @@ class PokeBattle_Scene
   end
   def pbShowAllDataboxes(side = nil)
     # reset databox visibility
+
     @battlers.each_with_index do |b, i|
       next if !b || (!side.nil? && i%2 != side)
       @sprites["dataBox_#{i}"].visible = true
