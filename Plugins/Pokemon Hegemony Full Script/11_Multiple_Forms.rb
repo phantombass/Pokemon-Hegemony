@@ -67,7 +67,7 @@ MultipleForms.register(:ROTOM,{
         pbMessage(_INTL("{1} forgot {2}...", pkmn.name, move_name))
         pbLearnMove(:THUNDERSHOCK) if pkmn.numMoves == 0
       end
-    elsif form < 7
+    elsif form < 8
       # Turned into an alternate form; try learning that form's unique move
       new_move_id = form_moves[form - 1]
       if move_index >= 0
@@ -86,7 +86,7 @@ MultipleForms.register(:ROTOM,{
         end
       else
         # Just try to learn this form's unique move
-        if form < 7
+        if form < 8
           pbLearnMove(pkmn, new_move_id, true)
         end
       end
