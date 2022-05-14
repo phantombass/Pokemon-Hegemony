@@ -26335,7 +26335,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = SOLGALEO,LevelDay,53,LUNALA,LevelNight,53
+Evolutions = SOLGALEO,Item,SUNSTONE,LUNALA,Item,MOONSTONE
 #-------------------------------
 [791]
 Name = Solgaleo
