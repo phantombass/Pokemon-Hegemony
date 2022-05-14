@@ -60,6 +60,7 @@ MultipleForms.register(:ROTOM,{
       break
     end
     if form == 0
+      $appliance = nil
       # Turned back into the base form; forget form-specific moves
       if move_index >= 0
         move_name = pkmn.moves[move_index].name
@@ -67,26 +68,26 @@ MultipleForms.register(:ROTOM,{
         pbMessage(_INTL("{1} forgot {2}...", pkmn.name, move_name))
         pbLearnMove(:THUNDERSHOCK) if pkmn.numMoves == 0
       end
-    elsif form < 8
+    elsif form < 8 && $appliance == nil
       # Turned into an alternate form; try learning that form's unique move
       new_move_id = form_moves[form - 1]
       if move_index >= 0
         # Knows another form's unique move; replace it
         old_move_name = pkmn.moves[move_index].name
-        if GameData::Move.exists?(new_move_id)
+        if GameData::Move.exists?(new_move_id) && old_move_name != "Rotoblast" && new_move_id != :ROTOBLAST
           pkmn.moves[move_index].id = new_move_id
           new_move_name = pkmn.moves[move_index].name
           pbMessage(_INTL("1,\\wt[16] 2, and\\wt[16]...\\wt[16] ...\\wt[16] ... Ta-da!\\se[Battle ball drop]\1"))
           pbMessage(_INTL("{1} forgot how to use {2}.\\nAnd...\1", pkmn.name, old_move_name))
           pbMessage(_INTL("\\se[]{1} learned {2}!\\se[Pkmn move learnt]", pkmn.name, new_move_name))
         else
-            pkmn.forget_move_at_index(move_index)
+            pkmn.forget_move_at_index(move_index) if new_move_id != :ROTOBLAST && old_move_name != "Rotoblast"
             pbMessage(_INTL("{1} forgot {2}...", pkmn.name, old_move_name))
             pbLearnMove(:THUNDERSHOCK) if pkmn.numMoves == 0
         end
       else
         # Just try to learn this form's unique move
-        if form < 8
+        if form < 8 && $appliance == nil
           pbLearnMove(pkmn, new_move_id, true)
         end
       end
