@@ -151,6 +151,7 @@ class PokeBattle_Battler
       @effects[PBEffects::PerishSong]        = 0
       @effects[PBEffects::PerishSongUser]    = -1
       @effects[PBEffects::PowerTrick]        = false
+      @effects[PBEffects::StarSap]           = -1
       @effects[PBEffects::Substitute]        = 0
       @effects[PBEffects::Telekinesis]       = 0
       @effects[PBEffects::NoRetreat]         = false
