@@ -1251,6 +1251,7 @@ class PokeBattle_Battler
       @effects[PBEffects::PerishSong]        = 0
       @effects[PBEffects::PerishSongUser]    = -1
       @effects[PBEffects::PowerTrick]        = false
+      @effects[PBEffects::StarSap]         = -1
       @effects[PBEffects::Substitute]        = 0
       @effects[PBEffects::Telekinesis]       = 0
     end
@@ -1340,6 +1341,7 @@ class PokeBattle_Battler
     @effects[PBEffects::MoveNext]            = false
     @effects[PBEffects::MudSport]            = false
     @effects[PBEffects::Nightmare]           = false
+    @effects[PBEffects::Obstruct]            = false
     @effects[PBEffects::Outrage]             = 0
     @effects[PBEffects::ParentalBond]        = 0
     @effects[PBEffects::PickupItem]          = nil
@@ -3029,6 +3031,10 @@ class PokeBattle_Move_110 < PokeBattle_Move
       user.effects[PBEffects::LeechSeed] = -1
       @battle.pbDisplay(_INTL("{1} shed Leech Seed!",user.pbThis))
     end
+    if user.effects[PBEffects::StarSap]>=0
+      user.effects[PBEffects::StarSap] = -1
+      @battle.pbDisplay(_INTL("{1} shed Star Sap!",user.pbThis))
+    end
     if user.pbOwnSide.effects[PBEffects::StealthRock]
       user.pbOwnSide.effects[PBEffects::StealthRock] = false
       @battle.pbDisplay(_INTL("{1} blew away stealth rocks!",user.pbThis))
@@ -3044,6 +3050,10 @@ class PokeBattle_Move_110 < PokeBattle_Move
     if user.pbOwnSide.effects[PBEffects::StickyWeb]
       user.pbOwnSide.effects[PBEffects::StickyWeb] = false
       @battle.pbDisplay(_INTL("{1} blew away sticky webs!",user.pbThis))
+    end
+    if user.pbOwnSide.effects[PBEffects::CometShards]
+      user.pbOwnSide.effects[PBEffects::CometShards] = false
+      @battle.pbDisplay(_INTL("{1} blew away comet shards!",user.pbThis))
     end
     user.pbRaiseStatStage(:SPEED,1,user)
   end
@@ -3317,49 +3327,13 @@ class PokeBattle_Move_17F < PokeBattle_MultiStatUpMove
       user.pbRaiseStatStage(:SPDEF,1,user)
     end
     if !(user.effects[PBEffects::MeanLook]>=0 || user.effects[PBEffects::Trapping]>0 ||
-       user.effects[PBEffects::JawLock] || user.effects[PBEffects::OctolockUser]>=0)
+       user.effects[PBEffects::JawLock] || user.effects[PBEffects::Octolock]>=0)
       user.effects[PBEffects::NoRetreat] = true
       @battle.pbDisplay(_INTL("{1} can no longer escape because it used No Retreat!",user.pbThis))
     end
   end
 end
 
-#===============================================================================
-# User is protected against damaging moves this round. Decreases the Defense of
-# the user of a stopped contact move by 2 stages. (Obstruct)
-#===============================================================================
-class PokeBattle_Move_180 < PokeBattle_ProtectMove
-  def initialize(battle,move)
-    super
-    @effect = PBEffects::Obstruct
-  end
-end
-
-
-
-#===============================================================================
-# Lowers target's Defense and Special Defense by 1 stage at the end of each
-# turn. Prevents target from retreating. (Octolock)
-#===============================================================================
-class PokeBattle_Move_181 < PokeBattle_Move
-  def pbFailsAgainstTarget?(user,target)
-    if target.effects[PBEffects::OctolockUser]>=0 || (target.damageState.substitute && !ignoresSubstitute?(user))
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    if Settings::MORE_TYPE_EFFECTS && target.pbHasType?(:GHOST)
-      @battle.pbDisplay(_INTL("It doesn't affect {1}...",target.pbThis(true)))
-      return true
-    end
-    return false
-  end
-
-  def pbEffectAgainstTarget(user,target)
-    target.effects[PBEffects::OctolockUser] = user.index
-    target.effects[PBEffects::Octolock] = true
-    @battle.pbDisplay(_INTL("{1} can no longer escape!",target.pbThis))
-  end
-end
 
 #===============================================================================
 # Changes Revelation Dance to only change types for Oricorio
@@ -3888,7 +3862,7 @@ end
 
 class PokeBattle_Move_507 < PokeBattle_Move
   def pbEffectAgainstTarget(user,target)
-    target.effects[PBEffects::LeechSeed] = user.index
+    target.effects[PBEffects::StarSap] = user.index
     @battle.pbDisplay(_INTL("{1} was sapped!",target.pbThis))
   end
 end
@@ -3902,7 +3876,7 @@ end
 
 class PokeBattle_Move_512 < PokeBattle_Move
   def pbEffectGeneral(user)
-    if user.pbOpposingSide.effects[PBEffects::StealthRock] == false
+    if user.pbOpposingSide.effects[PBEffects::StealthRock] == false && user.pbOpposingSide.effects[PBEffects::CometShards] == false
       user.pbOpposingSide.effects[PBEffects::StealthRock] = true
       @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",
          user.pbOpposingTeam(true)))
@@ -4231,6 +4205,24 @@ class PokeBattle_Battle
       b.pbFaint if b.fainted?
       recipient.pbFaint if recipient.fainted?
     end
+    # Star Sap
+    priority.each do |b|
+      next if b.effects[PBEffects::StarSap]<0
+      next if !b.takesIndirectDamage?
+      recipient = @battlers[b.effects[PBEffects::StarSap]]
+      next if !recipient || recipient.fainted?
+      oldHP = b.hp
+      oldHPRecipient = recipient.hp
+      pbCommonAnimation("LeechSeed",recipient,b)
+      hpLoss = b.pbReduceHP(b.totalhp/8)
+      recipient.pbRecoverHPFromDrain(hpLoss,b,
+         _INTL("{1}'s health is sapped by Star Sap!",b.pbThis))
+      recipient.pbAbilitiesOnDamageTaken(oldHPRecipient) if recipient.hp<oldHPRecipient
+      b.pbItemHPHealCheck
+      b.pbAbilitiesOnDamageTaken(oldHP)
+      b.pbFaint if b.fainted?
+      recipient.pbFaint if recipient.fainted?
+    end
     # Damage from Hyper Mode (Shadow Pokémon)
     priority.each do |b|
       next if !b.inHyperMode? || @choices[b.index][0]!=:UseMove
@@ -4311,6 +4303,13 @@ class PokeBattle_Battle
       b.pbItemHPHealCheck
       b.pbAbilitiesOnDamageTaken(oldHP)
       b.pbFaint if b.fainted?
+    end
+    # Octolock
+    priority.each do |b|
+      next if b.fainted? || b.effects[PBEffects::Octolock] != 0 || b.effects[PBEffects::Octolock] != 1
+      pbCommonAnimation("Octolock", b)
+      b.pbLowerStatStage(:DEFENSE, 1, nil) if b.pbCanLowerStatStage?(:DEFENSE)
+      b.pbLowerStatStage(:SPECIAL_DEFENSE, 1, nil, false) if b.pbCanLowerStatStage?(:SPECIAL_DEFENSE)
     end
     # Trapping attacks (Bind/Clamp/Fire Spin/Magma Storm/Sand Tomb/Whirlpool/Wrap)
     priority.each do |b|
@@ -4413,7 +4412,6 @@ class PokeBattle_Battle
         pbJudgeCheckpoint(@battlers[perishSongUsers[0]])
       end
     end
-    # Check for end of battle
     if @decision>0
       pbGainExp
       return
@@ -4502,7 +4500,7 @@ class PokeBattle_Battle
       BattleHandlers.triggerEOREffectAbility(b.ability,b,self) if b.abilityActive?
       # Flame Orb, Sticky Barb, Toxic Orb
       BattleHandlers.triggerEOREffectItem(b.item,b,self) if b.itemActive?
-      # Harvest, Pickup
+      # Harvest, Pickup, Ball Fetch
       BattleHandlers.triggerEORGainItemAbility(b.ability,b,self) if b.abilityActive?
     end
     pbGainExp
@@ -4552,10 +4550,13 @@ class PokeBattle_Battle
       b.effects[PBEffects::SpikyShield]      = false
       b.effects[PBEffects::Spotlight]        = 0
       b.effects[PBEffects::ThroatChop]       -= 1 if b.effects[PBEffects::ThroatChop]>0
+      b.effects[PBEffects::Obstruct]         = false
       b.lastHPLost                           = 0
       b.lastHPLostFromFoe                    = 0
       b.tookDamage                           = false
       b.tookPhysicalHit                      = false
+      b.statsRaised                          = false
+      b.statsLowered                         = false
       b.lastRoundMoveFailed                  = b.lastMoveFailed
       b.lastAttacker.clear
       b.lastFoeAttacker.clear
@@ -4577,6 +4578,8 @@ class PokeBattle_Battle
     @field.effects[PBEffects::FairyLock]   -= 1 if @field.effects[PBEffects::FairyLock]>0
     @field.effects[PBEffects::FusionBolt]  = false
     @field.effects[PBEffects::FusionFlare] = false
+    # Neutralizing Gas
+    pbCheckNeutralizingGas
     @endOfRound = false
   end
 
@@ -4614,21 +4617,6 @@ end
 #=============
 
 module PBEffects
-  GorillaTactics      = 114
-  BallFetch           = 115
-  LashOut             = 118
-  BurningJealousy     = 119
-  NoRetreat           = 120
-  Obstruct            = 121
-  JawLock             = 122
-  JawLockUser         = 123
-  TarShot             = 124
-  Octolock            = 125
-  OctolockUser        = 126
-  BlunderPolicy       = 127
-  #=
-  StickyWebUser      = 22
   CometShards        = 23
-  #=
-  NeutralizingGas = 13
+  StarSap            = 120
 end
