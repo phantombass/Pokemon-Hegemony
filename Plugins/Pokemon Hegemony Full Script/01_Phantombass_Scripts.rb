@@ -1514,7 +1514,8 @@ class PokeBattle_Battle
       if battler.effects[PBEffects::Trapping]>0 ||
          battler.effects[PBEffects::MeanLook]>-1 ||
          battler.effects[PBEffects::Ingrain] ||
-         battler.effects[PBEffects::Octolock]>-1 ||
+         battler.effects[PBEffects::Octolock]==0 ||
+         battler.effects[PBEffects::Octolock]==1 ||
          battler.effects[PBEffects::NoRetreat] ||
          @field.effects[PBEffects::FairyLock]>0
         pbDisplayPaused(_INTL("You can't escape!"))

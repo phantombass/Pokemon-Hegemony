@@ -110,8 +110,8 @@ class PokeBattle_Scene
   #-----------------------------------------------------------------------------
   def pbSetMessageMode(mode, light = false)
     @messagemode = mode
-    base = light ? EliteBattle.get(:messageLightColor) : EliteBattle.get(:messageDarkColor)
-    shadow = light ? EliteBattle.get(:messageLightShadow) : EliteBattle.get(:messageDarkShadow)
+    base = EliteBattle.get(:messageDarkColor) #: EliteBattle.get(:messageDarkColor)
+    shadow =  EliteBattle.get(:messageDarkShadow) #: EliteBattle.get(:messageDarkShadow)
     @sprites["messageBox"].src_rect.y = @sprites["messageBox"].src_rect.height * (light ? 1 : 0)
     @sprites["messageBox"].y = @viewport.height - 88
     msgwindow = @sprites["messageWindow"]
