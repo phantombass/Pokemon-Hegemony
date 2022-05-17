@@ -31508,7 +31508,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = GRUMPIG,Level,32
+Evolutions = GRUMPIG2,Level,32
 #-------------------------------
 [950]
 Name = Grumpig
