@@ -27,28 +27,28 @@ class DataBoxEBDX  <  SpriteWrapper
     @sprites["boost4"].bitmap = nil
     @sprites["boost4"].z = 1
     @sprites["boost4"].ex = @playerpoke ? 186 : 20
-    @sprites["boost4"].ey = @playerpoke ? -98 : 75
+    @sprites["boost4"].ey = @playerpoke ? -88 : 75
     @sprites["boost4"].visible = false
 
     @sprites["boost5"] = Sprite.new(@viewport)
     @sprites["boost5"].bitmap = nil
     @sprites["boost5"].z = 1
     @sprites["boost5"].ex = @playerpoke ? 186 : 20
-    @sprites["boost5"].ey = @playerpoke ? -82 : 91
+    @sprites["boost5"].ey = @playerpoke ? -72 : 91
     @sprites["boost5"].visible = false
 
     @sprites["boost6"] = Sprite.new(@viewport)
     @sprites["boost6"].bitmap = nil
     @sprites["boost6"].z = 1
     @sprites["boost6"].ex = @playerpoke ? 186 : 20
-    @sprites["boost6"].ey = @playerpoke ? -66 : 107
+    @sprites["boost6"].ey = @playerpoke ? -56 : 107
     @sprites["boost6"].visible = false
 
     @sprites["boost7"] = Sprite.new(@viewport)
     @sprites["boost7"].bitmap = nil
     @sprites["boost7"].z = 1
     @sprites["boost7"].ex = @playerpoke ? 186 : 20
-    @sprites["boost7"].ey = @playerpoke ? -50 : 123
+    @sprites["boost7"].ey = @playerpoke ? -40 : 123
     @sprites["boost7"].visible = false
   end
   alias update_StatOverlay update
