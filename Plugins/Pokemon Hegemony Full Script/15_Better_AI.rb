@@ -169,7 +169,7 @@ class PokeBattle_AI
 
 	def shouldSwitchHandler(idxBattler,battler,opps)
     battler = @battle.battlers[idxBattler]
-		skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill || 0
+		skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill_level || 0
 		moves = battler.moves
 		hp = battler.hp
 		higherhp = false
@@ -273,7 +273,7 @@ class PokeBattle_AI
     batonPass = -1
     moveType = -1
 		faster = false
-    skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill || 0
+    skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill_level || 0
     battler = @battle.battlers[idxBattler]
     # If Pokémon is within 6 levels of the foe, and foe's last move was
     # super-effective and powerful
@@ -486,7 +486,7 @@ class PokeBattle_AI
 		wildBattler = @battle.wildBattle?
 		skill       = 0
 		if !wildBattler
-			skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill || 0
+			skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
 		end
 		# Get scores and targets for each move
 		# NOTE: A move is only added to the choices array if it has a non-zero

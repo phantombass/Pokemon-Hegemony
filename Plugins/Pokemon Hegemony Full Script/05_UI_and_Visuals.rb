@@ -1142,8 +1142,8 @@ class PokemonSummary_Scene
       elsif Input.trigger?(Input::LEFT) && !@pokemon.egg?
         oldpage = @page
         @page -= 1
-        @page = 1 if @page<1
-        @page = 5 if @page>5
+        @page = 5 if @page<1
+        @page = 1 if @page>5
         if @page!=oldpage   # Move to next page
           pbSEPlay("GUI summary change page")
           @ribbonOffset = 0
@@ -1152,8 +1152,8 @@ class PokemonSummary_Scene
       elsif Input.trigger?(Input::RIGHT) && !@pokemon.egg?
         oldpage = @page
         @page += 1
-        @page = 1 if @page<1
-        @page = 5 if @page>5
+        @page = 5 if @page<1
+        @page = 1 if @page>5
         if @page!=oldpage   # Move to next page
           pbSEPlay("GUI summary change page")
           @ribbonOffset = 0

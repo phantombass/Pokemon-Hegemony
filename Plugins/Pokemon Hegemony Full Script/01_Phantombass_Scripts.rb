@@ -912,7 +912,7 @@ class PokeBattle_Battle
         exp = level_cap_gap + 1
       end
     else
-      if a = level_cap_gap
+      if a <= level_cap_gap
         exp = a
       else
         exp /= 7
