@@ -99,7 +99,7 @@ WildItemUncommon = PECHABERRY
 BattlerPlayerY = 54
 BattlerEnemyX = 4
 BattlerEnemyY = 26
-Evolutions = RATICATE,LevelNight,20
+Evolutions = RATICATE,Level,20
 #-------------------------------
 [RATICATE,1]
 FormName = Alolan Form
@@ -1041,7 +1041,7 @@ Pokedex = This very aggressive Pokémon will recklessly challenge opponents stro
 Generation = 8
 BattlerPlayerY = 59
 BattlerEnemyX = 6
-Evolutions = OBSTAGOON,LevelNight,35
+Evolutions = OBSTAGOON,Level,35
 #-------------------------------
 [GARDEVOIR,1]
 FormName = Mega Gardevoir
