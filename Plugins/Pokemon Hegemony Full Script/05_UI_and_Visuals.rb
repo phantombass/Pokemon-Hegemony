@@ -2287,8 +2287,6 @@ class PokemonPartyScreen
             evoreqs[evo[0]] = evo[2] if $Trainer.has_species?(evo[2]) || pkmn.check_evolution_on_trade(evo[2])
           elsif evo[1].to_s.start_with?('Happiness')
             evoreqs[evo[0]] = nil
-          elsif evo[1].to_s.start_with?('Level')
-            evoreqs[evo[0]] = nil
           elsif pkmn.check_evolution_on_level_up
             evoreqs[evo[0]] = nil
           end

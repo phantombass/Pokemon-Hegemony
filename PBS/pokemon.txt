@@ -23249,7 +23249,7 @@ BattlerEnemyX = -8
 BattlerEnemyY = 29
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = TYRANTRUM,LevelDay,39
+Evolutions = TYRANTRUM,Level,39
 #-------------------------------
 [697]
 Name = Tyrantrum
@@ -23315,7 +23315,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = AURORUS,LevelNight,39
+Evolutions = AURORUS,Level,39
 #-------------------------------
 [699]
 Name = Aurorus
@@ -24490,7 +24490,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 33
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = GUMSHOOS,LevelDay,20
+Evolutions = GUMSHOOS,Level,20
 #-------------------------------
 [735]
 Name = Gumshoos
@@ -25120,7 +25120,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 29
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = LURANTIS,LevelDay,34
+Evolutions = LURANTIS,Level,34
 #-------------------------------
 [754]
 Name = Lurantis
