@@ -1,78 +1,21 @@
 #===================================
 # Level Cap Scripts
 #===================================
-Events.onMapChange += proc {| sender, e |
-  badges = $Trainer.badge_count
-  if badges == 0
-    if $game_switches[65] == true
-      if $game_switches[71] == true
-        $game_variables[106] = 21
-      else
-        $game_variables[106] = 15
-      end
-    else
-      $game_variables[106] = 9
-    end
-  elsif badges == 1
-    if $game_switches[98] && $game_switches[95]
-      $game_variables[106] = 35
-    elsif $game_switches[95] && !$game_switches[98]
-      $game_variables[106] = 29
-    else
-      $game_variables[106] = 25
-    end
-  elsif badges == 2
-    if $game_switches[109]
-      $game_variables[106] = 42
-    else
-      $game_variables[106] = 38
-    end
-  elsif badges == 3
-    if  $game_switches[120] && $game_switches[116] && $game_switches[125]
-      $game_variables[106] = 61
-    elsif $game_switches[120] && $game_switches[116] && !$game_switches[125]
-      $game_variables[106] = 53
-    elsif $game_switches[116] && !$game_switches[120] && !$game_switches[125]
-      $game_variables[106] = 50
-    else
-      $game_variables[106] = 46
-    end
-  elsif badges == 4
-    if $game_switches[135]
-      $game_variables[106] = 69
-    else
-      $game_variables[106] = 66
-    end
-  elsif badges == 5
-    if $game_switches[149] && $game_switches[158]
-      $game_variables[106] = 78
-    elsif $game_variables[149] && !$game_switches[158]
-      $game_variables[106] = 75
-    else
-      $game_variables[106] = 72
-    end
-  elsif badges == 6
-    if $game_switches[177] && $game_switches[178]
-      $game_variables[106] = 89
-    elsif $game_switches[177] && !$game_switches[178]
-      $game_variables[106] = 85
-    else
-      $game_variables[106] = 80
-    end
-  elsif badges == 7
-    $game_variables[106] = 91
-  elsif badges == 8
-    $game_variables[106] = 95
+module Settings
+  LEVEL_CAP_SWITCH = true
+end
+
+LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85]
+$level_cap = 0
+
+module Game
+  def self.level_cap_update
+    $level_cap += 1
+    $level_cap = LEVEL_CAP.size-1 if $level_cap >= LEVEL_CAP.size
+    $game_variables[106] = LEVEL_CAP[$level_cap]
   end
-    # Weather Setting
-    time = pbGetTimeNow
-#    $game_variables[99] = time.day
-#    dailyWeather = $game_variables[27]
-#    if $game_variables[28] > $game_variables[99] || $game_variables[28]<$game_variables[99]
-#      $game_variables[27] = 1+rand(100)
-#      $game_variables[28] = $game_variables[99]
-#    end
-}
+end
+
 Events.onMapCreate += proc {| sender, e |
   $game_switches[134] = true #Blocked until ready for Demo 2 release
   $game_switches[175] = true #Blocked until ready for Full release
@@ -88,70 +31,6 @@ Events.onMapCreate += proc {| sender, e |
   if !$game_switches[134]
     $game_switches[141] = false
   end
-}
-Events.onStepTaken += proc {| sender, e |
-  badges = $Trainer.badge_count
-    if badges == 0
-      if $game_switches[65] == true
-        if $game_switches[71] == true
-          $game_variables[106] = 21
-        else
-          $game_variables[106] = 15
-        end
-      else
-        $game_variables[106] = 9
-      end
-    elsif badges == 1
-      if $game_switches[98] && $game_switches[95]
-        $game_variables[106] = 35
-      elsif $game_switches[95] && !$game_switches[98]
-        $game_variables[106] = 29
-      else
-        $game_variables[106] = 25
-      end
-    elsif badges == 2
-      if $game_switches[109]
-        $game_variables[106] = 42
-      else
-        $game_variables[106] = 38
-      end
-    elsif badges == 3
-      if  $game_switches[120] && $game_switches[116] && $game_switches[125]
-        $game_variables[106] = 61
-      elsif $game_switches[120] && $game_switches[116] && !$game_switches[125]
-        $game_variables[106] = 53
-      elsif $game_switches[116] && !$game_switches[120] && !$game_switches[125]
-        $game_variables[106] = 50
-      else
-        $game_variables[106] = 46
-      end
-    elsif badges == 4
-      if $game_switches[135]
-        $game_variables[106] = 69
-      else
-        $game_variables[106] = 66
-      end
-    elsif badges == 5
-      if $game_switches[149] && $game_switches[158]
-        $game_variables[106] = 78
-      elsif $game_variables[149] && !$game_switches[158]
-        $game_variables[106] = 75
-      else
-        $game_variables[106] = 72
-      end
-    elsif badges == 6
-      if $game_switches[177] && $game_switches[178]
-        $game_variables[106] = 89
-      elsif $game_switches[177] && !$game_switches[178]
-        $game_variables[106] = 85
-      else
-        $game_variables[106] = 80
-      end
-    elsif badges == 7
-      $game_variables[106] = 91
-    elsif badges == 8
-      $game_variables[106] = 95
-    end
 }
 
 EliteBattle::TRAINER_SPRITE_SCALE = 1
@@ -872,7 +751,7 @@ class PokeBattle_Battle
     isPartic    = defeatedBattler.participants.include?(idxParty)
     hasExpShare = expShare.include?(idxParty)
     level = defeatedBattler.level
-    level_cap = $game_variables[106]
+    level_cap = LEVEL_CAP[$level_cap]
     level_cap_gap = growth_rate.exp_values[level_cap] - pkmn.exp
     # Main Exp calculation
     exp = 0

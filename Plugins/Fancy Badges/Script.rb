@@ -78,26 +78,6 @@ end
 #-------------------------------------------------------------------------------
 def renderBadgeAnimation(badge_number = 0)
   $Trainer.badges[badge_number] = true
-  badges = $Trainer.badge_count
-  if badges == 0
-    $game_variables[106] = 21
-  elsif badges == 1
-    $game_variables[106] = 25
-  elsif badges == 2
-    $game_variables[106] = 38
-  elsif badges == 3
-    $game_variables[106] = 46
-  elsif badges == 4
-    $game_variables[106] = 66
-  elsif badges == 5
-    $game_variables[106] = 72
-  elsif badges == 6
-    $game_variables[106] = 80
-  elsif badges == 7
-    $game_variables[106] = 91
-  elsif badges == 8
-    $game_variables[106] = 95
-  end
   height = Graphics.height
   screen = Graphics.snap_to_bitmap
   viewport = Viewport.new(0, 0, Graphics.width, height)
