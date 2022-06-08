@@ -1664,7 +1664,7 @@ Pokemon = CRAWDAUNT,69
 	IV = 31,31,31,0,31,31
 	Nature = ADAMANT
 	Moves = AQUAJET,LIQUIDATION,KNOCKOFF,SWORDSDANCE
-Pokemon = SPIRITOMB2,61
+Pokemon = SPIRITOMB2,69
 	Ability = RESURGENCE
 	Item = COLBURBERRY
 	EV = 252,0,4,0,252,0
@@ -1709,7 +1709,7 @@ Pokemon = CRAWDAUNT,69
 	IV = 31,31,31,0,31,31
 	Nature = ADAMANT
 	Moves = AQUAJET,LIQUIDATION,KNOCKOFF,SWORDSDANCE
-Pokemon = SPIRITOMB2,61
+Pokemon = SPIRITOMB2,69
 	Ability = RESURGENCE
 	Item = COLBURBERRY
 	EV = 252,0,4,0,252,0
@@ -2084,6 +2084,8 @@ Pokemon = CHIMECHO,42
 	IV = 31,0,31,31,31,31
 	Nature = MODEST
 	Moves = HYPERVOICE,EXPANDINGFORCE,CALMMIND,RECOVER
+#-------------------------------
+# Insane Mode Gyms
 #-------------------------------
 # Militia Battles
 #-------------------------------
