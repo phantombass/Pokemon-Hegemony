@@ -35,7 +35,7 @@ class PokemonPauseMenu_Scene
     @viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
     @viewport.z = 99999
     capColor = "90F090,000000"
-    levelCap = LEVEL_CAP[$level_cap]
+    levelCap = LEVEL_CAP[$game_system.level_cap]
     quest_stage = $PokemonGlobal.quests.active_quests[0].stage
     quest_info = $quest_data.getStageDescription(:Quest1,quest_stage)
     @sprites = {}
