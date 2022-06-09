@@ -4,15 +4,38 @@
 module Settings
   LEVEL_CAP_SWITCH = true
 end
+class Game_System
+  attr_accessor :level_cap
+  def initialize
+    @map_interpreter    = Interpreter.new(0, true)
+    @battle_interpreter = Interpreter.new(0, false)
+    @timer              = 0
+    @timer_working      = false
+    @save_disabled      = false
+    @menu_disabled      = false
+    @encounter_disabled = false
+    @message_position   = 2
+    @message_frame      = 0
+    @save_count         = 0
+    @magic_number       = 0
+    @autoscroll_x_speed = 0
+    @autoscroll_y_speed = 0
+    @bgm_position       = 0
+    @bgs_position       = 0
+    @level_cap          = 0
+  end
+  def level_cap
+    return @level_cap
+  end
+end
 
 LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85]
-$level_cap = 0
 
 module Game
   def self.level_cap_update
-    $level_cap += 1
-    $level_cap = LEVEL_CAP.size-1 if $level_cap >= LEVEL_CAP.size
-    $game_variables[106] = LEVEL_CAP[$level_cap]
+    $game_system.level_cap += 1
+    $game_system.level_cap = LEVEL_CAP.size-1 if $game_system.level_cap >= LEVEL_CAP.size
+    $game_variables[106] = LEVEL_CAP[$game_system.level_cap]
   end
 end
 
@@ -751,7 +774,7 @@ class PokeBattle_Battle
     isPartic    = defeatedBattler.participants.include?(idxParty)
     hasExpShare = expShare.include?(idxParty)
     level = defeatedBattler.level
-    level_cap = LEVEL_CAP[$level_cap]
+    level_cap = LEVEL_CAP[$game_system.level_cap]
     level_cap_gap = growth_rate.exp_values[level_cap] - pkmn.exp
     # Main Exp calculation
     exp = 0
