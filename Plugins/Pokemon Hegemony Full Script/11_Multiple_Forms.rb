@@ -176,3 +176,49 @@ class PokeBattle_Battler
     end
   end
 end
+
+MultipleForms.register(:CUBONE,{
+  "getForm" => proc { |pkmn|
+    next if pkmn.form_simple >= 2
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+      next 1 if map_metadata == 169  # Haunted Tower
+    end
+    next 0
+  }
+})
+
+MultipleForms.register(:PIKACHU,{
+  "getForm" => proc { |pkmn|
+    next if pkmn.form_simple >= 2
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+      next 1 if map_metadata == 137  # Krypto Quay
+    end
+    next 0
+  }
+})
+
+MultipleForms.copy(:PIKACHU,:EXEGGCUTE)
+
+MultipleForms.register(:KOFFING,{
+  "getForm" => proc { |pkmn|
+    next if pkmn.form_simple >= 2
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+      next 1 if map_metadata == 188  # Nitro City
+    end
+    next 0
+  }
+})
+
+MultipleForms.register(:MIMEJR,{
+  "getForm" => proc { |pkmn|
+    next if pkmn.form_simple >= 2
+    maps = [105,106,107,108,109]
+    if $game_map && maps.include?($game_map.map_id)
+      next 1  # Mt Nenox
+    end
+    next 0
+  }
+})
