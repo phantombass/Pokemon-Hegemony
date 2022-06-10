@@ -32,30 +32,40 @@ end
 
 class PokemonPauseMenu_Scene
   def pbStartScene
-    @viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
-    @viewport.z = 99999
-    capColor = "90F090,000000"
-    levelCap = LEVEL_CAP[$game_system.level_cap]
-    quest_stage = $PokemonGlobal.quests.active_quests[0].stage
-    quest_info = $quest_data.getStageDescription(:Quest1,quest_stage)
-    @sprites = {}
-    @sprites["cmdwindow"] = Window_CommandPokemon.new([])
-    @sprites["cmdwindow"].visible = false
-    @sprites["cmdwindow"].viewport = @viewport
-    @sprites["infowindow"] = Window_UnformattedTextPokemon.newWithSize("",0,0,32,32,@viewport)
-    @sprites["infowindow"].visible = false
-    @sprites["helpwindow"] = Window_UnformattedTextPokemon.newWithSize("",0,0,32,32,@viewport)
-    @sprites["helpwindow"].visible = false
-    @sprites["levelcapwindow"] = Window_UnformattedTextPokemon.newWithSize("Level Cap: #{levelCap}",0,64,208,64,@viewport)
-    @sprites["levelcapwindow"].visible = true
-    @sprites["questwindow"] = Window_UnformattedTextPokemon.newWithSize("#{quest_info}",0,208,306,222,@viewport)
-    pbSetSmallFont(@sprites["questwindow"].contents)
-    @sprites["questwindow"].resizeToFit("#{quest_info}",306)
-    @sprites["questwindow"].visible = true
-    @infostate = false
-    @helpstate = false
-    $viewport4 = @viewport
-    pbSEPlay("GUI menu open")
+    if $game_switches[350] == false
+      @viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
+      @viewport.z = 99999
+      capColor = "90F090,000000"
+      levelCap = LEVEL_CAP[$game_system.level_cap]
+      quest_stage = $PokemonGlobal.quests.active_quests[0].stage
+      quest_info = $quest_data.getStageDescription(:Quest1,quest_stage)
+      @sprites = {}
+      @sprites["cmdwindow"] = Window_CommandPokemon.new([])
+      @sprites["cmdwindow"].visible = false
+      @sprites["cmdwindow"].viewport = @viewport
+      @sprites["infowindow"] = Window_UnformattedTextPokemon.newWithSize("",0,0,32,32,@viewport)
+      @sprites["infowindow"].visible = false
+      @sprites["helpwindow"] = Window_UnformattedTextPokemon.newWithSize("",0,0,32,32,@viewport)
+      @sprites["helpwindow"].visible = false
+      @sprites["levelcapwindow"] = Window_UnformattedTextPokemon.newWithSize("Level Cap: #{levelCap}",0,64,208,64,@viewport)
+      @sprites["levelcapwindow"].visible = true
+      @sprites["questwindow"] = Window_UnformattedTextPokemon.newWithSize("#{quest_info}",0,208,306,222,@viewport)
+      pbSetSmallFont(@sprites["questwindow"].contents)
+      @sprites["questwindow"].resizeToFit("#{quest_info}",306)
+      @sprites["questwindow"].visible = true
+      @infostate = false
+      @helpstate = false
+      $close_dexnav = 0
+      $viewport4 = @viewport
+      pbSEPlay("GUI menu open")
+    else
+      $viewport1.dispose
+      $currentDexSearch = nil
+      $close_dexnav = 1
+      $game_switches[350] = false
+      pbSEPlay("GUI menu close")
+      return
+    end
   end
 
   def pbShowInfo(text)
@@ -85,29 +95,44 @@ class PokemonPauseMenu_Scene
     @sprites["helpwindow"].visible = false
   end
 
+  def pbShowLevelCap
+    @sprites["levelcapwindow"].visible = true
+    @sprites["questwindow"].visible = true
+  end
+
+  def pbHideLevelCap
+    @sprites["levelcapwindow"].visible = false
+    @sprites["questwindow"].visible = false
+  end
+
   def pbShowCommands(commands)
-    ret = -1
-    cmdwindow = @sprites["cmdwindow"]
-    cmdwindow.commands = commands
-    cmdwindow.index    = $PokemonTemp.menuLastChoice
-    cmdwindow.resizeToFit(commands)
-    cmdwindow.x        = Graphics.width-cmdwindow.width
-    cmdwindow.y        = 0
-    cmdwindow.visible  = true
-    loop do
-      cmdwindow.update
-      Graphics.update
-      Input.update
-      pbUpdateSceneMap
-      if Input.trigger?(Input::BACK)
-        ret = -1
-        break
-      elsif Input.trigger?(Input::USE)
-        ret = cmdwindow.index
-        $PokemonTemp.menuLastChoice = ret
-        break
+    if $game_switches[350] == false && $close_dexnav < 1
+      ret = -1
+      cmdwindow = @sprites["cmdwindow"]
+      cmdwindow.commands = commands
+      cmdwindow.index    = $PokemonTemp.menuLastChoice
+      cmdwindow.resizeToFit(commands)
+      cmdwindow.x        = Graphics.width-cmdwindow.width
+      cmdwindow.y        = 0
+      cmdwindow.visible  = true
+      loop do
+        cmdwindow.update
+        Graphics.update
+        Input.update
+        pbUpdateSceneMap
+        if Input.trigger?(Input::BACK)
+          ret = -1
+          break
+        elsif Input.trigger?(Input::USE)
+          ret = cmdwindow.index
+          $PokemonTemp.menuLastChoice = ret
+          break
+        end
       end
+    else
+      ret = -1
     end
+    $close_dexnav -= 1
     return ret
   end
 
@@ -300,7 +325,11 @@ class PokemonPauseMenu
     commands[cmdDebug = commands.length]     = _INTL("Debug") if $DEBUG
     commands[cmdEndGame = commands.length]   = _INTL("Quit Game")
     loop do
-      command = @scene.pbShowCommands(commands)
+      if !$currentDexSearch
+        command = @scene.pbShowCommands(commands)
+      else
+        command = -1
+      end
       if cmdPokedex>=0 && command==cmdPokedex
         pbPlayDecisionSE
         if Settings::USE_CURRENT_REGION_DEX
@@ -413,6 +442,7 @@ class PokemonPauseMenu
         end
       elsif cmdSave>=0 && command==cmdSave
         @scene.pbHideMenu
+        @scene.pbHideLevelCap
         scene = PokemonSave_Scene.new
         screen = PokemonSaveScreen.new(scene)
         if screen.pbSaveScreen
@@ -421,6 +451,7 @@ class PokemonPauseMenu
           break
         else
           pbShowMenu
+          @scene.pbShowLevelCap
         end
       elsif cmdOption>=0 && command==cmdOption
         pbPlayDecisionSE
@@ -456,7 +487,9 @@ class PokemonPauseMenu
         break
       end
     end
-    @scene.pbEndScene if endscene
+    if $close_dexnav != 0
+      @scene.pbEndScene if endscene
+    end
   end
 end
 
