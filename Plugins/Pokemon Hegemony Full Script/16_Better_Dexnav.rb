@@ -13,6 +13,7 @@ class NewDexNav
     @encarray = []
     @pkmnsprite = []
     @navChoice = 0
+    $no_enc = 0
     navAbil = []
     @ab = []
     encstringarray = [] # Savordez simplified this on discord but I kept it for me to understand better
@@ -24,6 +25,10 @@ class NewDexNav
     if temparray.pop==7 || @encarray.length == 0 # i picked 7 cause funny
       loctext += sprintf("<al><c2=FFCADE00>This area has no encounters</c2></al>")
       loctext += sprintf("<c2=63184210>-----------------------------------------</c2>")
+      #@viewport1.dispose
+      #@viewport2.dispose
+      @viewport3.dispose
+      $no_enc = 1
     else
       i = 0
       @encarray.each do |specie|
@@ -67,6 +72,10 @@ class NewDexNav
     @sprites["nav"].visible
     @sprites["nav"].play
     pbFadeInAndShow(@sprites)
+    if $no_enc != 0
+      pbWait(24)
+      @viewport1.dispose
+    end
     main
   end
 
