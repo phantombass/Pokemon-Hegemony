@@ -11,6 +11,7 @@ class NewDexNav
     searchmon = 0
     @sprites = {}
     @encarray = []
+    $encTerr = nil
     @pkmnsprite = []
     @navChoice = 0
     $no_enc = 0
@@ -331,10 +332,18 @@ class NewDexNav
           @sprites["navMon"].text = _INTL("<c2=FFCADE00>{1}</c2>",GameData::Species.get(@encarray[navMon]).name)
           @sprites["nav"].x -= 64
         else
-          if lastMon < 6 && @navChoice == 0 || (lastMon < 13 && lastMon > 6 && @navChoice > 6) || (lastMon < 20 && lastMon > 13 && @navChoice > 13)
+          if lastMon < 6 && @navChoice == 0 || (lastMon < 13 && lastMon > 6 && @navChoice == 7) || (lastMon < 20 && lastMon > 13 && @navChoice == 14)
             @navChoice = lastMon
             navMon = lastMon
-            @sprites["nav"].x = 5 + (64*navMon)
+            if navMon > 0 && navMon < 6 || navMon > 7 && navMon < 13 || navMon > 14 && navMon < 20
+              if navMon < 6
+                @sprites["nav"].x = 5 + (64*navMon)
+              elsif navMon > 7 && navMon < 13
+                @sprites["nav"].x = 5 + (64*(navMon-7))
+              else
+                @sprites["nav"].x = 5 + (64*(navMon-14))
+              end
+            end
             @sprites["navMon"].text = _INTL("<c2=FFCADE00>{1}</c2>",GameData::Species.get(@encarray[navMon]).name)
           else
             @navChoice +=6
@@ -479,7 +488,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
     # Checks current search value, if it exists, sets the Pokemon to it
     if $currentDexSearch != nil && $currentDexSearch.is_a?(Array)
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
-      if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) ||((GameData::TerrainTag.get(pLoc).id == :Water || GameData::TerrainTag.get(pLoc).id == :StillWater || GameData::TerrainTag.get(pLoc).id == :DeepWater) && $encTerr == :OldRod)
+      if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && $encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) ||((GameData::TerrainTag.get(pLoc).id == :Water || GameData::TerrainTag.get(pLoc).id == :StillWater || GameData::TerrainTag.get(pLoc).id == :DeepWater) && $encTerr == :OldRod)
         pokemon.species=$currentDexSearch[0]
         $chainNav = [$currentDexSearch[0],0] if $chain == nil
         $chain = 0 if $chain == nil
