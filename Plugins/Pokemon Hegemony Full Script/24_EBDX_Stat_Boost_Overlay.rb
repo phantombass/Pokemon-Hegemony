@@ -144,3 +144,33 @@ class DataBoxEBDX  <  SpriteWrapper
     @sprites["boost7"].visible = o != 0 ? true : false
   end
 end
+
+class PokeBattle_Scene
+  def pbThrowSuccess
+    return if @battle.opponent
+    @briefmessage = true
+    # try to resolve the ME jingle
+    me = "EBDX/Capture Success"
+    try = @caughtBattler ? EliteBattle.get_data(@caughtBattler.species, :Species, :CAPTUREME) : nil
+    me = try if !try.nil?
+    # play ME
+    pbMEPlay(me)
+    # wait for audio frames to complete
+    frames = (getPlayTime("Audio/ME/#{me}") * Graphics.frame_rate).ceil + 4
+    self.wait(frames)
+    pbMEStop
+    # return scene to normal
+    5.times do
+      @sprites["ballshadow"].opacity -= 16
+      @sprites["captureball"].opacity -= 52
+      self.wait
+    end
+    @sprites["ballshadow"].dispose
+    @sprites["captureball"].dispose
+    pbShowAllDataboxes(0)
+    for i in 1...7
+      @sprites["boost#{i}"].visible = false if @sprites["boost#{i}"] != nil
+    end
+    @vector.reset
+  end
+end
