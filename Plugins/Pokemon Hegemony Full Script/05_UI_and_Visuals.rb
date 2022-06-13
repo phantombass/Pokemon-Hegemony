@@ -594,8 +594,8 @@ class PokemonSummary_Scene
             upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
             thisValue = [pkmn.ev[:HP], upperLimit].min
             params.setRange(0, upperLimit)
-            params.setDefaultValue(thisValue)
-            params.setCancelValue(thisValue)
+            params.setDefaultValue(pkmn.ev[:HP])
+            params.setCancelValue(pkmn.ev[:HP])
             f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
                GameData::Stat.get(:HP).name, upperLimit), params) { pbUpdate }
             if f != pkmn.ev[:HP]
@@ -627,8 +627,8 @@ class PokemonSummary_Scene
             upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
             thisValue = [pkmn.ev[:ATTACK], upperLimit].min
             params.setRange(0, upperLimit)
-            params.setDefaultValue(thisValue)
-            params.setCancelValue(thisValue)
+            params.setDefaultValue(pkmn.ev[:ATTACK])
+            params.setCancelValue(pkmn.ev[:ATTACK])
             f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
                GameData::Stat.get(:ATTACK).name, upperLimit), params) { pbUpdate }
             if f != pkmn.ev[:ATTACK]
@@ -660,8 +660,8 @@ class PokemonSummary_Scene
           upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
           thisValue = [pkmn.ev[:DEFENSE], upperLimit].min
           params.setRange(0, upperLimit)
-          params.setDefaultValue(thisValue)
-          params.setCancelValue(thisValue)
+          params.setDefaultValue(pkmn.ev[:DEFENSE])
+          params.setCancelValue(pkmn.ev[:DEFENSE])
           f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
              GameData::Stat.get(:DEFENSE).name, upperLimit), params) { pbUpdate }
           if f != pkmn.ev[:DEFENSE]
@@ -693,8 +693,8 @@ class PokemonSummary_Scene
           upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
           thisValue = [pkmn.ev[:SPECIAL_ATTACK], upperLimit].min
           params.setRange(0, upperLimit)
-          params.setDefaultValue(thisValue)
-          params.setCancelValue(thisValue)
+          params.setDefaultValue(pkmn.ev[:SPECIAL_ATTACK])
+          params.setCancelValue(pkmn.ev[:SPECIAL_ATTACK])
           f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
              GameData::Stat.get(:SPECIAL_ATTACK).name, upperLimit), params) { pbUpdate }
           if f != pkmn.ev[:SPECIAL_ATTACK]
@@ -726,8 +726,8 @@ class PokemonSummary_Scene
         upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
         thisValue = [pkmn.ev[:SPECIAL_DEFENSE], upperLimit].min
         params.setRange(0, upperLimit)
-        params.setDefaultValue(thisValue)
-        params.setCancelValue(thisValue)
+        params.setDefaultValue(pkmn.ev[:SPECIAL_DEFENSE])
+        params.setCancelValue(pkmn.ev[:SPECIAL_DEFENSE])
         f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
            GameData::Stat.get(:SPECIAL_DEFENSE).name, upperLimit), params) { pbUpdate }
         if f != pkmn.ev[:SPECIAL_DEFENSE]
@@ -759,8 +759,8 @@ class PokemonSummary_Scene
         upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
         thisValue = [pkmn.ev[:SPEED], upperLimit].min
         params.setRange(0, upperLimit)
-        params.setDefaultValue(thisValue)
-        params.setCancelValue(thisValue)
+        params.setDefaultValue(pkmn.ev[:SPEED])
+        params.setCancelValue(pkmn.ev[:SPEED])
         f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
            GameData::Stat.get(:SPEED).name, upperLimit), params) { pbUpdate }
         if f != pkmn.ev[:SPEED]
