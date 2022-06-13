@@ -6,22 +6,9 @@ module Settings
 end
 class Game_System
   attr_accessor :level_cap
+  alias initialize_cap initialize
   def initialize
-    @map_interpreter    = Interpreter.new(0, true)
-    @battle_interpreter = Interpreter.new(0, false)
-    @timer              = 0
-    @timer_working      = false
-    @save_disabled      = false
-    @menu_disabled      = false
-    @encounter_disabled = false
-    @message_position   = 2
-    @message_frame      = 0
-    @save_count         = 0
-    @magic_number       = 0
-    @autoscroll_x_speed = 0
-    @autoscroll_y_speed = 0
-    @bgm_position       = 0
-    @bgs_position       = 0
+    initialize_cap
     @level_cap          = 0
   end
   def level_cap
