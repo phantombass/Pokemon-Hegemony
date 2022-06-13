@@ -1969,6 +1969,10 @@ class PokemonOption_Scene
          proc { $PokemonSystem.runstyle },
          proc { |value| $PokemonSystem.runstyle = value }
        ),
+       EnumOption.new(_INTL("Text Entry"),[_INTL("Cursor"),_INTL("Keyboard")],
+         proc { $PokemonSystem.textinput },
+         proc { |value| $PokemonSystem.textinput = value }
+       ),
        EnumOption.new(_INTL("Screen Size"),[_INTL("S"),_INTL("M"),_INTL("L"),_INTL("XL"),_INTL("Full")],
          proc { [$PokemonSystem.screensize, 4].min },
          proc { |value|
