@@ -9,7 +9,7 @@ class PokeBattle_AI
       if ($mPri == 1 || $mPri == 2|| $mPri == 3) && @battle.field.terrain == :Psychic
         score -= 90
       end
-      if $mPri >= 1 && target.hp < target.totalhp/5 && !target.hasActiveAbility?(:QUEENLYMAJESTY) && !target.hasActiveAbility?(:DAZZLING) && @battle.field.terrain != :Psychic
+      if ($mPri == 1 || $mPri == 2|| $mPri == 3) && target.hp < target.totalhp/5 && !target.hasActiveAbility?(:QUEENLYMAJESTY) && !target.hasActiveAbility?(:DAZZLING) && @battle.field.terrain != :Psychic
         score += 80
       end
       score += 70 if move.soundMove? && target.effects[PBEffects::Substitute]>0

@@ -271,6 +271,7 @@ class PokeBattle_AI
 		return false if @battle.battlers.length == 1
     shouldSwitch = forceSwitch
     batonPass = -1
+		teleport = -1
     moveType = -1
 		faster = false
     skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill_level || 0
@@ -463,7 +464,7 @@ class PokeBattle_AI
           PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will use Baton Pass to avoid Perish Song")
           return true
         end
-				if teleport>=0 && @battle.pbRegisterMove(idxBattler,batonPass,false)
+				if teleport>=0 && @battle.pbRegisterMove(idxBattler,teleport,false)
           PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will use Teleport.")
           return true
         end
