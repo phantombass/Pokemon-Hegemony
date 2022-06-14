@@ -26,23 +26,6 @@ module Game
   end
 end
 
-Events.onMapCreate += proc {| sender, e |
-  $game_switches[134] = true #Blocked until ready for Demo 2 release
-  $game_switches[175] = true #Blocked until ready for Full release
-  if !$game_switches[70] && $game_switches[75]
-    item = :RARECANDY
-    qty = $PokemonBag.pbQuantity(item)
-    if qty > 5
-      $PokemonBag.pbDeleteItem(item,qty-5)
-    end
-    $game_switches[901] = true
-    $game_switches[75] = false
-  end
-  if !$game_switches[134]
-    $game_switches[141] = false
-  end
-}
-
 EliteBattle::TRAINER_SPRITE_SCALE = 1
 EliteBattle::CUSTOM_MOVE_ANIM = true
 

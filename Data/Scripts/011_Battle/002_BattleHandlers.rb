@@ -583,7 +583,7 @@ end
 def pbBattleGem(user,type,move,mults,moveType)
   # Pledge moves never consume Gems
   return if move.is_a?(PokeBattle_PledgeMove)
-  return if move.category == 2
+  return if move.statusMove?
   return if moveType != type
   user.effects[PBEffects::GemConsumed] = user.item_id
   if Settings::MECHANICS_GENERATION >= 6

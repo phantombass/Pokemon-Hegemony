@@ -2763,6 +2763,83 @@ class PokeBattle_Move_087 < PokeBattle_Move
   end
 end
 
+class PokeBattle_Move_0B3 < PokeBattle_Move
+  def callsAnotherMove?; return true; end
+
+  def pbOnStartUse(user,targets)
+    # NOTE: It's possible in theory to not have the move Nature Power wants to
+    #       turn into, but what self-respecting game wouldn't at least have Tri
+    #       Attack in it?
+    @npMove = :TRIATTACK
+    case @battle.field.terrain
+    when :Electric
+      @npMove = :THUNDERBOLT if GameData::Move.exists?(:THUNDERBOLT)
+    when :Grassy
+      @npMove = :ENERGYBALL if GameData::Move.exists?(:ENERGYBALL)
+    when :Misty
+      @npMove = :MOONBLAST if GameData::Move.exists?(:MOONBLAST)
+    when :Psychic
+      @npMove = :PSYCHIC if GameData::Move.exists?(:PSYCHIC)
+    when :Poison
+      @npMove = :DEATHTOLL if GameData::Move.exists?(:POISON)
+    else
+      case @battle.environment
+      when :Grass, :TallGrass, :Forest, :ForestGrass
+        if Settings::MECHANICS_GENERATION >= 6
+          @npMove = :ENERGYBALL if GameData::Move.exists?(:ENERGYBALL)
+        else
+          @npMove = :SEEDBOMB if GameData::Move.exists?(:SEEDBOMB)
+        end
+      when :MovingWater, :StillWater, :Underwater
+        @npMove = :HYDROPUMP if GameData::Move.exists?(:HYDROPUMP)
+      when :Puddle
+        @npMove = :MUDBOMB if GameData::Move.exists?(:MUDBOMB)
+      when :Cave
+        if Settings::MECHANICS_GENERATION >= 6
+          @npMove = :POWERGEM if GameData::Move.exists?(:POWERGEM)
+        else
+          @npMove = :ROCKSLIDE if GameData::Move.exists?(:ROCKSLIDE)
+        end
+      when :Rock
+        if Settings::MECHANICS_GENERATION >= 6
+          @npMove = :EARTHPOWER if GameData::Move.exists?(:EARTHPOWER)
+        else
+          @npMove = :ROCKSLIDE if GameData::Move.exists?(:ROCKSLIDE)
+        end
+      when :Sand
+        if Settings::MECHANICS_GENERATION >= 6
+          @npMove = :EARTHPOWER if GameData::Move.exists?(:EARTHPOWER)
+        else
+          @npMove = :EARTHQUAKE if GameData::Move.exists?(:EARTHQUAKE)
+        end
+      when :Snow
+        if Settings::MECHANICS_GENERATION >= 6
+          @npMove = :FROSTBREATH if GameData::Move.exists?(:FROSTBREATH)
+        else
+          @npMove = :BLIZZARD if GameData::Move.exists?(:BLIZZARD)
+        end
+      when :Ice
+        @npMove = :ICEBEAM if GameData::Move.exists?(:ICEBEAM)
+      when :Volcano
+        @npMove = :LAVAPLUME if GameData::Move.exists?(:LAVAPLUME)
+      when :Graveyard
+        @npMove = :SHADOWBALL if GameData::Move.exists?(:SHADOWBALL)
+      when :Sky
+        @npMove = :AIRSLASH if GameData::Move.exists?(:AIRSLASH)
+      when :Space
+        @npMove = :DRACOMETEOR if GameData::Move.exists?(:DRACOMETEOR)
+      when :UltraSpace
+        @npMove = :PSYSHOCK if GameData::Move.exists?(:PSYSHOCK)
+      end
+    end
+  end
+
+  def pbEffectAgainstTarget(user,target)
+    @battle.pbDisplay(_INTL("{1} turned into {2}!", @name, GameData::Move.get(@npMove).name))
+    user.pbUseMoveSimple(@npMove, target.index)
+  end
+end
+
 class PokeBattle_Move_516 < PokeBattle_Move
   def callsAnotherMove?; return true; end
 
@@ -3923,6 +4000,33 @@ class PokeBattle_Move_516 < PokeBattle_BurnMove
       baseDmg *= 2
     end
     return baseDmg
+  end
+end
+
+class PokeBattle_Move_0D8 < PokeBattle_HealingMove
+  def pbOnStartUse(user,targets)
+    case @battle.pbWeather
+    when :Sun, :HarshSun, :Eclipse, :Starstorm
+      if !user.hasUtilityUmbrella
+        @healAmount = (user.totalhp*2/3.0).round
+      else
+        @healAmount = (user.totalhp/2.0).round
+      end
+    when :Rain, :HeavyRain
+      if !user.hasUtilityUmbrella?
+        @healAmount = (user.totalhp/4.0).round
+      else
+        @healAmount = (user.totalhp/2.0).round
+      end
+    when :None, :StrongWinds
+      @healAmount = (user.totalhp/2.0).round
+    else
+      @healAmount = (user.totalhp/4.0).round
+    end
+  end
+
+  def pbHealAmount(user)
+    return @healAmount
   end
 end
 

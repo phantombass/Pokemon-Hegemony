@@ -364,6 +364,15 @@ class PokeBattle_AI
         break
       end
     end
+
+		if skill>=PBTrainerAI.highSkill
+      battler.eachMoveWithIndex do |m,i|
+        next if m.function!="0EA"   # Teleport
+        next if !@battle.pbCanChooseMove?(idxBattler,i,false)
+        teleport = i
+        break
+      end
+    end
     # Pokémon will faint because of bad poisoning at the end of this round, but
     # would survive at least one more round if it were regular poisoning instead
     if battler.status==GameData::Status.get(:POISON).id && battler.statusCount>0 &&
@@ -424,7 +433,7 @@ class PokeBattle_AI
           if spikes>0
             spikesDmg = [8,6,4][spikes-1]
             if pkmn.hp<=pkmn.totalhp/spikesDmg
-              next if !pkmn.hasType?(:FLYING) && !pkmn.hasActiveAbility?(:LEVITATE)
+              next if !pkmn.airborne? && !pkmn.hasActiveAbility?(:MAGICGUARD)
             end
           end
         end
@@ -452,6 +461,10 @@ class PokeBattle_AI
       if list.length>0
         if batonPass>=0 && @battle.pbRegisterMove(idxBattler,batonPass,false)
           PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will use Baton Pass to avoid Perish Song")
+          return true
+        end
+				if teleport>=0 && @battle.pbRegisterMove(idxBattler,batonPass,false)
+          PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will use Teleport.")
           return true
         end
         if @battle.pbRegisterSwitch(idxBattler,list[0])

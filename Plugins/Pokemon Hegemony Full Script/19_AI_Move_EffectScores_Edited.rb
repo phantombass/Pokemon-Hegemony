@@ -6,8 +6,11 @@ class PokeBattle_AI
     case move.function
     #---------------------------------------------------------------------------
     when "000"   # No extra effect
-      if ($mPri == 1 || $mPri == 2|| $mPri == 3) && @battle.field.terrain == :PSYCHIC
+      if ($mPri == 1 || $mPri == 2|| $mPri == 3) && @battle.field.terrain == :Psychic
         score -= 90
+      end
+      if $mPri >= 1 && target.hp < target.totalhp/5 && !target.hasActiveAbility?(:QUEENLYMAJESTY) && !target.hasActiveAbility?(:DAZZLING) && @battle.field.terrain != :Psychic
+        score += 80
       end
       score += 70 if move.soundMove? && target.effects[PBEffects::Substitute]>0
     #---------------------------------------------------------------------------
@@ -1148,6 +1151,7 @@ class PokeBattle_AI
           end
         end
         score += stages*10
+        score += 50 if skill>=PBTrainerAI.highSkill && stages > 0
       end
     #---------------------------------------------------------------------------
     when "052"
@@ -1372,6 +1376,8 @@ class PokeBattle_AI
           new_type = :FAIRY if GameData::Type.exists?(:FAIRY)
         when :Psychic
           new_type = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
+        when :Poison
+          new_type = :PSYCHIC if GameData::Type.exists?(:POISON)
         end
         if !new_type
           envtypes = {
@@ -1746,7 +1752,10 @@ class PokeBattle_AI
         score += 70 if target.status == :POISON
         score += 70 if target.effects[PBEffects::LeechSeed]
         score += 30 if target.effects[PBEffects::TwoTurnAttack]
-        score += 90 if @battle.positions[user.index].effects[PBEffects::Wish]>0
+        score += 90 if @battle.positions[user.index].effects[PBEffects::Wish]>0 && user.hp < user.totalhp*(2/3)
+        score += 90 if user.hasActiveAbility?(:GUTS) && user.status == :NONE && (user.hasActiveItem?(:BURNORB) || user.hasActiveItem?(:TOXICORB))
+        score += 90 if (user.hasActiveAbility?(:POISONHEAL) || user.hasActiveAbility?(:TOXICBOOST)) && user.status == :NONE && user.hasActiveItem?(:TOXICORB)
+        score += 90 if @battle.field.terrain == :Poison && (user.hasActiveAbility?(:POISONHEAL) || user.hasActiveAbility?(:TOXICBOOST)) && user.status == :NONE
       end
     #---------------------------------------------------------------------------
     when "0AB"
@@ -1871,27 +1880,40 @@ class PokeBattle_AI
         score -= 50
       end
     #---------------------------------------------------------------------------
-    when "0D5", "0D6"
+  when "0D5", "0D6", "506"
       if user.hp==user.totalhp || (skill>=PBTrainerAI.mediumSkill && !user.canHeal?)
         score -= 90
       else
         if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
           score += 80
         else
-          score += 50
+          if user.hp > user.totalhp/2 && user.hp < user.totalhp*(3/4)
+            aspeed = pbRoughStat(user,:SPEED,skill)
+            ospeed = pbRoughStat(target,:SPEED,skill)
+            if aspeed > ospeed
+              score += 20
+            else
+              score += 50
+            end
+          end
         end
         score -= user.hp*100/user.totalhp
       end
     #---------------------------------------------------------------------------
     when "0D7"
       score -= 90 if @battle.positions[user.index].effects[PBEffects::Wish]>0
+      if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp*(2/3)
+        score += 75
+      elsif skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
+        score += 90
+      end
     #---------------------------------------------------------------------------
     when "0D8"
       if user.hp==user.totalhp || (skill>=PBTrainerAI.mediumSkill && !user.canHeal?)
         score -= 90
       else
         case @battle.pbWeather
-        when :Sun, :HarshSun
+        when :Sun, :HarshSun, :Starstorm, :Eclipse
           score += 30
         when :None
         else
@@ -1917,7 +1939,7 @@ class PokeBattle_AI
       score -= 90 if user.effects[PBEffects::Ingrain]
     #---------------------------------------------------------------------------
     when "0DC"
-      if target.effects[PBEffects::LeechSeed]>=0
+      if target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::StarSap] >= 0
         score -= 90
       elsif skill>=PBTrainerAI.mediumSkill && target.pbHasType?(:GRASS)
         score -= 90
@@ -2034,6 +2056,21 @@ class PokeBattle_AI
         score += 50 if target.pbOwnSide.effects[PBEffects::Spikes]>0
         score += 50 if target.pbOwnSide.effects[PBEffects::ToxicSpikes]>0
         score += 50 if target.pbOwnSide.effects[PBEffects::StealthRock]
+        score += 50 if target.pbOwnSide.effects[PBEffects::CometShards]
+      end
+      if skill>=PBTrainerAI.mediumSkill
+        stages = 0
+        @battle.eachBattler do |b|
+          totalStages = 0
+          GameData::Stat.each_battle { |s| totalStages += b.stages[s.id] }
+          if b.opposes?(user)
+            stages += totalStages
+          else
+            stages -= totalStages
+          end
+        end
+        score += stages*10
+        score += 50 if skill>=PBTrainerAI.highSkill && stages > 0
       end
     #---------------------------------------------------------------------------
     when "0EC"
@@ -3035,7 +3072,19 @@ class PokeBattle_AI
       if user.hp==user.totalhp || (skill>=PBTrainerAI.mediumSkill && !user.canHeal?)
         score -= 90
       else
-        score += 50
+        if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
+          score += 80
+        else
+          if user.hp > user.totalhp/2 && user.hp < user.totalhp*(3/4)
+            aspeed = pbRoughStat(user,:SPEED,skill)
+            ospeed = pbRoughStat(target,:SPEED,skill)
+            if aspeed > ospeed
+              score += 20
+            else
+              score += 50
+            end
+          end
+        end
         score -= user.hp*100/user.totalhp
         score += 30 if @battle.pbWeather == :Sandstorm
       end
@@ -3096,6 +3145,8 @@ class PokeBattle_AI
     when "175"
       score += 30 if target.effects[PBEffects::Minimize]
     #---------------------------------------------------------------------------
+    when "507"
+      score += 60 if user.turnCount==0
     end
     return score
   end
