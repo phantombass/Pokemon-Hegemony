@@ -934,3 +934,4 @@
 915,ROTOMMULTITOOL,Rotom Multitool,Rotom Multitools,1,0,"A glowing orb to be held by Rotom. It contains the power of all its possible appliances.",0,0,0,
 916,TARFRUBERRY,Tarfru Berry,Tarfru Berries,5,20,"Weakens a supereffective Cosmic-type attack against the holding Pokémon.",0,0,5,
 917,ULTRANECROZIUMZ,Ultranecrozium Z,Ultranecrozium Zs,1,10000,"A long since forgotten crystal to be held by Necrozma. It allows it to Ultra Burst immediately on entry.",0,0,0,
+918,TM111,TM111,TM111s,4,30000,"The user lets loose a toxic ringing with the power to inflict damage.",3,0,0,DEATHTOLL

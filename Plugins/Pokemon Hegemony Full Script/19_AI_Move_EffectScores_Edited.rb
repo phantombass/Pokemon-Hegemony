@@ -372,6 +372,7 @@ class PokeBattle_AI
         score -= 90
       else
         score += 60 if user.turnCount==0
+        score += 50 if user.effects[PBEffects::Substitute] > 0
         score -= user.stages[:ATTACK]*10
         score -= user.stages[:DEFENSE]*10
         if skill>=PBTrainerAI.mediumSkill
@@ -493,6 +494,7 @@ class PokeBattle_AI
          user.statStageAtMax?(:SPECIAL_DEFENSE)
         score -= 90
       else
+        score += 50 if user.effects[PBEffects::Substitute] > 0
         score -= user.stages[:DEFENSE]*10
         score -= user.stages[:SPECIAL_DEFENSE]*10
       end
@@ -504,6 +506,7 @@ class PokeBattle_AI
         score -= 90
       else
         score += 60 if user.turnCount==0
+        score += 50 if user.effects[PBEffects::Substitute] > 0
         score -= user.stages[:SPECIAL_ATTACK]*10
         score -= user.stages[:SPECIAL_DEFENSE]*10
         score -= user.stages[:SPEED]*10
@@ -535,6 +538,7 @@ class PokeBattle_AI
         score -= 90
       else
         score += 60 if user.turnCount==0   # Calm Mind tends to be popular
+        score += 50 if user.effects[PBEffects::Substitute] > 0
         score -= user.stages[:SPECIAL_ATTACK]*10
         score -= user.stages[:SPECIAL_DEFENSE]*10
         if skill>=PBTrainerAI.mediumSkill
@@ -570,6 +574,7 @@ class PokeBattle_AI
           score -= 90
         else
           score += 60 if user.turnCount==0
+          score += 50 if user.effects[PBEffects::Substitute] > 0
           score -= user.stages[:ATTACK]*20
           if skill>=PBTrainerAI.mediumSkill
             hasPhysicalAttack = false
@@ -635,7 +640,8 @@ class PokeBattle_AI
         if user.statStageAtMax?(:SPECIAL_ATTACK)
           score -= 90
         else
-          score += 40 if user.turnCount==0
+          score += 60 if user.turnCount==0
+          score += 50 if user.effects[PBEffects::Substitute] > 0
           score -= user.stages[:SPECIAL_ATTACK]*20
           if skill>=PBTrainerAI.mediumSkill
             hasSpecicalAttack = false
@@ -1803,6 +1809,20 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "0BA"
       score -= 90 if target.effects[PBEffects::Taunt]>0
+      aspeed = pbRoughStat(user,:SPEED,skill)
+      ospeed = pbRoughStat(target,:SPEED,skill)
+      if aspeed > ospeed || (user.hasActiveAbility(:PRANKSTER) && !target.pbHasType?(:DARK))
+        if !target.lastRegularMoveUsed
+          score -= 90
+        else
+          moveData = GameData::Move.get(target.lastRegularMoveUsed)
+          if moveData.category == 2
+            score += 60
+          else
+            score -= 40
+          end
+        end
+      end
     #---------------------------------------------------------------------------
     when "0BB"
       score -= 90 if target.effects[PBEffects::HealBlock]>0
@@ -2019,6 +2039,8 @@ class PokeBattle_AI
       score += 50
       score -= user.hp*100/user.totalhp
       score += 30 if user.hp<=user.totalhp/10
+      score += 20 if user.hasActiveItem?(:CUSTAPBERRY) && user.hp<=user.totalhp/10
+      score += 20 if user.hasActiveAbility?(:PRANKSTER) && user.hp<=user.totalhp/10
     #---------------------------------------------------------------------------
     when "0E8"
       score -= 25 if user.hp>user.totalhp/2
@@ -2308,7 +2330,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "105"
-      if user.pbOpposingSide.effects[PBEffects::StealthRock] || @battle.pbWeather == :Windy
+      if user.pbOpposingSide.effects[PBEffects::StealthRock] || @battle.pbWeather == :Windy || user.pbOpposingSide.effects[PBEffects::CometShards]
         score -= 90
       else
         canChoose = false
@@ -2353,6 +2375,9 @@ class PokeBattle_AI
         score += 90 if user.effects[PBEffects::ProtectRate] > 1 && user.hasActiveAbility?(:SPEEDBOOST)
         score += 70 if target.status == :POISON
         score += 70 if target.effects[PBEffects::LeechSeed]
+        score += 70 if user.turnCount==0 && target.hp <= target.totalhp/2
+        score += 70 if user.hp>=user.totalhp/2 && target.hp <= target.totalhp/2
+        score += 20 if user.hasActiveItem?(:LEFTOVERS)
       end
     #---------------------------------------------------------------------------
     when "10D"
@@ -3121,6 +3146,9 @@ class PokeBattle_AI
         score += 80   # want to draw
       else
         score -= (user.totalhp-user.hp)*75/user.totalhp
+        aspeed = pbRoughStat(user,:SPEED,skill)
+        ospeed = pbRoughStat(target,:SPEED,skill)
+        score += 200 if user.hp < user.totalhp/4 && aspeed > ospeed
       end
     #---------------------------------------------------------------------------
     when "171"
