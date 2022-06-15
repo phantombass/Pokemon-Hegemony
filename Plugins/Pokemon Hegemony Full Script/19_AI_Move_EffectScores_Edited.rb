@@ -1811,7 +1811,7 @@ class PokeBattle_AI
       score -= 90 if target.effects[PBEffects::Taunt]>0
       aspeed = pbRoughStat(user,:SPEED,skill)
       ospeed = pbRoughStat(target,:SPEED,skill)
-      if aspeed > ospeed || (user.hasActiveAbility(:PRANKSTER) && !target.pbHasType?(:DARK))
+      if aspeed > ospeed || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK))
         if !target.lastRegularMoveUsed
           score -= 90
         else
