@@ -579,7 +579,7 @@ class PokemonSummary_Scene
         @scene.pbMessage(_INTL("Change which?\\ch[34,4,EVs,IVs,Cancel]"))
         stat = $game_variables[34]
         pkmn = @pokemon
-        if stat == -1 || stat == 3
+        if stat == -1 || stat == 3 || stat == 2
           @sprites["nav"].visible = false
           pbPlayCloseMenuSE
           break
