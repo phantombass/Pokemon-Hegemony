@@ -2,6 +2,7 @@ class DataBoxEBDX  <  SpriteWrapper
   alias setUp_StatOverlay setUp
   def setUp
     setUp_StatOverlay
+    $overlay = true
     if @battle.singleBattle?
       @sprites["boost1"] = Sprite.new(@viewport)
       @sprites["boost1"].bitmap = nil
@@ -122,26 +123,28 @@ class DataBoxEBDX  <  SpriteWrapper
     stat_boost.push(m)
     stat_boost.push(n)
     stat_boost.push(o)
-    @sprites["boost1"].bitmap = i != 0 ? pbBitmap(@path + "Atk#{i}") : nil
-    @sprites["boost1"].visible = i != 0 ? true : false
+    if !@safaribattle && $overlay == true
+      @sprites["boost1"].bitmap = i != 0 ? pbBitmap(@path + "Atk#{i}") : nil
+      @sprites["boost1"].visible = i != 0 ? true : false
 
-    @sprites["boost2"].bitmap = j != 0 ? pbBitmap(@path + "Def#{j}") : nil
-    @sprites["boost2"].visible = j != 0 ? true : false
+      @sprites["boost2"].bitmap = j != 0 ? pbBitmap(@path + "Def#{j}") : nil
+      @sprites["boost2"].visible = j != 0 ? true : false
 
-    @sprites["boost3"].bitmap = k != 0 ? pbBitmap(@path + "SpAtk#{k}") : nil
-    @sprites["boost3"].visible = k != 0 ? true : false
+      @sprites["boost3"].bitmap = k != 0 ? pbBitmap(@path + "SpAtk#{k}") : nil
+      @sprites["boost3"].visible = k != 0 ? true : false
 
-    @sprites["boost4"].bitmap = l != 0 ? pbBitmap(@path + "SpDef#{l}") : nil
-    @sprites["boost4"].visible = l != 0 ? true : false
+      @sprites["boost4"].bitmap = l != 0 ? pbBitmap(@path + "SpDef#{l}") : nil
+      @sprites["boost4"].visible = l != 0 ? true : false
 
-    @sprites["boost5"].bitmap = m != 0 ? pbBitmap(@path + "Spe#{m}") : nil
-    @sprites["boost5"].visible = m != 0 ? true : false
+      @sprites["boost5"].bitmap = m != 0 ? pbBitmap(@path + "Spe#{m}") : nil
+      @sprites["boost5"].visible = m != 0 ? true : false
 
-    @sprites["boost6"].bitmap = n != 0 ? pbBitmap(@path + "Acc#{n}") : nil
-    @sprites["boost6"].visible = n != 0 ? true : false
+      @sprites["boost6"].bitmap = n != 0 ? pbBitmap(@path + "Acc#{n}") : nil
+      @sprites["boost6"].visible = n != 0 ? true : false
 
-    @sprites["boost7"].bitmap = o != 0 ? pbBitmap(@path + "Eva#{o}") : nil
-    @sprites["boost7"].visible = o != 0 ? true : false
+      @sprites["boost7"].bitmap = o != 0 ? pbBitmap(@path + "Eva#{o}") : nil
+      @sprites["boost7"].visible = o != 0 ? true : false
+    end
   end
 end
 
@@ -159,6 +162,10 @@ class PokeBattle_Scene
     frames = (getPlayTime("Audio/ME/#{me}") * Graphics.frame_rate).ceil + 4
     self.wait(frames)
     pbMEStop
+    for i in 1..7
+      @sprites["boost#{i}"].visible = false if @sprites["boost#{i}"] != nil
+      @sprites["boost#{i}"].dispose if @sprites["boost#{i}"] != nil
+    end
     # return scene to normal
     5.times do
       @sprites["ballshadow"].opacity -= 16
@@ -168,9 +175,68 @@ class PokeBattle_Scene
     @sprites["ballshadow"].dispose
     @sprites["captureball"].dispose
     pbShowAllDataboxes(0)
-    for i in 1...7
-      @sprites["boost#{i}"].visible = false if @sprites["boost#{i}"] != nil
-    end
     @vector.reset
+  end
+end
+
+class EliteBattle_Pokedex
+  def main
+    # fade in scene
+    $overlay = false
+    16.times do
+      self.update
+      @viewport.color.alpha -= 16
+      Graphics.update
+    end
+    # hide silhouette
+    h = (@sprites["sil"].bitmap.height/32.0).ceil
+    32.times do
+      self.update
+      @sprites["sil"].src_rect.height -= h
+      Graphics.update
+    end
+    # play cry
+    GameData::Species.cry_filename_from_pokemon(@pokemon)
+    # begin loop
+    loop do
+      Graphics.update
+      Input.update
+      self.update
+      break if Input.trigger?(Input::C)
+    end
+    # moves Pokemon sprite to middle of screen
+    w = (@viewport.width/2 - @sprites["poke"].x)/32
+    32.times do
+      @sprites["contents"].color.alpha += 16
+      @sprites["bg"].color.alpha += 16
+      @sprites["highlight"].color.alpha += 16
+      @sprites["poke"].x += w
+      @sprites["color"].opacity += 8
+      for i in 1..3
+        @sprites["c#{i}"].opacity += 8
+      end
+      self.update
+      Graphics.update
+    end
+    @sprites["poke"].x = @viewport.width/2
+    for i in 1..7
+      @sprites["boost#{i}"].visible = false if @sprites["boost#{i}"] != nil
+      @sprites["boost#{i}"].dispose if @sprites["boost#{i}"] != nil
+    end
+    Graphics.update
+  end
+  def update
+    return if self.disposed?
+    @sprites["bg"].update
+    @sprites["highlight"].opacity += @sprites["highlight"].toggle*8
+    @sprites["highlight"].toggle *= -1 if @sprites["highlight"].opacity <= 0 || @sprites["highlight"].opacity >= 255
+    for i in 1..3
+      @sprites["c#{i}"].zoom_x -= @sprites["c#{i}"].speed * @sprites["c#{i}"].toggle
+      @sprites["c#{i}"].zoom_y -= @sprites["c#{i}"].speed * @sprites["c#{i}"].toggle
+      @sprites["c#{i}"].toggle *= -1 if @sprites["c#{i}"].zoom_x <= 0.96 || @sprites["c#{i}"].zoom_x >= 1.04
+    end
+    for i in 1..7
+      @sprites["boost#{i}"].dispose if @sprites["boost#{i}"] != nil
+    end
   end
 end
