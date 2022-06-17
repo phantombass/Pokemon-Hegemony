@@ -24,6 +24,23 @@ module Game
     $game_system.level_cap = LEVEL_CAP.size-1 if $game_system.level_cap >= LEVEL_CAP.size
     $game_variables[106] = LEVEL_CAP[$game_system.level_cap]
   end
+  def self.start_new
+    if $game_map && $game_map.events
+      $game_map.events.each_value { |event| event.clear_starting }
+    end
+    $game_temp.common_event_id = 0 if $game_temp
+    $PokemonTemp.begunNewGame = true
+    $game_system.initialize
+    $scene = Scene_Map.new
+    SaveData.load_new_game_values
+    $MapFactory = PokemonMapFactory.new($data_system.start_map_id)
+    $game_player.moveto($data_system.start_x, $data_system.start_y)
+    $game_player.refresh
+    $PokemonEncounters = PokemonEncounters.new
+    $PokemonEncounters.setup($game_map.map_id)
+    $game_map.autoplay
+    $game_map.update
+  end
 end
 
 EliteBattle::TRAINER_SPRITE_SCALE = 1
