@@ -134,9 +134,20 @@ class BagWindowEBDX
   def confirm
     pbSEPlay("EBDX/SE_Select2")
     if @index != 1
-      hide
-      @scene.pbDisplay(_INTL("Healing items can't be used."))
-      show
+      if @index == 4 && !GameData::Item.get(@lastUsed).is_poke_ball?
+        hide
+        @scene.pbDisplay(_INTL("Healing items can't be used."))
+        show
+      elsif @index < 4
+        hide
+        @scene.pbDisplay(_INTL("Healing items can't be used."))
+        show
+      else
+        @selPocket = 0
+        @page = -1
+        @ret = @lastUsed
+        @lastUsed = 0 if !($PokemonBag.pbQuantity(@lastUsed) > 1)
+      end
     elsif @index < 4
       cmd = [2, 3, 5, 7]
       cmd = [2, 1, 4, 5] if Settings.bag_pocket_names.length == 6
