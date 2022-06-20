@@ -139,7 +139,7 @@ class HMScreen
             useMoveCut
             break
           end
-        elsif cmdCut>=0 && cmd==cmdRockSmash
+        elsif cmdRockSmash>=0 && cmd==cmdRockSmash
           pbPlayDecisionSE
           dispose
           if !canUseMoveRockSmash?
@@ -147,7 +147,7 @@ class HMScreen
             useMoveRockSmash
             break
           end
-        elsif cmdCut>=0 && cmd==cmdStrength
+        elsif cmdStrength>=0 && cmd==cmdStrength
           pbPlayDecisionSE
           dispose
           if !canUseMoveStrength?
@@ -155,7 +155,7 @@ class HMScreen
             useMoveStrength
             break
           end
-        elsif cmdCut>=0 && cmd==cmdFlash
+        elsif cmdFlash>=0 && cmd==cmdFlash
           pbPlayDecisionSE
           dispose
           if !canUseMoveFlash?
@@ -163,7 +163,7 @@ class HMScreen
             useMoveFlash
             break
           end
-        elsif cmdCut>=0 && cmd==cmdSurf
+        elsif cmdSurf>=0 && cmd==cmdSurf
           pbPlayDecisionSE
           dispose
           if !canUseMoveSurf?
@@ -171,7 +171,7 @@ class HMScreen
             useMoveSurf
             break
           end
-        elsif cmdCut>=0 && cmd==cmdFly
+        elsif cmdFly>=0 && cmd==cmdFly
           pbPlayDecisionSE
           dispose
           if !canUseMoveFly?
@@ -187,12 +187,13 @@ class HMScreen
               $PokemonTemp.flydata = ret
               $game_temp.in_menu = false
               useMoveFly
+              dispose
+              @scene.pbEndScene
             end
           }
-          dispose
           break
           end
-        elsif cmdCut>=0 && cmd==cmdDive
+        elsif cmdDive>=0 && cmd==cmdDive
           pbPlayDecisionSE
           dispose
           if !canUseMoveDive?
@@ -200,7 +201,7 @@ class HMScreen
             useMoveDive
             break
           end
-        elsif cmdCut>=0 && cmd==cmdRockClimb
+        elsif cmdRockClimb>=0 && cmd==cmdRockClimb
           pbPlayDecisionSE
           dispose
           if !canUseMoveRockClimb?
@@ -208,7 +209,7 @@ class HMScreen
             useMoveRockClimb
             break
           end
-        elsif cmdCut>=0 && cmd==cmdWaterfall
+        elsif cmdWaterfall>=0 && cmd==cmdWaterfall
           pbPlayDecisionSE
           dispose
           if !canUseMoveWaterfall?
