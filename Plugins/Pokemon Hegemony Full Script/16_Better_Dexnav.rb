@@ -487,9 +487,10 @@ Events.onWildPokemonCreate+=proc {|sender,e|
     pokemon=e[0]
     # Checks current search value, if it exists, sets the Pokemon to it
     if $currentDexSearch != nil && $currentDexSearch.is_a?(Array)
+      mapid = $game_map.map_id
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
-      if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && $encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) ||((GameData::TerrainTag.get(pLoc).id == :Water || GameData::TerrainTag.get(pLoc).id == :StillWater || GameData::TerrainTag.get(pLoc).id == :DeepWater) && $encTerr == :OldRod)
-        pokemon.species=$currentDexSearch[0]
+      if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && $encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) || (($MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater) && $encTerr == :OldRod && (($PokemonBag.pbQuantity(:OLDROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :OldRod) || ($PokemonBag.pbQuantity(:GOODROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :GoodRod) || ($PokemonBag.pbQuantity(:SUPERROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :SuperRod)))
+        pokemon.species = $currentDexSearch[0]
         $chainNav = [$currentDexSearch[0],0] if $chain == nil
         $chain = 0 if $chain == nil
         if $chain == 0
