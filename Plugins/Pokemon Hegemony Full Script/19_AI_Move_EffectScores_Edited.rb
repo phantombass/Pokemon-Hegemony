@@ -9,6 +9,9 @@ class PokeBattle_AI
       if ($mPri == 1 || $mPri == 2|| $mPri == 3) && @battle.field.terrain == :Psychic
         score -= 90
       end
+      if ($mPri == 1 || $mPri == 2|| $mPri == 3) && @battle.field.terrain != :Psychic and user.turnCount == 0
+        score += 80
+      end
       if ($mPri == 1 || $mPri == 2|| $mPri == 3) && target.hp < target.totalhp/5 && !target.hasActiveAbility?(:QUEENLYMAJESTY) && !target.hasActiveAbility?(:DAZZLING) && @battle.field.terrain != :Psychic
         score += 80
       end
@@ -1755,10 +1758,10 @@ class PokeBattle_AI
         score -= 90
       else
         score += 95 if user.turnCount==0 && user.hasActiveAbility?(:SPEEDBOOST)
+        score += 100 if @battle.positions[user.index].effects[PBEffects::Wish]>0 && user.totalhp < user.totalhp/2
         score += 70 if target.status == :POISON
         score += 70 if target.effects[PBEffects::LeechSeed]
         score += 30 if target.effects[PBEffects::TwoTurnAttack]
-        score += 90 if @battle.positions[user.index].effects[PBEffects::Wish]>0 && user.hp < user.totalhp*(2/3)
         score += 90 if user.hasActiveAbility?(:GUTS) && user.status == :NONE && (user.hasActiveItem?(:BURNORB) || user.hasActiveItem?(:TOXICORB))
         score += 90 if (user.hasActiveAbility?(:POISONHEAL) || user.hasActiveAbility?(:TOXICBOOST)) && user.status == :NONE && user.hasActiveItem?(:TOXICORB)
         score += 90 if @battle.field.terrain == :Poison && (user.hasActiveAbility?(:POISONHEAL) || user.hasActiveAbility?(:TOXICBOOST)) && user.status == :NONE
@@ -1907,7 +1910,7 @@ class PokeBattle_AI
         if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
           score += 80
         else
-          if user.hp > user.totalhp/2 && user.hp < user.totalhp*(3/4)
+          if user.hp > user.totalhp/2 && user.hp < user.totalhp*0.75
             aspeed = pbRoughStat(user,:SPEED,skill)
             ospeed = pbRoughStat(target,:SPEED,skill)
             if aspeed > ospeed
@@ -1922,7 +1925,7 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "0D7"
       score -= 90 if @battle.positions[user.index].effects[PBEffects::Wish]>0
-      if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp*(2/3)
+      if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp*0.67
         score += 75
       elsif skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
         score += 90
@@ -3173,6 +3176,24 @@ class PokeBattle_AI
     when "175"
       score += 30 if target.effects[PBEffects::Minimize]
     #---------------------------------------------------------------------------
+  when "500"
+    score += 80 if user.turnCount == 0
+    if user.pbOpposingSide.effects[PBEffects::StealthRock] || @battle.pbWeather == :Windy || user.pbOpposingSide.effects[PBEffects::CometShards]
+      score -= 100
+    else
+      canChoose = false
+      user.eachOpposing do |b|
+        next if !@battle.pbCanChooseNonActive?(b.index)
+        canChoose = true
+        break
+      end
+      if !canChoose
+        # Opponent can't switch in any Pokemon
+        score -= 90
+      else
+        score += 10*@battle.pbAbleNonActiveCount(user.idxOpposingSide)
+      end
+    end
     when "507"
       score += 60 if user.turnCount==0
     end
