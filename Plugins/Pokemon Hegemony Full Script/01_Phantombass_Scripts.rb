@@ -3,6 +3,7 @@
 #===================================
 module Settings
   LEVEL_CAP_SWITCH = true
+  FISHING_AUTO_HOOK     = true
 end
 class Game_System
   attr_accessor :level_cap

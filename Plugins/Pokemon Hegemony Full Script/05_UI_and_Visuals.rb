@@ -2511,16 +2511,19 @@ class Scene_Credits
   @_zerudez on nitter.net
   Some back sprites by Phantombass using the art mentioned above
 
+  Perfect Kyurem Sprite:
+  Caleb
+
+  Astreon Front Sprite:
+  Bl00dy
+
   Mapping: Phantombass
 
   Eventing: Phantombass
 
   Playtesting:
 
-  DarkDevil26
-  ThatWelshOne_
-  RGTheAwesome
-  ItzMiller
+  TylertheTyrantrum
   Bl00dy
 
   Dedicated to:
