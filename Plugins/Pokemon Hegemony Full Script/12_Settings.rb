@@ -57,7 +57,7 @@ Settings::MENU_WINDOWSKINS = [
   ]
 Settings::FIELD_MOVES_COUNT_BADGES = false
 Settings::MAXIMUM_LEVEL = 120
-Settings::GAME_VERSION = "1.2.11"
+Settings::GAME_VERSION = "1.2.12"
 
 module Settings
   def self.storage_creator_name
