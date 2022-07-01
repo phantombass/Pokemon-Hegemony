@@ -428,6 +428,7 @@ class NewDexNav
       navRand = rand(3)
       $game_variables[400] = navRand
       navAbil1 = GameData::Species.get_species_form(searchmon,form).abilities
+      hAbil = GameData::Species.get_species_form(searchmon,form).hidden_abilities
         hAbil = hAbil.length == 0 ? GameData::Species.get_species_form(searchmon,form).abilities : GameData::Species.get_species_form(searchmon,form).hidden_abilities
       if navAbil1.length == 1
         navAbil = [navAbil1[0],navAbil1[0],hAbil[0]]
@@ -445,7 +446,7 @@ class NewDexNav
       searchtext = [searchmonName,ab,dexMove]
       searchpic = "#{searchmon}_#{form}"
       @sprites["search"] = Window_AdvancedTextPokemon.newWithSize("",265,130,250,126,@viewport3)
-      if navRand == 2
+      if navRand == 2 && navAbil[0] != navAbil[2]
         @sprites["search"].text = _INTL("{1}\n<c2=463F0000>{2}</c2>\n{3}",searchtext[0],searchtext[1],searchtext[2])
       else
         @sprites["search"].text = _INTL("{1}\n{2}\n{3}",searchtext[0],searchtext[1],searchtext[2])
