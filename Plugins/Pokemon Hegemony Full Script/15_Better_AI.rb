@@ -434,7 +434,7 @@ class PokeBattle_AI
           if spikes>0
             spikesDmg = [8,6,4][spikes-1]
             if pkmn.hp<=pkmn.totalhp/spikesDmg
-              next if !pkmn.airborne? && !pkmn.hasActiveAbility?(:MAGICGUARD)
+              next if !battler.airborne? && !battler.hasActiveAbility?(:MAGICGUARD)
             end
           end
         end
