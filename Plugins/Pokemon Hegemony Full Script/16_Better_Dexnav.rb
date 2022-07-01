@@ -427,8 +427,8 @@ class NewDexNav
       form = form
       navRand = rand(3)
       $game_variables[400] = navRand
-      hAbil = GameData::Species.get_species_form(searchmon,form).hidden_abilities
       navAbil1 = GameData::Species.get_species_form(searchmon,form).abilities
+        hAbil = hAbil.length == 0 ? GameData::Species.get_species_form(searchmon,form).abilities : GameData::Species.get_species_form(searchmon,form).hidden_abilities
       if navAbil1.length == 1
         navAbil = [navAbil1[0],navAbil1[0],hAbil[0]]
       else
