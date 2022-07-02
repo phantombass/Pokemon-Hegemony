@@ -426,9 +426,22 @@ class NewDexNav
       form = 0
       form = form
       navRand = rand(3)
+      itemRand = rand(3)
       $game_variables[400] = navRand
       navAbil1 = GameData::Species.get_species_form(searchmon,form).abilities
       hAbil = GameData::Species.get_species_form(searchmon,form).hidden_abilities
+      navItemCommon = GameData::Species.get(searchmon).wild_item_common
+      navItemUncommon = GameData::Species.get(searchmon).wild_item_uncommon
+      navItemRare = GameData::Species.get(searchmon).wild_item_rare
+      case itemRand
+      when 0
+        $game_variables[401] = navItemCommon
+      when 1
+        $game_variables[401] = navItemUncommon
+      when 2
+        $game_variables[401] = navItemRare
+      end
+      navItem = $game_variables[401]
         hAbil = hAbil.length == 0 ? GameData::Species.get_species_form(searchmon,form).abilities : GameData::Species.get_species_form(searchmon,form).hidden_abilities
       if navAbil1.length == 1
         navAbil = [navAbil1[0],navAbil1[0],hAbil[0]]
@@ -457,6 +470,9 @@ class NewDexNav
         @sprites["searchIcon"] = PokemonSpeciesIconSprite.new(searchpic,@viewport3)
       else
         @sprites["searchIcon"] = PokemonSpeciesIconSprite.new(searchmon,@viewport3)
+      end
+      if (itemRand == 0 && navItemCommon != nil) || (itemRand == 1 && navItemUncommon != nil) || (itemRand == 2 && navItemRare != nil)
+        @sprites["item"] = ItemIconSprite.new(440,65,navItem,@viewport3)
       end
       @sprites["searchIcon"].x = 450
       @sprites["searchIcon"].y = 65
@@ -513,6 +529,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
         else
           pokemon.level = pokemon.level
         end
+        pokemon.item = $game_variables[401]
         pokemon.name=GameData::Species.get(pokemon.species).name
         pokemon.ability_index = $game_variables[400]
         maps = GameData::MapMetadata.try_get($game_map.map_id)
