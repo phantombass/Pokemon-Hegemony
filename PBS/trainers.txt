@@ -3653,7 +3653,7 @@ Pokemon = INFERNAPE,80
 	Item = INFERNITE
 	Moves = CALMMIND,HEATWAVE,SLACKOFF,AURASPHERE
 #-------------------------------
-[ARMYBOSS,Ahab,5]
+[ARMYBOSS,Ahab,3]
 LoseText = "Hmmph."
 Pokemon = COALOSSAL,79
 	Nature = ADAMANT
