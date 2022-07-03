@@ -573,6 +573,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
           when 5 then pokemon.iv[:SPEED] = 31
           end
         end
+        pokemon.calc_stats
         pokemon.reset_moves
         if pokemon.moves[1] == nil
           pokemon.moves[1]=Pokemon::Move.new($currentDexSearch[1]) if $currentDexSearch[1]
