@@ -3702,6 +3702,32 @@ Pokemon = LOPUNNY,80
 	Item = LOPUNNITE
 	Moves = FAKEOUT,RETURN,DRAINPUNCH,ICEPUNCH
 #-------------------------------
+[OFFCORP,Bruce,2]
+LoseText = "Oh. That's unfortunate."
+Pokemon = OCTILLERY2,79
+	Nature = MODEST
+	EV = 252,0,0,0,252,4
+	IV = 31,0,31,31,31,31
+	Ability = TIGHTFOCUS
+	Item = AIRBALLOON
+	Moves = CHARGEBEAM,SEARINGSHOT,ICEBEAM,OVERCHARGE
+Pokemon = KYUREM,79
+	Form = 1
+	Nature = TIMID
+	EV = 0,0,4,252,252,0
+	IV = 31,31,31,31,31,31
+	Ability = TURBOBLAZE
+	Item = LIFEORB
+	Moves = CHILLINGCRY,ROOST,FUSIONFLARE,DRACOMETEOR
+Pokemon = LOPUNNY,80
+	Nature = ADAMANT
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Ability = GUTS
+	Happiness = 255
+	Item = LOPUNNITE
+	Moves = FAKEOUT,RETURN,DRAINPUNCH,ICEPUNCH
+#-------------------------------
 [OFFCORP,Bruce,4]
 LoseText = "Oh. That's unfortunate."
 Pokemon = OCTILLERY2,79
