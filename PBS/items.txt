@@ -935,3 +935,6 @@
 916,TARFRUBERRY,Tarfru Berry,Tarfru Berries,5,20,"Weakens a supereffective Cosmic-type attack against the holding Pokémon.",0,0,5,
 917,ULTRANECROZIUMZ,Ultranecrozium Z,Ultranecrozium Zs,1,10000,"A long since forgotten crystal to be held by Necrozma. It allows it to Ultra Burst immediately on entry.",0,0,0,
 918,TM111,TM111,TM111s,4,30000,"The user lets loose a toxic ringing with the power to inflict damage.",3,0,0,DEATHTOLL
+919,TM112,TM112,TM112s,4,30000,"The user lets loose a demented cry on the wind with the power to inflict damage.",3,0,0,WICKEDWIND
+920,TM113,TM113,TM113s,4,30000,"The user lets loose a horribly echoing shout with the power to inflict damage.",3,0,0,SPECTRALSHRIEK
+921,TM114,TM114,TM114s,4,30000,"The user looses a cold shriek with the power to inflict damage.",3,0,0,CHILLINGCRY
