@@ -64,7 +64,7 @@ class PokeBattle_Battler
     if ((@battle.rules["modifiedsleepclause"]) || (!selfsleep && @battle.rules["sleepclause"])) &&
        pbHasStatusPokemon?(:SLEEP)
       if showMessages
-        @battle.pbDisplay(_INTL("But {1} couldn't sleep!",pbThis(true)))
+        @battle.pbDisplay(_INTL("But {1} couldn't get drowsy due to Sleep Clause!",pbThis(true)))
       end
       return false
     end
@@ -113,17 +113,19 @@ end
 
 
 
-#class PokeBattle_Move_034   # Minimize
-#  alias __clauses__pbMoveFailed? pbMoveFailed?
+class PokeBattle_Move_034   # Minimize
+  unless method_defined?(:__clauses__pbMoveFailed?)
+    alias __clauses__pbMoveFailed? pbMoveFailed?
+  end
 
-#  def pbMoveFailed?(user,targets)
-#    if !damagingMove? && @battle.rules["evasionclause"]
-#      @battle.pbDisplay(_INTL("But it failed!"))
-#      return true
-#    end
-#    return __clauses__pbMoveFailed?(user,targets)
-#  end
-#end
+  def pbMoveFailed?(user, targets)
+    if !damagingMove? && @battle.rules["evasionclause"]
+      @battle.pbDisplay(_INTL("Evasion clause is in effect!"))
+      return true
+    end
+    return __clauses__pbMoveFailed?(user, targets)
+  end
+end
 
 
 
