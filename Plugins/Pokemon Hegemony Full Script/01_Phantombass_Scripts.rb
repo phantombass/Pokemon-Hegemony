@@ -119,6 +119,10 @@ module EnvironmentEBDX
 end
 
 class PokeBattle_Battle
+  def pbHegemonyClauses
+    self.rules["sleepclause"] = true
+    self.rules["evasionclause"] = true
+  end
   def pbCanSwitch?(idxBattler,idxParty=-1,partyScene=nil)
     # Check whether party Pokémon can switch in
     return false if !pbCanSwitchLax?(idxBattler,idxParty,partyScene)
@@ -570,6 +574,9 @@ end
 class PokeBattle_Battle
   def pbStartBattleCore
     # Set up the battlers on each side
+    if $game_switches[899] && $game_switches[900]
+      pbHegemonyClauses
+    end
     sendOuts = pbSetUpSides
     olditems = []
     pbParty(0).each_with_index do |pkmn,i|
