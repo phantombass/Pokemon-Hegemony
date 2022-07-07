@@ -5249,7 +5249,7 @@ Pokemon = EMPOLEON,95
 	Nature = TIMID
 	Moves = SURF,ICEBEAM,FLASHCANNON,ROOST
 #-------------------------------
-[PSYCORP,Sylvester.2]
+[PSYCORP,Sylvester,2]
 LoseText = "Oh you are good..."
 Pokemon = ZAPDOS,95
 	Ability = DEFIANT
