@@ -3194,7 +3194,7 @@ Type1 = STEEL
 Type2 = FAIRY
 BaseStats = 95,95,120,95,125,120
 Abilities = LEVITATE
-HiddenAbility = DIMENSIONBLOCK
+HiddenAbility = PIXILATE
 #-------------------------------
 [CORVIKNIGHT,1]
 FormName = Mega Corviknight
@@ -3212,7 +3212,7 @@ Type1 = STEEL
 Type2 = DRAGON
 BaseStats = 70,95,135,95,150,90
 Abilities = MEGALAUNCHER
-HiddenAbility = DIMENSIONBLOCK
+HiddenAbility = FILTER
 #-------------------------------
 [TORTERRA,1]
 FormName = Mega Torterra
