@@ -938,3 +938,4 @@
 919,TM112,TM112,TM112s,4,30000,"The user lets loose a demented cry on the wind with the power to inflict damage.",3,0,0,WICKEDWIND
 920,TM113,TM113,TM113s,4,30000,"The user lets loose a horribly echoing shout with the power to inflict damage.",3,0,0,SPECTRALSHRIEK
 921,TM114,TM114,TM114s,4,30000,"The user looses a cold shriek with the power to inflict damage.",3,0,0,CHILLINGCRY
+922,TM126,TM126,TM126s,4,30000,"Gliding on the ground, the user attacks the target. This move always goes first on Grassy Terrain.",3,0,0,GRASSYGLIDE
