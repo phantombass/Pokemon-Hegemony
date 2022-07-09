@@ -188,6 +188,8 @@ MultipleForms.register(:CUBONE,{
   }
 })
 
+MultipleForms.copy(:CUBONE,:QUILAVA,:CYNDAQUIL)
+
 MultipleForms.register(:PIKACHU,{
   "getForm" => proc { |pkmn|
     next if pkmn.form_simple >= 2

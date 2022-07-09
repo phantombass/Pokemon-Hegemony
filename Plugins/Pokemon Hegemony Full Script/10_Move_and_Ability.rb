@@ -3733,7 +3733,14 @@ class PokeBattle_Move_193 < PokeBattle_Move_0C0
   end
 end
 
+class PokeBattle_Move_520 < PokeBattle_Move_0C0
+  def hitsFlyingTargets?; return true; end
 
+  def pbCalcTypeModSingle(moveType,defType,user,target)
+    return Effectiveness::NORMAL_EFFECTIVE_ONE if moveType == :GROUND && defType == :FLYING
+    return super
+  end
+end
 
 #===============================================================================
 # Double damage if stats were lowered that turn. (Lash Out)
