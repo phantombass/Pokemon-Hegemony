@@ -1239,7 +1239,7 @@ end
 class PokeBattle_Move_047 < PokeBattle_TargetStatDownMove
   def initialize(battle,move)
     super
-    @statDown = [:ACCURACY,1]
+    @statDown = [:ATTACK,1]
   end
 end
 

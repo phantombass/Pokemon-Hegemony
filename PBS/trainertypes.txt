@@ -91,3 +91,4 @@
 88,DEFCORP,DefCorp Leader,100,,,,Male,200,
 89,PSYCORP,PsyCorp Leader,100,,,,Male,200,
 90,LEADER_Jackson,Gym Leader,100,Battle Gym Leader,Battle victory leader,,Male,200,
+91,CREATOR,Creator,100,Battle Elite,Battle victory leader,,Male,200,

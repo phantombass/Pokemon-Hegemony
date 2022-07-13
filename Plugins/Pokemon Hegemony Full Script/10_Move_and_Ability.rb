@@ -1173,7 +1173,24 @@ BattleHandlers::DamageCalcTargetAbility.add(:ICESCALES,
 )
 
 class PokeBattle_Battler
-
+  def immune_by_ability?(type,ability)
+    if type == :COSMIC && ability == :DIMENSIONBLOCK
+      return true
+    end
+    if type == :FIRE && ability == :FLASHFIRE
+      return true
+    end
+    if type == :GRASS && ability == :SAPSIPPER
+      return true
+    end
+    if type == :WATER && [:STORMDRAIN,:WATERABSORB,:DRYSKIN].include?(ability)
+      return true
+    end
+    if type == :GROUND && ability == :LEVITATE
+      return true
+    end
+    return false
+  end
   def pbCanLowerStatStage?(stat,user=nil,move=nil,showFailMsg=false,ignoreContrary=false)
     return false if fainted?
     return false if hasActiveAbility?(:UNSHAKEN)
@@ -3993,13 +4010,30 @@ class PokeBattle_Move_515 < PokeBattle_PoisonMove
   end
 end
 
-class PokeBattle_Move_516 < PokeBattle_BurnMove
+class PokeBattle_Move_519 < PokeBattle_BurnMove
   def pbBaseDamage(baseDmg,user,target)
     if target.pbHasAnyStatus? &&
        (target.effects[PBEffects::Substitute]==0 || ignoresSubstitute?(user))
       baseDmg *= 2
     end
     return baseDmg
+  end
+end
+
+class PokeBattle_Move_517 < PokeBattle_FreezeMove
+  def pbBaseDamage(baseDmg,user,target)
+    if target.pbHasAnyStatus? &&
+       (target.effects[PBEffects::Substitute]==0 || ignoresSubstitute?(user))
+      baseDmg *= 2
+    end
+    return baseDmg
+  end
+end
+
+class PokeBattle_Move_518 < PokeBattle_MultiStatUpMove
+  def initialize(battle,move)
+    super
+    @statUp = [:ATTACK,1,:DEFENSE,1,:SPEED,1]
   end
 end
 

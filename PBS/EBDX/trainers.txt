@@ -82,6 +82,10 @@ BattleBGM        = BW-NeoPlasmaBattle.ogg
 BattleBGM        = Goldeneye - Cradle.ogg
 BattleVS         = plasmaSM
 #-------------------------------
+[CREATOR]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+#-------------------------------
 [ROCKETBOSS,Armand]
 BattleScript	 = MILITIA1
 #-------------------------------
