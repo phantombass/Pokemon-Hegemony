@@ -555,7 +555,9 @@ class PokeBattle_AI
 						typeMatch = o.damageState.typeMod
 						superEffective = Effectiveness.super_effective?(typeMatch)
 						if superEffective
-							preferredMoves.push(c)
+							if !o.immune_by_ability?(user.moves[c[0]].type,o.ability)
+								preferredMoves.push(c)
+							end
 						end
 					end
 					# preferredMoves.push(c) No. Bad moves should not be added to possible moves
