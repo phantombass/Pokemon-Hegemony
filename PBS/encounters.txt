@@ -545,7 +545,7 @@ Land,21
 	1,TURTWIG,42,45
 #-------------------------------
 [139] # Cassim Caves
-Land,5
+Cave,5
     20,NUMEL,42,45
 	20,SLUGMA,42,45
 	20,BALTOY,42,45
