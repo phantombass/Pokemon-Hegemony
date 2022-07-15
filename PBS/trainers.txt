@@ -186,6 +186,10 @@ Pokemon = GRAVELER,24
 #-------------------------------
 [FISHERMAN,Sherman]
 LoseText = "Sigh..."
+Pokemon = BASCULIN,25
+	Form = 1
+	Ability = ADAPTABILITY
+	Moves = AQUAJET,CRUNCH,PSYCHICFANGS,FLIPTURN
 Pokemon = GYARADOS,25
 	Item = LEFTOVERS
 	Ability = INTIMIDATE
@@ -213,7 +217,8 @@ LoseText = "Of course..."
 Pokemon = HARIYAMA,25
 	Ability = THICKFAT
 	Moves = FAKEOUT,KNOCKOFF,FORCEPALM,ICEPUNCH
-Pokemon = RATICATE_1,25
+Pokemon = RATICATE,25
+	Form = 1
 	Ability = HUSTLE
 	Moves = QUICKATTACK,HYPERFANG,CRUNCH,SWORDSDANCE
 Pokemon = FLETCHINDER,25
@@ -295,8 +300,9 @@ Pokemon = CHATOT,30
 #-------------------------------
 [CUEBALL,Booli]
 LoseText = "Ugh. That fell apart."
-Pokemon = TOXICROAK,44
-	Ability = DRYSKIN
+Pokemon = SNEASEL,44
+	Ability = POISONTOUCH
+	Form = 1
 	Moves = DRAINPUNCH,SUCKERPUNCH,ICEPUNCH,POISONJAB
 Pokemon = SEVIPER,44
 	Ability = DRAGONSMAW
@@ -420,7 +426,7 @@ LoseText = "Hmm."
 Pokemon = CACTURNE,54
 	Ability = WATERABSORB
 	Item = EXPERTBELT
-	Moves = SEEDBOMB,SUCKERPUNCH,DRAINPUNCH,SPIKES
+	Moves = SEEDBOMB,EARTHQUAKE,DRAINPUNCH,SPIKES
 Pokemon = CAMERUPT,55
 	Item = CAMERUPTITE
 	Moves = EARTHPOWER,FLAMETHROWER,ROCKSLIDE,WILLOWISP
@@ -541,11 +547,11 @@ Pokemon = GYARADOS,60
 	Item = WACANBERRY
 	Nature = JOLLY
 	Moves = DRAGONDANCE,LIQUIDATION,ICEFANG,EARTHQUAKE
-Pokemon = PIDGEOT,60
-	Ability = BIGPECKS
-	Item = PIDGEOTITE
+Pokemon = CHATOT,60
+	Ability = PUNKROCK
+	Item = CHATOTITE
 	Nature = TIMID
-	Moves = HURRICANE,HEATWAVE,ROOST,UTURN
+	Moves = BOOMBURST,SPECTRALSHRIEK,ROOST,CHATTER
 #-------------------------------
 # Route 10
 #-------------------------------
@@ -3958,9 +3964,17 @@ Pokemon = DELIBIRD,63
 #-------------------------------
 [NAVY,Grunt,3]
 LoseText = "This can't be good."
+Pokemon = BASCULEGION,64
+	EV = 252,0,0,0,252,4
+	IV = 31,31,31,31,31,31
+	Form = 1
+	Nature = MODEST
+	Item = LEFTOVERS
+	Ability = ADAPTABILITY
+	Moves = SURF,SPECTRALSHRIEK,FLIPTURN,CHILLINGCRY
 Pokemon = WEAVILE,64
 	EV = 0,252,0,252,0,4
-	IV = 31,0,31,31,31,31
+	IV = 31,31,31,31,31,31
 	Nature = ADAMANT
 	Item = LIFEORB
 	Ability = PRESSURE
@@ -4343,13 +4357,14 @@ Pokemon = DURALUDON,88
 #-------------------------------
 [GUARDBOSS,Sunni]
 LoseText = "Well, I guess that settles it, then."
-Pokemon = STEELIX,85
-	EV = 252,4,0,0,252,0
+Pokemon = GOODRA,85
+	Form = 1
+	EV = 252,0,0,0,252,4
 	IV = 31,31,31,0,31,31
-	Nature = SASSY
-	Item = LEFTOVERS
-	Ability = STRONGJAW
-	Moves = GYROBALL,STEALTHROCK,DRACOFANGS,TOXIC
+	Nature = MODEST
+	Item = ASSAULTVEST
+	Ability = OVERCOAT
+	Moves = FLASHCANNON,DRAGONPULSE,FLAMETHROWER,ICEBEAM
 Pokemon = GARCHOMP,85
 	EV = 0,252,0,0,252,4
 	IV = 31,31,31,31,31,31
@@ -5065,13 +5080,14 @@ Pokemon = INFERNAPE,95
 #-------------------------------
 [GUARDBOSS,Sunni,1]
 LoseText = "You certainly make your point."
-Pokemon = STEELIX,95
-	EV = 252,4,0,0,252,0
+Pokemon = GOODRA,85
+	Form = 1
+	EV = 252,0,0,0,252,4
 	IV = 31,31,31,0,31,31
-	Nature = SASSY
-	Item = FIGYBERRY
-	Ability = STURDY
-	Moves = GYROBALL,STEALTHROCK,CURSE,BODYPRESS
+	Nature = MODEST
+	Item = ASSAULTVEST
+	Ability = OVERCOAT
+	Moves = FLASHCANNON,DRAGONPULSE,FLAMETHROWER,ICEBEAM
 Pokemon = GARCHOMP,85
 	EV = 252,4,0,0,252,0
 	IV = 31,31,31,31,31,31
@@ -5508,13 +5524,14 @@ Pokemon = INFERNAPE,95
 #-------------------------------
 [GUARDBOSS,Sunni,3]
 LoseText = "You certainly make your point."
-Pokemon = STEELIX,95
-	EV = 252,4,0,0,252,0
+Pokemon = GOODRA,85
+	Form = 1
+	EV = 252,0,0,0,252,4
 	IV = 31,31,31,0,31,31
-	Nature = SASSY
-	Item = FIGYBERRY
-	Ability = STURDY
-	Moves = GYROBALL,STEALTHROCK,CURSE,BODYPRESS
+	Nature = MODEST
+	Item = ASSAULTVEST
+	Ability = OVERCOAT
+	Moves = FLASHCANNON,DRAGONPULSE,FLAMETHROWER,ICEBEAM
 Pokemon = GARCHOMP,85
 	EV = 252,4,0,0,252,0
 	IV = 31,31,31,31,31,31
