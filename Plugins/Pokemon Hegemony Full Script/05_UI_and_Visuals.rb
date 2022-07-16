@@ -2468,9 +2468,12 @@ class HallOfFame_Scene
   def writeWelcome
     overlay=@sprites["overlay"].bitmap
     overlay.clear
-    grind = $game_switches[75] ? " Nuzlocke Minimal Grinding" : ""
+    grind = $game_switches[75] ? " Minimal Grinding" : ""
+    nuzlocke = $game_switches[70] ? " Nuzlocke" : ""
     if $game_switches[900] && !$game_switches[902]
       mode = "Hard Mode"
+    elsif $game_switches[900] && $game_switches[903]
+      mode = "Expert Mode"
     elsif $game_switches[900] && $game_switches[902]
       mode = "Insane Mode"
     else
@@ -2478,7 +2481,7 @@ class HallOfFame_Scene
     end
     pbDrawTextPositions(overlay,[[_INTL("Welcome to the Hall of Fame!"),
        Graphics.width/2,Graphics.height-80,2,BASECOLOR,SHADOWCOLOR]])
-       pbDrawTextPositions(overlay,[[_INTL("{1}{2}",mode,grind),
+       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}",mode,grind,nuzlocke),
           Graphics.width/2,Graphics.height-56,2,BASECOLOR,SHADOWCOLOR]])
   end
 end
