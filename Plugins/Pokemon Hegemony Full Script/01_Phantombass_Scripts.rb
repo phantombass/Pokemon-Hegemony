@@ -122,6 +122,9 @@ class PokeBattle_Battle
   def pbHegemonyClauses
     self.rules["sleepclause"] = true
     self.rules["evasionclause"] = true
+    if $game_switches[902] || $game_switches[903]
+      self.rulse["batonpassclause"] = true
+    end
   end
   def pbCanSwitch?(idxBattler,idxParty=-1,partyScene=nil)
     # Check whether party Pokémon can switch in
