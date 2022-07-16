@@ -42,6 +42,7 @@ def generate_hisui_egg
     egg.learn_move(move[rand(move.length)])
     egg.steps_to_hatch = 200
     egg.calc_stats
+    vTSS(@event_id,"A")
   else
     pbCallBub(2,@event_id)
     pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
@@ -70,6 +71,7 @@ def generate_random_egg
     egg.learn_move(move[rand(move.length)])
     egg.steps_to_hatch = 200
     egg.calc_stats
+    vTSS(@event_id,"A")
   else
     pbCallBub(2,@event_id)
     pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
@@ -99,6 +101,7 @@ def generate_starter_egg(type)
       egg.learn_move(move[rand(move.length)])
       egg.steps_to_hatch = 200
       egg.calc_stats
+      vTSS(@event_id,"A")
     else
       pbCallBub(2,@event_id)
       pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
@@ -124,6 +127,7 @@ def generate_starter_egg(type)
       egg.learn_move(move[rand(move.length)])
       egg.steps_to_hatch = 200
       egg.calc_stats
+      vTSS(@event_id,"A")
     else
       pbCallBub(2,@event_id)
       pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
@@ -149,6 +153,7 @@ def generate_starter_egg(type)
       egg.learn_move(move[rand(move.length)])
       egg.steps_to_hatch = 200
       egg.calc_stats
+      vTSS(@event_id,"A")
     else
       pbCallBub(2,@event_id)
       pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
