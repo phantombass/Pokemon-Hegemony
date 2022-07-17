@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.3.6"
+  GAME_VERSION = "1.3.7"
 end
 
 def write_version
@@ -50,6 +50,29 @@ module Game
     $PokemonEncounters.setup($game_map.map_id)
     $game_map.autoplay
     $game_map.update
+  end
+  def write_version
+    File.open("version.txt", "wb") { |f|
+      version = Settings::GAME_VERSION
+      f.write("#{version}")
+    }
+  end
+  def self.set_up_system
+    SaveData.move_old_windows_save if System.platform[/Windows/]
+    save_data = (SaveData.exists?) ? SaveData.read_from_file(SaveData::FILE_PATH) : {}
+    if save_data.empty?
+      SaveData.initialize_bootup_values
+    else
+      SaveData.load_bootup_values(save_data)
+    end
+    # Set resize factor
+    pbSetResizeFactor([$PokemonSystem.screensize, 4].min)
+    # Set language (and choose language if there is no save file)
+    if Settings::LANGUAGES.length >= 2
+      $PokemonSystem.language = pbChooseLanguage if save_data.empty?
+      pbLoadMessages('Data/' + Settings::LANGUAGES[$PokemonSystem.language][1])
+    end
+    write_version
   end
 end
 

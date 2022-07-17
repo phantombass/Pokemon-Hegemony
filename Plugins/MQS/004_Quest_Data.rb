@@ -49,7 +49,8 @@ module QuestModule
     :Stage42 => "Check in with Winston's friends.",
     :Stage43 => "Meet Rotom at the Abandoned Space Station.",
     :Stage44 => "Battle Rotom.",
-    :Stage45 => "Stop the Chancellor.",
+    :Stage45 => "Go to the Pokémon League",
+    :Stage46 => "Stop the Chancellor.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -94,7 +95,8 @@ module QuestModule
     :Location42 => "Rado Foothills",
     :Location43 => "Victory Road",
     :Location44 => "Abandoned Space Station",
-    :Location45 => "Pokémon League"
+    :Location45 => "Pokémon League",
+    :Location46 => "Pokémon League"
   }
 
 #====================================
