@@ -4,7 +4,16 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
+  GAME_VERSION = "1.3.6"
 end
+
+def write_version
+  File.open("version.txt", "wb") { |f|
+    version = Settings::GAME_VERSION
+    f.write("#{version}")
+  }
+end
+
 class Game_System
   attr_accessor :level_cap
   alias initialize_cap initialize
@@ -41,6 +50,79 @@ module Game
     $PokemonEncounters.setup($game_map.map_id)
     $game_map.autoplay
     $game_map.update
+  end
+end
+
+def PokemonLoadScreen
+  def pbStartLoadScreen
+    commands = []
+    cmd_continue     = -1
+    cmd_new_game     = -1
+    cmd_options      = -1
+    cmd_language     = -1
+    cmd_mystery_gift = -1
+    cmd_debug        = -1
+    cmd_quit         = -1
+    show_continue = !@save_data.empty?
+    if show_continue
+      commands[cmd_continue = commands.length] = _INTL('Continue')
+      if @save_data[:player].mystery_gift_unlocked
+        commands[cmd_mystery_gift = commands.length] = _INTL('Mystery Gift')
+      end
+    end
+    commands[cmd_new_game = commands.length]  = _INTL('New Game')
+    commands[cmd_options = commands.length]   = _INTL('Options')
+    commands[cmd_language = commands.length]  = _INTL('Language') if Settings::LANGUAGES.length >= 2
+    commands[cmd_debug = commands.length]     = _INTL('Debug') if $DEBUG
+    commands[cmd_quit = commands.length]      = _INTL('Quit Game')
+    map_id = show_continue ? @save_data[:map_factory].map.map_id : 0
+    @scene.pbStartScene(commands, show_continue, @save_data[:player],
+                        @save_data[:frame_count] || 0, map_id)
+    @scene.pbSetParty(@save_data[:player]) if show_continue
+    @scene.pbStartScene2
+    loop do
+      command = @scene.pbChoose(commands)
+      pbPlayDecisionSE if command != cmd_quit
+      case command
+      when cmd_continue
+        @scene.pbEndScene
+        write_version
+        Game.load(@save_data)
+        return
+      when cmd_new_game
+        @scene.pbEndScene
+        write_version
+        Game.start_new
+        return
+      when cmd_mystery_gift
+        pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
+      when cmd_options
+        pbFadeOutIn do
+          scene = PokemonOption_Scene.new
+          screen = PokemonOptionScreen.new(scene)
+          screen.pbStartScreen(true)
+        end
+      when cmd_language
+        @scene.pbEndScene
+        $PokemonSystem.language = pbChooseLanguage
+        pbLoadMessages('Data/' + Settings::LANGUAGES[$PokemonSystem.language][1])
+        if show_continue
+          @save_data[:pokemon_system] = $PokemonSystem
+          File.open(SaveData::FILE_PATH, 'wb') { |file| Marshal.dump(@save_data, file) }
+        end
+        $scene = pbCallTitle
+        return
+      when cmd_debug
+        pbFadeOutIn { pbDebugMenu(false) }
+      when cmd_quit
+        pbPlayCloseMenuSE
+        @scene.pbEndScene
+        $scene = nil
+        return
+      else
+        pbPlayBuzzerSE
+      end
+    end
   end
 end
 
