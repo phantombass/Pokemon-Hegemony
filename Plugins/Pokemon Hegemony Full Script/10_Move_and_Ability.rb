@@ -4750,6 +4750,24 @@ class PokeBattle_Battle
   end
 end
 
+def pbBattleTypeWeakingBerry(type,moveType,target,mults)
+  return if moveType != type
+  return if target.battle.pbCheckOpposingAbility(:UNNERVE,@index)
+  return if target.battle.pbCheckOpposingAbility(:ASONEICE,@index)
+  return if target.battle.pbCheckOpposingAbility(:ASONEGHOST,@index)
+  return if Effectiveness.resistant?(target.damageState.typeMod) && moveType != :NORMAL
+  mults[:final_damage_multiplier] /= target.hasActiveAbility?(:RIPEN)? 4 : 2
+  target.damageState.berryWeakened = true
+  target.battle.pbCommonAnimation("EatBerry",target)
+end
+
+class PokeBattle_Move_086 < PokeBattle_Move
+  def pbBaseDamageMultiplier(damageMult,user,target)
+    damageMult *= 2 if (!user.item || user.effects[PBEffects::GemConsumed] != nil) #For doubling up with Flying Gem
+    return damageMult
+  end
+end
+
 #=============
 #Effects
 #=============

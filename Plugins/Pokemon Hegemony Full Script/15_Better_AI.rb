@@ -66,6 +66,11 @@ end
 class PokeBattle_AI
 	def initialize(battle)
 		@battle = battle
+		$target_moves = []
+		$target_moves1 =  nil
+		$target_moves2 =  nil
+		$target_moves3 =  nil
+		$target_moves4 =  nil
 	end
 
 	def pbAIRandom(x); return rand(x); end
@@ -269,17 +274,53 @@ class PokeBattle_AI
 	def pbEnemyShouldWithdrawEx?(idxBattler,forceSwitch)
     return false if @battle.wildBattle?
 		return false if @battle.battlers.length == 1
+		$shouldBoost = false
+		$shouldBoostSpeed = false
     shouldSwitch = forceSwitch
     batonPass = -1
 		teleport = -1
     moveType = -1
-		faster = false
     skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill_level || 0
     battler = @battle.battlers[idxBattler]
+		$opposing = []
+		for i in @battle.battlers
+			if i != battler
+				if not(i.fainted?)
+					if i.opposes?
+						$opposing.push(i)
+					end
+				end
+			end
+		end
+		moves = battler.moves
+		battler.moves do |move|
+			for o in $opposing
+				baseDmg = pbMoveBaseDamage(move,battler,o,skill)
+			end
+		end
+		target = battler.pbDirectOpposing(true)
+		aspeed = pbRoughStat(battler,:SPEED,skill)
+		ospeed = pbRoughStat(target,:SPEED,skill)
+		faster = aspeed > ospeed ? true : false
     # If Pokémon is within 6 levels of the foe, and foe's last move was
     # super-effective and powerful
     if !shouldSwitch && battler.turnCount>-1 && skill>=PBTrainerAI.highSkill
-      target = battler.pbDirectOpposing(true)
+			if target.lastMoveUsed != nil
+				move = GameData::Move.get(target.lastMoveUsed)
+				if $target_moves1 == nil
+					$target_moves1 = move
+					$target_moves.push($target_moves1)
+				elsif $target_moves1 != nil && $target_moves1 != move && $target_moves2 == nil
+					$target_moves2 = move
+					$target_moves.push($target_moves2)
+				elsif $target_moves2 != nil && $target_moves1 != nil && ![$target_moves1,$target_moves2].include?(move) && $target_moves3 == nil
+					$target_moves3 = move
+					$target_moves.push($target_moves3)
+				elsif $target_moves3 != nil && $target_moves2 != nil && $target_moves1 != nil && ![$target_moves1,$target_moves2,$target_moves3].include?(move) && $target_moves4 == nil
+					$target_moves4 = move
+					$target_moves.push($target_moves4)
+				end
+			end
 					type1Battler = GameData::Type.get(target.type1).effectiveness(battler.type1) * GameData::Type.get(target.type2).effectiveness(battler.type1)
 				if battler.type1 != battler.type2
 					type2Battler = GameData::Type.get(target.type1).effectiveness(battler.type2) * GameData::Type.get(target.type2).effectiveness(battler.type2)
@@ -299,19 +340,54 @@ class PokeBattle_AI
 						shouldSwitch = false
 					end
 				if type1Target == (battler_SE || battler_2SE) || type2Target == (battler_SE || battler_2SE)
-					shouldSwitch = true
+					if !faster || pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp
+						shouldSwitch = true
+					elsif faster && pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp
+						shouldSwitch = true
+					elsif faster && pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp
+						shouldSwitch = false
+					end
 				end
 				if (type1Battler == (battler_SE || battler_2SE) || type2Battler == (battler_SE || battler_2SE)) && (type1Target != battler_SE && type2Target != battler_SE)
-					shouldSwitch = false
+					if !faster || pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp/2
+						switchChance = 50
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+					elsif faster && pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp/2
+						shouldSwitch = false
+						$shouldBoost = true
+					elsif !faster && pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp/2
+						for i in $target_moves
+							next if $target_moves.length == 0
+							if pbRoughDamage(i,target,battler,skill,baseDmg) >= battler.hp
+								shouldSwitch = true
+							else
+								shouldSwitch = false
+								$shouldBoostSpeed = true
+							end
+						end
+					elsif !faster && pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp/2
+						for i in $target_moves
+							next if $target_moves.length == 0
+							if pbRoughDamage(i,target,battler,skill,baseDmg) >= battler.hp
+								shouldSwitch = true
+							else
+								shouldSwitch = false
+								$shouldBoostSpeed = true
+							end
+						end
+					elsif faster && pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp/2
+						shouldSwitch = false
+					end
 				end
 				if type1Target != battler_SE && type2Target != battler_SE
-					if faster && target.hp <= (target.totalhp/3)
+					if faster && pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp/2
 						shouldSwitch = false
-					elsif faster
+					elsif !faster
 						if type1Battler == (battler_SE || battler_2SE) || type2Battler == (battler_SE || battler_2SE)
-							shouldSwitch = false
+							switchChance = pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp/2 ? 75 : 35
+							shouldSwitch = (pbAIRandom(100)<switchChance)
 						else
-							switchChance = 95
+							switchChance = 60
 							shouldSwitch = (pbAIRandom(100)<switchChance)
 						end
 					else
