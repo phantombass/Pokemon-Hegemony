@@ -276,6 +276,7 @@ class PokeBattle_AI
 		return false if @battle.battlers.length == 1
 		$shouldBoost = false
 		$shouldBoostSpeed = false
+		$shouldPri = false
     shouldSwitch = forceSwitch
     batonPass = -1
 		teleport = -1
@@ -295,7 +296,7 @@ class PokeBattle_AI
 		moves = battler.moves
 		battler.moves do |move|
 			for o in $opposing
-				baseDmg = pbMoveBaseDamage(move,battler,o,skill)
+				$baseDmg = pbMoveBaseDamage(move,battler,o,skill)
 			end
 		end
 		target = battler.pbDirectOpposing(true)
@@ -339,52 +340,61 @@ class PokeBattle_AI
 					if battler.effects[PBEffects::Substitute] > 0
 						shouldSwitch = false
 					end
+					if battler.stages[:ATTACK] > 0 || battler.stages[:SPECIAL_ATTACK] > 0
+						$shouldPri = true
+						shouldSwitch = false
+					end
 				if type1Target == (battler_SE || battler_2SE) || type2Target == (battler_SE || battler_2SE)
-					if !faster || pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp
+					if !faster || pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp
 						shouldSwitch = true
-					elsif faster && pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp
+					elsif !faster && $shouldPri && move.priority > 0 && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp
+						shouldSwitch = false
+					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp
 						shouldSwitch = true
-					elsif faster && pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp
+					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp
 						shouldSwitch = false
 					end
 				end
 				if (type1Battler == (battler_SE || battler_2SE) || type2Battler == (battler_SE || battler_2SE)) && (type1Target != battler_SE && type2Target != battler_SE)
-					if !faster || pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp/2
+					if !faster || pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2
 						switchChance = 50
 						shouldSwitch = (pbAIRandom(100)<switchChance)
-					elsif faster && pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp/2
+					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2
 						shouldSwitch = false
 						$shouldBoost = true
-					elsif !faster && pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp/2
+					elsif !faster && pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2
 						for i in $target_moves
 							next if $target_moves.length == 0
-							if pbRoughDamage(i,target,battler,skill,baseDmg) >= battler.hp
+							if pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp
 								shouldSwitch = true
 							else
 								shouldSwitch = false
 								$shouldBoostSpeed = true
 							end
 						end
-					elsif !faster && pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp/2
+					elsif !faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp/2
+						if move.priority > 0 && $shouldPri
+							shouldSwitch = false
+						end
 						for i in $target_moves
 							next if $target_moves.length == 0
-							if pbRoughDamage(i,target,battler,skill,baseDmg) >= battler.hp
+							if pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp
 								shouldSwitch = true
 							else
 								shouldSwitch = false
 								$shouldBoostSpeed = true
 							end
 						end
-					elsif faster && pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp/2
+					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp/2
 						shouldSwitch = false
 					end
 				end
 				if type1Target != battler_SE && type2Target != battler_SE
-					if faster && pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp/2
+					if faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp/2
 						shouldSwitch = false
 					elsif !faster
 						if type1Battler == (battler_SE || battler_2SE) || type2Battler == (battler_SE || battler_2SE)
-							switchChance = pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp/2 ? 75 : 35
+							switchChance = pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2 ? 75 : 35
 							shouldSwitch = (pbAIRandom(100)<switchChance)
 						else
 							switchChance = 60
@@ -432,6 +442,19 @@ class PokeBattle_AI
     if !@battle.pbCanChooseAnyMove?(idxBattler) && battler.turnCount && battler.turnCount>=0
       shouldSwitch = true
     end
+		@battle.pbParty(idxBattler).each_with_index do |pkmn,i|
+			if !@battle.pbCanSwitch?(idxBattler,i)
+				$shouldPri = true if battler.hp < battler.totalhp/4
+				next if $target_move == nil
+				for i in $target_move
+					if pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp && (battler.stages[:ATTACK] > 0 || battler.stages[:SPECIAL_ATTACK] > 0)
+						$shouldPri = true
+					else
+						$shouldBoost = true
+					end
+				end
+			end
+		end
     # Pokémon is Perish Songed and has Baton Pass
     if skill>=PBTrainerAI.highSkill && battler.effects[PBEffects::PerishSong]==1
       battler.eachMoveWithIndex do |m,i|

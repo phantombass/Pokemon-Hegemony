@@ -19,6 +19,7 @@ class PokeBattle_AI
         score += 80 if user.hp < user.totalhp/4
       end
       score += 70 if move.soundMove? && target.effects[PBEffects::Substitute]>0
+      score += 50 if $shouldPri
     #---------------------------------------------------------------------------
     when "001"
       score -= 95
@@ -297,7 +298,7 @@ class PokeBattle_AI
         end
       else
         score += 20 if user.stages[:SPEED]<0
-        score += 60 if $shouldBoostSpeed
+        score += 90 if $shouldBoostSpeed
       end
     #---------------------------------------------------------------------------
     when "020"
@@ -374,7 +375,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "024"
-      score += 60 if $shouldBoost
+      score += 90 if $shouldBoost
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:DEFENSE)
         score -= 90
@@ -448,11 +449,11 @@ class PokeBattle_AI
           ospeed = pbRoughStat(target,:SPEED,skill)
           score += 20 if aspeed<ospeed && aspeed*2>ospeed
         end
-        score += 60 if $shouldBoost || $shouldBoostSpeed
+        score += 90 if $shouldBoost || $shouldBoostSpeed
       end
     #---------------------------------------------------------------------------
     when "027", "028"
-      score += 60 if $shouldBoost
+      score += 90 if $shouldBoost
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:SPECIAL_ATTACK)
         score -= 90
@@ -510,7 +511,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "02B"
-      score += 60 if $shouldBoost
+      score += 90 if $shouldBoost
       if user.statStageAtMax?(:SPEED) &&
          user.statStageAtMax?(:SPECIAL_ATTACK) &&
          user.statStageAtMax?(:SPECIAL_DEFENSE)
@@ -544,7 +545,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "02C"
-      score += 60 if $shouldBoost
+      score += 90 if $shouldBoost
       if user.statStageAtMax?(:SPECIAL_ATTACK) &&
          user.statStageAtMax?(:SPECIAL_DEFENSE)
         score -= 90
@@ -614,7 +615,7 @@ class PokeBattle_AI
           end
           score += 20 if hasPhysicalAttack
         end
-        score += 60 if $shouldBoost
+        score += 90 if $shouldBoost
       end
     #---------------------------------------------------------------------------
     when "02F"
@@ -646,11 +647,11 @@ class PokeBattle_AI
       else
         score += 10 if user.turnCount==0
         score += 20 if user.stages[:SPEED]<0
-        score += 60 if $shouldBoostSpeed
+        score += 90 if $shouldBoostSpeed
       end
     #---------------------------------------------------------------------------
     when "032"
-      score += 60 if $shouldBoost
+      score += 90 if $shouldBoost
       if move.statusMove?
         if user.statStageAtMax?(:SPECIAL_ATTACK)
           score -= 90
@@ -729,7 +730,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "036"
-      score += 60 if $shouldBoost || $shouldBoostSpeed
+      score += 90 if $shouldBoost || $shouldBoostSpeed
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:SPEED)
         score -= 90
@@ -784,7 +785,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "039"
-      score += 60 if $shouldBoost
+      score += 90 if $shouldBoost
       if move.statusMove?
         if user.statStageAtMax?(:SPECIAL_ATTACK)
           score -= 90
@@ -1298,7 +1299,7 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "05B"
       score -= 90 if user.pbOwnSide.effects[PBEffects::Tailwind]>0
-      score += 60 if user.pbOwnSide.effects[PBEffects::Tailwind]<1 && $shouldBoostSpeed
+      score += 90 if user.pbOwnSide.effects[PBEffects::Tailwind]<1 && $shouldBoostSpeed
     #---------------------------------------------------------------------------
     when "05C"
       moveBlacklist = [
@@ -2480,6 +2481,10 @@ class PokeBattle_AI
       score -= 70 if target.hp<=target.totalhp/4   # need to risk this move
     #---------------------------------------------------------------------------
     when "116"
+      for i in $target_moves
+        score += 25 if !i.statusMove?
+      end
+      score += 50 if $shouldPri && score >= 50
     #---------------------------------------------------------------------------
     when "117"
       hasAlly = false
