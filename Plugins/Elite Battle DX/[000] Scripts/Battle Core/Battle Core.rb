@@ -141,6 +141,7 @@ class PokeBattle_Battle
     # displays trainer dialogue if applicable
     @scene.pbTrainerBattleSpeech(playerBattler?(@battlers[args[0]]) ? "recall" : "recallOpp")
     @replaced = true
+    $target_moves = []
     # specifies sendout toggle
     @scene.sendingOut = true if args[0]%2 == 0
     return pbRecallAndReplace_ebdx(*args)

@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.3.8"
+  GAME_VERSION = "1.3.9"
 end
 
 def write_version
@@ -1303,6 +1303,14 @@ class PokeBattle_Battler
     # Check for end of primordial weather
     @battle.pbEndPrimordialWeather
     @battle.pbSetBattled(self)
+  end
+  def canConsumeBerry?
+    abil = []
+    @battle.eachOtherSideBattler do |b|
+      abil.push(b.ability)
+    end
+    return false if [:UNNERVE,:ASONEICE,:ASONEGHOST].include?(abil)
+    return true
   end
   def takesEntryHazardDamage?
     if hasActiveItem?(:HEAVYDUTYBOOTS)
