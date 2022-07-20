@@ -394,7 +394,7 @@ class PokeBattle_AI
 						shouldSwitch = false
 					elsif !faster
 						if type1Battler == (battler_SE || battler_2SE) || type2Battler == (battler_SE || battler_2SE)
-							switchChance = pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2 ? 75 : 35
+							switchChance = 75
 							shouldSwitch = (pbAIRandom(100)<switchChance)
 						else
 							switchChance = 60
