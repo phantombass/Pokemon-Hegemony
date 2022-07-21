@@ -141,7 +141,23 @@ class PokeBattle_Battle
     # displays trainer dialogue if applicable
     @scene.pbTrainerBattleSpeech(playerBattler?(@battlers[args[0]]) ? "recall" : "recallOpp")
     @replaced = true
-    $target_moves = []
+    if playerBattler?(@battlers[args[0]])
+      $target_moves = nil
+      case $target_idx
+      when 0
+        $target_moves = $ai_learned_team[:moves1] == nil ? [] : $ai_learned_team[:moves1]
+      when 1
+        $target_moves = $ai_learned_team[:moves2] == nil ? [] : $ai_learned_team[:moves2]
+      when 2
+        $target_moves = $ai_learned_team[:moves3] == nil ? [] : $ai_learned_team[:moves3]
+      when 3
+        $target_moves = $ai_learned_team[:moves4] == nil ? [] : $ai_learned_team[:moves4]
+      when 4
+        $target_moves = $ai_learned_team[:moves5] == nil ? [] : $ai_learned_team[:moves5]
+      when 5
+        $target_moves = $ai_learned_team[:moves6] == nil ? [] : $ai_learned_team[:moves6]
+      end
+    end
     # specifies sendout toggle
     @scene.sendingOut = true if args[0]%2 == 0
     return pbRecallAndReplace_ebdx(*args)

@@ -63,14 +63,47 @@ def isSuperEffective?(battler1,battler2)
 	end
 	return false
 end
+
+class PokeBattle_Move
+	def pbDisplayUseMessage(user)
+    @battle.pbDisplayBrief(_INTL("{1} used {2}!",user.pbThis,@name))
+		if !user.opposes?
+			case $target_idx
+			when 0
+				$ai_learned_team[:moves1].push(@realMove)
+				$ai_learned_team[:moves1].uniq!
+			when 1
+				$ai_learned_team[:moves2].push(@realMove)
+				$ai_learned_team[:moves2].uniq!
+			when 2
+				$ai_learned_team[:moves3].push(@realMove)
+				$ai_learned_team[:moves3].uniq!
+			when 3
+				$ai_learned_team[:moves4].push(@realMove)
+				$ai_learned_team[:moves4].uniq!
+			when 4
+				$ai_learned_team[:moves5].push(@realMove)
+				$ai_learned_team[:moves5].uniq!
+			when 5
+				$ai_learned_team[:moves6].push(@realMove)
+				$ai_learned_team[:moves6].uniq!
+			end
+		end
+  end
+end
+
 class PokeBattle_AI
 	def initialize(battle)
 		@battle = battle
-		$target_moves = []
-		$target_moves1 =  nil
-		$target_moves2 =  nil
-		$target_moves3 =  nil
-		$target_moves4 =  nil
+		$ai_learned_team = {
+			:pokemon => [],
+			:moves1 => [],
+			:moves2 => [],
+			:moves3 => [],
+			:moves4 => [],
+			:moves5 => [],
+			:moves6 => []
+		}
 	end
 
 	def pbAIRandom(x); return rand(x); end
@@ -283,6 +316,7 @@ class PokeBattle_AI
     moveType = -1
     skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill_level || 0
     battler = @battle.battlers[idxBattler]
+		target = battler.pbDirectOpposing(true)
 		$opposing = []
 		for i in @battle.battlers
 			if i != battler
@@ -299,27 +333,64 @@ class PokeBattle_AI
 				$baseDmg = pbMoveBaseDamage(move,battler,o,skill)
 			end
 		end
-		target = battler.pbDirectOpposing(true)
 		aspeed = pbRoughStat(battler,:SPEED,skill)
 		ospeed = pbRoughStat(target,:SPEED,skill)
 		faster = aspeed > ospeed ? true : false
+		$ai_learned_team[:pokemon].push(target.species)
+		$ai_learned_team[:pokemon].uniq!
     # If Pokémon is within 6 levels of the foe, and foe's last move was
     # super-effective and powerful
     if !shouldSwitch && battler.turnCount>-1 && skill>=PBTrainerAI.highSkill
-			if target.lastMoveUsed != nil
-				move = GameData::Move.get(target.lastMoveUsed)
-				if $target_moves1 == nil
-					$target_moves1 = move
-					$target_moves.push($target_moves1)
-				elsif $target_moves1 != nil && $target_moves1 != move && $target_moves2 == nil
-					$target_moves2 = move
-					$target_moves.push($target_moves2)
-				elsif $target_moves2 != nil && $target_moves1 != nil && ![$target_moves1,$target_moves2].include?(move) && $target_moves3 == nil
-					$target_moves3 = move
-					$target_moves.push($target_moves3)
-				elsif $target_moves3 != nil && $target_moves2 != nil && $target_moves1 != nil && ![$target_moves1,$target_moves2,$target_moves3].include?(move) && $target_moves4 == nil
-					$target_moves4 = move
-					$target_moves.push($target_moves4)
+			target_id = $ai_learned_team[:pokemon]
+			targ = target.species
+			$target_idx = -1
+			for i in target_id
+				$target_idx += 1
+				break if i == targ
+			end
+			$targ_id = $ai_learned_team[:pokemon][$target_idx]
+			move_id1 = $ai_learned_team[:move1]
+			move_id2 = $ai_learned_team[:move2]
+			move_id3 = $ai_learned_team[:move3]
+			move_id4 = $ai_learned_team[:move4]
+			move_id5 = $ai_learned_team[:move5]
+			move_id6 = $ai_learned_team[:move6]
+			case $target_idx
+			when 0
+				if move_id1 != nil
+					for i in 0..move_id1.length
+						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move1][i],target,battler,skill)
+					end
+				end
+			when 1
+				if move_id2 != nil
+					for i in 0..move_id2.length
+						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move2][i],target,battler,skill)
+					end
+				end
+			when 2
+				if move_id3 != nil
+					for i in 0..move_id3.length
+						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move3][i],target,battler,skill)
+					end
+				end
+			when 3
+				if move_id4 != nil
+					for i in 0..move_id4.length
+						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move4][i],target,battler,skill)
+					end
+				end
+			when 4
+				if move_id5 != nil
+					for i in 0..move_id5.length
+						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move5][i],target,battler,skill)
+					end
+				end
+			when 5
+				if move_id6 != nil
+					for i in 0..move_id6.length
+						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move6][i],target,battler,skill)
+					end
 				end
 			end
 					type1Battler = GameData::Type.get(target.type1).effectiveness(battler.type1) * GameData::Type.get(target.type2).effectiveness(battler.type1)
@@ -363,27 +434,21 @@ class PokeBattle_AI
 						shouldSwitch = false
 						$shouldBoost = true
 					elsif !faster && pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2
-						for i in $target_moves
-							next if $target_moves.length == 0
-							if pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp
-								shouldSwitch = true
-							else
-								shouldSwitch = false
-								$shouldBoostSpeed = true
-							end
+						if pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) >= battler.hp
+							shouldSwitch = true
+						else
+							shouldSwitch = false
+							$shouldBoostSpeed = true
 						end
 					elsif !faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp/2
 						if move.priority > 0 && $shouldPri
 							shouldSwitch = false
 						end
-						for i in $target_moves
-							next if $target_moves.length == 0
-							if pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp
-								shouldSwitch = true
-							else
-								shouldSwitch = false
-								$shouldBoostSpeed = true
-							end
+						if pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) >= battler.hp
+							shouldSwitch = true
+						else
+							shouldSwitch = false
+							$shouldBoostSpeed = true
 						end
 					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp/2
 						shouldSwitch = false
@@ -394,7 +459,7 @@ class PokeBattle_AI
 						shouldSwitch = false
 					elsif !faster
 						if type1Battler == (battler_SE || battler_2SE) || type2Battler == (battler_SE || battler_2SE)
-							switchChance = 75
+							switchChance = pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) < battler.hp ? 35 : 75
 							shouldSwitch = (pbAIRandom(100)<switchChance)
 						else
 							switchChance = 60
