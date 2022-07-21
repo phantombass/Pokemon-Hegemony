@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.3.14"
+  GAME_VERSION = "1.3.15"
 end
 
 def write_version
@@ -228,7 +228,7 @@ class PokeBattle_Battle
     self.rules["sleepclause"] = true
     self.rules["evasionclause"] = true
     if $game_switches[902] || $game_switches[903]
-      self.rulse["batonpassclause"] = true
+      self.rules["batonpassclause"] = true
     end
   end
   def pbCanSwitch?(idxBattler,idxParty=-1,partyScene=nil)
