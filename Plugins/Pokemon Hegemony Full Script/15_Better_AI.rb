@@ -330,7 +330,7 @@ class PokeBattle_AI
 		moves = battler.moves
 		battler.moves do |move|
 			for o in $opposing
-				$baseDmg = pbMoveBaseDamage(move,battler,o,skill)
+				baseDmg = pbMoveBaseDamage(move,battler,o,skill)
 			end
 		end
 		aspeed = pbRoughStat(battler,:SPEED,skill)
@@ -359,36 +359,42 @@ class PokeBattle_AI
 			when 0
 				if move_id1 != nil
 					for i in 0..move_id1.length
+						$targ_move = move_id1[i]
 						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move1][i],target,battler,skill)
 					end
 				end
 			when 1
 				if move_id2 != nil
 					for i in 0..move_id2.length
+						$targ_move = move_id2[i]
 						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move2][i],target,battler,skill)
 					end
 				end
 			when 2
 				if move_id3 != nil
 					for i in 0..move_id3.length
+						$targ_move = move_id3[i]
 						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move3][i],target,battler,skill)
 					end
 				end
 			when 3
 				if move_id4 != nil
 					for i in 0..move_id4.length
+						$targ_move = move_id4[i]
 						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move4][i],target,battler,skill)
 					end
 				end
 			when 4
 				if move_id5 != nil
 					for i in 0..move_id5.length
+						$targ_move = move_id5[i]
 						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move5][i],target,battler,skill)
 					end
 				end
 			when 5
 				if move_id6 != nil
 					for i in 0..move_id6.length
+						$targ_move = move_id6[i]
 						$targbaseDmg = pbMoveBaseDamage($ai_learned_team[:move6][i],target,battler,skill)
 					end
 				end
@@ -408,58 +414,126 @@ class PokeBattle_AI
 				# 4 = SE
 				# 0 = Immune
 				if skill>=PBTrainerAI.beastMode
+					switchChance = 0
+					for move in battler.moves
+						$has_prio = true if move.priority > 0 && !move.statusMove?
+					end
 					if battler.effects[PBEffects::Substitute] > 0
 						shouldSwitch = false
 					end
 					if battler.stages[:ATTACK] > 0 || battler.stages[:SPECIAL_ATTACK] > 0
-						$shouldPri = true
+						$shouldPri = true if $has_prio
 						shouldSwitch = false
 					end
 				if type1Target == (battler_SE || battler_2SE) || type2Target == (battler_SE || battler_2SE)
-					if !faster || pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp
-						shouldSwitch = true
-					elsif !faster && $shouldPri && move.priority > 0 && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp
-						shouldSwitch = false
-					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp
-						shouldSwitch = true
-					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp
-						shouldSwitch = false
+					if !faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
+						end
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+					elsif !faster && $shouldPri
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
+						end
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+					elsif faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
+						end
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+					elsif faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
+						end
+						shouldSwitch = (pbAIRandom(100)<switchChance)
 					end
 				end
 				if (type1Battler == (battler_SE || battler_2SE) || type2Battler == (battler_SE || battler_2SE)) && (type1Target != battler_SE && type2Target != battler_SE)
-					if !faster || pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2
-						switchChance = 50
+					if !faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
+						end
 						shouldSwitch = (pbAIRandom(100)<switchChance)
-					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2
-						shouldSwitch = false
-						$shouldBoost = true
-					elsif !faster && pbRoughDamage(move,battler,target,skill,$baseDmg) < target.hp/2
-						if pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) >= battler.hp
-							shouldSwitch = true
-						else
-							shouldSwitch = false
-							$shouldBoostSpeed = true
+					elsif faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
 						end
-					elsif !faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp/2
-						if move.priority > 0 && $shouldPri
-							shouldSwitch = false
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+						$shouldBoost = true if shouldSwitch == false
+					elsif !faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
 						end
-						if pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) >= battler.hp
-							shouldSwitch = true
-						else
-							shouldSwitch = false
-							$shouldBoostSpeed = true
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+						for i in $targ_move
+							if pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) >= battler.hp
+								shouldSwitch = true
+							else
+								shouldSwitch = false
+								$shouldBoostSpeed = true
+							end
 						end
-					elsif faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp/2
-						shouldSwitch = false
+					elsif !faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
+						end
+						shouldSwitch = (pbAIRandom(100)<switchChance)
+						for i in $targ_move
+							if pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) >= battler.hp
+								shouldSwitch = true
+							else
+								shouldSwitch = false
+								$shouldBoostSpeed = true
+							end
+						end
+					elsif faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
+						end
+						shouldSwitch = (pbAIRandom(100)<switchChance)
 					end
 				end
 				if type1Target != battler_SE && type2Target != battler_SE
-					if faster && pbRoughDamage(move,battler,target,skill,$baseDmg) >= target.hp/2
-						shouldSwitch = false
+					if faster
+						for move in battler.moves
+							$has_prio = true if move.priority > 0 && !move.statusMove?
+							baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+							switchChance += 20 if pbRoughDamage(move,battler,target,skill,baseDmg) < battler.hp
+							switchChance -= 20 if pbRoughDamage(move,battler,target,skill,baseDmg) >= battler.hp
+						end
+						shouldSwitch = (pbAIRandom(100)<switchChance)
 					elsif !faster
 						if type1Battler == (battler_SE || battler_2SE) || type2Battler == (battler_SE || battler_2SE)
-							switchChance = pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) < battler.hp ? 35 : 75
+							for i in $targ_move
+								switchChance = pbRoughDamage(i,$targ_id,battler,skill,$targbaseDmg) < battler.hp ? 35 : 75
+							end
 							shouldSwitch = (pbAIRandom(100)<switchChance)
 						else
 							switchChance = 60
