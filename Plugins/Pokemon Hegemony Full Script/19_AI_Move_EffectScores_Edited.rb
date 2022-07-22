@@ -9,17 +9,14 @@ class PokeBattle_AI
       if move.priority > 0 && @battle.field.terrain == :Psychic
         score -= 90
       end
-      if move.priority > 2 && @battle.field.terrain != :Psychic and user.turnCount == 0
-        score += 80
-      end
       if move.priority > 0 && !target.hasActiveAbility?(:QUEENLYMAJESTY) && !target.hasActiveAbility?(:DAZZLING) && @battle.field.terrain != :Psychic
         score += 80 if pbRoughDamage(move,user,target,skill,move.baseDamage) >= target.hp
         score += 80 if user.stages[:ATTACK] > 0 && move.physicalMove?
         score += 80 if user.stages[:SPECIAL_ATTACK] > 0 && move.specialMove?
-        score += 80 if user.hp < user.totalhp/4
+        score += 80 if user.hp < user.totalhp/3
+        score += 50 if $shouldPri
       end
       score += 70 if move.soundMove? && target.effects[PBEffects::Substitute]>0
-      score += 50 if $shouldPri
     #---------------------------------------------------------------------------
     when "001"
       score -= 95
@@ -156,9 +153,10 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "012"
       if user.turnCount==0
-        if skill>=PBTrainerAI.highSkill
+        if skill>=PBTrainerAI.highSkill && $fakeOut == true
           score += 30 if !target.hasActiveAbility?(:INNERFOCUS) && !target.hasActiveAbility?(:STEADFAST) && target.effects[PBEffects::Substitute]==0
           score += 70 if target.status == :POISON
+          score += 50 if target.effects[PBEffects::ProtectRate]>1
         end
       else
         score -= 90   # Because it will fail here
@@ -298,7 +296,8 @@ class PokeBattle_AI
         end
       else
         score += 20 if user.stages[:SPEED]<0
-        score += 90 if $shouldBoostSpeed
+        score += 75 if $shouldBoostSpeed
+        score += 15 if $shouldBoostSpeed && user.hasActiveItem(:WEAKNESSPOLICY)
       end
     #---------------------------------------------------------------------------
     when "020"
@@ -1937,10 +1936,12 @@ class PokeBattle_AI
           end
         end
         score -= user.hp*100/user.totalhp
+        score += 50 if $shouldHeal
       end
     #---------------------------------------------------------------------------
     when "0D7"
       score -= 90 if @battle.positions[user.index].effects[PBEffects::Wish]>0
+      score += 50 if $shouldHeal
       if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp*0.67
         score += 75
       elsif skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
@@ -1960,6 +1961,7 @@ class PokeBattle_AI
         end
         score += 50
         score -= user.hp*100/user.totalhp
+        score += 50 if $shouldHeal
       end
     #---------------------------------------------------------------------------
     when "0D9"
@@ -3031,6 +3033,7 @@ class PokeBattle_AI
           end
         end
         score += (user.totalhp-user.hp)*50/user.totalhp
+        score += 50 if $shouldHeal
       end
     #---------------------------------------------------------------------------
     when "161"
