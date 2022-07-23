@@ -795,13 +795,34 @@ class PokeBattle_AI
 				elsif pkmn.role == :WINCON
 					list.push(i)
 				elsif moveData != nil && moveData.category == 0 && pkmn.role == :PHYSICALWALL
-					weight = 100
+					weight = 70
+					if $targ_move != nil
+						for j in $targ_move.length
+							if $targ_move[j].category == 0
+								weight += 10
+							end
+						end
+					end
 					list.unshift(i)  if pbAIRandom(100)<weight
 				elsif moveData != nil && moveData.category == 1 && pkmn.role == :SPECIALWALL
-					weight = 100
+					weight = 70
+					if $targ_move != nil
+						for j in $targ_move.length
+							if $targ_move[j].category == 1
+								weight += 10
+							end
+						end
+					end
 					list.unshift(i)  if pbAIRandom(100)<weight
 				elsif moveData != nil && moveData.category == 2 && pkmn.role == :STALLBREAKER
-					weight = 100
+					weight = 80
+					if $targ_move != nil
+						for j in $targ_move.length
+							if $targ_move[j].category == 2
+								weight += 10
+							end
+						end
+					end
 					list.unshift(i)  if pbAIRandom(100)<weight
 				elsif pkmn.role == :PIVOT
 					weight = 80
