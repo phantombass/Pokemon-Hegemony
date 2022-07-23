@@ -23,6 +23,7 @@ class PokeBattle_Battler
     @type1 = @type2 = nil
     @ability_id     = nil
     @item_id        = nil
+    @role           = nil
     @gender         = 0
     @attack = @defense = @spatk = @spdef = @speed = 0
     @status         = :NONE
@@ -82,6 +83,7 @@ class PokeBattle_Battler
     @type2         = pkmn.type2
     @ability_id    = pkmn.ability_id
     @item_id       = pkmn.item_id
+    @role          = pkmn.role
     @gender        = pkmn.gender
     @attack        = pkmn.attack
     @defense       = pkmn.defense

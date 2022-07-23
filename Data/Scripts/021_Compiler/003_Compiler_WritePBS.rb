@@ -614,6 +614,7 @@ module Compiler
           f.write(sprintf("    AbilityIndex = %d\r\n", pkmn[:ability_index])) if pkmn[:ability_index]
           f.write(sprintf("    Item = %s\r\n", pkmn[:item])) if pkmn[:item]
           f.write(sprintf("    Nature = %s\r\n", pkmn[:nature])) if pkmn[:nature]
+          f.write(sprintf("    Role = %s\r\n", pkmn[:role])) if pkmn[:role]
           ivs_array = []
           evs_array = []
           GameData::Stat.each_main do |s|

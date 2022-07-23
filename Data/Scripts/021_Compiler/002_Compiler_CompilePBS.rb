@@ -1225,6 +1225,14 @@ module Compiler
             else
               current_pkmn[line_schema[0]] = property_value.to_sym
             end
+          when "Role"
+            if property_value[/^\d+$/]
+              current_pkmn[:role] = property_value.to_i
+            elsif !GameData::Role.exists?(property_value.to_sym)
+              raise _INTL("Value {1} isn't a defined Role.\r\n{2}", property_value, FileLineData.linereport)
+            else
+              current_pkmn[line_schema[0]] = property_value.to_sym
+            end
           when "IV", "EV"
             value_hash = {}
             GameData::Stat.each_main do |s|

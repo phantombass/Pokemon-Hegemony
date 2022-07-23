@@ -17,6 +17,7 @@ class PokeBattle_Battler
   attr_accessor :spatk
   attr_accessor :speed
   attr_accessor :stages
+  attr_accessor :role
   attr_reader   :totalhp
   attr_reader   :fainted    # Boolean to mark whether self has fainted properly
   attr_accessor :captured   # Boolean to mark whether self was captured
@@ -64,6 +65,10 @@ class PokeBattle_Battler
 
   def ability
     return GameData::Ability.try_get(@ability_id)
+  end
+
+  def role
+    return GameData::Role.try_get(@role)
   end
 
   def ability=(value)
