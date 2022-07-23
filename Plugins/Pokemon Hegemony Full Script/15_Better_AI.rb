@@ -489,7 +489,7 @@ class PokeBattle_AI
 								end
 							end
 						else
-							switchChance = false
+							shouldSwitch = false
 						end
 					end
 				end
@@ -558,7 +558,7 @@ class PokeBattle_AI
 								end
 							end
 						else
-							switchChance = false
+							shouldSwitch = false
 						end
 					end
 				end
