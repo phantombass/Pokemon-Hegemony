@@ -223,6 +223,22 @@ class PokeBattle_Battle
   # Actually performs the recalling and sending out in all situations.
   def pbRecallAndReplace(idxBattler,idxParty,randomReplacement=false,batonPass=false)
     @scene.pbRecall(idxBattler) if !@battlers[idxBattler].fainted?
+    if @battlers[idxBattler].fainted? && @battlers[idxBattler].pbOwnedByPlayer?
+      case $target_idx
+      when 0
+        $ai_learned_team[:move1] = nil
+      when 1
+        $ai_learned_team[:move2] = nil
+      when 2
+        $ai_learned_team[:move3] = nil
+      when 3
+        $ai_learned_team[:move4] = nil
+      when 4
+        $ai_learned_team[:move5] = nil
+      when 5
+        $ai_learned_team[:move6] = nil
+      end
+    end
     @battlers[idxBattler].pbAbilitiesOnSwitchOut   # Inc. primordial weather check
     @scene.pbShowPartyLineup(idxBattler&1) if pbSideSize(idxBattler)==1
     pbMessagesOnReplace(idxBattler,idxParty) if !randomReplacement

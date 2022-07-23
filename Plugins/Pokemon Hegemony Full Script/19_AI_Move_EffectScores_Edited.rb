@@ -71,6 +71,7 @@ class PokeBattle_AI
           score += 10 if pbRoughStat(target,:DEFENSE,skill)>100
           score += 10 if pbRoughStat(target,:SPECIAL_DEFENSE,skill)>100
           score -= 40 if target.hasActiveAbility?([:GUTS,:MARVELSCALE,:TOXICBOOST])
+          score += 60 if user.role == :TOXICSTALLER && user.turnCount == 0 && move.statusMove?
         end
       else
         if skill>=PBTrainerAI.mediumSkill
@@ -96,6 +97,7 @@ class PokeBattle_AI
         if skill>=PBTrainerAI.highSkill
           score -= 40 if target.hasActiveAbility?([:GUTS,:MARVELSCALE,:QUICKFEET])
         end
+        score += 50 if user.role == :SPEEDCONTROL
       else
         if skill>=PBTrainerAI.mediumSkill
           score -= 90 if move.statusMove?
@@ -154,7 +156,9 @@ class PokeBattle_AI
     when "012"
       if user.turnCount==0
         if skill>=PBTrainerAI.highSkill && $fakeOut == true
-          score += 30 if !target.hasActiveAbility?(:INNERFOCUS) && !target.hasActiveAbility?(:STEADFAST) && target.effects[PBEffects::Substitute]==0
+          score += 30
+          score += 50 if target.hasActiveAbility?(:GALEWINGS)
+          score += 30 if !target.hasActiveAbility?(:INNERFOCUS) && !target.hasActiveAbility?(:STEADFAST)
           score += 70 if target.status == :POISON
           score += 50 if target.effects[PBEffects::ProtectRate]>1
         end
@@ -374,7 +378,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "024"
-      score += 90 if $shouldBoost
+      score += 50 if $shouldBoost
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:DEFENSE)
         score -= 90
@@ -424,6 +428,7 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "026"
       score += 60 if user.turnCount==0   # Dragon Dance tends to be popular
+      score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:SPEED)
         score -= 90
@@ -448,11 +453,11 @@ class PokeBattle_AI
           ospeed = pbRoughStat(target,:SPEED,skill)
           score += 20 if aspeed<ospeed && aspeed*2>ospeed
         end
-        score += 90 if $shouldBoost || $shouldBoostSpeed
+        score += 50 if $shouldBoost || $shouldBoostSpeed
       end
     #---------------------------------------------------------------------------
     when "027", "028"
-      score += 90 if $shouldBoost
+      score += 50 if $shouldBoost
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:SPECIAL_ATTACK)
         score -= 90
@@ -510,13 +515,14 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "02B"
-      score += 90 if $shouldBoost
+      score += 50 if $shouldBoost
       if user.statStageAtMax?(:SPEED) &&
          user.statStageAtMax?(:SPECIAL_ATTACK) &&
          user.statStageAtMax?(:SPECIAL_DEFENSE)
         score -= 90
       else
         score += 60 if user.turnCount==0
+        score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
         score += 50 if user.effects[PBEffects::Substitute] > 0
         score -= user.stages[:SPECIAL_ATTACK]*10
         score -= user.stages[:SPECIAL_DEFENSE]*10
@@ -544,12 +550,13 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "02C"
-      score += 90 if $shouldBoost
+      score += 50 if $shouldBoost
       if user.statStageAtMax?(:SPECIAL_ATTACK) &&
          user.statStageAtMax?(:SPECIAL_DEFENSE)
         score -= 90
       else
         score += 60 if user.turnCount==0   # Calm Mind tends to be popular
+        score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
         score += 50 if user.effects[PBEffects::Substitute] > 0
         score -= user.stages[:SPECIAL_ATTACK]*10
         score -= user.stages[:SPECIAL_DEFENSE]*10
@@ -587,6 +594,7 @@ class PokeBattle_AI
         else
           score += 60 if user.turnCount==0
           score += 50 if user.effects[PBEffects::Substitute] > 0
+          score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
           score -= user.stages[:ATTACK]*20
           if skill>=PBTrainerAI.mediumSkill
             hasPhysicalAttack = false
@@ -614,7 +622,7 @@ class PokeBattle_AI
           end
           score += 20 if hasPhysicalAttack
         end
-        score += 90 if $shouldBoost
+        score += 50 if $shouldBoost
       end
     #---------------------------------------------------------------------------
     when "02F"
@@ -636,6 +644,7 @@ class PokeBattle_AI
           score -= 90
         else
           score += 20 if user.turnCount==0
+          score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
           score -= user.stages[:SPEED]*10
           if skill>=PBTrainerAI.highSkill
             aspeed = pbRoughStat(user,:SPEED,skill)
@@ -646,16 +655,17 @@ class PokeBattle_AI
       else
         score += 10 if user.turnCount==0
         score += 20 if user.stages[:SPEED]<0
-        score += 90 if $shouldBoostSpeed
+        score += 50 if $shouldBoostSpeed
       end
     #---------------------------------------------------------------------------
     when "032"
-      score += 90 if $shouldBoost
+      score += 50 if $shouldBoost
       if move.statusMove?
         if user.statStageAtMax?(:SPECIAL_ATTACK)
           score -= 90
         else
           score += 60 if user.turnCount==0
+          score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
           score += 50 if user.effects[PBEffects::Substitute] > 0
           score -= user.stages[:SPECIAL_ATTACK]*20
           if skill>=PBTrainerAI.mediumSkill
@@ -729,7 +739,8 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "036"
-      score += 90 if $shouldBoost || $shouldBoostSpeed
+      score += 50 if $shouldBoost || $shouldBoostSpeed
+      score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:SPEED)
         score -= 90
@@ -784,12 +795,13 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "039"
-      score += 90 if $shouldBoost
+      score += 50 if $shouldBoost
       if move.statusMove?
         if user.statStageAtMax?(:SPECIAL_ATTACK)
           score -= 90
         else
           score += 40 if user.turnCount==0
+          score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
           score -= user.stages[:SPECIAL_ATTACK]*30
           if skill>=PBTrainerAI.mediumSkill
             hasSpecicalAttack = false
@@ -820,11 +832,13 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "03A"
+      score += 50 if $shouldBoost
       if user.statStageAtMax?(:ATTACK) ||
          user.hp<=user.totalhp/2
         score -= 100
       else
         score += (6-user.stages[:ATTACK])*10
+        score += 30 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(user.role)
         if skill>=PBTrainerAI.mediumSkill
           hasPhysicalAttack = false
           user.eachMove do |m|
@@ -1018,9 +1032,24 @@ class PokeBattle_AI
                      target.pbOwnSide.effects[PBEffects::LightScreen]>0 ||
                      target.pbOwnSide.effects[PBEffects::Mist]>0 ||
                      target.pbOwnSide.effects[PBEffects::Safeguard]>0
+
+      score += 30 if user.pbOwnSide.effects[PBEffects::Spikes]>0 ||
+                     user.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 ||
+                     user.pbOwnSide.effects[PBEffects::StealthRock] ||
+                     user.pbOwnSide.effects[PBEffects::StickyWeb] ||
+                     user.pbOwnSide.effects[PBEffects::CometShards]
+
+      score += 30 if (user.pbOwnSide.effects[PBEffects::Spikes]>0 ||
+                     user.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 ||
+                     user.pbOwnSide.effects[PBEffects::StealthRock] ||
+                     user.pbOwnSide.effects[PBEffects::StickyWeb] ||
+                     user.pbOwnSide.effects[PBEffects::CometShards]) && user.role == :HAZARDREMOVAL
+
       score -= 30 if target.pbOwnSide.effects[PBEffects::Spikes]>0 ||
                      target.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 ||
-                     target.pbOwnSide.effects[PBEffects::StealthRock]
+                     target.pbOwnSide.effects[PBEffects::StealthRock] ||
+                     target.pbOwnSide.effects[PBEffects::StickyWeb] ||
+                     target.pbOwnSide.effects[PBEffects::CometShards]
     #---------------------------------------------------------------------------
     when "04A"
       avg =  target.stages[:ATTACK]*10
@@ -1735,9 +1764,15 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "0A2"
       score -= 90 if user.pbOwnSide.effects[PBEffects::Reflect]>0
+      if user.pbOwnSide.effects[PBEffects::Reflect]<=0
+        score += 60 if user.role == :SCREENS
+      end
     #---------------------------------------------------------------------------
     when "0A3"
       score -= 90 if user.pbOwnSide.effects[PBEffects::LightScreen]>0
+      if user.pbOwnSide.effects[PBEffects::LightScreen]<=0
+        score += 60 if user.role == :SCREENS
+      end
     #---------------------------------------------------------------------------
     when "0A4"
     #---------------------------------------------------------------------------
@@ -1775,6 +1810,7 @@ class PokeBattle_AI
         score += 95 if user.turnCount==0 && user.hasActiveAbility?(:SPEEDBOOST)
         score += 100 if @battle.positions[user.index].effects[PBEffects::Wish]>0 && user.totalhp < user.totalhp/2
         score += 70 if target.status == :POISON
+        score += 30 if user.role == :TOXICSTALLER && target.status == :POISON
         score += 70 if target.effects[PBEffects::LeechSeed]
         score += 30 if target.effects[PBEffects::TwoTurnAttack]
         score += 90 if user.hasActiveAbility?(:GUTS) && user.status == :NONE && (user.hasActiveItem?(:BURNORB) || user.hasActiveItem?(:TOXICORB))
@@ -1830,15 +1866,12 @@ class PokeBattle_AI
       aspeed = pbRoughStat(user,:SPEED,skill)
       ospeed = pbRoughStat(target,:SPEED,skill)
       if aspeed > ospeed || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK))
-        if !target.lastRegularMoveUsed
-          score -= 90
-        else
-          moveData = GameData::Move.get(target.lastRegularMoveUsed)
-          if moveData.category == 2
-            score += 60
-          else
-            score -= 40
+        if $targ_move != nil
+          for i in $targ_move.length
+            score += 40 if $targ_move[i].category == 2
+            score -= 20 if $targ_move[i].category != 2
           end
+          score += 50 if user.role == :STALLBREAKER && score > 0
         end
       end
     #---------------------------------------------------------------------------
@@ -1937,11 +1970,13 @@ class PokeBattle_AI
         end
         score -= user.hp*100/user.totalhp
         score += 50 if $shouldHeal
+        score += 30 if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(user.role) && user.effects[Effects::ProtectRate]>1 && user.hp <= user.totalhp/2
       end
     #---------------------------------------------------------------------------
     when "0D7"
       score -= 90 if @battle.positions[user.index].effects[PBEffects::Wish]>0
       score += 50 if $shouldHeal
+      score += 30 if [:TOXICSTALLER,:CLERIC,:PHYSICALWALL,:SPECIALWALL].include?(user.role) && user.effects[Effects::ProtectRate]>1
       if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp*0.67
         score += 75
       elsif skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
@@ -1971,6 +2006,8 @@ class PokeBattle_AI
         score += 70
         score -= user.hp*140/user.totalhp
         score += 30 if user.status != :NONE
+        score += 50 if $shouldHeal
+        score += 30 if [:TOXICSTALLER,:CLERIC,:PHYSICALWALL,:SPECIALWALL].include?(user.role)
       end
     #---------------------------------------------------------------------------
     when "0DA"
@@ -1986,6 +2023,7 @@ class PokeBattle_AI
         score -= 90
       else
         score += 60 if user.turnCount==0
+        score += 30 if [:TOXICSTALLER,:CLERIC,:PHYSICALWALL,:SPECIALWALL].include?(user.role)
       end
     #---------------------------------------------------------------------------
     when "0DD"
@@ -2082,7 +2120,11 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "0EA"
-      score -= 100 if @battle.trainerBattle?
+      if @battle.pbSideSize(user.index) > 1
+        score += 50 if user.hasActiveAbility?(:REGENERATOR)
+        score += 30 if $enem_should_switch
+        score += 30 if [:PHYSICALWALL,:SPECIALWALL,:PIVOT].include?(user.role)
+      end
     #---------------------------------------------------------------------------
     when "0EB"
       if target.effects[PBEffects::Ingrain] ||
@@ -2095,6 +2137,7 @@ class PokeBattle_AI
         end
         score -= 90 if ch==0
       end
+      score += 30 if [:PHYSICALWALL,:SPECIALWALL].include?(user.role)
       if score>20
         score += 50 if target.pbOwnSide.effects[PBEffects::Spikes]>0
         score += 50 if target.pbOwnSide.effects[PBEffects::ToxicSpikes]>0
@@ -2122,6 +2165,8 @@ class PokeBattle_AI
         score += 40 if target.pbOwnSide.effects[PBEffects::Spikes]>0
         score += 40 if target.pbOwnSide.effects[PBEffects::ToxicSpikes]>0
         score += 40 if target.pbOwnSide.effects[PBEffects::StealthRock]
+        score += 40 if target.pbOwnSide.effects[PBEffects::CometShards]
+        score += 30 if [:PHYSICALWALL,:SPECIALWALL].include?(user.role)
       end
     #---------------------------------------------------------------------------
     when "0ED"
@@ -2144,6 +2189,7 @@ class PokeBattle_AI
           end
           score += 75 if !hasDamagingMove
         end
+        score += 30 if [:PHYSICALWALL,:SPECIALWALL,:PIVOT].include?(user.role)
       end
     #---------------------------------------------------------------------------
     when "0EE"
@@ -2151,6 +2197,10 @@ class PokeBattle_AI
       ospeed = pbRoughStat(target,:SPEED,skill)
       score +=30 if aspeed>ospeed
       score +=60 if ospeed>aspeed && user.hasActiveItem?(:CHOICESCARF)
+      score += 30 if $enem_should_switch
+      score += 30 if user.hasActiveAbility?(:REGENERATOR)
+      score += 30 if user.hasActiveAbility?(:NATURALCURE)
+      score += 30 if [:PIVOT,:PHYSICALWALL,:SPECIALWALL].include?(user.role)
     #---------------------------------------------------------------------------
     when "0EF"
       score -= 90 if target.effects[PBEffects::MeanLook]>=0
@@ -2316,6 +2366,7 @@ class PokeBattle_AI
       if user.pbOpposingSide.effects[PBEffects::Spikes]>=3 || @battle.pbWeather == :Windy
         score -= 90
       else
+        score += 50 if user.role == :HAZARDLEAD
         canChoose = false
         user.eachOpposing do |b|
           next if !@battle.pbCanChooseNonActive?(b.index)
@@ -2335,6 +2386,7 @@ class PokeBattle_AI
       if user.pbOpposingSide.effects[PBEffects::ToxicSpikes]>=2 || @battle.pbWeather == :Windy
         score -= 90
       else
+        score += 50 if user.role == :HAZARDLEAD
         canChoose = false
         user.eachOpposing do |b|
           next if !@battle.pbCanChooseNonActive?(b.index)
@@ -2354,6 +2406,7 @@ class PokeBattle_AI
       if user.pbOpposingSide.effects[PBEffects::StealthRock] || @battle.pbWeather == :Windy || user.pbOpposingSide.effects[PBEffects::CometShards]
         score -= 90
       else
+        score += 50 if user.role == :HAZARDLEAD
         canChoose = false
         user.eachOpposing do |b|
           next if !@battle.pbCanChooseNonActive?(b.index)
@@ -2395,6 +2448,12 @@ class PokeBattle_AI
         score += 60 if user.turnCount==0 && user.hasActiveAbility?(:SPEEDBOOST)
         score += 90 if user.effects[PBEffects::ProtectRate] > 1 && user.hasActiveAbility?(:SPEEDBOOST)
         score += 70 if target.status == :POISON
+        score += 30 if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:SETUPSWEEPER,:WINCON,:STALLBREAKER].include?(user.role)
+        if $targ_move != nil
+          for i in $targ_move.length
+            score += 30 if $targ_move[i].id == :SUCKERPUNCH
+          end
+        end
         score += 70 if target.effects[PBEffects::LeechSeed]
         score += 70 if user.turnCount==0 && target.hp <= target.totalhp/2
         score += 70 if user.hp>=user.totalhp/2 && target.hp <= target.totalhp/2
@@ -2441,6 +2500,11 @@ class PokeBattle_AI
         score += 80 if user.pbOwnSide.effects[PBEffects::Spikes]>0
         score += 80 if user.pbOwnSide.effects[PBEffects::ToxicSpikes]>0
         score += 80 if user.pbOwnSide.effects[PBEffects::StealthRock]
+        score += 80 if user.pbOwnSide.effects[PBEffects::StickyWeb]
+        score += 80 if user.pbOwnSide.effects[PBEffects::CometShards]
+        if user.pbOwnSide.effects[PBEffects::StealthRock] || user.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || user.pbOwnSide.effects[PBEffects::Spikes]>0 || user.pbOwnSide.effects[PBEffects::StickyWeb] || user.pbOwnSide.effects[PBEffects::CometShards]
+          score += 50 if user.role == :HAZARDREMOVAL
+        end
       end
     #---------------------------------------------------------------------------
     when "111"
@@ -2921,6 +2985,7 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "153"
       score -= 95 if user.pbOpposingSide.effects[PBEffects::StickyWeb] || @battle.pbWeather == :Windy
+      score += 50 if [:SPEEDCONTROL,:HAZARDLEAD].include?(user.role)
     #---------------------------------------------------------------------------
     when "154"
     #---------------------------------------------------------------------------
@@ -3069,7 +3134,11 @@ class PokeBattle_AI
       if user.pbOwnSide.effects[PBEffects::AuroraVeil]>0 || @battle.pbWeather != :Hail
         score -= 90
       else
-        score += 40
+        if user.role == :SCREENS
+          score += 60
+        else
+          score += 40
+        end
       end
     #---------------------------------------------------------------------------
     when "168"
@@ -3204,6 +3273,7 @@ class PokeBattle_AI
     if user.pbOpposingSide.effects[PBEffects::StealthRock] || @battle.pbWeather == :Windy || user.pbOpposingSide.effects[PBEffects::CometShards]
       score -= 100
     else
+      score += 50 if user.role == :HAZARDLEAD
       canChoose = false
       user.eachOpposing do |b|
         next if !@battle.pbCanChooseNonActive?(b.index)

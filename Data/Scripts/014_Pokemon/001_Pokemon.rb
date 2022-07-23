@@ -88,6 +88,7 @@ class Pokemon
   attr_accessor :candies_fed
   # @return [Boolean] whether the Pokemon is a Brilliant Pokemon or no
   attr_accessor :brilliant
+  attr_accessor :role
 
   # Max total IVs
   IV_STAT_LIMIT = 31
@@ -533,6 +534,10 @@ class Pokemon
 
   def nature_id
     return @nature
+  end
+
+  def role
+    return GameData::Role.try_get(@role)
   end
 
   # Sets this Pokémon's nature to a particular nature.
