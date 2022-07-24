@@ -2547,8 +2547,10 @@ class PokeBattle_AI
       score -= 70 if target.hp<=target.totalhp/4   # need to risk this move
     #---------------------------------------------------------------------------
     when "116"
-      for i in $target_moves
-        score += 25 if !i.statusMove?
+      if $targ_move != nil
+        for i in $targ_move
+          score += 25 if !i.statusMove?
+        end
       end
       score += 50 if $shouldPri && score >= 50
     #---------------------------------------------------------------------------
