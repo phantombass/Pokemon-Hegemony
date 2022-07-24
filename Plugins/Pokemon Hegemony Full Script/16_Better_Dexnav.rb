@@ -484,10 +484,15 @@ class NewDexNav
 end
 
 Events.onStartBattle+=proc {|_sender,e|
+  $repel_toggle = false
   if $game_switches[350] == true
     $viewport1.dispose
     $game_switches[350] = false
   end
+}
+
+Events.onEndBattle+=proc {|_sender,e|
+  $repel_toggle = true
 }
 
 Events.onMapChanging +=proc {|_sender,e|
