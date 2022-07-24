@@ -2044,7 +2044,7 @@ BattleHandlers::EORWeatherAbility.add(:ICEBODY,
 
 BattleHandlers::EORWeatherAbility.add(:RAINDISH,
   proc { |ability,weather,battler,battle|
-    next unless [:Rain, :HeavyRain].include?(weather)
+    next unless [:Rain, :HeavyRain, :Storm].include?(weather)
     next if battler.hasUtilityUmbrella?
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
