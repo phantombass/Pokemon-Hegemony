@@ -274,6 +274,7 @@ class PokeBattle_AI
           score += 20 if hasPhysicalAttack
         end
       end
+      score += 50 if $shouldBoost
     #---------------------------------------------------------------------------
     when "01D", "01E", "0C8"
       if move.statusMove?
@@ -336,6 +337,7 @@ class PokeBattle_AI
           score += 20 if hasSpecicalAttack
         end
       end
+      score += 50 if $shouldBoost
     #---------------------------------------------------------------------------
     when "021"
       foundMove = false
@@ -403,6 +405,7 @@ class PokeBattle_AI
       end
     #---------------------------------------------------------------------------
     when "025"
+      score += 50 if $shouldBoost
       if user.statStageAtMax?(:ATTACK) &&
          user.statStageAtMax?(:DEFENSE) &&
          user.statStageAtMax?(:ACCURACY)
@@ -1970,7 +1973,7 @@ class PokeBattle_AI
         end
         score -= user.hp*100/user.totalhp
         score += 50 if $shouldHeal
-        score += 30 if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(user.role) && user.effects[Effects::ProtectRate]>1 && user.hp <= user.totalhp/2
+        score += 30 if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:CLERIC,:WINCON].include?(user.role) && user.effects[Effects::ProtectRate]>1 && user.hp <= user.totalhp/2
       end
     #---------------------------------------------------------------------------
     when "0D7"
