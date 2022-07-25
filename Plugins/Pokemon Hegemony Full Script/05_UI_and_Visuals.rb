@@ -287,6 +287,7 @@ class PokemonPauseMenu
     cmdSave     = -1
     cmdOption   = -1
     cmdPokegear = -1
+    cmdPC = -1
     cmdDexnav = -1
     cmdDebug    = -1
     cmdQuit     = -1
@@ -298,6 +299,7 @@ class PokemonPauseMenu
     commands[cmdBag = commands.length]       = _INTL("Bag") if !pbInBugContest?
     commands[cmdPokegear = commands.length]  = _INTL("Pokégear") if $Trainer.has_pokegear
     commands[cmdDexnav = commands.length]  = _INTL("DexNav") if $game_switches[401]
+    commands[cmdPC = commands.length]  = _INTL("PC Box Link") if $game_switches[209] == false
     commands[cmdQuest = commands.length] = _INTL("Quest Log")
     commands[cmdTrainer = commands.length]   = $Trainer.name
     if pbInSafari?
@@ -391,6 +393,14 @@ class PokemonPauseMenu
           scene = PokemonPokegear_Scene.new
           screen = PokemonPokegearScreen.new(scene)
           screen.pbStartScreen
+          @scene.pbRefresh
+        }
+      elsif cmdPC>=0 && command==cmdPC
+        pbPlayDecisionSE
+        pbFadeOutIn {
+          scene = PokemonStorageScene.new
+          screen = PokemonStorageScreen.new(scene,$PokemonStorage)
+          screen.pbStartScreen(0)
           @scene.pbRefresh
         }
       elsif cmdDexnav>=0 && command==cmdDexnav
@@ -862,6 +872,27 @@ class PokemonSummary_Scene
     end
   end
 
+  def change_Level
+    pkmn = @pokemon
+    if pkmn.egg?
+      pbMessage(_INTL("{1} is an egg.", pkmn.name))
+    else
+      params = ChooseNumberParams.new
+      params.setRange(1, LEVEL_CAP[$game_system.level_cap])
+      params.setDefaultValue(pkmn.level)
+      level = pbMessageChooseNumber(
+         _INTL("Set the Pokémon's level (max. {1}).", params.maxNumber), params) { pbUpdate }
+      if level != pkmn.level
+        pkmn.level = level
+        pkmn.calc_stats
+        dorefresh = true
+      end
+      if dorefresh
+        drawPage(@page)
+      end
+    end
+  end
+
   def drawPage(page)
     if @pokemon.egg?
       drawPageOneEgg
@@ -1210,18 +1241,14 @@ class PokemonSummary_Scene
     cmdGiveItem = -1
     cmdTakeItem = -1
     cmdPokedex  = -1
-    cmdNature = -1
-    cmdStatChange = -1
-    cmdAbility = -1
+    cmdMinGrind = -1
     cmdMark     = -1
     if !@pokemon.egg?
       commands[cmdGiveItem = commands.length] = _INTL("Give item")
       commands[cmdTakeItem = commands.length] = _INTL("Take item") if @pokemon.hasItem?
       commands[cmdPokedex = commands.length]  = _INTL("View Pokédex") if $Trainer.has_pokedex
       if $game_switches[75]
-        commands[cmdNature = commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
-        commands[cmdStatChange = commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
-        commands[cmdAbility = commands.length] = _INTL("Change Ability") if @page == 2 || @page == 3 || @page == 4
+        commands[cmdMinGrind = commands.length] = _INTL("Minimal Grinding Options...") if @page == 2 || @page == 3 || @page == 4
       end
     end
     commands[cmdMark = commands.length]       = _INTL("Mark")
@@ -1247,12 +1274,26 @@ class PokemonSummary_Scene
         screen.pbStartSceneSingle(@pokemon.species)
       }
       dorefresh = true
-    elsif cmdNature>=0 && command==cmdNature
-      change_Nature
-    elsif cmdStatChange>=0 && command==cmdStatChange
-      change_Stats
-    elsif cmdAbility>=0 && command==cmdAbility
-      change_Ability
+    elsif cmdMinGrind>=0 && command==cmdMinGrind
+      min_grind_commands = []
+      cmdLevel = -1
+      cmdNature = -1
+      cmdStatChange = -1
+      cmdAbility = -1
+      min_grind_commands[cmdLevel = min_grind_commands.length] = _INTL("Set Level") if @page == 2 || @page == 3 || @page == 4
+      min_grind_commands[cmdNature = min_grind_commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
+      min_grind_commands[cmdStatChange = min_grind_commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
+      min_grind_commands[cmdAbility = min_grind_commands.length] = _INTL("Change Ability") if @page == 2 || @page == 3 || @page == 4
+      min_command = pbShowCommands(min_grind_commands)
+      if cmdLevel>=0 && min_command==cmdLevel
+        change_Level
+      elsif cmdNature>=0 && min_command==cmdNature
+        change_Nature
+      elsif cmdStatChange>=0 && min_command==cmdStatChange
+        change_Stats
+      elsif cmdAbility>=0 && min_command==cmdAbility
+        change_Ability
+      end
     elsif cmdMark>=0 && command==cmdMark
       dorefresh = pbMarking(@pokemon)
     end
@@ -2221,6 +2262,7 @@ class PokemonPartyScreen
       cmdMoves   = [-1] * pkmn.numMoves
       cmdSwitch  = -1
       cmdEvolve  = -1
+      cmdRelearn = -1
       cmdName    = -1
       cmdMail    = -1
       cmdItem    = -1
@@ -2240,10 +2282,12 @@ class PokemonPartyScreen
       if !pkmn.egg?
         if pkmn.mail
           commands[cmdMail = commands.length]     = _INTL("Mail")
+          commands[cmdRelearn = commands.length]   = _INTL("Relearn Moves") if $game_switches[197] == false
           commands[cmdEvolve = commands.length]   = _INTL("Evolve")
           commands[cmdName = commands.length]     = _INTL("Nickname")
         else
           commands[cmdItem = commands.length]     = _INTL("Item")
+          commands[cmdRelearn = commands.length]   = _INTL("Relearn Moves") if $game_switches[197] == false
           commands[cmdEvolve = commands.length]   = _INTL("Evolve")
           commands[cmdName = commands.length]     = _INTL("Nickname")
         end
@@ -2317,6 +2361,12 @@ class PokemonPartyScreen
         pkmnid = @scene.pbChoosePokemon(true)
         if pkmnid>=0 && pkmnid!=oldpkmnid
           pbSwitch(oldpkmnid,pkmnid)
+        end
+      elsif cmdRelearn>=0 && command==cmdRelearn
+        if pkmn.can_relearn_move?
+          pbRelearnMoveScreen(pkmn)
+        else
+          screen.pbDisplay(_INTL("This Pokémon cannot relearn any moves."))
         end
       elsif cmdEvolve>=0 && command==cmdEvolve
         evoreqs = {}

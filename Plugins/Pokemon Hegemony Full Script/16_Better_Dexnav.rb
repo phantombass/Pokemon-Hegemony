@@ -491,10 +491,6 @@ Events.onStartBattle+=proc {|_sender,e|
   end
 }
 
-Events.onEndBattle+=proc {|_sender,e|
-  $repel_toggle = true
-}
-
 Events.onMapChanging +=proc {|_sender,e|
   if $game_switches[350] == true
     if $currentDexSearch != nil
