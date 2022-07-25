@@ -3282,7 +3282,7 @@ Pokemon = MANECTRIC,95
 	Moves = THUNDER,MAGNETRISE,FLAMETHROWER,SIGNALBEAM
 	Role = WINCON
 #-------------------------------
-[ARMYBOSS,Ahab,6]
+[ARMYBOSS,Ahab,10]
 LoseText = "Hmmph."
 Pokemon = NIHILEGO,95
 	Nature = TIMID
@@ -5361,7 +5361,7 @@ Pokemon = MANECTRIC,95
 	Nature = TIMID
 	Moves = THUNDER,MAGNETRISE,FLAMETHROWER,SIGNALBEAM
 #-------------------------------
-[ARMYBOSS,Ahab,2]
+[ARMYBOSS,Ahab,6]
 LoseText = "Hmmph."
 Pokemon = MIENSHAO,95
 	Nature = JOLLY
@@ -5369,7 +5369,7 @@ Pokemon = MIENSHAO,95
 	EV = 0,252,0,252,0,4
 	IV = 31,31,31,31,31,31
 	Ability = RECKLESS
-	Moves = FAKEOUT,UTURN,HIGHJUMPKICK,KNOCKOFF
+	Moves = POISONJAB,UTURN,HIGHJUMPKICK,KNOCKOFF
 Pokemon = LYCANROC,95
 	Nature = JOLLY
 	Form = 2
@@ -5840,7 +5840,7 @@ Pokemon = MANECTRIC,95
 	Moves = THUNDER,MAGNETRISE,FLAMETHROWER,SIGNALBEAM
 	Role = WINCON
 #-------------------------------
-[ARMYBOSS,Ahab,4]
+[ARMYBOSS,Ahab,8]
 LoseText = "Hmmph."
 Pokemon = MIENSHAO,95
 	Nature = JOLLY
@@ -5848,7 +5848,7 @@ Pokemon = MIENSHAO,95
 	EV = 0,252,0,252,0,4
 	IV = 31,31,31,31,31,31
 	Ability = RECKLESS
-	Moves = FAKEOUT,UTURN,HIGHJUMPKICK,KNOCKOFF
+	Moves = POISONJAB,UTURN,HIGHJUMPKICK,KNOCKOFF
 	Role = PIVOT
 Pokemon = LYCANROC,95
 	Nature = JOLLY
