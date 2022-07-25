@@ -307,10 +307,12 @@ class PokemonLoadScreen
       when cmd_continue
         @scene.pbEndScene
         Game.load(@save_data)
+        $repel_toggle = true
         return
       when cmd_new_game
         @scene.pbEndScene
         Game.start_new
+        $repel_toggle = true
         return
       when cmd_mystery_gift
         pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
