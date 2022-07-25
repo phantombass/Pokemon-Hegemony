@@ -188,8 +188,6 @@ MultipleForms.register(:CUBONE,{
   }
 })
 
-MultipleForms.copy(:CUBONE,:QUILAVA,:CYNDAQUIL)
-
 MultipleForms.register(:PIKACHU,{
   "getForm" => proc { |pkmn|
     next if pkmn.form_simple >= 2
@@ -238,20 +236,8 @@ MultipleForms.register(:MIMEJR,{
 
 MultipleForms.copy(:MIMEJR,:RUFFLET,:BERGMITE)
 
-MultipleForms.register(:OSHAWOTT,{
-  "getForm" => proc { |pkmn|
-    next if pkmn.form_simple >= 2
-    maps = [236,237,238]
-    if $game_map && maps.include?($game_map.map_id)
-      next 1  # Zirco Mountain
-    end
-    next 0
-  }
-})
 
-MultipleForms.copy(:OSHAWOTT,:DEWOTT)
-
-MultipleForms.register(:ROWLET,{
+MultipleForms.register(:PETILIL,{
   "getForm" => proc { |pkmn|
     next if pkmn.form_simple >= 2
     maps = [159,174,175]
@@ -261,5 +247,3 @@ MultipleForms.register(:ROWLET,{
     next 0
   }
 })
-
-MultipleForms.copy(:ROWLET,:DARTRIX,:PETILIL)

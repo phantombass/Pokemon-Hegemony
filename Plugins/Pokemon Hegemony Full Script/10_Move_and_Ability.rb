@@ -4041,7 +4041,7 @@ class PokeBattle_Move_0D8 < PokeBattle_HealingMove
   def pbOnStartUse(user,targets)
     case @battle.pbWeather
     when :Sun, :HarshSun, :Eclipse, :Starstorm
-      if !user.hasUtilityUmbrella
+      if !user.hasUtilityUmbrella?
         @healAmount = (user.totalhp*2/3.0).round
       else
         @healAmount = (user.totalhp/2.0).round
