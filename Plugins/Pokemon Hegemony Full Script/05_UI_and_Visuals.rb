@@ -266,6 +266,7 @@ class PokemonPauseMenu
   def pbShowMenu
     @scene.pbRefresh
     @scene.pbShowMenu
+    @scene.pbShowLevelCap
   end
 
   def pbStartPokemonMenu
@@ -299,7 +300,7 @@ class PokemonPauseMenu
     commands[cmdBag = commands.length]       = _INTL("Bag") if !pbInBugContest?
     commands[cmdPokegear = commands.length]  = _INTL("Pokégear") if $Trainer.has_pokegear
     commands[cmdDexnav = commands.length]  = _INTL("DexNav") if $game_switches[401]
-    commands[cmdPC = commands.length]  = _INTL("PC Box Link") if $game_switches[209] == false
+    commands[cmdPC = commands.length]  = _INTL("PC Box Link") if $Trainer.party_count > 0
     commands[cmdQuest = commands.length] = _INTL("Quest Log")
     commands[cmdTrainer = commands.length]   = $Trainer.name
     if pbInSafari?
@@ -397,12 +398,33 @@ class PokemonPauseMenu
         }
       elsif cmdPC>=0 && command==cmdPC
         pbPlayDecisionSE
-        pbFadeOutIn {
-          scene = PokemonStorageScene.new
-          screen = PokemonStorageScreen.new(scene,$PokemonStorage)
-          screen.pbStartScreen(0)
-          @scene.pbRefresh
-        }
+        @scene.pbHideMenu
+        @scene.pbHideLevelCap
+        pbMessage("Which would you like to do?\\ch[34,4,Access PC,Heal,Cancel]")
+        if $game_variables[34] == 0
+         if $game_switches[209] == true
+           pbMessage(_INTL("You cannot access the PC in here."))
+           pbShowMenu
+         else
+          pbFadeOutIn {
+            scene = PokemonStorageScene.new
+            screen = PokemonStorageScreen.new(scene,$PokemonStorage)
+            screen.pbStartScreen(0)
+            pbShowMenu
+          }
+         end
+        elsif $game_variables[34] == 1
+          if ($game_switches[209] == true && $game_switches[902] == true) || ($game_switches[209] == true && $game_switches[197] == true)
+            pbMessage(_INTL("You cannot use this in here."))
+            pbShowMenu
+          else
+            $Trainer.heal_party
+            pbMessage(_INTL("Your party was healed!"))
+            pbShowMenu
+          end
+        else
+          pbShowMenu
+        end
       elsif cmdDexnav>=0 && command==cmdDexnav
         pbPlayDecisionSE
         $viewport4.dispose

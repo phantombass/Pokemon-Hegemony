@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.3.26"
+  GAME_VERSION = "1.3.27"
 end
 
 def write_version
@@ -629,9 +629,9 @@ end
 class Trainer
   def heal_party
     if $game_switches[73] == true
-      @party.each { |pkmn| pkmn.heal if !pkmn.fainted? }
+      pbEachPokemon { |poke,_box| poke.heal if !poke.fainted?}
     else
-      @party.each { |pkmn| pkmn.heal }
+      pbEachPokemon { |poke,_box| poke.heal if !poke.fainted?}
     end
   end
 end
