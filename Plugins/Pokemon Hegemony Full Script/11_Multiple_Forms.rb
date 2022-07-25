@@ -214,6 +214,17 @@ MultipleForms.register(:KOFFING,{
   }
 })
 
+MultipleForms.register(:GOOMY,{
+  "getForm" => proc { |pkmn|
+    next if pkmn.form_simple >= 2
+    if $game_map
+      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
+      next 1 if map_metadata == 172  # Cobalt Cave
+    end
+    next 0
+  }
+})
+
 MultipleForms.register(:MIMEJR,{
   "getForm" => proc { |pkmn|
     next if pkmn.form_simple >= 2
@@ -224,3 +235,31 @@ MultipleForms.register(:MIMEJR,{
     next 0
   }
 })
+
+MultipleForms.copy(:MIMEJR,:RUFFLET,:BERGMITE)
+
+MultipleForms.register(:OSHAWOTT,{
+  "getForm" => proc { |pkmn|
+    next if pkmn.form_simple >= 2
+    maps = [236,237,238]
+    if $game_map && maps.include?($game_map.map_id)
+      next 1  # Zirco Mountain
+    end
+    next 0
+  }
+})
+
+MultipleForms.copy(:OSHAWOTT,:DEWOTT)
+
+MultipleForms.register(:ROWLET,{
+  "getForm" => proc { |pkmn|
+    next if pkmn.form_simple >= 2
+    maps = [159,174,175]
+    if $game_map && maps.include?($game_map.map_id)
+      next 1  # Route 10, 16, 17
+    end
+    next 0
+  }
+})
+
+MultipleForms.copy(:ROWLET,:DARTRIX,:PETILIL)

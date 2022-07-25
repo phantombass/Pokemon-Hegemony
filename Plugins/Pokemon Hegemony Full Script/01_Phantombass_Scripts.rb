@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.3.25"
+  GAME_VERSION = "1.3.26"
 end
 
 def write_version
@@ -488,6 +488,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
 Events.onEndBattle += proc { |_sender,e|
   $game_switches[89] = false
   $CanToggle = true
+  $repel_toggle = true
   $viewport.dispose
 }
 
@@ -516,6 +517,11 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
+          for i in 197..202
+            $game_switches[i] = false
+          end
+          $game_switches[209] = false
+          $game_switches[899] = false
         elsif $game_map.map_id == 144 || $game_map.map_id == 145
           pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell after losing the Nuzlocke..."))
           pbCancelVehicles
@@ -529,6 +535,11 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
+          for i in 197..202
+            $game_switches[i] = false
+          end
+          $game_switches[209] = false
+          $game_switches[899] = false
         end
       else
         if $game_map.map_id == 144 || $game_map.map_id == 145
@@ -544,6 +555,11 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
+          for i in 197..202
+            $game_switches[i] = false
+          end
+          $game_switches[209] = false
+          $game_switches[899] = false
         else
           pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
           pbCancelVehicles
@@ -558,6 +574,11 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
+          $game_switches[209] = false
+          $game_switches[899] = false
+          for i in 197..202
+            $game_switches[i] = false
+          end
         end
       end
     end
@@ -593,6 +614,11 @@ def pbStartOver(gameover=false)
       $game_map.refresh
       $game_switches[119] = false
       $game_switches[94] = false
+      $game_switches[209] = false
+      $game_switches[899] = false
+      for i in 197..202
+        $game_switches[i] = false
+      end
     else
       $Trainer.heal_party
     end
