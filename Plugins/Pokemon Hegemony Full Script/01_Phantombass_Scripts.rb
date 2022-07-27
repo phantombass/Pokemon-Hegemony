@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.3.34"
+  GAME_VERSION = "1.3.35"
 end
 
 def write_version
