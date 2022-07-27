@@ -315,6 +315,7 @@ class PokeBattle_AI
 		$shouldPri = false
 		$shouldHeal = false
 		$fakeOut = false
+		$canSwitch = true
     shouldSwitch = forceSwitch
     batonPass = -1
 		teleport = -1
@@ -677,27 +678,85 @@ class PokeBattle_AI
 		end
 		@battle.pbParty(idxBattler).each_with_index do |pkmn,i|
 			if !@battle.pbCanSwitch?(idxBattler,i)
+				$canSwitch = false
 				$shouldPri = true if ((battler.hp < battler.totalhp/3) && $has_prio)
 				next if $targ_move == nil
 				for i in $targ_move
 					if pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp && (battler.stages[:ATTACK] > 0 || battler.stages[:SPECIAL_ATTACK] > 0) && $has_prio
 						$shouldPri = true
-					elsif pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp && $has_prio
+					elsif pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp && i.priority > 0
 						$shouldPri = true
-					else
-						$shouldBoost = true
+					elsif pbRoughDamage(i,target,battler,skill,$baseDmg) < battler.hp/2
+						$shouldBoost = true if battler.hp>=battler.totalhp/2
+						if $has_healing
+							healChance = (battler.hp/battler.totalhp)*100
+							if healChance < 67
+								$shouldHeal = healChance <= 50 ? true : pbAIRandom(100)<healChance
+							else
+								$shouldHeal = pbAIRandom(100)>healChance
+							end
+						end
+						$shouldBoost = false if $shouldHeal
 					end
 				end
 			end
 		end
 		if battler.stages[:ATTACK] > 0 || battler.stages[:SPECIAL_ATTACK] > 0
-			$shouldPri = true if $has_prio
-			switchChance = 0 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(battler.role)
-			shouldSwitch = $has_prio == false ? pbAIRandom(100)<switchChance : false
+			$shouldPri = true if $has_prio && (!faster || battler.hp<battler.totalhp/4)
+			switchChance = 0 if [:SPECIALBREAKER,:SETUPSWEEPER].include?(battler.role)
+			if battler.role = :WINCON && $canSwitch
+				if $targ_move != nil
+					for i in $targ_move
+						if pbRoughDamage(i,target,battler,skill,$baseDmg) < battler.hp/2
+							if !faster && battler.hp > battler.hp/2
+								$shouldBoostSpeed = true
+							else
+								for move in battler.moves
+									baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+									$shouldBoost if pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp && !$has_healing
+									if $has_healing
+										healChance = (battler.hp/battler.totalhp)*100
+										if healChance < 67
+											$shouldHeal = healChance <= 50 ? true : pbAIRandom(100)<healChance
+										else
+											$shouldHeal = pbAIRandom(100)>healChance
+										end
+									end
+								end
+							end
+							switchChance = 0
+						end
+						if pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp && !faster
+							for move in battler.moves
+								baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+								ch += 2 if pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp
+								ch -= 2 if pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp
+							end
+							switchChance = i.priority > 0 ? 100 : (92 + ch)
+						end
+					end
+				end
+			shouldSwitch = pbAIRandom(100)<switchChance
 		end
+	end
 		if battler.stages[:SPEED] > 0
-			switchChance = 0 if [:SPECIALBREAKER,:SETUPSWEEPER,:WINCON].include?(battler.role)
-			shouldSwitch = $enem_prio == true ? pbAIRandom(100)<switchChance : false
+			$shouldBoostSpeed = false if faster
+			switchChance = 0 if [:SPECIALBREAKER,:SETUPSWEEPER].include?(battler.role)
+			if battler.role = :WINCON && $canSwitch
+				if $targ_move == nil
+					for i in $targ_move
+						if pbRoughDamage(i,target,battler,skill,$baseDmg) > battler.hp && (!faster)
+							for move in battler.moves
+								baseDmg = pbMoveBaseDamage(move,battler,target,skill)
+								ch += 5 if pbRoughDamage(move,battler,target,skill,baseDmg) < target.hp
+								ch -= 5 if pbRoughDamage(move,battler,target,skill,baseDmg) >= target.hp
+							end
+							switchChance = i.priority > 0 ? 100 : (80 + ch)
+						end
+					end
+				end
+			end
+			shouldSwitch = pbAIRandom(100)<switchChance
 		end
     # Pokémon is Perish Songed and has Baton Pass
     if skill>=PBTrainerAI.highSkill && battler.effects[PBEffects::PerishSong]==1

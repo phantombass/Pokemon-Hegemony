@@ -394,7 +394,8 @@ MultipleForms.register(:KYUREM,{
     next pkmn.form+2 if pkmn.form==1 || pkmn.form==2
   },
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
-    next pkmn.form-2 if pkmn.form>=3   # Fused forms stop glowing
+    next pkmn.form-2 if pkmn.form==3   # Fused forms stop glowing
+    next pkmn.form-2 if pkmn.form==4   # Fused forms stop glowing
   },
   "onSetForm" => proc { |pkmn, form, oldForm|
     case form
