@@ -716,7 +716,7 @@
 #-------------------------------
 698,TM200,TM200,TM200s,4,4000,"A frenetic dance to uplift the fighting spirit. This sharply raises the user's Attack stat.",3,0,0,SWORDSDANCE,
 699,TM201,TM201,TM201s,4,6000,"The user drops onto the target with its full body weight. This may also leave the target with paralysis.",3,0,0,BODYSLAM,
-700,TM202,TM202,TM202s,4,10000,"The target is scorched with an intense blast of fire. This may also leave the target with a burn.",6,0,0,FLAMETHROWER,
+700,TM202,TM202,TM202s,4,10000,"The target is scorched with an intense blast of fire. This may also leave the target with a burn.",3,0,0,FLAMETHROWER,
 701,TM203,TM203,TM203s,4,16000,"The target is blasted by a huge volume of water launched under great pressure.",3,0,0,HYDROPUMP,
 702,TM204,TM204,TM204s,4,10000,"The user attacks everything around it by swamping its surroundings with a giant wave.",3,0,0,SURF,
 703,TM205,TM205,TM205s,4,10000,"The target is struck with an icy-cold beam of energy. This may also leave the target frozen.",3,0,0,ICEBEAM,
