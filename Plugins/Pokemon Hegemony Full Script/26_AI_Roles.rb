@@ -120,3 +120,9 @@ GameData::Role.register({
   :id_number    => 15,
   :name         => _INTL("Screens")
 })
+
+GameData::Role.register({
+  :id           => :NONE,
+  :id_number    => 16,
+  :name         => _INTL("None")
+})
