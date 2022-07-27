@@ -2515,7 +2515,7 @@ class PokeBattle_Battler
     return false if !takesIndirectDamage?
     return false if pbHasType?(:GROUND) || pbHasType?(:ROCK) || pbHasType?(:STEEL)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
-    return false if hasActiveAbility?([:OVERCOAT,:SANDFORCE,:SANDRUSH,:SANDVEIL,:ACCLIMATE])
+    return false if hasActiveAbility?([:OVERCOAT,:SANDFORCE,:SANDRUSH,:SANDVEIL,:ACCLIMATE,:FORECAST])
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
@@ -2523,7 +2523,7 @@ class PokeBattle_Battler
     return false if !takesIndirectDamage?
     return false if pbHasType?(:ICE)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
-    return false if hasActiveAbility?([:OVERCOAT,:ICEBODY,:SNOWCLOAK,:ACCLIMATE])
+    return false if hasActiveAbility?([:OVERCOAT,:ICEBODY,:SNOWCLOAK,:ACCLIMATE,:FORECAST])
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
@@ -2531,7 +2531,7 @@ class PokeBattle_Battler
     return false if !takesIndirectDamage?
     return false if pbHasType?(:POISON) || pbHasType?(:STEEL)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
-    return false if hasActiveAbility?([:OVERCOAT,:ACIDDRAIN,:TOXICRUSH,:ACCLIMATE])
+    return false if hasActiveAbility?([:OVERCOAT,:ACIDDRAIN,:TOXICRUSH,:ACCLIMATE,:FORECAST])
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
@@ -2539,7 +2539,7 @@ class PokeBattle_Battler
     return false if !takesIndirectDamage?
     return false if pbHasType?(:COSMIC)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
-    return false if hasActiveAbility?([:OVERCOAT,:STARSPRINT,:ASTRALCLOAK,:ACCLIMATE])
+    return false if hasActiveAbility?([:OVERCOAT,:STARSPRINT,:ASTRALCLOAK,:ACCLIMATE,:FORECAST])
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end

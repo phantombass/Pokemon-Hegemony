@@ -19,8 +19,30 @@ def hisui_eggs
 end
 
 def random_eggs
-  egg_list = [:SKITTY,:GULPIN,:FLABEBE,:AZURILL,:MAREANIE,:SNEASEL,:TEDDIURSA,:TOXEL,:CUBONE,:DARUMAKA,:MIMEJR,:MEOWTH,:EXEGGCUTE,:PONYTA,:CORSOLA,:FARFETCHD,:GEODUDE,:ROLYCOLY,:SKIDDO,:KLINK,:STANTLER,:PICHU,:MAGBY,:ELEKID,:SMOOCHUM,:HAPPINY,:MUNCHLAX,:POIPOLE,:COSMOG,:PHIONE,:KUBFU,:LARVESTA,:SIZZLIPEDE,:SANDACONDA,:MAGNEMITE,:CARBINK,:AUDINO,:RALTS,:ABRA,:GASTLY,:DROWZEE,:ELGYEM,:BRONZOR,:MUNNA,:IMPIDIMP,:INDEEDEE,:PINCURCHIN,:PYUKUMUKU,:WYNAUT,:SCRAGGY,:SEEL,:HORSEA,:JIGGLYPUFF,:MANKEY,:SEVIPER,
-  :ZANGOOSE,:SNUBBULL,:MAREEP,:GIRAFARIG,:DUNSPARCE,:CHINGLING,:SNORUNT,:SPHEAL,:BUIZEL,:FINNEON,:ARROKUDA,:MORELULL,:FOMANTIS,:INKAY,:COTTONEE]
+  egg_list = [:SKITTY,:GULPIN,:FLABEBE,:AZURILL,:MAREANIE,:SNEASEL,:TEDDIURSA,:TOXEL,:CUBONE,:DARUMAKA,:MIMEJR,:MEOWTH,:PONYTA,:CORSOLA,:FARFETCHD,:GEODUDE,:ROLYCOLY,:SKIDDO,:KLINK,:STANTLER,:PICHU,:MAGBY,:ELEKID,:SMOOCHUM,:HAPPINY,:MUNCHLAX,:POIPOLE,:COSMOG,:PHIONE,:KUBFU,:LARVESTA,:SIZZLIPEDE,:SANDACONDA,:MAGNEMITE,:CARBINK,:AUDINO,:RALTS,:ABRA,:GASTLY,:DROWZEE,:ELGYEM,:BRONZOR,:MUNNA,:IMPIDIMP,:INDEEDEE,:PINCURCHIN,:PYUKUMUKU,:WYNAUT,:SCRAGGY,:SEEL,:HORSEA,:JIGGLYPUFF,:MANKEY,:SEVIPER,
+  :ZANGOOSE,:SNUBBULL,:MAREEP,:GIRAFARIG,:DUNSPARCE,:CHINGLING,:SNORUNT,:SPHEAL,:BUIZEL,:FINNEON,:ARROKUDA,:MORELULL,:FOMANTIS,:INKAY,:COTTONEE,:MISDREAVUS,:MURKROW,:FEEBAS,:GOTHITA,:SOLOSIS,:STUNFISK,:PIKIPEK,:EMOLGA,:PLUSLE,:MINUN,:TOGEDEMARU,:MORPEKO,:VOLBEAT,:ILLUMISE,:ODDISH,:BELLSPROUT,:IGGLYBUFF,:CLEFFA,:PICHU,:STARYU,:GRIMER,:KOFFING,:LAPRAS,:ZUBAT,:NATU,:BONSLY,:WEEDLE,:CATERPIE,:WAILMER,:SHELMET,:KARRABLAST,:SCYTHER,:BARBOACH,:LUVDISC,:DEDENNE,:MINIOR,:CLOBBOPUS,:CRABRAWLER,:KRABBY]
+  return egg_list
+end
+
+def wartime_eggs
+  egg_list = [
+    :GROWLITHE2,
+    :DRIFLOON2,
+    :DREEPY2,
+    :GIBLE2,
+    :CARVANHA2,
+    :TREECKO2,
+    :TORCHIC2,
+    :MUDKIP2
+  ]
+  case $game_variables[7]
+  when 1
+    egg_list.delete(:TREECKO2)
+  when 2
+    egg_list.delete(:TORCHIC2)
+  when 3
+    egg_list.delete(:MUDKIP2)
+  end
   return egg_list
 end
 
@@ -51,9 +73,36 @@ def generate_hisui_egg
   end
 end
 
+def generate_wartime_egg
+  rand = rand(wartime_eggs.length)
+  egg = wartime_eggs[rand]
+  if pbGenerateEgg(egg,_I("Random Hiker"))
+    pbMessage(_INTL("\\me[Egg get]\\PN received an Egg!"))
+    pbCallBub(2,@event_id)
+    pbMessage(_INTL("\\[7fe00000]Take good care of it!"))
+    egg = $Trainer.last_party
+    species = egg.species
+    move = GameData::Species.get(species).egg_moves
+    egg.ability_index = 2
+    egg.form = 1
+    egg.iv[:HP] = 31
+    egg.iv[:DEFENSE] = 31
+    egg.iv[:SPECIAL_DEFENSE] = 31
+    egg.learn_move(move[rand(move.length)])
+    egg.steps_to_hatch = 200
+    egg.calc_stats
+    vTSS(@event_id,"A")
+  else
+    pbCallBub(2,@event_id)
+    pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
+    pbCallBub(2,@event_id)
+    pbMessage(_INTL("\\[7fe00000]Make some space in your party and come back."))
+  end
+end
+
 def generate_random_egg
   rand = rand(random_eggs.length)
-  regionals = [:CUBONE,:DARUMAKA,:MIMEJR,:MEOWTH,:EXEGGCUTE,:PONYTA,:CORSOLA,:FARFETCHD,:GEODUDE]
+  regionals = [:CUBONE,:DARUMAKA,:MEOWTH,:PONYTA,:CORSOLA,:FARFETCHD,:GEODUDE,:STUNFISK,:GRIMER,:KOFFING]
   reg_rand = rand(10)
   egg = random_eggs[rand]
   if pbGenerateEgg(egg,_I("Random Hiker"))

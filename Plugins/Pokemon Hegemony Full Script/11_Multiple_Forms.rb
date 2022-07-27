@@ -177,17 +177,6 @@ class PokeBattle_Battler
   end
 end
 
-MultipleForms.register(:CUBONE,{
-  "getForm" => proc { |pkmn|
-    next if pkmn.form_simple >= 2
-    if $game_map
-      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
-      next 1 if map_metadata == 169  # Haunted Tower
-    end
-    next 0
-  }
-})
-
 MultipleForms.register(:PIKACHU,{
   "getForm" => proc { |pkmn|
     next if pkmn.form_simple >= 2
@@ -201,27 +190,6 @@ MultipleForms.register(:PIKACHU,{
 
 MultipleForms.copy(:PIKACHU,:EXEGGCUTE)
 
-MultipleForms.register(:KOFFING,{
-  "getForm" => proc { |pkmn|
-    next if pkmn.form_simple >= 2
-    if $game_map
-      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
-      next 1 if map_metadata == 188  # Nitro City
-    end
-    next 0
-  }
-})
-
-MultipleForms.register(:GOOMY,{
-  "getForm" => proc { |pkmn|
-    next if pkmn.form_simple >= 2
-    if $game_map
-      map_metadata = GameData::MapMetadata.try_get($game_map.map_id)
-      next 1 if map_metadata == 172  # Cobalt Cave
-    end
-    next 0
-  }
-})
 
 MultipleForms.register(:MIMEJR,{
   "getForm" => proc { |pkmn|
@@ -229,20 +197,6 @@ MultipleForms.register(:MIMEJR,{
     maps = [105,106,107,108,109]
     if $game_map && maps.include?($game_map.map_id)
       next 1  # Mt Nenox
-    end
-    next 0
-  }
-})
-
-MultipleForms.copy(:MIMEJR,:RUFFLET,:BERGMITE)
-
-
-MultipleForms.register(:PETILIL,{
-  "getForm" => proc { |pkmn|
-    next if pkmn.form_simple >= 2
-    maps = [159,174,175]
-    if $game_map && maps.include?($game_map.map_id)
-      next 1  # Route 10, 16, 17
     end
     next 0
   }
