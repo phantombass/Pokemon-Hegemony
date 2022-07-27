@@ -155,7 +155,7 @@ class PokeBattle_Battler
       @effects[PBEffects::PickupItem] = @item_id
       @effects[PBEffects::PickupUse]  = @battle.nextPickupUse
     end
-    setBelched if belch && self.item.is_berry?
+    #setBelched if belch && self.item.is_berry?
     pbRemoveItem
     pbSymbiosis if symbiosis
   end
