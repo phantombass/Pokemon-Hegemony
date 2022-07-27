@@ -2388,7 +2388,7 @@ class PokemonPartyScreen
         if pkmn.can_relearn_move?
           pbRelearnMoveScreen(pkmn)
         else
-          screen.pbDisplay(_INTL("This Pokémon cannot relearn any moves."))
+          pbDisplay(_INTL("This Pokémon cannot relearn any moves."))
         end
       elsif cmdEvolve>=0 && command==cmdEvolve
         evoreqs = {}
