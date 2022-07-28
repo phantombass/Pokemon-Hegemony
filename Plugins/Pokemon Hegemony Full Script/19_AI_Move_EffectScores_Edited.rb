@@ -1977,7 +1977,7 @@ class PokeBattle_AI
         end
         score -= user.hp*100/user.totalhp
         score += 50 if $shouldHeal
-        score += 30 if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:CLERIC,:WINCON].include?($role_id) && user.effects[Effects::ProtectRate]>1 && user.hp <= user.totalhp/2
+        score += 30 if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:CLERIC,:WINCON].include?($role_id) && user.hp <= user.totalhp/2
       end
     #---------------------------------------------------------------------------
     when "0D7"
