@@ -323,6 +323,8 @@ class PokeBattle_AI
     skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill_level || 0
     battler = @battle.battlers[idxBattler]
 		target = battler.pbDirectOpposing(true)
+		role = battler.role
+		$role = role.id
 		$opposing = []
 		for i in @battle.battlers
 			if i != battler
@@ -667,7 +669,7 @@ class PokeBattle_AI
 		if battler.effects[PBEffects::Substitute] > 0
 			shouldSwitch = false
 		end
-		if battler.role == (:WINCON||:SETUPSWEEPER) && $enem_prio == false
+		if [:WINCON,:SETUPSWEEPER,:NONE].include?($role) && $enem_prio == false
 			shouldSwitch = false
 			if battler.stages[:ATTACK] <= 0 || battler.stages[:SPECIAL_ATTACK] <= 0
 				$shouldBoost = true
@@ -703,8 +705,8 @@ class PokeBattle_AI
 		end
 		if battler.stages[:ATTACK] > 0 || battler.stages[:SPECIAL_ATTACK] > 0
 			$shouldPri = true if $has_prio && (!faster || battler.hp<battler.totalhp/4)
-			switchChance = 0 if battler.role == (:SETUPSWEEPER||:SPECIALBREAKER||:PHYSICALBREAKER)
-			if battler.role = :WINCON && $canSwitch
+			switchChance = 0 if [:SETUPSWEEPER,:SPECIALBREAKER,:PHYSICALBREAKER,:NONE].include?($role)
+			if $role == :WINCON && $canSwitch
 				if $targ_move != nil
 					for i in $targ_move
 						if pbRoughDamage(i,target,battler,skill,$baseDmg) < battler.hp/2
@@ -741,8 +743,8 @@ class PokeBattle_AI
 	end
 		if battler.stages[:SPEED] > 0
 			$shouldBoostSpeed = false if faster
-			switchChance = 0 if battler.role == (:SETUPSWEEPER||:SPECIALBREAKER||:PHYSICALBREAKER)
-			if battler.role = :WINCON && $canSwitch
+			switchChance = 0 if [:SETUPSWEEPER,:SPECIALBREAKER,:PHYSICALBREAKER,:NONE].include?($role)
+			if $role == :WINCON && $canSwitch
 				if $targ_move == nil
 					for i in $targ_move
 						if pbRoughDamage(i,target,battler,skill,$baseDmg) > battler.hp && (!faster)
@@ -851,9 +853,9 @@ class PokeBattle_AI
           list.unshift(i) if pbAIRandom(100)<weight   # Put this Pokemon first
 				elsif moveType>=0 && Effectiveness.super_effective?(pbCalcTypeMod(moveType,battler,battler))
 					list.push(i)
-				elsif pkmn.role == :WINCON
+				elsif $role == :WINCON
 					list.push(i)
-				elsif moveData != nil && moveData.category == 0 && pkmn.role == :PHYSICALWALL
+				elsif moveData != nil && moveData.category == 0 && $role == :PHYSICALWALL
 					weight = 70
 					if $targ_move != nil
 						for j in $targ_move.length
@@ -863,7 +865,7 @@ class PokeBattle_AI
 						end
 					end
 					list.unshift(i)  if pbAIRandom(100)<weight
-				elsif moveData != nil && moveData.category == 1 && pkmn.role == :SPECIALWALL
+				elsif moveData != nil && moveData.category == 1 && $role == :SPECIALWALL
 					weight = 70
 					if $targ_move != nil
 						for j in $targ_move.length
@@ -873,7 +875,7 @@ class PokeBattle_AI
 						end
 					end
 					list.unshift(i)  if pbAIRandom(100)<weight
-				elsif moveData != nil && moveData.category == 2 && pkmn.role == :STALLBREAKER
+				elsif moveData != nil && moveData.category == 2 && $role == :STALLBREAKER
 					weight = 80
 					if $targ_move != nil
 						for j in $targ_move.length
@@ -883,7 +885,7 @@ class PokeBattle_AI
 						end
 					end
 					list.unshift(i)  if pbAIRandom(100)<weight
-				elsif pkmn.role == :PIVOT
+				elsif $role == :PIVOT
 					weight = 80
 					list.unshift(i)  if pbAIRandom(100)<weight
         elsif moveType>=0 && Effectiveness.resistant?(pbCalcTypeMod(moveType,battler,battler))

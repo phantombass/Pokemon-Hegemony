@@ -537,7 +537,14 @@ class Pokemon
   end
 
   def role
+    @role = :NONE if (@role == "" || @role == nil)
     return GameData::Role.try_get(@role)
+  end
+
+  def role=(value)
+    return if value && !GameData::Role.exists?(value)
+    @role = :NONE if !value
+    @role = (value) ? GameData::Role.get(value).id : value
   end
 
   # Sets this Pokémon's nature to a particular nature.
