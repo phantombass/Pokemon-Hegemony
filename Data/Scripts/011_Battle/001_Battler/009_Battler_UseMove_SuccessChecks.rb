@@ -123,8 +123,7 @@ class PokeBattle_Battler
     return true if !@battle.pbOwnedByPlayer?(@index)
     disobedient = false
     # Pokémon may be disobedient; calculate if it is
-    badgeLevel = 10 * (@battle.pbPlayer.badge_count + 1)
-    badgeLevel = GameData::GrowthRate.max_level if @battle.pbPlayer.badge_count >= 8
+    badgeLevel = LEVEL_CAP[$game_system.level_cap]
     if @pokemon.foreign?(@battle.pbPlayer) && @level>badgeLevel
       a = ((@level+badgeLevel)*@battle.pbRandom(256)/256).floor
       disobedient |= (a>=badgeLevel)
@@ -243,7 +242,7 @@ class PokeBattle_Battler
     # Truant
     if hasActiveAbility?(:TRUANT)
       @effects[PBEffects::Truant] = !@effects[PBEffects::Truant]
-      if !@effects[PBEffects::Truant]   # True means loafing, but was just inverted
+      if !@effects[PBEffects::Truant] && !move.statusMove?   # True means loafing, but was just inverted
         @battle.pbShowAbilitySplash(self)
         @battle.pbDisplay(_INTL("{1} is loafing around!",pbThis))
         @lastMoveFailed = true

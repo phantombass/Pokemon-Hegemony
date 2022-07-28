@@ -68,7 +68,13 @@ class PokeBattle_Battler
   end
 
   def role
+    @role = :NONE if (@role == "" || @role == nil)
     return GameData::Role.try_get(@role)
+  end
+
+  def role=(value)
+    new_role = GameData::Role.try_get(value)
+    @role = (new_role) ? new_role.id : nil
   end
 
   def ability=(value)
