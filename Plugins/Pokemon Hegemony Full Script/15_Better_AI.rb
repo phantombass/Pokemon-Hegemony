@@ -667,7 +667,7 @@ class PokeBattle_AI
 		if battler.effects[PBEffects::Substitute] > 0
 			shouldSwitch = false
 		end
-		if [:SETUPSWEEPER,:WINCON].include?(battler.role) && $enem_prio == false
+		if battler.role == (:WINCON||:SETUPSWEEPER) && $enem_prio == false
 			shouldSwitch = false
 			if battler.stages[:ATTACK] <= 0 || battler.stages[:SPECIAL_ATTACK] <= 0
 				$shouldBoost = true
@@ -703,7 +703,7 @@ class PokeBattle_AI
 		end
 		if battler.stages[:ATTACK] > 0 || battler.stages[:SPECIAL_ATTACK] > 0
 			$shouldPri = true if $has_prio && (!faster || battler.hp<battler.totalhp/4)
-			switchChance = 0 if [:SPECIALBREAKER,:SETUPSWEEPER].include?(battler.role)
+			switchChance = 0 if battler.role == (:SETUPSWEEPER||:SPECIALBREAKER||:PHYSICALBREAKER)
 			if battler.role = :WINCON && $canSwitch
 				if $targ_move != nil
 					for i in $targ_move
@@ -741,7 +741,7 @@ class PokeBattle_AI
 	end
 		if battler.stages[:SPEED] > 0
 			$shouldBoostSpeed = false if faster
-			switchChance = 0 if [:SPECIALBREAKER,:SETUPSWEEPER].include?(battler.role)
+			switchChance = 0 if battler.role == (:SETUPSWEEPER||:SPECIALBREAKER||:PHYSICALBREAKER)
 			if battler.role = :WINCON && $canSwitch
 				if $targ_move == nil
 					for i in $targ_move

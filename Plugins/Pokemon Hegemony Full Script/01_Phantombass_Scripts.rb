@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.4.1"
+  GAME_VERSION = "1.4.2"
 end
 
 def write_version
@@ -631,7 +631,7 @@ class Trainer
     if $game_switches[73] == true
       pbEachPokemon { |poke,_box| poke.heal if !poke.fainted?}
     else
-      pbEachPokemon { |poke,_box| poke.heal if !poke.fainted?}
+      pbEachPokemon { |poke,_box| poke.heal}
     end
   end
 end
