@@ -57,39 +57,50 @@ Pokemon = SURSKIT,9
 LoseText = "You're great!"
 Pokemon = ROSELIA,12
 	Moves = MEGADRAIN,SLUDGE,LEECHSEED,TOXICSPIKES
+	Role = HAZARDLEAD
 Pokemon = MARILL,12
 	Ability = HUGEPOWER
 	Moves = AQUAJET,COVET,KNOCKOFF,PROTECT
+	Role = PHYSICALBREAKER
 Pokemon = TORCHIC,13
 	Ability = SPEEDBOOST
+	Item = BERRYJUICE
 	Moves = FEATHERDART,AERIALACE,PROTECT,SUBSTITUTE
+	Role = WINCON
 #-------------------------------
 [LASS,Sheena]
 LoseText = "You're great!"
 Pokemon = SHINX,12
 	Ability = INTIMIDATE
 	Moves = SPARK,VOLTSWITCH,BITE,ICEFANG
+	Role = PHYSICALBREAKER
 Pokemon = FLABEBE,12
 	Ability = ADAPTABILITY
 	Moves = WISH,FAIRYWIND,PROTECT,MAGICALLEAF
+	Role = CLERIC
 Pokemon = ROGGENROLA,12
 	Ability = STURDY
 	Moves = ROCKTHROW,STEALTHROCK,HEADBUTT,BULLDOZE
+	Role = PIVOT
 Pokemon = TIMBURR,13
 	Ability = GUTS
 	Moves = MACHPUNCH,ROCKTHROW,PROTECT,KNOCKOFF
+	Role = WINCON
 #-------------------------------
 [BUGCATCHER,Casey]
 LoseText = "You're great!"
 Pokemon = SHELMET,13
 	Ability = SHELLARMOR
 	Moves = TOXICSPIKES,RECOVER,STRUGGLEBUG,MEGADRAIN
+	Role = HAZARDLEAD
 Pokemon = DOTTLER,14
 	Ability = MAGICGUARD
-	Moves = REFLECT,LIGHTSCREEN,RECOVER,CONFUSION
+	Moves = REFLECT,LIGHTSCREEN,RECOVER,STELLARWIND
+	Role = SCREENS
 Pokemon = KRICKETUNE,15
 	Ability = TECHNICIAN
 	Moves = FURYCUTTER,KNOCKOFF,FELLSTINGER,ROCKTOMB
+	Role = WINCON
 #-------------------------------
 # Helum Gym
 #-------------------------------
@@ -126,11 +137,14 @@ Pokemon = VOLTORB,19
 	Form = 1
 	Ability = COMPOSURE
 	Moves = ECHOEDVOICE,VOLTSWITCH,MEGADRAIN,SHOCKWAVE
+	Role = SPECIALBREAKER
 Pokemon = ARCHEN,19
 	Moves = UTURN,ROCKTHROW,PLUCK,ROOST
+	Role = PHYSICALBREAKER
 Pokemon = QWILFISH,19
 	Ability = INTIMIDATE
 	Moves = FLIPTURN,POISONTAIL,AQUAJET,PINMISSILE
+	Role = PIVOT
 #-------------------------------
 # Nenox Canyon
 #-------------------------------
@@ -149,14 +163,18 @@ Pokemon = ONIX,19
 	Item = BERRYJUICE
 	Ability = STURDY
 	Moves = BULLDOZE,ROCKTHROW,GLARE,DRAGONBREATH
+	Role = SPEEDCONTROL
 Pokemon = CRANIDOS,19
 	Item = BERRYJUICE
 	Ability = SHEERFORCE
 	Moves = BITE,ROCKTOMB,FIREPUNCH,BULLDOZE
+	Role = PHYSICALBREAKER
 Pokemon = GROWLITHE,19
 	Form = 1
+	Item = MUSCLEBAND
 	Ability = INTIMIDATE
 	Moves = FLAMECHARGE,ACCELEROCK,BITE,MORNINGSUN
+	Role = WINCON
 #-------------------------------
 [HIKER,Rob]
 LoseText = "Wow, awesome!"
@@ -187,13 +205,15 @@ Pokemon = GRAVELER,24
 [FISHERMAN,Sherman]
 LoseText = "Sigh..."
 Pokemon = BASCULIN,25
-	Form = 1
+	Form = 2
 	Ability = ADAPTABILITY
 	Moves = AQUAJET,CRUNCH,PSYCHICFANGS,FLIPTURN
+	Role = PHYSICALBREAKER
 Pokemon = GYARADOS,25
 	Item = LEFTOVERS
 	Ability = INTIMIDATE
 	Moves = WATERFALL,ICEFANG,BULLDOZE,SUBSTITUTE
+	Role = WINCON
 #-------------------------------
 [BUGCATCHER,Sheldon]
 LoseText = "What?!"
@@ -201,14 +221,17 @@ Pokemon = ESCAVALIER,24
 	Ability = OVERCOAT
 	Item = ASSAULTVEST
 	Moves = SPIKECANNON,LUNGE,KNOCKOFF,DRILLRUN
+	Role = PHYSICALBREAKER
 Pokemon = MASQUERAIN,24
 	Ability = INTIMIDATE
 	Item = FOCUSSASH
 	Moves = BUBBLEBEAM,BUGBUZZ,QUIVERDANCE,GIGADRAIN
+	Role = SETUPSWEEPER
 Pokemon = HERACROSS,24
 	Item = FLAMEORB
 	Ability = GUTS
-	Moves = PROTECT,KNOCKOFF,LUNGE,BRICKBREAK
+	Moves = PROTECT,FACADE,LUNGE,BRICKBREAK
+	Role = WINCON
 #-------------------------------
 # Mt. Nenox
 #-------------------------------
@@ -223,7 +246,7 @@ Pokemon = RATICATE,25
 	Moves = QUICKATTACK,HYPERFANG,CRUNCH,SWORDSDANCE
 Pokemon = FLETCHINDER,25
 	Ability = GALEWINGS
-	Item = FLYINGGEM
+	Item = SITRUSBERRY
 	Moves = ACROBATICS,ROOST,FLAMECHARGE,BULKUP
 #-------------------------------
 [SCIENTIST,Grunt,1]
@@ -232,20 +255,26 @@ Pokemon = GABITE,25
 	Ability = ROUGHSKIN
 	Item = SAFETYGOGGLES
 	Moves = DRAGONCLAW,BULLDOZE,FIREFANG,STEALTHROCK
+	Role = HAZARDLEAD
 Pokemon = PILOSWINE,25
 	Ability = THICKFAT
 	Moves = ICICLECRASH,ICESHARD,BULLDOZE,ROCKTOMB
+	Item = EVIOLITE
+	Role = PIVOT
 Pokemon = SANDSLASH,25
 	Form = 1
 	Ability = SLUSHRUSH
 	Moves = ICICLECRASH,SWORDSDANCE,BULLDOZE,IRONHEAD
+	Item = TARFRUBERRY
+	Role = WINCON
 #-------------------------------
 [SCIENTIST,Grunt,2]
 LoseText = "Oh you are good."
 Pokemon = HERACROSS,26
 	Ability = GUTS
 	Item = HERACRONITE
-	Moves = PINMISSILE,KNOCKOFF,ROCKBLAST,BULLETSEED
+	Moves = PINMISSILE,SWORDSDANCE,ROCKBLAST,BULLETSEED
+	Role = WINCON	
 #-------------------------------
 # Ogan Gym
 #-------------------------------
@@ -293,10 +322,12 @@ LoseText = "Hmmph"
 Pokemon = CHIMECHO,28
 	Ability = PRANKSTER
 	Moves = THUNDERWAVE,RECOVER,AURORABEAM,EXTRASENSORY
+	Role = SPEEDCONTROL
 Pokemon = CHATOT,30
 	Item = CHATOTITE
 	Ability = PUNKROCK
 	Moves = HYPERVOICE,WICKEDWIND,ROOST,CHATTER
+	Role = WINCON
 #-------------------------------
 [CUEBALL,Booli]
 LoseText = "Ugh. That fell apart."
@@ -326,8 +357,10 @@ Pokemon = SOLROCK,32
 LoseText = "You're great!"
 Pokemon = GOTHORITA,30
 	Moves = AURORABEAM,PSYSHOCK,DARKPULSE,COSMICPOWER
+	Role = SETUPSWEEPER
 Pokemon = CLEFABLE,30
 	Moves = MOONBLAST,AURORABEAM,SOFTBOILED,CALMMIND
+	Role = WINCON
 #-------------------------------
 # Route 5
 #-------------------------------
@@ -336,30 +369,36 @@ LoseText = "Wow, awesome!"
 Pokemon = BELLOSSOM,46
 	Ability = UNSHAKEN
 	Moves = LEAFSTORM,GIGADRAIN,MOONBLAST,QUIVERDANCE
+	Role = SETUPSWEEPER
 Pokemon = GARDEVOIR,46
 	Item = GARDEVOIRITE
 	Ability = TRACE
 	Moves = HYPERVOICE,PSYSHOCK,MYSTICALFIRE,WISH
+	Role = WINCON
 #-------------------------------
 [LADY,Mary]
 LoseText = "Wow, awesome!"
 Pokemon = CLEFABLE,46
 	Ability = MAGICGUARD
 	Moves = MOONBLAST,COMETSHARDS,SOFTBOILED,FLAMETHROWER
+	Role = HAZARDLEAD
 Pokemon = ALTARIA,46
 	Item = ALTARIANITE
 	Ability = CLOUDNINE
 	Moves = HYPERVOICE,FLAMETHROWER,ROOST,COTTONGUARD
+	Role = WINCON
 #-------------------------------
 [LADY,Sybil]
 LoseText = "Wow, awesome!"
 Pokemon = TOGEKISS,46
 	Ability = SERENEGRACE
 	Moves = MOONBLAST,AIRSLASH,SOFTBOILED,FLAMETHROWER
+	Role = SPECIALBREAKER
 Pokemon = MAWILE,46
 	Item = MAWILITE
 	Ability = INTIMIDATE
 	Moves = PLAYROUGH,KNOCKOFF,IRONHEAD,SUCKERPUNCH
+	Role = WINCON
 #-------------------------------
 # Route 7
 #-------------------------------
@@ -403,10 +442,12 @@ Pokemon = HIPPOWDON,54
 	Ability = SANDSTREAM
 	Item = LEFTOVERS
 	Moves = EARTHQUAKE,STEALTHROCK,WHIRLWIND,SLACKOFF
+	Role = HAZARDLEAD
 Pokemon = EXCADRILL,54
 	Ability = SANDRUSH
 	Item = AIRBALLOON
 	Moves = EARTHQUAKE,ROCKSLIDE,IRONHEAD,SWORDSDANCE
+	Role = WINCON
 #-------------------------------
 [RUINMANIAC,Carl]
 LoseText = "Hmm."
@@ -449,10 +490,12 @@ Pokemon = ARCANINE2,56
 	Ability = MINDGAMES
 	Item = LEFTOVERS
 	Moves = FLIPTURN,ICEFANG,CRUNCH,AQUAJET
+	Role = PIVOT
 Pokemon = GALLADE,57
 	Item = GALLADITE
-	Ability = STEADFAST
+	Ability = JUSTIFIED
 	Moves = PSYCHOCUT,KNOCKOFF,DRAINPUNCH,BULKUP
+	Role = WINCON
 #-------------------------------
 # Krypto Gym
 #-------------------------------
@@ -487,17 +530,20 @@ Pokemon = TOXICROAK,60
 	Item = BLACKSLUDGE
 	Nature = JOLLY
 	Moves = POISONJAB,DRAINPUNCH,ICEPUNCH,BULKUP
+	Role = PHYSICALBREAKER
 Pokemon = SCRAFTY,60
 	Ability = INTIMIDATE
 	Item = ASSAULTVEST
 	Nature = ADAMANT
 	Moves = FAKEOUT,DRAINPUNCH,KNOCKOFF,ICEPUNCH
+	Role = PIVOT
 Pokemon = LILLIGANT,60
 	Form = 1
 	Ability = HUSTLE
 	Item = WIDELENS
 	Nature = ADAMANT
 	Moves = VICTORYDANCE,DRAINPUNCH,LEAFBLADE,KNOCKOFF
+	Role = WINCON
 #-------------------------------
 [SWIMMER2_F,Anna]
 LoseText = "Oh not cool."
@@ -542,16 +588,19 @@ Pokemon = GLISCOR,60
 	Item = TOXICORB
 	Nature = JOLLY
 	Moves = PROTECT,FLING,ACROBATICS,EARTHQUAKE
+	Role = PIVOT
 Pokemon = GYARADOS,60
 	Ability = INTIMIDATE
 	Item = WACANBERRY
 	Nature = JOLLY
 	Moves = DRAGONDANCE,LIQUIDATION,ICEFANG,EARTHQUAKE
+	Role = SETUPSWEEPER
 Pokemon = CHATOT,60
 	Ability = PUNKROCK
 	Item = CHATOTITE
 	Nature = TIMID
 	Moves = BOOMBURST,SPECTRALSHRIEK,ROOST,CHATTER
+	Role = WINCON
 #-------------------------------
 # Route 10
 #-------------------------------
@@ -562,11 +611,13 @@ Pokemon = SKARMORY,66
 	Nature = CAREFUL
 	Item = LEFTOVERS
 	Moves = DRILLPECK,ROOST,STEALTHROCK,WHIRLWIND
+	Role = HAZARDLEAD
 Pokemon = RHYPERIOR,67
 	Item = PASSHOBERRY
 	Nature = ADAMANT
 	Ability = SOLIDROCK
 	Moves = ROCKPOLISH,SWORDSDANCE,EARTHQUAKE,RUBBLERAZE
+	Role = WINCON
 #-------------------------------
 [HIKER,Chester]
 LoseText = "It really freaks me out!"
@@ -588,10 +639,11 @@ Pokemon = LYCANROC,67
 [HIKER,Quenton]
 LoseText = "Please tell me I healed in Chloros..."
 Pokemon = QUAGSIRE,68
-	Ability = WATERABSORB
+	Ability = UNAWARE
 	Nature = SASSY
 	Item = RINDOBERRY
 	Moves = CURSE,AMNESIA,RECOVER,WATERFALL
+	Role = WINCON
 #-------------------------------
 # Chloros Gym
 #-------------------------------
@@ -643,6 +695,7 @@ Pokemon = TOXAPEX,69
 	EV = 252,0,4,0,0,252
 	IV = 31,31,31,31,31,31
 	Moves = TOXICSPIKES,RECOVER,LIQUIDATION,KNOCKOFF
+	Role = HAZARDLEAD
 Pokemon = PELIPPER,69
 	Item = WEATHERROCK
 	Ability = DRIZZLE
@@ -650,6 +703,7 @@ Pokemon = PELIPPER,69
 	EV = 252,0,252,4,0,0
 	IV = 31,0,31,31,31,31
 	Moves = SURF,ROOST,UTURN,HURRICANE
+	Role = PIVOT
 Pokemon = SHARPEDO,69
 	Item = SHARPEDONITE
 	Ability = SPEEDBOOST
@@ -657,6 +711,7 @@ Pokemon = SHARPEDO,69
 	EV = 0,252,4,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = AQUAJET,FISHIOUSREND,CRUNCH,ICEFANG
+	Role = WINCON
 #-------------------------------
 [FISHERMAN,Dexter]
 LoseText = "Oh my..."
@@ -667,6 +722,7 @@ Pokemon = TENTACRUEL,69
 	EV = 252,0,0,252,4,0
 	IV = 31,31,31,31,31,31
 	Moves = TOXICSPIKES,KNOCKOFF,SURF,VENOSHOCK
+	Role = HAZARDLEAD
 Pokemon = WAILORD,69
 	Item = CHOICESPECS
 	Ability = DRIZZLE
@@ -674,6 +730,7 @@ Pokemon = WAILORD,69
 	EV = 252,0,4,0,252,0
 	IV = 31,0,31,31,31,31
 	Moves = SURF,WATERSPOUT,ICEBEAM,HYPERVOICE
+	Role = SPECIALBREAKER
 Pokemon = GYARADOS,69
 	Item = GYARADOSITE
 	Ability = INTIMIDATE
@@ -681,6 +738,7 @@ Pokemon = GYARADOS,69
 	EV = 252,68,0,188,0,0
 	IV = 31,31,31,31,31,31
 	Moves = WATERFALL,CRUNCH,SUBSTITUTE,DRAGONDANCE
+	Role = WINCON
 #-------------------------------
 # Route 12
 #-------------------------------
@@ -693,6 +751,7 @@ Pokemon = CROBAT,76
 	EV = 252,0,4,252,0,0
 	IV = 31,0,31,31,31,31
 	Moves = NASTYPLOT,SLUDGEBOMB,GIGADRAIN,WINDDRILL
+	Role = SPECIALBREAKER
 Pokemon = DARMANITAN,76
 	Nature = JOLLY
 	Ability = SHEERFORCE
@@ -700,6 +759,7 @@ Pokemon = DARMANITAN,76
 	EV = 0,252,4,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = FIREPUNCH,ROCKSLIDE,EARTHQUAKE,UTURN
+	Role = PHYSICALBREAKER
 Pokemon = INTELEON,77
 	Nature = MODEST
 	Item = INTELEONITE
@@ -707,6 +767,7 @@ Pokemon = INTELEON,77
 	EV = 0,0,4,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = SNIPESHOT,ICEBEAM,STARBEAM,SUCKERPUNCH
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_M,Stefan]
 LoseText = "Oh wow."
@@ -717,6 +778,7 @@ Pokemon = TOXTRICITY,76
 	EV = 252,0,4,252,0,0
 	IV = 31,0,31,31,31,31
 	Moves = DEATHTOLL,BOOMBURST,OVERDRIVE,VOLTSWITCH
+	Role = SPECIALBREAKER
 Pokemon = MANDIBUZZ,76
 	Nature = CAREFUL
 	Ability = OVERCOAT
@@ -724,12 +786,14 @@ Pokemon = MANDIBUZZ,76
 	EV = 252,0,0,20,0,236
 	IV = 31,31,31,31,31,31
 	Moves = FOULPLAY,ROOST,UTURN,DEFOG
+	Role = PIVOT
 Pokemon = CHARIZARD,77
 	Nature = JOLLY
 	Item = CHARIZARDITEX
 	EV = 216,40,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = DRAGONDANCE,ROOST,FIREPUNCH,DRAGONCLAW
+	Role = WINCON
 #-------------------------------
 # Route 13
 #-------------------------------
@@ -752,6 +816,7 @@ Pokemon = MAROWAK,76
 	EV = 252,252,4,0,0,0
 	IV = 31,31,31,31,31,31
 	Moves = SHADOWBONE,BONEMERANG,FLAREBLITZ,STEALTHROCK
+	Role = HAZARDLEAD
 Pokemon = STARMIE,76
 	Nature = TIMID
 	Ability = REGENERATOR
@@ -759,12 +824,14 @@ Pokemon = STARMIE,76
 	EV = 0,0,4,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = SURF,STARBEAM,ICEBEAM,RECOVER
+	Role = SPECIALBREAKER
 Pokemon = GARCHOMP,77
 	Nature = JOLLY
 	Item = GARCHOMPITE
 	EV = 4,252,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = SWORDSDANCE,SCALESHOT,EARTHQUAKE,FIREFANG
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_F,Sarah]
 LoseText = "Oh wow."
@@ -775,6 +842,7 @@ Pokemon = BISHARP,76
 	EV = 4,252,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = SUCKERPUNCH,IRONHEAD,KNOCKOFF,SWORDSDANCE
+	Role = PHYSICALBREAKER
 Pokemon = GYARADOS,76
 	Nature = JOLLY
 	Ability = INTIMIDATE
@@ -782,6 +850,7 @@ Pokemon = GYARADOS,76
 	EV = 0,252,4,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = DRAGONDANCE,WATERFALL,EARTHQUAKE,ICEFANG
+	Role = SETUPSWEEPER
 Pokemon = GARDEVOIR,77
 	Nature = TIMID
 	Item = GARDEVOIRITE
@@ -789,6 +858,7 @@ Pokemon = GARDEVOIR,77
 	EV = 0,0,4,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = HYPERVOICE,PSYCHIC,MYSTICALFIRE,STARBEAM
+	Role = WINCON
 #-------------------------------
 # Nitro Gym
 #-------------------------------
@@ -801,6 +871,7 @@ Pokemon = SEVIPER,76
 	EV = 4,252,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = COIL,EARTHQUAKE,POISONJAB,DRACOFANGS
+	Role = SETUPSWEEPER
 Pokemon = ZANGOOSE,76
 	Nature = JOLLY
 	Ability = TOXICBOOST
@@ -808,6 +879,7 @@ Pokemon = ZANGOOSE,76
 	EV = 0,252,4,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = SWORDSDANCE,FEINT,CLOSECOMBAT,XSCISSOR
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_F,Carrie]
 LoseText = "Oh wow."
@@ -818,6 +890,7 @@ Pokemon = TOXICROAK,77
 	EV = 4,252,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = SWORDSDANCE,DRAINPUNCH,POISONJAB,BULLETPUNCH
+	Role = SETUPSWEEPER
 #-------------------------------
 [COOLTRAINER_F,Hellen]
 LoseText = "Oh wow."
@@ -828,6 +901,7 @@ Pokemon = PELIPPER,76
 	EV = 252,0,0,252,4,0
 	IV = 31,0,31,31,31,31
 	Moves = SCALD,HURRICANE,ROOST,UTURN
+	Role = PIVOT
 Pokemon = QWILFISH,76
 	Form = 1
 	Nature = JOLLY
@@ -836,6 +910,7 @@ Pokemon = QWILFISH,76
 	EV = 252,0,4,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = SWORDSDANCE,NIGHTSLASH,BARBBARRAGE,LIQUIDATION
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_F,Robin]
 LoseText = "Oh wow."
@@ -867,6 +942,7 @@ Pokemon = LAPRAS,83
 	EV = 252,0,4,252,0,0
 	IV = 31,0,31,31,31,31
 	Moves = SURF,ICEBEAM,FREEZEDRY,PSYCHIC
+	Role = SPECIALBREAKER
 Pokemon = CORVIKNIGHT,83
 	Nature = CAREFUL
 	Ability = PRESSURE
@@ -874,12 +950,14 @@ Pokemon = CORVIKNIGHT,83
 	EV = 252,0,4,0,0,252
 	IV = 31,31,31,31,31,31
 	Moves = BULKUP,ROOST,BRAVEBIRD,BODYPRESS
+	Role = PIVOT
 Pokemon = TYRANITAR,83
 	Nature = ADAMANT
 	Item = TYRANITARITE
 	EV = 252,4,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = DRAGONDANCE,ROCKSLIDE,EARTHQUAKE,CRUNCH
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_F,Evangeline]
 LoseText = "Oh wow."
@@ -890,6 +968,7 @@ Pokemon = GRENINJA,83
 	EV = 4,0,0,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = SCALD,DARKPULSE,ICEBEAM,UTURN
+	Role = SPECIALBREAKER
 Pokemon = MAGMORTAR,83
 	Nature = TIMID
 	Ability = FEVERPITCH
@@ -897,12 +976,14 @@ Pokemon = MAGMORTAR,83
 	EV = 0,0,4,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = FLAMECHARGE,SLUDGEBOMB,FLAMETHROWER,THUNDERBOLT
+	Role = SETUPSWEEPER
 Pokemon = SCEPTILE,83
 	Nature = ADAMANT
 	Item = SCEPTILITE
 	EV = 0,252,4,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = SWORDSDANCE,LEAFBLADE,DRAGONCLAW,EARTHQUAKE
+	Role = WINCON
 #-------------------------------
 # Route 15
 #-------------------------------
@@ -915,6 +996,7 @@ Pokemon = DELPHOX,83
 	EV = 0,0,4,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = MINDBLOWN,PSYCHIC,DAZZLINGGLEAM,TELEPORT
+	Role = SPECIALBREAKER
 Pokemon = LUDICOLO,83
 	Nature = TIMID
 	Ability = OWNTEMPO
@@ -922,12 +1004,14 @@ Pokemon = LUDICOLO,83
 	EV = 0,0,4,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = SCALD,GIGADRAIN,ICEBEAM,LEECHSEED
+	Role = SPECIALBREAKER
 Pokemon = AGGRON,83
 	Nature = CAREFUL
 	Item = AGGRONITE
 	EV = 252,4,0,0,0,252
 	IV = 31,31,31,31,31,31
 	Moves = HEAVYSLAM,TOXIC,EARTHQUAKE,BODYPRESS
+	Role = TOXICSTALLER
 #-------------------------------
 [COOLTRAINER_M,Axle]
 LoseText = "Oh wow."
@@ -938,6 +1022,7 @@ Pokemon = HIPPOWDON,83
 	EV = 252,0,148,0,0,108
 	IV = 31,31,31,31,31,31
 	Moves = EARTHQUAKE,STEALTHROCK,SLACKOFF,WHIRLWIND
+	Role = HAZARDLEAD
 Pokemon = DRACOZOLT,83
 	Nature = ADAMANT
 	Ability = SANDRUSH
@@ -945,12 +1030,14 @@ Pokemon = DRACOZOLT,83
 	EV = 0,252,4,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = BOLTBEAK,DRAGONCLAW,EARTHQUAKE,LOWKICK
+	Role = PHYSICALBREAKER
 Pokemon = STEELIX,83
 	Nature = BRAVE
 	Item = STEELIXITE
 	EV = 252,252,0,0,0,4
 	IV = 31,31,31,0,31,31
 	Moves = GYROBALL,CURSE,BODYPRESS,DRACOFANGS
+	Role = WINCON
 #-------------------------------
 # Route 20
 #-------------------------------
@@ -962,6 +1049,7 @@ Pokemon = ALAKAZAM,89
 	EV = 0,0,0,252,252,4
 	IV = 31,0,31,31,31,31
 	Moves = BARRIER,PSYSHOCK,RECOVER,STARBEAM
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_F,Raquel]
 LoseText = "Oh wow."
@@ -971,6 +1059,7 @@ Pokemon = CHIMECHO,89
 	EV = 252,0,0,0,252,4
 	IV = 31,0,31,31,31,31
 	Moves = CALMMIND,HYPERVOICE,RECOVER,PSYSHOCK
+	Role = WINCON
 #-------------------------------
 # Capitol Gym
 #-------------------------------
@@ -1095,6 +1184,7 @@ Pokemon = PALOSSAND,89
 	EV = 252,0,4,0,0,252
 	IV = 31,0,31,31,31,31
 	Moves = SPECTRALSHRIEK,SCORCHINGSANDS,SHOREUP,STEALTHROCK
+	Role = HAZARDLEAD
 Pokemon = AUDINO,90
 	Nature = BOLD
 	Ability = REGENERATOR
@@ -1102,6 +1192,7 @@ Pokemon = AUDINO,90
 	EV = 252,0,252,0,4,0
 	IV = 31,0,31,31,31,31
 	Moves = CALMMIND,SOFTBOILED,MOONBLAST,HYPERVOICE
+	Role = WINCON
 #-------------------------------
 [SCIENTIST,Grunt,8]
 LoseText = "This could be problematic."
@@ -1130,12 +1221,14 @@ Pokemon = MILOTIC,89
 	EV = 252,0,252,0,4,0
 	IV = 31,0,31,31,31,31
 	Moves = SCALD,RECOVER,HAZE,PROTECT
+	Role = PIVOT
 Pokemon = TORTERRA,90
 	Nature = ADAMANT
 	Item = TORTERRANITE
 	EV = 4,252,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = ROCKPOLISH,EARTHQUAKE,WOODHAMMER,STONEEDGE
+	Role = WINCON
 #-------------------------------
 [SCIENTIST,Grunt,10]
 LoseText = "This could be problematic."
@@ -1146,6 +1239,7 @@ Pokemon = PELIPPER,89
 	EV = 252,0,0,252,4,0
 	IV = 31,0,31,31,31,31
 	Moves = SCALD,UTURN,ROOST,HURRICANE
+	Role = PIVOT
 Pokemon = SWAMPERT,90
 	Nature = ADAMANT
 	Ability = RESURGENCE
@@ -1153,6 +1247,7 @@ Pokemon = SWAMPERT,90
 	EV = 0,252,0,252,0,4
 	IV = 31,31,31,31,31,31
 	Moves = LIQUIDATION,EARTHQUAKE,ICEPUNCH,BULKUP
+	Role = WINCON
 #-------------------------------
 [SCIENTIST,Grunt,11]
 LoseText = "This could be problematic."
@@ -1213,6 +1308,7 @@ Pokemon = GLISCOR,94
 	EV = 252,4,0,0,0,252
 	IV = 31,31,31,31,31,31
 	Moves = EARTHQUAKE,PROTECT,UTURN,STEALTHROCK
+	Role = HAZARDLEAD
 Pokemon = SWANNA,83
 	Nature = TIMID
 	Ability = ADAPTABILITY
@@ -1220,6 +1316,7 @@ Pokemon = SWANNA,83
 	EV = 0,0,4,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = SURF,HURRICANE,ICEBEAM,ROOST
+	Role = SPECIALBREAKER
 Pokemon = TYRANTRUM,94
 	Nature = ADAMANT
 	Ability = ROCKHEAD
@@ -1227,6 +1324,7 @@ Pokemon = TYRANTRUM,94
 	EV = 0,252,0,252,0,4
 	IV = 31,31,31,31,31,31
 	Moves = HEADSMASH,DRACOFANGS,EARTHQUAKE,CLOSECOMBAT
+	Role = PHYSICALBREAKER
 Pokemon = SAMUROTT2,94
 	Nature = JOLLY
 	Ability = ELECTRICSURGE
@@ -1234,6 +1332,7 @@ Pokemon = SAMUROTT2,94
 	EV = 0,252,0,252,0,4
 	IV = 31,31,31,31,31,31
 	Moves = STATICSURGE,CLOSECOMBAT,BOLTBEAK,LIQUIDATION
+	Role = SETUPSWEEPER
 Pokemon = METAGROSS,94
 	Nature = JOLLY
 	Ability = CLEARBODY
@@ -1241,6 +1340,7 @@ Pokemon = METAGROSS,94
 	EV = 0,252,0,252,4,0
 	IV = 31,31,31,31,31,31
 	Moves = METEORMASH,BULLETPUNCH,EARTHQUAKE,ICEPUNCH
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_F,Mikayla]
 LoseText = "Oh wow."
@@ -1251,6 +1351,7 @@ Pokemon = ASTREON,94
 	EV = 0,0,4,252,252,0
 	IV = 31,0,31,31,31,31
 	Moves = HYPERVOICE,COMETSHARDS,MOONLIGHT,POWERGEM
+	Role = HAZARDLEAD
 Pokemon = UMBREON,94
 	Nature = CALM
 	Ability = SYNCHRONIZE
@@ -1258,6 +1359,7 @@ Pokemon = UMBREON,94
 	EV = 252,0,4,0,0,252
 	IV = 31,31,31,31,31,31
 	Moves = FOULPLAY,WISH,PROTECT,HEALBELL
+	Role = SPECIALWALL
 Pokemon = FLAREON,94
 	Nature = ADAMANT
 	Ability = GUTS
@@ -1265,12 +1367,14 @@ Pokemon = FLAREON,94
 	EV = 252,252,4,0,0,0
 	IV = 31,31,31,31,31,31
 	Moves = FLAREBLITZ,FLAMECHARGE,FACADE,QUICKATTACK
+	Role = PHYSICALBREAKER
 Pokemon = GLACEON,94
 	Nature = MODEST
 	Item = CHOICESPECS
 	EV = 252,0,4,0,252,0
 	IV = 31,0,31,31,31,31
 	Moves = FREEZEDRY,SHADOWBALL,BLIZZARD,STARBEAM
+	Role = SPECIALBREAKER
 Pokemon = SYLVEON,94
 	Nature = BOLD
 	Ability = PIXILATE
@@ -1278,6 +1382,7 @@ Pokemon = SYLVEON,94
 	EV = 252,0,252,0,4,0
 	IV = 31,0,31,31,31,31
 	Moves = HYPERVOICE,WISH,PROTECT,MYSTICALFIRE
+	Role = PHYSICALWALL
 #-------------------------------
 [COOLTRAINER_M,Mike]
 LoseText = "Nice."
@@ -1288,6 +1393,7 @@ Pokemon = GARCHOMP,94
 	EV = 252,4,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = EARTHQUAKE,TOXIC,STEALTHROCK,DRAGONCLAW
+	Role = HAZARDLEAD
 Pokemon = PINCURCHIN,94
 	Nature = BOLD
 	Ability = ELECTRICSURGE
@@ -1295,6 +1401,7 @@ Pokemon = PINCURCHIN,94
 	EV = 252,0,252,0,0,4
 	IV = 31,0,31,31,31,31
 	Moves = SCALD,VOLTSWITCH,TOXIC,RECOVER
+	Role = PHYSICALWALL
 Pokemon = TYPHLOSION,94
 	Form = 1
 	Nature = TIMID
@@ -1303,6 +1410,7 @@ Pokemon = TYPHLOSION,94
 	EV = 0,0,0,252,252,4
 	IV = 31,0,31,31,31,31
 	Moves = FLAMETHROWER,INFERNALPARADE,SCORCHINGSANDS,FOCUSBLAST
+	Role = SPECIALBREAKER
 Pokemon = RAICHU,94
 	Form = 1
 	Nature = TIMID
@@ -1310,12 +1418,14 @@ Pokemon = RAICHU,94
 	EV = 0,0,0,252,252,4
 	IV = 31,0,31,31,31,31
 	Moves = NASTYPLOT,RISINGVOLTAGE,PSYSHOCK,SURF
+	Role = SETUPSWEEPER
 Pokemon = GALLADE,94
 	Nature = JOLLY
 	Item = GALLADITE
 	EV = 0,252,0,252,4,0
 	IV = 31,31,31,31,31,31
 	Moves = CLOSECOMBAT,PSYCHOCUT,SWORDSDANCE,ICEPUNCH
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_M,RG]
 LoseText = "Nice."
@@ -1326,6 +1436,7 @@ Pokemon = GARCHOMP,94
 	EV = 252,4,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = EARTHQUAKE,TOXIC,STEALTHROCK,DRAGONCLAW
+	Role = HAZARDLEAD
 Pokemon = SERPERIOR2,94
 	Nature = TIMID
 	Ability = CONTRARY
@@ -1333,6 +1444,7 @@ Pokemon = SERPERIOR2,94
 	EV = 0,0,0,252,252,4
 	IV = 31,0,31,31,31,31
 	Moves = FLEURCANNON,TOXOPLASM,STARBEAM,TOXICSPIKES
+	Role = SPECIALBREAKER
 Pokemon = VOLCARONA,94
 	Nature = TIMID
 	Ability = DROUGHT
@@ -1340,18 +1452,21 @@ Pokemon = VOLCARONA,94
 	EV = 0,0,0,252,252,4
 	IV = 31,0,31,31,31,31
 	Moves = FLAMETHROWER,BUGBUZZ,SCORCHINGSANDS,QUIVERDANCE
+	Role = SETUPSWEEPER
 Pokemon = BLASTOISE,94
 	Nature = MODEST
 	Item = LIFEORB
 	EV = 0,0,0,252,252,4
 	IV = 31,0,31,31,31,31
 	Moves = SHELLSMASH,SURF,ICEBEAM,AURASPHERE
+	Role = SETUPSWEEPER
 Pokemon = METAGROSS,94
 	Nature = JOLLY
 	Item = METAGROSSITE
 	EV = 0,252,0,252,4,0
 	IV = 31,31,31,31,31,31
 	Moves = METEORMASH,IRONHEAD,EARTHQUAKE,BULLETPUNCH
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_M,Allen]
 LoseText = "Nice."
@@ -1362,6 +1477,7 @@ Pokemon = GRIMMSNARL,94
 	EV = 252,4,252,0,0,0
 	IV = 31,31,31,31,31,31
 	Moves = SPIRITBREAK,LIGHTSCREEN,REFLECT,DARKESTLARIAT
+	Role = SCREENS
 Pokemon = KROOKODILE,94
 	Nature = JOLLY
 	Ability = MOXIE
@@ -1369,6 +1485,7 @@ Pokemon = KROOKODILE,94
 	EV = 0,252,0,252,0,4
 	IV = 31,31,31,31,31,31
 	Moves = EARTHQUAKE,KNOCKOFF,CLOSECOMBAT,FIREFANG
+	Role = PHYSICALBREAKER
 Pokemon = HYDREIGON,94
 	Nature = TIMID
 	Ability = MEDUSOID
@@ -1376,6 +1493,7 @@ Pokemon = HYDREIGON,94
 	EV = 0,0,0,252,252,4
 	IV = 31,0,31,31,31,31
 	Moves = DRACOMETEOR,DARKPULSE,UTURN,FLASHCANNON
+	Role = SPECIALBREAKER
 Pokemon = OVERQWIL,94
 	Nature = JOLLY
 	Ability = INTIMIDATE
@@ -1383,12 +1501,14 @@ Pokemon = OVERQWIL,94
 	EV = 252,4,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = BARBBARRAGE,NIGHTRUSH,TOXICSPIKES,FLIPTURN
+	Role = PIVOT
 Pokemon = ABSOL,94
 	Nature = ADAMANT
 	Item = ABSOLITE
 	EV = 0,252,0,252,4,0
 	IV = 31,31,31,31,31,31
-	Moves = KNOCKOFF,SWORDSDANCE,PSYCHOCUT,CLOSECOMBAT
+	Moves = KNOCKOFF,SWORDSDANCE,PSYCHOCUT,COSMICFURY
+	Role = WINCON
 #-------------------------------
 [COOLTRAINER_M,Jakey]
 LoseText = "Nice."
@@ -1401,6 +1521,7 @@ Pokemon = JUMPLUFF,94
 	EV = 4,252,0,252,0,0
 	IV = 31,31,31,31,31,31
 	Moves = RETURN,UTURN,SEEDBOMB,DOUBLEEDGE
+	Role = PHYSICALBREAKER
 Pokemon = CLEFABLE,94
 	Name = Jakelable
 	Nature = BOLD
@@ -1409,6 +1530,7 @@ Pokemon = CLEFABLE,94
 	EV = 252,0,252,0,0,4
 	IV = 31,0,31,31,31,31
 	Moves = MOONBLAST,SOFTBOILED,CALMMIND,COSMICPOWER
+	Role = PHYSICALWALL
 Pokemon = EXPLOUD,94
 	Name = JAKEY
 	Nature = MODEST
@@ -1417,6 +1539,7 @@ Pokemon = EXPLOUD,94
 	EV = 252,4,0,252,0,0
 	IV = 31,0,31,31,31,31
 	Moves = BOOMBURST,WICKEDWIND,DEATHTOLL,SURF
+	Role = SPECIALBREAKER
 Pokemon = ZEBSTRIKA2,94
 	Name = !horse
 	Nature = JOLLY
@@ -1425,13 +1548,15 @@ Pokemon = ZEBSTRIKA2,94
 	EV = 0,252,0,252,0,4
 	IV = 31,31,31,31,31,31
 	Moves = THOUSANDARROWS,ZINGZAP,FLAREBLITZ,FLAMECHARGE
+	Role = PHYSICALBREAKER
 Pokemon = HERACROSS,94
 	Name = Favorite
 	Nature = ADAMANT
 	Item = HERACRONITE
 	EV = 0,252,0,252,4,0
 	IV = 31,31,31,31,31,31
-	Moves = CLOSECOMBAT,PINMISSILE,BULLETSEED,ROCKBLAST
+	Moves = CLOSECOMBAT,PINMISSILE,SWORDSDANCE,ROCKBLAST
+	Role = WINCON
 #-------------------------------
 # Normal Mode Gym Battles
 #-------------------------------

@@ -941,3 +941,5 @@
 922,TM126,TM126,TM126s,4,30000,"Gliding on the ground, the user attacks the target. This move always goes first on Grassy Terrain.",3,0,0,GRASSYGLIDE
 923,TM127,TM127,TM127s,4,30000,"The user lands and rests its body. It restores the user's HP by up to half of its max HP.",3,0,0,ROOST
 924,TM128,TM128,TM128s,4,30000,"A move that leaves the target badly poisoned. Its poison damage worsens every turn.",3,0,0,TOXIC
+925,TM129,TM129,TM129s,4,30000,"Use it to flee from any wild Pokémon. It can also warp to the last Pokémon Center visited.",3,0,0,TELEPORT
+926,TM130,TM130,TM130s,4,30000,"The target is scared off and replaced by another Pokémon in its party. In the wild, the battle ends.",3,0,0,ROAR
