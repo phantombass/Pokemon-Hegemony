@@ -132,65 +132,13 @@ class PokeBattle_AI
 	end
 
 	#=============================================================================
-	# Decide whether the opponent should Mega Evolve their Pokémon
-	#=============================================================================
-	def pbEnemyShouldMegaEvolve?(idxBattler)
-#		return false if @battle.wildBattle?
-#		battler = @battle.battlers[idxBattler]
-#		$opposing = []
-#    for i in @battle.battlers
-#      if i != battler
-#        if not(i.fainted?)
-#          if i.opposes?
-#            $opposing.push(i)
-#          end
-#        end
-#      end
-#    end
-#		moves = battler.moves
-#		should = (MEGAEVOMETHOD==1)
-#		move   = false
-#		skill = @battle.pbGetOwnerFromBattlerIndex(idxBattler).skill
-#		battler.moves do |move|
-#			opposing do |o|
-#				baseDmg = pbMoveBaseDamage(move,battler,o,skill)
-#				if pbRoughDamage(move,battler,o,skill,baseDmg) >= o.hp
-#					move = false
-#					$nextTarget = o
-#					$nextMove = move
-#					$nextQue = 1
-#				end
-#			end
-#		end
-#		for o in $opposing
-#			if isSuperEffective?(battler,o)
-#				move = true
-#			end
-#		end
-#		for o in $opposing
-#			if o.hp <= (o.totalhp/3).floor
-#				should = true
-#			end
-#		end
-#		if move
-#			should = true
-#		end
-		if @battle.pbCanMegaEvolve?(idxBattler)
-			PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
-			return true
-		else
-			return false
-		end
-	end
-
-	#=============================================================================
 	# Choose an action
 	#=============================================================================
 	def pbDefaultChooseEnemyCommand(idxBattler)
 		return if pbEnemyShouldUseItem?(idxBattler)
 		return if pbEnemyShouldWithdraw?(idxBattler)
 		return if @battle.pbAutoFightMenu(idxBattler)
-		@battle.pbRegisterMegaEvolution(idxBattler) #if pbEnemyShouldMegaEvolve?(idxBattler)
+		@battle.pbRegisterMegaEvolution(idxBattler)
 		if SPIRIT_POWERS
 			@battle.pbRegisterSpiritPower(idxBattler) if pbEnemyShouldUseSpiritPower?(idxBattler)
 		end
@@ -316,6 +264,7 @@ class PokeBattle_AI
 		$shouldHeal = false
 		$fakeOut = false
 		$canSwitch = true
+		$shouldAttack = false
     shouldSwitch = forceSwitch
     batonPass = -1
 		teleport = -1
@@ -435,6 +384,9 @@ class PokeBattle_AI
 						$has_prio = true if move.priority > 0 && !move.statusMove?
 						$fakeOut = true if move.function == "012"
 						$has_healing = true if move.healingMove?
+					end
+					if (target.stages[:ATTACK] >= 2 || target.stages[:SPECIAL_ATTACK] >= 2) && !battler.hasActiveAbility?(:UNAWARE)
+						$shouldAttack = true
 					end
 				if type1Target == (battler_SE || battler_2SE) || type2Target == (battler_SE || battler_2SE)
 					if !faster && $shouldPri == false
@@ -1197,12 +1149,6 @@ class PokeBattle_AI
 			if user.status==GameData::Status.get(:FROZEN).id
 				if move.thawsUser?
 					score += 40
-				else
-					user.eachMove do |m|
-						next unless m.thawsUser?
-						score -= 60
-						break
-					end
 				end
 			end
 			# If target is frozen, don't prefer moves that could thaw them
@@ -1219,6 +1165,12 @@ class PokeBattle_AI
 				if move.soundMove?
 					score += 40
 				end
+			end
+		end
+
+		user.eachMove do |m|
+			if Effectiveness.super_effective?(pbCalcTypeMod(m.type,user,target))
+				score += 30
 			end
 		end
 		# Adjust score based on how much damage it can deal
@@ -1256,20 +1208,6 @@ class PokeBattle_AI
 		end
 		# Prefer flinching external effects (note that move effects which cause
 		# flinching are dealt with in the function code part of score calculation)
-		if skill>=PBTrainerAI.mediumSkill
-			if !target.hasActiveAbility?(:INNERFOCUS) &&
-				!target.hasActiveAbility?(:SHIELDDUST) &&
-				target.effects[PBEffects::Substitute]==0
-				canFlinch = false
-				if move.canKingsRock? && user.hasActiveItem?([:KINGSROCK,:RAZORFANG])
-					canFlinch = true
-				end
-				if user.hasActiveAbility?(:STENCH) && !move.flinchingMove?
-					canFlinch = true
-				end
-				realDamage *= 1.3 if canFlinch
-			end
-		end
 		# Convert damage to percentage of target's remaining HP
 		damagePercentage = realDamage*100.0/target.hp
 		# Don't prefer weak attacks

@@ -201,3 +201,17 @@ MultipleForms.register(:MIMEJR,{
     next 0
   }
 })
+
+def update_forms_from_glitches
+  pbEachPokemon { |poke,_box|
+    species = poke.species
+    if species == :BASCULIN && poke.obtain_method == 1
+      poke.form = 2
+    end
+  }
+  $glitches_fixed = true
+end
+
+Events.onMapUpdate+=proc {|sender,e|
+  update_forms_from_glitches if $glitches_fixed != true
+}
