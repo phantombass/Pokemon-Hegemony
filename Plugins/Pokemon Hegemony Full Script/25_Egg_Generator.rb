@@ -58,7 +58,7 @@ def generate_hisui_egg
     species = egg.species
     move = GameData::Species.get(species).egg_moves
     egg.ability_index = 2
-    egg.form = 1
+    egg.form = (species == :BASCULIN) ? 2 : 1
     egg.iv[:HP] = 31
     egg.iv[:DEFENSE] = 31
     egg.iv[:SPECIAL_DEFENSE] = 31
