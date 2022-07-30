@@ -917,7 +917,7 @@ ItemHandlers::UseInField.add(:ESCAPEROPE,proc { |item|
   pbEraseEscapePoint
   next 2
 })
-
+=begin
 Events.onStepTaken += proc {
   if $PokemonGlobal.repel > 0 && !$game_player.terrain_tag.ice   # Shouldn't count down if on ice
     $PokemonGlobal.repel -= 1 if $inf_repel == 0
@@ -979,7 +979,7 @@ Events.onStepTaken += proc {
     end
   end
 }
-
+=end
 ItemHandlers::UseOnPokemon.add(:ROTOMCATALOG,proc{|item,pkmn,scene|
   if pkmn.isSpecies?(:ROTOM)
     if pkmn.hp>0
