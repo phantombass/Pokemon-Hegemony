@@ -1839,7 +1839,7 @@ Evolutions = BASCULEGION,Item,SPELLTAG,BASCULEGION,HoldItem,SPELLTAG
 [BASCULEGION,1]
 FormName = Female
 Type1 = WATER
-Tyoe2 = GHOST
+Type2 = GHOST
 BaseStats = 120,92,65,78,100,75
 GrowthRate = Medium
 BaseEXP = 161
