@@ -646,8 +646,6 @@ def pbPickup(pkmn)
      :ANTIDOTE,
      :SUPERPOTION,
      :GREATBALL,
-     :REPEL,
-     :ESCAPEROPE,
      :FULLHEAL,
      :HYPERPOTION,
      :ULTRABALL,
@@ -673,7 +671,8 @@ def pbPickup(pkmn)
      :ELIXIR,
      :DESTINYKNOT,
      :LEFTOVERS,
-     :DESTINYKNOT
+     :DESTINYKNOT,
+     :IVMAXSTONE
   )
   return if pickupList.length<18
   return if pickupListRare.length<11
