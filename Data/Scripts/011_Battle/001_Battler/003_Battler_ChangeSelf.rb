@@ -263,7 +263,11 @@ class PokeBattle_Battler
     # Darmanitan - Zen Mode
     if isSpecies?(:DARMANITAN) && self.ability == :ZENMODE
       newForm = @form
-      newForm = @form + (@form < 2)? 2 : -2 if @hp <= @totalhp/2
+      if @hp <= @totalhp/2 && newForm < 2
+        newForm += 2
+      elsif @hp > @totalhp/2 && newForm >= 2
+        newForm -= 2
+      end
       if newForm != @form
         @battle.pbShowAbilitySplash(self,true)
         pbChangeForm(newForm,_INTL("{1} triggered!",abilityName))

@@ -265,6 +265,7 @@ class PokeBattle_AI
 		$fakeOut = false
 		$canSwitch = true
 		$shouldAttack = false
+		$shouldHaze = false
     shouldSwitch = forceSwitch
     batonPass = -1
 		teleport = -1
@@ -383,10 +384,27 @@ class PokeBattle_AI
 					for move in battler.moves
 						$has_prio = true if move.priority > 0 && !move.statusMove?
 						$fakeOut = true if move.function == "012"
+						$has_haze = true if move.function == "051"
 						$has_healing = true if move.healingMove?
 					end
-					if (target.stages[:ATTACK] >= 2 || target.stages[:SPECIAL_ATTACK] >= 2) && !battler.hasActiveAbility?(:UNAWARE)
+					if (target.stages[:ATTACK] >= 2 || target.stages[:SPECIAL_ATTACK] >= 2) && !battler.hasActiveAbility?(:UNAWARE) && $has_haze == false
 						$shouldAttack = true
+					end
+					if $has_haze == true
+						stages = 0
+						@battle.eachBattler do |b|
+		          totalStages = 0
+		          GameData::Stat.each_battle { |s| totalStages += b.stages[s.id] }
+		          if b.opposes?(user)
+		            stages += totalStages
+		          else
+		            stages -= totalStages
+		          end
+		        end
+						haze_score = stages*10
+						haze_score += 50 if stages > 0
+						haze_score += 20 if [:PHYSICALWALL,:SPECIALWALL,:PIVOT,:STALLBREAKER].include?($role) && stages > 0
+						$shouldHaze = (pbAIRandom(100)<haze_score)
 					end
 				if type1Target == (battler_SE || battler_2SE) || type2Target == (battler_SE || battler_2SE)
 					if !faster && $shouldPri == false
@@ -622,12 +640,27 @@ class PokeBattle_AI
 			shouldSwitch = false
 		end
 		if [:WINCON,:SETUPSWEEPER,:NONE].include?($role) && $enem_prio == false
-			shouldSwitch = false
+			switchChance = 0
+			if $targ_move != nil
+				for i in $targ_move
+					switchChance += 25 if pbRoughDamage(i,target,battler,skill,$baseDmg) >= battler.hp
+					switchChance -= 25 if pbRoughDamage(i,target,battler,skill,$baseDmg) < battler.hp/2
+				end
+			end
+			shouldSwitch = (pbAIRandom(100)<switchChance)
+			if $has_healing && shouldSwitch == false
+				healChance = (battler.hp/battler.totalhp)*100
+				if healChance < 67
+					$shouldHeal = healChance <= 50 ? true : pbAIRandom(100)<healChance
+				else
+					$shouldHeal = pbAIRandom(100)>healChance
+				end
+			end
 			if battler.stages[:ATTACK] <= 0 || battler.stages[:SPECIAL_ATTACK] <= 0
-				$shouldBoost = true
+				$shouldBoost = true if shouldSwitch == false && $shouldHeal == false
 			end
 			if battler.stages[:SPEED] <= 0 && !faster
-				$shouldBoostSpeed = true
+				$shouldBoostSpeed = true if shouldSwitch == false && $shouldHeal == false
 			end
 		end
 		@battle.pbParty(idxBattler).each_with_index do |pkmn,i|
@@ -1170,7 +1203,8 @@ class PokeBattle_AI
 
 		user.eachMove do |m|
 			if Effectiveness.super_effective?(pbCalcTypeMod(m.type,user,target))
-				score += 30
+				score += 20 if [:PHYSICALBREAKER,:SPECIALBREAKER,:REVENGER,:NONE].include?($role)
+				score += 30 if [:WINCON,:PHYSICALBREAKER,:SPECIALBREAKER,:SETUPSWEEPER,:NONE].include?($role) && (user.stages[:ATTACK]>0||user.stages[:SPECIAL_ATTACK]>0||user.stages[:SPEED]>0)
 			end
 		end
 		# Adjust score based on how much damage it can deal

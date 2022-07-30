@@ -53,6 +53,7 @@ class PokeBattle_AI
         score += 30
         if skill>=PBTrainerAI.highSkill
           score -= 30 if target.hasActiveAbility?(:MARVELSCALE)
+          score = 0 if user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)
         end
         if skill>=PBTrainerAI.bestSkill
           if target.pbHasMoveFunction?("011","0B4")   # Snore, Sleep Talk
@@ -74,6 +75,7 @@ class PokeBattle_AI
           score += 10 if pbRoughStat(target,:SPECIAL_DEFENSE,skill)>100
           score -= 40 if target.hasActiveAbility?([:GUTS,:MARVELSCALE,:TOXICBOOST])
           score += 60 if $role_id == :TOXICSTALLER && user.turnCount == 0 && move.statusMove?
+          score = 0 if user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)
         end
       else
         if skill>=PBTrainerAI.mediumSkill
@@ -100,7 +102,7 @@ class PokeBattle_AI
           score -= 40 if target.hasActiveAbility?([:GUTS,:MARVELSCALE,:QUICKFEET])
         end
         score += 50 if $role_id == :SPEEDCONTROL
-        score = 0 if user.hasActiveAbility?(:PRANKSTER) && target.hasType?(:DARK)
+        score = 0 if user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)
       else
         if skill>=PBTrainerAI.mediumSkill
           score -= 90 if move.statusMove?
@@ -112,6 +114,7 @@ class PokeBattle_AI
         score += 30
         if skill>=PBTrainerAI.highSkill
           score -= 40 if target.hasActiveAbility?([:GUTS,:MARVELSCALE,:QUICKFEET,:FLAREBOOST])
+          score = 0 if user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)
         end
       else
         if skill>=PBTrainerAI.mediumSkill
@@ -123,7 +126,7 @@ class PokeBattle_AI
       if target.pbCanFreeze?(user,false)
         score += 30
         if skill>=PBTrainerAI.highSkill
-          score -= 20 if target.hasActiveAbility?(:MARVELSCALE)
+          score -= 20 if target.hasActiveAbility?([:MARVELSCALE,:GUTS,:QUICKFEET])
         end
       else
         if skill>=PBTrainerAI.mediumSkill
@@ -1225,6 +1228,7 @@ class PokeBattle_AI
         end
         score += stages*10
         score += 50 if skill>=PBTrainerAI.highSkill && stages > 0
+        score += 50 if [:PHYSICALWALL,:SPECIALWALL,:PIVOT,:STALLBREAKER].include?($role_id) && score >= 20
       end
     #---------------------------------------------------------------------------
     when "052"
@@ -1892,8 +1896,8 @@ class PokeBattle_AI
       if aspeed > ospeed || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK))
         if $targ_move != nil
           for i in $targ_move.length
-            score += 40 if $targ_move[i].category == 2
-            score -= 20 if $targ_move[i].category != 2
+            score += 40 if $targ_move[i].statusMove?
+            score -= 20 if !$targ_move[i].statusMove?
           end
           score += 70 if $role_id == :STALLBREAKER && score > 0
         end
@@ -2000,7 +2004,7 @@ class PokeBattle_AI
     when "0D7"
       score -= 90 if @battle.positions[user.index].effects[PBEffects::Wish]>0
       score += 50 if $shouldHeal
-      score += 30 if [:TOXICSTALLER,:CLERIC,:PHYSICALWALL,:SPECIALWALL].include?($role_id) && user.effects[Effects::ProtectRate]>1
+      score += 30 if [:TOXICSTALLER,:CLERIC,:PHYSICALWALL,:SPECIALWALL].include?($role_id) && user.effects[PBEffects::ProtectRate]>1
       if skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp*0.67
         score += 75
       elsif skill >= PBTrainerAI.mediumSkill && user.hp <= user.totalhp/2
