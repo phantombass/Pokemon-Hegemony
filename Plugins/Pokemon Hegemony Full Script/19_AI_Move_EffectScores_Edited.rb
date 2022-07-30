@@ -100,6 +100,7 @@ class PokeBattle_AI
           score -= 40 if target.hasActiveAbility?([:GUTS,:MARVELSCALE,:QUICKFEET])
         end
         score += 50 if $role_id == :SPEEDCONTROL
+        score = 0 if user.hasActiveAbility?(:PRANKSTER) && target.hasType?(:DARK)
       else
         if skill>=PBTrainerAI.mediumSkill
           score -= 90 if move.statusMove?
