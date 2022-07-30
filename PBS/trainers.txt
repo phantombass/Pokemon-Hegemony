@@ -2198,7 +2198,7 @@ Pokemon = CHIMECHO,42
 	IV = 31,0,31,31,31,31
 	Nature = MODEST
 	Moves = HYPERVOICE,PSYSHOCK,CALMMIND,RECOVER
-	Role = SETUPSWEEPER
+	Role = WINCON
 #-------------------------------
 [LEADER_Erika,Astrid,3]
 LoseText = "Even the stars can't hold you back. Spectacular indeed."
@@ -2249,7 +2249,7 @@ Pokemon = CHIMECHO,42
 	IV = 31,0,31,31,31,31
 	Nature = MODEST
 	Moves = HYPERVOICE,EXPANDINGFORCE,CALMMIND,RECOVER
-	Role = SETUPSWEEPER
+	Role = WINCON
 #-------------------------------
 [LEADER_Brock,Gordon,2]
 LoseText = "Your ability to hold up under the pressure. So impressive. Kudos to you, my friend."
@@ -2800,7 +2800,7 @@ Pokemon = CHIMECHO,42
 	IV = 31,0,31,31,31,31
 	Nature = MODEST
 	Moves = HYPERVOICE,PSYSHOCK,CALMMIND,RECOVER
-	Role = SETUPSWEEPER
+	Role = WINCON
 #-------------------------------
 [LEADER_Erika,Astrid,5]
 LoseText = "Even the stars can't hold you back. Spectacular indeed."
