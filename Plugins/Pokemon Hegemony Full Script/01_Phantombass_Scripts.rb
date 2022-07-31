@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.4.10"
+  GAME_VERSION = "1.4.11"
 end
 
 def write_version
@@ -111,11 +111,13 @@ def PokemonLoadScreen
         @scene.pbEndScene
         write_version
         Game.load(@save_data)
+        $repel_toggle = true
         return
       when cmd_new_game
         @scene.pbEndScene
         write_version
         Game.start_new
+        $repel_toggle = true
         return
       when cmd_mystery_gift
         pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
