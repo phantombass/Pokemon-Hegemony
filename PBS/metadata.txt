@@ -1083,6 +1083,12 @@ ShowArea = true
 MapPosition = 0,25,11
 SnapEdges = true
 #-------------------------------
+[226]
+# Hidden Grotto - Route 20
+ShowArea = true
+MapPosition = 0,25,10
+SnapEdges = true
+#-------------------------------
 [227]
 # The Capitol
 Outdoor = true

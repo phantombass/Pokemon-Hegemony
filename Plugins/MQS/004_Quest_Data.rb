@@ -17,7 +17,7 @@ module QuestModule
     :Stage10 => "Investigate the abandoned DefCorp building.",
     :Stage11 => "Challenge the Gym.",
     :Stage12 => "Explore Mt. Nenox from the Neonn entrance.",
-    :Stage13 => "Find and explore the hidden cave.",
+    :Stage13 => "Find the hidden cave, then head to Sodum Town.",
     :Stage14 => "Go explore the Army Base.",
     :Stage15 => "Go to the Army Main Office.",
     :Stage16 => "Follow the Officer.",

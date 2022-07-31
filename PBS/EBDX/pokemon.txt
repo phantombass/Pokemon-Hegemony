@@ -9045,10 +9045,11 @@ BattlerEnemyY   = 36
 BattlerPlayerY = 26
 #-------------------------------
 [ASTREON]
-SpriteScaleEnemy = 0.75
-SpriteScalePlayer = 1
-BattlerEnemyY   = 36
-BattlerPlayerY = 26
+BattlerEnemyY           = 54
+BattlerAltitude         = 0
+BattlerPlayerX          = 6
+BattlerPlayerY          = 57
+BattlerEnemyX           = 6
 #-------------------------------
 [TREECKO2]
 BattlerPlayerY  = 20

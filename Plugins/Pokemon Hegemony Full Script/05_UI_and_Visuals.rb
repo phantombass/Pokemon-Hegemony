@@ -2589,8 +2589,9 @@ class Scene_Credits
   Perfect Kyurem Sprite:
   Caleb
 
-  Astreon Front Sprite:
-  Bl00dy
+  Astreon Sprites:
+  Bl00dy (concept art)
+  Saebbi (sprite art)
 
   Mapping: Phantombass
 
