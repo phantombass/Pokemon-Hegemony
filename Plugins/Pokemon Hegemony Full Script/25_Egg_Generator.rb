@@ -1,20 +1,48 @@
 def grass_starter_eggs
   egg_list = [:BULBASAUR,:CHIKORITA,:TREECKO,:TURTWIG,:SNIVY,:CHESPIN,:ROWLET,:GROOKEY]
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
   return egg_list
 end
 
 def fire_starter_eggs
   egg_list = [:CHARMANDER,:CYNDAQUIL,:TORCHIC,:CHIMCHAR,:TEPIG,:FENNEKIN,:LITTEN,:SCORBUNNY]
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
   return egg_list
 end
 
 def water_starter_eggs
   egg_list = [:SQUIRTLE,:TOTODILE,:MUDKIP,:PIPLUP,:OSHAWOTT,:FROAKIE,:POPPLIO,:SOBBLE]
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
   return egg_list
 end
 
 def hisui_eggs
   egg_list = [:CYNDAQUIL,:ROWLET,:OSHAWOTT,:QWILFISH,:SNEASEL,:GOOMY,:BERGMITE,:PETILIL,:ZORUA,:GROWLITHE,:VOLTORB,:RUFFLET,:BASCULIN]
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
   return egg_list
 end
 
@@ -22,6 +50,13 @@ def random_eggs
   egg_list = [:SKITTY,:GULPIN,:FLABEBE,:AZURILL,:MAREANIE,:SNEASEL,:TEDDIURSA,:TOXEL,:CUBONE,:DARUMAKA,:MIMEJR,:MEOWTH,:PONYTA,:CORSOLA,:FARFETCHD,:GEODUDE,:ROLYCOLY,:SKIDDO,:KLINK,:STANTLER,:PICHU,:MAGBY,:ELEKID,:SMOOCHUM,:HAPPINY,:MUNCHLAX,:POIPOLE,:COSMOG,:PHIONE,:KUBFU,:LARVESTA,:SIZZLIPEDE,:SANDACONDA,:MAGNEMITE,:CARBINK,:AUDINO,:RALTS,:ABRA,:GASTLY,:DROWZEE,:ELGYEM,:BRONZOR,:MUNNA,:IMPIDIMP,:INDEEDEE,:PINCURCHIN,:PYUKUMUKU,:WYNAUT,:SCRAGGY,:SEEL,:HORSEA,:JIGGLYPUFF,:MANKEY,:SEVIPER,
   :ZANGOOSE,:SNUBBULL,:MAREEP,:GIRAFARIG,:DUNSPARCE,:CHINGLING,:SNORUNT,:SPHEAL,:BUIZEL,:FINNEON,:ARROKUDA,:MORELULL,:FOMANTIS,:INKAY,:COTTONEE,:MISDREAVUS,:MURKROW,:FEEBAS,:GOTHITA,:SOLOSIS,:STUNFISK,:PIKIPEK,:EMOLGA,:PLUSLE,:MINUN,:TOGEDEMARU,:MORPEKO,:VOLBEAT,:ILLUMISE,:ODDISH,:BELLSPROUT,:IGGLYBUFF,:CLEFFA,:PICHU,:STARYU,:GRIMER,:KOFFING,:LAPRAS,:ZUBAT,:NATU,:BONSLY,:WEEDLE,:CATERPIE,:WAILMER,:SHELMET,:KARRABLAST,:SCYTHER,:BARBOACH,:LUVDISC,:DEDENNE,:MINIOR,:CLOBBOPUS,:CRABRAWLER,:KRABBY,
   :SKORUPI,:FOMANTIS,:DEWPIDER]
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
   return egg_list
 end
 
@@ -36,14 +71,13 @@ def wartime_eggs
     :TORCHIC2,
     :MUDKIP2
   ]
-  case $game_variables[7]
-  when 1
-    egg_list.delete(:TREECKO2)
-  when 2
-    egg_list.delete(:TORCHIC2)
-  when 3
-    egg_list.delete(:MUDKIP2)
-  end
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
   return egg_list
 end
 
