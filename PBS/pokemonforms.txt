@@ -1026,8 +1026,8 @@ Evolutions = CURSOLA,Level,38
 [HOUNDOOM,1]
 FormName = Mega Houndoom
 MegaStone = HOUNDOOMINITE
-BaseStats = 75,90,90,115,140,90
-Abilities = SOLARPOWER
+BaseStats = 75,100,90,115,130,90
+Abilities = ADAPTABILITY
 HiddenAbility = SOLARPOWER
 Height = 1.9
 Weight = 49.5
