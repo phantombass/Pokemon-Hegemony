@@ -1,36 +1,15 @@
 def grass_starter_eggs
   egg_list = [:BULBASAUR,:CHIKORITA,:TREECKO,:TURTWIG,:SNIVY,:CHESPIN,:ROWLET,:GROOKEY]
-  pbEachPokemon { |poke,_box|
-    mon = poke.species
-    evo = GameData::Species.get(mon).get_evolutions
-    if egg_list.include?(mon) || egg_list.include?(evo)
-      egg_list.delete(mon)
-    end
-  }
   return egg_list
 end
 
 def fire_starter_eggs
   egg_list = [:CHARMANDER,:CYNDAQUIL,:TORCHIC,:CHIMCHAR,:TEPIG,:FENNEKIN,:LITTEN,:SCORBUNNY]
-  pbEachPokemon { |poke,_box|
-    mon = poke.species
-    evo = GameData::Species.get(mon).get_evolutions
-    if egg_list.include?(mon) || egg_list.include?(evo)
-      egg_list.delete(mon)
-    end
-  }
   return egg_list
 end
 
 def water_starter_eggs
   egg_list = [:SQUIRTLE,:TOTODILE,:MUDKIP,:PIPLUP,:OSHAWOTT,:FROAKIE,:POPPLIO,:SOBBLE]
-  pbEachPokemon { |poke,_box|
-    mon = poke.species
-    evo = GameData::Species.get(mon).get_evolutions
-    if egg_list.include?(mon) || egg_list.include?(evo)
-      egg_list.delete(mon)
-    end
-  }
   return egg_list
 end
 
