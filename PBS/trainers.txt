@@ -288,14 +288,15 @@ Pokemon = SANDSLASH,30
 [HIKER,Rocco]
 LoseText = "You're great!"
 Pokemon = FORRETRESS,32
-	Moves = STEALTHROCK,SPIKES,GYROBALL,BUGBITE
+	Item = CUSTAPBERRY
+	Moves = STEALTHROCK,SPIKES,GYROBALL,EXPLOSION
 #-------------------------------
 [HIKER,Ethan]
 LoseText = "You're great!"
 Pokemon = SHUCKLE,30
 	Moves = STICKYWEB,STEALTHROCK,CURSE,ROLLOUT
 Pokemon = METANG,30
-	Moves = COMETSHARDS,BULLETPUNCH,ZENHEADBUTT,ICEPUNCH
+	Moves = COMETSHARDS,BULLETPUNCH,COMETPUNCH,ICEPUNCH
 #-------------------------------
 # Route 4
 #-------------------------------
@@ -306,7 +307,7 @@ Pokemon = ONIX,28
 	Moves = DRAGONBREATH,ROCKTOMB,BULLDOZE,GLARE
 Pokemon = SCIZOR,28
 	Ability = TECHNICIAN
-	Moves = BULLETPUNCH,SWORDSDANCE,ROOST,FURYCUTTER
+	Moves = BULLETPUNCH,SWORDSDANCE,ROOST,BUGBITE
 #-------------------------------
 [HIKER,Gaines]
 LoseText = "Wow, awesome!"
@@ -352,6 +353,7 @@ Pokemon = LUNATONE,30
 LoseText = "You're great!"
 Pokemon = SOLROCK,32
 	Moves = SWORDSDANCE,FLAREBLITZ,ROCKSLIDE,STARSAP
+	Role = SETUPSWEEPER
 #-------------------------------
 [CHANELLER,Aggie]
 LoseText = "You're great!"

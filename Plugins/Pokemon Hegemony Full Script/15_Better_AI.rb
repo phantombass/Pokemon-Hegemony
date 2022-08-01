@@ -395,7 +395,7 @@ class PokeBattle_AI
 						@battle.eachBattler do |b|
 		          totalStages = 0
 		          GameData::Stat.each_battle { |s| totalStages += b.stages[s.id] }
-		          if b.opposes?(user)
+		          if b.opposes?(battler)
 		            stages += totalStages
 		          else
 		            stages -= totalStages
