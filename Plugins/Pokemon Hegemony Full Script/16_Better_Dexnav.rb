@@ -504,7 +504,7 @@ Events.onMapChanging +=proc {|_sender,e|
 Events.onWildPokemonCreate+=proc {|sender,e|
     pokemon=e[0]
     # Checks current search value, if it exists, sets the Pokemon to it
-    if $currentDexSearch != nil && $currentDexSearch.is_a?(Array)
+    if $currentDexSearch != nil
       mapid = $game_map.map_id
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
       if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && $encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) || (($MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater) && $encTerr == :OldRod && (($PokemonBag.pbQuantity(:OLDROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :OldRod) || ($PokemonBag.pbQuantity(:GOODROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :GoodRod) || ($PokemonBag.pbQuantity(:SUPERROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :SuperRod)))
@@ -522,8 +522,8 @@ Events.onWildPokemonCreate+=proc {|sender,e|
         end
         $chain = $chainNav[1]
         lvl = rand(100)
-        if lvl > 80
-          pokemon.level = pokemon.level + 10
+        if lvl > 90
+          pokemon.level = pokemon.level + rand(100-lvl)
           if pokemon.level > $game_variables[106]
             $game_switches[89] = true
           end
