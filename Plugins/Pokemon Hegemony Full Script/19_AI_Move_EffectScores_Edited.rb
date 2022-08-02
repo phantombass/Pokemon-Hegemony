@@ -3312,30 +3312,33 @@ class PokeBattle_AI
     when "175"
       score += 30 if target.effects[PBEffects::Minimize]
     #---------------------------------------------------------------------------
-  when "500"
-    score += 80 if user.turnCount == 0
-    if user.pbOpposingSide.effects[PBEffects::StealthRock] || @battle.pbWeather == :Windy || user.pbOpposingSide.effects[PBEffects::CometShards]
-      score -= 100
-    else
-      score += 50 if $role_id == :HAZARDLEAD
-      if $role_id == :STALLBREAKER
-        score += (50-(user.turnCount*10))
-      end
-      canChoose = false
-      user.eachOpposing do |b|
-        next if !@battle.pbCanChooseNonActive?(b.index)
-        canChoose = true
-        break
-      end
-      if !canChoose
-        # Opponent can't switch in any Pokemon
-        score -= 90
+    when "500"
+      score += 80 if user.turnCount == 0
+      if user.pbOpposingSide.effects[PBEffects::StealthRock] || @battle.pbWeather == :Windy || user.pbOpposingSide.effects[PBEffects::CometShards]
+        score -= 100
       else
-        score += 10*@battle.pbAbleNonActiveCount(user.idxOpposingSide)
+        score += 50 if $role_id == :HAZARDLEAD
+        if $role_id == :STALLBREAKER
+          score += (50-(user.turnCount*10))
+        end
+        canChoose = false
+        user.eachOpposing do |b|
+          next if !@battle.pbCanChooseNonActive?(b.index)
+          canChoose = true
+          break
+        end
+        if !canChoose
+          # Opponent can't switch in any Pokemon
+          score -= 90
+        else
+          score += 10*@battle.pbAbleNonActiveCount(user.idxOpposingSide)
+        end
       end
-    end
     when "507"
       score += 60 if user.turnCount==0
+    when "518"
+      score += 60 if user.turnCount==0
+      score += 40 if [:SETUPSWEEPER,:WINCON,:PHYSICALBREAKER].include?($role_id) && ($shouldBoost || $shouldBoostSpeed) && !$shouldHeal
     end
     return score
   end
