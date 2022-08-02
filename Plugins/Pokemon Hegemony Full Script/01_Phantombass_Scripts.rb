@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = true
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.4.21"
+  GAME_VERSION = "1.4.22"
 end
 
 def write_version
@@ -501,8 +501,14 @@ def pbStartOver(gameover=false)
   end
   $Trainer.heal_party
   if $PokemonGlobal.pokecenterMapId && $PokemonGlobal.pokecenterMapId>=0
+    if $game_switches[902]
+      gameover = true
+    end
     if gameover
       pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back to a Pokémon Center."))
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]Pokémon Hegemony will now close..."))
+      SaveData.delete_file
+      raise SystemExit.new
     else
       if $game_switches[73] == true
         if $game_map.map_id != 144 && $game_map.map_id != 145

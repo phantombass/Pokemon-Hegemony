@@ -1,14 +1,50 @@
 def grass_starter_eggs
   egg_list = [:BULBASAUR,:CHIKORITA,:TREECKO,:TURTWIG,:SNIVY,:CHESPIN,:ROWLET,:GROOKEY]
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
   return egg_list
 end
 
 def fire_starter_eggs
   egg_list = [:CHARMANDER,:CYNDAQUIL,:TORCHIC,:CHIMCHAR,:TEPIG,:FENNEKIN,:LITTEN,:SCORBUNNY]
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
   return egg_list
 end
 
 def water_starter_eggs
+  egg_list = [:SQUIRTLE,:TOTODILE,:MUDKIP,:PIPLUP,:OSHAWOTT,:FROAKIE,:POPPLIO,:SOBBLE]
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_evolutions
+    if egg_list.include?(mon) || egg_list.include?(evo)
+      egg_list.delete(mon)
+    end
+  }
+  return egg_list
+end
+
+def grass_starter_egg_vendor
+  egg_list = [:BULBASAUR,:CHIKORITA,:TREECKO,:TURTWIG,:SNIVY,:CHESPIN,:ROWLET,:GROOKEY]
+  return egg_list
+end
+
+def fire_starter_egg_vendor
+  egg_list = [:CHARMANDER,:CYNDAQUIL,:TORCHIC,:CHIMCHAR,:TEPIG,:FENNEKIN,:LITTEN,:SCORBUNNY]
+  return egg_list
+end
+
+def water_starter_egg_vendor
   egg_list = [:SQUIRTLE,:TOTODILE,:MUDKIP,:PIPLUP,:OSHAWOTT,:FROAKIE,:POPPLIO,:SOBBLE]
   return egg_list
 end
@@ -126,7 +162,7 @@ def generate_random_egg
     species = egg.species
     move = GameData::Species.get(species).egg_moves
     egg.ability_index = 2
-    egg.form = !regionals.include?(species) ?  0 : reg_rand > 4 ? 1 : 0
+    egg.form = regionals.include?(species) ? (reg_rand > 4 ? 1 : 0) : 0
     egg.iv[:HP] = 31
     egg.iv[:DEFENSE] = 31
     egg.iv[:SPECIAL_DEFENSE] = 31
@@ -156,7 +192,7 @@ def generate_starter_egg(type)
       species = egg.species
       move = GameData::Species.get(species).egg_moves
       egg.ability_index = 2
-      egg.form = species != :ROWLET ? 0 : hisui_rand > 4 ? 1 : 0
+      egg.form = species != :ROWLET ? 0 : (hisui_rand > 4 ? 1 : 0)
       egg.iv[:HP] = 31
       egg.iv[:DEFENSE] = 31
       egg.iv[:SPECIAL_DEFENSE] = 31
@@ -182,7 +218,7 @@ def generate_starter_egg(type)
       species = egg.species
       move = GameData::Species.get(species).egg_moves
       egg.ability_index = 2
-      egg.form = species != :CYNDAQUIL ? 0 : hisui_rand > 4 ? 1 : 0
+      egg.form = species != :CYNDAQUIL ? 0 : (hisui_rand > 4 ? 1 : 0)
       egg.iv[:HP] = 31
       egg.iv[:DEFENSE] = 31
       egg.iv[:SPECIAL_DEFENSE] = 31
@@ -208,7 +244,90 @@ def generate_starter_egg(type)
       species = egg.species
       move = GameData::Species.get(species).egg_moves
       egg.ability_index = 2
-      egg.form = species != :OSHAWOTT ? 0 : hisui_rand > 4 ? 1 : 0
+      egg.form = species != :OSHAWOTT ? 0 : (hisui_rand > 4 ? 1 : 0)
+      egg.iv[:HP] = 31
+      egg.iv[:DEFENSE] = 31
+      egg.iv[:SPECIAL_DEFENSE] = 31
+      egg.learn_move(move[rand(move.length)])
+      egg.steps_to_hatch = 200
+      egg.calc_stats
+      vTSS(@event_id,"A")
+    else
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Make some space in your party and come back."))
+    end
+  end
+end
+
+def generate_starter_egg_vendor(type)
+  case type
+  when :GRASS
+    rand = rand(grass_starter_egg_vendor.length)
+    hisui_rand = rand(10)
+    egg = grass_starter_egg_vendor[rand]
+    if pbGenerateEgg(egg,_I("Random Hiker"))
+      pbMessage(_INTL("\\me[Egg get]\\PN received an Egg!"))
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Take good care of it!"))
+      egg = $Trainer.last_party
+      species = egg.species
+      move = GameData::Species.get(species).egg_moves
+      egg.ability_index = 2
+      egg.form = species != :ROWLET ? 0 : (hisui_rand > 4 ? 1 : 0)
+      egg.iv[:HP] = 31
+      egg.iv[:DEFENSE] = 31
+      egg.iv[:SPECIAL_DEFENSE] = 31
+      egg.learn_move(move[rand(move.length)])
+      egg.steps_to_hatch = 200
+      egg.calc_stats
+      vTSS(@event_id,"A")
+    else
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Make some space in your party and come back."))
+    end
+  when :FIRE
+    rand = rand(fire_starter_egg_vendor.length)
+    hisui_rand = rand(10)
+    egg = fire_starter_egg_vendor[rand]
+    if pbGenerateEgg(egg,_I("Random Hiker"))
+      pbMessage(_INTL("\\me[Egg get]\\PN received an Egg!"))
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Take good care of it!"))
+      egg = $Trainer.last_party
+      species = egg.species
+      move = GameData::Species.get(species).egg_moves
+      egg.ability_index = 2
+      egg.form = species != :CYNDAQUIL ? 0 : (hisui_rand > 4 ? 1 : 0)
+      egg.iv[:HP] = 31
+      egg.iv[:DEFENSE] = 31
+      egg.iv[:SPECIAL_DEFENSE] = 31
+      egg.learn_move(move[rand(move.length)])
+      egg.steps_to_hatch = 200
+      egg.calc_stats
+      vTSS(@event_id,"A")
+    else
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Make some space in your party and come back."))
+    end
+  when :WATER
+    rand = rand(water_starter_egg_vendor.length)
+    hisui_rand = rand(10)
+    egg = water_starter_egg_vendor[rand]
+    if pbGenerateEgg(egg,_I("Random Hiker"))
+      pbMessage(_INTL("\\me[Egg get]\\PN received an Egg!"))
+      pbCallBub(2,@event_id)
+      pbMessage(_INTL("\\[7fe00000]Take good care of it!"))
+      egg = $Trainer.last_party
+      species = egg.species
+      move = GameData::Species.get(species).egg_moves
+      egg.ability_index = 2
+      egg.form = species != :OSHAWOTT ? 0 : (hisui_rand > 4 ? 1 : 0)
       egg.iv[:HP] = 31
       egg.iv[:DEFENSE] = 31
       egg.iv[:SPECIAL_DEFENSE] = 31
