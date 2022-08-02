@@ -822,6 +822,6 @@
 983,ESPERWING,Esper Wing,01F,75,PSYCHIC,Special,90,20,100,NearOther,0,befh,"The user slashes with aura-enriched wings looking to land a critical hit. It raises the user's Speed stat."
 984,CEASELESSEDGE,Ceaseless Edge,0D0,60,DARK,Physical,100,15,0,NearOther,0,befh,"Traps foes in a violent swirling blade for four to five turns. High critical hit chance"
 985,TRIPLEARROWS,Triple Arrows,043,60,FIGHTING,Physical,100,10,100,NearOther,0,abefh,"The user delivers an axe kick, then fires three arrows. It lowers the target's Defense."
-986,VICTORYDANCE,Victory Dance,518,60,FIGHTING,Physical,100,10,100,NearOther,0,abefh,"The user delivers an axe kick, then fires three arrows. It lowers the target's Defense."
+986,VICTORYDANCE,Victory Dance,518,0,FIGHTING,Status,0,10,100,NearOther,0,abefh,"The user performs a dance to usher in victory, boosting its Attack, Defense and Speed."
 987,MOUNTAINGALE,Mountain Gale,000,120,ICE,Physical,85,10,0,NearOther,0,abef,"The user hurls giant chunks of ice at the target to inflict damage."
 988,COSMICFANGS,Cosmic Fangs,10A,85,COSMIC,Physical,100,10,0,NearOther,0,abefi,"The user charges with fangs bared. This attack can break barriers like Light Screen and Reflect."
