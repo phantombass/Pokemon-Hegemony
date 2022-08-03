@@ -2947,8 +2947,8 @@ class PokeBattle_Move_516 < PokeBattle_Move
       when :FIRE
         case type2
         when :GRASS; $appliance = 11
-        when :COSMIC,:ELECTRIC; $appliance = 8
-        when :NORMAL,:FLYING,:DRAGON,:POISON,:GROUND,:ROCK,:WATER,:BUG,:GHOST,:STEEL,:PSYCHIC,:ICE,:DARK,:FAIRY,:FIGHTING, type1; $appliance = 9
+        when :COSMIC; $appliance = 8
+        when :NORMAL,:FLYING,:ELECTRIC,:DRAGON,:POISON,:GROUND,:ROCK,:WATER,:BUG,:GHOST,:STEEL,:PSYCHIC,:ICE,:DARK,:FAIRY,:FIGHTING, type1; $appliance = 9
         end
       when :WATER
         case type2
@@ -3744,12 +3744,27 @@ end
 # Reduces Defense and Raises Speed after all hits (Scale Shot)
 #===============================================================================
 class PokeBattle_Move_193 < PokeBattle_Move_0C0
-  def pbEffectAfterAllHits(user,target)
-    if user.pbCanRaiseStatStage?(:SPEED,user,self)
-      user.pbRaiseStatStage(:SPEED,1,user)
+  def multiHitMove?; return true; end
+
+  def pbNumHits(user, targets)
+    hitChances = [
+      2, 2, 2, 2, 2, 2, 2,
+      3, 3, 3, 3, 3, 3, 3,
+      4, 4, 4,
+      5, 5, 5
+    ]
+    r = @battle.pbRandom(hitChances.length)
+    r = hitChances.length - 1 if user.hasActiveAbility?(:SKILLLINK)
+    return hitChances[r]
+  end
+
+  def pbEffectAfterAllHits(user, target)
+    return if target.damageState.unaffected
+    if user.pbCanLowerStatStage?(:DEFENSE, user, self)
+      user.pbLowerStatStage(:DEFENSE, 1, user)
     end
-    if user.pbCanLowerStatStage?(:DEFENSE,target)
-      user.pbLowerStatStage(:DEFENSE,1,user)
+    if user.pbCanRaiseStatStage?(:SPEED, user, self)
+      user.pbRaiseStatStage(:SPEED, 1, user)
     end
   end
 end

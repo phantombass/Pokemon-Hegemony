@@ -901,7 +901,7 @@
 882,TM123,TM123,TM123s,4,30000,"An energy-draining punch. The user's HP is restored by half the damage taken by the target.",3,0,0,DRAINPUNCH
 883,TM124,TM124,TM124s,4,30000,"The user attacks with a sinister beam of light. It may also confuse the target.",3,0,0,SIGNALBEAM
 884,TM125,TM125,TM125s,4,30000,"A strong wind blows away the foe's obstacles such as Light Screen. It also lowers their evasion.",3,0,0,DEFOG
-885,CASTFORMITE,Castformite,Castformites,1,0,"One variety of the mysterious Mega Stones. Have Castform hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
+885,CASTFORMITE,Castformite,Castformites,1,0,"A stone similar to a Mega Stone. Have Castform hold it, and this stone will enable it to Primal Revert during battle.",0,0,12,
 886,DURALUDONITE,Duraludonite,Duraludonites,1,0,"One variety of the mysterious Mega Stones. Have Duraludon hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
 887,CORVITE,Corvite,Corvites,1,0,"One of a variety of mysterious Mega Stones. Have Corviknight hold it, and it will be able to Mega Evolve.",0,0,12,
 888,CHIMECHONITE,Chimechonite,Chimechonites,1,0,"One variety of the mysterious Mega Stones. Have Chimecho hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
@@ -944,3 +944,5 @@
 925,TM129,TM129,TM129s,4,30000,"Use it to flee from any wild Pokémon. It can also warp to the last Pokémon Center visited.",3,0,0,TELEPORT
 926,TM130,TM130,TM130s,4,30000,"The target is scared off and replaced by another Pokémon in its party. In the wild, the battle ends.",3,0,0,ROAR
 927,TM131,TM131,TM131s,4,30000,"Striking opponents repeatedly makes the user's fists harder, raising the user's Attack stat.",3,0,0,POWERUPPUNCH
+928,TM132,TM132,TM132s,4,30000,"The user fires an EMP that reverses the polarity of the opponent. Is super-effective on Electric types.",3,0,0,POLARITYPULSE
+929,TM133,TM133,TM133s,4,30000,"A full-power attack that grows more powerful the more the user likes its Trainer.",3,0,0,RETURN
