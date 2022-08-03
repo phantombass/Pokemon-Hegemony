@@ -134,6 +134,14 @@ class PokeBattle_AI
 	#=============================================================================
 	# Choose an action
 	#=============================================================================
+	def pbEnemyShouldMegaEvolve?(idxBattler)
+    battler = @battle.battlers[idxBattler]
+    if @battle.pbCanMegaEvolve?(idxBattler)   # Simple "always should if possible"
+      PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
+      return true
+    end
+    return false
+  end
 	def pbDefaultChooseEnemyCommand(idxBattler)
 		return if pbEnemyShouldUseItem?(idxBattler)
 		return if pbEnemyShouldWithdraw?(idxBattler)

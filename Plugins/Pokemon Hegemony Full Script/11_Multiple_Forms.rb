@@ -6,6 +6,10 @@ MultipleForms.register(:CASTFORM,{
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
     next 0 if endBattle
     next 1 if pkmn.form == 1
+  },
+  "getPrimalForm" => proc { |pkmn|
+    next 1 if pkmn.hasItem?(:CASTFORMITE)
+    next
   }
 })
 
