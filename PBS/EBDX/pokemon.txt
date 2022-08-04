@@ -5960,6 +5960,13 @@ BattlerPlayerX          = 1
 BattlerPlayerY          = 29
 BattlerEnemyX           = 4
 #-------------------------------
+[KYUREM,5]
+BattlerEnemyY           = 18
+BattlerAltitude         = 0
+BattlerPlayerX          = 1
+BattlerPlayerY          = 29
+BattlerEnemyX           = 4
+#-------------------------------
 [CHESPIN]
 BattlerEnemyY           = 60
 BattlerAltitude         = 0
@@ -9306,14 +9313,6 @@ BattlerAltitude         = 0
 BattlerPlayerX          = 7
 BattlerPlayerY          = 47
 BattlerEnemyX           = 0
-#-------------------------------
-[KYUREM,5]
-SpriteScaleEnemy  		= 1
-BattlerEnemyY           = 21
-BattlerAltitude         = 0
-BattlerPlayerX          = 0
-BattlerPlayerY          = 46
-BattlerEnemyX           = 5
 #-------------------------------
 [OSHAWOTT2]
 BattlerEnemyY           = 64
