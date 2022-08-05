@@ -56,6 +56,9 @@ BattleEnv = FOREST
 [245]
 BattleEnv = FOREST
 #===================
+[250]
+BattleEnv = DIMENSION
+#===================
 [251]
 BattleEnv = CHAMPION
 #===================
