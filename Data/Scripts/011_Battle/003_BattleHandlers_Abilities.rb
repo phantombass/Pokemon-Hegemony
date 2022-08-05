@@ -1503,6 +1503,7 @@ BattleHandlers::TargetAbilityOnHit.add(:FLAMEBODY,
   proc { |ability,user,target,move,battle|
     next if !move.pbContactMove?(user)
     next if user.burned? || battle.pbRandom(100)>=30
+    next if !user.pbCanBurn?(target,false)
     battle.pbShowAbilitySplash(target)
     if user.pbCanBurn?(target,PokeBattle_SceneConstants::USE_ABILITY_SPLASH) &&
        user.affectedByContactEffect?(PokeBattle_SceneConstants::USE_ABILITY_SPLASH)
@@ -1611,6 +1612,7 @@ BattleHandlers::TargetAbilityOnHit.add(:POISONPOINT,
   proc { |ability,user,target,move,battle|
     next if !move.pbContactMove?(user)
     next if user.poisoned? || battle.pbRandom(100)>=30
+    next if !user.pbCanPoison?(target,false)
     battle.pbShowAbilitySplash(target)
     if user.pbCanPoison?(target,PokeBattle_SceneConstants::USE_ABILITY_SPLASH) &&
        user.affectedByContactEffect?(PokeBattle_SceneConstants::USE_ABILITY_SPLASH)
@@ -1646,6 +1648,7 @@ BattleHandlers::TargetAbilityOnHit.add(:SANDSPIT,
 BattleHandlers::TargetAbilityOnHit.add(:STATIC,
   proc { |ability,user,target,move,battle|
     next if !move.pbContactMove?(user)
+    next if !user.pbCanParalyze?(target,false)
     next if user.paralyzed? || battle.pbRandom(100)>=30
     battle.pbShowAbilitySplash(target)
     if user.pbCanParalyze?(target,PokeBattle_SceneConstants::USE_ABILITY_SPLASH) &&
