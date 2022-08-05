@@ -218,4 +218,5 @@ end
 
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
+  $game_switches[Settings::LEVEL_CAP_SWITCH] = true
 }
