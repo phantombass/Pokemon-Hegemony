@@ -2,9 +2,9 @@
 # Level Cap Scripts
 #===================================
 module Settings
-  LEVEL_CAP_SWITCH = true
+  LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.4.26"
+  GAME_VERSION = "1.4.27"
 end
 
 def write_version
@@ -112,12 +112,14 @@ def PokemonLoadScreen
         write_version
         Game.load(@save_data)
         $repel_toggle = true
+        $currentDexSearch = nil
         return
       when cmd_new_game
         @scene.pbEndScene
         write_version
         Game.start_new
         $repel_toggle = true
+        $currentDexSearch = nil
         return
       when cmd_mystery_gift
         pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
@@ -890,6 +892,15 @@ class PokeBattle_Battle
     end
     @scene.pbTrainerBattleSpeech("loss") if @decision == 2
     # reset all the EBDX queues
+    if $game_switches[73]
+      for i in 0...$Trainer.party.length
+        k = $Trainer.party.length - 1 - i
+        if $Trainer.party[k].hp <= 0
+          $PokemonBag.pbStoreItem($Trainer.party[k].item, 1) if $Trainer.party[k].item
+          $Trainer.party.delete_at(k)
+        end
+      end
+    end
     EliteBattle.reset(:nextBattleScript, :wildSpecies, :wildLevel, :wildForm, :nextBattleBack, :nextUI, :nextBattleData,
                      :wildSpecies, :wildLevel, :wildForm, :setBoss, :cachedBattler, :tviewport)
     EliteBattle.set(:setBoss, false)
@@ -911,7 +922,7 @@ class PokeBattle_Battle
     isPartic    = defeatedBattler.participants.include?(idxParty)
     hasExpShare = expShare.include?(idxParty)
     level = defeatedBattler.level
-    level_cap = LEVEL_CAP[$game_system.level_cap]
+    level_cap = $game_switches[Settings::LEVEL_CAP_SWITCH] ? LEVEL_CAP[$game_system.level_cap] : Settings::MAXIMUM_LEVEL
     level_cap_gap = growth_rate.exp_values[level_cap] - pkmn.exp
     # Main Exp calculation
     exp = 0
