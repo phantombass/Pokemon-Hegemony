@@ -47,8 +47,10 @@ class PokemonPauseMenu_Scene
       @sprites["infowindow"].visible = false
       @sprites["helpwindow"] = Window_UnformattedTextPokemon.newWithSize("",0,0,32,32,@viewport)
       @sprites["helpwindow"].visible = false
-      @sprites["levelcapwindow"] = Window_UnformattedTextPokemon.newWithSize("Level Cap: #{levelCap}",0,64,208,64,@viewport)
-      @sprites["levelcapwindow"].visible = true
+      if $game_switches[Settings::LEVEL_CAP_SWITCH]
+        @sprites["levelcapwindow"] =Window_UnformattedTextPokemon.newWithSize("Level Cap: #{levelCap}",0,64,208,64,@viewport)
+        @sprites["levelcapwindow"].visible = true
+      end
       @sprites["questwindow"] = Window_UnformattedTextPokemon.newWithSize("#{quest_info}",0,208,306,222,@viewport)
       pbSetSmallFont(@sprites["questwindow"].contents)
       @sprites["questwindow"].resizeToFit("#{quest_info}",306)
@@ -266,7 +268,7 @@ class PokemonPauseMenu
   def pbShowMenu
     @scene.pbRefresh
     @scene.pbShowMenu
-    @scene.pbShowLevelCap
+    @scene.pbShowLevelCap if $game_switches[Settings::LEVEL_CAP_SWITCH]
   end
 
   def pbStartPokemonMenu
@@ -483,7 +485,7 @@ class PokemonPauseMenu
           break
         else
           pbShowMenu
-          @scene.pbShowLevelCap
+          @scene.pbShowLevelCap if $game_switches[Settings::LEVEL_CAP_SWITCH]
         end
       elsif cmdOption>=0 && command==cmdOption
         pbPlayDecisionSE
