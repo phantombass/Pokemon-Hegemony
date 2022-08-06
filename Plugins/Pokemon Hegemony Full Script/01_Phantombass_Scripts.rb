@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.4.30"
+  GAME_VERSION = "1.4.31"
 end
 
 def write_version
@@ -892,7 +892,7 @@ class PokeBattle_Battle
     end
     @scene.pbTrainerBattleSpeech("loss") if @decision == 2
     # reset all the EBDX queues
-    if $game_switches[73]
+    if $game_switches[902]
       for i in 0...$Trainer.party.length
         k = $Trainer.party.length - 1 - i
         if $Trainer.party[k].hp <= 0
