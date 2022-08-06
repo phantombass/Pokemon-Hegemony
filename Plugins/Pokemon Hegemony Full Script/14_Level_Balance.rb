@@ -55,9 +55,9 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = levelcap
       end
       party[i].level = level
-      if $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] == false && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Trainers] == false
+      if $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] == false && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Rival] == false
         level += 3
-      elsif $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Trainers] == false
+      elsif $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Rival] == false
         level += 5
       end
       #now we evolve the pokémon, if applicable
@@ -116,7 +116,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       party[i].name=GameData::Species.get(species).name
       party[i].species=species
       party[i].calc_stats
-      if $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Ace] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Trainers] == false
+      if $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Ace] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Trainers] == false && $game_switches[LvlCap::Rival] == false
         party[i].reset_moves
       end
       end #end of for
