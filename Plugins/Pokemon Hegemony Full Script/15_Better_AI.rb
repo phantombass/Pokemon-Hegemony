@@ -23,8 +23,6 @@ Changes:
     ~ Powerful
   - If no moves fit the above conditions, choose a random one
 =end
-MEGAEVOMETHOD = 1 #if its 1, it will start as false and run checks to make sure it needs to, if 2, the opposite
-SPIRIT_POWERS = false
 #-------------------------------------------------------------------------------
 # AI skill levels:
 #     0:     Wild Pokémon
@@ -108,55 +106,12 @@ class PokeBattle_AI
 		$enem_should_switch = false
 		$targ_moves = []
 	end
-
-	def pbAIRandom(x); return rand(x); end
-
-	def pbStdDev(choices)
-		sum = 0
-		n   = 0
-		choices.each do |c|
-			sum += c[1]
-			n   += 1
-		end
-		return 0 if n<2
-		mean = sum.to_f/n.to_f
-		varianceTimesN = 0
-		choices.each do |c|
-			next if c[1]<=0
-			deviation = c[1].to_f-mean
-			varianceTimesN += deviation*deviation
-		end
-		# Using population standard deviation
-		# [(n-1) makes it a sample std dev, would be 0 with only 1 sample]
-		return Math.sqrt(varianceTimesN/n)
-	end
-
-	#=============================================================================
-	# Choose an action
-	#=============================================================================
 	def pbEnemyShouldMegaEvolve?(idxBattler)
-    battler = @battle.battlers[idxBattler]
-    if @battle.pbCanMegaEvolve?(idxBattler)   # Simple "always should if possible"
-      PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
-      return true
-    end
-    return false
+    return true
   end
-	def pbDefaultChooseEnemyCommand(idxBattler)
-		return if pbEnemyShouldUseItem?(idxBattler)
-		return if pbEnemyShouldWithdraw?(idxBattler)
-		return if @battle.pbAutoFightMenu(idxBattler)
-		@battle.pbRegisterMegaEvolution(idxBattler)
-		if SPIRIT_POWERS
-			@battle.pbRegisterSpiritPower(idxBattler) if pbEnemyShouldUseSpiritPower?(idxBattler)
-		end
-		pbChooseMoves(idxBattler)
-	end
-end
 
 #-------------------------------------------------------------------------------
 # Switching pkmn
-class PokeBattle_AI
 	#=============================================================================
 	# Decide whether the opponent should switch Pokémon
 	#=============================================================================
@@ -846,7 +801,7 @@ class PokeBattle_AI
           list.unshift(i) if pbAIRandom(100)<weight   # Put this Pokemon first
 				elsif moveType>=0 && Effectiveness.super_effective?(pbCalcTypeMod(moveType,battler,battler))
 					list.push(i)
-				elsif $role == :WINCON
+				elsif $role == :WINCON && @battle.pbCanChooseMove?(idxBattler,i,false)
 					list.push(i)
 				elsif moveData != nil && moveData.category == 0 && $role == :PHYSICALWALL
 					weight = 70
@@ -1211,7 +1166,7 @@ class PokeBattle_AI
 
 		user.eachMove do |m|
 			if Effectiveness.super_effective?(pbCalcTypeMod(m.type,user,target))
-				score += 20 if [:PHYSICALBREAKER,:SPECIALBREAKER,:REVENGER,:NONE].include?($role)
+				score += 20 if [:PHYSICALBREAKER,:SPECIALBREAKER,:REVENGEKILLER,:NONE].include?($role)
 				score += 30 if [:WINCON,:PHYSICALBREAKER,:SPECIALBREAKER,:SETUPSWEEPER,:NONE].include?($role) && (user.stages[:ATTACK]>0||user.stages[:SPECIAL_ATTACK]>0||user.stages[:SPEED]>0)
 			end
 		end
