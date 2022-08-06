@@ -13,6 +13,13 @@ MultipleForms.register(:CASTFORM,{
   }
 })
 
+MultipleForms.register(:NECROZMA,{
+  "getPrimalForm" => proc { |pkmn|
+    next pkmn.form + 2 if pkmn.hasItem?(:ULTRANECROZIUMZ) && (pkmn.form==1 || pkmn.form==2)
+    next
+  }
+})
+
 
 MultipleForms.register(:DIALGA,{
   "getForm" => proc { |pkmn|
