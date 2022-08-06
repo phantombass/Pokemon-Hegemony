@@ -17,13 +17,15 @@ module LvlCap
   Ace = 129                  #Switch for Ace Trainer Battles
   Hard = 900
   Insane = 902
+  Ironmon = 905
+  Kaizo = 906
 end
 
 
 Events.onTrainerPartyLoad+=proc {| sender, trainer |
    if trainer # Trainer data should exist to be loaded, but may not exist somehow
      party = trainer[0].party   # An array of the trainer's Pokémon
-    if $game_switches && $game_switches[LvlCap::Switch] && $Trainer
+    if $game_switches && $game_switches[LvlCap::Switch] && $Trainer && $game_switches[Settings::LEVEL_CAP_SWITCH]
        levelcap = $game_variables[LvlCap::LevelCap]
        badges = $Trainer.badge_count
        mlv = $Trainer.party.map { |e| e.level  }.max
