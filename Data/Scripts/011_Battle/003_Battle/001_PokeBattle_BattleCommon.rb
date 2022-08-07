@@ -14,9 +14,16 @@ module PokeBattle_BattleCommon
     currentBox = @peer.pbCurrentBox
     storedBox  = @peer.pbStorePokemon(pbPlayer,pkmn)
     if storedBox<0
-      pbDisplayPaused(_INTL("{1} has been added to your party.",pkmn.name))
-      @initialItems[0][pbPlayer.party.length-1] = pkmn.item_id if @initialItems
-      return
+      if $game_switches[LvlCap::Kaizo]
+        $PokemonBag.pbStoreItem($Trainer.party[0].item, 1) if $Trainer.party[0].item
+        $Trainer.remove_pokemon_at_index(0)
+        pbDisplayPaused(_INTL("{1} has replaced your former Pokémon.",pkmn.name))
+        return
+      else
+        pbDisplayPaused(_INTL("{1} has been added to your party.",pkmn.name))
+        @initialItems[0][pbPlayer.party.length-1] = pkmn.item_id if @initialItems
+        return
+      end
     end
     # Messages saying the Pokémon was stored in a PC box
     creator    = @peer.pbGetStorageCreatorName

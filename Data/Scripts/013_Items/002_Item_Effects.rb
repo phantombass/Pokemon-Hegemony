@@ -365,7 +365,12 @@ ItemHandlers::UseOnPokemon.addIf(proc { |item| GameData::Item.get(item).is_evolu
 )
 
 ItemHandlers::UseOnPokemon.add(:POTION,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,20,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,20,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.copy(:POTION,:BERRYJUICE,:SWEETHEART)
@@ -373,47 +378,92 @@ ItemHandlers::UseOnPokemon.copy(:POTION,:RAGECANDYBAR) if !Settings::RAGE_CANDY_
 
 ItemHandlers::UseOnPokemon.add(:SUPERPOTION,proc { |item,pkmn,scene|
   healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 60 : 50
-  next pbHPItem(pkmn,healAmt,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,healAmt,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:HYPERPOTION,proc { |item,pkmn,scene|
   healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 120 : 200
-  next pbHPItem(pkmn,healAmt,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,healAmt,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:MAXPOTION,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,pkmn.totalhp-pkmn.hp,scene)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,pkmn.totalhp-pkmn.hp,scene)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:FRESHWATER,proc { |item,pkmn,scene|
   healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 30 : 50
-  next pbHPItem(pkmn,healAmt,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,healAmt,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:SODAPOP,proc { |item,pkmn,scene|
   healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 50 : 60
-  next pbHPItem(pkmn,healAmt,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,healAmt,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:LEMONADE,proc { |item,pkmn,scene|
   healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 70 : 80
-  next pbHPItem(pkmn,healAmt,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,healAmt,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:MOOMOOMILK,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,100,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,100,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:ORANBERRY,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,10,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,10,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:SITRUSBERRY,proc { |item,pkmn,scene|
-  next pbHPItem(pkmn,pkmn.totalhp/4,scene,item)
+  if $game_switches[LvlCap::Ironmon] == false
+    next pbHPItem(pkmn,pkmn.totalhp/4,scene,item)
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:AWAKENING,proc { |item,pkmn,scene|
-  if pkmn.fainted? || pkmn.status != :SLEEP
+  if pkmn.fainted? || pkmn.status != :SLEEP || $game_switches[LvlCap::Ironmon]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -426,7 +476,7 @@ ItemHandlers::UseOnPokemon.add(:AWAKENING,proc { |item,pkmn,scene|
 ItemHandlers::UseOnPokemon.copy(:AWAKENING,:CHESTOBERRY,:BLUEFLUTE,:POKEFLUTE)
 
 ItemHandlers::UseOnPokemon.add(:ANTIDOTE,proc { |item,pkmn,scene|
-  if pkmn.fainted? || pkmn.status != :POISON
+  if pkmn.fainted? || pkmn.status != :POISON || $game_switches[LvlCap::Ironmon]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -439,7 +489,7 @@ ItemHandlers::UseOnPokemon.add(:ANTIDOTE,proc { |item,pkmn,scene|
 ItemHandlers::UseOnPokemon.copy(:ANTIDOTE,:PECHABERRY)
 
 ItemHandlers::UseOnPokemon.add(:BURNHEAL,proc { |item,pkmn,scene|
-  if pkmn.fainted? || pkmn.status != :BURN
+  if pkmn.fainted? || pkmn.status != :BURN || $game_switches[LvlCap::Ironmon]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -452,7 +502,7 @@ ItemHandlers::UseOnPokemon.add(:BURNHEAL,proc { |item,pkmn,scene|
 ItemHandlers::UseOnPokemon.copy(:BURNHEAL,:RAWSTBERRY)
 
 ItemHandlers::UseOnPokemon.add(:PARALYZEHEAL,proc { |item,pkmn,scene|
-  if pkmn.fainted? || pkmn.status != :PARALYSIS
+  if pkmn.fainted? || pkmn.status != :PARALYSIS || $game_switches[LvlCap::Ironmon]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -465,7 +515,7 @@ ItemHandlers::UseOnPokemon.add(:PARALYZEHEAL,proc { |item,pkmn,scene|
 ItemHandlers::UseOnPokemon.copy(:PARALYZEHEAL,:PARLYZHEAL,:CHERIBERRY)
 
 ItemHandlers::UseOnPokemon.add(:ICEHEAL,proc { |item,pkmn,scene|
-  if pkmn.fainted? || pkmn.status != :FROZEN
+  if pkmn.fainted? || pkmn.status != :FROZEN || $game_switches[LvlCap::Ironmon]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -478,7 +528,7 @@ ItemHandlers::UseOnPokemon.add(:ICEHEAL,proc { |item,pkmn,scene|
 ItemHandlers::UseOnPokemon.copy(:ICEHEAL,:ASPEARBERRY)
 
 ItemHandlers::UseOnPokemon.add(:FULLHEAL,proc { |item,pkmn,scene|
-  if pkmn.fainted? || pkmn.status == :NONE
+  if pkmn.fainted? || pkmn.status == :NONE || $game_switches[LvlCap::Ironmon]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -494,7 +544,7 @@ ItemHandlers::UseOnPokemon.copy(:FULLHEAL,
 ItemHandlers::UseOnPokemon.copy(:FULLHEAL,:RAGECANDYBAR) if Settings::RAGE_CANDY_BAR_CURES_STATUS_PROBLEMS
 
 ItemHandlers::UseOnPokemon.add(:FULLRESTORE,proc { |item,pkmn,scene|
-  if pkmn.fainted? || (pkmn.hp==pkmn.totalhp && pkmn.status == :NONE)
+  if pkmn.fainted? || (pkmn.hp==pkmn.totalhp && pkmn.status == :NONE) || $game_switches[LvlCap::Ironmon]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -510,7 +560,7 @@ ItemHandlers::UseOnPokemon.add(:FULLRESTORE,proc { |item,pkmn,scene|
 })
 
 ItemHandlers::UseOnPokemon.add(:REVIVE,proc { |item,pkmn,scene|
-  if !pkmn.fainted?
+  if !pkmn.fainted?  || $game_switches[73]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -523,7 +573,7 @@ ItemHandlers::UseOnPokemon.add(:REVIVE,proc { |item,pkmn,scene|
 })
 
 ItemHandlers::UseOnPokemon.add(:MAXREVIVE,proc { |item,pkmn,scene|
-  if !pkmn.fainted?
+  if !pkmn.fainted? || $game_switches[73]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -538,24 +588,34 @@ ItemHandlers::UseOnPokemon.copy(:MAXREVIVE,:MAXHONEY)
 
 ItemHandlers::UseOnPokemon.add(:ENERGYPOWDER,proc { |item,pkmn,scene|
   healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 60 : 50
-  if pbHPItem(pkmn,healAmt,scene,item)
-    pkmn.changeHappiness("powder")
-    next true
+  if $game_switches[LvlCap::Ironmon] == false
+    if pbHPItem(pkmn,healAmt,scene,item)
+      pkmn.changeHappiness("powder")
+      next true
+    end
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
   end
   next false
 })
 
 ItemHandlers::UseOnPokemon.add(:ENERGYROOT,proc { |item,pkmn,scene|
   healAmt = (Settings::REBALANCED_HEALING_ITEM_AMOUNTS ) ? 120 : 200
-  if pbHPItem(pkmn,healAmt,scene,item)
-    pkmn.changeHappiness("energyroot")
-    next true
+  if $game_switches[LvlCap::Ironmon] == false
+    if pbHPItem(pkmn,healAmt,scene,item)
+      pkmn.changeHappiness("energyroot")
+      next true
+    end
+  else
+    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    next false
   end
   next false
 })
 
 ItemHandlers::UseOnPokemon.add(:HEALPOWDER,proc { |item,pkmn,scene|
-  if pkmn.fainted? || pkmn.status == :NONE
+  if pkmn.fainted? || pkmn.status == :NONE || $game_switches[LvlCap::Ironmon]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -567,7 +627,7 @@ ItemHandlers::UseOnPokemon.add(:HEALPOWDER,proc { |item,pkmn,scene|
 })
 
 ItemHandlers::UseOnPokemon.add(:REVIVALHERB,proc { |item,pkmn,scene|
-  if !pkmn.fainted?
+  if !pkmn.fainted? || $game_switches[73]
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
@@ -580,53 +640,73 @@ ItemHandlers::UseOnPokemon.add(:REVIVALHERB,proc { |item,pkmn,scene|
 })
 
 ItemHandlers::UseOnPokemon.add(:ETHER,proc { |item,pkmn,scene|
-  move = scene.pbChooseMove(pkmn,_INTL("Restore which move?"))
-  next false if move<0
-  if pbRestorePP(pkmn,move,10)==0
+  if !$game_switches[LvlCap::Ironmon]
+    move = scene.pbChooseMove(pkmn,_INTL("Restore which move?"))
+    next false if move<0
+    if pbRestorePP(pkmn,move,10)==0
+      scene.pbDisplay(_INTL("It won't have any effect."))
+      next false
+    end
+    scene.pbDisplay(_INTL("PP was restored."))
+    next true
+  else
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
-  scene.pbDisplay(_INTL("PP was restored."))
-  next true
 })
 
 ItemHandlers::UseOnPokemon.copy(:ETHER,:LEPPABERRY)
 
 ItemHandlers::UseOnPokemon.add(:MAXETHER,proc { |item,pkmn,scene|
-  move = scene.pbChooseMove(pkmn,_INTL("Restore which move?"))
-  next false if move<0
-  if pbRestorePP(pkmn,move,pkmn.moves[move].total_pp-pkmn.moves[move].pp)==0
+  if !$game_switches[LvlCap::Ironmon]
+    move = scene.pbChooseMove(pkmn,_INTL("Restore which move?"))
+    next false if move<0
+    if pbRestorePP(pkmn,move,pkmn.moves[move].total_pp-pkmn.moves[move].pp)==0
+      scene.pbDisplay(_INTL("It won't have any effect."))
+      next false
+    end
+    scene.pbDisplay(_INTL("PP was restored."))
+    next true
+  else
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
-  scene.pbDisplay(_INTL("PP was restored."))
-  next true
 })
 
 ItemHandlers::UseOnPokemon.add(:ELIXIR,proc { |item,pkmn,scene|
-  pprestored = 0
-  for i in 0...pkmn.moves.length
-    pprestored += pbRestorePP(pkmn,i,10)
-  end
-  if pprestored==0
+  if !$game_switches[LvlCap::Ironmon]
+    pprestored = 0
+    for i in 0...pkmn.moves.length
+      pprestored += pbRestorePP(pkmn,i,10)
+    end
+    if pprestored==0
+      scene.pbDisplay(_INTL("It won't have any effect."))
+      next false
+    end
+    scene.pbDisplay(_INTL("PP was restored."))
+    next true
+  else
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
-  scene.pbDisplay(_INTL("PP was restored."))
-  next true
 })
 
 ItemHandlers::UseOnPokemon.add(:MAXELIXIR,proc { |item,pkmn,scene|
-  pprestored = 0
-  for i in 0...pkmn.moves.length
-    pprestored += pbRestorePP(pkmn,i,pkmn.moves[i].total_pp-pkmn.moves[i].pp)
-  end
-  if pprestored==0
+  if !$game_switches[LvlCap::Ironmon]
+    pprestored = 0
+    for i in 0...pkmn.moves.length
+      pprestored += pbRestorePP(pkmn,i,pkmn.moves[i].total_pp-pkmn.moves[i].pp)
+    end
+    if pprestored==0
+      scene.pbDisplay(_INTL("It won't have any effect."))
+      next false
+    end
+    scene.pbDisplay(_INTL("PP was restored."))
+    next true
+  else
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
-  scene.pbDisplay(_INTL("PP was restored."))
-  next true
 })
 
 ItemHandlers::UseOnPokemon.add(:PPUP,proc { |item,pkmn,scene|

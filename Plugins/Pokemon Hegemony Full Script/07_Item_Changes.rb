@@ -3,7 +3,7 @@
 #===================================
 class PokeBattle_Battle
   def pbItemMenu(idxBattler,firstAction)
-    if !@internalBattle || @opponent
+    if !@internalBattle || (@opponent && $game_switches[LvlCap::Ironmon] == false)
       pbDisplay(_INTL("Items can't be used here."))
       return false
     end
@@ -13,18 +13,37 @@ class PokeBattle_Battle
       battler = pkmn = nil
       case useType
       when 1, 2, 6, 7   # Use on Pokémon/Pokémon's move
-        pbDisplay(_INTL("Healing items can't be used here."))
-        next false
+        if $game_switches[LvlCap::Ironmon] == false
+          pbDisplay(_INTL("Healing items can't be used here."))
+          next false
+        else
+          if @battle.pbTeamLengthFromBattlerIndex(idxBattler) == 1
+            ret = item
+            break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, @bagWindow
+          end
+        end
       when 3, 8   # Use on battler
-        pbDisplay(_INTL("Healing items can't be used here."))
-        next false
+        if $game_switches[LvlCap::Ironmon] == false
+          pbDisplay(_INTL("Healing items can't be used here."))
+          next false
+        else
+          if @battle.pbPlayerBattlerCount == 1
+            ret = item
+            break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, @bagWindow
+          end
+        end
       when 4, 9   # Poké Balls
         next false if idxPkmn<0
         battler = @battlers[idxPkmn]
         pkmn    = battler.pokemon if battler
       when 5, 10   # No target (Poké Doll, Guard Spec., Launcher items)
-        pbDisplay(_INTL("Boosting items can't be used here."))
-        next false
+        if $game_switches[LvlCap::Ironmon] == false
+          pbDisplay(_INTL("Boosting items can't be used here."))
+          next false
+        else
+          ret = item
+          break if yield item.id, useType, idxBattler, -1, @bagWindow
+        end
       else
         next false
       end
@@ -133,7 +152,7 @@ end
 class BagWindowEBDX
   def confirm
     pbSEPlay("EBDX/SE_Select2")
-    if @index != 1
+    if @index != 1 && $game_switches[LvlCap::Ironmon] == false
       if @index == 4 && !GameData::Item.get(@lastUsed).is_poke_ball?
         hide
         @scene.pbDisplay(_INTL("Healing items can't be used."))
