@@ -235,15 +235,19 @@ def pbTrainerPC
 end
 
 def pbPokeCenterPC
-  pbMessage(_INTL("\\se[PC open]{1} booted up the PC.",$Trainer.name))
-  command = 0
-  loop do
-    commands = PokemonPCList.getCommandList
-    command = pbMessage(_INTL("Which PC should be accessed?"),commands,
-       commands.length,nil,command)
-    break if !PokemonPCList.callCommand(command)
+  if $game_switches[LvlCap::Ironmon] == true && $Trainer.party_full?
+    pbMessage(_INTL("You cannot switch out Pokémon until you have space in your party."))
+  else
+    pbMessage(_INTL("\\se[PC open]{1} booted up the PC.",$Trainer.name))
+    command = 0
+    loop do
+      commands = PokemonPCList.getCommandList
+      command = pbMessage(_INTL("Which PC should be accessed?"),commands,
+         commands.length,nil,command)
+      break if !PokemonPCList.callCommand(command)
+    end
+    pbSEPlay("PC close")
   end
-  pbSEPlay("PC close")
 end
 
 def pbGetStorageCreator

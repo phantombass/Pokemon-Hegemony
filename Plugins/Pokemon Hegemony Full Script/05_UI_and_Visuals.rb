@@ -47,10 +47,8 @@ class PokemonPauseMenu_Scene
       @sprites["infowindow"].visible = false
       @sprites["helpwindow"] = Window_UnformattedTextPokemon.newWithSize("",0,0,32,32,@viewport)
       @sprites["helpwindow"].visible = false
-      if $game_switches[Settings::LEVEL_CAP_SWITCH]
-        @sprites["levelcapwindow"] =Window_UnformattedTextPokemon.newWithSize("Level Cap: #{levelCap}",0,64,208,64,@viewport)
-        @sprites["levelcapwindow"].visible = true
-      end
+      @sprites["levelcapwindow"] =Window_UnformattedTextPokemon.newWithSize("Level Cap: #{levelCap}",0,64,208,64,@viewport)
+      @sprites["levelcapwindow"].visible = true
       @sprites["questwindow"] = Window_UnformattedTextPokemon.newWithSize("#{quest_info}",0,208,306,222,@viewport)
       pbSetSmallFont(@sprites["questwindow"].contents)
       @sprites["questwindow"].resizeToFit("#{quest_info}",306)
@@ -268,7 +266,7 @@ class PokemonPauseMenu
   def pbShowMenu
     @scene.pbRefresh
     @scene.pbShowMenu
-    @scene.pbShowLevelCap if $game_switches[Settings::LEVEL_CAP_SWITCH]
+    @scene.pbShowLevelCap if $game_switches[Settings::LEVEL_CAP_SWITCH] == true
   end
 
   def pbStartPokemonMenu
@@ -302,7 +300,7 @@ class PokemonPauseMenu
     commands[cmdBag = commands.length]       = _INTL("Bag") if !pbInBugContest?
     commands[cmdPokegear = commands.length]  = _INTL("Pokégear") if $Trainer.has_pokegear
     commands[cmdDexnav = commands.length]  = _INTL("DexNav") if $game_switches[401]
-    commands[cmdPC = commands.length]  = _INTL("PC Box Link") if $Trainer.party_count > 0
+    commands[cmdPC = commands.length]  = _INTL("PC Box Link") if $Trainer.party_count > 0 && $game_switches[LvlCap::Ironmon] == false
     commands[cmdQuest = commands.length] = _INTL("Quest Log")
     commands[cmdTrainer = commands.length]   = $Trainer.name
     if pbInSafari?
@@ -485,7 +483,7 @@ class PokemonPauseMenu
           break
         else
           pbShowMenu
-          @scene.pbShowLevelCap if $game_switches[Settings::LEVEL_CAP_SWITCH]
+          @scene.pbShowLevelCap if $game_switches[Settings::LEVEL_CAP_SWITCH] == true
         end
       elsif cmdOption>=0 && command==cmdOption
         pbPlayDecisionSE
@@ -2512,20 +2510,22 @@ class HallOfFame_Scene
   def writeWelcome
     overlay=@sprites["overlay"].bitmap
     overlay.clear
-    grind = $game_switches[75] ? " Minimal Grinding" : ($game_switches[900] ? "True" : "")
+    grind = $game_switches[75] ? "Minimal Grinding" : ($game_switches[900] ? "True " : "")
     nuzlocke = $game_switches[70] ? " Nuzlocke" : ""
+    kaizo = $game_switches[LvlCap::Kaizo] ? " Kaizo" : ""
+    ironmon = $game_switches[LvlCap::Ironmon] ? " Ironmon" : ""
     if $game_switches[900] && !$game_switches[902]
-      mode = "Hard Mode"
+      mode = " Hard Mode"
     elsif $game_switches[900] && $game_switches[903]
-      mode = "Expert Mode"
+      mode = " Expert Mode"
     elsif $game_switches[900] && $game_switches[902]
-      mode = "Insane Mode"
+      mode = " Insane Mode"
     else
-      mode = "Normal Mode"
+      mode = " Normal Mode"
     end
     pbDrawTextPositions(overlay,[[_INTL("Welcome to the Hall of Fame!"),
        Graphics.width/2,Graphics.height-80,2,BASECOLOR,SHADOWCOLOR]])
-       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}",grind,mode,nuzlocke),
+       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}",grind,mode,kaizo,ironmon,nuzlocke),
           Graphics.width/2,Graphics.height-56,2,BASECOLOR,SHADOWCOLOR]])
   end
 end
