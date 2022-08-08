@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.5.2"
+  GAME_VERSION = "1.5.3"
 end
 
 def write_version
@@ -493,11 +493,13 @@ Events.onEndBattle += proc { |_sender,e|
   $game_switches[89] = false
   $CanToggle = true
   $repel_toggle = true
-  for i in 0...$Trainer.party.length
-    k = $Trainer.party.length - 1 - i
-    if $Trainer.party[k].hp <= 0
-      $PokemonBag.pbStoreItem($Trainer.party[k].item, 1) if $Trainer.party[k].item
-      $Trainer.remove_pokemon_at_index(k)
+  if $game_switches[LvlCap::Ironmon] || $game_switches[902] == true
+    for i in 0...$Trainer.party.length
+      k = $Trainer.party.length - 1 - i
+      if $Trainer.party[k].hp <= 0
+        $PokemonBag.pbStoreItem($Trainer.party[k].item, 1) if $Trainer.party[k].item
+        $Trainer.remove_pokemon_at_index(k)
+      end
     end
   end
   $viewport.dispose
