@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.5.1"
+  GAME_VERSION = "1.5.2"
 end
 
 def write_version
@@ -926,7 +926,9 @@ class PokeBattle_Battle
     hasExpShare = expShare.include?(idxParty)
     level = defeatedBattler.level
     level_cap = $game_switches[Settings::LEVEL_CAP_SWITCH] ? LEVEL_CAP[$game_system.level_cap] : Settings::MAXIMUM_LEVEL
-    level_cap_gap = growth_rate.exp_values[level_cap] - pkmn.exp
+    if $game_switches[Settings::LEVEL_CAP_SWITCH]
+      level_cap_gap = growth_rate.exp_values[level_cap] - pkmn.exp
+    end
     # Main Exp calculation
     exp = 0
     a = level*defeatedBattler.pokemon.base_exp
@@ -961,14 +963,18 @@ class PokeBattle_Battle
       if pkmn.level >= level_cap
         exp /= 250
       end
-      if exp >= level_cap_gap
-        exp = level_cap_gap + 1
+      if $game_switches[Settings::LEVEL_CAP_SWITCH]
+        if exp >= level_cap_gap
+          exp = level_cap_gap + 1
+        end
       end
     else
-      if a <= level_cap_gap
-        exp = a
-      else
-        exp /= 7
+      if $game_switches[Settings::LEVEL_CAP_SWITCH]
+        if a <= level_cap_gap
+          exp = a
+        else
+          exp /= 7
+        end
       end
     end
     # Foreign Pokémon gain more Exp

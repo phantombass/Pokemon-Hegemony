@@ -1360,7 +1360,7 @@ ItemHandlers::UseOnPokemon.add(:IVMINSTONE,proc { |item,pkmn,scene|
   end
   stat = GameData::Stat.get(statChoice).id
   statDisp = GameData::Stat.get(statChoice).name
-    pkmn.iv[stat] = 31
+    pkmn.iv[stat] = 0
     pkmn.calc_stats
     scene.pbDisplay(_INTL("{1}'s {2} IVs were zeroed out!",pkmn.name,statDisp))
   next true
