@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.5.3"
+  GAME_VERSION = "1.5.4"
 end
 
 def write_version
@@ -1113,7 +1113,10 @@ class PokeBattle_Battle
        GameData::Type.exists?(:COSMIC) && battler.takesEntryHazardDamage?
       bTypes = battler.pbTypes(true)
       eff = Effectiveness.calculate(:COSMIC, bTypes[0], bTypes[1], bTypes[2])
-      if !Effectiveness.ineffective?(eff)
+      if battler.pbHasType?(:COSMIC)
+        battler.pbOwnSide.effects[PBEffects::CometShards] = false
+        pbDisplay(_INTL("{1} absorbed the Comet Shards!",battler.pbThis))
+      elsif !Effectiveness.ineffective?(eff)
         eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
         oldHP = battler.hp
         battler.pbReduceHP(battler.totalhp*eff/8,false)

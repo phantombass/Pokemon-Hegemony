@@ -7039,7 +7039,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = GLISCOR,NightHoldItem,RAZORFANG
+Evolutions = GLISCOR,HoldItem,RAZORFANG
 #-------------------------------
 [208]
 Name = Steelix
@@ -14903,7 +14903,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 30
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = CHANSEY,DayHoldItem,OVALSTONE
+Evolutions = CHANSEY,HoldItem,OVALSTONE
 Incense = LUCKINCENSE
 #-------------------------------
 [441]

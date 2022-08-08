@@ -425,6 +425,7 @@ class NewDexNav
       maps = GameData::MapMetadata.try_get($game_map.map_id)   # Map IDs for Zharonian Forme
       form = 0
       form = form
+      $form_hunt = GameData::Species.get($currentDexSearch[0]).form
       navRand = rand(3)
       itemRand = rand(3)
       $game_variables[400] = navRand
@@ -532,6 +533,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
         end
         pokemon.item = $game_variables[401]
         pokemon.name=GameData::Species.get(pokemon.species).name
+        pokemon.form = $form_hunt
         pokemon.ability_index = $game_variables[400]
         maps = GameData::MapMetadata.try_get($game_map.map_id)
         if $chain >= 0
