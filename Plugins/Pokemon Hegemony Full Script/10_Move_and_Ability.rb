@@ -3899,7 +3899,7 @@ class PokeBattle_Move_500 < PokeBattle_Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    if battle.field.weather==:Windy
+    if @battle.field.weather==:Windy
       @battle.pbDisplay(_INTL("The Wind prevented the hazards from being set!"))
       return true
     end
@@ -3988,11 +3988,16 @@ class PokeBattle_Move_511 < PokeBattle_StatUpMove
 end
 
 class PokeBattle_Move_512 < PokeBattle_Move
+  def canSetRocks?(user)
+    return false if user.pbOpposingSide.effects[PBEffects::StealthRock]
+    return false if user.pbOpposingSide.effects[PBEffects::CometShards]
+    return false if @battle.pbWeather == :Windy
+    return true
+  end
   def pbEffectGeneral(user)
-    if user.pbOpposingSide.effects[PBEffects::StealthRock] == false && user.pbOpposingSide.effects[PBEffects::CometShards] == false
+    if canSetRocks?(user)
       user.pbOpposingSide.effects[PBEffects::StealthRock] = true
-      @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",
-         user.pbOpposingTeam(true)))
+      @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",user.pbOpposingTeam(true)))
     end
   end
 end
