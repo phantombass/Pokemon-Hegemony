@@ -146,6 +146,7 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   def self.startRandomizer(skip = false)
     ret = $PokemonGlobal && $PokemonGlobal.isRandomizer
+    ret, cmd = self.ironmonKaizo if skip
     ret, cmd = self.randomizerSelection unless skip
     @randomizer = true
     # randomize data and cache it
