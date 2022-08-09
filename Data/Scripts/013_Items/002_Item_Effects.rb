@@ -368,7 +368,7 @@ ItemHandlers::UseOnPokemon.add(:POTION,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,20,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -381,7 +381,7 @@ ItemHandlers::UseOnPokemon.add(:SUPERPOTION,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,healAmt,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -391,7 +391,7 @@ ItemHandlers::UseOnPokemon.add(:HYPERPOTION,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,healAmt,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -400,7 +400,7 @@ ItemHandlers::UseOnPokemon.add(:MAXPOTION,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,pkmn.totalhp-pkmn.hp,scene)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -410,7 +410,7 @@ ItemHandlers::UseOnPokemon.add(:FRESHWATER,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,healAmt,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -420,7 +420,7 @@ ItemHandlers::UseOnPokemon.add(:SODAPOP,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,healAmt,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -430,7 +430,7 @@ ItemHandlers::UseOnPokemon.add(:LEMONADE,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,healAmt,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -439,7 +439,7 @@ ItemHandlers::UseOnPokemon.add(:MOOMOOMILK,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,100,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -448,7 +448,7 @@ ItemHandlers::UseOnPokemon.add(:ORANBERRY,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,10,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -457,7 +457,7 @@ ItemHandlers::UseOnPokemon.add(:SITRUSBERRY,proc { |item,pkmn,scene|
   if $game_switches[LvlCap::Ironmon] == false
     next pbHPItem(pkmn,pkmn.totalhp/4,scene,item)
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
 })
@@ -594,7 +594,7 @@ ItemHandlers::UseOnPokemon.add(:ENERGYPOWDER,proc { |item,pkmn,scene|
       next true
     end
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
   next false
@@ -608,7 +608,7 @@ ItemHandlers::UseOnPokemon.add(:ENERGYROOT,proc { |item,pkmn,scene|
       next true
     end
   else
-    pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
+    scene.pbDisplay(_INTL("You cannot use items outside of battle in Ironmon mode."))
     next false
   end
   next false

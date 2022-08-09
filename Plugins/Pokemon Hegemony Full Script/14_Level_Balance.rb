@@ -14,17 +14,30 @@ module LvlCap
   Rival = 87                 #Switch for Rival Battles
   LvlTrainer = 88
   Trainers = 72              #Switch for Trainers
-  Ace = 129                  #Switch for Ace Trainer Battles
+  Boss = 908                  #Switch for Ace Trainer Battles
   Hard = 900
   Insane = 902
   Ironmon = 905
   Kaizo = 906
+  Randomizer = 907
 end
 
 
 Events.onTrainerPartyLoad+=proc {| sender, trainer |
    if trainer # Trainer data should exist to be loaded, but may not exist somehow
      party = trainer[0].party   # An array of the trainer's Pokémon
+#     if $game_switches && $Trainer && ($game_switches[LvlCap::Kaizo] || $game_switches[LvlCap::Randomizer])
+#       if $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Rival] == false && $game_switches[LvlCap::Boss] == false
+#         for i in 0..party.length
+#           Console.echo _INTL("\n#{party[i]}\n")
+#           species = GameData::Species.get(party[i].species)
+#           Console.echo _INTL("\n#{species}\n")
+#           level = species.level
+#           pkmn = Pokemon.new(species,level)
+#           pkmn.reset_moves
+#         end
+#       end
+#     end
     if $game_switches && $game_switches[LvlCap::Switch] && $Trainer && $game_switches[Settings::LEVEL_CAP_SWITCH]
        levelcap = $game_variables[LvlCap::LevelCap]
        badges = $Trainer.badge_count
@@ -118,7 +131,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       party[i].name=GameData::Species.get(species).name
       party[i].species=species
       party[i].calc_stats
-      if $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Ace] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Trainers] == false && $game_switches[LvlCap::Rival] == false
+      if $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Boss] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Trainers] == false && $game_switches[LvlCap::Rival] == false
         party[i].reset_moves
       end
       end #end of for

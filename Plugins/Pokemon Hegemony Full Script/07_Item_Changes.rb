@@ -1,62 +1,6 @@
 #===================================
 #Items
 #===================================
-class PokeBattle_Battle
-  def pbItemMenu(idxBattler,firstAction)
-    if !@internalBattle || (@opponent && $game_switches[LvlCap::Ironmon] == false)
-      pbDisplay(_INTL("Items can't be used here."))
-      return false
-    end
-    ret = false
-    @scene.pbItemMenu(idxBattler,firstAction) { |item,useType,idxPkmn,idxMove,itemScene|
-      next false if !item
-      battler = pkmn = nil
-      case useType
-      when 1, 2, 6, 7   # Use on Pokémon/Pokémon's move
-        if $game_switches[LvlCap::Ironmon] == false
-          pbDisplay(_INTL("Healing items can't be used here."))
-          next false
-        else
-          if @battle.pbTeamLengthFromBattlerIndex(idxBattler) == 1
-            ret = item
-            break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, @bagWindow
-          end
-        end
-      when 3, 8   # Use on battler
-        if $game_switches[LvlCap::Ironmon] == false
-          pbDisplay(_INTL("Healing items can't be used here."))
-          next false
-        else
-          if @battle.pbPlayerBattlerCount == 1
-            ret = item
-            break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, @bagWindow
-          end
-        end
-      when 4, 9   # Poké Balls
-        next false if idxPkmn<0
-        battler = @battlers[idxPkmn]
-        pkmn    = battler.pokemon if battler
-      when 5, 10   # No target (Poké Doll, Guard Spec., Launcher items)
-        if $game_switches[LvlCap::Ironmon] == false
-          pbDisplay(_INTL("Boosting items can't be used here."))
-          next false
-        else
-          ret = item
-          break if yield item.id, useType, idxBattler, -1, @bagWindow
-        end
-      else
-        next false
-      end
-      next false if !pkmn
-      next false if !ItemHandlers.triggerCanUseInBattle(item,
-         pkmn,battler,idxMove,firstAction,self,itemScene)
-      next false if !pbRegisterItem(idxBattler,item,idxPkmn,idxMove)
-      ret = true
-      next true
-    }
-    return ret
-  end
-end
 
 BattleHandlers::DamageCalcTargetItem.add(:TARFRUBERRY,
   proc { |item,user,target,move,mults,baseDmg,type|
@@ -1474,7 +1418,7 @@ BattleHandlers::DamageCalcUserItem.add(:COSMICGEM,
 
 class PokeBattle_Battle
   def pbUsePokeBallInBattle(item,idxBattler,userBattler)
-    if $game_switches[89]
+    if $game_switches[89] && $game_switches[LvlCap::Kaizo] == false
       pbDisplay(_INTL("This Pokémon cannot be caught!"))
       $PokemonBag.pbStoreItem(item)
       return false
@@ -1495,10 +1439,7 @@ module PokeBattle_BattleCommon
     # Modify catch_rate depending on the Poké Ball's effect
     ultraBeast = [:NIHILEGO, :BUZZWOLE, :PHEROMOSA, :XURKITREE, :CELESTEELA,
                   :KARTANA, :GUZZLORD, :POIPOLE, :NAGANADEL, :STAKATAKA,
-                  :BLACEPHALON, :OSIRAM, :UNOWN, :BASTUNGSTEN, :FENIXET,
-                  :ORRUSTORM, :MAUSELYNX, :SOBEKODILE, :MERITEMPO, :CENTISEPA,
-                  :EYEROGLYPH, :PHIRENIX, :SATURABTU, :NEFLORA, :APOPHICARY,
-                  :FALKMUNRA, :CANINPU].include?(pkmn.species)
+                  :BLACEPHALON].include?(pkmn.species)
     if !ultraBeast || ball == :BEASTBALL
       catch_rate = BallHandlers.modifyCatchRate(ball,catch_rate,self,battler,ultraBeast)
     else

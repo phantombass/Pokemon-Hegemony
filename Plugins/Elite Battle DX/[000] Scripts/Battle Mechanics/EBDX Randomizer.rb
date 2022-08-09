@@ -22,13 +22,14 @@ module EliteBattle
     # refresh encounter tables
     $PokemonEncounters.setup($game_map.map_id) if $PokemonEncounters
   end
+
   def self.ironmonKaizo
     # list of all possible rules
     modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS]
     # list of rule descriptions
     # default
     added = []
-    for i in 0..modifiers.length
+    for i in 0..4
       added.push(modifiers[i])
     end
     # adds randomizer rules

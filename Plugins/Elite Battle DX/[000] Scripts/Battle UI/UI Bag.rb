@@ -698,11 +698,19 @@ class PokeBattle_Scene
           # are the only available Pokémon/battler to use the item on
           case useType
           when 1, 6   # Use on Pokémon
+            if $game_switches[LvlCap::Ironmon] == false
+              pbDisplay(_INTL("Healing items can't be used here."))
+              break
+            end
             if @battle.pbTeamLengthFromBattlerIndex(idxBattler) == 1
               ret = item
               break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, @bagWindow
             end
           when 3, 8   # Use on battler
+            if $game_switches[LvlCap::Ironmon] == false
+              pbDisplay(_INTL("Healing items can't be used here."))
+              break
+            end
             if @battle.pbPlayerBattlerCount == 1
               ret = item
               break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, @bagWindow
@@ -763,6 +771,10 @@ class PokeBattle_Scene
           # close out bag scene
           @bagWindow.closeCurrent
         when 5, 10   # Use with no target
+          if $game_switches[LvlCap::Ironmon] == false
+            pbDisplay(_INTL("Boosting items can't be used here."))
+            break
+          end
           ret = item
           break if yield item.id, useType, idxBattler, -1, @bagWindow
         end
