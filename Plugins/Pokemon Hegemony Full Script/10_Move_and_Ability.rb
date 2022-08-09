@@ -1132,7 +1132,15 @@ BattleHandlers::MoveBaseTypeModifierAbility.add(:STELLARIZE,
 
 BattleHandlers::MoveImmunityTargetAbility.add(:DIMENSIONBLOCK,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityHealAbility(user,target,move,type,:COSMIC,battle)
+    next if type != :COSMIC
+    battle.pbShowAbilitySplash(target)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("It doesn't affect {1}...",target.pbThis(true)))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",target.pbThis,target.abilityName,move.name))
+    end
+    battle.pbHideAbilitySplash(target)
+    next true
   }
 )
 
