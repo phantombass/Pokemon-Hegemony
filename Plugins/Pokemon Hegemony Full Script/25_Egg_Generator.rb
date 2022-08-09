@@ -235,7 +235,11 @@ def generate_starter_egg(type)
       species = egg.species
       move = GameData::Species.get(species).egg_moves
       egg.ability_index = 2
-      egg.form = species != :ROWLET ? 0 : (hisui_rand > 4 ? 1 : 0)
+      if species == :ROWLET
+        egg.form = hisui_rand>4 ? 1 : 0
+      else
+        egg.form = 0
+      end
       egg.iv[:HP] = 31
       egg.iv[:DEFENSE] = 31
       egg.iv[:SPECIAL_DEFENSE] = 31
@@ -261,7 +265,11 @@ def generate_starter_egg(type)
       species = egg.species
       move = GameData::Species.get(species).egg_moves
       egg.ability_index = 2
-      egg.form = species != :CYNDAQUIL ? 0 : (hisui_rand > 4 ? 1 : 0)
+      if species == :CYNDAQUIL
+        egg.form = hisui_rand>4 ? 1 : 0
+      else
+        egg.form = 0
+      end
       egg.iv[:HP] = 31
       egg.iv[:DEFENSE] = 31
       egg.iv[:SPECIAL_DEFENSE] = 31
@@ -287,7 +295,11 @@ def generate_starter_egg(type)
       species = egg.species
       move = GameData::Species.get(species).egg_moves
       egg.ability_index = 2
-      egg.form = species != :OSHAWOTT ? 0 : (hisui_rand > 4 ? 1 : 0)
+      if species == :OSHAWOTT
+        egg.form = hisui_rand>4 ? 1 : 0
+      else
+        egg.form = 0
+      end
       egg.iv[:HP] = 31
       egg.iv[:DEFENSE] = 31
       egg.iv[:SPECIAL_DEFENSE] = 31
