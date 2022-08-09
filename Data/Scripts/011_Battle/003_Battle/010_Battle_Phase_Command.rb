@@ -98,7 +98,7 @@ class PokeBattle_Battle
   end
 
   def pbItemMenu(idxBattler,firstAction)
-    if !@internalBattle
+    if !@internalBattle || (@opponent && $game_switches[LvlCap::Ironmon] == false)
       pbDisplay(_INTL("Items can't be used here."))
       return false
     end
