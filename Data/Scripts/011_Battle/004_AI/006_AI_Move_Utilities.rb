@@ -102,14 +102,17 @@ class PokeBattle_AI
       case type
       when :GROUND
         return true if target.airborne? && !move.hitsFlyingTargets?
+        return true if target.hasActiveAbility?(:MULTITOOL)
       when :FIRE
-        return true if target.hasActiveAbility?(:FLASHFIRE)
+        return true if target.hasActiveAbility?([:FLASHFIRE,:STEAMENGINE])
       when :WATER
-        return true if target.hasActiveAbility?([:DRYSKIN,:STORMDRAIN,:WATERABSORB])
+        return true if target.hasActiveAbility?([:DRYSKIN,:STORMDRAIN,:WATERABSORB,:STEAMENGINE,:WATERCOMPACTION])
       when :GRASS
         return true if target.hasActiveAbility?(:SAPSIPPER)
       when :ELECTRIC
         return true if target.hasActiveAbility?([:LIGHTNINGROD,:MOTORDRIVE,:VOLTABSORB])
+      when :COSMIC
+        return true if target.hasActiveAbility?(:DIMENSIONBLOCK)
       end
       return true if Effectiveness.not_very_effective?(typeMod) &&
                      target.hasActiveAbility?(:WONDERGUARD)

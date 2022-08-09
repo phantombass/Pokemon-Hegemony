@@ -3265,7 +3265,7 @@ Type1 = STEEL
 Type2 = FAIRY
 BaseStats = 95,95,120,95,125,120
 Abilities = LEVITATE
-HiddenAbility = PIXILATE
+HiddenAbility = DIMENSIONBLOCK
 #-------------------------------
 [CORVIKNIGHT,1]
 FormName = Mega Corviknight
@@ -3290,12 +3290,14 @@ FormName = Mega Torterra
 MegaStone = TORTERRANITE
 BaseStats = 95,139,105,76,105,105
 Abilities = THICKFAT
+HiddenAbility = THICKFAT
 #-------------------------------
 [INFERNAPE,1]
 FormName = Mega Infernape
 MegaStone = INFERNITE
 BaseStats = 76,119,111,98,119,111
 Abilities = MINDGAMES
+HiddenAbility = MINDGAMES
 #-------------------------------
 [EMPOLEON,1]
 FormName = Mega Empoleon
@@ -3304,6 +3306,7 @@ Type1 = WATER
 Type2 = STEEL
 BaseStats = 84,121,73,120,146,86
 Abilities = MAGICBOUNCE
+HiddenAbility = MAGICBOUNCE
 #-------------------------------
 [CHATOT,1]
 FormName = Mega Chatot
