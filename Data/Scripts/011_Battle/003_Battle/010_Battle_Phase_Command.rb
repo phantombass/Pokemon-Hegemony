@@ -212,6 +212,15 @@ class PokeBattle_Battle
         end
         case cmd
         when 0    # Fight
+          if !@opposes && $game_switches[LvlCap::Ironmon]
+            pbDisplay(_INTL("You can't fight wild Pokémon in Ironmon."))
+            next if actioned.length<=1
+            actioned.pop   # Forget this battler was done
+            idxBattler = actioned.last-1
+            pbCancelChoice(idxBattler+1)   # Clear the previous battler's choice
+            actioned.pop   # Forget the previous battler was done
+            break
+          end
           break if pbFightMenu(idxBattler)
         when 1    # Bag
           if pbItemMenu(idxBattler,actioned.length==1)
