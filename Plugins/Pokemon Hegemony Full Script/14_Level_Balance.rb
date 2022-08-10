@@ -70,10 +70,8 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = levelcap
       end
       party[i].level = level
-      if $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] == false && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Rival] == false
+      if $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Rival] == false
         level += 3
-      elsif $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Rival] == false
-        level += 5
       end
       #now we evolve the pokémon, if applicable
       #unused
