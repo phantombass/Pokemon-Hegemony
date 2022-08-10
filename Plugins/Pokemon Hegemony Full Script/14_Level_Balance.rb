@@ -39,7 +39,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
 #       end
 #     end
     if $game_switches && $game_switches[LvlCap::Switch] && $Trainer && $game_switches[Settings::LEVEL_CAP_SWITCH]
-       levelcap = $game_variables[LvlCap::LevelCap]
+       levelcap = LEVEL_CAP[$game_system.level_cap]
        badges = $Trainer.badge_count
        mlv = $Trainer.party.map { |e| e.level  }.max
       for i in 0...party.length
@@ -59,6 +59,8 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = (mlv-1) - rand(1)
         if $game_switches[LvlCap::Hard]
           level += 2
+        elsif $game_switches[LvlCap::Insane]
+          level += 4
         end
       elsif $game_switches[LvlCap::Rival] == true && $game_switches[LvlCap::Hard] == false
         level = party[i].level
@@ -70,9 +72,6 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = levelcap
       end
       party[i].level = level
-      if $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Rival] == false
-        level += 3
-      end
       #now we evolve the pokémon, if applicable
       #unused
       species = party[i].species

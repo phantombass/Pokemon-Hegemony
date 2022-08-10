@@ -226,6 +226,7 @@ end
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
+  $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false
   $game_switches[LvlCap::Rival] = false
   $game_switches[LvlCap::Gym] = false
 }
