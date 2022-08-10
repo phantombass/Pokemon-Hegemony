@@ -3008,11 +3008,6 @@ class PokeBattle_Move_516 < PokeBattle_Move
         when :NORMAL,:ICE,:GRASS,:BUG,:STEEL,:FAIRY,:GHOST,:POISON,:FLYING,:FIRE,:ELECTRIC,:PSYCHIC,:DRAGON,type1; $appliance = 8
         end
       end
-      if user.form!=$appliance
-        @battle.pbShowAbilitySplash(user,true)
-        user.pbChangeForm($appliance,_INTL("{1} transformed!",user.name))
-        @battle.pbHideAbilitySplash(user)
-      end
       case $appliance
       when 8
         user.effects[PBEffects::Type3] = :FIRE
@@ -3032,6 +3027,11 @@ class PokeBattle_Move_516 < PokeBattle_Move
       when 13
         user.effects[PBEffects::Type3] = :STEEL
         @npMove = :FLASHCANNON if GameData::Move.exists?(:FLASHCANNON)
+      end
+      if user.form!=$appliance
+        @battle.pbShowAbilitySplash(user,true)
+        user.pbChangeForm($appliance,_INTL("{1} transformed!",user.name))
+        @battle.pbHideAbilitySplash(user)
       end
     end
   end
