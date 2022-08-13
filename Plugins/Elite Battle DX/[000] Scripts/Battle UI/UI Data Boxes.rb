@@ -451,7 +451,6 @@ class DataBoxEBDX  <  SpriteWrapper
   #-----------------------------------------------------------------------------
   #  update databox
   #-----------------------------------------------------------------------------
-
   def update
     return if self.disposed?
     # updates the HP increase/decrease animation
@@ -508,7 +507,6 @@ class DataBoxEBDX  <  SpriteWrapper
     status = GameData::Status.get(@battler.status).id_number
     @sprites["status"].src_rect.y = @sprites["status"].src_rect.height * (status - 1)
     @sprites["status"].src_rect.width = status > 0 ? @sprites["status"].bitmap.width : 0
-
     # gets rid of the level up tone
     @sprites["base"].color.alpha -= 16 if @sprites["base"].color.alpha > 0
     # bobbing effect
