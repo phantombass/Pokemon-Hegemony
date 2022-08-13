@@ -107,7 +107,8 @@ class PokeBattle_AI
 		$targ_moves = []
 	end
 	def pbEnemyShouldMegaEvolve?(idxBattler)
-    return true
+		battler = @battle.battlers[idxBattler]
+    return true if battler.turnCount == 0
   end
 
 #-------------------------------------------------------------------------------
