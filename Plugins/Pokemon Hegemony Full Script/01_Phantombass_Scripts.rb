@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.5.14"
+  GAME_VERSION = "1.5.15"
 end
 
 def write_version
@@ -26,7 +26,7 @@ class Game_System
   end
 end
 
-LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85]
+LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,100]
 
 module Game
   def self.level_cap_update
