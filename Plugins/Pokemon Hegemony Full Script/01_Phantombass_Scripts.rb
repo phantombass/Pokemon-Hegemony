@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.5.13"
+  GAME_VERSION = "1.5.14"
 end
 
 def write_version
@@ -112,6 +112,7 @@ def PokemonLoadScreen
         write_version
         Game.load(@save_data)
         $repel_toggle = true
+        $appliance = nil
         $currentDexSearch = nil
         return
       when cmd_new_game
@@ -119,6 +120,7 @@ def PokemonLoadScreen
         write_version
         Game.start_new
         $repel_toggle = true
+        $appliance = nil
         $currentDexSearch = nil
         return
       when cmd_mystery_gift
