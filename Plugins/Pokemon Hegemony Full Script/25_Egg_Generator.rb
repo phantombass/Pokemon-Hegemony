@@ -86,6 +86,9 @@ def hisui_eggs
       egg_list.delete(e)
     end
   end
+  if egg_list == []
+    egg_list = [:CYNDAQUIL,:ROWLET,:OSHAWOTT,:QWILFISH,:SNEASEL,:GOOMY,:BERGMITE,:PETILIL,:ZORUA,:GROWLITHE,:VOLTORB,:RUFFLET,:BASCULIN]
+  end
   return egg_list
 end
 
@@ -135,6 +138,19 @@ def wartime_eggs
     if egg_list.include?(e)
       egg_list.delete(e)
     end
+  end
+  if egg_list == []
+    egg_list = [
+      :GROWLITHE2,
+      :DRIFLOON2,
+      :DREEPY2,
+      :GIBLE2,
+      :CARVANHA2,
+      :TREECKO2,
+      :TORCHIC2,
+      :MUDKIP2,
+      :FINNEON2
+    ]
   end
   return egg_list
 end
