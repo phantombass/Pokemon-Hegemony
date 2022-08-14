@@ -51,6 +51,7 @@ module QuestModule
     :Stage44 => "Battle Rotom.",
     :Stage45 => "Go to the Pokémon League.",
     :Stage46 => "Stop the Chancellor.",
+    :Stage47 => "Meet with Joseph.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -96,7 +97,8 @@ module QuestModule
     :Location43 => "Victory Road",
     :Location44 => "Abandoned Space Station",
     :Location45 => "Pokémon League",
-    :Location46 => "Pokémon League"
+    :Location46 => "Pokémon League",
+    :Location47 => "Helum City"
   }
 
 #====================================

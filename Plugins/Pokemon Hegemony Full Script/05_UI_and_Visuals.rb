@@ -1274,7 +1274,7 @@ class PokemonSummary_Scene
       cmdNature = -1
       cmdStatChange = -1
       cmdAbility = -1
-      min_grind_commands[cmdLevel = min_grind_commands.length] = _INTL("Set Level") if @page == 2 || @page == 3 || @page == 4
+      min_grind_commands[cmdLevel = min_grind_commands.length] = _INTL("Set Level") if (@page == 2 || @page == 3 || @page == 4) && ($game_switches[12] == false)
       min_grind_commands[cmdNature = min_grind_commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
       min_grind_commands[cmdStatChange = min_grind_commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
       min_grind_commands[cmdAbility = min_grind_commands.length] = _INTL("Change Ability") if @page == 2 || @page == 3 || @page == 4
@@ -2513,7 +2513,7 @@ class HallOfFame_Scene
     overlay=@sprites["overlay"].bitmap
     overlay.clear
     grind = $game_switches[75] ? "Minimal Grinding" : ($game_switches[900] ? "True " : "")
-    nuzlocke = $game_switches[70] ? " Nuzlocke" : ""
+    nuzlocke = $game_switches[73] ? " Nuzlocke" : ""
     kaizo = $game_switches[LvlCap::Kaizo] ? " Kaizo" : ""
     ironmon = $game_switches[LvlCap::Ironmon] ? " Ironmon" : ""
     if $game_switches[900] && !$game_switches[902]
@@ -2527,7 +2527,7 @@ class HallOfFame_Scene
     end
     pbDrawTextPositions(overlay,[[_INTL("Welcome to the Hall of Fame!"),
        Graphics.width/2,Graphics.height-80,2,BASECOLOR,SHADOWCOLOR]])
-       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}",grind,mode,kaizo,ironmon,nuzlocke),
+       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}",grind,mode,kaizo,ironmon,nuzlocke),
           Graphics.width/2,Graphics.height-56,2,BASECOLOR,SHADOWCOLOR]])
   end
 end
