@@ -29,7 +29,7 @@ module EliteBattle
     # list of rule descriptions
     # default
     added = []
-    for i in 0..4
+    for i in 0...modifiers.length
       added.push(modifiers[i])
     end
     # adds randomizer rules
@@ -55,6 +55,9 @@ module EliteBattle
       for i in 0...data[key].pokemon.length
         next if !species_exclusions.nil? && species_exclusions.include?(data[key].pokemon[i][:species])
         data[key].pokemon[i][:species] = EliteBattle.all_species.sample
+        data[key].pokemon[i].delete(:moves) if data[key].pokemon[i].key?(:moves)
+        data[key].pokemon[i].delete(:ability) if data[key].pokemon[i].key?(:ability)
+        data[key].pokemon[i].delete(:ability_index) if data[key].pokemon[i].key?(:ability_index)
       end
     end
     return data
@@ -105,7 +108,7 @@ module EliteBattle
     for org in GameData::Item.values
       loop do
         item = GameData::Item.values.sample
-        break if !GameData::Item.get(item).is_key_item?
+        break if GameData::Item.get(item).is_key_item?
       end
       new[org] = item
     end
@@ -252,7 +255,7 @@ def randomizeSpecies(species, static = false, gift = false)
   if !pokemon.nil?
     pokemon.species = species
     pokemon.calc_stats
-    pokemon.resetMoves
+    pokemon.reset_moves
   end
   return pokemon.nil? ? species : pokemon
 end
@@ -267,7 +270,8 @@ def randomizeItem(item)
       return item if item == ent
     end
   end
-  return EliteBattle.getRandomizedData(item, :ITEMS, item)
+  item = EliteBattle.getRandomizedData(item, :ITEMS, item)
+  return item
 end
 #===============================================================================
 #  aliasing to return randomized battlers
