@@ -52,6 +52,7 @@ module QuestModule
     :Stage45 => "Go to the Pokémon League.",
     :Stage46 => "Stop the Chancellor.",
     :Stage47 => "Meet with Joseph.",
+    :Stage48 => "Explore Helum Mine.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -98,7 +99,8 @@ module QuestModule
     :Location44 => "Abandoned Space Station",
     :Location45 => "Pokémon League",
     :Location46 => "Pokémon League",
-    :Location47 => "Helum City"
+    :Location47 => "Helum City",
+    :Location48 => "Helum Mine"
   }
 
 #====================================
