@@ -128,7 +128,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       party[i].name=GameData::Species.get(species).name
       party[i].species=species
       party[i].calc_stats
-      if $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Boss] == false && $game_switches[LvlCap::LvlTrainer] == false && $game_switches[LvlCap::Trainers] == false && $game_switches[LvlCap::Rival] == false && $game_switches[65] == true
+      if $game_switches[LvlCap::Kaizo] && ($game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Rival] == false && $game_switches[LvlCap::Trainers] == false && $game_switches[LvlCap::Boss] == false)
         party[i].reset_moves
       end
       end #end of for
