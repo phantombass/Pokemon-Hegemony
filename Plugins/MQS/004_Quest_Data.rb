@@ -53,6 +53,11 @@ module QuestModule
     :Stage46 => "Stop the Chancellor.",
     :Stage47 => "Meet with Joseph.",
     :Stage48 => "Explore Helum Mine.",
+    :Stage49 => "Begin your search for Bruce of OffCorp.",
+    :Stage50 => "Find where Bruce is talking about in his note.",
+    :Stage51 => "Go to DefCorp to look for Jackson.",
+    :Stage52 => "Find where the guard is talking about.",
+    :Stage53 => "Find the other 3 chambers across Parthenia.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -100,7 +105,12 @@ module QuestModule
     :Location45 => "Pokémon League",
     :Location46 => "Pokémon League",
     :Location47 => "Helum City",
-    :Location48 => "Helum Mine"
+    :Location48 => "Helum Mine",
+    :Location49 => "Boro Town",
+    :Location50 => "???",
+    :Location51 => "Chloros City",
+    :Location52 => "???",
+    :Location53 => "???"
   }
 
 #====================================
