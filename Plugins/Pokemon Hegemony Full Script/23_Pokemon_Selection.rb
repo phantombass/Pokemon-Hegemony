@@ -86,13 +86,13 @@ module PokemonSelection
   end
 
     def self.restore(*args)
-    hasSavedTeam=($PokemonGlobal.pokemonSelectionOriginalParty!=nil)
-    if hasSavedTeam
-      $Trainer.party=$PokemonGlobal.pokemonSelectionOriginalParty
-      $PokemonGlobal.pokemonSelectionOriginalParty=nil
-    end
+      hasSavedTeam=($PokemonGlobal.pokemonSelectionOriginalParty!=nil)
+      if hasSavedTeam
+        $Trainer.party=$PokemonGlobal.pokemonSelectionOriginalParty
+        $PokemonGlobal.pokemonSelectionOriginalParty=nil
+      end
       return hasSavedTeam
-  end
+    end
   end
 
   class PokemonRuleSet # Redefined to fix a bug
