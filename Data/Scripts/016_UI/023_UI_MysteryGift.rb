@@ -6,7 +6,7 @@
 # You should change it to your file's url once you upload it.
 #===============================================================================
 module MysteryGift
-  URL = "https://pastebin.com/raw/w6BqqUsm"
+  URL = "https://pastebin.com/raw/LvT6eF1h"
 end
 
 #===============================================================================
@@ -303,7 +303,7 @@ def pbDownloadMysteryGift(trainer)
           end
           sprites["msgwindow"].visible=true
           pbMessageDisplay(sprites["msgwindow"],_INTL("The gift has been received!")) { sprite.update }
-          pbMessageDisplay(sprites["msgwindow"],_INTL("Please pick up your gift from the deliveryman in any Poké Mart.")) { sprite.update }
+          pbMessageDisplay(sprites["msgwindow"],_INTL("Please pick up your gift from the deliveryman in any PMC.")) { sprite.update }
           trainer.mystery_gifts.push(gift)
           pending[command]=nil; pending.compact!
           opacityDiff = 16*20/Graphics.frame_rate

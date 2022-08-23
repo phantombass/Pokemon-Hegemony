@@ -826,3 +826,6 @@
 987,MOUNTAINGALE,Mountain Gale,000,120,ICE,Physical,85,10,0,NearOther,0,abef,"The user hurls giant chunks of ice at the target to inflict damage."
 988,COSMICFANGS,Cosmic Fangs,10A,85,COSMIC,Physical,100,10,0,NearOther,0,abefi,"The user charges with fangs bared. This attack can break barriers like Light Screen and Reflect."
 989,FAIRYSHAUNT,Fairy's Haunt,14F,75,FAIRY,Special,100,10,0,NearOther,0,abef,"The user steals the target's HP with a kiss. The user's HP is restored by over half of the damage dealt."
+990,BOUNCYBUBBLE,Bouncy Bubble,0DD,90,WATER,Special,100,10,0,NearOther,0,abef,"The user steals the target's HP with a bubbles. The user's HP is restored by half of the damage dealt."
+991,ZIPPYZAP,Zippy Zap,0A0,90,ELECTRIC,Physical,100,10,0,NearOther,2,abef,"The user charges the target at blinding speed. This attack always goes before any other move and always crits."
+992,DEEPFREEZE,Deep Freeze,00C,0,ICE,Status,90,10,100,NearOther,0,bef,"The target chilled to the bone and inflicting frostbite."
