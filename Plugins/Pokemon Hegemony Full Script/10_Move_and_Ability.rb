@@ -1106,19 +1106,43 @@ BattleHandlers::MoveImmunityTargetAbility.add(:LEGENDARMOR,
 
 BattleHandlers::MoveImmunityTargetAbility.add(:UNTAINTED,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityHealAbility(user,target,move,type,:DARK,battle)
+    next if type != :DARK
+    battle.pbShowAbilitySplash(target)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("It doesn't affect {1}...",target.pbThis(true)))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",target.pbThis,target.abilityName,move.name))
+    end
+    battle.pbHideAbilitySplash(target)
+    next true
   }
 )
 
 BattleHandlers::MoveImmunityTargetAbility.add(:CORRUPTION,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityHealAbility(user,target,move,type,:FAIRY,battle)
+    next if type != :FAIRY
+    battle.pbShowAbilitySplash(target)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("It doesn't affect {1}...",target.pbThis(true)))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",target.pbThis,target.abilityName,move.name))
+    end
+    battle.pbHideAbilitySplash(target)
+    next true
   }
 )
 
 BattleHandlers::MoveImmunityTargetAbility.add(:MENTALBLOCK,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityHealAbility(user,target,move,type,:PSYCHIC,battle)
+    next if type != :PSYCHIC
+    battle.pbShowAbilitySplash(target)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("It doesn't affect {1}...",target.pbThis(true)))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",target.pbThis,target.abilityName,move.name))
+    end
+    battle.pbHideAbilitySplash(target)
+    next true
   }
 )
 
@@ -2960,19 +2984,22 @@ class PokeBattle_Move_516 < PokeBattle_Move
         end
       when :WATER
         case type2
-        when :FIRE,:FLYING,:POISON,:DRAGON,:ICE,:STEEL; $appliance = 9
+        when :FIRE,:FLYING,:POISON,:DRAGON,:STEEL; $appliance = 9
         when :GRASS,:BUG; $appliance = 11
+        when :ICE; $appliance = 10
         when :NORMAL,:FIGHTING,:PSYCHIC,:ELECTRIC,:DARK,:FAIRY,:COSMIC, type1,:GHOST,:GROUND,:ROCK; $appliance = 12
         end
       when :ELECTRIC
         case type2
         when :FLYING,:GRASS,:GROUND,:DRAGON; $appliance = 10
         when :WATER,:ROCK,:GHOST,:PSYCHIC,type1,:DARK,:NORMAL,:FAIRY,:FIGHTING; $appliance = 12
-        when :BUG,:ICE,:STEEL,:COSMIC,:POISON,:FIRE; $appliance = 8
+        when :BUG,:ICE,:STEEL,:COSMIC,:POISON; $appliance = 8
+        when :FIRE; $appliace = 9
         end
       when :ICE
         case type2
-        when :ROCK,:GROUND,:WATER,:FIRE; $appliance = 9
+        when :ROCK,:GROUND,:FIRE; $appliance = 9
+        when :WATER; $appliance = 10
         when :GRASS, :BUG, :STEEL, :COSMIC, :FAIRY, type1, :NORMAL,:GHOST,:PSYCHIC,:FIGHTING,:DARK,:DRAGON,:FLYING,:POISON,:ELECTRIC; $appliance = 8
         end
       when :PSYCHIC
