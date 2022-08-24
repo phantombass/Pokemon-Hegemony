@@ -923,9 +923,9 @@
 904,CLEVERWING,Clever Wing,Clever Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Sp. Def stat of a single Pokémon.",1,0,0,
 905,SWIFTWING,Swift Wing,Swift Wings,2,100,"An item for use on a Pokémon. It slightly increases the base Speed stat of a single Pokémon.",1,0,0,
 906,WGARCHOMPITE,Wartime Garchompite,Wartime Garchompites,1,0,"One variety of the mysterious Mega Stones. Have Wartime Garchomp hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
-907,WSCEPTILITE,Wartime Sceptilite,Sceptilites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Sceptile hold it, and it will be able to Mega Evolve.",0,0,12,
-908,WBLAZIKENITE,Wartime Blazikenite,Blazikenites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Blaziken hold it, and it will be able to Mega Evolve.",0,0,12,
-909,WSWAMPERTITE,Wartime Swampertite,Swampertites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Swampert hold it, and it will be able to Mega Evolve.",0,0,12,
+907,WSCEPTILITE,Wartime Sceptilite,Wartime Sceptilites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Sceptile hold it, and it will be able to Mega Evolve.",0,0,12,
+908,WBLAZIKENITE,Wartime Blazikenite,Wartime Blazikenites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Blaziken hold it, and it will be able to Mega Evolve.",0,0,12,
+909,WSWAMPERTITE,Wartime Swampertite,Wartime Swampertites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Swampert hold it, and it will be able to Mega Evolve.",0,0,12,
 910,WSHARPEDONITE,Wartime Sharpedonite,Wartime Sharpedonites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Sharpedo hold it, and it will be able to Mega Evolve.",0,0,12,
 911,ETERNATITE,Eternatite,Eternatites,1,0,"One of a variety of mysterious Mega Stones. Have Eternatus hold it, and it will be able to Mega Evolve.",0,0,12,
 912,RILLABOOMITE,Rillaboomite,Rillaboomites,1,0,"One of a variety of mysterious Mega Stones. Have Rillaboom hold it, and it will be able to Mega Evolve.",0,0,12,
@@ -946,3 +946,5 @@
 927,TM131,TM131,TM131s,4,30000,"Striking opponents repeatedly makes the user's fists harder, raising the user's Attack stat.",3,0,0,POWERUPPUNCH
 928,TM132,TM132,TM132s,4,30000,"The user fires an EMP that reverses the polarity of the opponent. Is super-effective on Electric types.",3,0,0,POLARITYPULSE
 929,TM133,TM133,TM133s,4,30000,"A full-power attack that grows more powerful the more the user likes its Trainer.",3,0,0,RETURN
+930,TM134,TM134,TM134s,4,30000,"The target chilled to the bone and inflicting frostbite.",3,0,0,DEEPFREEZE
+931,WALTARIANITE,Wartime Altarianite,Wartime Altarianites,1,0,"One of a variety of mysterious Mega Stones. Have Wartime Altaria hold it, and it will be able to Mega Evolve.",0,0,12,
