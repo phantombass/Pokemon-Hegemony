@@ -235,7 +235,7 @@
 233,NEUROFORCE,Neuroforce,"Powers up moves that are super-effective."
 234,MINDGAMES,Mind Games,"Lowers foe's Sp.Atk on entry."
 235,DIMENSIONSHIFT,Dimension Shift,"Sets Trick Room on entry."
-236,UNTAINTED,Untained,"Protects the Pokémon from Dark-type attacks."
+236,UNTAINTED,Untainted,"Protects the Pokémon from Dark-type attacks."
 237,ENTYMATE,Entymate,"Normal-type moves become Bug-type moves."
 238,BAILOUT,Bail Out,"Every attacking move used switches this Pokémon out."
 239,IMPATIENT,Impatient,"Removes charge and recharge time."
