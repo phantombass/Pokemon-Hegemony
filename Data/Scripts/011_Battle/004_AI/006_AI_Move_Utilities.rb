@@ -113,6 +113,8 @@ class PokeBattle_AI
         return true if target.hasActiveAbility?([:LIGHTNINGROD,:MOTORDRIVE,:VOLTABSORB])
       when :COSMIC
         return true if target.hasActiveAbility?(:DIMENSIONBLOCK)
+      when :DARK
+        return true if target.hasActiveAbility?(:UNTAINTED)
       end
       return true if Effectiveness.not_very_effective?(typeMod) &&
                      target.hasActiveAbility?(:WONDERGUARD)
