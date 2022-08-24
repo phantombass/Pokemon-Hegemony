@@ -2520,8 +2520,6 @@ class HallOfFame_Scene
       mode = " Hard Mode"
     elsif $game_switches[900] && $game_switches[903]
       mode = " Expert Mode"
-    elsif $game_switches[900] && $game_switches[902]
-      mode = " Insane Mode"
     else
       mode = " Normal Mode"
     end
