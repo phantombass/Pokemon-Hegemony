@@ -28,11 +28,44 @@ LoseText = "You're great!"
 Pokemon = TOTODILE,7
 Pokemon = SHINX,7
 #-------------------------------
-[BUGCATCHER,Kale]
+[BUGCATCHER,Cale]
 LoseText = "You're great!"
 Pokemon = SURSKIT,7
 Pokemon = JOLTIK,7
 Pokemon = BLIPBUG,8
+#-------------------------------
+[BUGCATCHER,Cale,2]
+LoseText = "You're great!"
+Pokemon = SURSKIT,7
+Pokemon = JOLTIK,7
+Pokemon = BLIPBUG,8
+#-------------------------------
+[BUGCATCHER,Cale,4]
+LoseText = "You're great!"
+Pokemon = JOLTIK,13
+	Moves = VOLTSWITCH,STRUGGLEBUG,THUNDERWAVE,CHARGEBEAM
+	Ability = UNNERVE
+	Item = BERRYJUICE
+	Nature = TIMID
+	IV = 31,31,31,31,31,31
+	EV = 252,0,0,252,0,4
+	Role = SPEEDCONTROL
+Pokemon = DOTTLER,13
+	Moves = REFLECT,LIGHTSCREEN,STELLARWIND,RECOVER
+	Ability = MAGICGUARD
+	Item = LIGHTCLAY
+	IV = 31,31,31,31,31,31
+	EV = 252,0,252,0,0,4
+	Nature = BOLD
+	Role = SCREENS
+Pokemon = HERACROSS,13
+	Moves = PINMISSILE,BRICKBREAK,KNOCKOFF,AERIALACE
+	Ability = MOXIE
+	Item = COBABERRY
+	IV = 31,31,31,31,31,31
+	EV = 0,252,0,252,0,4
+	Nature = JOLLY
+	Role = WINCON
 #-------------------------------
 # Garon Woods
 #-------------------------------
