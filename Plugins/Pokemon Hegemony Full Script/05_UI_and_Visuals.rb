@@ -2513,6 +2513,7 @@ class HallOfFame_Scene
     overlay=@sprites["overlay"].bitmap
     overlay.clear
     grind = $game_switches[75] ? "Minimal Grinding" : ($game_switches[900] ? "True " : "")
+    inverse = $game_switches[909] ? "Inverse " : ""
     nuzlocke = $game_switches[73] ? " Nuzlocke" : ""
     kaizo = $game_switches[LvlCap::Kaizo] ? " Kaizo" : ""
     ironmon = $game_switches[LvlCap::Ironmon] ? " Ironmon" : ""
@@ -2520,14 +2521,12 @@ class HallOfFame_Scene
       mode = " Hard Mode"
     elsif $game_switches[900] && $game_switches[903]
       mode = " Expert Mode"
-    elsif $game_switches[900] && $game_switches[902]
-      mode = " Insane Mode"
     else
       mode = " Normal Mode"
     end
     pbDrawTextPositions(overlay,[[_INTL("Welcome to the Hall of Fame!"),
        Graphics.width/2,Graphics.height-80,2,BASECOLOR,SHADOWCOLOR]])
-       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}",grind,mode,kaizo,ironmon,nuzlocke),
+       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}{6}",grind,inverse,mode,kaizo,ironmon,nuzlocke),
           Graphics.width/2,Graphics.height-56,2,BASECOLOR,SHADOWCOLOR]])
   end
 end
