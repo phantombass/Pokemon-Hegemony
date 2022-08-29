@@ -1934,6 +1934,13 @@ class PokeBattle_AI
     when "0C0"
     #---------------------------------------------------------------------------
     when "0C1"
+      if user.role == :TARGETALLY
+        if user.opposes?(target)
+          score -= 100
+        else
+          score += 100 if user.turnCount == 0 && target.hasActiveAbility?(:JUSTIFIED)
+        end
+      end
     #---------------------------------------------------------------------------
     when "0C2"
     #---------------------------------------------------------------------------
