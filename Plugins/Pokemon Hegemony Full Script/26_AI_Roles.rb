@@ -126,3 +126,9 @@ GameData::Role.register({
   :id_number    => 16,
   :name         => _INTL("None")
 })
+
+GameData::Role.register({
+  :id           => :TARGETALLY,
+  :id_number    => 17,
+  :name         => _INTL("Target Ally")
+})

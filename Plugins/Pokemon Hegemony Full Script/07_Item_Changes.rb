@@ -1368,7 +1368,7 @@ ItemHandlers::UseOnPokemon.add(:ABILITYPATCH,proc { |item,pkmn,scene|
   for j in abils
     abilsarr.push([j[1],j[0]]) if j[0] && j[1]<2 && pkmn.ability_index != j[1]
   end
-  if pkmn.isSpecies?(:ZYGARDE) || pkmn.isSpecies?(:YAMASK) || pkmn.isSpecies?(:COFAGRIGUS) || pkmn.isSpecies?(:RUNERIGUS) || pkmn.isSpecies?(:ARCHEN) || pkmn.isSpecies?(:ARCHEOPS)
+  if pkmn.isSpecies?(:ZYGARDE) || pkmn.isSpecies?(:YAMASK) || pkmn.isSpecies?(:COFAGRIGUS) || pkmn.isSpecies?(:RUNERIGUS) || pkmn.isSpecies?(:ARCHEN) || pkmn.isSpecies?(:ARCHEOPS) || pkmn.isSpecies?(:CASTFORM) || pkmn.isSpecies?(:TYPENULL) || pkmn.isSpecies?(:SILVALLY)
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end
