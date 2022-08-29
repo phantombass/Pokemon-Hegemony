@@ -2836,6 +2836,9 @@ class PokeBattle_Move_0B3 < PokeBattle_Move
     when :Poison
       @npMove = :DEATHTOLL if GameData::Move.exists?(:POISON)
     else
+      if @battle.field.weather == :Storm
+        @npMove = :THUNDERBOLT if GameData::Move.exists?(:THUNDERBOLT)
+      end
       case @battle.environment
       when :Grass, :TallGrass, :Forest, :ForestGrass
         if Settings::MECHANICS_GENERATION >= 6
@@ -3640,6 +3643,9 @@ class PokeBattle_Move_18A < PokeBattle_Move
         ret = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
       when :Poison
         ret = :POISON if GameData::Type.exists?(:POISON)
+      end
+      if @battle.field.weather == :Storm
+        ret = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
       end
     end
     return ret
