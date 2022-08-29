@@ -179,9 +179,21 @@ BattleVS         = classicVS
 [FISHERMAN,Robert,4]
 BattleVS         = classicVS
 #-------------------------------
+[FISHERMAN,Dexter,4]
+BattleVS         = classicVS
+#-------------------------------
 [COOLTRAINER_F,Lisa,4]
 BattleVS         = classicVS
 #-------------------------------
+[COOLTRAINER_F,Marge,4]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_M,Zack,4]
+BattleVS         = classicVS
+#-------------------------------
 [RUINMANIAC,Darius,4]
+BattleVS         = classicVS
+#-------------------------------
+[HIKER,Tucker,4]
 BattleVS         = classicVS
 #-------------------------------
