@@ -185,6 +185,12 @@ BattleVS         = classicVS
 [COOLTRAINER_F,Lisa,4]
 BattleVS         = classicVS
 #-------------------------------
+[COOLTRAINER_F,Marge,4]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_M,Zack,4]
+BattleVS         = classicVS
+#-------------------------------
 [RUINMANIAC,Darius,4]
 BattleVS         = classicVS
 #-------------------------------
