@@ -41,7 +41,7 @@ module Game
     $game_temp.common_event_id = 0 if $game_temp
     $PokemonTemp.begunNewGame = true
     $game_system.initialize
-    $mobile_mg = false
+    MobileMysteryGift.initialize
     $scene = Scene_Map.new
     SaveData.load_new_game_values
     $MapFactory = PokemonMapFactory.new($data_system.start_map_id)
