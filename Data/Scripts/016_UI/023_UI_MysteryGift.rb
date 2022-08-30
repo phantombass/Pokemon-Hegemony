@@ -7,14 +7,10 @@
 #===============================================================================
 module MysteryGift
   URL = "https://pastebin.com/raw/LvT6eF1h"
+  MOBILE_FILE = "MysteryGift.txt"
 end
 
-class MobileMysteryGift
-    attr_accessor mobile_mg
-    def initialize
-        @mobile_mg = []
-    end
-end
+
 
 #===============================================================================
 # Creating a new Mystery Gift for the Master file, and editing an existing one.
@@ -255,11 +251,14 @@ def pbDownloadMysteryGift(trainer)
   pbFadeInAndShow(sprites)
   sprites["msgwindow"]=pbCreateMessageWindow
   pbMessageDisplay(sprites["msgwindow"],_INTL("Searching for a gift.\nPlease wait...\\wtnp[0]"))
+  mobile = IO.read(MysteryGift::MOBILE_FILE)
   string = pbDownloadToString(MysteryGift::URL)
   if nil_or_empty?(string)
     pbMessageDisplay(sprites["msgwindow"],_INTL("No new gifts are available."))
+  elsif $mobile_mg && nil_or_empty?(mobile)
+    pbMessageDisplay(sprites["msgwindow"],_INTL("No new gifts are available."))
   else
-    online = pbMysteryGiftDecrypt(string)
+    online=$mobile_mg ? pbMysteryGiftDecrypt(mobile) : pbMysteryGiftDecrypt(string)
     pending=[]
     for gift in online
       notgot=true
@@ -426,6 +425,7 @@ def pbReceiveMysteryGift(id)
   end
   return false
 end
+
 module Mobile_MG
   MOBILE_FILE = "MysteryGift.txt"
 end
