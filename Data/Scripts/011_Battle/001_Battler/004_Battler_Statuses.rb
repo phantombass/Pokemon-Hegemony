@@ -30,7 +30,7 @@ class PokeBattle_Battler
       if showMessages
         msg = ""
         case self.status
-        when :SLEEP     then msg = _INTL("{1} is already drowsy!", pbThis)
+        when :SLEEP     then msg = _INTL("{1} is already asleep!", pbThis)
         when :POISON    then msg = _INTL("{1} is already poisoned!", pbThis)
         when :BURN      then msg = _INTL("{1} already has a burn!", pbThis)
         when :PARALYSIS then msg = _INTL("{1} is already paralyzed!", pbThis)
@@ -231,7 +231,7 @@ class PokeBattle_Battler
     else
       case newStatus
       when :SLEEP
-        @battle.pbDisplay(_INTL("{1} became drowsy!", pbThis))
+        @battle.pbDisplay(_INTL("{1} fell asleep!", pbThis))
       when :POISON
         if newStatusCount>0
           @battle.pbDisplay(_INTL("{1} was badly poisoned!", pbThis))
@@ -408,7 +408,7 @@ class PokeBattle_Battler
     yield if block_given?
     case self.status
     when :SLEEP
-      @battle.pbDisplay(_INTL("{1} is drowsy.", pbThis))
+      @battle.pbDisplay(_INTL("{1} is asleep.", pbThis))
     when :POISON
       @battle.pbDisplay(_INTL("{1} was hurt by poison!", pbThis))
     when :BURN
@@ -426,7 +426,7 @@ class PokeBattle_Battler
     self.status = :NONE
     if showMessages
       case oldStatus
-      when :SLEEP     then @battle.pbDisplay(_INTL("{1} shook off the drowsiness!", pbThis))
+      when :SLEEP     then @battle.pbDisplay(_INTL("{1} woke up!", pbThis))
       when :POISON    then @battle.pbDisplay(_INTL("{1} was cured of its poisoning.", pbThis))
       when :BURN      then @battle.pbDisplay(_INTL("{1}'s burn was healed.", pbThis))
       when :PARALYSIS then @battle.pbDisplay(_INTL("{1} was cured of paralysis.", pbThis))

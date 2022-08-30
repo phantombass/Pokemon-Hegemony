@@ -213,25 +213,13 @@ class PokeBattle_Battler
     return true if skipAccuracyCheck
     # Check status problems and continue their effects/cure them
     case @status
-#    when :SLEEP
-#      self.statusCount -= 1
-#      if @statusCount<=0
-#        pbCureStatus
-#      else
-#        pbContinueStatus
-#        if !move.usableWhenAsleep?   # Snore/Sleep Talk
-#          @lastMoveFailed = true
-#          return false
-#        end
-#      end
     when :SLEEP
       self.statusCount -= 1
-      if @battle.pbRandom(100)<20
+      if @statusCount<=0
         pbCureStatus
       else
         pbContinueStatus
-        if @battle.pbRandom(100)<50
-          @battle.pbDisplay(_INTL("{1} is too drowsy to move.",pbThis))
+        if !move.usableWhenAsleep?   # Snore/Sleep Talk
           @lastMoveFailed = true
           return false
         end

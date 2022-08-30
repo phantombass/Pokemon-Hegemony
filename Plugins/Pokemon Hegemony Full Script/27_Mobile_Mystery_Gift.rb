@@ -3,7 +3,6 @@ module Mobile_MG
 end
 
 def write_mobile_mg
-  $mobile_mystery_gifts = []
   if safeExists?(Mobile_MG::MOBILE_FILE)
     $mobile_mystery_gifts=IO.read(Mobile_MG::MOBILE_FILE)
     $mobile_mystery_gifts=pbMysteryGiftDecrypt($mobile_mystery_gifts)
