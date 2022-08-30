@@ -9,6 +9,13 @@ module MysteryGift
   URL = "https://pastebin.com/raw/LvT6eF1h"
 end
 
+class MobileMysteryGift
+    attr_accessor mobile_mg
+    def initialize
+        @mobile_mg = []
+    end
+end
+
 #===============================================================================
 # Creating a new Mystery Gift for the Master file, and editing an existing one.
 #===============================================================================
