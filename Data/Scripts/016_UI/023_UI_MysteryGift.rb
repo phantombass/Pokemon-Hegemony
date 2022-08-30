@@ -9,7 +9,7 @@ module MysteryGift
   URL = "https://pastebin.com/raw/LvT6eF1h"
 end
 class MobileMysteryGift
-    attr_accessor mobile_mg
+    attr_accessor :mobile_mg
     def initialize
         @mobile_mg = []
     end
