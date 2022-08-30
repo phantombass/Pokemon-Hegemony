@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.6.0"
+  GAME_VERSION = "1.6.5"
 end
 
 def write_version
@@ -41,7 +41,7 @@ module Game
     $game_temp.common_event_id = 0 if $game_temp
     $PokemonTemp.begunNewGame = true
     $game_system.initialize
-    MobileMysteryGift.initialize
+    $mobile_mystery_gifts = []
     $scene = Scene_Map.new
     SaveData.load_new_game_values
     $MapFactory = PokemonMapFactory.new($data_system.start_map_id)

@@ -4414,13 +4414,15 @@ Pokemon = GOLETT,21
 	EV = 252,252,4,0,0,0
 	Nature = ADAMANT
 	Ability = IRONFIST
+	Role = HAZARDLEAD
 Pokemon = KLINK,21
 	Item = BERRYJUICE
-	Moves = OMINOUSWIND,SLUDGE,HYPNOSIS,CURSE
+	Moves = MIRRORSHOT,MIRRORRUSH,ROUND,CHARGEBEAM
 	IV = 31,0,31,31,31,31
 	EV = 0,0,0,252,252,4
 	Nature = TIMID
 	Ability = COMPOSURE
+	Role = SPECIALBREAKER
 Pokemon = POLTEAGEIST,21
 	Ability = WEAKARMOR
 	Item = WHITEHERB
@@ -4428,6 +4430,7 @@ Pokemon = POLTEAGEIST,21
 	IV = 31,0,31,31,31,31
 	EV = 252,0,0,252,4,0
 	Nature = MODEST
+	Role = SETUPSWEEPER
 #-------------------------------
 [TEAMROCKET_M,Grunt,1]
 LoseText = "Ugh. Wasn't ready for that."
