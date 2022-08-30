@@ -76,6 +76,30 @@ class PokeBattle_Battle
 #    if pbGetOwnerFromBattlerIndex(idxBattler).trainer_type == :BUGCATCHER
 #      return _INTL("Mega Net")
 #    end
+    case pbGetOwnerFromBattlerIndex(idxBattler).trainer_type
+    when :ARMYBOSS
+      return _INTL("Mega Cuff")
+    when :NAVYBOSS
+      return _INTL("Mega Chain")
+    when :LEADER_Sabrina
+      return _INTL("Mega Whip")
+    when :LEADER_Erika
+      return _INTL("Mega Necklace")
+    when :LEADER_Surge
+      return _INTL("Mega Boots")
+    when :LEADER_Winslow
+      return _INTL("Mega Hourglass")
+    when :LEADER_Brock
+      return _INTL("Mega Stone")
+    when :LEADER_Jackson
+      return _INTL("Mega Shield")
+    when :LEADER_Misty
+      return _INTL("Mega Bracelet")
+    when :RIVAL2
+      return _INTL("Mega Scroll")
+    when :CHANCELLOR
+      return _INTL("Mega Amulet")
+    end
     return _INTL("Mega Ring")
   end
 

@@ -31,6 +31,10 @@ class Player < Trainer
       self.refresh_accessible_dexes
     end
 
+    def set_all_seen
+      GameData::Species.each { |s| set_seen(s) }
+    end
+
     #===========================================================================
 
     # Sets the given species as seen in the Pokédex.
