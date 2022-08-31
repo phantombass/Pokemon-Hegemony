@@ -212,7 +212,7 @@ class PokeBattle_Battle
         end
         case cmd
         when 0    # Fight
-          if !@opposes && $game_switches[LvlCap::Ironmon]
+          if !@opponent && $game_switches[LvlCap::Ironmon]
             pbDisplay(_INTL("You can't fight wild Pokémon in Ironmon."))
             next if actioned.length<=1
             actioned.pop   # Forget this battler was done
