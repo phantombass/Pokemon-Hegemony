@@ -58,6 +58,8 @@ module QuestModule
     :Stage51 => "Go to DefCorp to look for Jackson.",
     :Stage52 => "Find where the guard is talking about.",
     :Stage53 => "Find the other 3 chambers across Parthenia.",
+    :Stage54 => "Meet Joseph.",
+    :Stage55 => "Find the Dojo Master.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -110,7 +112,9 @@ module QuestModule
     :Location50 => "???",
     :Location51 => "Chloros City",
     :Location52 => "???",
-    :Location53 => "???"
+    :Location53 => "???",
+    :Location54 => "Oxy Town",
+    :Location55 => "Ferro Village"
   }
 
 #====================================

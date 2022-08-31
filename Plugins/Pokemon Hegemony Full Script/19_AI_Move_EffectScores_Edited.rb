@@ -1969,9 +1969,11 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "0CF"
       score += 40 if target.effects[PBEffects::Trapping]==0
+      score += 60 if user.turnCount == 0 && user.role == :TOXICSTALLER
     #---------------------------------------------------------------------------
     when "0D0"
       score += 40 if target.effects[PBEffects::Trapping]==0
+      score += 60 if user.turnCount == 0 && user.role == :TOXICSTALLER
     #---------------------------------------------------------------------------
     when "0D1"
     #---------------------------------------------------------------------------
