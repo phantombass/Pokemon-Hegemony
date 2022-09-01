@@ -830,3 +830,4 @@
 991,ZIPPYZAP,Zippy Zap,0A0,90,ELECTRIC,Physical,100,10,0,NearOther,2,abef,"The user charges the target at blinding speed. This attack always goes before any other move and always crits."
 992,DEEPFREEZE,Deep Freeze,00C,0,ICE,Status,90,10,100,NearOther,0,bef,"The target chilled to the bone and inflicting frostbite."
 993,SPRINGTIDESTORM,Springtide Storm,519,105,FAIRY,Special,95,5,30,NearOther,0,abef,"The user attacks by wrapping the target in fierce winds that may lower the target's Defense and Sp.Def."
+994,BEATUP2,Beat Up,0C1,1,DARK,Physical,100,10,0,NearAlly,0,bef,"The user gets all the party Pokémon to attack the foe. The more party Pokémon, the more damage."

@@ -922,14 +922,22 @@ class PokeBattle_AI
 			PBDebug.log(logMsg)
 		end
 		# Find any preferred moves and just choose from them
+		battler = @battle.battlers[idxBattler]
 		if skill == PBTrainerAI.minimumSkill
-			battler = @battle.battlers[idxBattler]
 			battler.eachMoveWithIndex do |_m,i|
         #next if !@battle.pbCanChooseMove?(idxBattler,i,false)
         choices.push(i)   # Move index, score, target
       end
 			memento = choices[0][0]
 			@battle.pbRegisterMove(idxBattler,memento,false)
+		end
+		if battler.role == :TARGETALLY
+			battler.eachMoveWithIndex do |_m,i|
+        #next if !@battle.pbCanChooseMove?(idxBattler,i,false)
+        choices.push(i)   # Move index, score, target
+      end
+			beatup = choices[0][0]
+			@battle.pbRegisterMove(idxBattler,beatup,false)
 		end
 		if !wildBattler && skill>=PBTrainerAI.highSkill && maxScore>100
 			stDev = pbStdDev(choices)
@@ -1027,6 +1035,7 @@ class PokeBattle_AI
 					break
 				end
 			else
+				battler = @battle.battlers[idxBattler]
 				@battle.pbRegisterMove(idxBattler,$nextMove,false)
 				@battle.pbRegisterTarget(idxBattler,$nextTarget) if $nextTarget>=0
 				$nextQue = 0
