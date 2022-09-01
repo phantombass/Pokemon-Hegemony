@@ -59,6 +59,9 @@ module BattleScripts
       pname = $Trainer.name
       rname = $game_variables[12]
       @scene.pbTrainerSpeak("I have heard good things about you from #{rname}! Let's see if he was right.")
+      @battle.field.pbWeather = :StrongWinds
+      $gym_gimmick = true
+      @scene.pbDisplay("A Delta Stream brewed!")
     end
   }
 
@@ -69,8 +72,10 @@ module BattleScripts
       if $game_switches[LvlCap::Expert]
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
+        @battle.field.effects[PBEffects::TrickRoom] = -1
         $gym_gimmick = true
-        @scene.pbDisplay("The battlefield got permanently grassy!")
+        @scene.pbDisplay("The battlefield got permanently weird!")
+        @scene.pbDisplay("The dimensions were permanently twisted!")
       end
     end
 }
