@@ -59,8 +59,9 @@ module BattleScripts
       pname = $Trainer.name
       rname = $game_variables[12]
       @scene.pbTrainerSpeak("I have heard good things about you from #{rname}! Let's see if he was right.")
-      $gym_taunt = true
-      @scene.pbDisplay("#{pname}'s Pokémon have been permanently taunted!")
+      @battle.field.pbWeather = :StrongWinds
+      $gym_gimmick = true
+      @scene.pbDisplay("A Delta Stream brewed!")
     end
   }
 
