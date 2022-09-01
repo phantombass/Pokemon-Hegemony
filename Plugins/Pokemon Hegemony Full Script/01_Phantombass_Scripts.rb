@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.7.3"
+  GAME_VERSION = "1.7.5"
 end
 
 def write_version
@@ -43,6 +43,7 @@ module Game
     $game_system.initialize
     $mobile_mystery_gifts = []
     $gym_gimmick = false
+    $gym_weather = false
     $scene = Scene_Map.new
     SaveData.load_new_game_values
     $MapFactory = PokemonMapFactory.new($data_system.start_map_id)
@@ -116,6 +117,8 @@ def PokemonLoadScreen
         $repel_toggle = true
         $appliance = nil
         $currentDexSearch = nil
+        $gym_gimmick = false
+        $gym_weather = false
         return
       when cmd_new_game
         @scene.pbEndScene
@@ -124,6 +127,8 @@ def PokemonLoadScreen
         $repel_toggle = true
         $appliance = nil
         $currentDexSearch = nil
+        $gym_gimmick = false
+        $gym_weather = false
         return
       when cmd_mystery_gift
         pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
