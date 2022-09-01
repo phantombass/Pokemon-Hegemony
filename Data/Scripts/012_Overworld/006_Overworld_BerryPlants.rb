@@ -109,7 +109,7 @@ class BerryPlantSprite
   def updatePlantDetails(berryData)
     return berryData if berryData[0]==0
     berryvalues = GameData::BerryPlant.get(berryData[1])
-    timeperstage = berryvalues.hours_per_stage * 3600
+    timeperstage = berryvalues.hours_per_stage * 0.1
     timenow=pbGetTimeNow
     if berryData.length>6
       # Gen 4 growth mechanisms
