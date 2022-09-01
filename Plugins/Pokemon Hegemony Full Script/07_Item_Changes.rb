@@ -1440,11 +1440,8 @@ module PokeBattle_BattleCommon
     ultraBeast = [:NIHILEGO, :BUZZWOLE, :PHEROMOSA, :XURKITREE, :CELESTEELA,
                   :KARTANA, :GUZZLORD, :POIPOLE, :NAGANADEL, :STAKATAKA,
                   :BLACEPHALON].include?(pkmn.species)
-    if !ultraBeast || ball == :BEASTBALL
-      catch_rate = BallHandlers.modifyCatchRate(ball,catch_rate,self,battler,ultraBeast)
-    else
-      catch_rate /= 10
-    end
+    catch_rate = BallHandlers.modifyCatchRate(ball,catch_rate,self,battler,ultraBeast)
+
     # First half of the shakes calculation
     a = battler.totalhp
     b = battler.hp
