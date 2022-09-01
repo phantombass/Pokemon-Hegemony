@@ -132,3 +132,9 @@ GameData::Role.register({
   :id_number    => 17,
   :name         => _INTL("Target Ally")
 })
+
+GameData::Role.register({
+  :id           => :REDIRECTION,
+  :id_number    => 18,
+  :name         => _INTL("Redirection")
+})

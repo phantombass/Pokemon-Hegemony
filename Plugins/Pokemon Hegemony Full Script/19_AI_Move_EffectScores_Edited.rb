@@ -1934,7 +1934,7 @@ class PokeBattle_AI
     when "0C0"
     #---------------------------------------------------------------------------
     when "0C1"
-      if user.role == :TARGETALLY
+      if $role_id == :TARGETALLY
         if user.opposes?(target)
           score -= 100
         else
@@ -1969,11 +1969,11 @@ class PokeBattle_AI
     #---------------------------------------------------------------------------
     when "0CF"
       score += 40 if target.effects[PBEffects::Trapping]==0
-      score += 60 if user.turnCount == 0 && user.role == :TOXICSTALLER
+      score += 60 if user.turnCount == 0 && $role_id == :TOXICSTALLER
     #---------------------------------------------------------------------------
     when "0D0"
       score += 40 if target.effects[PBEffects::Trapping]==0
-      score += 60 if user.turnCount == 0 && user.role == :TOXICSTALLER
+      score += 60 if user.turnCount == 0 && $role_id == :TOXICSTALLER
     #---------------------------------------------------------------------------
     when "0D1"
     #---------------------------------------------------------------------------
@@ -2607,6 +2607,8 @@ class PokeBattle_AI
         hasAlly = true
         break
       end
+      score += 80 if user.turnCount == 0 && hasAlly && $role_id == :REDIRECTION
+      score += 50 if user.turnCount > 0 && hasAlly && $role_id == :REDIRECTION && $shouldAttack == false
       score -= 90 if !hasAlly
     #---------------------------------------------------------------------------
     when "118"
@@ -3348,6 +3350,14 @@ class PokeBattle_AI
     when "518"
       score += 60 if user.turnCount==0
       score += 40 if [:SETUPSWEEPER,:WINCON,:PHYSICALBREAKER].include?($role_id) && ($shouldBoost || $shouldBoostSpeed) && !$shouldHeal
+    when "520"
+      score += 20 if target.effects[PBEffects::MagnetRise]>0
+      score += 20 if target.effects[PBEffects::Telekinesis]>0
+      score += 20 if target.inTwoTurnAttack?("0C9","0CC")   # Fly, Bounce
+      score += 20 if target.pbHasType?(:FLYING)
+      score += 20 if target.hasActiveAbility?(:LEVITATE)
+      score += 20 if target.hasActiveAbility?(:MULTITOOL)
+      score += 20 if target.hasActiveItem?(:AIRBALLOON)
     end
     return score
   end
