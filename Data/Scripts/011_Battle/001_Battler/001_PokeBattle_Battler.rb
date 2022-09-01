@@ -282,7 +282,7 @@ class PokeBattle_Battler
       speedMult = BattleHandlers.triggerSpeedCalcItem(self.item,self,speedMult)
     end
     # Other effects
-    speedMult *= 2 if pbOwnSide.effects[PBEffects::Tailwind]>0
+    speedMult *= 2 if (pbOwnSide.effects[PBEffects::Tailwind]>0 || pbOwnSide.effects[PBEffects::Tailwind]<0 && $gym_gimmick == true)
     speedMult /= 2 if pbOwnSide.effects[PBEffects::Swamp]>0
     # Paralysis
     if status == :PARALYSIS && !hasActiveAbility?(:QUICKFEET)
