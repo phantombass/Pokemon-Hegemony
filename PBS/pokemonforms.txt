@@ -1342,9 +1342,11 @@ BattlerEnemyY = 6
 [SALAMENCE,1]
 FormName = Mega Salamence
 MegaStone = SALAMENCITE
+Type1 = DRAGON
+Type2 = COSMIC
 BaseStats = 95,145,130,120,120,90
-Abilities = AERILATE
-HiddenAbility = AERILATE
+Abilities = STELLARIZE
+HiddenAbility = STELLARIZE
 Height = 1.8
 Weight = 112.6
 Pokedex = It puts its forelegs inside its shell to streamline itself for flight. Salamence flies at high speeds over all kinds of topographical features.
@@ -2970,6 +2972,37 @@ BattlerPlayerY = 47
 BattlerEnemyX = -5
 BattlerShadowSize = 3
 #-------------------------------
+[ENAMORUS,1]
+Type1 = FAIRY
+Type2 = FLYING
+BaseStats = 74,115,110,46,135,100
+GenderRate = AlwaysMale
+GrowthRate = Slow
+BaseEXP = 270
+EffortPoints = 0,0,0,0,3,0
+Rareness = 3
+Happiness = 90
+Abilities = OVERCOAT
+HiddenAbility = OVERCOAT
+Moves = 1,FAIRYWIND,1,TACKLE,5,LEER,10,BLOCK,15,TWISTER,20,DRAININGKISS,25,IRONDEFENSE,30,IMPRISON,35,POWERTRICK,40,AIRSLASH,45,EXTRASENSORY,50,CRUNCH,55,PSYCHIC,60,MISTYTERRAIN,65,MOONBLAST,70,HURRICANE,75,SPRINGTIDESTORM
+TutorMoves = DAZZLINGGLEAM,MYSTICALFIRE,ATTRACT,BLOCK,BODYSLAM,BRICKBREAK,BRUTALSWING,BULKUP,BULLDOZE,CALMMIND,CONFIDE,DEFOG,DIG,FLASH,EARTHPOWER,EARTHQUAKE,ENDURE,EXPLOSION,FACADE,FLING,FLY,FOCUSBLAST,FRUSTRATION,GIGAIMPACT,GRASSKNOT,GRAVITY,HIDDENPOWER,HYPERBEAM,IMPRISON,IRONTAIL,KNOCKOFF,MUDSHOT,OUTRAGE,PAYBACK,PROTECT,PSYCHIC,REST,RETURN,ROCKPOLISH,ROCKSLIDE,ROCKSMASH,ROCKTOMB,ROLEPLAY,ROUND,SANDSTORM,SANDTOMB,SCARYFACE,SELFDESTRUCT,SLEEPTALK,SLUDGEBOMB,SLUDGEWAVE,SMACKDOWN,SNORE,STEALTHROCK,STONEEDGE,STRENGTH,SUBSTITUTE,SUPERPOWER,SWAGGER,SWORDSDANCE,TOXIC,UTURN,WEATHERBALL
+Compatibility = Undiscovered
+StepsToHatch = 30855
+Height = 1.5
+Weight = 68.0
+Color = Brown
+Shape = HeadArms
+Kind = Abundance
+Pokedex = When it flies from across the sea, the bitter winter comes to an end. Enamorus’s love gives rise to the budding of fresh life.
+FormName = Incarnate Forme
+Generation = 5
+BattlerPlayerX = 0
+BattlerPlayerY = 44
+BattlerEnemyX = 0
+BattlerEnemyY = 6
+BattlerShadowX = 0
+BattlerShadowSize = 3
+#-------------------------------
 [TREECKO,2]
 Type1 = FIGHTING
 BaseStats = 40,65,45,70,35,55
@@ -3334,6 +3367,7 @@ Type1 = PSYCHIC
 Type2 = BUG
 BaseStats = 75,75,130,20,145,140
 Abilities = DIMENSIONSHIFT
+HiddenAbility = PRISMARMOR
 #-------------------------------
 [SCEPTILE2,1]
 FormName = Wartime Mega Sceptile

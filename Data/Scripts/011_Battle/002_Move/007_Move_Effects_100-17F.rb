@@ -165,7 +165,7 @@ end
 
 
 #===============================================================================
-# Ends the opposing side's Light Screen, Reflect and Aurora Break. (Brick Break,
+# Ends the opposing side's Light Screen, Reflect and Aurora Veil. (Brick Break,
 # Psychic Fangs)
 #===============================================================================
 class PokeBattle_Move_10A < PokeBattle_Move
@@ -1797,6 +1797,10 @@ class PokeBattle_Move_154 < PokeBattle_Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
+    if @battle.field.terrain != :Electric && @battle.field.terrain != :None && $gym_gimmick == true
+      @battle.pbDisplay(_INTL("But the Gym's terrain couldn't be removed!"))
+      return true
+    end
     return false
   end
 
@@ -1818,6 +1822,10 @@ class PokeBattle_Move_155 < PokeBattle_Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
+    if @battle.field.terrain != :Grassy && @battle.field.terrain != :None && $gym_gimmick == true
+      @battle.pbDisplay(_INTL("But the Gym's terrain couldn't be removed!"))
+      return true
+    end
     return false
   end
 
@@ -1837,6 +1845,10 @@ class PokeBattle_Move_156 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
     if @battle.field.terrain == :Misty
       @battle.pbDisplay(_INTL("But it failed!"))
+      return true
+    end
+    if @battle.field.terrain != :Misty && @battle.field.terrain != :None && $gym_gimmick == true
+      @battle.pbDisplay(_INTL("But the Gym's terrain couldn't be removed!"))
       return true
     end
     return false
@@ -2570,6 +2582,10 @@ class PokeBattle_Move_173 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
     if @battle.field.terrain == :Psychic
       @battle.pbDisplay(_INTL("But it failed!"))
+      return true
+    end
+    if @battle.field.terrain != :Psychic && @battle.field.terrain != :None && $gym_gimmick == true
+      @battle.pbDisplay(_INTL("But the Gym's terrain couldn't be removed!"))
       return true
     end
     return false

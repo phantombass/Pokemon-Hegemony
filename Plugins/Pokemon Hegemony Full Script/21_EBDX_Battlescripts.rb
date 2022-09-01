@@ -1,22 +1,52 @@
 module BattleScripts
   TURNER = {
     "afterLastOpp" => "My last Pokémon. Time to switch up my approach!",
-    "turnStart0" => "Let's see just how prepared you are!"
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Let's see just how prepared you are!")
+      if $game_switches[LvlCap::Expert]
+        @battle.field.terrain = :Grassy
+        @battle.field.terrainDuration = -1
+        $gym_gimmick = true
+        @scene.pbDisplay("The battlefield got permanently grassy!")
+      end
+    end
   }
 
   HAZEL = {
     "afterLastOpp" => "Hmm, my last Pokémon...",
-    "turnStart0" => "I'm very curious to see how you handle this battle style."
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("I'm very curious to see how you handle this battle style.")
+      if $game_switches[LvlCap::Expert]
+        @battle.battlers[1].pbOwnSide.effects[PBEffects::AuroraVeil] = -1
+        $gym_gimmick = true
+        @scene.pbDisplay("Hazel set a permanent Aurora Veil!")
+      end
+    end
   }
 
   ASTRID = {
     "afterLastOpp" => "My heavens. Is this my last Pokémon?",
-    "turnStart0" => "I hope you're ready to learn about the power of Cosmic-types."
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("I hope you're ready to learn about the power of Cosmic-types.")
+      if $game_switches[LvlCap::Expert]
+        @battle.field.pbWeather = :Starstorm
+        @battle.field.weatherDuration = -1
+        $gym_gimmick = true
+        @scene.pbDisplay("Stars permanently filled the sky!")
+      end
+    end
   }
 
   GAIL = {
     "afterLastOpp" => "I see you've picked up rather fast. Think you can handle this one, though?",
-    "turnStart0" => "You'll be so confused in this battle. It's ok, you'll learn."
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("You'll be so confused in this battle. It's ok, you'll learn.")
+      if $game_switches[LvlCap::Expert]
+        @battle.battlers[1].pbOwnSide.effects[PBEffects::Tailwind] = -1
+        $gym_gimmick = true
+        @scene.pbDisplay("A permanent Tailwind blew in behind Gail's team!")
+      end
+    end
   }
 
   GORDON = {
@@ -34,17 +64,48 @@ module BattleScripts
 
   WINSLOW = {
     "afterLastOpp" => "Am I being played here? This is my last ditch Pokémon!",
-    "turnStart0" => "Things are about to get real twisted in here!"
-  }
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Things are about to get real twisted in here!")
+      if $game_switches[LvlCap::Expert]
+        @battle.field.terrain = :Psychic
+        @battle.field.terrainDuration = -1
+        $gym_gimmick = true
+        @scene.pbDisplay("The battlefield got permanently grassy!")
+      end
+    end
+}
 
   VINCENT = {
     "afterLastOpp" => "Looks like it's closing time. Last call!",
-    "turnStart0" => "Let's march."
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Let's march.")
+      if $game_switches[LvlCap::Expert]
+        if $game_variables[28] < 4
+          @battle.field.terrain = :Poison
+          @battle.field.terrainDuration = -1
+          $gym_gimmick = true
+          @scene.pbDisplay("The battlefield got permanently toxic!")
+        else
+          @battle.field.pbWeather = :AcidRain
+          @battle.field.weatherDuration = -1
+          $gym_gimmick = true
+          @scene.pbDisplay("The skies permanently filled with Acid Rain!")
+        end
+      end
+    end
   }
 
   JACKSON = {
     "afterLastOpp" => "Don't think we've given up!",
-    "turnStart0" => "I don't plan on losing to some punk."
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("I don't plan on losing to some punk.")
+      if $game_switches[LvlCap::Expert]
+        @battle.field.terrain = :Misty
+        @battle.field.terrainDuration = -1
+        $gym_gimmick = true
+        @scene.pbDisplay("The battlefield got permanently misty!")
+      end
+    end
   }
 
   MILITIA1 = {
