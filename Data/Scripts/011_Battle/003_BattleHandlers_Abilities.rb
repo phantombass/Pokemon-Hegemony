@@ -35,12 +35,13 @@ BattleHandlers::SpeedCalcAbility.add(:SLUSHRUSH,
 BattleHandlers::SpeedCalcAbility.add(:SURGESURFER,
   proc { |ability,battler,mult|
     next mult*2 if battler.battle.field.terrain == :Electric
+    next mult*2 if battler.battle.pbWeather == :Storm
   }
 )
 
 BattleHandlers::SpeedCalcAbility.add(:SWIFTSWIM,
   proc { |ability,battler,mult|
-    next mult * 2 if [:Rain, :HeavyRain].include?(battler.battle.pbWeather) && !battler.hasUtilityUmbrella?
+    next mult * 2 if [:Rain, :HeavyRain, :Storm].include?(battler.battle.pbWeather) && !battler.hasUtilityUmbrella?
   }
 )
 
