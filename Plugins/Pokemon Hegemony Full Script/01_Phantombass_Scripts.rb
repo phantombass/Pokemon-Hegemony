@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.6.8"
+  GAME_VERSION = "1.7.0"
 end
 
 def write_version
@@ -42,6 +42,7 @@ module Game
     $PokemonTemp.begunNewGame = true
     $game_system.initialize
     $mobile_mystery_gifts = []
+    $gym_gimmick = false
     $scene = Scene_Map.new
     SaveData.load_new_game_values
     $MapFactory = PokemonMapFactory.new($data_system.start_map_id)
@@ -534,6 +535,7 @@ def pbStartOver(gameover=false)
             PokemonSelection.restore
           end
           $CanToggle = true
+          $gym_gimmick = false
           $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
           $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
           $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
@@ -553,6 +555,7 @@ def pbStartOver(gameover=false)
           pbRemoveDependencies
           $game_switches[Settings::STARTING_OVER_SWITCH] = true
           $CanToggle = true
+          $gym_gimmick = false
           $game_temp.player_new_map_id    = 144
           $game_temp.player_new_x         = 45
           $game_temp.player_new_y         = 6
@@ -573,6 +576,7 @@ def pbStartOver(gameover=false)
           pbRemoveDependencies
           $game_switches[Settings::STARTING_OVER_SWITCH] = true
           $CanToggle = true
+          $gym_gimmick = false
           $game_temp.player_new_map_id    = 144
           $game_temp.player_new_x         = 45
           $game_temp.player_new_y         = 6
@@ -594,6 +598,7 @@ def pbStartOver(gameover=false)
             PokemonSelection.restore
           end
           $CanToggle = true
+          $gym_gimmick = false
           $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
           $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
           $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
@@ -634,6 +639,7 @@ def pbStartOver(gameover=false)
       $game_switches[Settings::STARTING_OVER_SWITCH] = true
       $game_switches[73] = false
       $CanToggle = true
+      $gym_gimmick = false
       if $PokemonGlobal.pokemonSelectionOriginalParty!=nil
         PokemonSelection.restore
       end

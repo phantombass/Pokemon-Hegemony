@@ -971,14 +971,18 @@ BattleHandlers::AbilityOnSwitchIn.add(:MEDUSOID,
 BattleHandlers::AbilityOnSwitchIn.add(:DIMENSIONSHIFT,
   proc { |ability,battler,battle|
     battle.pbShowAbilitySplash(battler)
-    if battle.field.effects[PBEffects::TrickRoom] > 0
-      battle.field.effects[PBEffects::TrickRoom] = 0
-      battle.pbDisplay(_INTL("{1} reverted the dimensions!",battler.pbThis))
-      battle.pbCalculatePriority
+    if $gym_gimmick == true && battle.field.effects[PBEffects::TrickRoom] < 0
+      battle.pbDisplay(_INTL("The dimensions are unchanged!"))
     else
-      battle.field.effects[PBEffects::TrickRoom] = 5
-      battle.pbDisplay(_INTL("{1} twisted the dimensions!",battler.pbThis))
-      battle.pbCalculatePriority
+      if battle.field.effects[PBEffects::TrickRoom] > 0
+        battle.field.effects[PBEffects::TrickRoom] = 0
+        battle.pbDisplay(_INTL("{1} reverted the dimensions!",battler.pbThis))
+        battle.pbCalculatePriority
+      else
+        battle.field.effects[PBEffects::TrickRoom] = 5
+        battle.pbDisplay(_INTL("{1} twisted the dimensions!",battler.pbThis))
+        battle.pbCalculatePriority
+      end
     end
     battle.pbHideAbilitySplash(battler)
   }
@@ -4165,6 +4169,10 @@ end
 class PokeBattle_Battle
   def pbStartWeather(user,newWeather,fixedDuration=false,showAnim=true)
     return if @field.weather==newWeather
+    if $gym_gimmick == true && @field.weather != newWeather
+      pbDisplay(_INTL("The weather could not be changed!"))
+      return
+    end
     @field.weather = newWeather
     duration = (fixedDuration) ? 5 : -1
     if duration>0 && user && user.itemActive?
@@ -4213,6 +4221,10 @@ class PokeBattle_Battle
 
   def pbStartTerrain(user,newTerrain,fixedDuration=true)
     return if @field.terrain==newTerrain
+    if $gym_gimmick == true && @field.terrain != newTerrain
+      pbDisplay(_INTL("The terrain could not be changed!"))
+      return
+    end
     @field.terrain = newTerrain
     duration = (fixedDuration) ? 5 : -1
     if duration>0 && user && user.itemActive?
@@ -4833,6 +4845,12 @@ class PokeBattle_Move_086 < PokeBattle_Move
   end
 end
 
+class PokeBattle_Move_519 < PokeBattle_TargetMultiStatDownMove
+  def initialize(battle,move)
+    super
+    @statDown = [:DEFENSE,1,:SPECIAL_DEFENSE,1]
+  end
+end
 #=============
 #Effects
 #=============

@@ -609,7 +609,7 @@ BattleHandlers::DamageCalcUserItem.add(:LIFEORB,
 
 BattleHandlers::DamageCalcUserItem.add(:LIGHTBALL,
   proc { |item,user,target,move,mults,baseDmg,type|
-    if user.isSpecies?(:PIKACHU)
+    if user.isSpecies?(:PIKACHU) || user.isSpecies?(:PIKACHU2)
       mults[:attack_multiplier] *= 2
     end
   }

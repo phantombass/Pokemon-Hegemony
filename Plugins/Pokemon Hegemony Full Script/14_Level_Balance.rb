@@ -16,7 +16,7 @@ module LvlCap
   Trainers = 72              #Switch for Trainers
   Boss = 908                  #Switch for Ace Trainer Battles
   Hard = 900
-  Insane = 902
+  Expert = 903
   Ironmon = 905
   Kaizo = 906
   Randomizer = 907
@@ -46,10 +46,10 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = 0
         level=1 if level<1
       if mlv<=levelcap && mlv <= party[i].level && $game_switches[LvlCap::Gym] == true && $game_switches[LvlCap::Trainers] == true
-        if $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Insane] == false
+        if $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == false
+          level = levelcap + rand(2)
+        elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == true
           level = levelcap + rand(2) +1
-        elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Insane] == true
-          level = levelcap + rand(2) +3
         else
           level = levelcap
         end
@@ -58,16 +58,16 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       elsif $game_switches[LvlCap::Trainers] == true && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Rival] == false
         level = (mlv-1) - rand(1)
         if $game_switches[LvlCap::Hard]
+          level += 1
+        elsif $game_switches[LvlCap::Expert]
           level += 2
-        elsif $game_switches[LvlCap::Insane]
-          level += 4
         end
       elsif $game_switches[LvlCap::Rival] == true && $game_switches[LvlCap::Hard] == false
         level = party[i].level
       elsif $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Rival] == true
+        level = party[i].level + 2
+      elsif $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Expert] && $game_switches[LvlCap::Rival] == true
         level = party[i].level + 3
-      elsif $game_switches[LvlCap::Hard] && $game_switches[LvlCap::Insane] && $game_switches[LvlCap::Rival] == true
-        level = party[i].level + 5
       else
         level = levelcap
       end
