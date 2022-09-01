@@ -4,6 +4,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("Let's see just how prepared you are!")
       if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:GRASSYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
         @battle.field.terrain = :Grassy
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -17,7 +18,8 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("I'm very curious to see how you handle this battle style.")
       if $game_switches[LvlCap::Expert]
-        @battle.battlers[1].pbOwnSide.effects[PBEffects::AuroraVeil] = -1
+        @battle.battlers[1].pbOwnSide.effects[PBEffects::AuroraVeil] = 1
+        @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
         $gym_gimmick = true
         @scene.pbDisplay("Hazel set a permanent Aurora Veil!")
       end
@@ -29,9 +31,10 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("I hope you're ready to learn about the power of Cosmic-types.")
       if $game_switches[LvlCap::Expert]
-        @battle.field.pbWeather = :Starstorm
+        @scene.pbAnimation(GameData::Move.get(:WISH).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.weather = :Starstorm
         @battle.field.weatherDuration = -1
-        $gym_gimmick = true
+        $gym_weather = true
         @scene.pbDisplay("Stars permanently filled the sky!")
       end
     end
@@ -42,7 +45,8 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("You'll be so confused in this battle. It's ok, you'll learn.")
       if $game_switches[LvlCap::Expert]
-        @battle.battlers[1].pbOwnSide.effects[PBEffects::Tailwind] = -1
+        @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.battlers[1].pbOwnSide.effects[PBEffects::Tailwind] = 1
         $gym_gimmick = true
         @scene.pbDisplay("A permanent Tailwind blew in behind Gail's team!")
       end
@@ -59,8 +63,9 @@ module BattleScripts
       pname = $Trainer.name
       rname = $game_variables[12]
       @scene.pbTrainerSpeak("I have heard good things about you from #{rname}! Let's see if he was right.")
-      @battle.field.pbWeather = :StrongWinds
-      $gym_gimmick = true
+      @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :StrongWinds
+      $gym_weather = true
       @scene.pbDisplay("A Delta Stream brewed!")
     end
   }
@@ -70,9 +75,10 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("Things are about to get real twisted in here!")
       if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
-        @battle.field.effects[PBEffects::TrickRoom] = -1
+        @battle.field.effects[PBEffects::TrickRoom] = 1
         $gym_gimmick = true
         @scene.pbDisplay("The battlefield got permanently weird!")
         @scene.pbDisplay("The dimensions were permanently twisted!")
@@ -86,14 +92,16 @@ module BattleScripts
       @scene.pbTrainerSpeak("Let's march.")
       if $game_switches[LvlCap::Expert]
         if $game_variables[28] < 4
+          @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
           @battle.field.terrain = :Poison
           @battle.field.terrainDuration = -1
           $gym_gimmick = true
           @scene.pbDisplay("The battlefield got permanently toxic!")
         else
-          @battle.field.pbWeather = :AcidRain
+          @scene.pbAnimation(GameData::Move.get(:RAINDANCE).id,@battle.battlers[1],@battle.battlers[1])
+          @battle.field.weather = :AcidRain
           @battle.field.weatherDuration = -1
-          $gym_gimmick = true
+          $gym_weather = true
           @scene.pbDisplay("The skies permanently filled with Acid Rain!")
         end
       end
@@ -105,6 +113,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("I don't plan on losing to some punk.")
       if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:MISTYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
         @battle.field.terrain = :Misty
         @battle.field.terrainDuration = -1
         $gym_gimmick = true

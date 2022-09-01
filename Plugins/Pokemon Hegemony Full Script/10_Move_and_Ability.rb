@@ -757,8 +757,7 @@ BattleHandlers::EORHealingAbility.add(:ASPIRANT,
 
 BattleHandlers::MoveImmunityTargetAbility.add(:STEAMENGINE,
   proc { |ability,user,target,move,type,battle|
-    next pbBattleMoveImmunityStatAbility(user,target,move,type,:FIRE,:SPEED,6,battle)
-    next pbBattleMoveImmunityStatAbility(user,target,move,type,:WATER,:SPEED,6,battle)
+    next (pbBattleMoveImmunityStatAbility(user,target,move,type,:WATER,:SPEED,6,battle) || pbBattleMoveImmunityStatAbility(user,target,move,type,:FIRE,:SPEED,6,battle))
   }
 )
 
@@ -2704,7 +2703,7 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
     if target.pbCanLowerStatStage?(@statDown[0],user,self)
       target.pbLowerStatStage(@statDown[0],@statDown[1],user)
     end
-    if target.pbOwnSide.effects[PBEffects::AuroraVeil]>0
+    if target.pbOwnSide.effects[PBEffects::AuroraVeil]>0 && $gym_gimmick == false
       target.pbOwnSide.effects[PBEffects::AuroraVeil] = 0
       @battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!",target.pbTeam))
     end
@@ -4169,8 +4168,9 @@ end
 class PokeBattle_Battle
   def pbStartWeather(user,newWeather,fixedDuration=false,showAnim=true)
     return if @field.weather==newWeather
-    if $gym_gimmick == true && @field.weather != newWeather
+    if $gym_weather == true && @field.weather != newWeather
       pbDisplay(_INTL("The weather could not be changed!"))
+      pbHideAbilitySplash(user) if user
       return
     end
     @field.weather = newWeather
@@ -4645,8 +4645,10 @@ class PokeBattle_Battle
       pbEORCountDownSideEffect(side,PBEffects::Mist,
          _INTL("{1} is no longer protected by mist!",@battlers[side].pbTeam))
       # Tailwind
-      pbEORCountDownSideEffect(side,PBEffects::Tailwind,
-         _INTL("{1}'s Tailwind petered out!",@battlers[side].pbTeam))
+      if $gym_gimmick == false
+        pbEORCountDownSideEffect(side,PBEffects::Tailwind,
+           _INTL("{1}'s Tailwind petered out!",@battlers[side].pbTeam))
+      end
       # Lucky Chant
       pbEORCountDownSideEffect(side,PBEffects::LuckyChant,
          _INTL("{1}'s Lucky Chant wore off!",@battlers[side].pbTeam))
@@ -4660,12 +4662,16 @@ class PokeBattle_Battle
       pbEORCountDownSideEffect(side,PBEffects::Swamp,
          _INTL("The swamp around {1} disappeared!",@battlers[side].pbTeam(true)))
       # Aurora Veil
-      pbEORCountDownSideEffect(side,PBEffects::AuroraVeil,
-         _INTL("{1}'s Aurora Veil wore off!",@battlers[side].pbTeam(true)))
+      if $gym_gimmick == false
+        pbEORCountDownSideEffect(side,PBEffects::AuroraVeil,
+           _INTL("{1}'s Aurora Veil wore off!",@battlers[side].pbTeam(true)))
+      end
     end
     # Trick Room
-    pbEORCountDownFieldEffect(PBEffects::TrickRoom,
-       _INTL("The twisted dimensions returned to normal!"))
+    if $gym_gimmick == false
+      pbEORCountDownFieldEffect(PBEffects::TrickRoom,
+         _INTL("The twisted dimensions returned to normal!"))
+    end
     # Gravity
     pbEORCountDownFieldEffect(PBEffects::Gravity,
        _INTL("Gravity returned to normal!"))
