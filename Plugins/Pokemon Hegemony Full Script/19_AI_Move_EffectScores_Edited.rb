@@ -746,7 +746,7 @@ class PokeBattle_AI
     when "035"
       score += 50 if $shouldBoost || $shouldBoostSpeed
       score -= 70 if $shouldAttack
-      score += 30 if [:PHYSICALBREAKER,:SETUPSWEEPER,:WINCON].include?($role_id)
+      score += 50 if [:PHYSICALBREAKER,:SETUPSWEEPER,:WINCON].include?($role_id)
       score -= user.stages[:ATTACK]*20
       score -= user.stages[:SPEED]*20
       score -= user.stages[:SPECIAL_ATTACK]*20
