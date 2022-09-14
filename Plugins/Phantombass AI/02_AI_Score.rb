@@ -1510,8 +1510,8 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
   next score
 end
 
-# Bulk Up
-PBAI::ScoreHandler.add("024") do |score, ai, user, target, move|
+# Bulk Up & Victory Dance
+PBAI::ScoreHandler.add("024", "518") do |score, ai, user, target, move|
   if [:SETUPSWEEPER,:PHYSICALBREAKER].include?(user.role.id)
     if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:DEFENSE)
       score -= 30
@@ -1702,11 +1702,20 @@ PBAI::ScoreHandler.add("0EA") do |score, ai, user, target, move|
   next score
 end
 
-#Toxic
-PBAI::ScoreHandler.add("006") do |score, ai, user, target, move|
-  if user.role.id == :TOXICSTALLER && target.can_poison?(user, move)
+#Beat Up for Doubles Mini Boss
+PBAI::ScoreHandler.add("0C1") do |score, ai, user, target, move|
+  if user.role.id == :TARGETALLY && move.id == :BEATUP2
     score += 100
     PBAI.log("+ 100 for being a #{user.role.name}")
+  end
+  next score
+end
+
+#Tempest Rage for Primal Castform
+PBAI::ScoreHandler.add("087") do |score, ai, user, target, move|
+  if user.battler.species == :CASTFORM && user.battler.form == 1 && move.id == :TEMPESTRAGE
+    score += 50
+    PBAI.log("+ 50 because the move changes type and weather to match well vs target")
   end
   next score
 end
