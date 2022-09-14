@@ -569,10 +569,10 @@ class PokemonSummary_Scene
           @sprites["nav"].y -= 47
         end
       elsif Input.trigger?(Input::C)
-        @scene.pbMessage(_INTL("Change which?\\ch[34,5,EVs,Max IVs,Clear EVs,Min IVs,Cancel]"))
+        @scene.pbMessage(_INTL("Change which?\\ch[34,6,Max EVs,EVs,Max IVs,Clear EVs,Min IVs,Cancel]"))
         stat = $game_variables[34]
         pkmn = @pokemon
-        if stat == -1 || stat == 5 || stat == 4
+        if stat == -1 || stat == 6 || stat == 5
           @sprites["nav"].visible = false
           pbPlayCloseMenuSE
           break
@@ -580,6 +580,14 @@ class PokemonSummary_Scene
         case stat_choice
         when 0
           if stat == 0
+            upperLimit = 0
+            GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :HP }
+            upperLimit = Pokemon::EV_LIMIT - upperLimit
+            upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
+            pkmn.ev[:HP] = upperLimit
+            pkmn.calc_stats
+            dorefresh = true
+          elsif stat == 1
             params = ChooseNumberParams.new
             upperLimit = 0
             GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :HP }
@@ -596,15 +604,15 @@ class PokemonSummary_Scene
               pkmn.calc_stats
               dorefresh = true
             end
-          elsif stat == 1
+          elsif stat == 2
             pkmn.iv[:HP] = 31
             pkmn.calc_stats
             dorefresh = true
-          elsif stat == 2
+          elsif stat == 3
             pkmn.ev[:HP] = 0
             pkmn.calc_stats
             dorefresh = true
-          elsif stat == 3
+          elsif stat == 4
             pkmn.iv[:HP] = 0
             pkmn.calc_stats
             dorefresh = true
@@ -613,6 +621,14 @@ class PokemonSummary_Scene
           end
         when 1
           if stat == 0
+            upperLimit = 0
+            GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :ATTACK }
+            upperLimit = Pokemon::EV_LIMIT - upperLimit
+            upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
+            pkmn.ev[:ATTACK] = upperLimit
+            pkmn.calc_stats
+            dorefresh = true
+          elsif stat == 1
             params = ChooseNumberParams.new
             upperLimit = 0
             GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :ATTACK }
@@ -629,15 +645,15 @@ class PokemonSummary_Scene
               pkmn.calc_stats
               dorefresh = true
             end
-          elsif stat == 1
+          elsif stat == 2
             pkmn.iv[:ATTACK] = 31
             pkmn.calc_stats
             dorefresh = true
-          elsif stat == 2
+          elsif stat == 3
             pkmn.ev[:ATTACK] = 0
             pkmn.calc_stats
             dorefresh = true
-          elsif stat == 3
+          elsif stat == 4
             pkmn.iv[:ATTACK] = 0
             pkmn.calc_stats
             dorefresh = true
@@ -646,6 +662,14 @@ class PokemonSummary_Scene
           end
       when 2
         if stat == 0
+          upperLimit = 0
+          GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :DEFENSE }
+          upperLimit = Pokemon::EV_LIMIT - upperLimit
+          upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
+          pkmn.ev[:DEFENSE] = upperLimit
+          pkmn.calc_stats
+          dorefresh = true
+        elsif stat == 1
           params = ChooseNumberParams.new
           upperLimit = 0
           GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :DEFENSE }
@@ -662,15 +686,15 @@ class PokemonSummary_Scene
             pkmn.calc_stats
             dorefresh = true
           end
-        elsif stat == 1
+        elsif stat == 2
           pkmn.iv[:DEFENSE] = 31
           pkmn.calc_stats
           dorefresh = true
-        elsif stat == 2
+        elsif stat == 3
           pkmn.ev[:DEFENSE] = 0
           pkmn.calc_stats
           dorefresh = true
-        elsif stat == 3
+        elsif stat == 4
           pkmn.iv[:DEFENSE] = 0
           pkmn.calc_stats
           dorefresh = true
@@ -678,7 +702,15 @@ class PokemonSummary_Scene
           break
         end
     when 3
-        if stat == 0
+      if stat == 0
+        upperLimit = 0
+        GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPECIAL_ATTACK }
+        upperLimit = Pokemon::EV_LIMIT - upperLimit
+        upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
+        pkmn.ev[:SPECIAL_ATTACK] = upperLimit
+        pkmn.calc_stats
+        dorefresh = true
+        elsif stat == 1
           params = ChooseNumberParams.new
           upperLimit = 0
           GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPECIAL_ATTACK }
@@ -695,15 +727,15 @@ class PokemonSummary_Scene
             pkmn.calc_stats
             dorefresh = true
           end
-        elsif stat == 1
+        elsif stat == 2
           pkmn.iv[:SPECIAL_ATTACK] = 31
           pkmn.calc_stats
           dorefresh = true
-        elsif stat == 2
+        elsif stat == 3
           pkmn.ev[:SPECIAL_ATTACK] = 0
           pkmn.calc_stats
           dorefresh = true
-        elsif stat == 3
+        elsif stat == 4
           pkmn.iv[:SPECIAL_ATTACK] = 0
           pkmn.calc_stats
           dorefresh = true
@@ -712,6 +744,14 @@ class PokemonSummary_Scene
         end
     when 4
       if stat == 0
+        upperLimit = 0
+        GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPECIAL_DEFENSE }
+        upperLimit = Pokemon::EV_LIMIT - upperLimit
+        upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
+        pkmn.ev[:SPECIAL_DEFENSE] = upperLimit
+        pkmn.calc_stats
+        dorefresh = true
+      elsif stat == 1
         params = ChooseNumberParams.new
         upperLimit = 0
         GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPECIAL_DEFENSE }
@@ -728,15 +768,15 @@ class PokemonSummary_Scene
           pkmn.calc_stats
           dorefresh = true
         end
-      elsif stat == 1
+      elsif stat == 2
         pkmn.iv[:SPECIAL_DEFENSE] = 31
         pkmn.calc_stats
         dorefresh = true
-      elsif stat == 2
+      elsif stat == 3
         pkmn.ev[:SPECIAL_DEFENSE] = 0
         pkmn.calc_stats
         dorefresh = true
-      elsif stat == 3
+      elsif stat == 4
         pkmn.iv[:SPECIAL_DEFENSE] = 0
         pkmn.calc_stats
         dorefresh = true
@@ -745,6 +785,14 @@ class PokemonSummary_Scene
       end
     when 5
       if stat == 0
+        upperLimit = 0
+        GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPEED }
+        upperLimit = Pokemon::EV_LIMIT - upperLimit
+        upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
+        pkmn.ev[:SPEED] = upperLimit
+        pkmn.calc_stats
+        dorefresh = true
+      elsif stat == 1
         params = ChooseNumberParams.new
         upperLimit = 0
         GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPEED }
@@ -761,15 +809,15 @@ class PokemonSummary_Scene
           pkmn.calc_stats
           dorefresh = true
         end
-      elsif stat == 1
+      elsif stat == 2
         pkmn.iv[:SPEED] = 31
         pkmn.calc_stats
         dorefresh = true
-      elsif stat == 2
+      elsif stat == 3
         pkmn.ev[:SPEED] = 0
         pkmn.calc_stats
         dorefresh = true
-      elsif stat == 3
+      elsif stat == 4
         pkmn.iv[:SPEED] = 0
         pkmn.calc_stats
         dorefresh = true
