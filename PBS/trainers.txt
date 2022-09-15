@@ -293,6 +293,7 @@ Pokemon = CHINCHOU,22
 	EV = 252,0,252,4,0,0
 	Moves = FLIPTURN,BUBBLEBEAM,SHOCKWAVE,ICYWIND
 	Nature = BOLD
+	Role = PIVOT
 Pokemon = LUDICOLO,22
 	Item = EXPERTBELT
 	Ability = SWIFTSWIM
@@ -300,6 +301,7 @@ Pokemon = LUDICOLO,22
 	IV = 31,0,31,31,31,31
 	EV = 0,0,4,252,252,0
 	Nature = TIMID
+	Role = SPECIALBREAKER
 Pokemon = ARCANINE2,22
 	Item = MYSTICWATER
 	Ability = MINDGAMES
@@ -307,6 +309,7 @@ Pokemon = ARCANINE2,22
 	EV = 0,252,0,252,0,4
 	Moves = AQUAJET,LIQUIDATION,CRUNCH,MORNINGSUN
 	Nature = ADAMANT
+	Role = WINCON
 #-------------------------------
 # Route 3
 #-------------------------------

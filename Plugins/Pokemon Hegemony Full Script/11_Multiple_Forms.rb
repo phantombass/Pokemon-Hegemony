@@ -205,7 +205,7 @@ MultipleForms.copy(:PIKACHU,:EXEGGCUTE)
 MultipleForms.register(:MIMEJR,{
   "getForm" => proc { |pkmn|
     next if pkmn.form_simple >= 2
-    maps = [105,106,107,108,109]
+    maps = [83,105,106,107,108,109]
     if $game_map && maps.include?($game_map.map_id)
       next 1  # Mt Nenox
     end
