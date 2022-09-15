@@ -553,7 +553,7 @@ class PBAI
         if ["15B", "0D5", "0D6", "0D7", "0D8", "0D9"].include?(move.function)
           self.flags[:will_be_healed] = true
         elsif move.function == "0DF"
-          target.flags[:will_be_healed] = true
+          @battler.flags[:will_be_healed] = true
         elsif move.function == "0A1"
           @side.flags[:will_luckychant] = true
         elsif move.function == "0A2"
@@ -565,11 +565,11 @@ class PBAI
         elsif move.function == "167"
           @side.flags[:will_auroraveil] = true
         elsif move.function == "0BA"
-          target.flags[:will_be_taunted] = true
+          @battler.flags[:will_be_taunted] = true
         elsif move.function == "0B9"
-          target.flags[:will_be_disabled] = true
+          @battler.flags[:will_be_disabled] = true
         elsif move.function == "0BC"
-          target.flags[:will_be_encored] = true
+          @battler.flags[:will_be_encored] = true
         end
         return [choice[0], choice[2]]
       end

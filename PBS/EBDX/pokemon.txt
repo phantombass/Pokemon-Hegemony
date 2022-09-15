@@ -883,6 +883,13 @@ BattlerPlayerX          = 11
 BattlerPlayerY          = 57
 BattlerEnemyX           = 5
 #-------------------------------
+[MRMIME,1]
+BattlerEnemyY           = 52
+BattlerAltitude         = 0
+BattlerPlayerX          = 11
+BattlerPlayerY          = 57
+BattlerEnemyX           = 5
+#-------------------------------
 [SCYTHER]
 BattlerEnemyY           = 48
 BattlerAltitude         = 0
@@ -5574,13 +5581,6 @@ BattlerAltitude         = 0
 BattlerPlayerX          = 18
 BattlerPlayerY          = 45
 BattlerEnemyX           = 1
-#-------------------------------
-[MRMIME,1]
-BattlerEnemyY           = 25
-BattlerAltitude         = 0
-BattlerPlayerX          = 0
-BattlerPlayerY          = 0
-BattlerEnemyX           = 0
 #-------------------------------
 [PINSIR,1]
 BattlerEnemyY           = 8
