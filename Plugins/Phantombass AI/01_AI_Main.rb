@@ -1007,7 +1007,7 @@ class PBAI
       when "06A", "06B", "06C", "06D", "06E"
         baseDmg = move.pbFixedDamage(self,target)
       when "06F"   # Psywave
-        baseDmg = user.level
+        baseDmg = self.level
       when "070"   # OHKO
         baseDmg = 200
       when "071", "072", "073"   # Counter, Mirror Coat, Metal Burst
@@ -1023,10 +1023,10 @@ class PBAI
            "098", "099", "09A", "0F7", "113"
         baseDmg = move.pbBaseDamage(baseDmg,@battler,target)
       when "086"   # Acrobatics
-        baseDmg *= 2 if !@battler.item || @battler.hasActiveItem?(:FLYINGGEM)
+        baseDmg *= 2 if !self.item || self.hasActiveItem?(:FLYINGGEM)
       when "08D"   # Gyro Ball
         targetSpeed = target.effective_speed
-        userSpeed = user.effective_speed
+        userSpeed = self.effective_speed
         baseDmg = [[(25*targetSpeed/userSpeed).floor,150].min,1].max
       when "094"   # Present
         baseDmg = 50
@@ -1043,7 +1043,7 @@ class PBAI
       when "0BF"   # Triple Kick
         baseDmg *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
       when "0C0"   # Fury Attack
-        if user.hasActiveAbility?(:SKILLLINK)
+        if self.hasActiveAbility?(:SKILLLINK)
           baseDmg *= 5
         else
           baseDmg = (baseDmg * 31 / 10).floor    # Average damage dealt

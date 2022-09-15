@@ -203,15 +203,17 @@ MultipleForms.copy(:PIKACHU,:EXEGGCUTE)
 
 
 MultipleForms.register(:MIMEJR,{
-  "getForm" => proc { |pkmn|
-    next if pkmn.form_simple >= 2
+  "getFormOnCreation" => proc { |pkmn|
+    maps = 83
     maps = [83,105,106,107,108,109]
     if $game_map && maps.include?($game_map.map_id)
-      next 1  # Mt Nenox
+      next 1  # Boro Town
     end
     next 0
   }
 })
+
+MultipleForms.copy(:MIMEJR,:RUFFLET)
 
 def update_forms_from_glitches
   pbEachPokemon { |poke,_box|
