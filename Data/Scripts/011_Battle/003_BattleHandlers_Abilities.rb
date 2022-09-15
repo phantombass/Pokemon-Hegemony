@@ -2436,6 +2436,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:ELECTRICSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Electric
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:ELECTRICTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Electric)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }
@@ -2516,6 +2517,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:GRASSYSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Grassy
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:GRASSYTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Grassy)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }
@@ -2561,6 +2563,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:MISTYSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Misty
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:MISTYTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Misty)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }
@@ -2592,6 +2595,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:PSYCHICSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Psychic
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Psychic)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }

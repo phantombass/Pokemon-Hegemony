@@ -50,7 +50,7 @@ class PBAI
       test += 1 if w > weights.sum/2
     end
     weights.each do |x|
-      lower_test += 1 if x>weights.sum*0.3
+      lower_test += 1 if x>=weights.sum*0.3
     end
     newweights = weights.map do |e|
       e = 0 if e < weights.sum/2 && test > 0
@@ -942,7 +942,7 @@ class PBAI
         # Since this makes status moves unlikely to be chosen when the other moves
         # have a high base power, all status moves should ideally be addressed individually
         # in this method, and used in the optimal scenario for each individual move.
-        score = [:PIVOT,:PHYSICALWALL,:SPECIALWALL,:SETUPSWEEPER,:TOXICSTALLER,:STALLBREAKER].include?(self.role.id) ? 100 : 70
+        score = [:PIVOT,:PHYSICALWALL,:SPECIALWALL,:SETUPSWEEPER,:TOXICSTALLER,:STALLBREAKER].include?(self.role.id) ? 100 : 30
         PBAI.log("Test move #{move.name} (#{score})...")
         # Trigger general score modifier code
         score = PBAI::ScoreHandler.trigger_general(score, @ai, self, target, move)
@@ -1530,6 +1530,7 @@ class PBAI
       @wild_pokemon = wild_pokemon
   		@battlers = []
   		@party = []
+      @flags = {}
     end
     def effects
       return @battle.sides[@index].effects

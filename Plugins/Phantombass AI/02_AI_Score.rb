@@ -790,7 +790,7 @@ PBAI::ScoreHandler.add("15B") do |score, ai, user, target, move|
     # At full hp, factor is 0 (thus not encouraging this move)
     # At half hp, factor is 0.5 (thus slightly encouraging this move)
     # At 1 hp, factor is about 1.0 (thus encouraging this move)
-    if user.flags[:will_be_healed]
+    if user.flags[:will_be_healed] && ai.battle.pbSideSize(0) == 2
       score -= 30
       PBAI.log("- 30 for the user will already be healed by something")
     elsif factor != 0
@@ -828,7 +828,7 @@ end
 # Rest
 PBAI::ScoreHandler.add("0D9") do |score, ai, user, target, move|
   factor = 1 - user.hp / user.totalhp.to_f
-  if user.flags[:will_be_healed]
+  if user.flags[:will_be_healed] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for the user will already be healed by something")
   elsif factor != 0
@@ -1037,8 +1037,12 @@ PBAI::ScoreHandler.add("103", "104", "105", "500") do |score, ai, user, target, 
     score += add
     PBAI.log("+ #{add} for there are #{inactive} pokemon to be sent out at some point")
   end
-  score -= 200 if ai.battle.pbWeather == :Windy
-  PBAI.log("- 100 because Windy weather prevents hazards")
+  if user.role.id == :HAZARDLEAD
+    score += 50
+    PBAI.log("+ 50 for being a #{user.role.name}")
+  end
+  score = 0 if ai.battle.field.weather == :Windy
+  PBAI.log("* 0 because Windy weather prevents hazards")
   next score
 end
 
@@ -1049,7 +1053,7 @@ PBAI::ScoreHandler.add("0B9") do |score, ai, user, target, move|
   if target.effects[PBEffects::Disable] > 1
     score -= 30
     PBAI.log("- 30 for the target is already disabled")
-  elsif target.flags[:will_be_disabled] == true
+  elsif target.flags[:will_be_disabled] == true && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for the target is being disabled by another battler")
   else
@@ -1255,7 +1259,7 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
   # At full hp, factor is 0 (thus not encouraging this move)
   # At half hp, factor is 0.5 (thus slightly encouraging this move)
   # At 1 hp, factor is about 1.0 (thus encouraging this move)
-  if user.flags[:will_be_healed]
+  if user.flags[:will_be_healed] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for the user will already be healed by something")
   elsif factor != 0
@@ -1283,6 +1287,10 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
   PBAI.log("+ 40 for being #{user.role.name} and potentially passing a Wish") if user.role.id == :CLERIC && move.function == "0D7"
   score += 20 if user.should_switch?(target)
   PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+  if move.function == "0D7" && ai.battle.positions[user.index].effects[PBEffects::Wish] > 0
+    score = 0
+    PBAI.log("* 0 because Wish this turn will fail")
+  end
   next score
 end
 
@@ -1304,7 +1312,7 @@ PBAI::ScoreHandler.add("0D8") do |score, ai, user, target, move|
   # At full hp, factor is 0 (thus not encouraging this move)
   # At half hp, factor is 0.5 (thus slightly encouraging this move)
   # At 1 hp, factor is about 1.0 (thus encouraging this move)
-  if user.flags[:will_be_healed]
+  if user.flags[:will_be_healed] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for the user will already be healed by something")
   elsif factor != 0
@@ -1332,7 +1340,7 @@ PBAI::ScoreHandler.add("0A2") do |score, ai, user, target, move|
   if user.side.effects[PBEffects::Reflect] > 0
     score -= 30
     PBAI.log("- 30 for reflect is already active")
-  elsif user.side.flags[:will_reflect]
+  elsif user.side.flags[:will_reflect] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for another battler will already use reflect")
   else
@@ -1355,7 +1363,7 @@ PBAI::ScoreHandler.add("0A3") do |score, ai, user, target, move|
   if user.side.effects[PBEffects::LightScreen] > 0
     score -= 30
     PBAI.log("- 30 for light screen is already active")
-  elsif user.side.flags[:will_lightscreen]
+  elsif user.side.flags[:will_lightscreen] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for another battler will already use light screen")
   else
@@ -1377,7 +1385,7 @@ PBAI::ScoreHandler.add("167") do |score, ai, user, target, move|
   if user.side.effects[PBEffects::AuroraVeil] > 0
     score -= 30
     PBAI.log("- 30 for Aurora Veil is already active")
-  elsif user.side.flags[:will_auroraveil]
+  elsif user.side.flags[:will_auroraveil] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for another battler will already use Aurora Veil")
   elsif user.effectiveWeather != :Hail
@@ -1398,7 +1406,7 @@ end
 
 #Taunt
 PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
-  if target.flags[:will_be_taunted]
+  if target.flags[:will_be_taunted] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for another battler will already use Taunt on this target")
   elsif target.effects[PBEffects::Taunt]>0
@@ -1421,7 +1429,7 @@ end
 
 # Haze
 PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
-  if user.side.flags[:will_haze]
+  if user.side.flags[:will_haze] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for another battler will already use haze")
   else
@@ -1653,9 +1661,23 @@ end
 
 # Protect
 PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
-  if user.effects[PBEffects::Wish] > 0  && user.effects[PBEffects::ProtectRate] == 0
+  if user.effects[PBEffects::Wish] > 0 && user.effects[PBEffects::ProtectRate] == 0
     score += 100
     PBAI.log("+ 100 for receiving an incoming Wish")
+  end
+  if user.effects[PBEffects::Substitute] > 0 && user.effects[PBEffects::ProtectRate] == 0
+    if user.hasActiveAbility?(:SPEEDBOOST) && target.faster_than?(user)
+      score += 100
+      PBAI.log("+ 100 for boosting speed to outspeed opponent")
+    end
+    if (user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveAbility?(:POISONHEAL) && user.status == :POISON)) && user.hp < user.totalhp
+      score += 50
+      PBAI.log("+ 50 for recovering HP behind a Substitute")
+    end
+    if target.effects[PBEffects::LeechSeed] || target.effects[PBEffects::StarSap] || [:POISON,:BURN,:FROZEN].include?(target.status)
+      score += 50
+      PBAI.log("+ 50 for forcing opponent to take residual damage")
+    end
   end
   if (user.hasActiveItem?(:FLAMEORB) && user.status == :NONE && user.hasActiveAbility?([:GUTS,:MARVELSCALE])) || ((user.hasActiveItem?(:TOXICORB) || ai.battle.field.terrain == :Poison) && user.hasActiveAbility?([:TOXICBOOST,:POISONHEAL,:GUTS]) && user.affectedByTerrain? && user.status == :NONE)
     score += 100
@@ -1716,6 +1738,46 @@ PBAI::ScoreHandler.add("087") do |score, ai, user, target, move|
   if user.battler.species == :CASTFORM && user.battler.form == 1 && move.id == :TEMPESTRAGE
     score += 50
     PBAI.log("+ 50 because the move changes type and weather to match well vs target")
+  end
+  next score
+end
+
+#Substitute
+PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
+  dmg = 0
+  sound = 0
+  for i in target.used_moves
+    dmg += 1 if target.get_move_damage(user,i) >= user.hp*0.75
+    sound += 1 if i.soundMove? && i.damagingMove?
+  end
+  if user.effects[PBEffects::Substitute] == 0
+    if user.turnCount == 0 && dmg == 0
+      score += 100
+      PBAI.log("+ 100 for Substituting on the first turn and being guaranteed to have a Sub stay up")
+    end
+    if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:STALLBREAKER,:PIVOT,:SETUPSWEEPER].include?(user.role.id)
+      score += 30
+      PBAI.log("+ 30 for being a #{user.role.name}")
+    end
+    if user.hp < user.totalhp/4
+      score -= 100
+      PBAI.log("- 100 for being unable to Substitute")
+    end
+    if sound > 0
+      score -= 30
+      PBAI.log("- 30 because the target has shown a damaging sound-based move")
+    end
+    if target.status == :POISON || target.status == :BURN || target.status == :FROZEN || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::StarSap]>=0
+      score += 30
+      PBAI.log("+ 30 for capitalizing on target's residual damage")
+    end
+    if user.should_switch?(target)
+      score += 30
+      PBAI.log("+ 30 for capitalizing on target's predicted switch")
+    end
+  else
+    score -= 100
+    PBAI.log("- 100 for already having a Substitute")
   end
   next score
 end
