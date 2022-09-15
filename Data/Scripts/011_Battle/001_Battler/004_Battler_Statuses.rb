@@ -395,6 +395,10 @@ class PokeBattle_Battler
     pbInflictStatus(:FROZEN, 0, msg)
   end
 
+  def pbFreezeIceBody(user = nil, msg = nil)
+    pbInflictStatus(:FROZEN, user, msg)
+  end
+
   #=============================================================================
   # Generalised status displays
   #=============================================================================
