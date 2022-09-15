@@ -774,6 +774,7 @@ BattleHandlers::TargetAbilityOnHit.add(:SPLINTER,
     if battle.field.weather == :Windy
       battle.pbDisplay(_INTL("The wind prevented {1}'s {2} from working!",battler.pbThis,battler.abilityName))
     else
+      battle.scene.pbAnimation(GameData::Move.get(:STEALTHROCK).id,battler,battler)
       battler.pbOpposingSide.effects[PBEffects::StealthRock] = 1
       battle.pbDisplay(_INTL("{1}'s {2} set Stealth Rocks!",battler.pbThis,battler.abilityName))
     end
@@ -1047,6 +1048,24 @@ BattleHandlers::SpeedCalcAbility.add(:BACKDRAFT,
 BattleHandlers::SpeedCalcAbility.add(:TOXICRUSH,
   proc { |ability,battler,mult|
     next mult * 2 if [:AcidRain].include?(battler.battle.pbWeather)
+  }
+)
+
+BattleHandlers::TargetAbilityOnHit.add(:ICEBODY,
+  proc { |ability,user,target,move,battle|
+    next if !move.pbContactMove?(user)
+    next if user.frozen? || battle.pbRandom(100)>=30
+    next if !user.pbCanFreeze?(target,false)
+    battle.pbShowAbilitySplash(target)
+    if user.pbCanFreeze?(target,PokeBattle_SceneConstants::USE_ABILITY_SPLASH) &&
+       user.affectedByContactEffect?(PokeBattle_SceneConstants::USE_ABILITY_SPLASH)
+      msg = nil
+      if !PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+        msg = _INTL("{1}'s {2} gave {3} frostbite!",target.pbThis,target.abilityName,user.pbThis(true))
+      end
+      user.pbFreeze(target,msg)
+    end
+    battle.pbHideAbilitySplash(target)
   }
 )
 

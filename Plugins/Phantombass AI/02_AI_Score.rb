@@ -1506,7 +1506,7 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
         score += 40
         PBAI.log("+ 40 for being a #{user.role.name}")
       end
-      atk_boost = user.stages[:ATTACK]*10
+      atk_boost = user.stages[:ATTACK]*20
       diff = atk_boost
       score -= diff
       PBAI.log("- #{diff} for boosted stats") if diff > 0
@@ -1544,8 +1544,8 @@ PBAI::ScoreHandler.add("024", "518") do |score, ai, user, target, move|
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
       end
-      atk_boost = user.stages[:ATTACK]*10
-      def_boost = user.stages[:DEFENSE]*10
+      atk_boost = user.stages[:ATTACK]*20
+      def_boost = user.stages[:DEFENSE]*20
       diff = atk_boost + def_boost
       score -= diff
       PBAI.log("- #{diff} for boosted stats") if diff > 0
@@ -1581,7 +1581,7 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
         score += 40
         PBAI.log("+ 40 for being a #{user.role.name}")
       end
-      atk_boost = user.stages[:SPECIAL_ATTACK]*10
+      atk_boost = user.stages[:SPECIAL_ATTACK]*20
       diff = atk_boost
       score -= diff
       PBAI.log("- #{diff} for boosted stats") if diff > 0
@@ -1619,8 +1619,8 @@ PBAI::ScoreHandler.add("02C") do |score, ai, user, target, move|
       score += 40
       PBAI.log("+ 40 for being a #{user.role.name}")
     end
-    atk_boost = user.stages[:SPECIAL_ATTACK]*10
-    def_boost = user.stages[:SPECIAL_DEFENSE]*10
+    atk_boost = user.stages[:SPECIAL_ATTACK]*20
+    def_boost = user.stages[:SPECIAL_DEFENSE]*20
     diff = atk_boost + def_boost
     score -= diff
     PBAI.log("- #{diff} for boosted stats") if diff > 0
