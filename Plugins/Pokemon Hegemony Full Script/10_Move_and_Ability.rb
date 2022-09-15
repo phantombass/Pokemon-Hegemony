@@ -931,6 +931,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:TOXICSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Poison
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Poison)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }

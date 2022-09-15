@@ -569,262 +569,74 @@ class PokemonSummary_Scene
           @sprites["nav"].y -= 47
         end
       elsif Input.trigger?(Input::C)
-        @scene.pbMessage(_INTL("Change which?\\ch[34,6,Max EVs,EVs,Max IVs,Clear EVs,Min IVs,Cancel]"))
+        @scene.pbMessage(_INTL("Change which?\\ch[34,3,EVs,IVs,Cancel]"))
         stat = $game_variables[34]
+        stats = [:HP,:ATTACK,:DEFENSE,:SPECIAL_ATTACK,:SPECIAL_DEFENSE,:SPEED]
         pkmn = @pokemon
-        if stat == -1 || stat == 6 || stat == 5
+        if stat == -1 || stat == 3 || stat == 2
           @sprites["nav"].visible = false
           pbPlayCloseMenuSE
           break
         end
-        case stat_choice
-        when 0
-          if stat == 0
-            upperLimit = 0
-            GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :HP }
-            upperLimit = Pokemon::EV_LIMIT - upperLimit
-            upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-            pkmn.ev[:HP] = upperLimit
-            pkmn.calc_stats
-            dorefresh = true
-          elsif stat == 1
-            params = ChooseNumberParams.new
-            upperLimit = 0
-            GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :HP }
-            upperLimit = Pokemon::EV_LIMIT - upperLimit
-            upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-            thisValue = [pkmn.ev[:HP], upperLimit].min
-            params.setRange(0, upperLimit)
-            params.setDefaultValue(thisValue)
-            params.setCancelValue(pkmn.ev[:HP])
-            f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
-               GameData::Stat.get(:HP).name, upperLimit), params) { pbUpdate }
-            if f != pkmn.ev[:HP]
-              pkmn.ev[:HP] = f
-              pkmn.calc_stats
-              dorefresh = true
-            end
-          elsif stat == 2
-            pkmn.iv[:HP] = 31
-            pkmn.calc_stats
-            dorefresh = true
-          elsif stat == 3
-            pkmn.ev[:HP] = 0
-            pkmn.calc_stats
-            dorefresh = true
-          elsif stat == 4
-            pkmn.iv[:HP] = 0
-            pkmn.calc_stats
-            dorefresh = true
-          else
-            break
-          end
-        when 1
-          if stat == 0
-            upperLimit = 0
-            GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :ATTACK }
-            upperLimit = Pokemon::EV_LIMIT - upperLimit
-            upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-            pkmn.ev[:ATTACK] = upperLimit
-            pkmn.calc_stats
-            dorefresh = true
-          elsif stat == 1
-            params = ChooseNumberParams.new
-            upperLimit = 0
-            GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :ATTACK }
-            upperLimit = Pokemon::EV_LIMIT - upperLimit
-            upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-            thisValue = [pkmn.ev[:ATTACK], upperLimit].min
-            params.setRange(0, upperLimit)
-            params.setDefaultValue(thisValue)
-            params.setCancelValue(pkmn.ev[:ATTACK])
-            f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
-               GameData::Stat.get(:ATTACK).name, upperLimit), params) { pbUpdate }
-            if f != pkmn.ev[:ATTACK]
-              pkmn.ev[:ATTACK] = f
-              pkmn.calc_stats
-              dorefresh = true
-            end
-          elsif stat == 2
-            pkmn.iv[:ATTACK] = 31
-            pkmn.calc_stats
-            dorefresh = true
-          elsif stat == 3
-            pkmn.ev[:ATTACK] = 0
-            pkmn.calc_stats
-            dorefresh = true
-          elsif stat == 4
-            pkmn.iv[:ATTACK] = 0
-            pkmn.calc_stats
-            dorefresh = true
-          else
-            break
-          end
-      when 2
         if stat == 0
-          upperLimit = 0
-          GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :DEFENSE }
-          upperLimit = Pokemon::EV_LIMIT - upperLimit
-          upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-          pkmn.ev[:DEFENSE] = upperLimit
-          pkmn.calc_stats
-          dorefresh = true
-        elsif stat == 1
-          params = ChooseNumberParams.new
-          upperLimit = 0
-          GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :DEFENSE }
-          upperLimit = Pokemon::EV_LIMIT - upperLimit
-          upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-          thisValue = [pkmn.ev[:DEFENSE], upperLimit].min
-          params.setRange(0, upperLimit)
-          params.setDefaultValue(thisValue)
-          params.setCancelValue(pkmn.ev[:DEFENSE])
-          f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
-             GameData::Stat.get(:DEFENSE).name, upperLimit), params) { pbUpdate }
-          if f != pkmn.ev[:DEFENSE]
-            pkmn.ev[:DEFENSE] = f
+          @scene.pbMessage(_INTL("How?\\ch[34,4,Max EVs,Clear EVs,Change EVs...,Cancel]"))
+          stat_ev = $game_variables[34]
+          if stat_ev == -1 || stat_ev == 4 || stat_ev == 3
+            @sprites["nav"].visible = false
+            pbPlayCloseMenuSE
+            break
+          end
+          if stat_ev == 0
+            upperLimit = 0
+            GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != stats[stat_choice] }
+            upperLimit = Pokemon::EV_LIMIT - upperLimit
+            upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
+            pkmn.ev[stats[stat_choice]] = upperLimit
             pkmn.calc_stats
             dorefresh = true
-          end
-        elsif stat == 2
-          pkmn.iv[:DEFENSE] = 31
-          pkmn.calc_stats
-          dorefresh = true
-        elsif stat == 3
-          pkmn.ev[:DEFENSE] = 0
-          pkmn.calc_stats
-          dorefresh = true
-        elsif stat == 4
-          pkmn.iv[:DEFENSE] = 0
-          pkmn.calc_stats
-          dorefresh = true
-        else
-          break
-        end
-    when 3
-      if stat == 0
-        upperLimit = 0
-        GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPECIAL_ATTACK }
-        upperLimit = Pokemon::EV_LIMIT - upperLimit
-        upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-        pkmn.ev[:SPECIAL_ATTACK] = upperLimit
-        pkmn.calc_stats
-        dorefresh = true
-        elsif stat == 1
-          params = ChooseNumberParams.new
-          upperLimit = 0
-          GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPECIAL_ATTACK }
-          upperLimit = Pokemon::EV_LIMIT - upperLimit
-          upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-          thisValue = [pkmn.ev[:SPECIAL_ATTACK], upperLimit].min
-          params.setRange(0, upperLimit)
-          params.setDefaultValue(thisValue)
-          params.setCancelValue(pkmn.ev[:SPECIAL_ATTACK])
-          f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
-             GameData::Stat.get(:SPECIAL_ATTACK).name, upperLimit), params) { pbUpdate }
-          if f != pkmn.ev[:SPECIAL_ATTACK]
-            pkmn.ev[:SPECIAL_ATTACK] = f
+          elsif stat_ev == 1
+            pkmn.ev[stats[stat_choice]] = 0
             pkmn.calc_stats
             dorefresh = true
+          elsif stat_ev == 2
+            params = ChooseNumberParams.new
+            upperLimit = 0
+            GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != stats[stat_choice] }
+            upperLimit = Pokemon::EV_LIMIT - upperLimit
+            upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
+            thisValue = [pkmn.ev[stats[stat_choice]], upperLimit].min
+            params.setRange(0, upperLimit)
+            params.setDefaultValue(thisValue)
+            params.setCancelValue(pkmn.ev[stats[stat_choice]])
+            f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
+               GameData::Stat.get(stats[stat_choice]).name, upperLimit), params) { pbUpdate }
+            if f != pkmn.ev[stats[stat_choice]]
+              pkmn.ev[stats[stat_choice]] = f
+              pkmn.calc_stats
+              dorefresh = true
+            end
           end
-        elsif stat == 2
-          pkmn.iv[:SPECIAL_ATTACK] = 31
-          pkmn.calc_stats
-          dorefresh = true
-        elsif stat == 3
-          pkmn.ev[:SPECIAL_ATTACK] = 0
-          pkmn.calc_stats
-          dorefresh = true
-        elsif stat == 4
-          pkmn.iv[:SPECIAL_ATTACK] = 0
-          pkmn.calc_stats
-          dorefresh = true
-        else
-          break
         end
-    when 4
-      if stat == 0
-        upperLimit = 0
-        GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPECIAL_DEFENSE }
-        upperLimit = Pokemon::EV_LIMIT - upperLimit
-        upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-        pkmn.ev[:SPECIAL_DEFENSE] = upperLimit
-        pkmn.calc_stats
-        dorefresh = true
-      elsif stat == 1
-        params = ChooseNumberParams.new
-        upperLimit = 0
-        GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPECIAL_DEFENSE }
-        upperLimit = Pokemon::EV_LIMIT - upperLimit
-        upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-        thisValue = [pkmn.ev[:SPECIAL_DEFENSE], upperLimit].min
-        params.setRange(0, upperLimit)
-        params.setDefaultValue(thisValue)
-        params.setCancelValue(pkmn.ev[:SPECIAL_DEFENSE])
-        f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
-           GameData::Stat.get(:SPECIAL_DEFENSE).name, upperLimit), params) { pbUpdate }
-        if f != pkmn.ev[:SPECIAL_DEFENSE]
-          pkmn.ev[:SPECIAL_DEFENSE] = f
-          pkmn.calc_stats
-          dorefresh = true
+        if stat == 1
+          @scene.pbMessage(_INTL("How?\\ch[34,4,Max IVs,Min IVs,Cancel]"))
+          stat_iv = $game_variables[34]
+          if stat_iv == -1 || stat_iv == 3 || stat_iv == 2
+            @sprites["nav"].visible = false
+            pbPlayCloseMenuSE
+            break
+          end
+          if stat_iv == 0
+            pkmn.iv[stats[stat_choice]] = 31
+            pkmn.calc_stats
+            dorefresh = true
+          elsif stat_iv == 1
+            pkmn.iv[stats[stat_choice]] = 0
+            pkmn.calc_stats
+            dorefresh = true
+          else
+            break
+          end
         end
-      elsif stat == 2
-        pkmn.iv[:SPECIAL_DEFENSE] = 31
-        pkmn.calc_stats
-        dorefresh = true
-      elsif stat == 3
-        pkmn.ev[:SPECIAL_DEFENSE] = 0
-        pkmn.calc_stats
-        dorefresh = true
-      elsif stat == 4
-        pkmn.iv[:SPECIAL_DEFENSE] = 0
-        pkmn.calc_stats
-        dorefresh = true
-      else
-        break
-      end
-    when 5
-      if stat == 0
-        upperLimit = 0
-        GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPEED }
-        upperLimit = Pokemon::EV_LIMIT - upperLimit
-        upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-        pkmn.ev[:SPEED] = upperLimit
-        pkmn.calc_stats
-        dorefresh = true
-      elsif stat == 1
-        params = ChooseNumberParams.new
-        upperLimit = 0
-        GameData::Stat.each_main { |s| upperLimit += pkmn.ev[s.id] if s.id != :SPEED }
-        upperLimit = Pokemon::EV_LIMIT - upperLimit
-        upperLimit = [upperLimit, Pokemon::EV_STAT_LIMIT].min
-        thisValue = [pkmn.ev[:SPEED], upperLimit].min
-        params.setRange(0, upperLimit)
-        params.setDefaultValue(thisValue)
-        params.setCancelValue(pkmn.ev[:SPEED])
-        f = pbMessageChooseNumber(_INTL("Set the EV for {1} (max. {2}).",
-           GameData::Stat.get(:SPEED).name, upperLimit), params) { pbUpdate }
-        if f != pkmn.ev[:SPEED]
-          pkmn.ev[:SPEED] = f
-          pkmn.calc_stats
-          dorefresh = true
-        end
-      elsif stat == 2
-        pkmn.iv[:SPEED] = 31
-        pkmn.calc_stats
-        dorefresh = true
-      elsif stat == 3
-        pkmn.ev[:SPEED] = 0
-        pkmn.calc_stats
-        dorefresh = true
-      elsif stat == 4
-        pkmn.iv[:SPEED] = 0
-        pkmn.calc_stats
-        dorefresh = true
-      else
-        break
-      end
-    end
       elsif Input.trigger?(Input::B)
         @sprites["nav"].visible = false
         pbPlayCloseMenuSE
