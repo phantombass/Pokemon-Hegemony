@@ -1036,13 +1036,15 @@ PBAI::ScoreHandler.add("103", "104", "105", "500") do |score, ai, user, target, 
     add *= 3 / 4.0 if user.opposing_side.effects[PBEffects::ToxicSpikes] == 1 && move.function == "104"
     score += add
     PBAI.log("+ #{add} for there are #{inactive} pokemon to be sent out at some point")
+    if user.role.id == :HAZARDLEAD
+      score += 50
+      PBAI.log("+ 50 for being a #{user.role.name}")
+    end
+    if ai.battle.field.weather == :Windy
+      score = 0
+      PBAI.log("* 0 because Windy weather prevents hazards")
+    end
   end
-  if user.role.id == :HAZARDLEAD
-    score += 50
-    PBAI.log("+ 50 for being a #{user.role.name}")
-  end
-  score = 0 if ai.battle.field.weather == :Windy
-  PBAI.log("* 0 because Windy weather prevents hazards")
   next score
 end
 
@@ -1440,10 +1442,10 @@ PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
     # Target debuffs: net goes up
     # The lower net is, the better Haze is to choose.
     user.side.battlers.each do |proj|
-      GameData::Stat.each_battle { |s| net += proj.stages[s] }
+      GameData::Stat.each_battle { |s| net += proj.stages[s] if proj.stages[s] != nil }
     end
     target.side.battlers.each do |proj|
-      GameData::Stat.each_battle { |s| net -= proj.stages[s] }
+      GameData::Stat.each_battle { |s| net -= proj.stages[s] if proj.stages[s] != nil }
     end
     # As long as the target's stat stages are more advantageous than ours (i.e. net < 0), Haze is a good choice
     if net < 0
@@ -1778,6 +1780,25 @@ PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
   else
     score -= 100
     PBAI.log("- 100 for already having a Substitute")
+  end
+  next score
+end
+
+#Destiny Bond
+PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
+  dmg = 0
+  for i in target.used_moves
+    dmg += 1 if target.get_move_damage(user,i) >= user.hp
+    sound += 1 if i.soundMove? && i.damagingMove?
+  end
+  if dmg > 0 && !user.effects[PBEffects::DestinyBondPrevious]
+    dbond = 50*dmg
+    score += dbond
+    PBAI.log("+ #{dbond} for being able to take down the opponent with Destiny Bond")
+    if user.hasActiveItem?(:CUSTAPBERRY) && user.hp <= user.totalhp/4
+      score += 50
+      PBAI.log("+ 50 for having Custap Berry's boosted priority on Destiny Bond")
+    end
   end
   next score
 end
