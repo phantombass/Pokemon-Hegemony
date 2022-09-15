@@ -1063,7 +1063,7 @@ BattleHandlers::TargetAbilityOnHit.add(:ICEBODY,
       if !PokeBattle_SceneConstants::USE_ABILITY_SPLASH
         msg = _INTL("{1}'s {2} gave {3} frostbite!",target.pbThis,target.abilityName,user.pbThis(true))
       end
-      user.pbFreeze(target,msg)
+      user.pbFreezeIceBody(target,msg)
     end
     battle.pbHideAbilitySplash(target)
   }
