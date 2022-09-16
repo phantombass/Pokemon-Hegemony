@@ -1018,13 +1018,14 @@ end
 
 
 # Stealth Rock, Spikes, Toxic Spikes
-PBAI::ScoreHandler.add("103", "104", "105", "500") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, target, move|
   if move.function == "103" && user.opposing_side.effects[PBEffects::Spikes] >= 3 ||
      move.function == "104" && user.opposing_side.effects[PBEffects::ToxicSpikes] >= 2 ||
      move.function == "105" && user.opposing_side.effects[PBEffects::StealthRock] ||
+     move.function == "153" && user.opposing_side.effects[PBEffects::StickyWeb] ||
      move.function == "500" && user.opposing_side.effects[PBEffects::CometShards]
-    score -= 30
-    PBAI.log("- 30 for the opposing side already has max spikes")
+    score = 0
+    PBAI.log("* 0 for the opposing side already has max #{move.name}")
   else
     fnt = 0
     user.side.party.each do |pkmn|
