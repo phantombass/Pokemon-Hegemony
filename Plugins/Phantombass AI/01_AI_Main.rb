@@ -550,10 +550,11 @@ class PBAI
       if idx
         choice = scores[idx]
         move = @battler.moves[choice[0]]
+        target = opposing_side.battlers[choice[2]]
         if ["15B", "0D5", "0D6", "0D7", "0D8", "0D9"].include?(move.function)
           self.flags[:will_be_healed] = true
         elsif move.function == "0DF"
-          @battler.flags[:will_be_healed] = true
+          target.flags[:will_be_healed] = true
         elsif move.function == "0A1"
           @side.flags[:will_luckychant] = true
         elsif move.function == "0A2"
@@ -565,11 +566,11 @@ class PBAI
         elsif move.function == "167"
           @side.flags[:will_auroraveil] = true
         elsif move.function == "0BA"
-          @battler.flags[:will_be_taunted] = true
+          target.flags[:will_be_taunted] = true
         elsif move.function == "0B9"
-          @battler.flags[:will_be_disabled] = true
+          target.flags[:will_be_disabled] = true
         elsif move.function == "0BC"
-          @battler.flags[:will_be_encored] = true
+          target.flags[:will_be_encored] = true
         end
         return [choice[0], choice[2]]
       end
