@@ -1091,7 +1091,7 @@ PBAI::ScoreHandler.add("071") do |score, ai, user, target, move|
   prevDmg = user.get_damage_by_user(target)
   if prevDmg.size > 0 && prevDmg != 0
     lastDmg = prevDmg[-1]
-    lastMove = lastDmg[1]
+    lastMove = PokeBattle_Move.from_pokemon_move(ai.battle,Pokemon::Move.new(lastDmg[1]))
     expect = true if lastMove.physicalMove?
   end
   # If we can reasonably expect the target to use a physical move
@@ -1109,7 +1109,7 @@ PBAI::ScoreHandler.add("CounterSpecialDamage") do |score, ai, user, target, move
   prevDmg = user.get_damage_by_user(target)
   if prevDmg.size > 0 && prevDmg != 0
     lastDmg = prevDmg[-1]
-    lastMove = lastDmg[1]
+    lastMove = PokeBattle_Move.from_pokemon_move(ai.battle,Pokemon::Move.new(lastDmg[1]))
     expect = true if lastMove.specialMove?
   end
   # If we can reasonably expect the target to use a special move
@@ -1347,8 +1347,12 @@ PBAI::ScoreHandler.add("0A2") do |score, ai, user, target, move|
     score -= 30
     PBAI.log("- 30 for another battler will already use reflect")
   else
-    enemies = target.side.battlers.select { |proj| !proj.fainted? }.size
-    physenemies = target.side.battlers.select { |proj| proj.is_physical_attacker? }.size
+    fnt = target.side.party.size
+    physenemies = 0
+    target.side.party.each do |pkmn|
+      fnt -=1 if pkmn.fainted?
+      physenemies += 1 if pkmn.is_physical_attacker?
+    end
     add = enemies * 20 + physenemies * 30
     score += add
     PBAI.log("+ #{add} based on enemy and physical enemy count")
@@ -1370,9 +1374,13 @@ PBAI::ScoreHandler.add("0A3") do |score, ai, user, target, move|
     score -= 30
     PBAI.log("- 30 for another battler will already use light screen")
   else
-    enemies = target.side.battlers.select { |proj| !proj.fainted? }.size
-    specenemies = target.side.battlers.select { |proj| proj.is_special_attacker? }.size
-    add = enemies * 20 + specenemies * 30
+    fnt = target.side.party.size
+    specenemies = 0
+    target.side.party.each do |pkmn|
+      fnt -=1 if pkmn.fainted?
+      specenemies += 1 if pkmn.is_special_attacker?
+    end
+    add = fnt * 20 + specenemies * 30
     score += add
     PBAI.log("+ #{add} based on enemy and special enemy count")
     if user.role.id == :SCREENS
@@ -1391,12 +1399,15 @@ PBAI::ScoreHandler.add("167") do |score, ai, user, target, move|
   elsif user.side.flags[:will_auroraveil] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for another battler will already use Aurora Veil")
-  elsif user.effectiveWeather != :Hail
+  elsif ![:Hail,:Sleet].include?(ai.battle.pbWeather)
     score -= 30
-    PBAI.log("- 30 for Aurora Veil will fail without Hail active")
+    PBAI.log("- 30 for Aurora Veil will fail without Hail or Sleet active")
   else
-    enemies = target.side.battlers.select { |proj| !proj.fainted? }.size
-    add = enemies * 30
+    fnt = target.side.party.size
+    target.side.party.each do |pkmn|
+      fnt -=1 if pkmn.fainted?
+    end
+    add = fnt * 30
     score += add
     PBAI.log("+ #{add} based on enemy count")
     if user.role.id == :SCREENS
@@ -1486,10 +1497,10 @@ end
 
 # Swords Dance
 PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
-  if [:SETUPSWEEPER,:PHYSICALBREAKER].include?(user.role.id)
+  if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:ATTACK)
-      score -= 30
-      PBAI.log("- 30 for battler being max Attack")
+      score = 0
+      PBAI.log("* 0 for battler being max Attack")
     else
       count = 0
       user.moves.each do |m|
@@ -1523,10 +1534,10 @@ end
 
 # Bulk Up & Victory Dance
 PBAI::ScoreHandler.add("024", "518") do |score, ai, user, target, move|
-  if [:SETUPSWEEPER,:PHYSICALBREAKER].include?(user.role.id)
+  if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:DEFENSE)
-      score -= 30
-      PBAI.log("- 30 for battler being max on Attack or Defense")
+      score = 0
+      PBAI.log("* 0 for battler being max on Attack or Defense")
     else
       count = 0
       user.moves.each do |m|
@@ -1561,10 +1572,10 @@ end
 
 # Nasty Plot
 PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
-  if [:SETUPSWEEPER,:SPECIALBREAKER].include?(user.role.id)
+  if [:SETUPSWEEPER,:SPECIALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:SPECIAL_ATTACK)
-      score -= 30
-      PBAI.log("- 30 for battler being max Special Attack")
+      score = 0
+      PBAI.log("* 0 for battler being max Special Attack")
     else
       count = 0
       user.moves.each do |m|
@@ -1598,10 +1609,10 @@ end
 
 # Calm Mind
 PBAI::ScoreHandler.add("02C") do |score, ai, user, target, move|
-  if [:SETUPSWEEPER,:SPECIALBREAKER].include?(user.role.id)
+  if [:SETUPSWEEPER,:SPECIALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:SPECIAL_ATTACK) || user.statStageAtMax?(:SPECIAL_DEFENSE)
-      score -= 30
-      PBAI.log("- 30 for battler being max Special Attack or Special Defense")
+      score = 0
+      PBAI.log("* 0 for battler being max Special Attack or Special Defense")
     else
       count = 0
       user.moves.each do |m|

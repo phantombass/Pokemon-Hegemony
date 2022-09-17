@@ -855,7 +855,7 @@ BattleHandlers::AccuracyCalcTargetAbility.add(:SANDVEIL,
 
 BattleHandlers::AccuracyCalcTargetAbility.add(:SNOWCLOAK,
   proc { |ability,mods,user,target,move,type|
-    mods[:evasion_multiplier] *= 1.25 if target.battle.pbWeather == :Hail
+    mods[:evasion_multiplier] *= 1.25 if [:Hail,:Sleet].include?(target.battle.pbWeather)
   }
 )
 
@@ -2033,7 +2033,7 @@ BattleHandlers::EORWeatherAbility.add(:DRYSKIN,
 
 BattleHandlers::EORWeatherAbility.add(:ICEBODY,
   proc { |ability,weather,battler,battle|
-    next unless weather == :Hail
+    next unless weather == (:Hail || :Sleet)
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
     battler.pbRecoverHP(battler.totalhp/8)

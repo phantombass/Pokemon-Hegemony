@@ -188,6 +188,13 @@ BattlerPlayerX          = -6
 BattlerPlayerY          = 67
 BattlerEnemyX           = 1
 #-------------------------------
+[PIKACHU2]
+BattlerEnemyY           = 61
+BattlerAltitude         = 0
+BattlerPlayerX          = -6
+BattlerPlayerY          = 67
+BattlerEnemyX           = 1
+#-------------------------------
 [RAICHU]
 BattlerEnemyY           = 53
 BattlerAltitude         = 0

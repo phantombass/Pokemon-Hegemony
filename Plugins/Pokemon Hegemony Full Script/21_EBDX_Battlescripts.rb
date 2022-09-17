@@ -63,10 +63,12 @@ module BattleScripts
       pname = $Trainer.name
       rname = $game_variables[12]
       @scene.pbTrainerSpeak("I have heard good things about you from #{rname}! Let's see if he was right.")
-      @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
-      @battle.field.weather = :StrongWinds
-      $gym_weather = true
-      @scene.pbDisplay("A Delta Stream brewed!")
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.weather = :StrongWinds
+        $gym_weather = true
+        @scene.pbDisplay("A Delta Stream brewed!")
+      end
     end
   }
 
