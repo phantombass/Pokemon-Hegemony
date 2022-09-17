@@ -248,7 +248,7 @@ class PokemonEggHatch_Scene
     cmd = [_INTL("Yes"),_INTL("No")]
     pbMessageDisplay(@sprites["msgwindow"],_INTL("\\se[]{1} hatched from the Egg!\\wt[80]",@pokemon.name)) { self.update }
     pbMessageDisplay(@sprites["msgwindow"],_INTL("Would you like to nickname the newly hatched {1}?",@pokemon.name)) { self.update }
-    if pbShowCommands(@sprites["msgwindow"],cmd,1,0) { self.update } == 0
+    if pbShowCommands(@sprites["msgwindow"],cmd,2,0) { self.update } == 0
       nickname = pbEnterPokemonName(_INTL("{1}'s nickname?",@pokemon.name),0,10,"",@pokemon,true)
       @pokemon.name = nickname if nickname != ""
       @nicknamed = true

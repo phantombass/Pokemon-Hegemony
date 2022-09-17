@@ -459,6 +459,7 @@ def pbBerryPlant
         return
       end
       $PokemonBag.pbStoreItem(berry,berrycount)
+      playBerryPickME
       if berrycount>1
         pbMessage(_INTL("You picked the {1} \\c[1]{2}\\c[0].\\wtnp[30]",berrycount,itemname))
       else

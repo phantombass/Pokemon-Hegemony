@@ -66,6 +66,7 @@ module Settings
   def self.pokedex_names
     return [
       [_INTL("Parthenia Pokédex"), 0],
+      [_INTL("Armadia Pokédex"), 1],
       _INTL("National Pokédex")
     ]
   end
