@@ -302,7 +302,7 @@
 297,TM09,TM09,TM09s,4,50000,"The user charges at the target using every bit of its power. The user can't move on the next turn.",3,0,0,GIGAIMPACT,
 298,TM10,TM10,TM10s,4,10000,"The user scatters curious leaves that chase the target. This attack never misses.",3,0,0,MAGICALLEAF,
 299,TM11,TM11,TM11s,4,10000,"In this two-turn attack, the user gathers light, then blasts a bundled beam on the next turn.",3,0,0,SOLARBEAM,
-300,TM12,TM12,TM12s,4,50000,"In this two-turn attack, the user gathers light, then attacks with a charged blade on the next turn.",3,0,0,SOLARBLADE,
+300,TM12,TM12,TM12s,4,10000,"In this two-turn attack, the user gathers light, then attacks with a charged blade on the next turn.",3,0,0,SOLARBLADE,
 301,TM13,TM13,TM13s,4,10000,"The target becomes trapped within a fierce vortex of fire that rages for four to five turns.",3,0,0,FIRESPIN,
 302,TM14,TM14,TM14s,4,10000,"The user launches a weak jolt of electricity that paralyzes the target.",3,0,0,THUNDERWAVE,
 303,TM15,TM15,TM15s,4,10000,"The user burrows into the ground, then attacks on the next turn.",3,0,0,DIG,
@@ -770,9 +770,9 @@
 751,TM253,TM253,TM253s,4,16000,"The user fights the foe up close without guarding itself. It also cuts the user's Defense and Sp. Def.",3,0,0,CLOSECOMBAT,
 752,TM254,TM254,TM254s,4,4000,"The user lays a trap of poison spikes at the opponent's feet. They poison opponents that switch into battle.",3,0,0,TOXICSPIKES,
 753,TM255,TM255,TM255s,4,16000,"The user cloaks itself in fire and charges at the foe. The user sustains serious damage, too.",3,0,0,FLAREBLITZ,
-754,TM256,TM256,TM256s,4,6000,"The user looses a blast of aura power from deep within its body at the target. This attack never misses.",3,0,0,AURASPHERE,
+754,TM256,TM256,TM256s,4,10000,"The user looses a blast of aura power from deep within its body at the target. This attack never misses.",3,0,0,AURASPHERE,
 755,TM257,TM257,TM257s,4,6000,"The target is stabbed with a tentacle, arm, or the like steeped in poison. This may also poison the target.",3,0,0,POISONJAB,
-756,TM258,TM258,TM258s,4,6000,"The user releases a horrible aura imbued with dark thoughts. This may also make the target flinch.",3,0,0,DARKPULSE,
+756,TM258,TM258,TM258s,4,10000,"The user releases a horrible aura imbued with dark thoughts. This may also make the target flinch.",3,0,0,DARKPULSE,
 757,TM259,TM259,TM259s,4,6000,"The user slams a barrage of hard-shelled seeds down on the target from above.",3,0,0,SEEDBOMB,
 758,TM260,TM260,TM260s,4,6000,"The user slashes at the target by crossing its scythes or claws as if they were a pair of scissors.",3,0,0,XSCISSOR,
 759,TM261,TM261,TM261s,4,10000,"The user generates a damaging sound wave by vibration. This may also lower the target's Sp. Def stat.",3,0,0,BUGBUZZ,
@@ -813,7 +813,7 @@
 794,TM296,TM296,TM296s,4,10000,"The user attacks with an exploding pollen puff. If the target is an ally, it restores its HP instead.",3,0,0,POLLENPUFF,
 795,TM297,TM297,TM297s,4,10000,"The user bites the target with its psychic capabilities. This can also destroy Light Screen and Reflect.",3,0,0,PSYCHICFANGS,
 796,TM298,TM298,TM298s,4,6000,"The user slams into the target using a full-force blast of water. This may also lower the target's Defense stat.",3,0,0,LIQUIDATION,
-797,TM299,TM299,TM299s,4,6000,"The user attacks by slamming its body into the target. The higher the user's Defense, the more damage it inflicts.",3,0,0,BODYPRESS,
+797,TM299,TM299,TM299s,4,10000,"The user attacks by slamming its body into the target. The higher the user's Defense, the more damage it inflicts.",3,0,0,BODYPRESS,
 #-------------------------------
 798,TORTERRANITE,Torterranite,Torterranites,1,10000,"One variety of the mysterious Mega Stones. Have Torterra hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
 799,INFERNITE,Infernite,Infernites,1,10000,"One variety of the mysterious Mega Stones. Have Infernape hold it, and this stone will enable it to Mega Evolve during battle.",0,0,12,
@@ -934,17 +934,17 @@
 915,ROTOMMULTITOOL,Rotom Multitool,Rotom Multitools,1,0,"A glowing orb to be held by Rotom. It contains the power of all its possible appliances.",0,0,0,
 916,TARFRUBERRY,Tarfru Berry,Tarfru Berries,5,20,"Weakens a supereffective Cosmic-type attack against the holding Pokémon.",0,0,5,
 917,ULTRANECROZIUMZ,Ultranecrozium Z,Ultranecrozium Zs,1,10000,"A long since forgotten crystal to be held by Necrozma. It allows it to Ultra Burst immediately on entry.",0,0,0,
-918,TM111,TM111,TM111s,4,30000,"The user lets loose a toxic ringing with the power to inflict damage.",3,0,0,DEATHTOLL
-919,TM112,TM112,TM112s,4,30000,"The user lets loose a demented cry on the wind with the power to inflict damage.",3,0,0,WICKEDWIND
-920,TM113,TM113,TM113s,4,30000,"The user lets loose a horribly echoing shout with the power to inflict damage.",3,0,0,SPECTRALSHRIEK
-921,TM114,TM114,TM114s,4,30000,"The user looses a cold shriek with the power to inflict damage.",3,0,0,CHILLINGCRY
-922,TM126,TM126,TM126s,4,30000,"Gliding on the ground, the user attacks the target. This move always goes first on Grassy Terrain.",3,0,0,GRASSYGLIDE
-923,TM127,TM127,TM127s,4,30000,"The user lands and rests its body. It restores the user's HP by up to half of its max HP.",3,0,0,ROOST
-924,TM128,TM128,TM128s,4,30000,"A move that leaves the target badly poisoned. Its poison damage worsens every turn.",3,0,0,TOXIC
-925,TM129,TM129,TM129s,4,30000,"Use it to flee from any wild Pokémon. It can also warp to the last Pokémon Center visited.",3,0,0,TELEPORT
-926,TM130,TM130,TM130s,4,30000,"The target is scared off and replaced by another Pokémon in its party. In the wild, the battle ends.",3,0,0,ROAR
-927,TM131,TM131,TM131s,4,30000,"Striking opponents repeatedly makes the user's fists harder, raising the user's Attack stat.",3,0,0,POWERUPPUNCH
-928,TM132,TM132,TM132s,4,30000,"The user fires an EMP that reverses the polarity of the opponent. Is super-effective on Electric types.",3,0,0,POLARITYPULSE
-929,TM133,TM133,TM133s,4,30000,"A full-power attack that grows more powerful the more the user likes its Trainer.",3,0,0,RETURN
-930,TM134,TM134,TM134s,4,30000,"The target chilled to the bone and inflicting frostbite.",3,0,0,DEEPFREEZE
+918,TM111,TM111,TM111s,4,10000,"The user lets loose a toxic ringing with the power to inflict damage.",3,0,0,DEATHTOLL
+919,TM112,TM112,TM112s,4,10000,"The user lets loose a demented cry on the wind with the power to inflict damage.",3,0,0,WICKEDWIND
+920,TM113,TM113,TM113s,4,10000,"The user lets loose a horribly echoing shout with the power to inflict damage.",3,0,0,SPECTRALSHRIEK
+921,TM114,TM114,TM114s,4,10000,"The user looses a cold shriek with the power to inflict damage.",3,0,0,CHILLINGCRY
+922,TM126,TM126,TM126s,4,10000,"Gliding on the ground, the user attacks the target. This move always goes first on Grassy Terrain.",3,0,0,GRASSYGLIDE
+923,TM127,TM127,TM127s,4,10000,"The user lands and rests its body. It restores the user's HP by up to half of its max HP.",3,0,0,ROOST
+924,TM128,TM128,TM128s,4,10000,"A move that leaves the target badly poisoned. Its poison damage worsens every turn.",3,0,0,TOXIC
+925,TM129,TM129,TM129s,4,10000,"Use it to flee from any wild Pokémon. It can also warp to the last Pokémon Center visited.",3,0,0,TELEPORT
+926,TM130,TM130,TM130s,4,10000,"The target is scared off and replaced by another Pokémon in its party. In the wild, the battle ends.",3,0,0,ROAR
+927,TM131,TM131,TM131s,4,10000,"Striking opponents repeatedly makes the user's fists harder, raising the user's Attack stat.",3,0,0,POWERUPPUNCH
+928,TM132,TM132,TM132s,4,10000,"The user fires an EMP that reverses the polarity of the opponent. Is super-effective on Electric types.",3,0,0,POLARITYPULSE
+929,TM133,TM133,TM133s,4,10000,"A full-power attack that grows more powerful the more the user likes its Trainer.",3,0,0,RETURN
+930,TM134,TM134,TM134s,4,10000,"The target chilled to the bone and inflicting frostbite.",3,0,0,DEEPFREEZE
 931,WALTARIANITE,Wartime Altarianite,Wartime Altarianites,1,10000,"One of a variety of mysterious Mega Stones. Have Wartime Altaria hold it, and it will be able to Mega Evolve.",0,0,12,
