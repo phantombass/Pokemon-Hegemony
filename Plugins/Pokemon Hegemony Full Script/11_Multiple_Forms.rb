@@ -225,8 +225,19 @@ def update_forms_from_glitches
   $glitches_fixed = true
 end
 
+def pikachu_glitch_fix
+  pbEachPokemon { |poke,_box|
+    species = poke.species
+    if species == :PIKACHU2 && poke.ability == :STEAMENGINE
+      poke.ability = :STEAMPOWERED
+    end
+  }
+  $pika_fixed = true
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
+  pikachu_glitch_fix if $pika_fixed != true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
   setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
   #$game_switches[218] = true
