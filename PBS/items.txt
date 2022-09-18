@@ -948,3 +948,4 @@
 929,TM133,TM133,TM133s,4,10000,"A full-power attack that grows more powerful the more the user likes its Trainer.",3,0,0,RETURN
 930,TM134,TM134,TM134s,4,10000,"The target chilled to the bone and inflicting frostbite.",3,0,0,DEEPFREEZE
 931,WALTARIANITE,Wartime Altarianite,Wartime Altarianites,1,10000,"One of a variety of mysterious Mega Stones. Have Wartime Altaria hold it, and it will be able to Mega Evolve.",0,0,12,
+932,FLASHFIREORB,Flash Fire Orb,Flash Fire Orbs,1,0,"A glowing orb that gives the holder Flash Fire as a second ability.",0,0,0,
