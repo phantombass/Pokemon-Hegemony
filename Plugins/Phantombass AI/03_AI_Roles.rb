@@ -138,3 +138,9 @@ GameData::Role.register({
   :id_number    => 18,
   :name         => _INTL("Redirection")
 })
+
+GameData::Role.register({
+  :id           => :TRICKROOMSETTER,
+  :id_number    => 19,
+  :name         => _INTL("Trick Room Setter")
+})
