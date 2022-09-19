@@ -943,7 +943,7 @@ class PBAI
         # Since this makes status moves unlikely to be chosen when the other moves
         # have a high base power, all status moves should ideally be addressed individually
         # in this method, and used in the optimal scenario for each individual move.
-        score = [:PIVOT,:PHYSICALWALL,:SPECIALWALL,:SETUPSWEEPER,:TOXICSTALLER,:STALLBREAKER].include?(self.role.id) ? 100 : 30
+        score = [:PIVOT,:PHYSICALWALL,:SPECIALWALL,:SETUPSWEEPER,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY].include?(self.role.id) ? 100 : 30
         PBAI.log("Test move #{move.name} (#{score})...")
         # Trigger general score modifier code
         score = PBAI::ScoreHandler.trigger_general(score, @ai, self, target, move)

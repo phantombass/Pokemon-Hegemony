@@ -117,6 +117,7 @@ end
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next if !move.is_a?(PokeBattle_MultiStatUpMove) && !move.is_a?(PokeBattle_StatUpMove) &&
           !move.is_a?(PokeBattle_StatDownMove)
+  next if move.damagingMove? && user.hasActiveAbility?(:SHEERFORCE)
   boosts = 0
   atkBoosts = 0
   spAtkBoosts = 0
@@ -1894,6 +1895,19 @@ PBAI::ScoreHandler.add("512") do |score, ai, user, target, move|
   if user.opposing_side.effects[PBEffects::StealthRock] != true
     score += 50
     PBAI.log("+ 50 for being able to set Stealth Rocks")
+  end
+  next score
+end
+
+#Trick Room
+PBAI::ScoreHandler.add("11F") do |score, ai, user, target, move|
+  if user.opposing_side.effects[PBEffects::TrickRoom] == 0 && target.faster_than?(user)
+    score += 50
+    PBAI.log("+ 50 for setting Trick Room to outspeed target")
+    if user.role.id == :TRICKROOMSETTER
+      score += 50
+      PBAI.log("+ 50 for being a #{user.role.name}")
+    end
   end
   next score
 end
