@@ -1110,6 +1110,8 @@ class PBAI
           return true if target.hasActiveAbility?(:SCALER)
         when :ICE
           return true if target.hasActiveAbility?(:DEFROST)
+        when :DARK
+          return true if target.hasActiveAbility?(:UNTAINTED)
         end
         return true if move.damagingMove? && Effectiveness.not_very_effective?(typeMod) &&
                        target.hasActiveAbility?(:WONDERGUARD)

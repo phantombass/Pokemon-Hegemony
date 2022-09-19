@@ -1034,7 +1034,7 @@ PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, t
     inactive = user.opposing_side.party.size - fnt
     add = inactive * 30
     add *= (3 - user.opposing_side.effects[PBEffects::Spikes]) / 3.0 if move.function == "103"
-    add *= 3 / 4.0 if user.opposing_side.effects[PBEffects::ToxicSpikes] == 1 && move.function == "104"
+    add *= 0.5 if user.opposing_side.effects[PBEffects::ToxicSpikes] == 1 && move.function == "104"
     score += add
     PBAI.log("+ #{add} for there are #{inactive} pokemon to be sent out at some point")
     if user.role.id == :HAZARDLEAD
@@ -1519,6 +1519,9 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
         PBAI.log("+ #{add} to boost to guarantee the kill")
         score += 40
         PBAI.log("+ 40 for being a #{user.role.name}")
+      elsif count > 0
+        score -= 100
+        PBAI.log("- 100 since the target can now be killed by an attack")
       end
       atk_boost = user.stages[:ATTACK]*20
       diff = atk_boost
@@ -1532,8 +1535,8 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
   next score
 end
 
-# Bulk Up & Victory Dance
-PBAI::ScoreHandler.add("024", "518") do |score, ai, user, target, move|
+# Bulk Up, Victory Dance, Dragon Dance
+PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
   if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:DEFENSE)
       score = 0
@@ -1557,6 +1560,9 @@ PBAI::ScoreHandler.add("024", "518") do |score, ai, user, target, move|
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
+      elsif count > 0
+        score -= 100
+        PBAI.log("- 100 since the target can now be killed by an attack")
       end
       atk_boost = user.stages[:ATTACK]*20
       def_boost = user.stages[:DEFENSE]*20
@@ -1594,6 +1600,9 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
         PBAI.log("+ #{add} to boost to guarantee the kill")
         score += 40
         PBAI.log("+ 40 for being a #{user.role.name}")
+      elsif count > 0
+        score -= 100
+        PBAI.log("- 100 since the target can now be killed by an attack")
       end
       atk_boost = user.stages[:SPECIAL_ATTACK]*20
       diff = atk_boost
@@ -1607,8 +1616,8 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
   next score
 end
 
-# Calm Mind
-PBAI::ScoreHandler.add("02C") do |score, ai, user, target, move|
+# Calm Mind and Quiver Dance
+PBAI::ScoreHandler.add("02B", "02C") do |score, ai, user, target, move|
   if [:SETUPSWEEPER,:SPECIALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:SPECIAL_ATTACK) || user.statStageAtMax?(:SPECIAL_DEFENSE)
       score = 0
@@ -1629,9 +1638,12 @@ PBAI::ScoreHandler.add("02C") do |score, ai, user, target, move|
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
+        score += 40
+        PBAI.log("+ 40 for being a #{user.role.name}")
+      elsif count > 0
+        score -= 100
+        PBAI.log("- 100 since the target can now be killed by an attack")
       end
-      score += 40
-      PBAI.log("+ 40 for being a #{user.role.name}")
     end
     atk_boost = user.stages[:SPECIAL_ATTACK]*20
     def_boost = user.stages[:SPECIAL_DEFENSE]*20
@@ -1679,6 +1691,10 @@ PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
     score += 100
     PBAI.log("+ 100 for receiving an incoming Wish")
   end
+  if ai.battle.pbSideSize(0) == 2 && user.effects[PBEffects::ProtectRate] == 0
+    score += 50
+    PBAI.log("+ 50 for encouraging use of Protect in Double battles")
+  end
   if user.effects[PBEffects::Substitute] > 0 && user.effects[PBEffects::ProtectRate] == 0
     if user.hasActiveAbility?(:SPEEDBOOST) && target.faster_than?(user)
       score += 100
@@ -1694,8 +1710,8 @@ PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
     end
   end
   if (user.hasActiveItem?(:FLAMEORB) && user.status == :NONE && user.hasActiveAbility?([:GUTS,:MARVELSCALE])) || ((user.hasActiveItem?(:TOXICORB) || ai.battle.field.terrain == :Poison) && user.hasActiveAbility?([:TOXICBOOST,:POISONHEAL,:GUTS]) && user.affectedByTerrain? && user.status == :NONE)
-    score += 100
-    PBAI.log("+ 100 for getting a status to benefit their ability")
+    score += 500
+    PBAI.log("+ 500 for getting a status to benefit their ability")
   end
   if (target.status == :POISON || target.status == :BURN || target.status == :FROZEN)
     protect = 60 - user.effects[PBEffects::ProtectRate] * 40
@@ -1741,8 +1757,8 @@ end
 #Beat Up for Doubles Mini Boss
 PBAI::ScoreHandler.add("0C1") do |score, ai, user, target, move|
   if user.role.id == :TARGETALLY && move.id == :BEATUP2
-    score += 100
-    PBAI.log("+ 100 for being a #{user.role.name}")
+    score += 200
+    PBAI.log("+ 200 for being a #{user.role.name}")
   end
   next score
 end
@@ -1801,9 +1817,8 @@ PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
   dmg = 0
   for i in target.used_moves
     dmg += 1 if target.get_move_damage(user,i) >= user.hp
-    sound += 1 if i.soundMove? && i.damagingMove?
   end
-  if dmg > 0 && !user.effects[PBEffects::DestinyBondPrevious]
+  if dmg > 0
     dbond = 50*dmg
     score += dbond
     PBAI.log("+ #{dbond} for being able to take down the opponent with Destiny Bond")
@@ -1811,6 +1826,74 @@ PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
       score += 50
       PBAI.log("+ 50 for having Custap Berry's boosted priority on Destiny Bond")
     end
+  end
+  score = 0 if user.effects[PBEffects::DestinyBondPrevious] == true
+  PBAI.log("* 0 for having used Destiny Bond the previous turn")
+  next score
+end
+
+#Overcharge
+PBAI::ScoreHandler.add("501") do |score, ai, user, target, move|
+  if target.pbHasType?(:GROUND)
+    score += 50
+    PBAI.log("+ 50 for being effective against Ground types")
+  end
+  if target.hasActiveAbility?([:LIGHTINGROD,:MOTORDRIVE,:VOLTABSORB]) && target.pbHasType?([:WATER,:FLYING])
+    score += 50
+    PBAI.log("+ 50 for move ignoring abilities and potentially being strong against target")
+  end
+  next score
+end
+
+#Draco Meteor, Astro Bomb, Psycho Boost, etc.
+PBAI::ScoreHandler.add("03F","03C","03B","03E","15F","193","114","035") do |score, ai, user, target, move|
+  if user.hasActiveAbility?(:CONTRARY) && !["114","035"].include?(move.function)
+    score += 50
+    PBAI.log("+ 50 for boosting")
+  end
+  if user.hasActiveAbility?(:UNSHAKEN)
+    score += 50
+    PBAI.log("+ 50 for stat drops being prevented")
+  end
+  next score
+end
+
+#Bonemerang
+PBAI::ScoreHandler.add("520") do |score, ai, user, target, move|
+  if target.pbHasType?(:FLYING)
+    score += 50
+    PBAI.log("+ 50 for being effective against Flying types")
+  end
+  if target.hasActiveAbility?(:LEVITATE) && target.pbHasType?([:FIRE,:ELECTRIC,:ROCK,:STEEL])
+    score += 50
+    PBAI.log("+ 50 for move ignoring abilities and potentially being strong against target")
+  end
+  next score
+end
+
+#Perfection Pulse
+PBAI::ScoreHandler.add("504") do |score, ai, user, target, move|
+  if target.pbHasType?(:FAIRY)
+    score += 50
+    PBAI.log("+ 50 for being effective against Fairy types")
+  end
+  next score
+end
+
+#Polarity Pulse
+PBAI::ScoreHandler.add("505") do |score, ai, user, target, move|
+  if target.pbHasType?(:ELECTRIC)
+    score += 50
+    PBAI.log("+ 50 for being super effective against Electric types")
+  end
+  next score
+end
+
+#Stone Axe
+PBAI::ScoreHandler.add("512") do |score, ai, user, target, move|
+  if user.opposing_side.effects[PBEffects::StealthRock] != true
+    score += 50
+    PBAI.log("+ 50 for being able to set Stealth Rocks")
   end
   next score
 end
