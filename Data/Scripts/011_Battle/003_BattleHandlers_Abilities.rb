@@ -2033,7 +2033,7 @@ BattleHandlers::EORWeatherAbility.add(:DRYSKIN,
 
 BattleHandlers::EORWeatherAbility.add(:ICEBODY,
   proc { |ability,weather,battler,battle|
-    next unless weather == (:Hail || :Sleet)
+    next unless [:Hail,:Sleet].include?(weather)
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
     battler.pbRecoverHP(battler.totalhp/8)
