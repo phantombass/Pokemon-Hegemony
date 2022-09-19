@@ -2242,7 +2242,7 @@ end
 #===============================================================================
 class PokeBattle_Move_167 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
-    if @battle.pbWeather != :Hail
+    if @battle.pbWeather != :Hail && @battle.pbWeather != :Sleet
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
