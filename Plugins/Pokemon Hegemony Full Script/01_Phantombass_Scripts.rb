@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.8.15"
+  GAME_VERSION = "1.8.16"
 end
 
 def write_version
@@ -1117,7 +1117,7 @@ class PokeBattle_Battle
     # Entry hazards
     # Stealth Rock
     if battler.pbOwnSide.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
-       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage?
+       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage? && !battler.hasActiveAbility?(:SCALER)
       bTypes = battler.pbTypes(true)
       eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
       if !Effectiveness.ineffective?(eff)
