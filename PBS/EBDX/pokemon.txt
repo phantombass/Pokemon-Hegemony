@@ -9349,3 +9349,24 @@ BattlerPlayerX          = 22
 BattlerPlayerY          = 47
 BattlerEnemyX           = -3
 #-------------------------------
+[DEINO2]
+BattlerEnemyY           = 62
+BattlerAltitude         = 0
+BattlerPlayerX          = 30
+BattlerPlayerY          = 62
+BattlerEnemyX           = -1
+#-------------------------------
+[ZWEILOUS2]
+BattlerEnemyY           = 47
+BattlerAltitude         = 0
+BattlerPlayerX          = 35
+BattlerPlayerY          = 63
+BattlerEnemyX           = 4
+#-------------------------------
+[HYDREIGON2]
+BattlerEnemyY           = 27
+BattlerAltitude         = 15
+BattlerPlayerX          = 14
+BattlerPlayerY          = 32
+BattlerEnemyX           = -9
+#-------------------------------
