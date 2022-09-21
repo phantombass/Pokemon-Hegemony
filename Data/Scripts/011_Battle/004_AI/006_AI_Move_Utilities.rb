@@ -79,7 +79,7 @@ class PokeBattle_AI
 
   # For switching. Determines the effectiveness of a potential switch-in against
   # an opposing battler.
-  def pbCalcTypeModPokemon(battlerThis,_battlerOther)
+  def pbCalcTypeModPokemon(battlerThis,target)
     mod1 = Effectiveness.calculate(battlerThis.type1,target.type1,target.type2)
     mod2 = Effectiveness::NORMAL_EFFECTIVE
     if battlerThis.type1!=battlerThis.type2

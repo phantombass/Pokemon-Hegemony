@@ -283,7 +283,7 @@ class PokeBattle_Move
     end
     if target.damageState.critical
       if numTargets>1
-        @battle.pbDisplay(_INTL("A critical hit on {1}!",target.pbThis(true)))
+        @battle.pbDisplay(_INTL("\rA critical hit on {1}!",target.pbThis(true)))
       else
         @battle.pbDisplay(_INTL("A critical hit!"))
       end

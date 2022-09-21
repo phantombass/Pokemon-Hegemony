@@ -1141,6 +1141,20 @@ BattleHandlers::MoveImmunityTargetAbility.add(:UNTAINTED,
   }
 )
 
+BattleHandlers::MoveImmunityTargetAbility.add(:SCALER,
+  proc { |ability,user,target,move,type,battle|
+    next if type != :ROCK
+    battle.pbShowAbilitySplash(target)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("It doesn't affect {1}...",target.pbThis(true)))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",target.pbThis,target.abilityName,move.name))
+    end
+    battle.pbHideAbilitySplash(target)
+    next true
+  }
+)
+
 BattleHandlers::MoveImmunityTargetAbility.add(:CORRUPTION,
   proc { |ability,user,target,move,type,battle|
     next if type != :FAIRY
@@ -2574,7 +2588,7 @@ class PokeBattle_Battler
     return false if !takesIndirectDamage?
     return false if pbHasType?(:GROUND) || pbHasType?(:ROCK) || pbHasType?(:STEEL)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
-    return false if hasActiveAbility?([:OVERCOAT,:SANDFORCE,:SANDRUSH,:SANDVEIL,:ACCLIMATE,:FORECAST])
+    return false if hasActiveAbility?([:OVERCOAT,:SANDFORCE,:SANDRUSH,:SANDVEIL,:ACCLIMATE,:FORECAST,:SCALER])
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
@@ -2614,9 +2628,9 @@ class PokeBattle_Move
       end
       if target.damageState.critical
         if numTargets>1
-          @battle.pbDisplay(_INTL("A critical hit on {1}!",target.pbThis(true)))
+          @battle.pbDisplay(_INTL("<c2=463f0000>A critical hit on {1}</c2>!",target.pbThis(true)))
         else
-          @battle.pbDisplay(_INTL("A critical hit!"))
+          @battle.pbDisplay(_INTL("<c2=463f0000>A critical hit!</c2>"))
         end
       end
       # Effectiveness message, for moves with 1 hit
