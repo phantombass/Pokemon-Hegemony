@@ -1484,3 +1484,42 @@ module PokeBattle_BattleCommon
     return numShakes
   end
 end
+
+BattleHandlers::ItemOnSwitchIn.add(:LEVITATEORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :LEVITATE
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Levitate Orb lifts it off the ground!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:FLASHFIREORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :FLASHFIRE
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Flash Fire Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:SAPSIPPERORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :SAPSIPPER
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Sap Sipper Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)

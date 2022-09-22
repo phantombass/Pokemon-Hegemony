@@ -513,11 +513,13 @@ class PokemonBagScreen
         for i in 0...$PokemonBag.pockets[pock].length
           item = $PokemonBag.pockets[pock][i][0]
           name = item.name
-          sortarray.push [item,name]
+          amt = $PokemonBag.pockets[pock][i][1]
+          sortarray.push [item,name,amt]
         end
         sortarray.sort! {|a,b| a[1]<=>b[1]}
         for i in 0...$PokemonBag.pockets[pock].length
           $PokemonBag.pockets[pock][i][0] = sortarray[i][0]
+          $PokemonBag.pockets[pock][i][1] = sortarray[i][2]
         end
         @scene.pbRefresh
         @scene.pbDisplay(_INTL("Items sorted by name!"))

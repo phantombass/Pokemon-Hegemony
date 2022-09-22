@@ -4069,3 +4069,22 @@ BattlerPlayerY = 54
 BattlerEnemyY = 6
 BattlerShadowSize = 3
 #-------------------------------
+[SANDACONDA,1]
+FormName = Mega Sandaconda
+MegaStone = SANDACONDANITE
+Type1 = GROUND
+Type2 = DRAGON
+BaseStats = 72,127,155,81,65,110
+Rareness = 120
+Happiness = 70
+Abilities = SANDRUSH
+HiddenAbility = SANDRUSH
+Height = 3.8
+Generation = 8
+BattlerPlayerX = 0
+BattlerPlayerY = 54
+BattlerEnemyX = -2
+BattlerEnemyY = 26
+BattlerShadowX = 0
+BattlerShadowSize = 3
+#-------------------------------

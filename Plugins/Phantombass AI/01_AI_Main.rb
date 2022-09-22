@@ -167,7 +167,7 @@ class PBAI
     else
       # [move_index, move_target]
       if data[0] == :ITEM
-        data[0] = rand(4)
+        data[0] = rand(projection.moves.length)
       end
       move_index, move_target = data
       # Mega evolve if we determine that we should
@@ -1100,10 +1100,12 @@ class PBAI
           return true if target.airborne? && !move.hitsFlyingTargets?
         when :FIRE
           return true if target.hasActiveAbility?([:FLASHFIRE, :STEAMENGINE])
+          return true if target.hasActiveItem?(:FLASHFIREORB)
         when :WATER
           return true if target.hasActiveAbility?([:DRYSKIN, :STORMDRAIN, :WATERABSORB, :IRRIGATION, :STEAMENGINE, :WATERCOMPACTION])
         when :GRASS
           return true if target.hasActiveAbility?(:SAPSIPPER)
+          return true if target.hasActiveItem?(:SAPSIPPERORB)
         when :ELECTRIC
           return true if target.hasActiveAbility?([:LIGHTNINGROD, :MOTORDRIVE, :VOLTABSORB])
         when :ROCK
