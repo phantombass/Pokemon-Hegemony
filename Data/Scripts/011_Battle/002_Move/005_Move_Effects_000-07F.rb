@@ -405,20 +405,18 @@ class PokeBattle_Move_019 < PokeBattle_Move
   def worksWithNoTargets?; return true; end
 
   def pbMoveFailed?(user,targets)
-    failed = true
+    has_effect = false
     @battle.eachSameSideBattler(user) do |b|
-      next if b.status == :NONE
-      failed = false
+      has_effect = true if b.status != :NONE
       break
     end
-    if !failed
-      @battle.pbParty(user.index).each do |pkmn|
-        next if !pkmn || !pkmn.able? || pkmn.status == :NONE
-        failed = false
+    if has_effect != true
+      @battle.pbParty(user.index) do |pkmn|
+        has_effect = true if pkmn&.able? && pkmn.status != :NONE
         break
       end
     end
-    if failed
+    if has_effect != true
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -462,8 +460,7 @@ class PokeBattle_Move_019 < PokeBattle_Move
     # 5 version of this move, to make Pokémon out in battle get cured first.
     if pbTarget(user) == :UserSide
       @battle.eachSameSideBattler(user) do |b|
-        next if b.status == :NONE
-        pbAromatherapyHeal(b.pokemon,b)
+        pbAromatherapyHeal(b.pokemon,b) if b.status == :NONE
       end
     end
     # Cure all Pokémon in the user's and partner trainer's party.

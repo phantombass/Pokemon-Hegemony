@@ -433,7 +433,7 @@ class PokeBattle_Battler
     # Airborne-based immunity to Ground moves
     if move.damagingMove? && move.calcType == :GROUND &&
        target.airborne? && !move.hitsFlyingTargets?
-      if (target.hasActiveAbility?(:LEVITATE) || target.hasActiveAbility?(:MULTITOOL)) && !@battle.moldBreaker
+      if (target.hasActiveAbility?(:LEVITATE) || target.hasActiveAbility?(:MULTITOOL) || target.hasActiveItem?(:LEVITATEORB)) && !@battle.moldBreaker
         @battle.pbShowAbilitySplash(target)
         if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
           @battle.pbDisplay(_INTL("{1} avoided the attack!",target.pbThis))
@@ -455,6 +455,39 @@ class PokeBattle_Battler
         @battle.pbDisplay(_INTL("{1} makes Ground moves miss with Telekinesis!",target.pbThis))
         return false
       end
+    end
+    if move.damagingMove? && move.calcType == :GRASS && target.hasActiveItem?(:SAPSIPPERORB)
+      ability = target.ability_id
+      target.ability_id = :SAPSIPPER
+      if ability != target.ability_id
+        @battle.pbShowAbilitySplash(target)
+        if target.pbCanRaiseStatStage?(:ATTACK,target)
+          target.pbRaiseStatStage(:ATTACK,1,target)
+          battle.pbDisplay(_INTL("{1}'s {2} Orb boosted its Attack!",target.pbThis,target.abilityName))
+        else
+          battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+        end
+        @battle.pbHideAbilitySplash(target)
+        user.ability_id = ability
+      end
+      return false
+    end
+    if move.damagingMove? && move.calcType == :FIRE && target.hasActiveItem?(:FLASHFIREORB)
+      ability = target.ability_id
+      target.ability_id = :FLASHFIRE
+      if ability != target.ability_id
+        @battle.pbShowAbilitySplash(target)
+        if !target.effects[PBEffects::FlashFire]
+          target.effects[PBEffects::FlashFire] = true
+            battle.pbDisplay(_INTL("The power of {1}'s Fire-type moves rose because of its {2} Orb!",target.pbThis(true),target.abilityName))
+        else
+            battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",
+               target.pbThis,target.abilityName,move.name))
+        end
+        @battle.pbHideAbilitySplash(target)
+        user.ability_id = ability
+      end
+      return false
     end
     # Immunity to powder-based moves
     if move.powderMove?

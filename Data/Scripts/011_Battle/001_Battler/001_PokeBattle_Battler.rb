@@ -525,7 +525,7 @@ class PokeBattle_Battler
     return true if pbHasType?(:FLYING)
     return true if hasActiveAbility?(:LEVITATE) && !@battle.moldBreaker
     return true if hasActiveAbility?(:MULTITOOL) && !@battle.moldBreaker
-    return true if hasActiveItem?(:AIRBALLOON)
+    return true if hasActiveItem?([:AIRBALLOON,:LEVITATEORB])
     return true if @effects[PBEffects::MagnetRise] > 0
     return true if @effects[PBEffects::Telekinesis] > 0
     return false
