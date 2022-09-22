@@ -235,9 +235,18 @@ def pikachu_glitch_fix
   $pika_fixed = true
 end
 
+def quest_fix
+  if $game_switches[214] == true && $game_switches[212] == false
+    $game_variables[Mission::Main] -= 1
+    $game_switches[214] = false
+  end
+  $quest_fixed = true
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
   pikachu_glitch_fix if $pika_fixed != true
+  quest_fix if $quest_fixed != true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
   setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
   #$game_switches[218] = true

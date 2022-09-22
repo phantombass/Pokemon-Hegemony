@@ -2113,7 +2113,7 @@ BattleHandlers::EORHealingAbility.add(:HYDRATION,
     next if !battler.hasUtilityUmbrella?
     battle.pbShowAbilitySplash(battler)
     oldStatus = battler.status
-    battler.pbCureStatus(PokeBattle_SceneConstants::USE_ABILITY_SPLASH)
+    battler.status = :NONE
     if !PokeBattle_SceneConstants::USE_ABILITY_SPLASH
       case oldStatus
       when :SLEEP
