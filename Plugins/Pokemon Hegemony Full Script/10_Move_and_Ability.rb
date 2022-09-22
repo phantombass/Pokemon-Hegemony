@@ -4074,7 +4074,7 @@ class PokeBattle_Move_512 < PokeBattle_Move
   end
   def pbEffectGeneral(user)
     if canSetRocks?(user)
-      battle.scene.pbAnimation(GameData::Move.get(:STEALTHROCK).id,battler,battler)
+      @battle.scene.pbAnimation(GameData::Move.get(:STEALTHROCK).id,user,user)
       user.pbOpposingSide.effects[PBEffects::StealthRock] = true
       @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",user.pbOpposingTeam(true)))
     end
