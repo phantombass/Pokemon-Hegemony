@@ -262,6 +262,14 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += 250
     end
   end
+  if target.hp <= target.totalhp/4
+    score += 100
+    PBAI.log("+ 100 for attempting to kill the target with priority")
+  end
+  if user.hp <= user.totalhp/4 && target.faster_than?(user)
+    score += 100
+    PBAI.log("+ 100 for attempting to do last minute damage to the target with priority")
+  end
   next score
 end
 
@@ -443,8 +451,14 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
     chance = move.pbAdditionalEffectChance(user, target)
     chance = 100 if chance == 0
     if chance > 0 && chance <= 100
-      score += chance * 2
-      PBAI.log("+ #{chance} for being able to freeze the target")
+      if target.is_special_attacker?
+        add = 30 + chance * 2
+        score += add
+        PBAI.log("+ #{add} for being able to frostbite the special-attacking target")
+      else
+        score += chance
+        PBAI.log("+ #{chance} for being able to frostbite the target")
+      end
     end
   end
   next score
@@ -489,6 +503,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         add = chance * 1.4 * move.pbNumHits(user, [target])
         score += add
         PBAI.log("+ #{add} for being able to badly poison the target")
+        if move.statusMove? && (target.pbHasType?([:POISON,:STEEL]) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
+          score = 0
+          PBAI.log("* 0 because the target cannot be poisoned")
+        end
       else
         add = chance * move.pbNumHits(user, [target])
         score += add
@@ -885,8 +903,13 @@ end
 # Ice Fang
 PBAI::ScoreHandler.add("00E") do |score, ai, user, target, move|
   if !target.frozen? && target.can_freeze?(user, move)
-    score += 20
-    PBAI.log("+ 20 for being able to freeze the target")
+    if target.is_special_attacker?
+      score += 40
+      PBAI.log("+ 40 for being able to frostbite the special-attacking target")
+    else
+      score += 10
+      PBAI.log("+ 10 for being able to frostbite the target")
+    end
   end
   next score
 end
@@ -1018,7 +1041,7 @@ PBAI::ScoreHandler.add("0D1", "0D2", "0D3") do |score, ai, user, target, move|
 end
 
 
-# Stealth Rock, Spikes, Toxic Spikes
+# Stealth Rock, Spikes, Toxic Spikes, Sticky Web, Comet Shards
 PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, target, move|
   if move.function == "103" && user.opposing_side.effects[PBEffects::Spikes] >= 3 ||
      move.function == "104" && user.opposing_side.effects[PBEffects::ToxicSpikes] >= 2 ||
@@ -1270,22 +1293,26 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
     if user.is_healing_pointless?(0.50)
       score -= 10
       PBAI.log("- 10 for we will take more damage than we can heal if the target repeats their move")
-    elsif user.is_healing_necessary?(0.50)
+    elsif user.is_healing_necessary?(0.65)
       add = (factor * 250).round
       score += add
       PBAI.log("+ #{add} for we will likely die without healing")
+      if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:PIVOT,:CLERIC].include?(user.role.id)
+        score += 40
+        PBAI.log("+ 40 for being #{user.role.name}")
+      end
     else
       add = (factor * 125).round
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
+      if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:PIVOT,:CLERIC].include?(user.role.id)
+        score += 40
+        PBAI.log("+ 40 for being #{user.role.name}")
+      end
     end
   else
     score -= 30
     PBAI.log("- 30 for we are at full hp")
-  end
-  if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:PIVOT,:CLERIC].include?(user.role.id)
-    score += 40
-    PBAI.log("+ 40 for being #{user.role.name}")
   end
   score += 40 if user.role.id == :CLERIC && move.function == "0D7"
   PBAI.log("+ 40 for being #{user.role.name} and potentially passing a Wish") if user.role.id == :CLERIC && move.function == "0D7"
@@ -1778,7 +1805,7 @@ PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
   dmg = 0
   sound = 0
   for i in target.used_moves
-    dmg += 1 if target.get_move_damage(user,i) >= user.hp*0.75
+    dmg += 1 if target.get_move_damage(user,i) >= user.totalhp/4
     sound += 1 if i.soundMove? && i.damagingMove?
   end
   if user.effects[PBEffects::Substitute] == 0
@@ -1807,8 +1834,8 @@ PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
       PBAI.log("+ 30 for capitalizing on target's predicted switch")
     end
   else
-    score -= 100
-    PBAI.log("- 100 for already having a Substitute")
+    score = 0
+    PBAI.log("* 0 for already having a Substitute")
   end
   next score
 end
@@ -1901,12 +1928,77 @@ end
 
 #Trick Room
 PBAI::ScoreHandler.add("11F") do |score, ai, user, target, move|
-  if user.opposing_side.effects[PBEffects::TrickRoom] == 0 && target.faster_than?(user)
+  if user.opposing_side.effects[PBEffects::TrickRoom] <= 0 && target.faster_than?(user)
     score += 50
     PBAI.log("+ 50 for setting Trick Room to outspeed target")
     if user.role.id == :TRICKROOMSETTER
       score += 50
       PBAI.log("+ 50 for being a #{user.role.name}")
+    end
+  else
+    score = 0
+    PBAI.log("* 0 to not undo Trick Room")
+  end
+  next score
+end
+
+#Explosion
+PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
+  next if move.pbCalcType(user) == :NORMAL && target.pbHasType?(:GHOST)
+  next if target.hasActiveAbility?(:DAMP)
+  if user.get_move_damage(target, move) >= target.hp
+    score += 20
+    PBAI.log("+ 20 for being able to KO")
+  end
+  if !ai.battle.pbCanSwitch?(user.battler.index) && user.hasActiveItem?(:CUSTAPBERRY)
+    score += 1000
+    PBAI.log("+ 1000 for being unable to switch and will likely outprioritize the target")
+  end
+  protect = false
+  for i in target.used_moves
+    protect = true if i.function == "0AA"
+    break
+  end
+  if protect == true
+    pro = 50 * target.effects[PBEffects::ProtectRate]
+    score += pro
+    if pro > 0
+      PBAI.log("+ #{pro} to predict around Protect")
+    else
+      score = 0
+      PBAI.log("* 0 because the target has Protect and can choose it")
+    end
+  end
+  next score
+end
+
+#Expanding Force
+PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
+  if ai.battle.field.terrain == :Psychic
+    score += 100
+    PBAI.log("+ 100 for boosted damage in Psychic Terrain")
+    if ai.battle.pbSideSize(0) == 2
+      score += 50
+      PBAI.log("+ 50 for being in a Double battle")
+    end
+  else
+    user.battler.eachAlly do |battler|
+      ally = true if battler == user.battler
+      weak_to_psychic = true if (battler.pbHasType?([:POISON,:COSMIC,:FIGHTING]) && !battler.pbHasType?(:DARK))
+      resists_psychic = true if (battler.pbHasType?([:DARK,:STEEL,:PSYCHIC]) || battler.hasActiveAbility?(:TELEPATHY))
+      weak_to_psychic = false if resists_psychic == true
+    end
+    if ai.battle.pbSideSize(0) == 2 && ally == true
+      if weak_to_psychic
+        score = 0
+        PBAI.log("* 0 for being in a Double battle & ally is weak to Psychic")
+      elsif resists_psychic
+        score += 100
+        PBAI.log("+ 100 for being in a Double battle & ally resists Psychic")
+      else
+        score += 50
+        PBAI.log("+ 50 for being in a double battle")
+      end
     end
   end
   next score
