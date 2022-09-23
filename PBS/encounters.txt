@@ -1171,3 +1171,34 @@ Land,21
 	1,TORCHIC2,76,79
 	1,POIPOLE,5,5
 #-------------------------------
+# Armadia Region
+#-------------------------------
+[264] # Route 21
+Land,21
+	30,LURANTIS,80,82
+	30,TSAREENA,80,82
+	10,ARAQUANID,80,82
+	10,RIBOMBEE,80,82
+	5,PERSIAN_1,80,82
+	5,EXEGGUTOR,80,82
+	3,ELECTRODE_1,80,82
+	3,SCYTHER,80,82
+	2,SCIZOR,80,82
+	2,KLEAVOR,80,82
+Water,2
+    60,MAGIKARP,14,40
+    30,GYARADOS,20,45
+    10,LUVDISC,25,45
+OldRod
+    90,MAGIKARP,5,5
+	10,CHINCHOU,5,5
+GoodRod
+    60,SHELLDER,17,18
+    20,QWILFISH_1,15,16
+    20,BASCULIN_2,16,19
+SuperRod
+    40,CLOYSTER,48,60
+    40,OVERQWIL,48,60
+    15,TOXAPEX,48,60
+    5,BASCULEGION,48,60
+#-------------------------------
