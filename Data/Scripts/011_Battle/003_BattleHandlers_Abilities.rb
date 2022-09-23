@@ -2109,11 +2109,11 @@ BattleHandlers::EORHealingAbility.add(:HEALER,
 BattleHandlers::EORHealingAbility.add(:HYDRATION,
   proc { |ability,battler,battle|
     next if battler.status == :NONE
-    next if ![:Rain, :HeavyRain].include?(battle.pbWeather)
-    next if !battler.hasUtilityUmbrella?
+    next if ![:Rain,:Storm,:HeavyRain].include?(battle.pbWeather)
+    next if battler.hasUtilityUmbrella?
     battle.pbShowAbilitySplash(battler)
     oldStatus = battler.status
-    battler.status = :NONE
+    battler.pbCureStatus(PokeBattle_SceneConstants::USE_ABILITY_SPLASH)
     if !PokeBattle_SceneConstants::USE_ABILITY_SPLASH
       case oldStatus
       when :SLEEP
