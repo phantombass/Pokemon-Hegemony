@@ -4,6 +4,7 @@ class PBAI
   #If this is true, the AI will know your moves, held items, and abilities
   #before they are revealed.
   OMNISCIENT_AI = false
+  AI_KNOWS_ABILITY = true
 
   def initialize(battle, wild_battle)
     @battle = battle
@@ -1176,7 +1177,7 @@ class PBAI
     end
 
     def has_ability?(ability)
-      return @battler.hasActiveAbility?(ability) && (OMNISCIENT_AI || @shown_ability)
+      return @battler.hasActiveAbility?(ability) && (AI_KNOWS_ABILITY || @shown_ability)
     end
     alias hasActiveAbility? has_ability?
 
@@ -1642,7 +1643,7 @@ class PokeBattle_Battle
   alias ai_pbShowAbilitySplash pbShowAbilitySplash
   def pbShowAbilitySplash(battler, delay = false, logTrigger = true)
     ai_pbShowAbilitySplash(battler, delay, logTrigger)
-    @battleAI.reveal_ability(battler)
+    @battleAI.reveal_ability(battler) if AI_KNOWS_ABILITY == false
   end
 end
 

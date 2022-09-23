@@ -2737,7 +2737,7 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
     if target.pbCanLowerStatStage?(@statDown[0],user,self)
       target.pbLowerStatStage(@statDown[0],@statDown[1],user)
     end
-    if target.pbOwnSide.effects[PBEffects::AuroraVeil]>0 && $gym_gimmick == false
+    if target.pbOwnSide.effects[PBEffects::AuroraVeil]>0 && $gym_gimmick != true
       target.pbOwnSide.effects[PBEffects::AuroraVeil] = 0
       @battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!",target.pbTeam))
     end
@@ -4680,7 +4680,7 @@ class PokeBattle_Battle
       pbEORCountDownSideEffect(side,PBEffects::Mist,
          _INTL("{1} is no longer protected by mist!",@battlers[side].pbTeam))
       # Tailwind
-      if $gym_gimmick == false
+      if $gym_gimmick != true
         pbEORCountDownSideEffect(side,PBEffects::Tailwind,
            _INTL("{1}'s Tailwind petered out!",@battlers[side].pbTeam))
       end
@@ -4697,13 +4697,13 @@ class PokeBattle_Battle
       pbEORCountDownSideEffect(side,PBEffects::Swamp,
          _INTL("The swamp around {1} disappeared!",@battlers[side].pbTeam(true)))
       # Aurora Veil
-      if $gym_gimmick == false
+      if $gym_gimmick != true
         pbEORCountDownSideEffect(side,PBEffects::AuroraVeil,
            _INTL("{1}'s Aurora Veil wore off!",@battlers[side].pbTeam(true)))
       end
     end
     # Trick Room
-    if $gym_gimmick == false
+    if $gym_gimmick != true
       pbEORCountDownFieldEffect(PBEffects::TrickRoom,
          _INTL("The twisted dimensions returned to normal!"))
     end
