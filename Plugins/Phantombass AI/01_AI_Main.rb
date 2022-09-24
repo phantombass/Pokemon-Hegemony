@@ -209,17 +209,17 @@ class PBAI
 
     def initialize(side, pokemon, wild_pokemon = false)
       @side = side
-      @ai = @side.ai
-      @battle = @ai.battle
-      @pokemon = pokemon
-      @battler = nil
-      @ai_index = nil
-      @used_moves = []
-      @damage_taken = []
+  		@pokemon = pokemon
+  		@battler = nil
+  		@ai = @side.ai
+  		@battle = @ai.battle
+  		@damage_taken = []
   		@damage_dealt = []
-      @shown_item = false
-      @shown_ability = false
-      @skill = wild_pokemon ? 0 : 200
+  		@ai_index = nil
+      @used_moves = []
+      @revealed_ability = false
+      @revealed_item = false
+  		@skill = wild_pokemon ? 0 : 200
       @flags = {}
     end
     alias original_missing method_missing
@@ -298,35 +298,35 @@ class PBAI
     def effective_attack
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:ATTACK] + 6
+	    stage = @battler.stages[:ATTACK] != nil ? @battler.stages[:ATTACK] + 6 : 6
 	    return (@battler.attack.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
 	  def effective_defense
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:DEFENSE] + 6
+	    stage = @battler.stages[:DEFENSE] != nil ? @battler.stages[:DEFENSE] + 6 : 6
 	    return (@battler.defense.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
 	  def effective_spatk
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPECIAL_ATTACK] + 6
+	    stage = @battler.stages[:SPECIAL_ATTACK] != nil ? @battler.stages[:SPECIAL_ATTACK] + 6 : 6
 	    return (@battler.spatk.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
 	  def effective_spdef
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPECIAL_DEFENSE] + 6
+	    stage = @battler.stages[:SPECIAL_DEFENSE] != nil ? @battler.stages[:SPECIAL_DEFENSE] + 6 : 6
 	    return (@battler.spdef.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
 	  def effective_speed
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPEED] + 6
+	    stage = @battler.stages[:SPEED] != nil ? @battler.stages[:SPEED] + 6 : 6
 	    return (@battler.speed.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
@@ -792,7 +792,7 @@ class PBAI
       if self.effects[PBEffects::PerishSong] == 1
         switch = true
       end
-      if (self.hasActiveItem?([:CHOICEBAND,:CHOICESCARF,:CHOICESPECS]) || self.hasActiveAbility?([:GORILLATACTICS,:FORESTSSECRETS])) && self.lastMoveUsed != nil
+      if (self.hasActiveItem?([:CHOICEBAND,:CHOICESCARF,:CHOICESPECS]) || self.hasActiveAbility?(:GORILLATACTICS)) && self.lastMoveUsed != nil
         choiced_move_name = GameData::Move.get(self.lastMoveUsed)
         factor = 0
         self.opposing_side.each do |pkmn|
@@ -813,7 +813,7 @@ class PBAI
             dmgs = @damage_dealt.select { |e| e[1] == encored_move.id }
             if dmgs.size > 0
               last_dmg = dmgs[-1]
-              # Bad move if it did less than 35% damage
+              # Bad move if it did less than 25% damage
               if last_dmg[3] < 0.25
                 switch = true
               end
@@ -861,8 +861,8 @@ class PBAI
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible
             score = (75 * hi_off_score * (switch_to_dark_type ? 2.0 : 1.0)).round
-            score += 50 if [:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
-            score += 30 if [:PIVOT,:STALLBREAKER].include?(proj.pokemon.role)
+            score += 30 if [:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
+            score += 15 if [:PIVOT,:STALLBREAKER].include?(proj.pokemon.role)
             index = party.index(proj.pokemon)
             return [score, index]
           end
@@ -885,8 +885,8 @@ class PBAI
           if eligible && hi_off_score >= 1.0
             # Better choice than the current battler, so let's switch to this pokemon
             score = (100 * hi_off_score).round
-            score += 50 if [:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
-            score += 30 if [:PIVOT,:STALLBREAKER].include?(proj.pokemon.role)
+            score += 30 if [:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
+            score += 15 if [:PIVOT,:STALLBREAKER].include?(proj.pokemon.role)
             index = party.index(proj.pokemon)
             return [score, index]
           end
@@ -1177,12 +1177,12 @@ class PBAI
     end
 
     def has_ability?(ability)
-      return @battler.hasActiveAbility?(ability) && (AI_KNOWS_ABILITY || @shown_ability)
+      return @battler.hasActiveAbility?(ability) && (AI_KNOWS_ABILITY || @revealed_ability)
     end
     alias hasActiveAbility? has_ability?
 
     def has_item?(item)
-      return @battler.hasActiveItem?(item) && (OMNISCIENT_AI || @shown_item)
+      return @battler.hasActiveItem?(item) && (OMNISCIENT_AI || @revealed_item)
     end
     alias hasActiveItem? has_item?
 
@@ -1485,7 +1485,7 @@ class PBAI
     # Considers type matchup and level
     def underdog?(target)
       return true if bad_against?(target)
-      return true if target.level >= self.level + 5
+      return true if target.level >= self.level + 3
       return false
     end
 
@@ -1643,7 +1643,7 @@ class PokeBattle_Battle
   alias ai_pbShowAbilitySplash pbShowAbilitySplash
   def pbShowAbilitySplash(battler, delay = false, logTrigger = true)
     ai_pbShowAbilitySplash(battler, delay, logTrigger)
-    @battleAI.reveal_ability(battler) if AI_KNOWS_ABILITY == false
+    @battleAI.reveal_ability(battler) if PBAI::AI_KNOWS_ABILITY == false
   end
 end
 
