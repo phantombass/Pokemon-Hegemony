@@ -238,6 +238,7 @@ end
 def quest_fix
   if $game_switches[214] == true && $game_switches[212] == false
     $game_variables[Mission::Main] -= 1
+    $PokemonGlobal.quests.advanceQuestToStage(:Quest1,$game_variables[Mission::Main],"463F0000",false)
     $game_switches[214] = false
   end
   $quest_fixed = true

@@ -154,7 +154,11 @@ class Player_Quests
         @active_quests[i].color = color if color != nil
         @active_quests[i].new = true # Setting this back to true makes the "!" icon appear when the quest updates
         found = true
-        pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New task added!</c2>\nYour quest log has been updated!</ac>",QUEST_JINGLE))
+        if $game_switches[214] == true && $game_switches[212] == false
+          pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New update!</c2>\nYour quest log has been corrected!</ac>",QUEST_JINGLE))
+        else
+          pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New quest update!</c2></ac>",QUEST_JINGLE))
+        end
       end
       return if found
     end
