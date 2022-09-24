@@ -1482,10 +1482,10 @@ PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
     # Target debuffs: net goes up
     # The lower net is, the better Haze is to choose.
     user.side.battlers.each do |proj|
-      GameData::Stat.each_battle { |s| net += proj.stages[s] if proj.stages[s] != nil }
+      GameData::Stat.each_battle { |s| net -= proj.stages[s] if proj.stages[s] != nil }
     end
     target.side.battlers.each do |proj|
-      GameData::Stat.each_battle { |s| net -= proj.stages[s] if proj.stages[s] != nil }
+      GameData::Stat.each_battle { |s| net += proj.stages[s] if proj.stages[s] != nil }
     end
     # As long as the target's stat stages are more advantageous than ours (i.e. net < 0), Haze is a good choice
     if net < 0
@@ -1982,22 +1982,22 @@ PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
       PBAI.log("+ 50 for being in a Double battle")
     end
   else
-    user.battler.eachAlly do |battler|
-      ally = true if battler == user.battler
-      weak_to_psychic = true if (battler.pbHasType?([:POISON,:COSMIC,:FIGHTING]) && !battler.pbHasType?(:DARK))
-      resists_psychic = true if (battler.pbHasType?([:DARK,:STEEL,:PSYCHIC]) || battler.hasActiveAbility?(:TELEPATHY))
+    ally = @side.battlers.find { |proj| proj && proj != self && !proj.fainted? }
+    if ally != nil
+      weak_to_psychic = true if (ally.pbHasType?([:POISON,:COSMIC,:FIGHTING]) && !ally.pbHasType?(:DARK))
+      resists_psychic = true if (ally.pbHasType?([:DARK,:STEEL,:PSYCHIC]) || ally.hasActiveAbility?(:TELEPATHY))
       weak_to_psychic = false if resists_psychic == true
-    end
-    if ai.battle.pbSideSize(0) == 2 && ally == true
-      if weak_to_psychic
-        score = 0
-        PBAI.log("* 0 for being in a Double battle & ally is weak to Psychic")
-      elsif resists_psychic
-        score += 100
-        PBAI.log("+ 100 for being in a Double battle & ally resists Psychic")
-      else
-        score += 50
-        PBAI.log("+ 50 for being in a double battle")
+      if ai.battle.pbSideSize(0) == 2
+        if weak_to_psychic
+          score = 0
+          PBAI.log("* 0 for being in a Double battle & ally is weak to Psychic")
+        elsif resists_psychic
+          score += 100
+          PBAI.log("+ 100 for being in a Double battle & ally resists Psychic")
+        else
+          score += 50
+          PBAI.log("+ 50 for being in a double battle")
+        end
       end
     end
   end

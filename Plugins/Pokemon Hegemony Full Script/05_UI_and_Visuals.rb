@@ -2126,8 +2126,7 @@ class PokemonPartyScreen
       if !pkmn.egg?
         # Check for hidden moves and add any that were found
         pkmn.moves.each_with_index do |m, i|
-          if [:MILKDRINK, :SOFTBOILED].include?(m.id) ||
-             HiddenMoveHandlers.hasHandler(m.id)
+          if [:MILKDRINK, :SOFTBOILED].include?(m.id)
             commands[cmdMoves[i] = commands.length] = [m.name, 1]
           end
         end
@@ -2183,23 +2182,6 @@ class PokemonPartyScreen
           @scene.pbSelect(oldpkmnid)
           pbRefresh
           break
-        elsif pbCanUseHiddenMove?(pkmn,pkmn.moves[i].id)
-          if pbConfirmUseHiddenMove(pkmn,pkmn.moves[i].id)
-            @scene.pbEndScene
-            if pkmn.moves[i].id == :FLY
-              scene = PokemonRegionMap_Scene.new(-1,false)
-              screen = PokemonRegionMapScreen.new(scene)
-              ret = screen.pbStartFlyScreen
-              if ret
-                $PokemonTemp.flydata=ret
-                return [pkmn,pkmn.moves[i].id]
-              end
-              @scene.pbStartScene(@party,
-                 (@party.length>1) ? _INTL("Choose a Pokémon.") : _INTL("Choose Pokémon or cancel."))
-              break
-            end
-            return [pkmn,pkmn.moves[i].id]
-          end
         end
       end
       next if havecommand
