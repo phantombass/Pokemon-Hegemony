@@ -217,11 +217,12 @@ class PBAI
   		@damage_dealt = []
   		@ai_index = nil
       @used_moves = []
-      @revealed_ability = false
-      @revealed_item = false
+      @shown_ability = false
+      @shown_item = false
   		@skill = wild_pokemon ? 0 : 200
       @flags = {}
     end
+
     alias original_missing method_missing
     def method_missing(name, *args, &block)
       if @battler.respond_to?(name)
@@ -298,35 +299,35 @@ class PBAI
     def effective_attack
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:ATTACK] != nil ? @battler.stages[:ATTACK] + 6 : 6
+	    stage = @battler.stages[:ATTACK] + 6
 	    return (@battler.attack.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
 	  def effective_defense
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:DEFENSE] != nil ? @battler.stages[:DEFENSE] + 6 : 6
+	    stage = @battler.stages[:DEFENSE] + 6
 	    return (@battler.defense.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
 	  def effective_spatk
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPECIAL_ATTACK] != nil ? @battler.stages[:SPECIAL_ATTACK] + 6 : 6
+	    stage = @battler.stages[:SPECIAL_ATTACK] + 6
 	    return (@battler.spatk.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
 	  def effective_spdef
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPECIAL_DEFENSE] != nil ? @battler.stages[:SPECIAL_DEFENSE] + 6 : 6
+	    stage = @battler.stages[:SPECIAL_DEFENSE] + 6
 	    return (@battler.spdef.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 
 	  def effective_speed
   		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
 	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPEED] != nil ? @battler.stages[:SPEED] + 6 : 6
+	    stage = @battler.stages[:SPEED] + 6
 	    return (@battler.speed.to_f * stageMul[stage] / stageDiv[stage]).floor
 	  end
 

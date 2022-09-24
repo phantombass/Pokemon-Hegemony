@@ -1378,6 +1378,7 @@ PBAI::ScoreHandler.add("0A2") do |score, ai, user, target, move|
     fnt = target.side.party.size
     physenemies = 0
     target.side.party.each do |pkmn|
+      next if pkmn.battler == nil
       fnt -=1 if pkmn.fainted?
       physenemies += 1 if pkmn.is_physical_attacker?
     end
@@ -1405,6 +1406,7 @@ PBAI::ScoreHandler.add("0A3") do |score, ai, user, target, move|
     fnt = target.side.party.size
     specenemies = 0
     target.side.party.each do |pkmn|
+      next if pkmn.battler == nil
       fnt -=1 if pkmn.fainted?
       specenemies += 1 if pkmn.is_special_attacker?
     end
@@ -1982,10 +1984,15 @@ PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
       PBAI.log("+ 50 for being in a Double battle")
     end
   else
-    ally = @side.battlers.find { |proj| proj && proj != self && !proj.fainted? }
-    if ally != nil
-      weak_to_psychic = true if (ally.pbHasType?([:POISON,:COSMIC,:FIGHTING]) && !ally.pbHasType?(:DARK))
-      resists_psychic = true if (ally.pbHasType?([:DARK,:STEEL,:PSYCHIC]) || ally.hasActiveAbility?(:TELEPATHY))
+    ally = false
+    b = nil
+    target.battler.eachAlly do |battler|
+      ally = true if battler == user.battler
+      b = battler if ally == true
+    end
+    if ally == true
+      weak_to_psychic = true if (b.pbHasType?([:POISON,:COSMIC,:FIGHTING]) && !b.pbHasType?(:DARK))
+      resists_psychic = true if (b.pbHasType?([:DARK,:STEEL,:PSYCHIC]) || b.hasActiveAbility?(:TELEPATHY))
       weak_to_psychic = false if resists_psychic == true
       if ai.battle.pbSideSize(0) == 2
         if weak_to_psychic
