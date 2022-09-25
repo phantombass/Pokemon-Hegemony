@@ -91,6 +91,17 @@ class PokeBattle_Battler
     return check_item.include?(@item_id) if check_item.is_a?(Array)
     return self.item == check_item
   end
+  def ability_orb_held?(check_item)
+    return false if !check_item
+    item = GameData::Item.get(check_item)
+    item_list = [
+      :INTIMIDATEORB,
+      :SAPSIPPERORB,
+      :FLASHFIREORB,
+      :LEVITATEORB
+    ]
+    return item_list.include?(item.id)
+  end
 end
 
 class BagWindowEBDX
@@ -1492,6 +1503,31 @@ BattleHandlers::ItemOnSwitchIn.add(:LEVITATEORB,
     if ability != battler.ability_id
       battle.pbShowAbilitySplash(battler,false,true)
       battle.pbDisplay(_INTL("{1}'s Levitate Orb lifts it off the ground!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:INTIMIDATEORB,
+  proc { |item, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :INTIMIDATE
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.allOtherSideBattlers(battler.index).each do |b|
+        next if !b.near?(battler)
+        check_item = true
+        if b.hasActiveAbility?(:CONTRARY)
+          check_item = false if b.statStageAtMax?(:ATTACK)
+        elsif b.statStageAtMin?(:ATTACK)
+          check_item = false
+        end
+        check_ability = b.pbLowerAttackStatStageIntimidate(battler)
+        b.pbAbilitiesOnIntimidated if check_ability
+        b.pbItemOnIntimidatedCheck if check_item
+      end
+      battle.pbDisplay(_INTL("{1}'s Intimidate Orb lowers the foe's Attack!",battler.name))
       battle.pbHideAbilitySplash(battler)
       battler.ability_id = ability
     end

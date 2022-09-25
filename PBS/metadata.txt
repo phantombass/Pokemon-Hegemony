@@ -609,6 +609,7 @@ SnapEdges = true
 Outdoor = true
 ShowArea = true
 Weather = Rain,0
+MapPosition = 0,12,4
 SnapEdges = true
 #-------------------------------
 [117]

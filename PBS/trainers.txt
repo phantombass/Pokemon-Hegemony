@@ -7669,10 +7669,10 @@ Pokemon = CHIMECHO2,85
 LoseText = "Most excellent."
 Pokemon = HIPPOWDON,95
 	Nature = CAREFUL
-	Item = WEATHERROCK
+	Item = LEFTOVERS
 	EV = 252,148,0,0,0,108
 	IV = 31,31,31,31,31,31
-	Ability = SANDSTREAM
+	Ability = SANDFORCE
 	Moves = EARTHQUAKE,STEALTHROCK,SLACKOFF,WHIRLWIND
 	Role = HAZARDLEAD
 Pokemon = DRACOVISH,95
@@ -7713,7 +7713,7 @@ Pokemon = SANDACONDA,95
 	IV = 31,31,31,31,31,31
 	Ability = MEDUSOID
 	Item = SANDACONDANITE
-	Moves = EARTHQUAKE,DRAGONDARTS,SHOREUP,COIL
+	Moves = THOUSANDARROWS,DRAGONDARTS,SHOREUP,COIL
 #-------------------------------
 # Post-Game Boss Battles
 #-------------------------------

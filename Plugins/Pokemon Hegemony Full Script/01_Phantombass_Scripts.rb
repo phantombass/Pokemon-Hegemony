@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.8.26"
+  GAME_VERSION = "1.8.27"
 end
 
 def write_version
@@ -75,6 +75,8 @@ module Game
       $PokemonSystem.language = pbChooseLanguage if save_data.empty?
       pbLoadMessages('Data/' + Settings::LANGUAGES[$PokemonSystem.language][1])
     end
+    $gym_gimmick = false
+    $gym_weather = false
     write_version
   end
 end
