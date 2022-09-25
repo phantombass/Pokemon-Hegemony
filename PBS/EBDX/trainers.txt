@@ -209,3 +209,11 @@ BattleVS         = classicVS
 [COOLTRAINER_M,Will,4]
 BattleVS         = classicVS
 #-------------------------------
+#Post-Game
+#-------------------------------
+[DOJO_Jasper]
+BattleBGM        = DPPT-Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = JASPER
+Ace				 = 6
+#-------------------------------
