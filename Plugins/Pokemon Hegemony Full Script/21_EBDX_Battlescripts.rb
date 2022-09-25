@@ -168,4 +168,18 @@ module BattleScripts
     "afterLastOpp" => "I will not accept this. I WILL MAINTAIN CONTROL!",
     "turnStart0" => "You can't seem to comprehend. I control EVERYTHING."
   }
+  #==============================================================================
+  # Post-Game
+  #==============================================================================
+  JASPER = {
+    "afterLastOpp" => "Hmm. You are very good. Very good indeed.",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Allow me to formally introduce you to how we do Dojo Battles here!")
+      @scene.pbAnimation(GameData::Move.get(:SANDSTORM).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Sandstorm
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Jasper set a permanent Sandstorm!")
+    end
+  }
 end

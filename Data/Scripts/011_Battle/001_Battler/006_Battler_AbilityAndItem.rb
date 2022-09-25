@@ -31,6 +31,9 @@ class PokeBattle_Battler
     if abilityActive?
       BattleHandlers.triggerAbilityOnSwitchOut(self.ability,self,false)
     end
+    if ability_orb_held?(self.item) && hasActiveAbility?(:NEUTRALIZINGGAS)
+      Battle::ItemEffects.triggerOnSwitchIn(self.item,self,false)
+    end
     # Reset form
     @battle.peer.pbOnLeavingBattle(@battle,@pokemon,@battle.usedInBattle[idxOwnSide][@index/2])
     # Treat self as fainted
@@ -49,6 +52,9 @@ class PokeBattle_Battler
     @battle.pbPriority(true).each do |b|
       next if !b || !b.abilityActive?
       BattleHandlers.triggerAbilityOnBattlerFainting(b.ability,b,self,@battle)
+    end
+    if ability_orb_held?(self.item) && hasActiveAbility?(:NEUTRALIZINGGAS)
+      Battle::ItemEffects.triggerOnSwitchIn(self.item,self,false)
     end
   end
 
