@@ -503,7 +503,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         add = chance * 1.4 * move.pbNumHits(user, [target])
         score += add
         PBAI.log("+ #{add} for being able to badly poison the target")
-        if move.statusMove? && (target.pbHasType?([:POISON,:STEEL]) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
+        if move.statusMove? && (target.pbHasType?(:POISON) || target.pbHasType?(:STEEL) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
           score = 0
           PBAI.log("* 0 because the target cannot be poisoned")
         end
