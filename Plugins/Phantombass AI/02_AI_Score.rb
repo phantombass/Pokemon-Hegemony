@@ -1952,9 +1952,13 @@ PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
     score += 20
     PBAI.log("+ 20 for being able to KO")
   end
-  if !ai.battle.pbCanSwitch?(user.battler.index) && user.hasActiveItem?(:CUSTAPBERRY)
+  if !ai.battle.pbCanSwitch?(user.battler.index) && user.hasActiveItem?(:CUSTAPBERRY) && user.hp <= user.totalhp/4
     score += 1000
     PBAI.log("+ 1000 for being unable to switch and will likely outprioritize the target")
+  end
+  if user.hasActiveItem?(:CUSTAPBERRY) && user.hp <= user.totalhp/4
+    score += 500
+    PBAI.log("+ 500 for being unable to switch and will likely outprioritize the target")
   end
   protect = false
   for i in target.used_moves
