@@ -1382,7 +1382,7 @@ PBAI::ScoreHandler.add("0A2") do |score, ai, user, target, move|
       fnt -=1 if pkmn.fainted?
       physenemies += 1 if pkmn.is_physical_attacker?
     end
-    add = enemies * 20 + physenemies * 30
+    add = fnt * 20 + physenemies * 30
     score += add
     PBAI.log("+ #{add} based on enemy and physical enemy count")
     if user.role.id == :SCREENS
