@@ -259,6 +259,7 @@ class FightWindowEBDX
     for i in 0...@nummoves
       @button["#{i}"].x += ((i%2 == 0 ? 1 : -1)*@viewport.width/16)
     end
+    @showMega = true if @battle.pbCanMegaEvolve?(@battler.index)
   end
   def showPlay
     @megaButton.src_rect.x = 0

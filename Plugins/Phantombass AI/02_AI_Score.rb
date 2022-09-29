@@ -1930,7 +1930,7 @@ end
 
 #Trick Room
 PBAI::ScoreHandler.add("11F") do |score, ai, user, target, move|
-  if user.opposing_side.effects[PBEffects::TrickRoom] <= 0 && target.faster_than?(user)
+  if ai.battle.field.effects[PBEffects::TrickRoom] == 0 && target.faster_than?(user)
     score += 50
     PBAI.log("+ 50 for setting Trick Room to outspeed target")
     if user.role.id == :TRICKROOMSETTER
@@ -1939,7 +1939,7 @@ PBAI::ScoreHandler.add("11F") do |score, ai, user, target, move|
     end
   else
     score = 0
-    PBAI.log("* 0 to not undo Trick Room")
+    PBAI.log("* 0 to not undo Trick Room") if ai.battle.field.effects[PBEffects::TrickRoom] != 0
   end
   next score
 end
