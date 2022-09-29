@@ -773,6 +773,12 @@ class PBAI
       end
       return [0, 0]
     end
+    def choice_locked?
+      return false
+      if (self.hasActiveItem?([:CHOICEBAND,:CHOICESCARF,:CHOICESPECS]) || self.hasActiveAbility?(:GORILLATACTICS)) && self.lastMoveUsed != nil
+        return true
+      end
+    end
     def get_switch_score
       # Yields [score, pokemon_index]
       switch = false
@@ -793,7 +799,7 @@ class PBAI
       if self.effects[PBEffects::PerishSong] == 1
         switch = true
       end
-      if (self.hasActiveItem?([:CHOICEBAND,:CHOICESCARF,:CHOICESPECS]) || self.hasActiveAbility?(:GORILLATACTICS)) && self.lastMoveUsed != nil
+      if self.choice_locked?
         choiced_move_name = GameData::Move.get(self.lastMoveUsed)
         factor = 0
         self.opposing_side.each do |pkmn|
@@ -984,7 +990,7 @@ class PBAI
         end
       end
       # Take 10% of the final score if the target is immune to this move.
-      if !move.statusMove? && target_is_immune?(move, target)
+      if !move.statusMove? && target_is_immune?(move, target) && !self.choice_locked?
         score *= 0
         PBAI.log("* 0 for the target being immune")
       end
@@ -1417,6 +1423,13 @@ class PBAI
     def should_switch?(target)
       return true if target.bad_against?(self)
       return false if self.bad_against?(target)
+      kill = false
+      for t in target.used_moves
+        kill = true if target.get_move_damage(self,t) >= self.hp
+      end
+      if kill == true && target.faster_than?(self)
+        return false
+      end
       for i in self.moves
         return true if self.get_move_damage(target,i) >= target.hp
         return true if i.priority > 0 && i.damagingMove? && self.get_move_damage(target,i) >= target.hp
