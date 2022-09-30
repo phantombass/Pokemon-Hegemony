@@ -270,6 +270,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
     score += 100
     PBAI.log("+ 100 for attempting to do last minute damage to the target with priority")
   end
+  if user.turnCount > 0 && move.function == "012"
+    score = 0
+    PBAI.log("* 0 to prevent Fake Out failing")
+  end
   next score
 end
 
@@ -379,8 +383,8 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ 200 for being in a Double battle")
       end
     elsif user.turnCount != 0 && move.function == "012"
-      score -= 90
-      PBAI.log("- 90 to stop Fake Out beyond turn 1")
+      score = 0
+      PBAI.log("* 0 to stop Fake Out beyond turn 1")
     end
   end
   next score
@@ -669,7 +673,7 @@ PBAI::ScoreHandler.add_damaging do |score, ai, user, target, move|
       score += add
       PBAI.log("+ #{5 * (target.level - user.level - 5)} for preferring damaging moves due to being a low level")
     end
-    if move.priority > 0
+    if move.priority > 0 && move.function != "012"
       score += 30
       PBAI.log("+ 30 for being a priority move and being and underdog")
     end
