@@ -5492,18 +5492,18 @@ BattlerPlayerY          = 0
 BattlerEnemyX           = -1
 #-------------------------------
 [PONYTA,1]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 45
 BattlerAltitude         = 0
-BattlerPlayerX          = 0
-BattlerPlayerY          = 0
-BattlerEnemyX           = 2
+BattlerPlayerX          = 3
+BattlerPlayerY          = 57
+BattlerEnemyX           = -3
 #-------------------------------
 [RAPIDASH,1]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 33
 BattlerAltitude         = 0
-BattlerPlayerX          = 0
-BattlerPlayerY          = 0
-BattlerEnemyX           = 0
+BattlerPlayerX          = 9
+BattlerPlayerY          = 43
+BattlerEnemyX           = 4
 #-------------------------------
 [SLOWPOKE,1]
 BattlerEnemyY           = 68
