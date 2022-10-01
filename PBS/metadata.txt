@@ -1178,3 +1178,112 @@ SnapEdges = true
 ShowArea = true
 MapPosition = 0,28,0
 SnapEdges = true
+#-------------------------------
+[263]
+# Port Lithum
+Outdoor = true
+ShowArea = true
+MapPosition = 1,22,2
+SnapEdges = true
+#-------------------------------
+[264]
+# Route 21
+Outdoor = true
+ShowArea = true
+MapPosition = 1,23,3
+SnapEdges = true
+#-------------------------------
+[265]
+# Route 22
+Outdoor = true
+ShowArea = true
+MapPosition = 1,25,6
+SnapEdges = true
+#-------------------------------
+[266]
+# Ferro Village
+Outdoor = true
+ShowArea = true
+MapPosition = 1,28,6
+SnapEdges = true
+#-------------------------------
+[267]
+# Lithum PMC
+MapPosition = 1,22,2
+#-------------------------------
+[268]
+# Ferro PMC
+MapPosition = 1,28,6
+#-------------------------------
+[269]
+# Pokémon Day Care
+MapPosition = 1,28,6
+#-------------------------------
+[270]
+# Houses
+MapPosition = 1,28,6
+#-------------------------------
+[271]
+# Route 23
+Outdoor = true
+ShowArea = true
+MapPosition = 1,22,6
+SnapEdges = true
+#-------------------------------
+[272]
+# Lithum Dojo
+MapPosition = 1,22,2
+SnapEdges = true
+#-------------------------------
+[273]
+# House
+MapPosition = 1,22,2
+#-------------------------------
+[274]
+# House
+MapPosition = 1,23,3
+#-------------------------------
+[275]
+# Hidden Grotto - Route 21
+Outdoor = true
+MapPosition = 1,23,3
+SnapEdges = true
+#-------------------------------
+[276]
+# Hidden Grotto - Route 22
+MapPosition = 1,26,6
+SnapEdges = true
+#-------------------------------
+[277]
+# Plumbum Town
+Outdoor = true
+ShowArea = true
+MapPosition = 1,22,9
+SnapEdges = true
+#-------------------------------
+[278]
+# Plumbum PMC
+MapPosition = 1,22,9
+#-------------------------------
+[279]
+# Hidden Grotto - Route 23
+MapPosition = 1,22,6
+SnapEdges = true
+#-------------------------------
+[280]
+# Plumbum Ruins
+ShowArea = true
+MapPosition = 1,22,9
+SnapEdges = true
+#-------------------------------
+[281]
+# House
+MapPosition = 1,22,9
+#-------------------------------
+[282]
+# Plumbum Lab
+MapPosition = 1,22,9
+#-------------------------------
+[283]
+# House
+MapPosition = 1,22,6
