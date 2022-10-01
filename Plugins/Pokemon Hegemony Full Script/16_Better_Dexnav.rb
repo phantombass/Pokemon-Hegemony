@@ -193,7 +193,7 @@ class NewDexNav
         e60 = enc_list5[11][1] if eLength5 >= 11
       end
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
-      if GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None
+      if GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :StairLeft || GameData::TerrainTag.get(pLoc).id == :StairRight
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
           $encTerr = :OldRod
         else

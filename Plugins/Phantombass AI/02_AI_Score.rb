@@ -999,14 +999,16 @@ end
 
 # Dark Void
 PBAI::ScoreHandler.add("003") do |score, ai, user, target, move|
-  if user.is_species?(:DARKRAI) && move.name == "Dark Void"
-    if !target.asleep? && target.can_sleep?(user, move)
-      score += 120
-      PBAI.log("+ 120 for damaging the target with Nightmare if it is asleep")
+  if move.name == "Dark Void"
+    if user.is_species?(:DARKRAI)
+      if !target.asleep? && target.can_sleep?(user, move)
+        score += 120
+        PBAI.log("+ 120 for damaging the target with Nightmare if it is asleep")
+      end
+    else
+      score -= 100
+      PBAI.log("- 100 for this move will fail")
     end
-  else
-    score -= 100
-    PBAI.log("- 100 for this move will fail")
   end
   next score
 end
