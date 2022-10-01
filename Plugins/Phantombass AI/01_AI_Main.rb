@@ -774,10 +774,8 @@ class PBAI
       return [0, 0]
     end
     def choice_locked?
+      return true if self.effects[PBEffects::ChoiceBand] != nil
       return false
-      if (self.hasActiveItem?([:CHOICEBAND,:CHOICESCARF,:CHOICESPECS]) || self.hasActiveAbility?(:GORILLATACTICS)) && self.lastMoveUsed != nil
-        return true
-      end
     end
     def get_switch_score
       # Yields [score, pokemon_index]
@@ -802,7 +800,7 @@ class PBAI
       if self.choice_locked?
         choiced_move_name = GameData::Move.get(self.lastMoveUsed)
         factor = 0
-        self.opposing_side.each do |pkmn|
+        opposing_side.battlers.each do |pkmn|
           factor += pkmn.calculate_move_matchup(choiced_move_name)
         end
         if factor < 2
@@ -855,7 +853,7 @@ class PBAI
       scores = get_optimal_switch_choice
       # If we should switch due to effects in battle
       if switch
-        availscores = scores.select { |e| !e[2].fainted}
+        availscores = scores.select { |e| !e[2].fainted?}
         # Switch to a dark type instead of the best type matchup
         if switch_to_dark_type
           availscores = availscores.select { |e| e[2].pokemon.types.include?(:DARK) }
@@ -991,7 +989,7 @@ class PBAI
       end
       # Take 10% of the final score if the target is immune to this move.
       if !move.statusMove? && target_is_immune?(move, target) && !self.choice_locked?
-        score *= 0
+        score = 0
         PBAI.log("* 0 for the target being immune")
       end
       # Take 10% of the final score if the move is disabled and thus unusable

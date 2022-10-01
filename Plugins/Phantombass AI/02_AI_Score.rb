@@ -441,8 +441,8 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ 1000 for being Choice locked and unable to switch")
       end
     else
-      score -= 100
-      PBAI.log("- 100 for being Choice locked")
+      score = 0
+      PBAI.log("* 0 for being Choice locked")
     end
   end
   next score

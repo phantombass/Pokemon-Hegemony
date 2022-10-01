@@ -32154,3 +32154,33 @@ BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
+[969]
+Name = Regieleki
+InternalName = REGIELEKI2
+Type1 = PSYCHIC
+BaseStats = 80,100,50,200,100,50
+GenderRate = Genderless
+GrowthRate = Slow
+BaseEXP = 261
+EffortPoints = 0,0,0,3,0,0
+Rareness = 3
+Happiness = 0
+Abilities = PSYCHICSURGE
+Moves = 1,CONFUSION,1,RAPIDSPIN,6,PSYBEAM,12,ANCIENTPOWER,18,BRAINFREEZE,24,HYPNOSIS,30,EXTREMESPEED,36,AURASPHERE,42,PSYCHIC,48,MAGNETRISE,54,THRASH,60,LOCKON,66,PHOTONGEYSER,72,HYPERBEAM,78,PSYCHOBOOST,91,BOOMBURST
+TutorMoves = EXPANDINGFORCE,PSYCHIC,PSYSHOCK,SHADOWBALL,STARBEAM,ACROBATICS,AGILITY,ASSURANCE,BODYSLAM,BOUNCE,EERIEIMPULSE,PSYCHICTERRAIN,ELECTROBALL,ELECTROWEB,ENDURE,FACADE,GIGAIMPACT,HYPERVOICE,HYPERBEAM,LIGHTSCREEN,PROTECT,RAINDANCE,REFLECT,REST,RISINGVOLTAGE,ROUND,SCREECH,SELFDESTRUCT,SLEEPTALK,SNORE,SUBSTITUTE,SWIFT,THUNDER,THUNDERBOLT,THUNDERWAVE,VOLTSWITCH,WILDCHARGE,TELEPORT
+Compatibility = Undiscovered
+StepsToHatch = 31096
+Height = 1.2
+Weight = 145.0
+Color = Yellow
+Shape = BipedalTail
+Kind = Electron
+Pokedex = Its entire body is made up of an single organ that generates electrical energy. Regieleki is capable of creating all of Galar's electricity.
+Generation = 8
+BattlerPlayerX = 4
+BattlerPlayerY = 48
+BattlerEnemyX = 4
+BattlerEnemyY = 10
+BattlerShadowX = 0
+BattlerShadowSize = 2
+#-------------------------------
