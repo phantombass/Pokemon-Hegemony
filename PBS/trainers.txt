@@ -2558,7 +2558,7 @@ Pokemon = SHIFTRY,83
 	Item = LIFEORB
 	EV = 0,252,4,252,0,0
 	IV = 31,31,31,31,31,31
-	Moves = SOLARBLADE,KNOCKOFF,SWORDSDANCE,TELEPORT
+	Moves = SOLARBLADE,KNOCKOFF,SWORDSDANCE,HEATWAVE
 	Role = PHYSICALBREAKER
 #-------------------------------
 # Victory Road
@@ -2820,6 +2820,134 @@ Pokemon = HERACROSS,94
 	EV = 0,252,0,252,4,0
 	IV = 31,31,31,31,31,31
 	Moves = CLOSECOMBAT,PINMISSILE,SWORDSDANCE,ROCKBLAST
+	Role = WINCON
+#-------------------------------
+# Route 21
+#-------------------------------
+[COOLTRAINER_F,Ann]
+LoseText = "Oh wow."
+Pokemon = ALTARIA2,91
+	Nature = TIMID
+	Item = WALTARIANITE
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Ability = PARENTALBOND
+	Moves = CALMMIND,BOOMBURST,SPECTRALSHRIEK,ROOST
+	Role = WINCON
+#-------------------------------
+[COOLTRAINER_M,Denny]
+LoseText = "Oh wow."
+Pokemon = VOLCARONA,91
+	Nature = TIMID
+	Item = WEATHERROCK
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Ability = DROUGHT
+	Moves = QUIVERDANCE,HEATWAVE,RAGEPOWDER,PROTECT
+	Role = REDIRECTION
+Pokemon = VICTREEBEL,91
+	Nature = JOLLY
+	Item = LIFEORB
+	EV = 4,252,0,252,0,0
+	IV = 31,31,31,31,31,31
+	Ability = CHLOROPHYLL
+	Moves = SOLARBLADE,POISONJAB,RETURN,SWORDSDANCE
+	Happiness = 255
+	Role = WINCON
+#-------------------------------
+# Route 23
+#-------------------------------
+[COOLTRAINER_M,Javer]
+LoseText = "Oh wow."
+Pokemon = NINETALES,91
+	Form = 1
+	Nature = TIMID
+	Item = WEATHERROCK
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Ability = HAILSTORM
+	Moves = AURORAVEIL,BLIZZARD,DAZZLINGGLEAM,PROTECT
+	Role = SCREENS
+Pokemon = ARCTOZOLT,91
+	Nature = JOLLY
+	Item = LIFEORB
+	EV = 4,252,0,252,0,0
+	IV = 31,31,31,31,31,31
+	Ability = SLUSHRUSH
+	Moves = BOLTBEAK,ICICLECRASH,STOMPINGTANTRUM,LOWKICK
+	Role = WINCON
+#-------------------------------
+[COOLTRAINER_F,Skye]
+LoseText = "Oh wow."
+Pokemon = ALTARIA,91
+	Nature = TIMID
+	Item = ALTARIANITE
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Ability = CLOUDNINE
+	Moves = CALMMIND,HYPERVOICE,FLAMETHROWER,ROOST
+	Role = WINCON
+#-------------------------------
+[COOLTRAINER_M,Rami]
+LoseText = "Oh wow."
+Pokemon = CHIMECHO2,91
+	Nature = MODEST
+	Item = WCHIMECHONITE
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Ability = PUNKROCK
+	Moves = SHIFTGEAR,MOONBLAST,POLARITYPULSE,STARBEAM
+	Role = WINCON
+#-------------------------------
+# Plumbum Town
+#-------------------------------
+[SCIENTIST,Grunt,13]
+LoseText = "This could be problematic."
+Pokemon = DRIFBLIM2,89
+	Nature = TIMID
+	Item = WEATHERROCK
+	Ability = RAGINGSEA
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Moves = OVERCHARGE,POLARITYPULSE,RECHARGE,WEATHERBALL
+	Role = PIVOT
+Pokemon = ZAPDOS,90
+	Nature = TIMID
+	Item = LIFEORB
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Moves = HURRICANE,WEATHERBALL,THUNDER,ROOST
+	Ability = STATIC
+	Role = SPECIALBREAKER
+#-------------------------------
+[SCIENTIST,Grunt,14]
+LoseText = "This could be problematic."
+Pokemon = GYARADOS,90
+	Nature = JOLLY
+	Item = GYARADOSITE
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Moves = SUBSTITUTE,DRAGONDANCE,WATERFALL,CRUNCH
+	Ability = INTIMIDATE
+	Role = WINCON
+#-------------------------------
+[SCIENTIST,Grunt,15]
+LoseText = "This could be problematic."
+Pokemon = PINCURCHIN,89
+	Nature = BOLD
+	Item = TERRAINEXTENDER
+	Ability = ELECTRICSURGE
+	EV = 252,0,252,0,4,0
+	IV = 31,0,31,31,31,31
+	Moves = OVERCHARGE,SCALD,RECOVER,PROTECT
+Pokemon = RAICHU,90
+	Form = 1
+	Nature = TIMID
+	Item = LIFEORB
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Moves = RISINGVOLTAGE,PSYSHOCK,THUNDER,FAKEOUT
+	Ability = SURGESURFER
 	Role = WINCON
 #-------------------------------
 # Normal Mode Gym Battles

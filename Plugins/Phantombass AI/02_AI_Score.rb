@@ -2020,3 +2020,25 @@ PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
   end
   next score
 end
+
+#Rage Powder
+PBAI::ScoreHandler.add("117") do |score, ai, user, target, move|
+  if ai.battle.pbSideSize(0) == 2
+    ally = false
+    b = nil
+    enemy = []
+    target.battler.eachAlly do |battler|
+      ally = true if battler == user.battler
+      b = battler if ally == true
+      enemy.push(battler) if battler != user.battler
+    end
+    if user.role.id == :REDIRECTION && (b.bad_against?(enemy[0]) || b.bad_against?(enemy[1]))
+      score += 200
+      PBAI.log("+ 200 for redirecting an attack away from partner")
+    end
+  else
+    score = 0
+    PBAI.log("* 0 because move will fail")
+  end
+  next score
+end
