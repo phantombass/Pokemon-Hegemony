@@ -71,7 +71,7 @@
 68,OBSTRUCT,Obstruct,180,0,DARK,Status,0,10,0,NearOther,4,,"Protect the user from all attacks. Direct contact harshly lowers the attacker's Defense stat."
 69,WICKEDBLOW,Wicked Blow,0A0,80,DARK,Physical,100,5,0,NearOther,0,abef,"The user strikes the target with a fierce blow of Dark Mastery. It always results in a critical hit."
 70,LASHOUT,Lash Out,194,75,DARK,Physical,100,5,100,NearOther,0,abef,"If the user's stats were lowered during the turn, the power of this move is doubled."
-71,FIERYWRATH,Fiery Wrath,00F,90,DARK,Special,100,10,20,AllNearFoes,0,ef,"The user transforms its wrath into a fire-like aura to attack. This may also make opposing Pokémon flinch."
+71,FIERYWRATH,Fiery Wrath,00F,90,DARK,Special,100,10,20,AllNearFoes,0,bef,"The user transforms its wrath into a fire-like aura to attack. This may also make opposing Pokémon flinch."
 #-------------------------------
 72,ROAROFTIME,Roar of Time,0C2,150,DRAGON,Special,90,5,0,NearOther,0,bef,"The user blasts the target with power that distorts even time. The user must rest on the next turn."
 73,DRACOMETEOR,Draco Meteor,03F,130,DRAGON,Special,90,5,0,NearOther,0,bef,"Comets are summoned down from the sky. The attack's recoil harshly reduces the user's Sp. Atk stat."
@@ -670,7 +670,7 @@
 654,MAGICPOWDER,Magic Powder,197,0,PSYCHIC,Status,100,20,0,NearOther,0,bcel,"The user scatters a cloud of magic powder that changes the target to Psychic type."
 655,EXPANDINGFORCE,Expanding Force,190,80,PSYCHIC,Special,100,20,0,AllNearOthers,0,bef,"The user attacks the target with its psychic power. This move's power goes up and damages all opposing Pokémon on Psychic Terrain."
 656,EERIESPELL,Eerie Spell,210,90,PSYCHIC,Special,100,10,0,NearOther,0,bef,"The user casts a horrible spell on the opponent. This removes 3 PP from their last used move."
-657,FREEZINGGLARE,Freezing Glare,00C,90,PSYCHIC,Special,100,10,10,NearOther,0,ef,"The user shoots its psychic power from its eyes to attack. This may also leave the target frozen."
+657,FREEZINGGLARE,Freezing Glare,00C,90,PSYCHIC,Special,100,10,10,NearOther,0,bef,"The user shoots its psychic power from its eyes to attack. This may also leave the target frozen."
 #-------------------------------
 658,HEADSMASH,Head Smash,0FC,150,ROCK,Physical,80,5,0,NearOther,0,abef,"The user attacks the foe with a hazardous, full-power headbutt. The user also takes terrible damage."
 659,ROCKWRECKER,Rock Wrecker,0C2,150,ROCK,Physical,90,5,0,NearOther,0,befn,"The user launches a huge boulder at the target to attack. It must rest on the next turn, however."

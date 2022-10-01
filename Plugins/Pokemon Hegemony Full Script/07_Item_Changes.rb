@@ -447,6 +447,9 @@ def useMoveFly
 #    end
     $game_switches[119] = false
     $game_switches[94] = false
+    if $game_switches[231] == true
+      $game_switches[241] = true
+    end
     $CanToggle = true
     $game_temp.player_new_direction = 2
     $PokemonTemp.flydata = nil
