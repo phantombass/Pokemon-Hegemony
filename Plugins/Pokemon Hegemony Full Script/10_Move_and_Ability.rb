@@ -3034,7 +3034,7 @@ class PokeBattle_Move_516 < PokeBattle_Move
         when :FLYING,:GRASS,:GROUND,:DRAGON; $appliance = 10
         when :WATER,:ROCK,:GHOST,:PSYCHIC,type1,:DARK,:NORMAL,:FAIRY,:FIGHTING; $appliance = 12
         when :BUG,:ICE,:STEEL,:COSMIC,:POISON; $appliance = 8
-        when :FIRE; $appliace = 9
+        when :FIRE; $appliance = 9
         end
       when :ICE
         case type2

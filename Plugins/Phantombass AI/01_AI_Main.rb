@@ -1653,8 +1653,8 @@ class PokeBattle_Battle
   end
 
   alias ai_pbShowAbilitySplash pbShowAbilitySplash
-  def pbShowAbilitySplash(battler, delay = false, logTrigger = true)
-    ai_pbShowAbilitySplash(battler, delay, logTrigger)
+  def pbShowAbilitySplash(battler,delay=false,logTrigger=true,ability=nil)
+    ai_pbShowAbilitySplash(battler,delay,logTrigger,ability)
     @battleAI.reveal_ability(battler) if PBAI::AI_KNOWS_ABILITY == false
   end
 end

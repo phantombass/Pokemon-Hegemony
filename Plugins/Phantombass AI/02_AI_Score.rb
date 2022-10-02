@@ -1723,9 +1723,9 @@ end
 
 # Protect
 PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
-  if user.effects[PBEffects::Wish] > 0 && user.effects[PBEffects::ProtectRate] == 0
-    score += 100
-    PBAI.log("+ 100 for receiving an incoming Wish")
+  if ai.battle.positions[user.index].effects[PBEffects::Wish] > 0
+    score += 300
+    PBAI.log("+ 300 for receiving an incoming Wish")
   end
   if ai.battle.pbSideSize(0) == 2 && user.effects[PBEffects::ProtectRate] == 0
     score += 50
@@ -2040,5 +2040,50 @@ PBAI::ScoreHandler.add("117") do |score, ai, user, target, move|
     score = 0
     PBAI.log("* 0 because move will fail")
   end
+  next score
+end
+
+# Shift Gear
+PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
+  if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(user.role.id)
+    if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:SPEED)
+      score = 0
+      PBAI.log("* 0 for battler being max on Attack or Defense")
+    else
+      count = 0
+      user.moves.each do |m|
+        count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
+      end
+      t_count = 0
+      if target.used_moves != nil
+        target.used_moves.each do |tmove|
+          t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      end
+      add = user.turnCount == 0 ? 70 : 50
+      score += add
+      PBAI.log("+ #{add} for being a #{user.role.name}")
+      end
+      if count == 0 && t_count == 0
+        add = user.turnCount == 0 ? 60 : 40
+        score += add
+        PBAI.log("+ #{add} to boost to guarantee the kill")
+      elsif count > 0
+        score -= 100
+        PBAI.log("- 100 since the target can now be killed by an attack")
+      end
+      atk_boost = user.stages[:ATTACK]*20
+      spe_boost = user.stages[:SPEED]*20
+      diff = atk_boost + spe_boost
+      score -= diff
+      PBAI.log("- #{diff} for boosted stats") if diff > 0
+      PBAI.log("+ #{diff} for lowered stats") if diff < 0
+      score += 20 if user.should_switch?(target)
+      PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+      if user.faster_than?(target) && user.is_special_attacker?
+        score = 0
+        PBAI.log("* 0 because we outspeed and Special Attackers don't factor Attack")
+      end
+    end
   next score
 end
