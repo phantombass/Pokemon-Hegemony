@@ -455,6 +455,7 @@ def useMoveFly
     $PokemonTemp.flydata = nil
     $scene.transfer_player
     $game_map.autoplay
+    $game_screen.weather(:None,9.0,20)
     $game_map.refresh
   }
   pbEraseEscapePoint
