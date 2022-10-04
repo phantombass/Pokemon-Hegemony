@@ -777,6 +777,10 @@ class PBAI
       return true if self.effects[PBEffects::ChoiceBand] != nil
       return false
     end
+    def can_switch?
+      return true if @battle.pbCanSwitch?(@battler.index)
+      return false
+    end
     def get_switch_score
       # Yields [score, pokemon_index]
       switch = false
@@ -798,7 +802,7 @@ class PBAI
         switch = true
       end
       if self.choice_locked?
-        choiced_move_name = GameData::Move.get(self.lastMoveUsed)
+        choiced_move_name = GameData::Move.get(self.effects[PBEffects::ChoiceBand])
         factor = 0
         opposing_side.battlers.each do |pkmn|
           factor += pkmn.calculate_move_matchup(choiced_move_name)
@@ -989,6 +993,10 @@ class PBAI
       end
       # Take 10% of the final score if the target is immune to this move.
       if !move.statusMove? && target_is_immune?(move, target) && !self.choice_locked?
+        score = 0
+        PBAI.log("* 0 for the target being immune")
+      end
+      if self.choice_locked? && target_is_immune?(move, target) && self.can_switch?
         score = 0
         PBAI.log("* 0 for the target being immune")
       end

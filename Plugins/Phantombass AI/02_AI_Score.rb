@@ -2027,14 +2027,18 @@ PBAI::ScoreHandler.add("117") do |score, ai, user, target, move|
     ally = false
     b = nil
     enemy = []
-    target.battler.eachAlly do |battler|
-      ally = true if battler == user.battler
-      b = battler if ally == true
-      enemy.push(battler) if battler != user.battler
+    user.battler.eachAlly do |battler|
+      ally = true if battler != user.battler
     end
-    if user.role.id == :REDIRECTION && (b.bad_against?(enemy[0]) || b.bad_against?(enemy[1]))
-      score += 200
-      PBAI.log("+ 200 for redirecting an attack away from partner")
+    if ally
+      ai.battle.eachOtherSideBattler(user.index) do |opp|
+        enemy.push(opp)
+      end
+      mon = user.side.battlers.find {|proj| proj && proj != self && !proj.fainted?}
+      if user.role.id == :REDIRECTION && (mon.bad_against?(enemy[0]) || mon.bad_against?(enemy[1]))
+        score += 200
+        PBAI.log("+ 200 for redirecting an attack away from partner")
+      end
     end
   else
     score = 0

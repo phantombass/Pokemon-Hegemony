@@ -44,6 +44,9 @@ BattleEnv = DARKNESS
 [172]
 BattleEnv = CAVE
 #===================
+[183]
+BattleEnv = CAVE
+#===================
 [203]
 BattleEnv = FOREST
 #===================
@@ -54,11 +57,17 @@ BattleEnv = FOREST
 BattleEnv = FOREST
 #===================
 [245]
-BattleEnv = FOREST
+BattleEnv = CAVE
 #===================
 [250]
 BattleEnv = DIMENSION
 #===================
 [251]
 BattleEnv = CHAMPION
+#===================
+[280]
+BattleEnv = TEMPLE
+#===================
+[285]
+BattleEnv = TEMPLE
 #===================
