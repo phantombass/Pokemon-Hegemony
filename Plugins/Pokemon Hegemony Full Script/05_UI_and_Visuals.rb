@@ -1134,7 +1134,7 @@ class PokemonSummary_Scene
       cmdNature = -1
       cmdStatChange = -1
       cmdAbility = -1
-      min_grind_commands[cmdLevel = min_grind_commands.length] = _INTL("Set Level") if (@page == 2 || @page == 3 || @page == 4) && ($game_switches[12] == false)
+      min_grind_commands[cmdLevel = min_grind_commands.length] = _INTL("Set Level") if (@page == 2 || @page == 3 || @page == 4)
       min_grind_commands[cmdNature = min_grind_commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
       min_grind_commands[cmdStatChange = min_grind_commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
       min_grind_commands[cmdAbility = min_grind_commands.length] = _INTL("Change Ability") if @page == 2 || @page == 3 || @page == 4

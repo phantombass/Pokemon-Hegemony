@@ -1,4 +1,4 @@
-{"33{I"__pk__:ET{"BattleEnv["OUTDOOR"43{@{@
+{"33{I"__pk__:ET{"BattleEnv["OUTDOOR"43{@{@
 ["OUTDOOR"78{@{@
 ["FOREST"81{@{@
 ["FOREST"88{@{@
@@ -12,10 +12,13 @@
 ["DESERT"142{@{@
 ["FOREST"169{@{@
 ["DARKNESS"172{@{@
+["	CAVE"183{@{@
 ["	CAVE"203{@{@
 ["FOREST"223{@{@
 ["FOREST"226{@{@
 ["FOREST"245{@{@
-["FOREST"250{@{@
+["	CAVE"250{@{@
 ["DIMENSION"251{@{@
-["CHAMPION
+["CHAMPION"280{@{@
+["TEMPLE"285{@{@
+["TEMPLE

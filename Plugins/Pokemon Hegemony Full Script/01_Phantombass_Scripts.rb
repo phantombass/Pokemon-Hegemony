@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.8.37"
+  GAME_VERSION = "1.8.38"
 end
 
 def write_version
@@ -26,7 +26,7 @@ class Game_System
   end
 end
 
-LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,100]
+LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,92,95,100]
 
 module Game
   def self.level_cap_update
@@ -44,6 +44,7 @@ module Game
     $mobile_mystery_gifts = []
     $gym_gimmick = false
     $gym_weather = false
+    $appliance = nil
     $scene = Scene_Map.new
     SaveData.load_new_game_values
     $MapFactory = PokemonMapFactory.new($data_system.start_map_id)
@@ -77,6 +78,7 @@ module Game
     end
     $gym_gimmick = false
     $gym_weather = false
+    $appliance = nil
     write_version
   end
 end
@@ -551,7 +553,7 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
-          for i in 197..202
+          for i in 197..203
             $game_switches[i] = false
           end
           $game_switches[209] = false
@@ -570,7 +572,7 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
-          for i in 197..202
+          for i in 197..203
             $game_switches[i] = false
           end
           $game_switches[209] = false
@@ -591,7 +593,7 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
-          for i in 197..202
+          for i in 197..203
             $game_switches[i] = false
           end
           $game_switches[209] = false
@@ -616,7 +618,7 @@ def pbStartOver(gameover=false)
           $game_switches[94] = false
           $game_switches[209] = false
           $game_switches[899] = false
-          for i in 197..202
+          for i in 197..203
             $game_switches[i] = false
           end
         end
@@ -660,7 +662,7 @@ def pbStartOver(gameover=false)
       $game_switches[94] = false
       $game_switches[209] = false
       $game_switches[899] = false
-      for i in 197..202
+      for i in 197..203
         $game_switches[i] = false
       end
     else

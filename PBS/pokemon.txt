@@ -31916,7 +31916,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 31
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = ZWEILOUS,Level,30
+Evolutions = ZWEILOUS2,Level,30
 #-------------------------------
 [962]
 Name = Zweilous
@@ -31949,7 +31949,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = HYDREIGON,Level,55
+Evolutions = HYDREIGON2,Level,55
 #-------------------------------
 [963]
 Name = Hydreigon
@@ -32015,7 +32015,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 30
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = VOLCARONA,Level,59
+Evolutions = VOLCARONA2,Level,59
 #-------------------------------
 [965]
 Name = Volcarona
@@ -32084,7 +32084,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Evolutions = MAGNETON,Level,30
+Evolutions = MAGNETON2,Level,30
 #-------------------------------
 [967]
 Name = Magneton
@@ -32119,7 +32119,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = MAGNEZONE,Item,THUNDERSTONE,MAGNEZONE,Location,232
+Evolutions = MAGNEZONE2,Item,THUNDERSTONE,MAGNEZONE,Location,232
 #-------------------------------
 [968]
 Name = Magnezone

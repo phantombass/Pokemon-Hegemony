@@ -1171,6 +1171,19 @@ Land,21
 	1,TORCHIC2,76,79
 	1,POIPOLE,5,5
 #-------------------------------
+[254] # Helum Mine
+Cave,5
+    30,GIGALITH,76,79
+	30,CROBAT,76,79
+	10,EXCADRILL,76,79
+	10,TYRANITAR,76,79
+	5,NOIVERN,76,79
+	5,PARASECT,76,79
+	3,HAXORUS,76,79
+	3,FERROTHORN,76,79
+	2,CRYOGONAL,76,79
+	2,GARCHOMP,76,79
+#-------------------------------
 # Armadia Region
 #-------------------------------
 [264] # Route 21
@@ -1239,7 +1252,7 @@ Land,21
 	20,FINNEON2,5,5
 	20,PIKACHU2,5,5
 #-------------------------------
-[271] # Route 22
+[271] # Route 23
 Land,21
 	30,GIRAFARIG,80,82
 	30,SLAKING,80,82

@@ -1179,6 +1179,18 @@ ShowArea = true
 MapPosition = 0,28,0
 SnapEdges = true
 #-------------------------------
+[254]
+# Helum Mine
+ShowArea = true
+MapPosition = 0,10,0
+SnapEdges = true
+#-------------------------------
+[255]
+# Helum Mine
+ShowArea = true
+MapPosition = 0,10,0
+SnapEdges = true
+#-------------------------------
 [263]
 # Port Lithum
 Outdoor = true
