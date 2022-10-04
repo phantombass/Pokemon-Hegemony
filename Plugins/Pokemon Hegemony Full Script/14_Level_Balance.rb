@@ -75,7 +75,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       #now we evolve the pokémon, if applicable
       #unused
       species = party[i].species
-      if badges > 8
+      if badges == 99999
       newspecies = GameData::Species.get(species).get_baby_species # revert to the first evolution
       evoflag=0 #used to track multiple evos not done by lvl
       endevo=false
