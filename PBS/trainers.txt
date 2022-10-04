@@ -2857,7 +2857,7 @@ Pokemon = VICTREEBEL,91
 #-------------------------------
 # Route 23
 #-------------------------------
-[COOLTRAINER_M,Javer]
+[COOLTRAINER_M,Javier]
 LoseText = "Oh wow."
 Pokemon = NINETALES,91
 	Form = 1
