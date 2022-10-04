@@ -20,5 +20,6 @@ module FancyBadges
     "Renege Badge",
     "Infirm Badge",
     "Deep Space Badge",
+    "Grit Badge"
   ]
 end

@@ -1287,7 +1287,7 @@ PBAI::ScoreHandler.add("0EF") do |score, ai, user, target, move|
 end
 
 # Recover, Slack Off, Soft-Boiled, Heal Order, Milk Drink, Roost, Wish
-PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("0D5", "0D6", "0D7", "16D") do |score, ai, user, target, move|
   factor = 1 - user.hp / user.totalhp.to_f
   # At full hp, factor is 0 (thus not encouraging this move)
   # At half hp, factor is 0.5 (thus slightly encouraging this move)
@@ -1319,6 +1319,10 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
   else
     score -= 30
     PBAI.log("- 30 for we are at full hp")
+  end
+  if move.function == "16D" && ai.battle.pbWeather == :Sandstorm
+    score += 50
+    PBAI.log("+ 50 for added recovery in Sandstorm")
   end
   score += 40 if user.role.id == :CLERIC && move.function == "0D7"
   PBAI.log("+ 40 for being #{user.role.name} and potentially passing a Wish") if user.role.id == :CLERIC && move.function == "0D7"
@@ -1528,6 +1532,48 @@ PBAI::ScoreHandler.add("0D4") do |score, ai, user, target, move|
     score -= 10
     PBAI.log("- 10 for we don't know whether we'd survive two subsequent attacks")
   end
+  next score
+end
+
+# Shell Smash
+PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
+  if [:SETUPSWEEPER,:PHYSICALBREAKER,:SPECIALBREAKER,:WINCON].include?(user.role.id)
+    if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:SPECIAL_ATTACK)
+      score = 0
+      PBAI.log("* 0 for battler being max on Attack or Defense")
+    else
+      count = 0
+      user.moves.each do |m|
+        count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
+      end
+      t_count = 0
+      if target.used_moves != nil
+        target.used_moves.each do |tmove|
+          t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      end
+      add = user.turnCount == 0 ? 90 : 70
+      score += add
+      PBAI.log("+ #{add} for being a #{user.role.name}")
+      end
+      if count == 0 && t_count == 0
+        add = user.turnCount == 0 ? 80 : 60
+        score += add
+        PBAI.log("+ #{add} to boost to guarantee the kill")
+      elsif count > 0
+        score -= 100
+        PBAI.log("- 100 since the target can now be killed by an attack")
+      end
+      atk_boost = user.stages[:ATTACK]*20
+      spa_boost = user.stages[:SPECIAL_ATTACK]*20
+      spe_boost = user.stages[:SPEED]*20
+      diff = atk_boost + spa_boost + spe_boost
+      score -= diff
+      PBAI.log("- #{diff} for boosted stats") if diff > 0
+      PBAI.log("+ #{diff} for lowered stats") if diff < 0
+      score += 20 if user.should_switch?(target)
+      PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+    end
   next score
 end
 
@@ -1882,8 +1928,8 @@ PBAI::ScoreHandler.add("501") do |score, ai, user, target, move|
 end
 
 #Draco Meteor, Astro Bomb, Psycho Boost, etc.
-PBAI::ScoreHandler.add("03F","03C","03B","03E","15F","193","114","035") do |score, ai, user, target, move|
-  if user.hasActiveAbility?(:CONTRARY) && !["114","035"].include?(move.function)
+PBAI::ScoreHandler.add("03F","03C","03B","03E","15F","193","114") do |score, ai, user, target, move|
+  if user.hasActiveAbility?(:CONTRARY) && !["114"].include?(move.function)
     score += 50
     PBAI.log("+ 50 for boosting")
   end
