@@ -65,9 +65,21 @@ BattleEnv = DIMENSION
 [251]
 BattleEnv = CHAMPION
 #===================
+[275]
+BattleEnv = FOREST
+#===================
+[276]
+BattleEnv = FOREST
+#===================
+[279]
+BattleEnv = FOREST
+#===================
 [280]
 BattleEnv = TEMPLE
 #===================
 [285]
 BattleEnv = TEMPLE
+#===================
+[287]
+BattleEnv = FOREST
 #===================
