@@ -1299,3 +1299,36 @@ MapPosition = 1,22,9
 [283]
 # House
 MapPosition = 1,22,6
+#-------------------------------
+[284]
+# Route 24
+Outdoor = true
+ShowArea = true
+MapPosition = 1,24,9
+SnapEdges = true
+#-------------------------------
+[285]
+# Haunted Dimension
+Outdoor = true
+ShowArea = true
+MapPosition = 1,24,9
+SnapEdges = true
+#-------------------------------
+[286]
+# Haunted Cave
+ShowArea = true
+MapPosition = 1,24,9
+SnapEdges = true
+#-------------------------------
+[287]
+# Hidden Grotto - Route 24
+MapPosition = 1,24,9
+SnapEdges = true
+#-------------------------------
+[288]
+# Route 25
+Outdoor = true
+ShowArea = true
+MapPosition = 1,26,11
+SnapEdges = true
+#-------------------------------
