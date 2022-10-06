@@ -1287,14 +1287,14 @@ PBAI::ScoreHandler.add("0EF") do |score, ai, user, target, move|
 end
 
 # Recover, Slack Off, Soft-Boiled, Heal Order, Milk Drink, Roost, Wish
-PBAI::ScoreHandler.add("0D5", "0D6", "0D7", "16D") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
   factor = 1 - user.hp / user.totalhp.to_f
   # At full hp, factor is 0 (thus not encouraging this move)
   # At half hp, factor is 0.5 (thus slightly encouraging this move)
   # At 1 hp, factor is about 1.0 (thus encouraging this move)
   if user.flags[:will_be_healed] && ai.battle.pbSideSize(0) == 2
-    score -= 30
-    PBAI.log("- 30 for the user will already be healed by something")
+    score = 0
+    PBAI.log("* 0 for the user will already be healed by something")
   elsif factor != 0
     if user.is_healing_pointless?(0.50)
       score -= 10
@@ -1319,10 +1319,6 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7", "16D") do |score, ai, user, target, 
   else
     score -= 30
     PBAI.log("- 30 for we are at full hp")
-  end
-  if move.function == "16D" && ai.battle.pbWeather == :Sandstorm
-    score += 50
-    PBAI.log("+ 50 for added recovery in Sandstorm")
   end
   score += 40 if user.role.id == :CLERIC && move.function == "0D7"
   PBAI.log("+ 40 for being #{user.role.name} and potentially passing a Wish") if user.role.id == :CLERIC && move.function == "0D7"
@@ -1369,6 +1365,41 @@ PBAI::ScoreHandler.add("0D8") do |score, ai, user, target, move|
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
     end
+  else
+    score -= 30
+    PBAI.log("- 30 for we are at full hp")
+  end
+  next score
+end
+
+# Shore Up
+PBAI::ScoreHandler.add("16D") do |score, ai, user, target, move|
+  heal_factor = 0.5
+  if ai.battle.pbWeather == :Sandstorm
+    heal_factor = 2.0 / 3.0
+  end
+  factor = 1 - user.hp / user.totalhp.to_f
+  # At full hp, factor is 0 (thus not encouraging this move)
+  # At half hp, factor is 0.5 (thus slightly encouraging this move)
+  # At 1 hp, factor is about 1.0 (thus encouraging this move)
+  if user.flags[:will_be_healed] && ai.battle.pbSideSize(0) == 2
+    score -= 30
+    PBAI.log("- 30 for the user will already be healed by something")
+  elsif factor != 0
+    if user.is_healing_pointless?(heal_factor)
+      score -= 10
+      PBAI.log("- 10 for we will take more damage than we can heal if the target repeats their move")
+    elsif user.is_healing_necessary?(0.65)
+      add = (factor * 250).round
+      score += add
+      PBAI.log("+ #{add} for we will likely die without healing")
+    else
+      add = (factor * 125).round
+      score += add
+      PBAI.log("+ #{add} for we have lost some hp")
+    end
+    score += 30 if ai.battle.weather == :Sandstorm
+    PBAI.log("+ 30 for extra healing in Sandstorm")
   else
     score -= 30
     PBAI.log("- 30 for we are at full hp")

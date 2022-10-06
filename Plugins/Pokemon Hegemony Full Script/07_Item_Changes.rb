@@ -999,7 +999,7 @@ BattleHandlers::WeatherExtenderItem.add(:WEATHERROCK,
 )
 
 ItemHandlers::UseOnPokemon.add(:RARECANDY,proc { |item,pkmn,scene|
-  if pkmn.level>=GameData::GrowthRate.max_level || pkmn.shadowPokemon? || (pkmn.level>=$game_variables[106] && $game_switches[Settings::LEVEL_CAP_SWITCH] == true) || (pkmn.fainted? && $game_switches[73])
+  if pkmn.level>=GameData::GrowthRate.max_level || pkmn.shadowPokemon? || (pkmn.level>=LEVEL_CAP[$game_system.level_cap] && $game_switches[Settings::LEVEL_CAP_SWITCH] == true) || (pkmn.fainted? && $game_switches[73])
     scene.pbDisplay(_INTL("It won't have any effect."))
     next false
   end

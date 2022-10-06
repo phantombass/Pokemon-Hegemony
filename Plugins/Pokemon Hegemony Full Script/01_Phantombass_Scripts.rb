@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.8.40"
+  GAME_VERSION = "1.9.0"
 end
 
 def write_version
@@ -13,7 +13,13 @@ def write_version
     f.write("#{version}")
   }
 end
-
+def reset_custom_variables
+  $gym_gimmick = false
+  $gym_weather = false
+  $appliance = nil
+  $currentDexSearch = nil
+  $repel_toggle = true
+end
 class Game_System
   attr_accessor :level_cap
   alias initialize_cap initialize
@@ -26,7 +32,7 @@ class Game_System
   end
 end
 
-LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,92,95,100]
+LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,88,90,93,95,98,100]
 
 module Game
   def self.level_cap_update
@@ -42,9 +48,7 @@ module Game
     $PokemonTemp.begunNewGame = true
     $game_system.initialize
     $mobile_mystery_gifts = []
-    $gym_gimmick = false
-    $gym_weather = false
-    $appliance = nil
+    reset_custom_variables
     $scene = Scene_Map.new
     SaveData.load_new_game_values
     $MapFactory = PokemonMapFactory.new($data_system.start_map_id)
@@ -76,9 +80,7 @@ module Game
       $PokemonSystem.language = pbChooseLanguage if save_data.empty?
       pbLoadMessages('Data/' + Settings::LANGUAGES[$PokemonSystem.language][1])
     end
-    $gym_gimmick = false
-    $gym_weather = false
-    $appliance = nil
+    reset_custom_variables
     write_version
   end
 end
@@ -118,21 +120,13 @@ def PokemonLoadScreen
         @scene.pbEndScene
         write_version
         Game.load(@save_data)
-        $repel_toggle = true
-        $appliance = nil
-        $currentDexSearch = nil
-        $gym_gimmick = false
-        $gym_weather = false
+        reset_custom_variables
         return
       when cmd_new_game
         @scene.pbEndScene
         write_version
         Game.start_new
-        $repel_toggle = true
-        $appliance = nil
-        $currentDexSearch = nil
-        $gym_gimmick = false
-        $gym_weather = false
+        reset_custom_variables
         return
       when cmd_mystery_gift
         pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
