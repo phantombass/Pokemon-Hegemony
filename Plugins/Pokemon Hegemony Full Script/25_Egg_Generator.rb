@@ -155,6 +155,38 @@ def wartime_eggs
   return egg_list
 end
 
+def postgame_wartime_eggs
+  egg_list = [
+    :MAGNEMITE2,
+    :DEINO2,
+    :FERROSEED2,
+    :IMPIDIMP2,
+  ]
+  eggs = []
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    evo = GameData::Species.get(mon).get_baby_species
+    evos = GameData::Species.get(evo).get_family_evolutions
+    eggs.push(evos)
+  }
+  eggs.flatten!
+  eggs.uniq!
+  eggs.each do |e|
+    if egg_list.include?(e)
+      egg_list.delete(e)
+    end
+  end
+  if egg_list == []
+    egg_list = [
+      :MAGNEMITE2,
+      :DEINO2,
+      :FERROSEED2,
+      :IMPIDIMP2,
+    ]
+  end
+  return egg_list
+end
+
 def generate_hisui_egg
   rand = rand(hisui_eggs.length)
   egg = hisui_eggs[rand]
@@ -185,6 +217,32 @@ end
 def generate_wartime_egg
   rand = rand(wartime_eggs.length)
   egg = wartime_eggs[rand]
+  if pbGenerateEgg(egg,_I("Random Hiker"))
+    pbMessage(_INTL("\\me[Egg get]\\PN received an Egg!"))
+    pbCallBub(2,@event_id)
+    pbMessage(_INTL("\\[7fe00000]Take good care of it!"))
+    egg = $Trainer.last_party
+    species = egg.species
+    move = GameData::Species.get(species).egg_moves
+    egg.ability_index = 2
+    egg.iv[:HP] = 31
+    egg.iv[:DEFENSE] = 31
+    egg.iv[:SPECIAL_DEFENSE] = 31
+    egg.learn_move(move[rand(move.length)])
+    egg.steps_to_hatch = 200
+    egg.calc_stats
+    vTSS(@event_id,"A")
+  else
+    pbCallBub(2,@event_id)
+    pbMessage(_INTL("\\[7fe00000]Oh, you can't carry it with you."))
+    pbCallBub(2,@event_id)
+    pbMessage(_INTL("\\[7fe00000]Make some space in your party and come back."))
+  end
+end
+
+def generate_postgame_wartime_egg
+  rand = rand(postgame_wartime_eggs.length)
+  egg = postgame_wartime_eggs[rand]
   if pbGenerateEgg(egg,_I("Random Hiker"))
     pbMessage(_INTL("\\me[Egg get]\\PN received an Egg!"))
     pbCallBub(2,@event_id)

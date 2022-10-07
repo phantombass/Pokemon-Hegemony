@@ -440,6 +440,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         score += 1000
         PBAI.log("+ 1000 for being Choice locked and unable to switch")
       end
+      if ai.battle.pbCanSwitch?(user.battler.index) && user.get_move_damage(target, move) < target.totalhp/4
+        score = 0
+        PBAI.log("* 0 to encourage switching when Choice Locked into something bad")
+      end
     else
       score = 0
       PBAI.log("* 0 for being Choice locked")
@@ -2166,5 +2170,18 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
         PBAI.log("* 0 because we outspeed and Special Attackers don't factor Attack")
       end
     end
+  next score
+end
+
+#Rolling Fog
+PBAI::ScoreHandler.add("521") do |score, ai, user, target, move|
+  if ai.battle.field.terrain == :Misty
+    score += 100
+    PBAI.log("+ 100 for double power in Misty Terrain")
+  end
+  if ai.battle.pbSideSize(0) == 2
+    score += 50
+    PBAI.log("+ 50 for hitting both targets")
+  end
   next score
 end

@@ -1332,3 +1332,41 @@ ShowArea = true
 MapPosition = 1,26,11
 SnapEdges = true
 #-------------------------------
+[289]
+# Argyros City
+Outdoor = true
+ShowArea = true
+MapPosition = 1,25,14
+SnapEdges = true
+#-------------------------------
+[290]
+# Hidden Grotto - Argyros
+MapPosition = 1,25,14
+SnapEdges = true
+#-------------------------------
+[291]
+# Argyros PMC
+MapPosition = 1,25,14
+#-------------------------------
+[292]
+# Argyros Dojo
+MapPosition = 1,25,14
+SnapEdges = true
+#-------------------------------
+[293]
+# Houses
+MapPosition = 1,25,14
+#-------------------------------
+[294]
+# Argyros Observatory
+MapPosition = 1,25,14
+#-------------------------------
+[295]
+# House
+MapPosition = 1,26,14
+#-------------------------------
+[296]
+# Offshoot Cave
+ShowArea = true
+MapPosition = 1,26,11
+SnapEdges = true

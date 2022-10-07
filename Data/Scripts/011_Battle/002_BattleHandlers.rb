@@ -368,8 +368,8 @@ module BattleHandlers
     ItemOnStatLoss.trigger(item,battler,user,move,switched,battle)
   end
 
-  def self.triggerUserItemOnMiss(item,user,target,move,battle)
-    UserItemOnMiss.trigger(item,user,target,move,battle)
+  def self.triggerUserItemOnMiss(item,user,target,move,hit_num,battle)
+    UserItemOnMiss.trigger(item,user,target,move,hit_num,battle)
   end
 
   #=============================================================================

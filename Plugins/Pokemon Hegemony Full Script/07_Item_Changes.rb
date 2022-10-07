@@ -1563,3 +1563,15 @@ BattleHandlers::ItemOnSwitchIn.add(:SAPSIPPERORB,
     end
   }
 )
+
+BattleHandlers::ItemOnSwitchIn.add(:ILLUMINATEORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :ILLUMINATE
+    if ability != battler.ability_id
+      battler.pbRaiseStatStageByAbility(:ACCURACY, 1, battler)
+      battle.pbDisplay(_INTL("{1}'s Illuminate Orb boosts its accuracy!",battler.name))
+      battler.ability_id = ability
+    end
+  }
+)

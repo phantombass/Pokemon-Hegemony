@@ -182,4 +182,16 @@ module BattleScripts
       @scene.pbDisplay("Jasper set a permanent Sandstorm!")
     end
   }
+  APOLLO = {
+    "afterLastOpp" => "Hmm. You are very good. Very good indeed.",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("My dojo is themed around the Sun. Let me show you!")
+      @scene.pbAnimation(GameData::Move.get(:SUNNYDAY).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :HarshSun
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Apollo set up Harsh Sunlight!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
+    end
+  }
 end

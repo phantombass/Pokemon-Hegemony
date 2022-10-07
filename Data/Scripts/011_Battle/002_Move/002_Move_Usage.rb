@@ -56,6 +56,8 @@ class PokeBattle_Move
   def pbOverrideSuccessCheckPerHit(user,target); return false; end
   def pbCrashDamage(user); end
   def pbInitialEffect(user,targets,hitNum); end
+  def pbDesignateTargetsForHit(targets, hitNum); return targets; end   # For Dragon Darts
+  def pbRepeatHit?; return false; end   # For Dragon Darts
 
   def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
     return if !showAnimation
