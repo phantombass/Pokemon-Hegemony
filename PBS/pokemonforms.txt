@@ -4088,3 +4088,22 @@ BattlerEnemyY = 26
 BattlerShadowX = 0
 BattlerShadowSize = 3
 #-------------------------------
+[COALOSSAL,1]
+Type1 = ROCK
+Type2 = FIRE
+FormName = Mega Coalossal
+MegaStone = COALOSSALITE
+BaseStats = 110,110,140,50,80,120
+Rareness = 45
+Happiness = 70
+Abilities = STEAMENGINE
+HiddenAbility = STEAMENGINE
+Weight = 990.4
+Generation = 8
+BattlerPlayerX = 0
+BattlerPlayerY = 42
+BattlerEnemyX = -2
+BattlerEnemyY = 11
+BattlerShadowX = 0
+BattlerShadowSize = 2
+#-------------------------------

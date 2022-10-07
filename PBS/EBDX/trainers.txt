@@ -217,3 +217,9 @@ BattleVS         = plasmaSM
 BattleScript	 = JASPER
 Ace				 = 6
 #-------------------------------
+[DOJO_Apollo]
+BattleBGM        = DPPT-Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = APOLLO
+Ace				 = 6
+#-------------------------------

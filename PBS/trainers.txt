@@ -2950,6 +2950,159 @@ Pokemon = RAICHU,90
 	Ability = SURGESURFER
 	Role = WINCON
 #-------------------------------
+# Route 24
+#-------------------------------
+[COOLTRAINER_M,Al]
+LoseText = "Oh wow."
+Pokemon = HOOPA,91
+	Form = 1
+	Nature = JOLLY
+	Item = LIFEORB
+	EV = 0,252,0,252,4,0
+	IV = 31,31,31,31,31,31
+	Ability = MINDGAMES
+	Moves = HYPERSPACEFURY,COSMICFURY,DRAINPUNCH,ZENHEADBUTT
+	Role = WINCON
+#-------------------------------
+[COOLTRAINER_F,Bea]
+LoseText = "Oh wow."
+Pokemon = MARSHADOW,91
+	Nature = ADAMANT
+	Item = EXPERTBELT
+	EV = 0,252,0,252,4,0
+	IV = 31,31,31,31,31,31
+	Ability = TECHNICIAN
+	Moves = DRAINPUNCH,SPECTRALTHIEF,ICEPUNCH,BULKUP
+	Role = WINCON
+#-------------------------------
+[COOLTRAINER_M,Cedric]
+LoseText = "Oh wow."
+Pokemon = SYLVEON,89
+	Nature = MODEST
+	Item = CHOICESPECS
+	Ability = PIXILATE
+	EV = 252,0,4,0,252,0
+	IV = 31,0,31,31,31,31
+	Moves = ROLLINGFOG,HYPERVOICE,MISTYEXPLOSION,PSYSHOCK
+	Role = SPECIALBREAKER
+Pokemon = TAPUFINI,90
+	Nature = TIMID
+	Item = TERRAINEXTENDER
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Moves = ROLLINGFOG,MUDDYWATER,CALMMIND,PROTECT
+	Ability = MISTYSURGE
+	Role = WINCON
+#-------------------------------
+# Route 25
+#-------------------------------
+[COOLTRAINER_M,Dom]
+LoseText = "Oh wow."
+Pokemon = LANDORUS,91
+	Form = 1
+	Nature = JOLLY
+	Item = YACHEBERRY
+	EV = 0,252,0,252,4,0
+	IV = 31,31,31,31,31,31
+	Ability = INTIMIDATE
+	Moves = SWORDSDANCE,ROCKPOLISH,EARTHQUAKE,ROCKSLIDE
+	Role = WINCON
+#-------------------------------
+[COOLTRAINER_F,Eva]
+LoseText = "Oh wow."
+Pokemon = ENAMORUS,91
+	Nature = TIMID
+	Item = PIXIEPLATE
+	EV = 0,252,0,252,4,0
+	IV = 31,31,31,31,31,31
+	Ability = CONTRARY
+	Moves = SPRINGTIDESTORM,AIRSLASH,MYSTICALFIRE,SUPERPOWER
+	Role = WINCON
+#-------------------------------
+# Argyros Observatory
+#-------------------------------
+[ARMY,Grunt,6]
+LoseText = "This can't be good."
+Pokemon = AERODACTYL,95
+	Item = HEAVYDUTYBOOTS
+	Ability = UNNERVE
+	Moves = STEALTHROCK,HONECLAWS,WINGATTACK,STONEEDGE
+	IV = 31,31,31,31,31,31
+	EV = 0,252,0,252,0,4
+	Role = HAZARDLEAD
+Pokemon = HAWLUCHA,95
+	Item = WHITEHERB
+	Ability = UNBURDEN
+	Moves = SWORDSDANCE,ACROBATICS,DRAINPUNCH,CLOSECOMBAT
+	IV = 31,31,31,31,31,31
+	EV = 0,252,0,252,0,4
+	Role = SETUPSWEEPER
+Pokemon = COALOSSAL,95
+	Ability = STEAMENGINE
+	Item = COALOSSALITE
+	Moves = HEATCRASH,RUBBLERAZE,EARTHQUAKE,HEAVYSLAM
+	IV = 31,31,31,31,31,31
+	EV = 252,252,0,0,0,4
+	Role = WINCON
+#-------------------------------
+[ARMY,Grunt,7]
+LoseText = "This can't be good."
+Pokemon = GOLEM,95
+	Item = CUSTAPBERRY
+	Ability = STURDY
+	Moves = STEALTHROCK,EXPLOSION,STONEEDGE,EARTHQUAKE
+	IV = 31,31,31,31,31,31
+	EV = 252,252,0,0,0,4
+	Role = HAZARDLEAD
+Pokemon = ARMALDO,95
+	Item = SITRUSBERRY
+	Ability = BATTLEARMOR
+	Moves = SWORDSDANCE,XSCISSOR,STONEEDGE,KNOCKOFF
+	IV = 31,31,31,31,31,31
+	EV = 252,252,0,0,0,4
+	Role = SETUPSWEEPER
+Pokemon = MEDICHAM,95
+	Ability = PUREPOWER
+	Item = MEDICHAMITE
+	Moves = DRAINPUNCH,ICEPUNCH,METEORMASH,FAKEOUT
+	IV = 31,31,31,31,31,31
+	EV = 0,252,0,252,0,4
+	Role = WINCON
+#-------------------------------
+[ARMY,Grunt,8]
+LoseText = "This can't be good."
+Pokemon = CRADILY,95
+	Item = LEFTOVERS
+	Ability = STORMDRAIN
+	Moves = RECOVER,GIGADRAIN,ANCIENTPOWER,STEALTHROCK
+	IV = 31,31,31,31,31,31
+	EV = 252,0,0,0,4,252
+	Role = HAZARDLEAD
+Pokemon = SCRAFTY,95
+	Ability = INTIMIDATE
+	Item = ASSAULTVEST
+	Moves = DRAINPUNCH,ICEPUNCH,CRUNCH,KNOCKOFF
+	IV = 31,31,31,31,31,31
+	EV = 252,252,0,0,0,4
+	Role = PIVOT
+Pokemon = SWAMPERT2,95
+	Ability = NIGHTFALL
+	Item = WSWAMPERTITE
+	Moves = HEADSMASH,KNOCKOFF,ROCKPOLISH,EARTHQUAKE
+	IV = 31,31,31,31,31,31
+	EV = 0,252,0,252,0,4
+	Role = WINCON
+#-------------------------------
+[ARMY,Grunt,9]
+LoseText = "This can't be good."
+Pokemon = GALLADE,77
+	Ability = INNERFOCUS
+	Item = GALLADITE
+	Moves = DRAINPUNCH,ICEPUNCH,PSYCHOCUT,KNOCKOFF
+	IV = 31,31,31,31,31,31
+	EV = 0,252,0,252,0,4
+	Role = WINCON
+#-------------------------------
 # Normal Mode Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
@@ -7843,6 +7996,57 @@ Pokemon = SANDACONDA,95
 	Item = SANDACONDANITE
 	Moves = THOUSANDARROWS,DRAGONDARTS,SHOREUP,COIL
 #-------------------------------
+[DOJO_Apollo,Apollo]
+LoseText = "Most excellent."
+Pokemon = VOLCARONA,95
+	Nature = TIMID
+	Item = LEFTOVERS
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Ability = SWARM
+	Moves = RAGEPOWDER,ROOST,HEATWAVE,BUGBUZZ
+	Role = REDIRECTION
+Pokemon = CHERRIM,95
+	Nature = MODEST
+	Item = EXPERTBELT
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Ability = FLOWERGIFT
+	Moves = SOLARBEAM,ASTRALGALE,SYNTHESIS,WEATHERBALL
+	Role = SPECIALBREAKER
+Pokemon = VENUSAUR,95
+	Nature = MODEST
+	Item = LIFEORB
+	EV = 0,0,4,252,252,0
+	IV = 31,0,31,31,31,31
+	Ability = CHLOROPHYLL
+	Moves = SOLARBEAM,EARTHPOWER,SYNTHESIS,WEATHERBALL
+	Role = SPECIALBREAKER
+Pokemon = MAGEARNA,95
+	Nature = TIMID
+	Item = LEVITATEORB
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Ability = SOULHEART
+	Moves = SHIFTGEAR,MOONBLAST,POLARITYPULSE,THUNDERBOLT
+	Role = SPECIALBREAKER
+Pokemon = PIKACHU2,95
+	Nature = HASTY
+	Item = LIGHTBALL
+	EV = 0,4,0,252,252,0
+	IV = 31,31,31,31,31,31
+	Ability = STEAMPOWERED
+	Moves = ZIPPYZAP,OVERCHARGE,HEATWAVE,BOUNCYBUBBLE
+	Role = SPECIALBREAKER
+Pokemon = HOUNDOOM,95
+	Nature = TIMID
+	Item = HOUNDOOMINITE
+	EV = 252,0,0,252,4,0
+	IV = 31,0,31,31,31,31
+	Ability = ADAPTABILITY
+	Moves = NASTYPLOT,HEATWAVE,FIERYWRATH,SOLARBEAM
+	Role = SPECIALBREAKER
+#-------------------------------
 # Post-Game Boss Battles
 #-------------------------------
 [OFFCORP,Bruce,7]
@@ -8195,5 +8399,55 @@ Pokemon = MANECTRIC,95
 	IV = 31,0,31,31,31,31
 	Nature = TIMID
 	Moves = OVERCHARGE,VOLTSWITCH,FLAMETHROWER,SIGNALBEAM
+	Role = WINCON
+#-------------------------------
+[ARMYBOSS,Ahab,11]
+LoseText = "Hmmph."
+Pokemon = SWAMPERT2,95
+	Nature = CAREFUL
+	EV = 252,4,0,0,0,252
+	IV = 31,31,31,31,31,31
+	Ability = NIGHTFALL
+	Item = CHOPLEBERRY
+	Moves = STEALTHROCK,ROCKSLIDE,KNOCKOFF,ROAR
+	Role = HAZARDLEAD
+Pokemon = NIHILEGO,95
+	Nature = TIMID
+	Item = AIRBALLOON
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Ability = BEASTBOOST
+	Moves = DEATHTOLL,PALEOBEAM,STARBEAM,TOXICSPIKES
+	Role = SPECIALBREAKER
+Pokemon = REGIROCK2,95
+	Nature = CAREFUL
+	EV = 252,4,0,0,0,252
+	IV = 31,31,31,31,31,31
+	Ability = SCRAPPY
+	Item = LEFTOVERS
+	Moves = BULKUP,BODYPRESS,DRAINPUNCH,DARKESTLARIAT
+	Role = SETUPSWEEPER
+Pokemon = TERRAKION,95
+	Nature = JOLLY
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,0,31,31
+	Ability = BEASTBOOST
+	Item = CHOICESCARF
+	Moves = CLOSECOMBAT,EARTHQUAKE,ROCKSLIDE,STONEEDGE
+	Role = PHYSICALBREAKER
+Pokemon = URSHIFU,95
+	Nature = ADAMANT
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Ability = UNSEENFIST
+	Item = CHOICEBAND
+	Moves = WICKEDBLOW,CLOSECOMBAT,UTURN,IRONHEAD
+	Role = PHYSICALBREAKER
+Pokemon = INFERNAPE,95
+	Nature = MODEST
+	EV = 0,0,0,252,252,4
+	IV = 31,31,31,31,31,31
+	Item = INFERNITE
+	Moves = CALMMIND,FLAMETHROWER,SLACKOFF,AURASPHERE
 	Role = WINCON
 #-------------------------------
