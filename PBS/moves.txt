@@ -782,7 +782,7 @@
 929,PIXIEPUNCH,Pixie Punch,0A5,60,FAIRY,Physical,0,20,0,NearOther,0,abefj,"The user throws a punch with the power of the fairies. The punch lands without fail."
 930,NIGHTRUSH,Night Rush,03C,120,DARK,Physical,100,5,0,NearOther,0,abef,"The user fights the foe up close without guarding itself. It also cuts the user's Defense and Sp. Def."
 931,SPAMRAID,Spam Raid,0C0,25,DARK,Physical,100,30,0,NearOther,0,befn,"The user brute forces their way through the opponent. Two to five viruses are shot in rapid succession."
-933,HEXCANNON,Hex Cannon,0BD,50,GHOST,Physical,100,10,0,NearOther,0,befn,"The user releases haunted emmisaries to torment the target. The target is hit twice in a row."
+933,HEXCANNON,Hex Cannon,17C,50,GHOST,Physical,100,10,0,NearOther,0,befn,"The user releases haunted emmisaries to torment the target. The target is hit twice in a row."
 935,FEATHERDART,Feather Dart,000,40,FIRE,Physical,100,30,0,NearOther,0,bef,"The user shoots a feather like a flaming dart at the target."
 939,SPACIALGROVE,Spacial Grove,0DD,100,GRASS,Special,100,5,0,NearOther,0,bef,"The foe has their energy drained by the grove the user plants around them, healing the user."
 940,SIRENSSONG,Siren's Song,147,100,WATER,Special,100,5,0,NearOther,0,befk,"Using a hypnotic song, the user strikes right next to the target. Skips protections."
@@ -831,3 +831,4 @@
 992,DEEPFREEZE,Deep Freeze,00C,0,ICE,Status,90,10,100,NearOther,0,bef,"The target chilled to the bone and inflicting frostbite."
 993,SPRINGTIDESTORM,Springtide Storm,519,105,FAIRY,Special,95,5,30,NearOther,0,abef,"The user attacks by wrapping the target in fierce winds that may lower the target's Defense and Sp.Def."
 994,BEATUP2,Beat Up,0C1,1,DARK,Physical,100,10,0,NearAlly,0,bef,"The user gets all the party Pokémon to attack the foe. The more party Pokémon, the more damage."
+995,ROLLINGFOG,Rolling Fog,521,70,FAIRY,Special,100,20,0,NearOther,0,bef,"The user attacks with deep fog rising from the ground. This move's power doubles when the target is on Misty Terrain."

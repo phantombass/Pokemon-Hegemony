@@ -1656,7 +1656,8 @@ BattleHandlers::ItemOnStatLoss.add(:EJECTPACK,
 #===============================================================================
 
 BattleHandlers::UserItemOnMiss.add(:BLUNDERPOLICY,
-  proc { |item,user,target,move,battle|
+  proc { |item,user,target,move,hit_num,battle|
+    next if hit_num > 0 || target.damageState.invulnerable
     next if target.fainted? || target.semiInvulnerable? || move.function == "070"
     next if !user.pbCanRaiseStatStage?(:SPEED,user,move)
     battle.pbCommonAnimation("UseItem",user)

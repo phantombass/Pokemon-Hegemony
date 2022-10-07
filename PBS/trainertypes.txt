@@ -93,3 +93,4 @@
 90,LEADER_Jackson,Gym Leader,100,Battle Gym Leader,Battle victory leader,,Male,200,
 91,CREATOR,Creator,100,Battle Elite,Battle victory leader,,Male,200,
 92,DOJO_Jasper,Dojo Master,100,Battle Gym Leader,Battle victory leader,,Male,200,
+93,DOJO_Apollo,Dojo Master,100,Battle Gym Leader,Battle victory leader,,Male,200,

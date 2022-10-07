@@ -430,6 +430,11 @@ class PokeBattle_Battle
     @battlers.each { |b| yield b if b && !b.fainted? && !b.opposes?(idxBattler) }
   end
 
+  def allSameSideBattlers(idxBattler = 0)
+    idxBattler = idxBattler.index if idxBattler.respond_to?("index")
+    return @battlers.select { |b| b && !b.fainted? && !b.opposes?(idxBattler) }
+  end
+
   def eachOtherSideBattler(idxBattler=0)
     idxBattler = idxBattler.index if idxBattler.respond_to?("index")
     @battlers.each { |b| yield b if b && !b.fainted? && b.opposes?(idxBattler) }

@@ -20,6 +20,12 @@ BattleHandlers::SpeedCalcAbility.add(:SANDRUSH,
   }
 )
 
+BattleHandlers::SpeedCalcAbility.add(:FLOWERGIFT,
+  proc { |ability,battler,mult|
+    next mult * 2 if [:Sun,:HarshSun].include?(battler.battle.pbWeather)
+  }
+)
+
 BattleHandlers::SpeedCalcAbility.add(:SLOWSTART,
   proc { |ability,battler,mult|
     next mult/2 if battler.effects[PBEffects::SlowStart]>0
@@ -939,7 +945,7 @@ BattleHandlers::DamageCalcUserAbility.add(:FLASHFIRE,
 
 BattleHandlers::DamageCalcUserAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.physicalMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
+    if [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1175,7 +1181,7 @@ BattleHandlers::DamageCalcUserAllyAbility.add(:BATTERY,
 
 BattleHandlers::DamageCalcUserAllyAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.physicalMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
+    if [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1215,7 +1221,7 @@ BattleHandlers::DamageCalcTargetAbility.copy(:FILTER,:SOLIDROCK)
 
 BattleHandlers::DamageCalcTargetAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
+    if [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
       mults[:defense_multiplier] *= 1.5
     end
   }
@@ -1312,7 +1318,7 @@ BattleHandlers::DamageCalcTargetAbilityNonIgnorable.add(:SHADOWSHIELD,
 
 BattleHandlers::DamageCalcTargetAllyAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
+    if [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
       mults[:defense_multiplier] *= 1.5
     end
   }

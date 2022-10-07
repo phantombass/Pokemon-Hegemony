@@ -953,3 +953,5 @@
 934,SANDACONDANITE,Sandacondanite,Sandacondanite,1,10000,"One of a variety of mysterious Mega Stones. Have Sandaconda hold it, and it will be able to Mega Evolve.",0,0,12,
 935,INTIMIDATEORB,Intimidate Orb,Intimidate Orbs,1,0,"A glowing orb that gives the holder Intimidate as a second ability.",0,0,0,
 936,LEVITATEORB,Levitate Orb,Levitate Orbs,1,0,"A glowing orb that gives the holder Levitate as a second ability.",0,0,0,
+937,ILLUMINATEORB,Illuminate Orb,Illuminate Orbs,1,0,"A glowing orb that gives the holder Illuminate as a second ability.",0,0,0,
+938,COALOSSALITE,Coalossalite,Coalossalite,1,10000,"One of a variety of mysterious Mega Stones. Have Coalossal hold it, and it will be able to Mega Evolve.",0,0,12,

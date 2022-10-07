@@ -60,11 +60,14 @@ module QuestModule
     :Stage53 => "Find the other 3 chambers across Parthenia.",
     :Stage54 => "Meet Joseph.",
     :Stage55 => "Find the Dojo Master.",
-    :Stage56 => "Challenge the Dojo",
+    :Stage56 => "Challenge the Dojo.",
     :Stage57 => "Head toward Plumbum Town",
-    :Stage58 => "Defeat the PsyCorp Scientists",
-    :Stage59 => "Defeat Sylvester",
-    :Stage60 => "Wait for the next update!",
+    :Stage58 => "Defeat the PsyCorp Scientists.",
+    :Stage59 => "Defeat Sylvester.",
+    :Stage60 => "Go to Argyros City.",
+    :Stage61 => "Help stop the Army!",
+    :Stage62 => "Challenge the Dojo",
+    :Stage63 => "Wait for the next update!",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -124,7 +127,10 @@ module QuestModule
     :Location57 => "Route 23",
     :Location58 => "Plumbum Town",
     :Location59 => "Plumbum Ruins",
-    :Location60 => "???"
+    :Location60 => "Argyros City",
+    :Location61 => "Argyros Observatory",
+    :Location62 => "Argyros City",
+    :Location63 => "Stannum Town"
   }
 
 #====================================

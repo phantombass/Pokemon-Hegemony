@@ -778,6 +778,10 @@ class PokeBattle_Battler
     @battle.battlers.each { |b| yield b if b && !b.fainted? && b.opposes?(@index) }
   end
 
+  def allAllies
+    return @battle.allSameSideBattlers(@index).reject { |b| b.index == @index }
+  end
+
   # Returns the battler that is most directly opposite to self. unfaintedOnly is
   # whether it should prefer to return a non-fainted battler.
   def pbDirectOpposing(unfaintedOnly=false)

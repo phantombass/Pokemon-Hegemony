@@ -1113,7 +1113,7 @@ class PBAI
         when :GROUND
           return true if target.airborne? && !move.hitsFlyingTargets?
         when :FIRE
-          return true if target.hasActiveAbility?([:FLASHFIRE, :STEAMENGINE])
+          return true if target.hasActiveAbility?([:FLASHFIRE, :STEAMENGINE, :FLOWERGIFT])
           return true if target.hasActiveItem?(:FLASHFIREORB)
         when :WATER
           return true if target.hasActiveAbility?([:DRYSKIN, :STORMDRAIN, :WATERABSORB, :IRRIGATION, :STEAMENGINE, :WATERCOMPACTION])
