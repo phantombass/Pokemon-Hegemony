@@ -9482,3 +9482,24 @@ BattlerPlayerX          = 33
 BattlerPlayerY          = 46
 BattlerEnemyX           = -2
 #-------------------------------
+[REGIROCK2]
+BattlerEnemyY           = 36
+BattlerAltitude         = 0
+BattlerPlayerX          = -2
+BattlerPlayerY          = 42
+BattlerEnemyX           = 1
+#-------------------------------
+[REGICE2]
+BattlerEnemyY           = 40
+BattlerAltitude         = 5
+BattlerPlayerX          = 4
+BattlerPlayerY          = 45
+BattlerEnemyX           = 0
+#-------------------------------
+[REGISTEEL2]
+BattlerEnemyY           = 45
+BattlerAltitude         = 0
+BattlerPlayerX          = 11
+BattlerPlayerY          = 38
+BattlerEnemyX           = -3
+#-------------------------------
