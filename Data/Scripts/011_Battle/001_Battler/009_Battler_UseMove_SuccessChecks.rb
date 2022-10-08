@@ -472,6 +472,22 @@ class PokeBattle_Battler
       end
       return false
     end
+    if move.damagingMove? && move.calcType == :ELECTRIC && target.hasActiveItem?(:LIGHTNINGRODORB)
+      ability = target.ability_id
+      target.ability_id = :LIGHTNINGROD
+      if ability != target.ability_id
+        @battle.pbShowAbilitySplash(target)
+        if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK,target)
+          target.pbRaiseStatStage(:SPECIAL_ATTACK,1,target)
+          battle.pbDisplay(_INTL("{1}'s {2} Orb boosted its Special Attack!",target.pbThis,target.abilityName))
+        else
+          battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+        end
+        @battle.pbHideAbilitySplash(target)
+        user.ability_id = ability
+      end
+      return false
+    end
     if move.damagingMove? && move.calcType == :FIRE && target.hasActiveItem?(:FLASHFIREORB)
       ability = target.ability_id
       target.ability_id = :FLASHFIRE
@@ -484,6 +500,28 @@ class PokeBattle_Battler
             battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",
                target.pbThis,target.abilityName,move.name))
         end
+        @battle.pbHideAbilitySplash(target)
+        user.ability_id = ability
+      end
+      return false
+    end
+    if move.damagingMove? && move.calcType == :ROCK && target.hasActiveItem?(:SCALERORB)
+      ability = target.ability_id
+      target.ability_id = :SCALER
+      if ability != target.ability_id
+        @battle.pbShowAbilitySplash(target)
+        battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+        @battle.pbHideAbilitySplash(target)
+        user.ability_id = ability
+      end
+      return false
+    end
+    if move.damagingMove? && move.calcType == :COSMIC && target.hasActiveItem?(:DIMENSIONBLOCKORB)
+      ability = target.ability_id
+      target.ability_id = :DIMENSIONBLOCK
+      if ability != target.ability_id
+        @battle.pbShowAbilitySplash(target)
+        battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
       end

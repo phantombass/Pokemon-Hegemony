@@ -1122,12 +1122,17 @@ class PBAI
           return true if target.hasActiveItem?(:SAPSIPPERORB)
         when :ELECTRIC
           return true if target.hasActiveAbility?([:LIGHTNINGROD, :MOTORDRIVE, :VOLTABSORB])
+          return true if target.hasActiveItem?(:LIGHTNINGRODORB)
         when :ROCK
           return true if target.hasActiveAbility?(:SCALER)
+          return true if target.hasActiveItem?(:SCALERORB)
         when :ICE
           return true if target.hasActiveAbility?(:DEFROST)
         when :DARK
           return true if target.hasActiveAbility?(:UNTAINTED)
+        when :COSMIC
+          return true if target.hasActiveAbility?(:DIMENSIONBLOCK)
+          return true if target.hasActiveItem?(:DIMENSIONBLOCKORB)
         end
         return true if move.damagingMove? && Effectiveness.not_very_effective?(typeMod) &&
                        target.hasActiveAbility?(:WONDERGUARD)

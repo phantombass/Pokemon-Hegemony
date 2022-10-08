@@ -98,7 +98,9 @@ class PokeBattle_Battler
       :INTIMIDATEORB,
       :SAPSIPPERORB,
       :FLASHFIREORB,
-      :LEVITATEORB
+      :LEVITATEORB,
+      :ILLUMINATEORB,
+      :FILTERORB
     ]
     return item_list.include?(item.id)
   end
@@ -1538,6 +1540,31 @@ BattleHandlers::ItemOnSwitchIn.add(:INTIMIDATEORB,
   }
 )
 
+BattleHandlers::ItemOnSwitchIn.add(:MEDUSOIDORB,
+  proc { |item, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :MEDUSOID
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.allOtherSideBattlers(battler.index).each do |b|
+        next if !b.near?(battler)
+        check_item = true
+        if b.hasActiveAbility?(:CONTRARY)
+          check_item = false if b.statStageAtMax?(:SPEED)
+        elsif b.statStageAtMin?(:SPEED)
+          check_item = false
+        end
+        check_ability = b.pbLowerSpeedStatStageMedusoid(battler)
+        b.pbAbilitiesOnIntimidated if check_ability
+        b.pbItemOnIntimidatedCheck if check_item
+      end
+      battle.pbDisplay(_INTL("{1}'s Medusoid Orb lowers the foe's Speed!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
 BattleHandlers::ItemOnSwitchIn.add(:FLASHFIREORB,
   proc { |ability, battler, battle|
     ability = battler.ability_id
@@ -1571,6 +1598,53 @@ BattleHandlers::ItemOnSwitchIn.add(:ILLUMINATEORB,
     if ability != battler.ability_id
       battler.pbRaiseStatStageByAbility(:ACCURACY, 1, battler)
       battle.pbDisplay(_INTL("{1}'s Illuminate Orb boosts its accuracy!",battler.name))
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:FILTERORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :FILTER
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Sap Sipper Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::DamageCalcTargetItem.add(:FILTERORB,
+  proc { |item,user,target,move,mults,baseDmg,type|
+    if Effectiveness.super_effective?(user.damageState.typeMod)
+      mults[:final_damage_multiplier] *= 0.75
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:SCALERORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :SCALER
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Scaler Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:UNSHAKENORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :UNSHAKEN
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Scaler Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
       battler.ability_id = ability
     end
   }

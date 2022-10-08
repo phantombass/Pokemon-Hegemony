@@ -672,8 +672,13 @@ end
 
 module BattleHandlers
   StatLossImmunityAbilityNonIgnorableSandy = AbilityHandlerHash.new   # Unshaken
+  StatLossImmunityItem               = ItemHandlerHash.new #Unshaken Orb
   def self.triggerStatLossImmunityAbilityNonIgnorableSandy(ability,battler,stat,battle,showMessages)
     ret = StatLossImmunityAbilityNonIgnorableSandy.trigger(ability,battler,stat,battle,showMessages)
+    return (ret!=nil) ? ret : false
+  end
+  def self.triggerStatLossImmunityItem(ability,battler,stat,battle,showMessages)
+    ret = StatLossImmunityItem.trigger(ability,battler,stat,battle,showMessages)
     return (ret!=nil) ? ret : false
   end
 end
@@ -1115,6 +1120,20 @@ BattleHandlers::StatLossImmunityAbilityNonIgnorableSandy.add(:UNSHAKEN,
   }
 )
 
+BattleHandlers::StatLossImmunityItem.add(:UNSHAKENORB,
+  proc { |ability,battler,stat,battle,showMessages|
+    if showMessages
+      ability = battler.ability_id
+      battler.ability_id = :UNSHAKEN
+      battle.pbShowAbilitySplash(battler)
+      battle.pbDisplay(_INTL("{1}'s stats cannot be lowered because of its {2} Orb!",battler.pbThis,battler.abilityName))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+    next true
+  }
+)
+
 BattleHandlers::MoveImmunityTargetAbility.add(:WATERCOMPACTION,
   proc { |ability,user,target,move,type,battle|
     next pbBattleMoveImmunityStatAbility(user,target,move,type,:WATER,:SPECIAL_DEFENSE,2,battle)
@@ -1287,6 +1306,7 @@ class PokeBattle_Battler
   def pbCanLowerStatStage?(stat,user=nil,move=nil,showFailMsg=false,ignoreContrary=false)
     return false if fainted?
     return false if hasActiveAbility?(:UNSHAKEN)
+    return false if hasActiveItem?(:UNSHAKENORB)
     # Contrary
     if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
       return pbCanRaiseStatStage?(stat,user,move,showFailMsg,true)
@@ -1567,7 +1587,7 @@ class PokeBattle_Battler
         pbChangeForm(0,_INTL("{1} changed to Shield Forme!",pbThis))
       end
     end
-    if hasActiveAbility?(:ACCLIMATE) && move.function == "087"
+    if hasActiveAbility?(:ACCLIMATE) && move.function == "087" && $gym_weather == false
       oldWeather = @battle.pbWeather
       newWeather = 0
       weatherChange = nil
@@ -2628,7 +2648,7 @@ class PokeBattle_Battler
     return false if pbHasType?(:GROUND) || pbHasType?(:ROCK) || pbHasType?(:STEEL)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
     return false if hasActiveAbility?([:OVERCOAT,:SANDFORCE,:SANDRUSH,:SANDVEIL,:ACCLIMATE,:FORECAST,:SCALER])
-    return false if hasActiveItem?(:SAFETYGOGGLES)
+    return false if hasActiveItem?([:SAFETYGOGGLES,:SCALERORB])
     return true
   end
   def takesHailDamage?
