@@ -584,6 +584,6 @@ class PokeBattle_Battler
     elsif !move.pbMissMessage(user,target)
       @battle.pbDisplay(_INTL("{1}'s attack missed!",user.pbThis))
     end
-    BattleHandlers.triggerUserItemOnMiss(user.item,user,target,move,@battle)
+    BattleHandlers.triggerUserItemOnMiss(user.item,user,target,move,hit_num,@battle)
   end
 end
