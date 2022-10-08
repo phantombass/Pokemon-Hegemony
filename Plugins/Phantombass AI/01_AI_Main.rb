@@ -423,7 +423,7 @@ class PBAI
     # Whether the pokemon should mega-evolve
     def should_mega_evolve?(idx)
       # Always mega evolve if the pokemon is able to
-      return true
+      return @battle.pbCanMegaEvolve?(@battler.index)
     end
 
     def choose_move

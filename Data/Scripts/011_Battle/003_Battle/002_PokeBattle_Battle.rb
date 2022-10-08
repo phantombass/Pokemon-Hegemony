@@ -222,7 +222,7 @@ class PokeBattle_Battle
     when 2
       n = pbSideSize(idxBattler%2)
       return [0,0,1][idxBattler/2] if n==3
-      return idxBattler/2   # Same as [0,1][idxBattler/2], i.e. 2 battler slots
+      return [0,1][idxBattler/2]   # Same as idxBattler/2, i.e. 2 battler slots
     when 3
       return idxBattler/2
     end
