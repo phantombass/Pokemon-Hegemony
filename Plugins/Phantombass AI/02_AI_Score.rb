@@ -328,6 +328,15 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next score
 end
 
+# Prevent moves that fail in Primal Weather
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  if (ai.battle.pbWeather == :HarshSun && move.type == :WATER) || (ai.battle.pbWeather == :HeavyRain && move.type == :FIRE)
+    score = 0
+    PBAI.log("* 0 because the weather will make the move unusable")
+  end
+  next score
+end
+
 
 # Prefer moves that can thaw the user if the user is frozen
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
