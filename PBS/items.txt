@@ -961,3 +961,4 @@
 942,SCALERORB,Scaler Orb,Scaler Orbs,1,0,"A glowing orb that gives the holder Scaler as a second ability.",0,0,0,
 943,UNSHAKENORB,Unshaken Orb,Unshaken Orbs,1,0,"A glowing orb that gives the holder Unshaken as a second ability.",0,0,0,
 944,LIGHTNINGRODORB,Lightning Rod Orb,Lightning Rod Orbs,1,0,"A glowing orb that gives the holder Lightning Rod as a second ability.",0,0,0,
+945,WVENUSAURITE,Wartime Venusaurite,Wartime Venusaurites,1,10000,"One of a variety of mysterious Mega Stones. Have Wartime Venusaur hold it, and it will be able to Mega Evolve.",0,0,12,
