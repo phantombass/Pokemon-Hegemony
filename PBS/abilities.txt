@@ -332,4 +332,5 @@
 330,MULTITOOL,Multitool,"This Pokémon gains a third typing based on the best appliance matchup."
 331,BACKDRAFT,Backdraft,"Doubles Speed in Wind-based weather."
 332,SPLINTER,Splinter,"Contact moves set Stealth Rocks."
-333,SCALER,Scaler,"Immune to Rock-type moves, Stealth Rocks, and Sandstorm.
+333,SCALER,Scaler,"Immune to Rock-type moves, Stealth Rocks, and Sandstorm."
+334,NOCTEMBOOST,Noctem Boost,"Doubles Speed and boosts Fairy moves in Eclipse."

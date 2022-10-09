@@ -9503,3 +9503,10 @@ BattlerPlayerX          = 11
 BattlerPlayerY          = 38
 BattlerEnemyX           = -3
 #-------------------------------
+[VENUSAUR2,1]
+BattlerEnemyY           = 43
+BattlerAltitude         = 0
+BattlerPlayerX          = 41
+BattlerPlayerY          = 50
+BattlerEnemyX           = 0
+#-------------------------------
