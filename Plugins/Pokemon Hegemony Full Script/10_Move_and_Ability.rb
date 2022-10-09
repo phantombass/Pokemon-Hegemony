@@ -515,7 +515,7 @@ class PokeBattle_Move
         multipliers[:final_damage_multiplier] *= 1.5
       elsif type == :GHOST
         multipliers[:final_damage_multiplier] *= 1.5
-      elsif type == :FAIRY
+      elsif type == :FAIRY && !user.hasActiveAbility?(:NOCTEMBOOST)
         multipliers[:final_damage_multiplier] /= 2
       elsif type == :PSYCHIC
         multipliers[:final_damage_multiplier] /= 2
@@ -1047,6 +1047,12 @@ BattleHandlers::SpeedCalcAbility.add(:STARSPRINT,
 BattleHandlers::SpeedCalcAbility.add(:BACKDRAFT,
   proc { |ability,battler,mult|
     next mult * 2 if [:Windy,:StrongWinds].include?(battler.battle.pbWeather)
+  }
+)
+
+BattleHandlers::SpeedCalcAbility.add(:NOCTEMBOOST,
+  proc { |ability,battler,mult|
+    next mult * 2 if [:Eclipse].include?(battler.battle.pbWeather)
   }
 )
 
