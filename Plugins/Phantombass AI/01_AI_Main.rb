@@ -477,6 +477,8 @@ class PBAI
       # If absolutely no good options exist
       if scores.size == 0
         # Then just try to use the very first move with pp
+        healing = false
+        protect = false
         for i in 0...4
           move = @battler.moves[i]
           next if move.nil?
@@ -484,13 +486,10 @@ class PBAI
             next if @battler.effects[PBEffects::DisableMove] == move.id
             scores << [i, 1, 0, "internal"]
           end
+          healing = true if move.healingMove?
         end
-      end
-
-      # If we still don't have any options, that means we have no non-disabled moves with pp left, so we use Struggle.
-      if scores.size == 0
-        # Struggle
-        #scores << [-1, 1000, 0, "internal"]
+        self.flags[:should_heal] = true if healing == true
+        self.flags[:should_protect] = true if healing == false
       end
 
       # Map the numeric skill factor to a -4..1 range (not hard bounds)
