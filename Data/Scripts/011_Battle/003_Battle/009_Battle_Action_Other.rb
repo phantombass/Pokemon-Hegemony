@@ -112,7 +112,7 @@ class PokeBattle_Battle
     return false if !pbHasMegaRing?(idxBattler)
     side  = @battlers[idxBattler].idxOwnSide
     owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
-    return @megaEvolution[side][owner]==-1
+    return @megaEvolution[side][owner] == -1
   end
 
   def pbRegisterMegaEvolution(idxBattler)

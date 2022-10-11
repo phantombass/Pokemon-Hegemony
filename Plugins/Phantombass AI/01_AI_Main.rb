@@ -1470,7 +1470,7 @@ class PBAI
     # Calculates the combined type effectiveness of all user and target types
     def calculate_type_matchup(target)
       user_types = self.pbTypes(true)
-      target_types = target.pbTypes(true)
+      target_types = target.pbTypes(true) if target != nil
       mod = 1.0
       user_types.each do |user_type|
         target_types.each do |target_type|
