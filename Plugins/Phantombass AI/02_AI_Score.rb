@@ -711,6 +711,12 @@ PBAI::ScoreHandler.add_damaging do |score, ai, user, target, move|
       PBAI.log("- 50 for being a physical move and being burned")
     end
   end
+  if user.frozen?
+    if move.specialMove?
+      score -= 50
+      PBAI.log("- 50 for being a special move and being frostbitten")
+    end
+  end
   next score
 end
 
