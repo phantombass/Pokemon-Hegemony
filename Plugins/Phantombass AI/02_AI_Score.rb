@@ -1341,10 +1341,10 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
   end
   score += 40 if user.role.id == :CLERIC && move.function == "0D7"
   PBAI.log("+ 40 for being #{user.role.name} and potentially passing a Wish") if user.role.id == :CLERIC && move.function == "0D7"
-  score += 20 if user.should_switch?(target)
-  PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-  score += 60 if self.flags[:should_heal] == true
-  PBAI.log("+ 60 because there are no better moves") if self.flags[:should_heal] == true
+  score += 50 if user.should_switch?(target)
+  PBAI.log("+ 50 for predicting the switch") if user.should_switch?(target)
+  score += 60 if user.flags[:should_heal] == true
+  PBAI.log("+ 60 because there are no better moves") if user.flags[:should_heal] == true
   if move.function == "0D7" && ai.battle.positions[user.index].effects[PBEffects::Wish] > 0
     score = 0
     PBAI.log("* 0 because Wish this turn will fail")
@@ -1860,8 +1860,8 @@ PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
   if user.should_switch?(target)
     PBAI.log("- 40 for predicting the switch")
   end
-  score += 60 if self.flags[:should_protect] == true
-  PBAI.log("+ 60 because there are no better moves") if self.flags[:should_protect] == true
+  score += 60 if user.flags[:should_protect] == true
+  PBAI.log("+ 60 because there are no better moves") if user.flags[:should_protect] == true
   next score
 end
 
