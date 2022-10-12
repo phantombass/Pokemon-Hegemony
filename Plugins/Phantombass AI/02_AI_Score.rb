@@ -1419,7 +1419,7 @@ PBAI::ScoreHandler.add("16D") do |score, ai, user, target, move|
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
     end
-    score += 30 if ai.battle.weather == :Sandstorm
+    score += 30 if ai.battle.field.weather == :Sandstorm
     PBAI.log("+ 30 for extra healing in Sandstorm")
   else
     score -= 30
