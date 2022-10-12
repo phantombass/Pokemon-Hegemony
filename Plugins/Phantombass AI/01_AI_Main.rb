@@ -488,8 +488,8 @@ class PBAI
           end
           healing = true if move.healingMove?
         end
-        self.flags[:should_heal] = true if healing == true
-        self.flags[:should_protect] = true if healing == false
+        user.flags[:should_heal] = true if healing == true
+        user.flags[:should_protect] = true if healing == false
       end
 
       # Map the numeric skill factor to a -4..1 range (not hard bounds)
