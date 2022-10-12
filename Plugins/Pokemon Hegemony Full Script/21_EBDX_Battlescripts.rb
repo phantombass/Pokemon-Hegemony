@@ -36,6 +36,7 @@ module BattleScripts
         @battle.field.weatherDuration = -1
         $gym_weather = true
         @scene.pbDisplay("Stars permanently filled the sky!")
+        @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
       end
     end
   }
@@ -68,6 +69,7 @@ module BattleScripts
         @battle.field.weather = :StrongWinds
         $gym_weather = true
         @scene.pbDisplay("A Delta Stream brewed!")
+        @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
       end
     end
   }
@@ -105,6 +107,7 @@ module BattleScripts
           @battle.field.weatherDuration = -1
           $gym_weather = true
           @scene.pbDisplay("The skies permanently filled with Acid Rain!")
+          @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
         end
       end
     end
@@ -180,6 +183,7 @@ module BattleScripts
       @battle.field.weatherDuration = -1
       $gym_weather = true
       @scene.pbDisplay("Jasper set a permanent Sandstorm!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
     end
   }
   APOLLO = {
@@ -191,6 +195,18 @@ module BattleScripts
       @battle.field.weatherDuration = -1
       $gym_weather = true
       @scene.pbDisplay("Apollo set up Harsh Sunlight!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
+    end
+  }
+  LUNA = {
+    "afterLastOpp" => "Hmm. You are very good. Very good indeed.",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("...time to show you why I hate visitors to my island...")
+      @battle.pbCommonAnimation("ShadowSky")
+      @battle.field.weather = :Eclipse
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Luna set a permanent Eclipse!")
       @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
     end
   }

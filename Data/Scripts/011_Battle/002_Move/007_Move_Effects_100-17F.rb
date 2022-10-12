@@ -172,17 +172,21 @@ class PokeBattle_Move_10A < PokeBattle_Move
   def ignoresReflect?; return true; end
 
   def pbEffectGeneral(user)
-    if user.pbOpposingSide.effects[PBEffects::LightScreen]>0
-      user.pbOpposingSide.effects[PBEffects::LightScreen] = 0
-      @battle.pbDisplay(_INTL("{1}'s Light Screen wore off!",user.pbOpposingTeam))
-    end
-    if user.pbOpposingSide.effects[PBEffects::Reflect]>0
-      user.pbOpposingSide.effects[PBEffects::Reflect] = 0
-      @battle.pbDisplay(_INTL("{1}'s Reflect wore off!",user.pbOpposingTeam))
-    end
-    if user.pbOpposingSide.effects[PBEffects::AuroraVeil]>0
-      user.pbOpposingSide.effects[PBEffects::AuroraVeil] = 0
-      @battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!",user.pbOpposingTeam))
+    if $gym_gimmick == false
+      if user.pbOpposingSide.effects[PBEffects::LightScreen]>0
+        user.pbOpposingSide.effects[PBEffects::LightScreen] = 0
+        @battle.pbDisplay(_INTL("{1}'s Light Screen wore off!",user.pbOpposingTeam))
+      end
+      if user.pbOpposingSide.effects[PBEffects::Reflect]>0
+        user.pbOpposingSide.effects[PBEffects::Reflect] = 0
+        @battle.pbDisplay(_INTL("{1}'s Reflect wore off!",user.pbOpposingTeam))
+      end
+      if user.pbOpposingSide.effects[PBEffects::AuroraVeil]>0
+        user.pbOpposingSide.effects[PBEffects::AuroraVeil] = 0
+        @battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!",user.pbOpposingTeam))
+      end
+    else
+      @battle.pbDisplay(_INTL("The screens could not be removed!"))
     end
   end
 
