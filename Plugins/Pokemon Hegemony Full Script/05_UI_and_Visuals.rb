@@ -1324,7 +1324,7 @@ class BattleSceneRoom
 
   def setWeather
     # loop once
-    for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain,]],["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds, :Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]],["Overcast", [:Overcast,:Eclipse]],["Starstorm", [:Starstorm]],["VolcanicAsh", [:VolcanicAsh, :DAshfall]]]
+    for wth in [["Rain", [:Rain, :HeavyRain, :Storm, :AcidRain,]],["Snow", [:Hail, :Sleet]], ["StrongWind", [:StrongWinds]],["Windy", [:Windy]], ["Sunny", [:Sun, :HarshSun]], ["Sandstorm", [:Sandstorm, :DustDevil]],["Overcast", [:Overcast]],["Eclipse", [:Eclipse]],["Starstorm", [:Starstorm]],["VolcanicAsh", [:VolcanicAsh, :DAshfall]]]
       proceed = false
       for cond in (wth[1].is_a?(Array) ? wth[1] : [wth[1]])
         proceed = true if @battle.pbWeather == cond
@@ -1559,6 +1559,16 @@ class BattleSceneRoom
       next if !@sprites["w_sand#{j}"]
       @sprites["w_sand#{j}"].update
     end
+    # windy particles
+    for j in 0...2
+      next if !@sprites["w_windy#{j}"]
+      @sprites["w_windy#{j}"].update
+    end
+    #eclipse particles
+    for j in 0...2
+      next if !@sprites["eclipse#{j}"]
+      @sprites["eclipse#{j}"].update
+    end
   end
   #-----------------------------------------------------------------------------
   # sunny weather handlers
@@ -1613,7 +1623,7 @@ class BattleSceneRoom
     end
   end
   #-----------------------------------------------------------------------------
-  # snow weather handlers
+  # sandstorm weather handlers
   #-----------------------------------------------------------------------------
   def drawSandstorm
     for j in 0...2
@@ -1634,7 +1644,7 @@ class BattleSceneRoom
     end
   end
   #-----------------------------------------------------------------------------
-  # sandstorm weather handlers
+  # snow weather handlers
   #-----------------------------------------------------------------------------
   def drawSnow
     for j in 0...72
@@ -1763,6 +1773,69 @@ class BattleSceneRoom
       next if !@sprites["w_starstorm#{j}"]
       @sprites["w_starstorm#{j}"].dispose
       @sprites.delete("w_starstorm#{j}")
+    end
+  end
+  #-----------------------------------------------------------------------------
+  # eclipse weather handlers
+  #-----------------------------------------------------------------------------
+
+  def drawEclipse
+    if @sprites["sky"]
+      @sprites["sky"].tone.all -= 10 if @sprites["sky"].tone.all > -100
+      @sprites["sky"].tone.gray += 16 if @sprites["sky"].tone.gray < 172
+      for i in 0..1
+        @sprites["cloud#{i}"].tone.all -= 10 if @sprites["cloud#{i}"].tone.all > -100
+        @sprites["cloud#{i}"].tone.gray += 16 if @sprites["cloud#{i}"].tone.gray < 172
+      end
+    end
+    for j in 0...2
+      next if @sprites["eclipse#{j}"]
+      @sprites["eclipse#{j}"] = ScrollingSprite.new(@viewport)
+      @sprites["eclipse#{j}"].default!
+      @sprites["eclipse#{j}"].z = 150
+      @sprites["eclipse#{j}"].y = 200
+      @sprites["eclipse#{j}"].setBitmap("Graphics/EBDX/Animations/Weather/eclipse")
+      @sprites["eclipse#{j}"].speed = 1
+      @sprites["eclipse#{j}"].opacity = 64
+      @sprites["eclipse#{j}"].direction = j == 0 ? 1 : -1
+    end
+  end
+  def deleteEclipse
+    if @sprites["sky"]
+      @sprites["sky"].tone.all += 10 if @sprites["sky"].tone.all < 0
+      @sprites["sky"].tone.gray -= 16 if @sprites["sky"].tone.gray > 0
+      for i in 0..1
+        @sprites["cloud#{i}"].tone.all += 10 if @sprites["cloud#{i}"].tone.all < 0
+        @sprites["cloud#{i}"].tone.gray -= 16 if @sprites["cloud#{i}"].tone.gray > 0
+      end
+    end
+    for j in 0...2
+      next if !@sprites["eclipse#{j}"]
+      @sprites["eclipse#{j}"].dispose
+      @sprites.delete("eclipse#{j}")
+    end
+  end
+  #-----------------------------------------------------------------------------
+  # windy weather handlers
+  #-----------------------------------------------------------------------------
+  def drawWindy
+    @strongwind = true
+    for j in 0...2
+      next if @sprites["w_windy#{j}"]
+      @sprites["w_windy#{j}"] = ScrollingSprite.new(@viewport)
+      @sprites["w_windy#{j}"].default!
+      @sprites["w_windy#{j}"].z = 100
+      @sprites["w_windy#{j}"].setBitmap("Graphics/EBDX/Animations/Weather/windy#{j}")
+      @sprites["w_windy#{j}"].speed = 32
+      @sprites["w_windy#{j}"].direction = -1
+    end
+  end
+  def deleteWindy
+    @strongwind = false
+    for j in 0...2
+      next if !@sprites["w_windy#{j}"]
+      @sprites["w_windy#{j}"].dispose
+      @sprites.delete("w_windy#{j}")
     end
   end
   #-----------------------------------------------------------------------------
