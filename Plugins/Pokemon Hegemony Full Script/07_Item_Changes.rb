@@ -457,7 +457,7 @@ def useMoveFly
     $PokemonTemp.flydata = nil
     $scene.transfer_player
     $game_map.autoplay
-    $game_screen.weather(:None,9.0,20)
+    $game_screen.update
     $game_map.refresh
   }
   pbEraseEscapePoint
@@ -749,8 +749,8 @@ def pbRockClimb
     return false
   end
   if pbConfirmMessage(_INTL("It's a large rock wall. Would you like to climb it?"))
-    if $PokemonBag.pbQuantity(:HIKINGGEAR)>0 || $game_switches[HMCatalogue::RockClimb]
-      pbMessage(_INTL("{1} used the {2}!",$Trainer.name,GameData::Item.get(:HIKINGGEAR).name))
+    if $game_switches[HMCatalogue::RockClimb]
+      pbMessage(_INTL("{1} used Rock Climb!",$Trainer.name))
       pbHiddenMoveAnimation(nil)
     end
     if event.direction==8
