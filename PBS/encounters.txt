@@ -1325,3 +1325,21 @@ SuperRod
     15,TOXAPEX,48,60
     5,BASCULEGION,48,60
 #-------------------------------
+[300] # Urani Island
+Water,2
+    60,MAGIKARP,14,40
+    30,GYARADOS,20,45
+    10,LUVDISC,25,45
+OldRod
+    90,MAGIKARP,5,5
+	10,FRILLISH,5,5
+GoodRod
+    60,SHELLDER,17,18
+    20,QWILFISH_1,15,16
+    20,BASCULIN_2,16,19
+SuperRod
+    40,CLOYSTER,48,60
+    40,OVERQWIL,48,60
+    15,TOXAPEX,48,60
+    5,BASCULEGION,48,60
+#-------------------------------

@@ -790,7 +790,6 @@ class PBAI
 
       $d_switch = 0
       $d_switch = 1 if $doubles_switch != nil
-      trapped  = false
 
       # If the pokemon is struggling
       if !@battle.pbCanChooseAnyMove?(@battler.index)
@@ -848,8 +847,7 @@ class PBAI
           end
         end
       end
-      if self.effects[PBEffects::Trapping] > 0
-        trapped = true
+      if self.trapped?
         switch = false
       end
       # Get the optimal switch choice by type
@@ -881,7 +879,7 @@ class PBAI
       curr_score = scores.find { |e| e[2] == self }[0]
       # If the current battler is not very effective offensively in any of its types,
       # then we see if there is a battler that is super effective in at least one of its types.
-      if curr_score < 1.0 && trapped == false
+      if curr_score < 1.0 && !self.trapped?
         availscores = scores.select { |e|!e[2].fainted?}
         while availscores.size > 0
           hi_off_score, hi_def_score, proj = availscores[0]
@@ -1447,6 +1445,10 @@ class PBAI
       return true if target.bad_against?(self) && self.faster_than?(target)
       return false
     end
+
+    def trapped?
+			return self.effects[PBEffects::Trapping] > 0
+		end
 
     def discourage_making_contact_with?(target)
       return false if has_ability?(:LONGREACH)

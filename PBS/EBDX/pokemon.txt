@@ -9510,3 +9510,66 @@ BattlerPlayerX          = 41
 BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
+[BULBASAUR2]
+BattlerEnemyY           = 78
+BattlerAltitude         = 0
+BattlerPlayerX          = 0
+BattlerPlayerY          = 79
+BattlerEnemyX           = 7
+#-------------------------------
+[IVYSAUR2]
+BattlerEnemyY           = 56
+BattlerAltitude         = 0
+BattlerPlayerX          = 5
+BattlerPlayerY          = 65
+BattlerEnemyX           = 3
+#-------------------------------
+[VENUSAUR2]
+BattlerEnemyY           = 51
+BattlerAltitude         = 0
+BattlerPlayerX          = 37
+BattlerPlayerY          = 59
+BattlerEnemyX           = 2
+#-------------------------------
+[CHARMANDER2]
+BattlerEnemyY           = 60
+BattlerAltitude         = 0
+BattlerPlayerX          = 15
+BattlerPlayerY          = 63
+BattlerEnemyX           = 8
+#-------------------------------
+[CHARMELEON2]
+BattlerEnemyY           = 54
+BattlerAltitude         = 0
+BattlerPlayerX          = 8
+BattlerPlayerY          = 57
+BattlerEnemyX           = 4
+#-------------------------------
+[CHARIZARD2]
+BattlerEnemyY           = 32
+BattlerAltitude         = 0
+BattlerPlayerX          = 6
+BattlerPlayerY          = 44
+BattlerEnemyX           = -1
+#-------------------------------
+[SQUIRTLE2]
+BattlerEnemyY           = 69
+BattlerAltitude         = 0
+BattlerPlayerX          = 34
+BattlerPlayerY          = 75
+BattlerEnemyX           = 4
+#-------------------------------
+[WARTORTLE2]
+BattlerEnemyY           = 47
+BattlerAltitude         = 0
+BattlerPlayerX          = 28
+BattlerPlayerY          = 61
+BattlerEnemyX           = -2
+#-------------------------------
+[BLASTOISE2]
+BattlerEnemyY           = 56
+BattlerAltitude         = 0
+BattlerPlayerX          = 25
+BattlerPlayerY          = 55
+BattlerEnemyX           = 1
+#-------------------------------
