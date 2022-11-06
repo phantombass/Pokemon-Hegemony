@@ -222,4 +222,10 @@ BattleBGM        = DPPT-Gym Leader.ogg
 BattleVS         = plasmaSM
 BattleScript	 = APOLLO
 Ace				 = 6
+#-------------------------------+
+[DOJO_Luna]
+BattleBGM        = DPPT-Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = LUNA
+Ace				 = 6
 #-------------------------------

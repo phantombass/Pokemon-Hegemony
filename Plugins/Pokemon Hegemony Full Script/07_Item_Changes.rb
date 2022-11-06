@@ -1521,7 +1521,7 @@ BattleHandlers::ItemOnSwitchIn.add(:INTIMIDATEORB,
     battler.ability_id = :INTIMIDATE
     if ability != battler.ability_id
       battle.pbShowAbilitySplash(battler,false,true)
-      battle.allOtherSideBattlers(battler.index).each do |b|
+      battle.eachOtherSideBattler(battler.index) do |b|
         next if !b.near?(battler)
         check_item = true
         if b.hasActiveAbility?(:CONTRARY)
@@ -1529,8 +1529,7 @@ BattleHandlers::ItemOnSwitchIn.add(:INTIMIDATEORB,
         elsif b.statStageAtMin?(:ATTACK)
           check_item = false
         end
-        check_ability = b.pbLowerAttackStatStageIntimidate(battler)
-        b.pbAbilitiesOnIntimidated if check_ability
+        b.pbLowerAttackStatStageIntimidate(battler)
         b.pbItemOnIntimidatedCheck if check_item
       end
       battle.pbDisplay(_INTL("{1}'s Intimidate Orb lowers the foe's Attack!",battler.name))
@@ -1546,7 +1545,7 @@ BattleHandlers::ItemOnSwitchIn.add(:MEDUSOIDORB,
     battler.ability_id = :MEDUSOID
     if ability != battler.ability_id
       battle.pbShowAbilitySplash(battler,false,true)
-      battle.allOtherSideBattlers(battler.index).each do |b|
+      battle.eachOtherSideBattler(battler.index) do |b|
         next if !b.near?(battler)
         check_item = true
         if b.hasActiveAbility?(:CONTRARY)
@@ -1554,8 +1553,7 @@ BattleHandlers::ItemOnSwitchIn.add(:MEDUSOIDORB,
         elsif b.statStageAtMin?(:SPEED)
           check_item = false
         end
-        check_ability = b.pbLowerSpeedStatStageMedusoid(battler)
-        b.pbAbilitiesOnIntimidated if check_ability
+        b.pbLowerSpeedStatStageMedusoid(battler)
         b.pbItemOnIntimidatedCheck if check_item
       end
       battle.pbDisplay(_INTL("{1}'s Medusoid Orb lowers the foe's Speed!",battler.name))

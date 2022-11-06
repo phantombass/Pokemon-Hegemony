@@ -187,7 +187,7 @@ module BattleScripts
     end
   }
   APOLLO = {
-    "afterLastOpp" => "Hmm. You are very good. Very good indeed.",
+    "afterLastOpp" => "Oh my. How exciting!",
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("My dojo is themed around the Sun. Let me show you!")
       @scene.pbAnimation(GameData::Move.get(:SUNNYDAY).id,@battle.battlers[1],@battle.battlers[1])
@@ -199,7 +199,7 @@ module BattleScripts
     end
   }
   LUNA = {
-    "afterLastOpp" => "Hmm. You are very good. Very good indeed.",
+    "afterLastOpp" => "Hmmph. This isn't over yet.",
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("...time to show you why I hate visitors to my island...")
       @battle.pbCommonAnimation("ShadowSky")

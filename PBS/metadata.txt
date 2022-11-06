@@ -1370,3 +1370,28 @@ MapPosition = 1,26,14
 ShowArea = true
 MapPosition = 1,26,11
 SnapEdges = true
+#-------------------------------
+[297]
+# SS Aqua
+ShowArea = true
+MapPosition = 1,24,15
+SnapEdges = true
+#-------------------------------
+[300]
+# Urani Island
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 1,27,18
+SnapEdges = true
+#-------------------------------
+[302]
+# Argyros Dojo
+MapPosition = 1,27,18
+SnapEdges = true
+#-------------------------------
+[305]
+# SS Aqua
+ShowArea = true
+MapPosition = 1,23,14
+SnapEdges = true
