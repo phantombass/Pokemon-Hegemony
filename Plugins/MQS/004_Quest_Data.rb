@@ -67,7 +67,11 @@ module QuestModule
     :Stage60 => "Go to Argyros City.",
     :Stage61 => "Help stop the Army!",
     :Stage62 => "Challenge the Dojo",
-    :Stage63 => "Wait for the next update!",
+    :Stage63 => "Board the SS Aqua for Stannum Town.",
+    :Stage64 => "Find the Captain",
+    :Stage65 => "Escape the SS Aqua",
+    :Stage66 => "Find the secret behind the Wartime Lab",
+    :Stage67 => "Challenge the Dojo.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -130,7 +134,11 @@ module QuestModule
     :Location60 => "Argyros City",
     :Location61 => "Argyros Observatory",
     :Location62 => "Argyros City",
-    :Location63 => "Stannum Town"
+    :Location63 => "SS Aqua",
+    :Location64 => "SS Aqua",
+    :Location65 => "SS Aqua",
+    :Location66 => "Wartime Lab",
+    :Location67 => "Urani Island"
   }
 
 #====================================

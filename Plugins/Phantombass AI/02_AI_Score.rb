@@ -1152,7 +1152,7 @@ PBAI::ScoreHandler.add("071") do |score, ai, user, target, move|
 end
 
 # Mirror Coat
-PBAI::ScoreHandler.add("CounterSpecialDamage") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("072") do |score, ai, user, target, move|
   expect = false
   expect = true if target.is_special_attacker? && !target.is_healing_necessary?(0.5)
   prevDmg = user.get_damage_by_user(target)
@@ -1256,6 +1256,10 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
     if user.role.id == :PIVOT
       score += 40
       PBAI.log("+ 40 for being a #{user.role.name}")
+    end
+    if user.trapped? && user.can_switch?
+      score += 100
+      PBAI.log("+ 100 for escaping a trap")
     end
     if target.faster_than?(user) && !user.bad_against?(target)
       score += 20
@@ -1419,7 +1423,7 @@ PBAI::ScoreHandler.add("16D") do |score, ai, user, target, move|
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
     end
-    score += 30 if ai.battle.field.weather == :Sandstorm
+    score += 30 if ai.battle.pbWeather == :Sandstorm
     PBAI.log("+ 30 for extra healing in Sandstorm")
   else
     score -= 30

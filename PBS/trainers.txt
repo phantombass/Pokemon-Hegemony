@@ -3103,6 +3103,97 @@ Pokemon = GALLADE,77
 	EV = 0,252,0,252,0,4
 	Role = WINCON
 #-------------------------------
+# SS Aqua
+#-------------------------------
+[SAILOR,Al]
+LoseText = "Oh wow."
+Pokemon = POLITOED,91
+	Nature = BOLD
+	Item = WEATHERROCK
+	EV = 252,0,252,0,4,0
+	IV = 31,0,31,31,31,31
+	Ability = DRIZZLE
+	Moves = SCALD,PERISHSONG,FLIPTURN,PROTECT
+	Role = PHYSICALWALL
+Pokemon = TORNADUS,91
+	Form = 1
+	Nature = TIMID
+	Item = ASSAULTVEST
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Ability = REGENERATOR
+	Moves = HURRICANE,KNOCKOFF,UTURN,DARKPULSE
+	Role = PIVOT
+Pokemon = SWAMPERT,91
+	Nature = ADAMANT
+	Item = SWAMPERTITE
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Ability = DRIZZLE
+	Moves = LIQUIDATION,EARTHQUAKE,ICEPUNCH,BULKUP
+	Role = WINCON
+#-------------------------------
+[SAILOR,Benny]
+LoseText = "Oh wow."
+Pokemon = GYARADOS,91
+	Nature = JOLLY
+	Item = GYARADOSITE
+	EV = 252,4,0,252,0,0
+	IV = 31,31,31,31,31,31
+	Ability = INTIMIDATE
+	Moves = DRAGONDANCE,CRUNCH,WATERFALL,EARTHQUAKE
+	Role = WINCON
+#-------------------------------
+[SAILOR,Gavin]
+LoseText = "Oh wow."
+Pokemon = LUDICOLO,91
+	Nature = MODEST
+	Item = LIFEORB
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Ability = SWIFTSWIM
+	Moves = HYDROPUMP,GIGADRAIN,ICEBEAM,FAKEOUT
+	Role = SPECIALBREAKER
+Pokemon = KYOGRE,91
+	Nature = TIMID
+	Item = BLUEORB
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Ability = DRIZZLE
+	Moves = THUNDER,ORIGINPULSE,ICEBEAM,CALMMIND
+	Role = WINCON
+#-------------------------------
+[COOLTRAINER_F,Delta]
+LoseText = "Oh wow."
+Pokemon = ALTARIA2,91
+	Nature = TIMID
+	Item = WALTARIANITE
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	AbilityIndex = 2
+	Moves = CALMMIND,ROOST,BOOMBURST,SPECTRALSHRIEK
+	Role = WINCON
+#-------------------------------
+[GENTLEMAN,Edmund]
+LoseText = "Oh wow."
+Pokemon = ARCANINE,91
+	Form = 1
+	Nature = JOLLY
+	Item = AIRBALLOON
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Ability = INTIMIDATE
+	Moves = RAGINGFURY,ROCKSLIDE,ACCELEROCK,CRUNCH
+	Role = PHYSICALBREAKER
+Pokemon = ARCANINE2,91
+	Nature = JOLLY
+	Item = LEFTOVERS
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Ability = MINDGAMES
+	Moves = LIQUIDATION,CRUNCH,AQUAJET,CLOSECOMBAT
+	Role = PHYSICALBREAKER
+#-------------------------------
 # Normal Mode Gym Battles
 #-------------------------------
 [LEADER_Blaine,Turner]
