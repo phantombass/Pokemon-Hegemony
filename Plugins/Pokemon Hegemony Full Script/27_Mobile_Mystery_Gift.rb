@@ -1,80 +1,77 @@
 module Mobile_MG
-  MOBILE_FILE = "MysteryGift.txt"
+  Swablu = {
+    :id => 1,
+    :Type => "Pokemon",
+    :Level => 5,
+    :Stats => [:HP,:ATTACK,:DEFENSE,:SPECIAL_ATTACK,:SPECIAL_DEFENSE,:SPEED],
+    :Item => :WALTARIANITE,
+    :Nature => :TIMID,
+    :Ability => rand(3),
+    :Egg_Move => true,
+    :Gift => :SWABLU2
+  }
+  Pikachu = {
+    :id => 2,
+    :Type => "Pokemon",
+    :Level => 5,
+    :Stats => [:HP,:ATTACK,:DEFENSE,:SPECIAL_ATTACK,:SPECIAL_DEFENSE,:SPEED],
+    :Item => :LIGHTBALL,
+    :Nature => :HASTY,
+    :Ability => 0,
+    :Egg_Move => true,
+    :Gift => :PIKACHU2
+  }
+  DeepFreeze = {
+    :id => 3,
+    :Type => "Item",
+    :Gift => :TM134
+  }
+  CosmicPower = {
+    :id => 4,
+    :Type => "Item",
+    :Gift => :TM244
+  }
+  IronHead = {
+    :id => 5,
+    :Type => "Item",
+    :Gift => :TM274
+  }
+  AllySwitch = {
+    :id => 6,
+    :Type => "Item",
+    :Gift => :TM283
+  }
 end
 
-def write_mobile_mg
-  if safeExists?(Mobile_MG::MOBILE_FILE)
-    $mobile_mystery_gifts=IO.read(Mobile_MG::MOBILE_FILE)
-    $mobile_mystery_gifts=pbMysteryGiftDecrypt($mobile_mystery_gifts)
-    $mobile_mystery_gifts.push($mobile_mystery_gifts)
+def get_mobile_mystery_gift(gift)
+  if !gift.is_a?(Symbol)
+    raise _INTL("The 'gift' argument should be a symbol, e.g. ':Swablu'.")
   end
-end
-
-def next_id_mobile
-  for i in $mobile_mystery_gifts
-    return i[0] if i.length>1
-  end
-  return 0
-end
-
-def mobile_mg_receive(id)
-  $mg_received = [] if ($mg_received == nil || $mg_received == 0)
-  index=-1
-  for i in 0...$mobile_mystery_gifts.length
-    next if $mg_received != nil && $mg_received.include?(id)
-    if $mobile_mystery_gifts[i][0]==id && $mobile_mystery_gifts[i].length>1
-      index=i
-      break
+  id = Mobile_MG.const_get(gift)[:id]
+  type = Mobile_MG.const_get(gift)[:Type]
+  mg = Mobile_MG.const_get(gift)[:Gift]
+  case type
+  when "Pokemon"
+    stats = Mobile_MG.const_get(gift)[:Stats]
+    item = Mobile_MG.const_get(gift)[:Item]
+    level = Mobile_MG.const_get(gift)[:Level]
+    ability = Mobile_MG.const_get(gift)[:Ability]
+    nature = Mobile_MG.const_get(gift)[:Nature]
+    egg = Mobile_MG.const_get(gift)[:Egg_Move]
+    stat_length = stats.length-1
+    move = GameData::Species.get(mg).egg_moves
+    pkmn = pbGenPkmn(mg,level)
+    for i in 0..stat_length
+      pkmn.iv[stats[i]] = 31
     end
-  end
-  if index==-1
-    pbMessage(_INTL("Couldn't find an unclaimed Mystery Gift with ID {1}.",id))
-    return false
-  end
-  gift=$mobile_mystery_gifts[index]
-  if gift[1]==0   # Pokémon
-    gift[2].personalID = rand(2**16) | rand(2**16) << 16
-    gift[2].calc_stats
-    time=pbGetTimeNow
-    gift[2].timeReceived=time.getgm.to_i
-    gift[2].obtain_method = 4   # Fateful encounter
-    gift[2].record_first_moves
-    if $game_map
-      gift[2].obtain_map=$game_map.map_id
-      gift[2].obtain_level=gift[2].level
-    else
-      gift[2].obtain_map=0
-      gift[2].obtain_level=gift[2].level
+    pkmn.nature = nature
+    pkmn.item = item
+    pkmn.ability_index = ability
+    if egg == true
+      pkmn.learn_move(move[rand(move.length)])
     end
-    if pbAddPokemonSilent(gift[2])
-      pbMessage(_INTL("\\me[Pkmn get]{1} received {2}!",$Trainer.name,gift[2].name))
-      $mobile_mystery_gifts[index]=[id]
-      $mg_received.push(id)
-      return true
-    end
-  elsif gift[1]>0   # Item
-    item=gift[2]
-    qty=gift[1]
-    if $PokemonBag.pbCanStore?(item,qty)
-      $PokemonBag.pbStoreItem(item,qty)
-      itm = GameData::Item.get(item)
-      itemname=(qty>1) ? itm.name_plural : itm.name
-      if item == :LEFTOVERS
-        pbMessage(_INTL("\\me[Item get]You obtained some \\c[1]{1}\\c[0]!\\wtnp[30]",itemname))
-      elsif itm.is_machine?   # TM or HM
-        pbMessage(_INTL("\\me[Item get]You obtained \\c[1]{1} {2}\\c[0]!\\wtnp[30]",itemname,
-           GameData::Move.get(itm.move).name))
-      elsif qty>1
-        pbMessage(_INTL("\\me[Item get]You obtained {1} \\c[1]{2}\\c[0]!\\wtnp[30]",qty,itemname))
-      elsif itemname.starts_with_vowel?
-        pbMessage(_INTL("\\me[Item get]You obtained an \\c[1]{1}\\c[0]!\\wtnp[30]",itemname))
-      else
-        pbMessage(_INTL("\\me[Item get]You obtained a \\c[1]{1}\\c[0]!\\wtnp[30]",itemname))
-      end
-      $mobile_mystery_gifts[index]=[id]
-      $mg_received.push(id)
-      return true
-    end
+    pbAddPokemon(pkmn)
+  when "Item"
+    pbReceiveItem(mg)
   end
-  return false
 end
