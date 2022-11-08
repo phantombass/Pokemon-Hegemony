@@ -1386,7 +1386,7 @@ MapPosition = 1,27,18
 SnapEdges = true
 #-------------------------------
 [302]
-# Argyros Dojo
+# Urani Dojo
 MapPosition = 1,27,18
 SnapEdges = true
 #-------------------------------
@@ -1394,4 +1394,11 @@ SnapEdges = true
 # SS Aqua
 ShowArea = true
 MapPosition = 1,23,14
+SnapEdges = true
+#-------------------------------
+[307]
+# Stannum Town
+Outdoor = true
+ShowArea = true
+MapPosition = 1,21,16
 SnapEdges = true

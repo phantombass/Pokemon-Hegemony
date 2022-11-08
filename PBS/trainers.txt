@@ -2319,6 +2319,38 @@ Pokemon = VENUSAUR,90
 	IV = 31,0,31,31,31,31
 	Moves = LEECHSEED,GIGADRAIN,SLUDGEBOMB,EARTHPOWER
 #-------------------------------
+[SCIENTIST,Grunt,108]
+LoseText = "This could be problematic."
+Pokemon = GOLEM,89
+	Form = 1
+	Nature = ADAMANT
+	Ability = GALVANIZE
+	Item = ASSAULTVEST
+	EV = 252,252,0,0,0,4
+	IV = 31,31,31,31,31,31
+	Happiness = 255
+	Moves = RUBBLERAZE,RETURN,FIREPUNCH,EARTHQUAKE
+Pokemon = CELESTEELA,89
+	Nature = SASSY
+	Ability = BEASTBOOST
+	Item = LEFTOVERS
+	EV = 252,4,0,0,0,252
+	IV = 31,31,31,31,31,31
+	Moves = HEAVYSLAM,LEECHSEED,FLAMETHROWER,PROTECT
+Pokemon = LUVDISC,89
+	Nature = TIMID
+	Ability = SOULHEART
+	Item = LIFEORB
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Moves = SCALD,DAZZLINGGLEAM,ICEBEAM,PROTECT
+Pokemon = VENUSAUR,90
+	Nature = BOLD
+	Item = VENUSAURITE
+	EV = 252,0,252,0,4,0
+	IV = 31,0,31,31,31,31
+	Moves = LEECHSEED,GIGADRAIN,SLUDGEBOMB,EARTHPOWER
+#-------------------------------
 [SCIENTIST,Grunt,9]
 LoseText = "This could be problematic."
 Pokemon = MILOTIC,89
