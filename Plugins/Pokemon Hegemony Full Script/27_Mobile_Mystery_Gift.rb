@@ -41,6 +41,11 @@ module Mobile_MG
     :Type => "Item",
     :Gift => :TM283
   }
+  WillOWisp = {
+    :id => 7,
+    :Type => "Item",
+    :Gift => :TM38
+  }
 end
 
 def get_mobile_mystery_gift(gift)

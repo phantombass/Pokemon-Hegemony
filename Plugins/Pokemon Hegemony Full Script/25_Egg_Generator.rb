@@ -161,6 +161,9 @@ def postgame_wartime_eggs
     :DEINO2,
     :FERROSEED2,
     :IMPIDIMP2,
+    :BULBASAUR2,
+    :CHARMANDER2,
+    :SQUIRTLE2
   ]
   eggs = []
   pbEachPokemon { |poke,_box|
@@ -182,6 +185,9 @@ def postgame_wartime_eggs
       :DEINO2,
       :FERROSEED2,
       :IMPIDIMP2,
+      :BULBASAUR2,
+      :CHARMANDER2,
+      :SQUIRTLE2
     ]
   end
   return egg_list
