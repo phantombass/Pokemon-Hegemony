@@ -8,6 +8,9 @@ BattleEnv = OUTDOOR
 [78]
 BattleEnv = FOREST
 #===================
+[80]
+BattleEnv = FOREST
+#===================
 [81]
 BattleEnv = FOREST
 #===================
