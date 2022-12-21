@@ -334,3 +334,4 @@
 332,SPLINTER,Splinter,"Contact moves set Stealth Rocks."
 333,SCALER,Scaler,"Immune to Rock-type moves, Stealth Rocks, and Sandstorm."
 334,NOCTEMBOOST,Noctem Boost,"Doubles Speed and boosts Fairy moves in Eclipse."
+335,TOXICDEBRIS,Toxic Debris,"Contact moves set Toxic Spikes."

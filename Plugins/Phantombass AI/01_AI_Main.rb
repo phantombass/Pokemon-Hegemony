@@ -374,7 +374,7 @@ class PBAI
         # we consider this Pokémon capable of being a physical attacker.
         return true if physcount > 1
         return true if attackBoosters >= 1
-        return true if self.role == :PHYSICALBREAKER
+        return true if self.role.id == :PHYSICALBREAKER
       end
       return false
     end
@@ -415,7 +415,7 @@ class PBAI
         # we consider this Pokémon capable of being a special attacker.
         return true if speccount > 1
         return true if spatkBoosters >= 1
-        return true if self.role == :SPECIALBREAKER
+        return true if self.role.id == :SPECIALBREAKER
       end
       return false
     end

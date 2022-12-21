@@ -1390,6 +1390,12 @@ SnapEdges = true
 MapPosition = 1,27,18
 SnapEdges = true
 #-------------------------------
+[303]
+# Wartime Lab
+ShowArea = true
+MapPosition = 1,27,18
+SnapEdges = true
+#-------------------------------
 [305]
 # SS Aqua
 ShowArea = true
@@ -1401,4 +1407,52 @@ SnapEdges = true
 Outdoor = true
 ShowArea = true
 MapPosition = 1,21,16
+SnapEdges = true
+#-------------------------------
+[308]
+# Harbor
+MapPosition = 1,21,16
+#-------------------------------
+[309]
+# Stannum PMC
+MapPosition = 1,21,16
+#-------------------------------
+[310]
+# Route 26
+Outdoor = true
+ShowArea = true
+MapPosition = 1,19,16
+SnapEdges = true
+#-------------------------------
+[311]
+# Route 27
+Outdoor = true
+ShowArea = true
+MapPosition = 1,17,16
+SnapEdges = true
+#-------------------------------
+[312]
+# Stibni Village
+Outdoor = true
+ShowArea = true
+MapPosition = 1,16,18
+SnapEdges = true
+#-------------------------------
+[313]
+# Houses
+MapPosition = 1,16,18
+#-------------------------------
+[314]
+# Stibni PMC
+MapPosition = 1,16,18
+#-------------------------------
+[315]
+# Houses
+MapPosition = 1,21,16
+#-------------------------------
+[316]
+# Route 28
+Outdoor = true
+ShowArea = true
+MapPosition = 1,15,12
 SnapEdges = true

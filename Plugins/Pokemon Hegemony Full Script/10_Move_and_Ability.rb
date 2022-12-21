@@ -787,6 +787,21 @@ BattleHandlers::TargetAbilityOnHit.add(:SPLINTER,
   }
 )
 
+BattleHandlers::TargetAbilityOnHit.add(:TOXICDEBRIS,
+  proc { |ability,target,battler,move,battle|
+    next if battler.pbOpposingSide.effects[PBEffects::ToxicSpikes] == 2
+    battle.pbShowAbilitySplash(battler)
+    if battle.field.weather == :Windy
+      battle.pbDisplay(_INTL("The wind prevented {1}'s {2} from working!",battler.pbThis,battler.abilityName))
+    else
+      battle.scene.pbAnimation(GameData::Move.get(:TOXICSPIKES).id,battler,battler)
+      battler.pbOpposingSide.effects[PBEffects::ToxicSpikes] += 1
+      battle.pbDisplay(_INTL("{1}'s {2} set Toxic Spikes!",battler.pbThis,battler.abilityName))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 class PokeBattle_Battle
   alias initialize_ex initialize
   def initialize(scene,p1,p2,player,opponent)
@@ -4170,6 +4185,21 @@ class PokeBattle_Move_512 < PokeBattle_Move
     if canSetRocks?(user)
       @battle.scene.pbAnimation(GameData::Move.get(:STEALTHROCK).id,user,user)
       user.pbOpposingSide.effects[PBEffects::StealthRock] = true
+      @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",user.pbOpposingTeam(true)))
+    end
+  end
+end
+
+class PokeBattle_Move_522 < PokeBattle_Move
+  def canSetSpikes?(user)
+    return false if user.pbOpposingSide.effects[PBEffects::Spikes] < 3
+    return false if @battle.pbWeather == :Windy
+    return true
+  end
+  def pbEffectGeneral(user)
+    if canSetSpikes?(user)
+      @battle.scene.pbAnimation(GameData::Move.get(:SPIKES).id,user,user)
+      user.pbOpposingSide.effects[PBEffects::Spikes] += 1
       @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",user.pbOpposingTeam(true)))
     end
   end
