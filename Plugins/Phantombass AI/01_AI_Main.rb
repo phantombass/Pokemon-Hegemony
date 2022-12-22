@@ -362,7 +362,7 @@ class PBAI
       # Count the number of physical moves
       physcount = 0
       attackBoosters = 0
-      self.moves.each do |move|
+      @battler.moves.each do |move|
         next if move.pp == 0
         physcount += 1 if move.physicalMove?
         if move.statUp
@@ -371,6 +371,7 @@ class PBAI
           end
         end
       end
+      p physcount
       # If the user doesn't have any physical moves, the Pokémon can never be
       # a physical attacker.
       return false if physcount == 0
@@ -403,7 +404,7 @@ class PBAI
       # Count the number of physical moves
       speccount = 0
       spatkBoosters = 0
-      self.moves.each do |move|
+      @battler.moves.each do |move|
         next if move.pp == 0
         speccount += 1 if move.specialMove?
         if move.statUp
