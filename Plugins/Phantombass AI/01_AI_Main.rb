@@ -252,6 +252,16 @@ class PBAI
       return @battler.role
     end
 
+    def defensive?
+      return true if [:SCREENS,:PIVOT,:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY,:REDIRECTION,:CLERIC,:HAZARDLEAD,:SKILLSWAPALLY].include?(@battler.role.id)
+      return false
+    end
+
+    def setup?
+      return true if [:SETUPSWEEPER,:WINCON].include?(@battler.role.id)
+      return false
+    end
+
     def totalhp
       return @battler.totalhp
     end
@@ -950,7 +960,7 @@ class PBAI
         # Since this makes status moves unlikely to be chosen when the other moves
         # have a high base power, all status moves should ideally be addressed individually
         # in this method, and used in the optimal scenario for each individual move.
-        score = [:PIVOT,:PHYSICALWALL,:SPECIALWALL,:SETUPSWEEPER,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY].include?(self.role.id) ? 100 : 30
+        score = (self.defensive? || self.setup?) ? 100 : 30
         PBAI.log("Test move #{move.name} (#{score})...")
         # Trigger general score modifier code
         score = PBAI::ScoreHandler.trigger_general(score, @ai, self, target, move)
