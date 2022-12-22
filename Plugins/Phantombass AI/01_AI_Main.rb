@@ -209,17 +209,17 @@ class PBAI
 
     def initialize(side, pokemon, wild_pokemon = false)
       @side = side
-  		@pokemon = pokemon
-  		@battler = nil
-  		@ai = @side.ai
-  		@battle = @ai.battle
-  		@damage_taken = []
-  		@damage_dealt = []
-  		@ai_index = nil
+      @pokemon = pokemon
+      @battler = nil
+      @ai = @side.ai
+      @battle = @ai.battle
+      @damage_taken = []
+      @damage_dealt = []
+      @ai_index = nil
       @used_moves = []
       @shown_ability = false
       @shown_item = false
-  		@skill = wild_pokemon ? 0 : 200
+      @skill = wild_pokemon ? 0 : 200
       @flags = {}
     end
 
@@ -297,39 +297,39 @@ class PBAI
     end
 
     def effective_attack
-  		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:ATTACK] + 6
-	    return (@battler.attack.to_f * stageMul[stage] / stageDiv[stage]).floor
-	  end
+      stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
+      stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+      stage = @battler.stages[:ATTACK] + 6
+      return (@battler.attack.to_f * stageMul[stage] / stageDiv[stage]).floor
+    end
 
-	  def effective_defense
-  		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:DEFENSE] + 6
-	    return (@battler.defense.to_f * stageMul[stage] / stageDiv[stage]).floor
-	  end
+    def effective_defense
+      stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
+      stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+      stage = @battler.stages[:DEFENSE] + 6
+      return (@battler.defense.to_f * stageMul[stage] / stageDiv[stage]).floor
+    end
 
-	  def effective_spatk
-  		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPECIAL_ATTACK] + 6
-	    return (@battler.spatk.to_f * stageMul[stage] / stageDiv[stage]).floor
-	  end
+    def effective_spatk
+      stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
+      stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+      stage = @battler.stages[:SPECIAL_ATTACK] + 6
+      return (@battler.spatk.to_f * stageMul[stage] / stageDiv[stage]).floor
+    end
 
-	  def effective_spdef
-  		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPECIAL_DEFENSE] + 6
-	    return (@battler.spdef.to_f * stageMul[stage] / stageDiv[stage]).floor
-	  end
+    def effective_spdef
+      stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
+      stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+      stage = @battler.stages[:SPECIAL_DEFENSE] + 6
+      return (@battler.spdef.to_f * stageMul[stage] / stageDiv[stage]).floor
+    end
 
-	  def effective_speed
-  		stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-	    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-	    stage = @battler.stages[:SPEED] + 6
-	    return (@battler.speed.to_f * stageMul[stage] / stageDiv[stage]).floor
-	  end
+    def effective_speed
+      stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
+      stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+      stage = @battler.stages[:SPEED] + 6
+      return (@battler.speed.to_f * stageMul[stage] / stageDiv[stage]).floor
+    end
 
     def faster_than?(target)
       return self.effective_speed >= target.effective_speed
@@ -1110,26 +1110,21 @@ class PBAI
         when :GROUND
           return true if target.airborne? && !move.hitsFlyingTargets?
         when :FIRE
-          return true if target.hasActiveAbility?([:FLASHFIRE, :STEAMENGINE, :FLOWERGIFT])
-          return true if target.hasActiveItem?(:FLASHFIREORB)
+          return true if target.hasActiveAbility?([:FLASHFIRE, :STEAMENGINE])
         when :WATER
           return true if target.hasActiveAbility?([:DRYSKIN, :STORMDRAIN, :WATERABSORB, :IRRIGATION, :STEAMENGINE, :WATERCOMPACTION])
         when :GRASS
           return true if target.hasActiveAbility?(:SAPSIPPER)
-          return true if target.hasActiveItem?(:SAPSIPPERORB)
         when :ELECTRIC
           return true if target.hasActiveAbility?([:LIGHTNINGROD, :MOTORDRIVE, :VOLTABSORB])
-          return true if target.hasActiveItem?(:LIGHTNINGRODORB)
-        when :ROCK
-          return true if target.hasActiveAbility?(:SCALER)
-          return true if target.hasActiveItem?(:SCALERORB)
-        when :ICE
-          return true if target.hasActiveAbility?(:DEFROST)
+        when :DRAGON
+          return true if target.hasActiveAbility?(:LEGENDARMOR)
         when :DARK
           return true if target.hasActiveAbility?(:UNTAINTED)
         when :COSMIC
           return true if target.hasActiveAbility?(:DIMENSIONBLOCK)
-          return true if target.hasActiveItem?(:DIMENSIONBLOCKORB)
+        when :SOUND
+          return true if target.hasActiveAbility?(:SOUNDPROOF)
         end
         return true if move.damagingMove? && Effectiveness.not_very_effective?(typeMod) &&
                        target.hasActiveAbility?(:WONDERGUARD)
@@ -1290,18 +1285,18 @@ class PBAI
     end
 
     def get_damage_by_user(user)
-	  	return @damage_taken.select { |e| e[0] == user }
-	  end
+      return @damage_taken.select { |e| e[0] == user }
+    end
 
-	  def get_damage_by_user_and_move(user, move)
+    def get_damage_by_user_and_move(user, move)
       move = move.id if move.is_a?(GameData::Move)
-	  	return @damage_taken.select { |e| e[0] == user && e[1] == move }
-	  end
+      return @damage_taken.select { |e| e[0] == user && e[1] == move }
+    end
 
-	  def get_damage_by_move(move)
+    def get_damage_by_move(move)
       move = move.id if move.is_a?(GameData::Move)
-	  	return @damage_taken.select { |e| e[1] == move }
-	  end
+      return @damage_taken.select { |e| e[1] == move }
+    end
 
     def last_damage_taken
       return @damage_taken[-1]
@@ -1446,9 +1441,20 @@ class PBAI
       return false
     end
 
+    def can_switch?
+      party = @ai.battle.pbParty(self.battler.index)
+      fainted = 0
+      for i in party
+        fainted += 1
+      end
+      return false if fainted == party.length - 1
+      return false if self.trapped?
+      return true
+    end
+
     def trapped?
-			return self.effects[PBEffects::Trapping] > 0
-		end
+      return self.effects[PBEffects::Trapping] > 0
+    end
 
     def discourage_making_contact_with?(target)
       return false if has_ability?(:LONGREACH)
@@ -1550,61 +1556,61 @@ class PBAI
   end
   class Side
     attr_reader :ai
-  	attr_reader :index
-  	attr_reader :battlers
-  	attr_reader :party
-  	attr_reader :trainers
+    attr_reader :index
+    attr_reader :battlers
+    attr_reader :party
+    attr_reader :trainers
     attr_reader :flags
     def initialize(ai, index, wild_pokemon = false)
-  		@ai = ai
-  		@index = index
-  		@battle = @ai.battle
+      @ai = ai
+      @index = index
+      @battle = @ai.battle
       @wild_pokemon = wild_pokemon
-  		@battlers = []
-  		@party = []
+      @battlers = []
+      @party = []
       @flags = {}
     end
     def effects
       return @battle.sides[@index].effects
     end
 
-  	def set_party(party)
-  		@party = party.map { |pokemon| Battler_AI_Learning.new(self, pokemon, @wild_pokemon) }
-  	end
+    def set_party(party)
+      @party = party.map { |pokemon| Battler_AI_Learning.new(self, pokemon, @wild_pokemon) }
+    end
 
-  	def set_trainers(trainers)
-  		@trainers = trainers
-  	end
+    def set_trainers(trainers)
+      @trainers = trainers
+    end
 
-  	def opposing_side
-  		return @ai.sides[1 - @index]
-  	end
+    def opposing_side
+      return @ai.sides[1 - @index]
+    end
     def recall(battlerIndex)
-  		index = PBAI.battler_to_proj_index(battlerIndex)
-  		proj = @battlers[index]
-  		if proj.nil?
-  			raise "Battler to be recalled was not found in the active battlers list."
-  		end
-  		if !proj.active?
-  			raise "Battler to be recalled was not active."
-  		end
-  		@battlers[index] = nil
-  		proj.battler = nil
-  	end
+      index = PBAI.battler_to_proj_index(battlerIndex)
+      proj = @battlers[index]
+      if proj.nil?
+        raise "Battler to be recalled was not found in the active battlers list."
+      end
+      if !proj.active?
+        raise "Battler to be recalled was not active."
+      end
+      @battlers[index] = nil
+      proj.battler = nil
+    end
 
-  	def send_out(battlerIndex, battler)
-  		proj = @party.find { |proj| proj && proj.pokemon == battler.pokemon }
-  		if proj.nil?
-  			raise "Battler to be sent-out was not found in the party list."
-  		end
-  		if proj.active?
-  			raise "Battler to be sent-out was already sent out before."
-  		end
-  		index = PBAI.battler_to_proj_index(battlerIndex)
-  		@battlers[index] = proj
-  		proj.ai_index = index
-  		proj.battler = battler
-  	end
+    def send_out(battlerIndex, battler)
+      proj = @party.find { |proj| proj && proj.pokemon == battler.pokemon }
+      if proj.nil?
+        raise "Battler to be sent-out was not found in the party list."
+      end
+      if proj.active?
+        raise "Battler to be sent-out was already sent out before."
+      end
+      index = PBAI.battler_to_proj_index(battlerIndex)
+      @battlers[index] = proj
+      proj.ai_index = index
+      proj.battler = battler
+    end
     def end_of_round
       @battlers.each { |proj| proj.end_of_round if proj }
       @flags = {}
@@ -1613,16 +1619,16 @@ class PBAI
 end
 
 class PokeBattle_Battle
-	attr_reader :battleAI
+  attr_reader :battleAI
 
   alias ai_initialize initialize
   def initialize(*args)
-  	ai_initialize(*args)
-  	@battleAI = PBAI.new(self, self.wildBattle?)
-  	@battleAI.sides[0].set_party(@party1)
-  	@battleAI.sides[0].set_trainers(@player)
-  	@battleAI.sides[1].set_party(@party2)
-  	@battleAI.sides[1].set_trainers(@opponent)
+    ai_initialize(*args)
+    @battleAI = PBAI.new(self, self.wildBattle?)
+    @battleAI.sides[0].set_party(@party1)
+    @battleAI.sides[0].set_trainers(@player)
+    @battleAI.sides[1].set_party(@party2)
+    @battleAI.sides[1].set_trainers(@opponent)
   end
 
   def pbRecallAndReplace(idxBattler, idxParty, batonPass = false)
@@ -1710,13 +1716,13 @@ class PokeBattle_Move
 end
 
 class PokeBattle_Battler
-	alias ai_pbInitialize pbInitialize
-	def pbInitialize(pkmn, idxParty, batonPass = false)
-		ai_pbInitialize(pkmn, idxParty, batonPass)
-		ai = @battle.battleAI
-		sideIndex = @index % 2
-		ai.sides[sideIndex].send_out(@index, self)
-	end
+  alias ai_pbInitialize pbInitialize
+  def pbInitialize(pkmn, idxParty, batonPass = false)
+    ai_pbInitialize(pkmn, idxParty, batonPass)
+    ai = @battle.battleAI
+    sideIndex = @index % 2
+    ai.sides[sideIndex].send_out(@index, self)
+  end
 
   alias ai_pbFaint pbFaint
   def pbFaint(*args)
@@ -1730,11 +1736,11 @@ class PokeBattle_PoisonMove
 end
 
 class Array
-	def sum
-		n = 0
-		self.each { |e| n += e }
-		n
-	end
+  def sum
+    n = 0
+    self.each { |e| n += e }
+    n
+  end
 end
 
 # Overwrite Frisk to show the enemy held item
