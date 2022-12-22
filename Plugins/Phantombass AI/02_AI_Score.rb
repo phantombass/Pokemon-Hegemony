@@ -694,7 +694,10 @@ end
 # Discourage using physical moves when the user is burned
 PBAI::ScoreHandler.add_damaging do |score, ai, user, target, move|
   if user.burned?
-    if move.physicalMove? && move.function != "07E"
+    if user.hasActiveAbility?(:GUTS) && move.physicalMove?
+      score += 100
+      PBAI.log("+ 100 for taking advantage of Guts")
+    elsif !user.hasActiveAbility?(:GUTS) && move.physicalMove? && move.function != "07E"
       score -= 50
       PBAI.log("- 50 for being a physical move and being burned")
     end
