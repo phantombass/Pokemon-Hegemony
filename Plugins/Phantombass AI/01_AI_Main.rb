@@ -787,8 +787,13 @@ class PBAI
       return false
     end
     def can_switch?
-      return true if @battle.pbCanSwitch?(@battler.index)
-      return false
+      party = @ai.battle.pbParty(self.battler.index)
+      fainted = 0
+      for i in party
+        fainted += 1
+      end
+      return false if fainted == party.length - 1
+      return true
     end
     def get_switch_score
       # Yields [score, pokemon_index]
@@ -1452,10 +1457,10 @@ class PBAI
     end
 
     def can_switch?
-      party = @ai.battle.pbParty(self.battler.index)
+      party = @battle.pbParty(battler.index)
       fainted = 0
       for i in party
-        fainted += 1
+        fainted += 1 if i.fainted?
       end
       return false if fainted == party.length - 1
       return false if self.trapped?
