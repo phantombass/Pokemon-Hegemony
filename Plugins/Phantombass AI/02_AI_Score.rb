@@ -241,26 +241,14 @@ end
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   # Apply this logic only for priority moves
   next if move.priority <= 0 || move.function == "0D4" || move.statusMove? # Bide
-  prevDmg = target.get_damage_by_user_and_move(user, move)
-  if prevDmg.size > 0 && prevDmg != 0
-    # We have the previous damage this user has done with this move.
-    # Use the average of the previous damage dealt, and if it's more than the target's hp,
-    # we can likely use this move to knock out the target.
-    avg = (prevDmg.map { |e| e[2] }.sum / prevDmg.size.to_f).floor
-    if avg >= target.battler.hp
-      PBAI.log("+ 250 for priority move with average damage (#{avg}) >= target hp (#{target.battler.hp})")
-      score += 250
-    end
-  else
-    # Calculate the damage this priority move will do.
-    # The AI kind of cheats here, because this takes all items, berries, abilities, etc. into account.
-    # It is worth for the effect though; the AI using a priority move to prevent
-    # you from using one last move before you faint.
-    dmg = user.get_move_damage(target, move)
-    if dmg >= target.battler.hp
-      PBAI.log("+ 250 for priority move with predicted damage (#{dmg}) >= target hp (#{target.battler.hp})")
-      score += 250
-    end
+  # Calculate the damage this priority move will do.
+  # The AI kind of cheats here, because this takes all items, berries, abilities, etc. into account.
+  # It is worth for the effect though; the AI using a priority move to prevent
+  # you from using one last move before you faint.
+  dmg = user.get_move_damage(target, move)
+  if dmg >= target.battler.hp
+    PBAI.log("+ 250 for priority move with predicted damage (#{dmg}) >= target hp (#{target.battler.hp})")
+    score += 250
   end
   if target.hp <= target.totalhp/4
     score += 100
