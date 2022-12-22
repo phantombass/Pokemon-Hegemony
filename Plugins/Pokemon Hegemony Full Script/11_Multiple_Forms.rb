@@ -260,14 +260,21 @@ def post_game_beta_test
   $game_switches[218] = true
 end
 
+def second_league_fix
+  if $game_switches[12]
+    $game_switches[195] = true
+  end
+  $second_league_fix = true
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
   pikachu_glitch_fix if $pika_fixed != true
   quest_fix if $quest_fixed != true
   pokemon_league_fix if $pokemon_league_fixed != true
+  second_league_fix if $second_league_fix != true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
   setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
-  #$game_switches[218] = true
   $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false && $game_switches[71] == true
   $game_switches[LvlCap::Rival] = false if $game_map.map_id != 251
   $game_switches[LvlCap::Gym] = false if $game_map.map_id != 251

@@ -252,6 +252,16 @@ class PBAI
       return @battler.role
     end
 
+    def defensive?
+      return true if [:SCREENS,:PIVOT,:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY,:REDIRECTION,:CLERIC,:HAZARDLEAD,:SKILLSWAPALLY].include?(@battler.role.id)
+      return false
+    end
+
+    def setup?
+      return true if [:SETUPSWEEPER,:WINCON].include?(@battler.role.id)
+      return false
+    end
+
     def totalhp
       return @battler.totalhp
     end
@@ -777,8 +787,13 @@ class PBAI
       return false
     end
     def can_switch?
-      return true if @battle.pbCanSwitch?(@battler.index)
-      return false
+      party = @ai.battle.pbParty(self.battler.index)
+      fainted = 0
+      for i in party
+        fainted += 1
+      end
+      return false if fainted == party.length - 1
+      return true
     end
     def get_switch_score
       # Yields [score, pokemon_index]
@@ -950,7 +965,7 @@ class PBAI
         # Since this makes status moves unlikely to be chosen when the other moves
         # have a high base power, all status moves should ideally be addressed individually
         # in this method, and used in the optimal scenario for each individual move.
-        score = [:PIVOT,:PHYSICALWALL,:SPECIALWALL,:SETUPSWEEPER,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY].include?(self.role.id) ? 100 : 30
+        score = (self.defensive? || self.setup?) ? 100 : 30
         PBAI.log("Test move #{move.name} (#{score})...")
         # Trigger general score modifier code
         score = PBAI::ScoreHandler.trigger_general(score, @ai, self, target, move)
@@ -1442,10 +1457,10 @@ class PBAI
     end
 
     def can_switch?
-      party = @ai.battle.pbParty(self.battler.index)
+      party = @battle.pbParty(battler.index)
       fainted = 0
       for i in party
-        fainted += 1
+        fainted += 1 if i.fainted?
       end
       return false if fainted == party.length - 1
       return false if self.trapped?
