@@ -608,7 +608,7 @@ SuperRod
     5,STARYU,15,17
 #-------------------------------
 [134] # Cassim Desert
-Sandy,5
+Land,5
     20,NUMEL,41,44
 	20,SANDYGAST,41,44
 	20,BALTOY,41,44
@@ -623,7 +623,7 @@ Sandy,5
 	1,LARVESTA,42,45
 #-------------------------------
 [135] # Cassim Desert
-Sandy,5
+Land,5
     20,TRAPINCH,42,45
 	20,SANDYGAST,42,45
 	20,HIPPOWDON,42,45
