@@ -371,7 +371,6 @@ class PBAI
           end
         end
       end
-      p physcount
       # If the user doesn't have any physical moves, the Pokémon can never be
       # a physical attacker.
       return false if physcount == 0
