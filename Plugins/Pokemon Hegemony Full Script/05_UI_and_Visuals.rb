@@ -2472,7 +2472,6 @@ class Scene_Credits
   KingOfThe-X-Roads on Deviantart
   Anarlaurendil on Deviantart
   @_zerudez on nitter.net
-  Some back sprites by Phantombass using the art mentioned above
 
   Perfect Kyurem Sprite:
   Caleb
@@ -2480,6 +2479,10 @@ class Scene_Credits
   Astreon Sprites:
   Bl00dy (concept art)
   Saebbi (sprite art)
+
+  Tilesets:
+  Ekat
+  Idilio
 
   Mapping: Phantombass
 
