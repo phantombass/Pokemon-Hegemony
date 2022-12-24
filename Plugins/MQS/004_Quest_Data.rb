@@ -72,6 +72,7 @@ module QuestModule
     :Stage65 => "Escape the SS Aqua",
     :Stage66 => "Find the secret behind the Wartime Lab",
     :Stage67 => "Challenge the Dojo.",
+    :Stage68 => "Board the SS Aqua for Stannum Town.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -138,7 +139,8 @@ module QuestModule
     :Location64 => "SS Aqua",
     :Location65 => "SS Aqua",
     :Location66 => "Wartime Lab",
-    :Location67 => "Urani Island"
+    :Location67 => "Urani Island",
+    :Location68 => "Urani Island"
   }
 
 #====================================
