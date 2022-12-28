@@ -335,3 +335,4 @@
 333,SCALER,Scaler,"Immune to Rock-type moves, Stealth Rocks, and Sandstorm."
 334,NOCTEMBOOST,Noctem Boost,"Doubles Speed and boosts Fairy moves in Eclipse."
 335,TOXICDEBRIS,Toxic Debris,"Contact moves set Toxic Spikes."
+336,EARTHEATER,Earth Eater,"Heals HP when hit by a Ground-type move."
