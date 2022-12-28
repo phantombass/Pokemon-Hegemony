@@ -652,7 +652,7 @@ MultipleForms.register(:TOXEL,{
      natures = [:LONELY, :BOLD, :RELAXED,:TIMID,
                 :SERIOUS, :MODEST, :MILD, :QUIET,
                 :BASHFUL, :CALM, :GENTLE, :CAREFUL]
-     next 1 if natures.include?(pkmn.nature)
+     next 2 if natures.include?(pkmn.nature)
      next 0
   },
 })

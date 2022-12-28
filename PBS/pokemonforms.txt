@@ -2731,6 +2731,18 @@ Pokedex = The half-swallowed Pikachu is so startled that it isn't struggling yet
 BattlerEnemyX = -6
 #-------------------------------
 [TOXTRICITY,1]
+FormName = Mega Toxtricity
+MegaStone = TOXTRICITITE
+BaseStats = 75,108,90,115,144,90
+Abilities = SURGESURFER
+HiddenAbility = SURGESURFER
+Height = 2.4
+Weight = 155.5
+Pokedex = It has an electrical organ on its chest. While generating electricity, it fills its surroundings with what sounds like the strumming of a bass guitar.
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[TOXTRICITY,2]
 FormName = Low Key Form
 Abilities = PUNKROCK,MINUS
 Moves = 0,SPARK,1,SPARK,1,EERIEIMPULSE,1,BELCH,1,TEARFULLOOK,1,NUZZLE,1,GROWL,1,FLAIL,1,ACID,1,THUNDERSHOCK,1,ACIDSPRAY,1,LEER,1,NOBLEROAR,4,CHARGE,8,SHOCKWAVE,12,SCARYFACE,16,TAUNT,20,VENOMDRENCH,24,SCREECH,28,SWAGGER,32,TOXIC,36,DISCHARGE,40,POISONJAB,44,OVERDRIVE,48,BOOMBURST,52,MAGNETICFLUX
@@ -2741,190 +2753,354 @@ BattlerPlayerY = 44
 BattlerEnemyX = 4
 BattlerEnemyY = 10
 #-------------------------------
+[MACHAMP,1]
+FormName = Mega Machamp
+MegaStone = MACHAMPITE
+BaseStats = 90,170,100,75,65,105
+Abilities = AMBIDEXTROUS
+HiddenAbility = AMBIDEXTROUS
+Height = 2.4
+Weight = 155.5
+Pokedex = It quickly swings its four arms to rock its opponents with ceaseless punches and chops from all angles.
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[KINGLER,1]
+FormName = Mega Kingler
+MegaStone = KINGLERITE
+Type1 = WATER
+Type2 = STEEL
+BaseStats = 55,160,115,115,50,80
+Abilities = TOUGHCLAWS
+HiddenAbility = TOUGHCLAWS
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[CENTISKORCH,1]
+FormName = Mega Centiskorch
+MegaStone = CENTISKORCHITE
+BaseStats = 100,145,105,85,90,100
+Abilities = DAZZLING
+HiddenAbility = DAZZLING
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[GRIMMSNARL,1]
+FormName = Mega Grimmsnarl
+MegaStone = GRIMMSNARLITE
+BaseStats = 95,140,95,70,115,95
+Abilities = PRANKSTER
+HiddenAbility = PRANKSTER
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[HATTERENE,1]
+FormName = Mega Hatterene
+MegaStone = HATTERENITE
+BaseStats = 57,100,135,19,156,143
+Abilities = MAGICBOUNCE
+HiddenAbility = MAGICBOUNCE
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[LAPRAS,1]
+FormName = Mega Lapras
+MegaStone = LAPRASITE
+BaseStats = 130,85,90,80,145,105
+Abilities = SLUSHRUSH
+HiddenAbility = SLUSHRUSH
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[BUTTERFREE,1]
+FormName = Mega Butterfree
+MegaStone = BUTTERFRENITE
+Type1 = BUG
+Type2 = PSYCHIC
+BaseStats = 60,45,80,100,120,90
+Abilities = NEUROFORCE
+HiddenAbility = NEUROFORCE
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[SNORLAX,1]
+FormName = Mega Snorlax
+MegaStone = SNORLITE
+BaseStats = 160,160,95,30,65,130
+Abilities = RESURGENCE
+HiddenAbility = RESURGENCE
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[DREDNAW,1]
+FormName = Mega Drednaw
+MegaStone = DREDNAWITE
+BaseStats = 90,135,120,94,48,98
+Abilities = SWIFTSWIM
+HiddenAbility = SWIFTSWIM
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[ORBEETLE,1]
+FormName = Mega Orbeetle
+MegaStone = ORBEETLITE
+BaseStats = 60,45,130,130,100,140
+Abilities = MAGICGUARD
+HiddenAbility = MAGICGUARD
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[GARBODOR,1]
+FormName = Mega Garbodor
+MegaStone = GARBODORITE
+Type1 = POISON
+Type2 = STEEL
+BaseStats = 80,125,112,85,60,112
+Abilities = TRASHSHIELD
+HiddenAbility = TRASHSHIELD
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[COPPERAJAH,1]
+FormName = Mega Copperajah
+MegaStone = COPPERAJITE
+Type1 = STEEL
+Type2 = GROUND
+BaseStats = 122,170,89,50,80,89
+Abilities = THICKFAT
+HiddenAbility = THICKFAT
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[MELMETAL,1]
+FormName = Mega Melmetal
+MegaStone = MELMETALITE
+BaseStats = 135,183,143,114,30,95
+Abilities = LIMBER
+HiddenAbility = LIMBER
+Height = 2.4
+Weight = 155.5
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
 [ALCREMIE,1]
-FormName = Berry - Vanilla Cream
+FormName = Mega Alcremie
+MegaStone = ALCREMITE
+BaseStats = 60,65,105,94,130,141
+Abilities = TRIAGE
+HiddenAbility = TRIAGE
+Height = 2.4
+Weight = 155.5
+Pokedex = In order to support its flower, which has grown larger due to Mega Evolution, its back and legs have become stronger.
+Generation = 6
+BattlerEnemyY = 19
 #-------------------------------
 [ALCREMIE,2]
-FormName = Love - Vanilla Cream
+FormName = Berry - Vanilla Cream
 #-------------------------------
 [ALCREMIE,3]
-FormName = Star - Vanilla Cream
+FormName = Love - Vanilla Cream
 #-------------------------------
 [ALCREMIE,4]
-FormName = Clover - Vanilla Cream
+FormName = Star - Vanilla Cream
 #-------------------------------
 [ALCREMIE,5]
-FormName = Flower - Vanilla Cream
+FormName = Clover - Vanilla Cream
 #-------------------------------
 [ALCREMIE,6]
-FormName = Ribbon - Vanilla Cream
+FormName = Flower - Vanilla Cream
 #-------------------------------
 [ALCREMIE,7]
-FormName = Strawberry - Ruby Cream
+FormName = Ribbon - Vanilla Cream
 #-------------------------------
 [ALCREMIE,8]
-FormName = Berry - Ruby Cream
+FormName = Strawberry - Ruby Cream
 #-------------------------------
 [ALCREMIE,9]
-FormName = Love - Ruby Cream
+FormName = Berry - Ruby Cream
 #-------------------------------
 [ALCREMIE,10]
-FormName = Star - Ruby Cream
+FormName = Love - Ruby Cream
 #-------------------------------
 [ALCREMIE,11]
-FormName = Clover - Ruby Cream
+FormName = Star - Ruby Cream
 #-------------------------------
 [ALCREMIE,12]
-FormName = Flower - Ruby Cream
+FormName = Clover - Ruby Cream
 #-------------------------------
 [ALCREMIE,13]
-FormName = Ribbon - Ruby Cream
+FormName = Flower - Ruby Cream
 #-------------------------------
 [ALCREMIE,14]
-FormName = Strawberry - Matcha Cream
+FormName = Ribbon - Ruby Cream
 #-------------------------------
 [ALCREMIE,15]
-FormName = Berry - Matcha Cream
+FormName = Strawberry - Matcha Cream
 #-------------------------------
 [ALCREMIE,16]
-FormName = Love - Matcha Cream
+FormName = Berry - Matcha Cream
 #-------------------------------
 [ALCREMIE,17]
-FormName = Star - Matcha Cream
+FormName = Love - Matcha Cream
 #-------------------------------
 [ALCREMIE,18]
-FormName = Clover - Matcha Cream
+FormName = Star - Matcha Cream
 #-------------------------------
 [ALCREMIE,19]
-FormName = Flower - Matcha Cream
+FormName = Clover - Matcha Cream
 #-------------------------------
 [ALCREMIE,20]
-FormName = Ribbon - Matcha Cream
+FormName = Flower - Matcha Cream
 #-------------------------------
 [ALCREMIE,21]
-FormName = Strawberry - Mint Cream
+FormName = Ribbon - Matcha Cream
 #-------------------------------
 [ALCREMIE,22]
-FormName = Berry - Mint Cream
+FormName = Strawberry - Mint Cream
 #-------------------------------
 [ALCREMIE,23]
-FormName = Love - Mint Cream
+FormName = Berry - Mint Cream
 #-------------------------------
 [ALCREMIE,24]
-FormName = Star - Mint Cream
+FormName = Love - Mint Cream
 #-------------------------------
 [ALCREMIE,25]
-FormName = Clover - Mint Cream
+FormName = Star - Mint Cream
 #-------------------------------
 [ALCREMIE,26]
-FormName = Flower - Mint Cream
+FormName = Clover - Mint Cream
 #-------------------------------
 [ALCREMIE,27]
-FormName = Ribbon - Mint Cream
+FormName = Flower - Mint Cream
 #-------------------------------
 [ALCREMIE,28]
-FormName = Strawberry - Lemon Cream
+FormName = Ribbon - Mint Cream
 #-------------------------------
 [ALCREMIE,29]
-FormName = Berry - Lemon Cream
+FormName = Strawberry - Lemon Cream
 #-------------------------------
 [ALCREMIE,30]
-FormName = Love - Lemon Cream
+FormName = Berry - Lemon Cream
 #-------------------------------
 [ALCREMIE,31]
-FormName = Star - Lemon Cream
+FormName = Love - Lemon Cream
 #-------------------------------
 [ALCREMIE,32]
-FormName = Clover - Lemon Cream
+FormName = Star - Lemon Cream
 #-------------------------------
 [ALCREMIE,33]
-FormName = Flower - Lemon Cream
+FormName = Clover - Lemon Cream
 #-------------------------------
 [ALCREMIE,34]
-FormName = Ribbon - Lemon Cream
+FormName = Flower - Lemon Cream
 #-------------------------------
 [ALCREMIE,35]
-FormName = Strawberry - Salted Cream
+FormName = Ribbon - Lemon Cream
 #-------------------------------
 [ALCREMIE,36]
-FormName = Berry - Salted Cream
+FormName = Strawberry - Salted Cream
 #-------------------------------
 [ALCREMIE,37]
-FormName = Love - Salted Cream
+FormName = Berry - Salted Cream
 #-------------------------------
 [ALCREMIE,38]
-FormName = Star - Salted Cream
+FormName = Love - Salted Cream
 #-------------------------------
 [ALCREMIE,39]
-FormName = Clover - Salted Cream
+FormName = Star - Salted Cream
 #-------------------------------
 [ALCREMIE,40]
-FormName = Flower - Salted Cream
+FormName = Clover - Salted Cream
 #-------------------------------
 [ALCREMIE,41]
-FormName = Ribbon - Salted Cream
+FormName = Flower - Salted Cream
 #-------------------------------
 [ALCREMIE,42]
-FormName = Strawberry - Ruby Swirl
+FormName = Ribbon - Salted Cream
 #-------------------------------
 [ALCREMIE,43]
-FormName = Berry - Ruby Swirl
+FormName = Strawberry - Ruby Swirl
 #-------------------------------
 [ALCREMIE,44]
-FormName = Love - Ruby Swirl
+FormName = Berry - Ruby Swirl
 #-------------------------------
 [ALCREMIE,45]
-FormName = Star - Ruby Swirl
+FormName = Love - Ruby Swirl
 #-------------------------------
 [ALCREMIE,46]
-FormName = Clover - Ruby Swirl
+FormName = Star - Ruby Swirl
 #-------------------------------
 [ALCREMIE,47]
-FormName = Flower - Ruby Swirl
+FormName = Clover - Ruby Swirl
 #-------------------------------
 [ALCREMIE,48]
-FormName = Ribbon - Ruby Swirl
+FormName = Flower - Ruby Swirl
 #-------------------------------
 [ALCREMIE,49]
-FormName = Strawberry - Caramel Swirl
+FormName = Ribbon - Ruby Swirl
 #-------------------------------
 [ALCREMIE,50]
-FormName = Berry - Caramel Swirl
+FormName = Strawberry - Caramel Swirl
 #-------------------------------
 [ALCREMIE,51]
-FormName = Love - Caramel Swirl
+FormName = Berry - Caramel Swirl
 #-------------------------------
 [ALCREMIE,52]
-FormName = Star - Caramel Swirl
+FormName = Love - Caramel Swirl
 #-------------------------------
 [ALCREMIE,53]
-FormName = Clover - Caramel Swirl
+FormName = Star - Caramel Swirl
 #-------------------------------
 [ALCREMIE,54]
-FormName = Flower - Caramel Swirl
+FormName = Clover - Caramel Swirl
 #-------------------------------
 [ALCREMIE,55]
-FormName = Ribbon - Caramel Swirl
+FormName = Flower - Caramel Swirl
 #-------------------------------
 [ALCREMIE,56]
-FormName = Strawberry - Rainbow Swirl
+FormName = Ribbon - Caramel Swirl
 #-------------------------------
 [ALCREMIE,57]
-FormName = Berry - Rainbow Swirl
+FormName = Strawberry - Rainbow Swirl
 #-------------------------------
 [ALCREMIE,58]
-FormName = Love - Rainbow Swirl
+FormName = Berry - Rainbow Swirl
 #-------------------------------
 [ALCREMIE,59]
-FormName = Star - Rainbow Swirl
+FormName = Love - Rainbow Swirl
 #-------------------------------
 [ALCREMIE,60]
-FormName = Clover - Rainbow Swirl
+FormName = Star - Rainbow Swirl
 #-------------------------------
 [ALCREMIE,61]
-FormName = Flower - Rainbow Swirl
+FormName = Clover - Rainbow Swirl
 #-------------------------------
 [ALCREMIE,62]
+FormName = Flower - Rainbow Swirl
+#-------------------------------
+[ALCREMIE,63]
 FormName = Ribbon - Rainbow Swirl
 #-------------------------------
 [SINISTEA,1]
@@ -4116,6 +4292,91 @@ HiddenAbility = NOCTEMBOOST
 Height = 2.4
 Weight = 155.5
 Pokedex = In order to support its flower, which has grown larger due to Mega Evolution, its back and legs have become stronger.
+Generation = 6
+BattlerEnemyY = 19
+#-------------------------------
+[CHARIZARD2,1]
+FormName = Wartime Mega Charizard
+MegaStone = WCHARIZARDITE
+Type1 = POISON
+Type2 = DRAGON
+BaseStats = 78,130,111,100,130,85
+Abilities = NITRIC
+HiddenAbility = LEVITATE
+Height = 1.5
+Generation = 6
+BattlerPlayerX = 0
+BattlerPlayerY = 54
+BattlerEnemyY = 6
+BattlerShadowSize = 3
+#-------------------------------
+[BLASTOISE2,1]
+FormName = Wartime Mega Blastoise
+MegaStone = WBLASTOISINITE
+BaseStats = 79,103,120,78,135,115
+Abilities = UNSHAKEN
+HiddenAbility = UNSHAKEN
+Weight = 101.1
+Pokedex = The cannon on its back is as powerful as a tank gun. Its tough legs and back enable it to withstand the recoil from firing the cannon.
+Generation = 6
+BattlerPlayerY = 42
+BattlerEnemyX = -12
+BattlerEnemyY = 10
+#-------------------------------
+[GLALIE2,1]
+FormName = Wartime Mega Glalie
+MegaStone = WGLALITITE
+BaseStats = 80,130,80,110,100,80
+Abilities = EARTHEATER
+HiddenAbility = EARTHEATER
+Height = 2.1
+Weight = 350.2
+Pokedex = It envelops prey in its mouth, freezing them instantly. But its jaw is dislocated, so it's unable to eat them.
+Generation = 6
+BattlerEnemyY = 6
+#-------------------------------
+[TORTERRA2,1]
+FormName = Wartime Mega Torterra
+MegaStone = WTORTERRANITE
+BaseStats = 95,139,105,76,105,105
+Abilities = LEVITATE
+HiddenAbility = LEVITATE
+#-------------------------------
+[INFERNAPE2,1]
+FormName = Wartime Mega Infernape
+MegaStone = WINFERNITE
+BaseStats = 76,119,101,118,119,101
+Abilities = GORILLATACTICS
+HiddenAbility = GORILLATACTICS
+#-------------------------------
+[EMPOLEON2,1]
+FormName = Wartime Mega Empoleon
+MegaStone = WEMPOLEONITE
+BaseStats = 84,121,73,120,146,86
+Abilities = SCALER
+HiddenAbility = SCALER
+#-------------------------------
+[AGGRON2,1]
+FormName = Wartime Mega Aggron
+MegaStone = WAGGRONITE
+BaseStats = 70,140,230,50,60,80
+Abilities = SKILLLINK
+HiddenAbility = BALLISTIC
+Height = 2.2
+Weight = 395.0
+Generation = 6
+BattlerPlayerX = 9
+BattlerEnemyX = -4
+BattlerEnemyY = 13
+#-------------------------------
+[GRIMMSNARL2,1]
+FormName = Wartime Mega Grimmsnarl
+MegaStone = WGRIMMSNARLITE
+BaseStats = 95,130,95,70,115,105
+Abilities = IRONFIST
+HiddenAbility = IRONFIST
+Height = 2.4
+Weight = 155.5
 Generation = 6
 BattlerEnemyY = 19
 #-------------------------------

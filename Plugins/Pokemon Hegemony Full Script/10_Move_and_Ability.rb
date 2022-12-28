@@ -46,10 +46,25 @@ module Effectiveness
   end
 end
 
+#Rage Fist
+class PokeBattle_Battle
+  attr_reader :rage_hit
+  def getBattlerHit(user) ; return @rage_hit[user.index & 1][user.pokemonIndex] ; end
+  def addBattlerHit(user,qty=1) ; @rage_hit[user.index & 1][user.pokemonIndex] += qty ; end
+end
+class PokeBattle_Move_522 < PokeBattle_Move
+  def pbBaseDamage(baseDmg, user, target)
+    rage_hit = @battle.getBattlerHit(user)
+    dmg = [baseDmg + 50  * rage_hit,350].min
+    return dmg
+  end
+end
+
 class PokeBattle_Move
   def pbChangeUsageCounters(user,specialUsage)
     user.effects[PBEffects::FuryCutter]   = 0
     user.effects[PBEffects::ParentalBond] = 0
+    user.effects[PBEffects::Ambidextrous] = 0
     user.effects[PBEffects::ProtectRate]  = 1
     @battle.field.effects[PBEffects::FusionBolt]  = false
     @battle.field.effects[PBEffects::FusionFlare] = false
@@ -67,12 +82,19 @@ class PokeBattle_Move
     else
       return 1
     end
+    if user.hasActiveAbility?(:AMBIDEXTROUS) && pbDamagingMove? && punchingMove? && !chargingTurnMove? && targets.length==1
+      # Record that Parental Bond applies, to weaken the second attack
+      user.effects[PBEffects::Ambidextrous] = 3
+      return 2
+    else
+      return 1
+    end
     return 1
   end
 
   def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
     return if !showAnimation
-    if user.effects[PBEffects::ParentalBond]==1
+    if user.effects[PBEffects::ParentalBond]==1 || user.effects[PBEffects::Ambidextrous]
       @battle.pbCommonAnimation("ParentalBond",user,targets)
     else
       @battle.pbAnimation(id,user,targets,hitNum)
@@ -412,6 +434,9 @@ class PokeBattle_Move
     end
     # Parental Bond's second attack
     if user.effects[PBEffects::ParentalBond]==1
+      multipliers[:base_damage_multiplier] /= 4
+    end
+    if user.effects[PBEffects::Ambidextrous]==1
       multipliers[:base_damage_multiplier] /= 4
     end
     # Other
@@ -784,6 +809,16 @@ BattleHandlers::TargetAbilityOnHit.add(:SPLINTER,
       battle.pbDisplay(_INTL("{1}'s {2} set Stealth Rocks!",battler.pbThis,battler.abilityName))
     end
     battle.pbHideAbilitySplash(battler)
+  }
+)
+
+BattleHandlers::DamageCalcTargetAbility.add(:TRASHSHIELD,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if Effectiveness.super_effective?(target.damageState.typeMod)
+      mults[:final_damage_multiplier] *= 2.0
+    else
+      mults[:final_damage_multiplier] *= 0.5
+    end
   }
 )
 
@@ -1312,6 +1347,14 @@ BattleHandlers::DamageCalcTargetAbility.add(:ICESCALES,
 )
 
 class PokeBattle_Battler
+  alias ragefist_pbEffectsOnMakingHit pbEffectsOnMakingHit
+  def pbEffectsOnMakingHit(move, user, target)
+    ragefist_pbEffectsOnMakingHit(move, user, target)
+    if target.damageState.calcDamage > 0 && !target.damageState.substitute
+        # target.pokemon.rage_hit += 1
+        @battle.addBattlerHit(target)
+    end
+  end
   def immune_by_ability?(type,ability)
     if type == :COSMIC && ability == :DIMENSIONBLOCK
       return true
@@ -1501,6 +1544,7 @@ class PokeBattle_Battler
     @effects[PBEffects::Obstruct]            = false
     @effects[PBEffects::Outrage]             = 0
     @effects[PBEffects::ParentalBond]        = 0
+    @effects[PBEffects::Ambidextrous]        = 0
     @effects[PBEffects::PickupItem]          = nil
     @effects[PBEffects::PickupUse]           = 0
     @effects[PBEffects::Pinch]               = false
@@ -2199,6 +2243,7 @@ class PokeBattle_Battler
     numTargets = 0   # Number of targets that are affected by this hit
     # Count a hit for Parental Bond (if it applies)
     user.effects[PBEffects::ParentalBond] -= 1 if user.effects[PBEffects::ParentalBond] > 0
+    user.effects[PBEffects::Ambidextrous] -= 1 if user.effects[PBEffects::Ambidextrous] > 0
     # Accuracy check (accuracy/evasion calc)
     if hitNum == 0 || move.successCheckPerHit?
       targets.each do |b|
@@ -2720,7 +2765,7 @@ class PokeBattle_Move
         end
       end
       # Effectiveness message, for moves with 1 hit
-      if !multiHitMove? && user.effects[PBEffects::ParentalBond]==0
+      if !multiHitMove? && (user.effects[PBEffects::ParentalBond]==0 || user.effects[PBEffects::Ambidextrous]==0)
         pbEffectivenessMessage(user,target,numTargets)
       end
       if target.damageState.substitute && target.effects[PBEffects::Substitute]==0
@@ -5016,6 +5061,15 @@ class PokeBattle_Move_086 < PokeBattle_Move
   end
 end
 
+#===============================================================================
+#Electro Drift/Collision Course
+class PokeBattle_Move_523 < PokeBattle_Move
+  def pbBaseDamage(baseDmg, user, target)
+    baseDmg *= 1.3 if Effectiveness.super_effective?(target.damageState.typeMod)
+    return baseDmg
+  end
+end
+
 class PokeBattle_Move_519 < PokeBattle_TargetMultiStatDownMove
   def initialize(battle,move)
     super
@@ -5029,4 +5083,5 @@ end
 module PBEffects
   CometShards        = 23
   StarSap            = 120
+  Ambidextrous       = 121
 end
