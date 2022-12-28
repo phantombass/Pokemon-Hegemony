@@ -163,7 +163,7 @@ class PokeBattle_Battle
     @moldBreaker       = false
     @runCommand        = 0
     @nextPickupUse     = 0
-    @rage_hit = {}
+    @rage_hit = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
     if GameData::Move.exists?(:STRUGGLE)
       @struggle = PokeBattle_Move.from_pokemon_move(self, Pokemon::Move.new(:STRUGGLE))
     else
