@@ -1456,3 +1456,120 @@ Outdoor = true
 ShowArea = true
 MapPosition = 1,15,12
 SnapEdges = true
+#-------------------------------
+[317]
+# Wolfram City
+Outdoor = true
+ShowArea = true
+MapPosition = 1,15,8
+SnapEdges = true
+#-------------------------------
+[320]
+# Hidden Grotto - Route 26
+Outdoor = false
+ShowArea = false
+MapPosition = 1,20,16
+SnapEdges = true
+#-------------------------------
+[321]
+# Hidden Grotto - Wolfram
+MapPosition = 1,15,8
+SnapEdges = true
+#-------------------------------
+[323]
+# Route 29
+Outdoor = true
+ShowArea = true
+MapPosition = 1,13,8
+SnapEdges = true
+#-------------------------------
+[324]
+# Route 30
+Outdoor = true
+ShowArea = true
+MapPosition = 1,11,6
+SnapEdges = true
+#-------------------------------
+[325]
+# Oro City
+Outdoor = true
+ShowArea = true
+MapPosition = 1,11,1
+SnapEdges = true
+#-------------------------------
+[327]
+# Oro Ruins
+ShowArea = true
+MapPosition = 1,11,1
+SnapEdges = true
+#-------------------------------
+[328]
+# Hidden Grotto - Route 27
+MapPosition = 1,17,14
+SnapEdges = true
+#-------------------------------
+[329]
+# Hidden Grotto - Route 29
+MapPosition = 1,13,8
+SafariMap = false
+SnapEdges = true
+#-------------------------------
+[330]
+# Hidden Grotto - Route 30
+MapPosition = 1,11,6
+SnapEdges = true
+#-------------------------------
+[331]
+# Stibni Dojo
+MapPosition = 1,16,18
+SnapEdges = true
+#-------------------------------
+[332]
+# Wolfram Dojo
+MapPosition = 1,15,8
+SnapEdges = true
+#-------------------------------
+[333]
+# Oro Dojo
+MapPosition = 1,11,1
+SnapEdges = true
+#-------------------------------
+[334]
+# Route 31
+Outdoor = true
+ShowArea = true
+MapPosition = 1,8,5
+SnapEdges = true
+#-------------------------------
+[335]
+# Route 32
+Outdoor = true
+ShowArea = true
+MapPosition = 1,2,5
+SnapEdges = true
+#-------------------------------
+[336]
+# Yttrius Coast
+Outdoor = true
+ShowArea = true
+MapPosition = 1,2,3
+SnapEdges = true
+#-------------------------------
+[337]
+# Route 33
+Outdoor = true
+ShowArea = true
+MapPosition = 1,8,8
+SnapEdges = true
+#-------------------------------
+[338]
+# Hidden Grotto - Route 33
+MapPosition = 1,8,8
+SnapEdges = true
+#-------------------------------
+[339]
+# Route 34
+Outdoor = true
+ShowArea = true
+MapPosition = 1,4,10
+SnapEdges = true
