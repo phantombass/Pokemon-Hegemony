@@ -1167,6 +1167,12 @@ BattleHandlers::MoveImmunityTargetAbility.add(:LEGENDARMOR,
   }
 )
 
+BattleHandlers::MoveImmunityTargetAbility.add(:EARTHEATER,
+  proc { |ability,user,target,move,type,battle|
+    next pbBattleMoveImmunityHealAbility(user,target,move,type,:GROUND,battle)
+  }
+)
+
 BattleHandlers::MoveImmunityTargetAbility.add(:UNTAINTED,
   proc { |ability,user,target,move,type,battle|
     next if type != :DARK
