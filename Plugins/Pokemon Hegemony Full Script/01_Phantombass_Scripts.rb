@@ -474,6 +474,13 @@ class Pokemon
          pkmn.status = :BURN
        end
   end
+  def shiny_locked?
+    blacklist = []
+    for i in GameData::Species.get(self).id_number
+      blacklist.push(i) if i > 898
+    end
+    return blacklist
+  end
 end
 
 Events.onWildPokemonCreate+=proc {|sender,e|
@@ -494,6 +501,9 @@ Events.onWildPokemonCreate+=proc {|sender,e|
   if $game_map.map_id == 110
     formRand = rand(29)
     pokemon.form = formRand
+  end
+  if pokemon.shiny_locked?
+    pokemon.shiny = false
   end
 }
 
