@@ -1,4 +1,4 @@
-# Results of battle:
+U# Results of battle:
 #    0 - Undecided or aborted
 #    1 - Player won
 #    2 - Player lost
@@ -163,6 +163,7 @@ class PokeBattle_Battle
     @moldBreaker       = false
     @runCommand        = 0
     @nextPickupUse     = 0
+    @rage_hit = []
     if GameData::Move.exists?(:STRUGGLE)
       @struggle = PokeBattle_Move.from_pokemon_move(self, Pokemon::Move.new(:STRUGGLE))
     else
