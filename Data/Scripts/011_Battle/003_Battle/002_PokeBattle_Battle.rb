@@ -1,4 +1,4 @@
-U# Results of battle:
+# Results of battle:
 #    0 - Undecided or aborted
 #    1 - Player won
 #    2 - Player lost
