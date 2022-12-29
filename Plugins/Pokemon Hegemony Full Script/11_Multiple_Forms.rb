@@ -267,12 +267,20 @@ def second_league_fix
   $second_league_fix = true
 end
 
+def intro_fix
+  if $game_variables[7] > 0
+    $game_switches[60] = true
+  end
+  $intro_fix = true
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
   pikachu_glitch_fix if $pika_fixed != true
   quest_fix if $quest_fixed != true
   pokemon_league_fix if $pokemon_league_fixed != true
   second_league_fix if $second_league_fix != true
+  intro_fix if $intro_fix != true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
   setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
   $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false && $game_switches[71] == true
