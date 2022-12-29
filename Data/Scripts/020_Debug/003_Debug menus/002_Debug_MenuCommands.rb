@@ -533,6 +533,27 @@ DebugMenuCommands.register("addpokemon", {
   }
 })
 
+DebugMenuCommands.register("fixpokemon", {
+  "parent"      => "pokemonmenu",
+  "name"        => _INTL("Fix Invalid Pokémon"),
+  "description" => _INTL("Give yourself a Pokémon to replace a broken one."),
+  "effect"      => proc {
+    species = pbChooseSpeciesList
+      if species
+        params = ChooseNumberParams.new
+        params.setRange(1, GameData::GrowthRate.max_level)
+        params.setInitialValue(5)
+        params.setCancelValue(0)
+        level = pbMessageChooseNumber(_INTL("Set the Pokémon's level."), params)
+        $Trainer.party.each {|pkmn| 
+          pkmn.species = :ANNIHILAPE2 if pkmn.species == :ANNHILAPE2
+          pkmn.species = :ANNIHILAPE if pkmn.species == :ANNHILAPE
+        }
+      end
+      pbAddPokemon(species, level) if level > 0
+  }
+})
+
 DebugMenuCommands.register("healparty", {
   "parent"      => "pokemonmenu",
   "name"        => _INTL("Heal Party"),

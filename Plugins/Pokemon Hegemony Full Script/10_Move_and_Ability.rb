@@ -519,6 +519,12 @@ class PokeBattle_Move
       elsif type == :WATER
         multipliers[:final_damage_multiplier] *= 1.5
       end
+    when :Hail
+      if Settings::GEN_9_SNOW == true
+        if target.pbHasType?(:ICE) && (physicalMove? || @function="122")
+          multipliers[:defense_multiplier] *= 1.5
+        end
+     end
     when :Starstorm
      if type == :COSMIC
        multipliers[:final_damage_multiplier] *= 1.5

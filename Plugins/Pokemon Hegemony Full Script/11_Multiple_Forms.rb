@@ -274,6 +274,14 @@ def intro_fix
   $intro_fix = true
 end
 
+def annihilape_fix
+  $Trainer.party.each {|pkmn| 
+    pkmn.species = :ANNIHILAPE2 if pkmn.species == :ANNHILAPE2
+    pkmn.species = :ANNIHILAPE if pkmn.species == :ANNHILAPE
+  }
+  $annihilape_fix = true
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
   pikachu_glitch_fix if $pika_fixed != true
@@ -281,6 +289,7 @@ Events.onMapUpdate+=proc {|sender,e|
   pokemon_league_fix if $pokemon_league_fixed != true
   second_league_fix if $second_league_fix != true
   intro_fix if $intro_fix != true
+  annihilape_fix if $annihilape_fix != true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
   setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
   $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false && $game_switches[71] == true

@@ -253,7 +253,7 @@ class PBAI
     end
 
     def defensive?
-      return true if [:SCREENS,:PIVOT,:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY,:REDIRECTION,:CLERIC,:HAZARDLEAD,:SKILLSWAPALLY].include?(@battler.role.id)
+      return true if [:SCREENS,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY,:REDIRECTION,:CLERIC,:HAZARDLEAD,:SKILLSWAPALLY].include?(@battler.role.id)
       return false
     end
 
@@ -882,8 +882,8 @@ class PBAI
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible
             score = (75 * hi_off_score * (switch_to_dark_type ? 2.0 : 1.0)).round
-            score += 30 if [:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
-            score += 15 if [:PIVOT,:STALLBREAKER].include?(proj.pokemon.role)
+            score += 50 if [:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
+            score += 30 if [:DEFENSIVEPIVOT,:STALLBREAKER].include?(proj.pokemon.role)
             index = party.index(proj.pokemon)
             return [score, index]
           end
@@ -907,7 +907,7 @@ class PBAI
             # Better choice than the current battler, so let's switch to this pokemon
             score = (100 * hi_off_score).round
             score += 30 if [:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
-            score += 15 if [:PIVOT,:STALLBREAKER].include?(proj.pokemon.role)
+            score += 15 if [:OFFENSIVEPIVOT,:STALLBREAKER].include?(proj.pokemon.role)
             index = party.index(proj.pokemon)
             return [score, index]
           end
