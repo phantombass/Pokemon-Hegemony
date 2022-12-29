@@ -219,7 +219,7 @@ class PBAI
       @used_moves = []
       @shown_ability = false
       @shown_item = false
-      @skill = wild_pokemon ? 0 : 200
+      @skill = wild_pokemon ? 50 : 200
       @flags = {}
     end
 
