@@ -475,11 +475,7 @@ class Pokemon
        end
   end
   def shiny_locked?
-    blacklist = []
-    for i in GameData::Species.get(self).id_number
-      blacklist.push(i) if i > 898
-    end
-    return blacklist
+    return GameData::Species.get(self.species).id_number > 898
   end
 end
 

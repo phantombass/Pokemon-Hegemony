@@ -336,3 +336,7 @@
 334,NOCTEMBOOST,Noctem Boost,"Doubles Speed and boosts Fairy moves in Eclipse."
 335,TOXICDEBRIS,Toxic Debris,"Contact moves set Toxic Spikes."
 336,EARTHEATER,Earth Eater,"Heals HP when hit by a Ground-type move."
+337,ORICHALCUMPULSE,Orichalcum Pulse,"Sets Sun and boosts Koraidon's Attack."
+338,HADRONENGINE,Hadron Engine,"Sets Electric Terrain and boost Miraidon's Special Attack."
+339,AMBIDEXTROUS,Ambidextrous,"Punching moves hit twice."
+340,TRASHSHIELD,Trash Shield,"Takes more damage from weaknesses, but less from other moves."

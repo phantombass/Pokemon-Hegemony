@@ -141,6 +141,7 @@ class PokeBattle_Battle
     @priority          = []
     @priorityTrickRoom = false
     @choices           = []
+    @rage_hit          = []
     @megaEvolution     = [
        [-1] * (@player ? @player.length : 1),
        [-1] * (@opponent ? @opponent.length : 1)
@@ -163,6 +164,7 @@ class PokeBattle_Battle
     @moldBreaker       = false
     @runCommand        = 0
     @nextPickupUse     = 0
+    @rage_hit = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
     if GameData::Move.exists?(:STRUGGLE)
       @struggle = PokeBattle_Move.from_pokemon_move(self, Pokemon::Move.new(:STRUGGLE))
     else
