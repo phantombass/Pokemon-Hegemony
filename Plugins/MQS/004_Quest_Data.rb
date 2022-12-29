@@ -61,18 +61,21 @@ module QuestModule
     :Stage54 => "Meet Joseph.",
     :Stage55 => "Find the Dojo Master.",
     :Stage56 => "Challenge the Dojo.",
-    :Stage57 => "Head toward Plumbum Town",
+    :Stage57 => "Head toward Plumbum Town.",
     :Stage58 => "Defeat the PsyCorp Scientists.",
     :Stage59 => "Defeat Sylvester.",
     :Stage60 => "Go to Argyros City.",
     :Stage61 => "Help stop the Army!",
     :Stage62 => "Challenge the Dojo",
     :Stage63 => "Board the SS Aqua for Stannum Town.",
-    :Stage64 => "Find the Captain",
-    :Stage65 => "Escape the SS Aqua",
-    :Stage66 => "Find the secret behind the Wartime Lab",
+    :Stage64 => "Find the Captain.",
+    :Stage65 => "Escape the SS Aqua.",
+    :Stage66 => "Find the secret behind the Wartime Lab.",
     :Stage67 => "Challenge the Dojo.",
     :Stage68 => "Board the SS Aqua for Stannum Town.",
+    :Stage69 => "Check out the Abandoned Mansion.",
+    :Stage70 => "Update Joseph on your findings.",
+    :Stage71 => "Find out what caused the explosion.",
     :Location1 => "Garon Town",
     :Location2 => "Boro Town",
     :Location3 => "Boro Town",
@@ -140,7 +143,10 @@ module QuestModule
     :Location65 => "SS Aqua",
     :Location66 => "Wartime Lab",
     :Location67 => "Urani Island",
-    :Location68 => "Urani Island"
+    :Location68 => "Urani Island",
+    :Location69 => "Stibni Village",
+    :Location70 => "Wolfram City",
+    :Location71 => "Wolfram City"
   }
 
 #====================================

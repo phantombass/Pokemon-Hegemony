@@ -1941,7 +1941,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = ANNHILAPE,HoldItem,SPELLTAG
+Evolutions = ANNIHILAPE,HoldItem,SPELLTAG
 #-------------------------------
 [58]
 Name = Growlithe
@@ -30978,7 +30978,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = ANNHILAPE2,Level,45
+Evolutions = ANNIHILAPE2,Level,45
 #-------------------------------
 [934]
 Name = Finneon
@@ -32948,8 +32948,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
 [993]
-Name = Annhilape
-InternalName = ANNHILAPE
+Name = Annihilape
+InternalName = ANNIHILAPE
 Type1 = FIGHTING
 Type2 = GHOST
 BaseStats = 110,105,80,90,50,90
@@ -32981,8 +32981,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
 [994]
-Name = Annhilape
-InternalName = ANNHILAPE2
+Name = Annihilape
+InternalName = ANNIHILAPE2
 Type1 = FIRE
 Type2 = GRASS
 BaseStats = 110,125,80,115,45,80

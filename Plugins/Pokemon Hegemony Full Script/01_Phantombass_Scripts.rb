@@ -475,7 +475,18 @@ class Pokemon
        end
   end
   def shiny_locked?
-    return GameData::Species.get(self.species).id_number > 898
+    blacklist = []
+    for i in 899..950
+      blacklist.push(i)
+    end
+    for j in 958..992
+      blacklist.push(j)
+    end
+    for k in 994..1012
+      blacklist.push(k)
+    end
+    pkmn = GameData::Species.get(self.species).id_number
+    return blacklist.include?(pkmn)
   end
 end
 
@@ -777,7 +788,7 @@ class PokeBattle_Battle
     when :Sun         then pbDisplay(_INTL("The sunlight is strong."))
     when :Rain        then pbDisplay(_INTL("It is raining."))
     when :Sandstorm   then pbDisplay(_INTL("A sandstorm is raging."))
-    when :Hail        then pbDisplay(_INTL("Hail is falling."))
+    when :Hail        then pbDisplay(_INTL("Snow is falling."))
     when :HarshSun    then pbDisplay(_INTL("The sunlight is extremely harsh."))
     when :HeavyRain   then pbDisplay(_INTL("It is raining heavily."))
     when :StrongWinds then pbDisplay(_INTL("The wind is strong."))
@@ -1218,7 +1229,7 @@ class PokeBattle_Battle
       when :Sun       then pbDisplay(_INTL("The sunlight faded."))
       when :Rain      then pbDisplay(_INTL("The rain stopped."))
       when :Sandstorm then pbDisplay(_INTL("The sandstorm subsided."))
-      when :Hail      then pbDisplay(_INTL("The hail stopped."))
+      when :Hail      then pbDisplay(_INTL("The snow stopped."))
       when :ShadowSky then pbDisplay(_INTL("The shadow sky faded."))
       when :Starstorm then pbDisplay(_INTL("The stars have faded."))
       when :Storm then pbDisplay(_INTL("The storm has calmed."))
@@ -1255,7 +1266,7 @@ class PokeBattle_Battle
 #    when :Sun         then pbDisplay(_INTL("The sunlight is strong."))
 #    when :Rain        then pbDisplay(_INTL("Rain continues to fall."))
     when :Sandstorm   then pbDisplay(_INTL("The sandstorm is raging."))
-    when :Hail        then pbDisplay(_INTL("The hail is crashing down."))
+    when :Hail        then pbDisplay(_INTL("The snow is falling."))
 #    when :HarshSun    then pbDisplay(_INTL("The sunlight is extremely harsh."))
 #    when :HeavyRain   then pbDisplay(_INTL("It is raining heavily."))
 #    when :StrongWinds then pbDisplay(_INTL("The wind is strong."))
@@ -1280,6 +1291,7 @@ class PokeBattle_Battle
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :Hail
+        next if Settings::GEN_9_SNOW == true
         next if !b.takesHailDamage?
         pbDisplay(_INTL("{1} is buffeted by the hail!",b.pbThis))
         @scene.pbDamageAnimation(b)

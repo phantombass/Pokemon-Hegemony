@@ -70,4 +70,5 @@ module Settings
       _INTL("National Pokédex")
     ]
   end
+  GEN_9_SNOW = true
 end
