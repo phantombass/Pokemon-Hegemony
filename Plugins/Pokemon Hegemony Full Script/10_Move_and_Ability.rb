@@ -79,22 +79,18 @@ class PokeBattle_Move
       # Record that Parental Bond applies, to weaken the second attack
       user.effects[PBEffects::ParentalBond] = 3
       return 2
-    else
-      return 1
     end
     if user.hasActiveAbility?(:AMBIDEXTROUS) && pbDamagingMove? && punchingMove? && !chargingTurnMove? && targets.length==1
       # Record that Parental Bond applies, to weaken the second attack
       user.effects[PBEffects::Ambidextrous] = 3
       return 2
-    else
-      return 1
     end
     return 1
   end
 
   def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
     return if !showAnimation
-    if user.effects[PBEffects::ParentalBond]==1 || user.effects[PBEffects::Ambidextrous]
+    if (user.effects[PBEffects::ParentalBond]==1 || user.effects[PBEffects::Ambidextrous]==1)
       @battle.pbCommonAnimation("ParentalBond",user,targets)
     else
       @battle.pbAnimation(id,user,targets,hitNum)

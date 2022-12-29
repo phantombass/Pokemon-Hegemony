@@ -2261,3 +2261,13 @@ PBAI::ScoreHandler.add("049") do |score, ai, user, target, move|
   end
   next score
 end
+
+#Rage Fist
+PBAI::ScoreHandler.add("522") do |score, ai, user, target, move|
+  hit = ai.battle.getBattlerHit(user) * 50
+  if hit > 0
+    score += hit
+    PBAI.log("+ #{hit} for having a damage boost")
+  end
+  next score
+end
