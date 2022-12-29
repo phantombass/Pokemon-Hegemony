@@ -1165,8 +1165,8 @@ PBAI::ScoreHandler.add("0DC") do |score, ai, user, target, move|
   if !user.underdog?(target) && !target.has_type?(:GRASS) && target.effects[PBEffects::LeechSeed] == 0
     score += 60
     PBAI.log("+ 60 for sapping hp from the target")
-    score += 30 if [:PHYSICALWALL,:SPECIALWALL,:PIVOT].include?(user.role.id)
-    PBAI.log("+ 30 for being a #{user.role.name}") if [:PHYSICALWALL,:SPECIALWALL,:PIVOT].include?(user.role.id)
+    score += 30 if [:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT].include?(user.role.id)
+    PBAI.log("+ 30 for being a #{user.role.name}") if [:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT].include?(user.role.id)
   end
   next score
 end
@@ -1244,7 +1244,7 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
     score += 100
     PBAI.log("+ 100 for forcing our target to switch and we're bad against our target")
   elsif move.function == "0EE"
-    if user.role.id == :PIVOT
+    if [:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:HAZARDLEAD].include?(user.role.id)
       score += 40
       PBAI.log("+ 40 for being a #{user.role.name}")
     end
@@ -1317,7 +1317,7 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
       add = (factor * 250).round
       score += add
       PBAI.log("+ #{add} for we will likely die without healing")
-      if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:PIVOT,:CLERIC].include?(user.role.id)
+      if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:CLERIC].include?(user.role.id)
         score += 40
         PBAI.log("+ 40 for being #{user.role.name}")
       end
@@ -1325,7 +1325,7 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
       add = (factor * 125).round
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
-      if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:PIVOT,:CLERIC].include?(user.role.id)
+      if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:CLERIC].include?(user.role.id)
         score += 40
         PBAI.log("+ 40 for being #{user.role.name}")
       end
@@ -1866,7 +1866,7 @@ PBAI::ScoreHandler.add("0EA") do |score, ai, user, target, move|
     score += 300
     PBAI.log("+ 300 for escaping the trap")
   end
-  if [:PHYSICALWALL,:SPECIALWALL,:PIVOT,:TOXICSTALLER].include?(user.role.id)
+  if [:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:TOXICSTALLER,:HAZARDLEAD].include?(user.role.id)
     score += 50
     PBAI.log("+ 50 for being a #{user.role.name}")
   end
@@ -1916,7 +1916,7 @@ PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
       score += 100
       PBAI.log("+ 100 for Substituting on the first turn and being guaranteed to have a Sub stay up")
     end
-    if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:STALLBREAKER,:PIVOT,:SETUPSWEEPER].include?(user.role.id)
+    if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:STALLBREAKER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:SETUPSWEEPER].include?(user.role.id)
       score += 30
       PBAI.log("+ 30 for being a #{user.role.name}")
     end
@@ -2196,6 +2196,78 @@ PBAI::ScoreHandler.add("521") do |score, ai, user, target, move|
   if ai.battle.pbSideSize(0) == 2
     score += 50
     PBAI.log("+ 50 for hitting both targets")
+  end
+  next score
+end
+
+PBAI::ScoreHandler.add("179") do |score, ai, user, target, move|
+  if user.role.id == :SETUPSWEEPER
+    score += 100
+    PBAI.log("+ 100 for gaining an omni-boost")
+    if user.hasActiveItem?(:THROATSPRAY)
+      score += 50
+      PBAI.log("+ 50 for activating Throat Spray")
+    end
+  end
+  next score
+end
+
+# Rapid Spin
+PBAI::ScoreHandler.add("110") do |score, ai, user, target, move|
+  hazard_score = 0
+  rocks = user.own_side.effects[PBEffects::StealthRock] ? 1 : 0
+  webs = user.own_side.effects[PBEffects::StickyWeb] ? 1 : 0
+  spikes = user.own_side.effects[PBEffects::Spikes] > 0 ? user.own_side.effects[PBEffects::Spikes] : 0
+  tspikes = user.own_side.effects[PBEffects::ToxicSpikes] > 0 ? user.own_side.effects[PBEffects::ToxicSpikes] : 0
+  comet = user.own_side.effects[PBEffects::CometShards] ? 1 : 0
+  hazard_score = (rocks*20) + (webs*20) + (spikes*10) + (tspikes*10) + (comet*20)
+  score += hazard_score
+  PBAI.log("+ #{hazard_score} for removing hazards")
+  if user.role.id == :HAZARDREMOVAL
+    score += 50
+    PBAI.log("+ 50 for being a #{user.role.name}")
+  end
+  next score
+end
+
+# Defog
+PBAI::ScoreHandler.add("049") do |score, ai, user, target, move|
+  hazard_score = 0
+  rocks = user.own_side.effects[PBEffects::StealthRock] ? 1 : 0
+  webs = user.own_side.effects[PBEffects::StickyWeb] ? 1 : 0
+  spikes = user.own_side.effects[PBEffects::Spikes] > 0 ? user.own_side.effects[PBEffects::Spikes] : 0
+  tspikes = user.own_side.effects[PBEffects::ToxicSpikes] > 0 ? user.own_side.effects[PBEffects::ToxicSpikes] : 0
+  comet = user.own_side.effects[PBEffects::CometShards] ? 1 : 0
+  light = user.opposing_side.effects[PBEffects::LightScreen] > 0 ? user.opposing_side.effects[PBEffects::LightScreen] : 0
+  reflect = user.opposing_side.effects[PBEffects::Reflect] > 0 ? user.opposing_side.effects[PBEffects::Reflect] : 0
+  veil = user.opposing_side.effects[PBEffects::AuroraVeil] > 0 ? user.opposing_side.effects[PBEffects::AuroraVeil] : 0
+  hazard_score = (rocks*20) + (webs*20) + (spikes*10) + (tspikes*10) + (comet*20) + (light*10) + (reflect*10) + (veil*20)
+
+  orocks = user.opposing_side.effects[PBEffects::StealthRock] ? 1 : 0
+  owebs = user.opposing_side.effects[PBEffects::StickyWeb] ? 1 : 0
+  ospikes = user.opposing_side.effects[PBEffects::Spikes] > 0 ? user.opposing_side.effects[PBEffects::Spikes] : 0
+  otspikes = user.opposing_side.effects[PBEffects::ToxicSpikes] > 0 ? user.opposing_side.effects[PBEffects::ToxicSpikes] : 0
+  ocomet = user.opposing_side.effects[PBEffects::CometShards] ? 1 : 0
+  slight = user.own_side.effects[PBEffects::LightScreen] > 0 ? user.own_side.effects[PBEffects::LightScreen] : 0
+  sreflect = user.own_side.effects[PBEffects::Reflect] > 0 ? user.own_side.effects[PBEffects::Reflect] : 0
+  sveil = user.own_side.effects[PBEffects::AuroraVeil] > 0 ? user.own_side.effects[PBEffects::AuroraVeil] : 0
+  user_score = (orocks*20) + (owebs*20) + (ospikes*10) + (otspikes*10) + (ocomet*20) + (slight*10) + (sreflect*10) + (sveil*20)
+  hazards = (hazard_score - user_score)
+  score += hazards
+  PBAI.log("+ #{hazards} for removing hazards and screens")
+  if user.role.id == :HAZARDREMOVAL && hazards > 0
+    score += 50
+    PBAI.log("+ 50 for being a #{user.role.name}")
+  end
+  next score
+end
+
+#Rage Fist
+PBAI::ScoreHandler.add("522") do |score, ai, user, target, move|
+  hit = ai.battle.getBattlerHit(user) * 50
+  if hit > 0
+    score += hit
+    PBAI.log("+ #{hit} for having a damage boost")
   end
   next score
 end
