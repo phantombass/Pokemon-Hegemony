@@ -100,7 +100,11 @@ class PokeBattle_Battler
       :FLASHFIREORB,
       :LEVITATEORB,
       :ILLUMINATEORB,
-      :FILTERORB
+      :FILTERORB,
+      :WATERABSORBORB,
+      :DIMENSIONBLOCKORB,
+      :EARTHEATERORB,
+      :LIGHTNINGRODORB
     ]
     return item_list.include?(item.id)
   end
@@ -451,6 +455,9 @@ def useMoveFly
     $game_switches[94] = false
     if $game_switches[231] == true
       $game_switches[241] = true
+    end
+    if $game_switches[283] == true && $game_switches[239] == true
+      $game_switches[283] = false
     end
     $CanToggle = true
     $game_temp.player_new_direction = 2
@@ -1641,7 +1648,33 @@ BattleHandlers::ItemOnSwitchIn.add(:UNSHAKENORB,
     battler.ability_id = :UNSHAKEN
     if ability != battler.ability_id
       battle.pbShowAbilitySplash(battler,false,true)
-      battle.pbDisplay(_INTL("{1}'s Scaler Orb lights up!",battler.name))
+      battle.pbDisplay(_INTL("{1}'s Unshaken Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:EARTHEATERORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :EARTHEATER
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Earth Eater Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:WATERABSORBORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :WATERABSORB
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Water Absorb Orb lights up!",battler.name))
       battle.pbHideAbilitySplash(battler)
       battler.ability_id = ability
     end

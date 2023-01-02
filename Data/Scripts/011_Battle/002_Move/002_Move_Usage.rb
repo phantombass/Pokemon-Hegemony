@@ -357,6 +357,8 @@ class PokeBattle_Move
       target.effects[PBEffects::BideDamage] += damage
       target.effects[PBEffects::BideTarget] = user.index
     end
+    target.effects[PBEffects::Comeuppance]       = damage
+    target.effects[PBEffects::ComeuppanceTarget] = user.index
     target.damageState.fainted = true if target.fainted?
     target.lastHPLost = damage             # For Focus Punch
     target.tookDamage = true if damage>0   # For Assurance

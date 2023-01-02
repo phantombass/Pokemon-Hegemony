@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.9.13"
+  GAME_VERSION = "2.0"
 end
 
 def write_version
@@ -42,6 +42,10 @@ module Game
     $game_variables[106] = LEVEL_CAP[$game_system.level_cap]
   end
   def self.start_new
+    pbMessage(_INTL("Welcome to Pokémon Hegemony, a complete, non-profit fan game made by Phantombass."))
+    pbMessage(_INTL("If you paid for this, contact the person who sent it to you for a refund immediately."))
+    pbMessage(_INTL("The current version is 2.0, which includes a full post-game story."))
+    pbMessage(_INTL("I hope you enjoy your journey!"))
     if $game_map && $game_map.events
       $game_map.events.each_value { |event| event.clear_starting }
     end
@@ -85,6 +89,22 @@ module Game
     write_version
   end
 end
+
+module DailyE4
+  Variable = 70
+  TimeNow = 71
+  LastTime = 72
+end
+
+Events.onMapChange += proc {| sender, e |
+    # E4 Setting
+    time = pbGetTimeNow
+    $game_variables[DailyE4::LastTime] = time.day
+    if $game_variables[DailyE4::TimeNow] > $game_variables[DailyE4::LastTime] || $game_variables[DailyE4::TimeNow]<$game_variables[DailyE4::LastTime]
+      $game_variables[DailyE4::Variable] = 1+rand(100)
+      $game_variables[DailyE4::TimeNow] = $game_variables[DailyE4::LastTime]
+    end
+}
 
 def PokemonLoadScreen
   def pbStartLoadScreen
@@ -570,6 +590,9 @@ def pbStartOver(gameover=false)
           end
           $game_switches[209] = false
           $game_switches[899] = false
+          if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
         elsif $game_map.map_id == 144 || $game_map.map_id == 145
           pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell after losing the Nuzlocke..."))
           pbCancelVehicles
@@ -589,6 +612,9 @@ def pbStartOver(gameover=false)
           end
           $game_switches[209] = false
           $game_switches[899] = false
+          if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
         end
       else
         if $game_map.map_id == 144 || $game_map.map_id == 145
@@ -610,6 +636,9 @@ def pbStartOver(gameover=false)
           end
           $game_switches[209] = false
           $game_switches[899] = false
+          if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
         else
           pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
           pbCancelVehicles
@@ -632,6 +661,9 @@ def pbStartOver(gameover=false)
           $game_switches[899] = false
           for i in 197..203
             $game_switches[i] = false
+          end
+          if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
           end
         end
       end
@@ -677,6 +709,9 @@ def pbStartOver(gameover=false)
       for i in 197..203
         $game_switches[i] = false
       end
+      if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
     else
       $Trainer.heal_party
     end
@@ -1538,7 +1573,24 @@ class PokeBattle_Battler
     return true if @effects[PBEffects::Ingrain]
     return true if @effects[PBEffects::NoRetreat]
     return true if @battle.field.effects[PBEffects::FairyLock] > 0
+    return true if @effects[PBEffects::CommanderDondozo] >= 0
+    return true if @effects[PBEffects::CommanderTatsugiri]
     return false
+  end
+  alias proto_pbCheckFormOnWeatherChange pbCheckFormOnWeatherChange
+  def pbCheckFormOnWeatherChange(ability_changed = false)
+    ret = proto_pbCheckFormOnWeatherChange(ability_changed)
+    return ret if ret == false
+    if hasActiveAbility?(:PROTOSYNTHESIS) && !@effects[PBEffects::BoosterEnergy] && @effects[PBEffects::ParadoxStat]
+      if @item == :BOOSTERENERGY
+        pbHeldItemTriggered(@item)
+        @effects[PBEffects::BoosterEnergy] = true
+        @battle.pbDisplay(_INTL("{1} used its Booster Energy to activate Protosynthesis!", pbThis))
+      else
+        @battle.pbDisplay(_INTL("The effects of {1}'s Protosynthesis wore off!", pbThis(true)))
+        @effects[PBEffects::ParadoxStat] = nil
+      end
+    end
   end
 end
 class PokeBattle_Battle

@@ -1745,12 +1745,12 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
   next score
 end
 
-# Calm Mind and Quiver Dance
-PBAI::ScoreHandler.add("02B", "02C") do |score, ai, user, target, move|
+# Calm Mind/Quiver Dance/Geomancy
+PBAI::ScoreHandler.add("02B", "02C", "14E") do |score, ai, user, target, move|
   if [:SETUPSWEEPER,:SPECIALBREAKER,:WINCON].include?(user.role.id)
-    if user.statStageAtMax?(:SPECIAL_ATTACK) || user.statStageAtMax?(:SPECIAL_DEFENSE)
+    if user.statStageAtMax?(:SPECIAL_ATTACK)
       score = 0
-      PBAI.log("* 0 for battler being max Special Attack or Special Defense")
+      PBAI.log("* 0 for battler being max Special Attack")
     else
       count = 0
       user.moves.each do |m|
@@ -2117,7 +2117,7 @@ PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
 end
 
 #Rage Powder
-PBAI::ScoreHandler.add("117") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
   if ai.battle.pbSideSize(0) == 2
     ally = false
     b = nil
@@ -2268,6 +2268,22 @@ PBAI::ScoreHandler.add("522") do |score, ai, user, target, move|
   if hit > 0
     score += hit
     PBAI.log("+ #{hit} for having a damage boost")
+  end
+  next score
+end
+
+#Tailwind
+PBAI::ScoreHandler.add("05B") do |score, ai, user, target, move|
+  if user.own_side.effects[PBEffects::Tailwind] <= 0
+    score += 100
+    PBAI.log("+ 100 for setting up to outspeed")
+    if user.role.id == :SPEEDCONTROL
+      score += 50
+      PBAI.log("+ 50 for being a #{user.role.name}")
+    end
+  else
+    score = 0
+    PBAI.log("* 0 because Tailwind is already up")
   end
   next score
 end

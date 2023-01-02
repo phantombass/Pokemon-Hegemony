@@ -1406,6 +1406,7 @@ SnapEdges = true
 # Stannum Town
 Outdoor = true
 ShowArea = true
+Weather = Rain,0
 MapPosition = 1,21,16
 SnapEdges = true
 #-------------------------------
@@ -1428,6 +1429,7 @@ SnapEdges = true
 # Route 27
 Outdoor = true
 ShowArea = true
+Weather = Rain,0
 MapPosition = 1,17,16
 SnapEdges = true
 #-------------------------------
@@ -1464,6 +1466,16 @@ ShowArea = true
 MapPosition = 1,15,8
 SnapEdges = true
 #-------------------------------
+[318]
+# Abandoned Mansion
+MapPosition = 1,16,18
+SnapEdges = true
+#-------------------------------
+[319]
+# Abandoned Mansion
+MapPosition = 1,16,18
+SnapEdges = true
+#-------------------------------
 [320]
 # Hidden Grotto - Route 26
 Outdoor = false
@@ -1473,6 +1485,7 @@ SnapEdges = true
 #-------------------------------
 [321]
 # Hidden Grotto - Wolfram
+ShowArea = false
 MapPosition = 1,15,8
 SnapEdges = true
 #-------------------------------
@@ -1572,4 +1585,161 @@ SnapEdges = true
 Outdoor = true
 ShowArea = true
 MapPosition = 1,4,10
+SnapEdges = true
+#-------------------------------
+[340]
+# Route 35
+Outdoor = true
+ShowArea = true
+MapPosition = 1,4,16
+SnapEdges = true
+#-------------------------------
+[341]
+# Kallim Sanctuary
+Outdoor = true
+ShowArea = true
+MapPosition = 1,2,17
+SnapEdges = true
+#-------------------------------
+[342]
+# Yttrius Ruins
+ShowArea = true
+MapPosition = 1,2,3
+#-------------------------------
+[343]
+# Kallim Ruins
+ShowArea = true
+MapPosition = 1,2,17
+SnapEdges = true
+#-------------------------------
+[344]
+# Kallim Dojo
+ShowArea = false
+MapPosition = 1,2,17
+SnapEdges = true
+#-------------------------------
+[345]
+# Route 36
+Outdoor = true
+ShowArea = true
+MapPosition = 1,6,17
+SnapEdges = true
+#-------------------------------
+[346]
+# Alumi Steppes
+Outdoor = true
+ShowArea = true
+MapPosition = 1,10,17
+SnapEdges = true
+#-------------------------------
+[347]
+# Mt. Titanus
+ShowArea = true
+MapPosition = 1,10,16
+SnapEdges = true
+#-------------------------------
+[348]
+# Mt. Titanus
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 1,10,16
+SnapEdges = true
+#-------------------------------
+[349]
+# Mt. Titanus
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 1,10,16
+SnapEdges = true
+#-------------------------------
+[350]
+# Titanus Apex
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 1,9,13
+SnapEdges = true
+#-------------------------------
+[351]
+# Duskbound Forest
+Outdoor = true
+ShowArea = true
+Weather = Rain,0
+MapPosition = 1,14,14
+SnapEdges = true
+#-------------------------------
+[352]
+# Forest Cave
+ShowArea = true
+MapPosition = 1,14,15
+SnapEdges = true
+#-------------------------------
+[353]
+# Kallim PMC
+MapPosition = 1,2,17
+#-------------------------------
+[354]
+# Apartment 1
+MapPosition = 1,15,8
+#-------------------------------
+[355]
+# Apartment 2
+MapPosition = 1,15,8
+#-------------------------------
+[356]
+# Houses
+MapPosition = 1,15,8
+#-------------------------------
+[357]
+# Pokémon Lab
+MapPosition = 1,15,8
+#-------------------------------
+[358]
+# Alumi PMC
+MapPosition = 1,10,17
+#-------------------------------
+[359]
+# Alumi Dojo
+MapPosition = 1,10,17
+SnapEdges = true
+#-------------------------------
+[360]
+# Alumi Ruins
+ShowArea = true
+MapPosition = 1,10,17
+SnapEdges = true
+#-------------------------------
+[361]
+# Houses
+MapPosition = 1,10,17
+#-------------------------------
+[362]
+# Houses
+MapPosition = 1,11,1
+#-------------------------------
+[363]
+# House
+MapPosition = 1,8,5
+#-------------------------------
+[365]
+# Hidden Grotto - Route 35
+MapPosition = 1,4,15
+SnapEdges = true
+#-------------------------------
+[366]
+# Titanus Temple
+ShowArea = true
+MapPosition = 1,9,13
+SnapEdges = true
+#-------------------------------
+[369]
+# Hidden Grotto - Mt. Titanus
+MapPosition = 1,10,16
+SnapEdges = true
+#-------------------------------
+[370]
+# Hidden Grotto - Route 36
+MapPosition = 1,6,17
 SnapEdges = true

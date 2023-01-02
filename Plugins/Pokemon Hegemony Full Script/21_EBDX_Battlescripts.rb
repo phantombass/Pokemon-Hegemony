@@ -210,4 +210,161 @@ module BattleScripts
       @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
     end
   }
+  MALOKI = {
+    "afterLastOpp" => "This is one righteous battle, my dude!",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Time to feel the tidal wave come crashing in!")
+      @scene.pbAnimation(GameData::Move.get(:RAINDANCE).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :HeavyRain
+      $gym_weather = true
+      @scene.pbDisplay("Maloki set up Heavy Rain!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
+    end
+  }
+  JULIET = {
+    "afterLastOpp" => "Like, WHOA. This is my last one!",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("YAY! Battle time!")
+      @scene.pbAnimation(GameData::Move.get(:ELECTRICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.terrain = :Electric
+      @battle.field.terrainDuration = -1
+      $gym_gimmick = true
+      @scene.pbDisplay("Juliet set up a permanent Electric Terrain!")
+    end
+  }
+  OLAF = {
+    "afterLastOpp" => "Huh. Not bad, kid.",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("I really do not care for battling, but here we go.")
+      @scene.pbAnimation(GameData::Move.get(:BLIZZARD).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Sleet
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Olaf set up permanent Sleet!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
+    end
+  }
+  WENDY = {
+    "afterLastOpp" => "Huh. Not bad, kid.",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Umm, I'm really not sure...ok, here we go, I guess...")
+      @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Windy
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Wendy set up a permanent Wind!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
+    end
+  }
+  ADAM = {
+    "afterLastOpp" => "Wow! You're so tough! But can you handle this?",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Let's get this show going!")
+      @scene.pbAnimation(GameData::Move.get(:MISTYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.terrain = :Misty
+      @battle.field.terrainDuration = -1
+      $gym_gimmick = true
+      @scene.pbDisplay("Adam set up a permanent Misty Terrain!")
+    end
+  }
+  CHANCELLOR1 = {
+    "afterLastOpp" => "I have to succeed at this. You will NOT stand in my way!",
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Why can't you just stay out of our business?!?")
+      @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.terrain = :Psychic
+      @battle.field.terrainDuration = -1
+      $gym_gimmick = true
+      @scene.pbDisplay("Yule set up a permanent Psychic Terrain!")
+    end
+  }
+  ASTRIDLEAGUE = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:WISH).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Starstorm
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Astrid set a permanent Starstorm!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+  WINSLOWLEAGUE = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.terrain = :Psychic
+        @battle.field.terrainDuration = -1
+        @battle.field.effects[PBEffects::TrickRoom] = 1
+        $gym_gimmick = true
+      @scene.pbDisplay("Winslow set permanent Psychic Terrain and Trick Room!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+  EUGENERAIN = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:RAINDANCE).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :HeavyRain
+      $gym_weather = true
+      @scene.pbDisplay("Eugene set up Heavy Rain!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+  EUGENESLEET = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:HAIL).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Sleet
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Eugene set up permanent Sleet!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+  ARMANDLEAGUE = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :StrongWinds
+      $gym_weather = true
+      @scene.pbDisplay("Armand set up Delta Stream!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+  WINSTONLEAGUE = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Windy
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Winston set a permanent Wind!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+  VINCENTLEAGUE = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.terrain = :Poison
+        @battle.field.terrainDuration = -1
+        $gym_gimmick = true
+      @scene.pbDisplay("Vincent set permanent Poison Terrain!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+  JOSEPHSAND = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:SANDSTORM).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Sandstorm
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("Joseph set a permanent Sandstorm!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+  JOSEPHTERRAIN = {
+    "turnStart0" => proc do
+      @scene.pbAnimation(GameData::Move.get(:ELECTRICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.terrain = :Electric
+        @battle.field.terrainDuration = -1
+        $gym_gimmick = true
+      @scene.pbDisplay("Winslow set permanent Electric Terrain!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
 end
