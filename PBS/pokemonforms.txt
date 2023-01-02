@@ -4380,3 +4380,139 @@ Weight = 155.5
 Generation = 6
 BattlerEnemyY = 19
 #-------------------------------
+[OINKOLOGNE,1]
+FormName = Female
+BaseStats = 115,90,70,65,59,90
+Abilities = AROMAVEIL,GLUTTONY
+Moves = 1,TACKLE,1,TAILWHIP,3,DISARMINGVOICE,5,ECHOEDVOICE,9,MUDSHOT,12,COVET,15,DIG,17,HEADBUTT,23,YAWN,28,TAKEDOWN,30,WORKUP,34,UPROAR,39,DOUBLEEDGE,45,EARTHPOWER,51,BELCH
+Pokedex = This is a meticulous Pokémon that likes to keep things tidy. It shrouds itself in a floral aroma that soothes the Pokémon around it.
+#-------------------------------
+[DUDUNSPARCE,1]
+FormName = Three-Segment Form
+Height = 4.5
+Weight = 47.4
+#-------------------------------
+[PALAFIN,1]
+FormName = Hero Form
+Height = 1.8
+Weight = 97.4
+BaseStats = 100,160,97,100,106,87
+BaseExp = 228
+#-------------------------------
+[MAUSHOLD,1]
+FormName = Family of Three
+Weight = 2.3
+#-------------------------------
+[REVAVROOM,1]
+FormName = Schedar Starmobile
+Type1 = FIRE
+Abilities = SPEEDBOOST
+#-------------------------------
+[REVAVROOM,2]
+FormName = Ruchbah Starmobile
+Type1 = FAIRY
+Abilities = MISTYSURGE
+#-------------------------------
+[REVAVROOM,3]
+FormName = CAPH Starmobile
+Type1 = FIGHTING
+Abilities = STAMINA
+#-------------------------------
+[REVAVROOM,4]
+FormName = NAVI Starmobile
+Type1 = POISON
+Abilities = TOXICDEBRIS
+#-------------------------------
+[REVAVROOM,5]
+FormName = Segin Starmobile
+Type1 = DARK
+Abilities = INTIMIDATE
+#-------------------------------
+[TATSUGIRI,1]
+FormName = Droopy Form
+Color = Red
+Pokedex = This species’ differing colors and patterns are apparently the result of Tatsugiri changing itself to suit the preferences of the prey it lures in.
+#-------------------------------
+[TATSUGIRI,2]
+FormName = Stretchy Form
+Color = Yellow
+Pokedex = Bird Pokémon are its main prey. This Pokémon knows it’s weak, so it hunts with a partner.
+#-------------------------------
+[SQUAWKABILLY,1]
+FormName = Blue Plumage
+Color = Blue
+Pokedex = Blue-feathered Squawkabilly view their green- feathered counterparts as rivals, since the latter make up the largest, most powerful groups.
+#-------------------------------
+[SQUAWKABILLY,2]
+FormName = Yellow Plumage
+Color = Yellow
+HiddenAbilities = SHEERFORCE
+Pokedex = The yellow Squawkabilly are especially fierce. They've even been known to drive other bird Pokémon out of town.
+#-------------------------------
+[SQUAWKABILLY,3]
+FormName = White Plumage
+Color = White
+HiddenAbilities = SHEERFORCE
+Pokedex = Though these Squawkabilly are the fewest in number, they have no trouble living in towns since they blend in with the white buildings.
+#-------------------------------
+[WOOPER,1]
+Type1 = POISON
+Type2 = GROUND
+FormName = Paldean Form
+Color = Brown
+Abilities = POISONPOINT, WATERABSORB
+Moves = 1,MUDSHOT,1,TAILWHIP,4,TACKLE,5,POISONTAIL,12,TOXICSPIKES,16,SLAM,21,YAWN,24,POISONJAB,28,SLUDGEWAVE,32,AMNESIA,36,TOXIC,40,EARTHQUAKE
+TutorMoves = TAKEDOWN,MUDSLAP,PROTECT,WATERPULSE,LOWKICK,ACIDSPRAY,TRAILBLAZE,CHILLINGWATER,FACADE,POISONTAIL,BULLDOZE,MUDSHOT,ROCKTOMB,VENOSHOCK,ENDURE,RAINDANCE,SANDSTORM,DIG,BODYSLAM,SLEEPTALK,WATERFALL,POISONJAB,STOMPINGTANTRUM,REST,ROCKSLIDE,BODYPRESS,SPIKES,TOXICSPIKES,GUNKSHOT,SUBSTITUTE,LIQUIDATION,STEALTHROCK,SURF,AMNESIA,HELPINGHAND,EARTHPOWER,HYDROPUMP,SLUDGEBOMB,EARTHQUAKE,STONEEDGE
+EggMoves = DOUBLEKICK,MIST,COUNTER,RECOVER,HAZE,CURSE,ANCIENTPOWER,STOCKPILE,SPITUP,SWALLOW,ACIDSPRAY,AFTERYOU
+Weight = 11
+Pokedex = After losing a territorial struggle, Wooper began living on land. The Pokémon changed over time, developing a poisonous film to protect its body.
+Evolutions = CLODSIRE,Level,20
+#-------------------------------
+[TAUROS,1]
+FormName = Paldean Form (Combat Breed)
+Type1 = FIGHTING
+Color = Black
+HiddenAbilities = CUDCHEW
+BaseStats = 75,110,105,100,30,70
+Moves = 1,TACKLE,1,TAILWHIP,5,WORKUP,10,DOUBLEKICK,15,ASSURANCE,20,HEADBUTT,25,SCARYFACE,30,ZENHEADBUTT,35,RAGINGBULL,40,REST,45,SWAGGER,50,THRASH,55,DOUBLEEDGE,60,CLOSECOMBAT
+TutorMoves = TAKEDOWN,SCARYFACE,PROTECT,THIEF,TRAILBLAZE,FACADE,BULLDOZE,ROCKTOMB,ENDURE,SANDSTORM,SMARTSTRIKE,DIG,ZENHEADBUTT,BULKUP,BODYSLAM,SLEEPTALK,STOMPINGTANTRUM,REST,ROCKSLIDE,BODYPRESS,IRONHEAD,SUBSTITUTE,DRILLRUN,REVERSAL,WILDCHARGE,EARTHQUAKE,STONEEDGE,GIGAIMPACT,OUTRAGE,HYPERBEAM,CLOSECOMBAT,SUNNYDAY,RAINDANCE,SURF
+EggMoves = CURSE,ENDEAVOR
+Weight = 115
+Pokedex = This kind of Tauros, known as the Combat Breed, is distinguished by its thick, powerful muscles and its fierce disposition.
+#-------------------------------
+[TAUROS,2]
+FormName = Paldean Form (Blaze Breed)
+Type1 = FIGHTING
+Type2 = FIRE
+Color = Black
+HiddenAbilities = CUDCHEW
+BaseStats = 75,110,105,100,30,70
+Moves = 1,TACKLE,1,TAILWHIP,5,WORKUP,10,DOUBLEKICK,15,ASSURANCE,20,HEADBUTT,25,SCARYFACE,30,ZENHEADBUTT,35,RAGINGBULL,40,REST,45,SWAGGER,50,THRASH,55,DOUBLEEDGE,60,CLOSECOMBAT
+TutorMoves = TAKEDOWN,SCARYFACE,PROTECT,THIEF,TRAILBLAZE,FACADE,BULLDOZE,ROCKTOMB,ENDURE,SANDSTORM,SMARTSTRIKE,DIG,ZENHEADBUTT,BULKUP,BODYSLAM,SLEEPTALK,STOMPINGTANTRUM,REST,ROCKSLIDE,BODYPRESS,IRONHEAD,SUBSTITUTE,DRILLRUN,REVERSAL,WILDCHARGE,EARTHQUAKE,STONEEDGE,GIGAIMPACT,OUTRAGE,HYPERBEAM,CLOSECOMBAT,WILLOWISP,SUNNYDAY,FLAMETHROWER,FLAMECHARGE,FIRESPIN,FIREBLAST,OVERHEAT,FLAREBLITZ
+EggMoves = CURSE,ENDEAVOR
+Weight = 85
+Pokedex = People call this kind of Tauros the Blaze Breed due to the hot air it snorts from its nostrils. Its three tails are intertwined.
+#-------------------------------
+[TAUROS,3]
+FormName = Paldean Form (Aqua Breed)
+Type1 = FIGHTING
+Type2 = WATER
+Color = Black
+HiddenAbilities = CUDCHEW
+BaseStats = 75,110,105,100,30,70
+Moves = 1,TACKLE,1,TAILWHIP,5,WORKUP,10,DOUBLEKICK,15,ASSURANCE,20,HEADBUTT,25,SCARYFACE,30,ZENHEADBUTT,35,RAGINGBULL,40,REST,45,SWAGGER,50,THRASH,55,DOUBLEEDGE,60,CLOSECOMBAT
+TutorMoves = TAKEDOWN,SCARYFACE,PROTECT,THIEF,TRAILBLAZE,FACADE,BULLDOZE,ROCKTOMB,ENDURE,SANDSTORM,SMARTSTRIKE,DIG,ZENHEADBUTT,BULKUP,BODYSLAM,SLEEPTALK,STOMPINGTANTRUM,REST,ROCKSLIDE,BODYPRESS,IRONHEAD,SUBSTITUTE,DRILLRUN,REVERSAL,WILDCHARGE,EARTHQUAKE,STONEEDGE,GIGAIMPACT,OUTRAGE,HYPERBEAM,CLOSECOMBAT,RAINDANCE,SURF,CHILLINGWATER,WATERPULSE,LIQUIDATION,HYDROPUMP
+EggMoves = CURSE,ENDEAVOR
+Weight = 110
+Pokedex = It swims by jetting water from its horns. The most notable characteristic of the Aqua Breed is its high body fat, which allows it to float easily.
+#-------------------------------
+[GIMMIGHOUL,1]
+FormName = Roam Form
+Color = Gray
+Shape = Bipedal
+Abilities = RUNAWAY
+Height = 0.1
+Weight = 0.1
+Pokedex = This Pokémon was born from passion that seeped into a coin. It wanders, apparently seeking to return to the treasure chest it once inhabited.
+CatchRate = 0
+Evolutions = GHOLDENGO,None,

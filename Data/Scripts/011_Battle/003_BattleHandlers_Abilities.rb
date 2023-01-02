@@ -605,7 +605,7 @@ BattleHandlers::MoveBlockingAbility.add(:DAZZLING,
   }
 )
 
-BattleHandlers::MoveBlockingAbility.copy(:DAZZLING,:QUEENLYMAJESTY)
+BattleHandlers::MoveBlockingAbility.copy(:DAZZLING,:QUEENLYMAJESTY,:ARMORTAIL)
 
 #===============================================================================
 # MoveImmunityTargetAbility handlers

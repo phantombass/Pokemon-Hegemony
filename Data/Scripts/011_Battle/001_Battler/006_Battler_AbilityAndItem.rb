@@ -62,7 +62,7 @@ class PokeBattle_Battler
   def pbAbilitiesOnDamageTaken(oldHP,newHP=-1)
     return false if !abilityActive?
     newHP = @hp if newHP<0
-    return false if oldHP<@totalhp/2 || newHP>=@totalhp/2   # Didn't drop below half
+    return false if !@droppedBelowHalfHP
     ret = BattleHandlers.triggerAbilityOnHPDroppedBelowHalf(self.ability,self,@battle)
     return ret   # Whether self has switched out
   end
