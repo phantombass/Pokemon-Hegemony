@@ -229,3 +229,73 @@ BattleVS         = plasmaSM
 BattleScript	 = LUNA
 Ace				 = 6
 #-------------------------------
+[DOJO_Maloki]
+BattleBGM        = DPPT-Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = MALOKI
+Ace				 = 6
+#-------------------------------
+[DOJO_Juliet]
+BattleBGM        = DPPT-Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = JULIET
+Ace				 = 6
+#-------------------------------
+[DOJO_Olaf]
+BattleBGM        = DPPT-Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = OLAF
+Ace				 = 6
+#-------------------------------
+[DOJO_Wendy]
+BattleBGM        = DPPT-Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = WENDY
+Ace				 = 6
+#-------------------------------
+[DOJO_Adam]
+BattleBGM        = DPPT-Gym Leader.ogg
+BattleVS         = plasmaSM
+BattleScript	 = ADAM
+Ace				 = 6
+#-------------------------------
+[LEAGUE_Astrid]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+BattleScript	 = ASTRIDLEAGUE
+Ace				 = 6
+#-------------------------------
+[LEAGUE_Winslow]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+BattleScript	 = WINSLOWLEAGUE
+Ace				 = 6
+#-------------------------------
+[LEAGUE_Eugene]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+Ace				 = 6
+#-------------------------------
+[LEAGUE_Armand]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+BattleScript	 = ARMANDLEAGUE
+Ace				 = 6
+#-------------------------------
+[LEAGUE_Vincent]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+BattleScript	 = VINCENTLEAGUE
+Ace				 = 6
+#-------------------------------
+[LEAGUE_Winston]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = plasmaSM
+BattleScript	 = WINSTONLEAGUE
+Ace				 = 6
+#-------------------------------
+[CHAMPION]
+BattleBGM        = HGSS-278-BattleChampion.ogg 
+BattleVS         = plasmaSM
+Ace				 = 6
+#-------------------------------

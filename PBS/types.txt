@@ -36,7 +36,7 @@ Immunities = ELECTRIC
 Name = Rock
 InternalName = ROCK
 Weaknesses = FIGHTING,GROUND,STEEL,WATER,GRASS,TIME
-Resistances = NORMAL,FLYING,POISON,FIRE,SOUND
+Resistances = NORMAL,FLYING,POISON,FIRE,SOUND,COSMIC
 #-------------------------------
 [6]
 Name = Bug
@@ -103,7 +103,7 @@ Name = Ice
 InternalName = ICE
 IsSpecialType = true
 Weaknesses = FIGHTING,ROCK,STEEL,FIRE,TIME
-Resistances = ICE,SOUND
+Resistances = ICE,SOUND,COSMIC
 #-------------------------------
 [16]
 Name = Dragon

@@ -39,6 +39,13 @@ MultipleForms.register(:PALKIA,{
   }
 })
 
+MultipleForms.register(:PALAFIN, {
+  "getFormOnLeavingBattle" => proc { |pkmn, battle, usedInBattle, endBattle|
+    next if !endBattle || !usedInBattle || !pkmn.fainted?
+    next 0 
+  }
+})
+
 MultipleForms.register(:ROTOM,{
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
     $appliance = 7 if endBattle
@@ -282,6 +289,24 @@ def annihilape_fix
   $annihilape_fix = true
 end
 
+def regigigas_open?
+  regi = 0
+  regis = [:REGIROCK,:REGICE,:REGISTEEL,:REGIELEKI,:REGIDRAGO]
+  $Trainer.party.each {|pkmn|
+    regi += 1 if regis.include?(pkmn.species)
+  }
+  return regi == 5
+end
+
+def wartime_regigigas_open?
+  regi = 0
+  regis = [:WREGIROCK,:WREGICE,:WREGISTEEL,:WREGIELEKI,:WREGIDRAGO]
+  $Trainer.party.each {|pkmn|
+    regi += 1 if regis.include?(pkmn.species)
+  }
+  return regi == 5
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
   pikachu_glitch_fix if $pika_fixed != true
@@ -290,6 +315,8 @@ Events.onMapUpdate+=proc {|sender,e|
   second_league_fix if $second_league_fix != true
   intro_fix if $intro_fix != true
   annihilape_fix if $annihilape_fix != true
+  $game_switches[284] = true if wartime_regigigas_open?
+  $game_switches[285] = true if regigigas_open?
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
   setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
   $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false && $game_switches[71] == true
