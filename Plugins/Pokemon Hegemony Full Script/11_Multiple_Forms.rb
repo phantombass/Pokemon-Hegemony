@@ -260,13 +260,6 @@ def pokemon_league_fix
   end
 end
 
-def post_game_beta_test
-  for i in 197..203
-    $game_switches[i] = false
-  end
-  $game_switches[218] = true
-end
-
 def second_league_fix
   if $game_switches[12]
     $game_switches[195] = true
@@ -315,6 +308,7 @@ Events.onMapUpdate+=proc {|sender,e|
   second_league_fix if $second_league_fix != true
   intro_fix if $intro_fix != true
   annihilape_fix if $annihilape_fix != true
+  $game_switches[218] = true
   $game_switches[284] = true if wartime_regigigas_open?
   $game_switches[285] = true if regigigas_open?
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
