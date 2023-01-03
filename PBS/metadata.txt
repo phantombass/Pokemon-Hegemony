@@ -218,6 +218,10 @@ BicycleAlways = true
 MapPosition = 0,11,7
 MapSize = 1,111
 #-------------------------------
+[043]
+HealingSpot = 32,32,14
+MapPosition = 0,20,1
+#-------------------------------
 [044]
 # Route 6
 Outdoor = true
@@ -449,6 +453,7 @@ SnapEdges = true
 [084]
 # Boro PMC
 MapPosition = 0,16,2
+HealingSpot = 83,10,8
 SnapEdges = true
 #-------------------------------
 [085]
@@ -485,6 +490,7 @@ SnapEdges = true
 # Helum PMC
 ShowArea = false
 MapPosition = 0,10,1
+HealingSpot = 91,37,23
 SnapEdges = true
 #-------------------------------
 [093]
@@ -540,6 +546,7 @@ SnapEdges = true
 [103]
 # Ogan PMC
 MapPosition = 0,1,1
+HealingSpot = 102,27,24
 SnapEdges = true
 #-------------------------------
 [105]
@@ -611,6 +618,11 @@ ShowArea = true
 Weather = Rain,0
 MapPosition = 0,12,4
 SnapEdges = true
+#-------------------------------
+[116]
+# Neonn PMC
+HealingSpot = 114,21,10
+MapPosition = 0,12,4
 #-------------------------------
 [117]
 # Hidden Grotto - Route 4
@@ -700,6 +712,7 @@ SnapEdges = true
 [132]
 # Sodum PMC
 MapPosition = 0,16,5
+HealingSpot = 131,15,22
 SnapEdges = true
 #-------------------------------
 [133]
@@ -742,6 +755,7 @@ SnapEdges = true
 [138]
 # Krypto PMC
 MapPosition = 0,18,5
+HealingSpot = 137,7,12
 SnapEdges = true
 #-------------------------------
 [139]
@@ -816,6 +830,7 @@ SnapEdges = true
 [153]
 # Hydro PMC
 MapPosition = 0,22,16
+HealingSpot = 152,22,31
 SnapEdges = true
 #-------------------------------
 [154]
@@ -860,6 +875,7 @@ SnapEdges = true
 [162]
 # Chloros PMC
 MapPosition = 0,11,10
+HealingSpot = 161,22,19
 SnapEdges = true
 #-------------------------------
 [163]
