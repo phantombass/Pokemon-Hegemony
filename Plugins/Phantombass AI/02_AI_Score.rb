@@ -2032,10 +2032,10 @@ end
 #Trick Room
 PBAI::ScoreHandler.add("11F") do |score, ai, user, target, move|
   if ai.battle.field.effects[PBEffects::TrickRoom] == 0 && target.faster_than?(user)
-    score += 50
+    score += 100
     PBAI.log("+ 50 for setting Trick Room to outspeed target")
     if user.role.id == :TRICKROOMSETTER
-      score += 50
+      score += 100
       PBAI.log("+ 50 for being a #{user.role.name}")
     end
   else
@@ -2130,9 +2130,13 @@ PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
         enemy.push(opp)
       end
       mon = user.side.battlers.find {|proj| proj && proj != self && !proj.fainted?}
-      if user.role.id == :REDIRECTION && (mon.bad_against?(enemy[0]) || mon.bad_against?(enemy[1]))
+      if (mon.bad_against?(enemy[0]) || mon.bad_against?(enemy[1]))
         score += 200
         PBAI.log("+ 200 for redirecting an attack away from partner")
+        if user.role.id == :REDIRECTION 
+          score += 100
+          PBAI.log("+ 100 for being a #{user.role.name} role")
+        end
       end
     end
   else
@@ -2275,10 +2279,10 @@ end
 #Tailwind
 PBAI::ScoreHandler.add("05B") do |score, ai, user, target, move|
   if user.own_side.effects[PBEffects::Tailwind] <= 0
-    score += 100
+    score += 200
     PBAI.log("+ 100 for setting up to outspeed")
     if user.role.id == :SPEEDCONTROL
-      score += 50
+      score += 100
       PBAI.log("+ 50 for being a #{user.role.name}")
     end
   else

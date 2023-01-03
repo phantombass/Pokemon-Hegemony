@@ -219,6 +219,7 @@ MapPosition = 0,11,7
 MapSize = 1,111
 #-------------------------------
 [043]
+# Garon PMC
 HealingSpot = 32,32,14
 MapPosition = 0,20,1
 #-------------------------------
@@ -452,8 +453,8 @@ SnapEdges = true
 #-------------------------------
 [084]
 # Boro PMC
-MapPosition = 0,16,2
 HealingSpot = 83,10,8
+MapPosition = 0,16,2
 SnapEdges = true
 #-------------------------------
 [085]
@@ -489,8 +490,8 @@ SnapEdges = true
 [092]
 # Helum PMC
 ShowArea = false
-MapPosition = 0,10,1
 HealingSpot = 91,37,23
+MapPosition = 0,10,1
 SnapEdges = true
 #-------------------------------
 [093]
@@ -545,8 +546,8 @@ SnapEdges = true
 #-------------------------------
 [103]
 # Ogan PMC
-MapPosition = 0,1,1
 HealingSpot = 102,27,24
+MapPosition = 0,1,1
 SnapEdges = true
 #-------------------------------
 [105]
@@ -711,8 +712,8 @@ SnapEdges = true
 #-------------------------------
 [132]
 # Sodum PMC
-MapPosition = 0,16,5
 HealingSpot = 131,15,22
+MapPosition = 0,16,5
 SnapEdges = true
 #-------------------------------
 [133]
@@ -754,8 +755,8 @@ SnapEdges = true
 #-------------------------------
 [138]
 # Krypto PMC
-MapPosition = 0,18,5
 HealingSpot = 137,7,12
+MapPosition = 0,18,5
 SnapEdges = true
 #-------------------------------
 [139]
@@ -829,8 +830,8 @@ SnapEdges = true
 #-------------------------------
 [153]
 # Hydro PMC
-MapPosition = 0,22,16
 HealingSpot = 152,22,31
+MapPosition = 0,22,16
 SnapEdges = true
 #-------------------------------
 [154]
@@ -874,8 +875,8 @@ SnapEdges = true
 #-------------------------------
 [162]
 # Chloros PMC
-MapPosition = 0,11,10
 HealingSpot = 161,22,19
+MapPosition = 0,11,10
 SnapEdges = true
 #-------------------------------
 [163]
@@ -956,6 +957,11 @@ ShowArea = true
 MapPosition = 0,24,3
 SnapEdges = true
 #-------------------------------
+[177]
+# Carbo PMC
+HealingSpot = 176,7,15
+MapPosition = 0,24,3
+#-------------------------------
 [181]
 # Air Force Main Office
 MapPosition = 0,24,3
@@ -981,6 +987,11 @@ ShowArea = true
 MapPosition = 0,7,17
 SnapEdges = true
 #-------------------------------
+[186]
+# Mangan PMC
+HealingSpot = 175,19,6
+MapPosition = 0,7,17
+#-------------------------------
 [187]
 # Route 13
 Outdoor = true
@@ -995,6 +1006,11 @@ ShowArea = true
 Weather = Rain,0
 MapPosition = 0,4,14
 SnapEdges = true
+#-------------------------------
+[189]
+# Nitro PMC
+HealingSpot = 188,43,8
+MapPosition = 0,4,14
 #-------------------------------
 [191]
 # Nitro Gym
@@ -1044,6 +1060,11 @@ ShowArea = true
 MapPosition = 0,24,9
 SnapEdges = true
 #-------------------------------
+[209]
+# Rubid PMC
+HealingSpot = 208,5,7
+MapPosition = 0,2,8
+#-------------------------------
 [212]
 # Route 14
 Outdoor = true
@@ -1069,6 +1090,11 @@ Outdoor = true
 ShowArea = true
 MapPosition = 0,2,8
 SnapEdges = true
+#-------------------------------
+[216]
+# Oxy PMC
+HealingSpot = 215,21,6
+MapPosition = 0,2,8
 #-------------------------------
 [218]
 # War Path Ruins
@@ -1113,6 +1139,11 @@ ShowArea = true
 MapPosition = 0,27,12
 SnapEdges = true
 #-------------------------------
+[228]
+# Capitol PMC
+HealingSpot = 227,13,31
+MapPosition = 0,2,8
+#-------------------------------
 [236]
 # Zirco Mountain
 ShowArea = true
@@ -1156,6 +1187,11 @@ Outdoor = true
 ShowArea = true
 MapPosition = 0,28,7
 SnapEdges = true
+#-------------------------------
+[243]
+# Rado PMC
+HealingSpot = 242,7,6
+MapPosition = 0,2,8
 #-------------------------------
 [245]
 # Hidden Grotto - Route 19
@@ -1237,10 +1273,12 @@ SnapEdges = true
 #-------------------------------
 [267]
 # Lithum PMC
+HealingSpot = 263,5,12
 MapPosition = 1,22,2
 #-------------------------------
 [268]
 # Ferro PMC
+HealingSpot = 266,8,5
 MapPosition = 1,28,6
 #-------------------------------
 [269]
@@ -1291,6 +1329,7 @@ SnapEdges = true
 #-------------------------------
 [278]
 # Plumbum PMC
+HealingSpot = 277,26,8
 MapPosition = 1,22,9
 #-------------------------------
 [279]
@@ -1362,6 +1401,7 @@ SnapEdges = true
 #-------------------------------
 [291]
 # Argyros PMC
+HealingSpot = 289,40,13
 MapPosition = 1,25,14
 #-------------------------------
 [292]
@@ -1432,6 +1472,7 @@ MapPosition = 1,21,16
 #-------------------------------
 [309]
 # Stannum PMC
+HealingSpot = 307,27,17
 MapPosition = 1,21,16
 #-------------------------------
 [310]
@@ -1462,6 +1503,7 @@ MapPosition = 1,16,18
 #-------------------------------
 [314]
 # Stibni PMC
+HealingSpot = 312,30,15
 MapPosition = 1,16,18
 #-------------------------------
 [315]
@@ -1504,6 +1546,11 @@ SnapEdges = true
 ShowArea = false
 MapPosition = 1,15,8
 SnapEdges = true
+#-------------------------------
+[322]
+# Wolfram PMC
+HealingSpot = 325,27,22
+MapPosition = 1,11,1
 #-------------------------------
 [323]
 # Route 29
@@ -1688,12 +1735,14 @@ SnapEdges = true
 #-------------------------------
 [352]
 # Forest Cave
+Outdoor = false
 ShowArea = true
 MapPosition = 1,14,15
 SnapEdges = true
 #-------------------------------
 [353]
 # Kallim PMC
+HealingSpot = 341,8,14
 MapPosition = 1,2,17
 #-------------------------------
 [354]
@@ -1714,6 +1763,7 @@ MapPosition = 1,15,8
 #-------------------------------
 [358]
 # Alumi PMC
+HealingSpot = 346,7,25
 MapPosition = 1,10,17
 #-------------------------------
 [359]

@@ -1088,7 +1088,7 @@ BattleHandlers::MoveImmunityTargetAbility.add(:GOODASGOLD,
   proc { |ability, user, target, move, type, battle, show_message|
     next false if !move.statusMove?
     next false if target == user
-    next false if @battle.moldBreaker == true
+    next false if battle.moldBreaker == true
     if show_message
       battle.pbShowAbilitySplash(target)
       if Battle::Scene::USE_ABILITY_SPLASH
@@ -1182,7 +1182,7 @@ BattleHandlers::CertainStatGainAbility.add(:OPPORTUNIST,
 BattleHandlers::AbilityOnSwitchIn.add(:ORICHALCUMPULSE,
   proc { |ability, battler, battle, switch_in|
     battle.pbShowAbilitySplash(battler)
-    if [:Sun, :HarshSun].include?(battler.effectiveWeather)
+    if [:Sun, :HarshSun].include?(battler.battle.pbWeather)
       battle.pbDisplay(_INTL("{1} basked in the sunlight, sending its ancient pulse into a frenzy!", battler.pbThis))
       battle.pbHideAbilitySplash(battler)
       next 
@@ -1202,7 +1202,7 @@ BattleHandlers::DamageCalcUserAbility.add(:ORICHALCUMPULSE,
 #===============================================================================
 BattleHandlers::AbilityOnSwitchIn.add(:PROTOSYNTHESIS,
   proc { |ability, battler, battle, switch_in|
-    next if ![:Sun, :HarshSun].include?(battler.effectiveWeather) && battler.item != :BOOSTERENERGY
+    next if ![:Sun, :HarshSun].include?(battler.battle.pbWeather) && battler.item != :BOOSTERENERGY
     userStats = battler.plainStats
     highestStatValue = 0
     userStats.each_value { |value| highestStatValue = value if highestStatValue < value }
@@ -1210,7 +1210,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:PROTOSYNTHESIS,
     [:ATTACK,:DEFENSE,:SPECIAL_ATTACK,:SPECIAL_DEFENSE,:SPEED].each do |s|
       next if userStats[s] < highestStatValue
       battle.pbShowAbilitySplash(battler)
-      if battler.item == :BOOSTERENERGY && ![:Sun, :HarshSun].include?(battler.effectiveWeather)
+      if battler.item == :BOOSTERENERGY && ![:Sun, :HarshSun].include?(battler.battle.pbWeather)
         battler.pbHeldItemTriggered(battler.item)
         battler.effects[PBEffects::BoosterEnergy] = true
         battle.pbDisplay(_INTL("{1} used its Booster Energy to activate Protosynthesis!", battler.pbThis))
@@ -1343,7 +1343,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:SUPREMEOVERLORD,
 BattleHandlers::AbilityOnSwitchIn.add(:SWORDOFRUIN,
   proc { |ability, battler, battle, switch_in|
   battle.pbShowAbilitySplash(battler)
-  battle.pbDisplay(_INTL("{1}'s Tablets of Ruin weakened the Defense of all surrounding Pokémon!", battler.pbThis))
+  battle.pbDisplay(_INTL("{1}'s Sword of Ruin weakened the Defense of all surrounding Pokémon!", battler.pbThis))
   battle.pbHideAbilitySplash(battler)
   }
 )
