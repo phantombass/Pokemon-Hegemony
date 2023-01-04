@@ -1187,7 +1187,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:ORICHALCUMPULSE,
       battle.pbHideAbilitySplash(battler)
       next 
     end
-    battle.pbStartWeatherAbility(:Sun, battler)
+    pbBattleWeatherAbility(:Sun, battler, battle)
     battle.pbDisplay(_INTL("{1} turned the sunlight harsh, sending its ancient pulse into a frenzy!", battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
@@ -5235,9 +5235,9 @@ class PokeBattle_Move_525 < PokeBattle_Move
 end
 
 class PokeBattle_Move_526 < PokeBattle_Move
-  def pbFailsAgainstTarget?(user, target, show_message)
+  def pbFailsAgainstTarget?(user, target)
     if target.effects[PBEffects::SaltCure]
-      @battle.pbDisplay(_INTL("{1} evaded the attack!", target.pbThis)) if show_message
+      @battle.pbDisplay(_INTL("{1} evaded the attack!", target.pbThis))
       return true
     end
     return false
