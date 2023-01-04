@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "2.0.8"
+  GAME_VERSION = "2.0.9"
 end
 
 def write_version
@@ -32,6 +32,19 @@ class Game_System
     return @level_cap
   end
 end
+
+def randomizer_boss
+  if $game_switches[907]
+    EliteBattle.toggle_randomizer if EliteBattle.randomizer?
+  end
+end
+
+def randomizer_on
+  if $game_switches[907]
+    EliteBattle.toggle_randomizer if !EliteBattle.randomizer?
+  end
+end
+
 
 LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,88,90,93,95,98,100]
 
@@ -593,6 +606,7 @@ def pbStartOver(gameover=false)
           if $game_switches[283] == true && $game_switches[239] == true
             $game_switches[283] = false
           end
+          randomizer_on
         elsif $game_map.map_id == 144 || $game_map.map_id == 145
           pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell after losing the Nuzlocke..."))
           pbCancelVehicles
@@ -615,6 +629,7 @@ def pbStartOver(gameover=false)
           if $game_switches[283] == true && $game_switches[239] == true
             $game_switches[283] = false
           end
+          randomizer_on
         end
       else
         if $game_map.map_id == 144 || $game_map.map_id == 145
@@ -639,6 +654,7 @@ def pbStartOver(gameover=false)
           if $game_switches[283] == true && $game_switches[239] == true
             $game_switches[283] = false
           end
+          randomizer_on
         else
           pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
           pbCancelVehicles
@@ -665,6 +681,7 @@ def pbStartOver(gameover=false)
           if $game_switches[283] == true && $game_switches[239] == true
             $game_switches[283] = false
           end
+          randomizer_on
         end
       end
     end
@@ -709,6 +726,7 @@ def pbStartOver(gameover=false)
       for i in 197..203
         $game_switches[i] = false
       end
+      randomizer_on
       if $game_switches[283] == true && $game_switches[239] == true
             $game_switches[283] = false
           end
