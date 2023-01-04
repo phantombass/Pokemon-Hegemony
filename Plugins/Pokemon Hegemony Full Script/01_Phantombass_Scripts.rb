@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "2.0.18"
+  GAME_VERSION = "2.0.19"
 end
 
 def write_version
@@ -1279,7 +1279,7 @@ class PokeBattle_Battle
       @field.weatherDuration = 1
     end
     # Weather wears off
-    if @field.weatherDuration==0
+    if @field.weatherDuration==0 && $gym_weather == false
       case @field.weather
       when :Sun       then pbDisplay(_INTL("The sunlight faded."))
       when :Rain      then pbDisplay(_INTL("The rain stopped."))

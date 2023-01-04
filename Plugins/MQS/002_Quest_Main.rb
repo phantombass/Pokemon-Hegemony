@@ -156,8 +156,6 @@ class Player_Quests
         found = true
         if $game_switches[214] == true && $game_switches[212] == false
           pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New update!</c2>\nYour quest log has been corrected!</ac>",QUEST_JINGLE))
-        elsif $game_switches[289] == false && $game_switches[110] == true
-          pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New update!</c2>\nYour quest log has been corrected!</ac>",QUEST_JINGLE))
         else
           pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New quest update!</c2></ac>",QUEST_JINGLE))
         end
