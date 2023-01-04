@@ -6489,4 +6489,16 @@ module PBEffects
   StarSap             = 415
   CometShards         = 416
   Ambidextrous        = 417
+  GorillaTactics      = 418
+  BallFetch           = 419
+  LashOut             = 420
+  BurningJealousy     = 421
+  NoRetreat           = 422
+  Obstruct            = 423
+  JawLock             = 424
+  JawLockUser         = 425
+  TarShot             = 426
+  Octolock            = 427
+  OctolockUser        = 428
+  BlunderPolicy       = 429
 end
