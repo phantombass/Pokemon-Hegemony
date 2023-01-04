@@ -300,17 +300,6 @@ def wartime_regigigas_open?
   return regi == 5
 end
 
-def pbQuestFix
-  if $game_switches[289] == false
-    if $game_switches[110] == true
-      $game_variables[Mission::Main] += 1
-      $PokemonGlobal.quests.advanceQuestToStage(:Quest1,$game_variables[Mission::Main],"463F0000",false)
-      $game_switches[289] = true
-    end
-  end
-  $fixed_for_quest = true
-end
-
 Events.onMapUpdate+=proc {|sender,e|
   update_forms_from_glitches if $glitches_fixed != true
   pikachu_glitch_fix if $pika_fixed != true
