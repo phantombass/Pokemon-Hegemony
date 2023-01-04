@@ -5177,9 +5177,8 @@ end
 class PokeBattle_Move_503 < PokeBattle_TwoTurnMove
   def pbIsChargingTurn?(user)
     ret = super
-    if user.effects[PBEffects::TwoTurnAttack]==0
-      w = @battle.pbWeather
-      if w==:Starstorm
+    if !user.effects[PBEffects::TwoTurnAttack]
+      if [:Starstorm].include?(@battle.pbWeather)
         @powerHerb = false
         @chargingTurn = true
         @damagingTurn = true
@@ -5228,9 +5227,13 @@ class PokeBattle_Move_525 < PokeBattle_Move
       @battle.pbDisplay(_INTL("The mist disappeared from the battlefield."))
     when :Psychic
       @battle.pbDisplay(_INTL("The weirdness disappeared from the battlefield."))
+    when :Poison
+      @battle.pbDisplay(_INTL("The toxic waste disappeared from the battlefield."))
     end
     @battle.field.terrain = :None
-    @battle.allBattlers.each { |battler| battler.pbAbilityOnTerrainChange }
+    @battle.eachBattler do |battler| 
+      battler.pbAbilityOnTerrainChange
+    end
   end
 end
 
