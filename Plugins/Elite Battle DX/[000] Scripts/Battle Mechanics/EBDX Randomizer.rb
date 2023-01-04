@@ -29,7 +29,7 @@ module EliteBattle
     # list of rule descriptions
     # default
     added = []
-    for i in 0...modifiers.length
+    for i in 0..modifiers.length
       added.push(modifiers[i])
     end
     # adds randomizer rules
@@ -108,9 +108,10 @@ module EliteBattle
     for org in GameData::Item.values
       loop do
         item = GameData::Item.values.sample
-        break if GameData::Item.get(item).is_key_item?
+        break if !GameData::Item.get(item).is_key_item?
       end
       new[org] = item
+
     end
     return new
   end

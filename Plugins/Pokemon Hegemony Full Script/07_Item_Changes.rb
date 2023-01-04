@@ -453,12 +453,18 @@ def useMoveFly
 #    end
     $game_switches[119] = false
     $game_switches[94] = false
+    $game_switches[209] = false
+      $game_switches[899] = false
+      for i in 197..203
+        $game_switches[i] = false
+      end
     if $game_switches[231] == true
       $game_switches[241] = true
     end
     if $game_switches[283] == true && $game_switches[239] == true
       $game_switches[283] = false
     end
+    randomizer_on
     $CanToggle = true
     $game_temp.player_new_direction = 2
     $PokemonTemp.flydata = nil
