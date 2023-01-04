@@ -5795,7 +5795,7 @@ class PokeBattle_Battle
     end
     # Check for end of primordial weather, and weather-triggered form changes
     eachBattler { |b| b.pbCheckFormOnWeatherChange }
-    pbEndPrimordialWeather
+    pbEndPrimordialWeather if $gym_weather == false
   end
 
   def pbStartTerrain(user,newTerrain,fixedDuration=true)
@@ -6404,6 +6404,7 @@ class PokeBattle_Battle
   end
 
   def pbEndPrimordialWeather
+    return if $gym_weather == true
     oldWeather = @field.weather
     # End Primordial Sea, Desolate Land, Delta Stream
     case @field.weather
