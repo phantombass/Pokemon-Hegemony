@@ -92,6 +92,10 @@ BallHandlers::ModifyCatchRate.add(:POKEBALL,proc { |ball,catchRate,battle,battle
   next catchRate*255 if ($game_switches[LvlCap::Ironmon] || $game_switches[75])
 
 })
+BallHandlers::ModifyCatchRate.add(:PREMIERBALL,proc { |ball,catchRate,battle,battler,ultraBeast|
+  next catchRate*255 if ($game_switches[LvlCap::Ironmon] || $game_switches[75])
+
+})
 BallHandlers::ModifyCatchRate.add(:GREATBALL,proc { |ball,catchRate,battle,battler,ultraBeast|
   next catchRate*255 if ($game_switches[LvlCap::Ironmon] || $game_switches[75])
   next catchRate*1.5
