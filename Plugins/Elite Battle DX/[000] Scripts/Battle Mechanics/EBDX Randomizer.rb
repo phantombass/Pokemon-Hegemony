@@ -57,6 +57,7 @@ module EliteBattle
         data[key].pokemon[i][:species] = EliteBattle.all_species.sample
         data[key].pokemon[i].delete(:moves) if data[key].pokemon[i].key?(:moves)
         data[key].pokemon[i].delete(:ability) if data[key].pokemon[i].key?(:ability)
+        data[key].pokemon[i].delete(:role) if data[key].pokemon[i].key?(:role)
         data[key].pokemon[i].delete(:ability_index) if data[key].pokemon[i].key?(:ability_index)
       end
     end
