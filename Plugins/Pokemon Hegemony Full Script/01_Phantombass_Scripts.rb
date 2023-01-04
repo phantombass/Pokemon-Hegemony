@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "2.0.10"
+  GAME_VERSION = "2.0.11"
 end
 
 def write_version
@@ -18,7 +18,7 @@ def reset_custom_variables
   $gym_weather = false
   $appliance = nil
   $currentDexSearch = nil
-  $repel_toggle = true
+  $repel_toggle = false
   #$mega_flag = 0
 end
 class Game_System
@@ -155,12 +155,14 @@ def PokemonLoadScreen
         write_version
         Game.load(@save_data)
         reset_custom_variables
+        $repel_toggle = true
         return
       when cmd_new_game
         @scene.pbEndScene
         write_version
         Game.start_new
         reset_custom_variables
+        repel_toggle = true
         return
       when cmd_mystery_gift
         pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
