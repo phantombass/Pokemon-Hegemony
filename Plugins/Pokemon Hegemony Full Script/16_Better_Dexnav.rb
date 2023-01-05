@@ -319,7 +319,7 @@ class NewDexNav
         @navChoice +=7
         navMon += 7
         @sprites["nav"].y += 64
-        @sprites["navMon"].text = _INTL("<c2={FFCADE00}>{1}</c2>",GameData::Species.get(@encarray[navMon]).name)
+        @sprites["navMon"].text = _INTL("<c2=FFCADE00>{1}</c2>",GameData::Species.get(@encarray[navMon]).name)
       elsif Input.trigger?(Input::UP) && @navChoice > 6
         @navChoice -=7
         navMon -=7

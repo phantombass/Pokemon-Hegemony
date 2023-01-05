@@ -1030,6 +1030,16 @@ PBAI::ScoreHandler.add("004") do |score, ai, user, target, move|
     score += 60
     PBAI.log("+ 60 for putting the target to sleep")
   end
+  sleep = false
+  user.opposing_side.party.each do |pkmn|
+    if pkmn.status == :SLEEP
+      sleep = true
+    end
+  end
+  if ai.battle.rules["sleepclause"] == true && sleep == true
+    score = 0
+    PBAI.log("*0 because Sleep Clause is in effect")
+  end
   next score
 end
 
@@ -1068,7 +1078,7 @@ PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, t
     PBAI.log("* 0 for the opposing side already has max #{move.name}")
   else
     fnt = 0
-    user.side.party.each do |pkmn|
+    user.opposing_side.party.each do |pkmn|
       fnt +=1 if pkmn.fainted?
     end
     inactive = user.opposing_side.party.size - fnt
