@@ -25,7 +25,7 @@ module EliteBattle
 
   def self.ironmonKaizo
     # list of all possible rules
-    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS]
+    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES]
     # list of rule descriptions
     # default
     added = []
@@ -63,7 +63,68 @@ module EliteBattle
     end
     return data
   end
-  
+  def self.randomizeAbilities
+    pkmn = EliteBattle.all_species
+    data = load_data("Data/abilities.dat")
+    abilities = []
+    for i in 0..data.keys.length
+      abilities.push(data.keys[i+1]) if i.even? && data.keys[i+1] != nil
+    end
+    ability_blacklist = [
+      :BATTLEBOND,
+      :DISGUISE,
+      :FLOWERGIFT,                                        # This can be stopped
+      :FORECAST,
+      :MULTITYPE,
+      :POWERCONSTRUCT,
+      :SCHOOLING,
+      :SHIELDSDOWN,
+      :STANCECHANGE,
+      :ZENMODE,
+      :DUAT,
+      :ACCLIMATE,
+      :WORMHOLE,
+      :PINDROP,
+      :BOREALIS,
+      :BAROMETRIC,
+      :DESERTSTORM,
+      :ASHCOVER,
+      :ASHRUSH,
+      :MUGGYAIR,
+      :FIGHTERSWRATH,
+      :ELECTROSTATIC,
+      :BAILOUT,
+      :IMPATIENT,
+      :TIMEWARP,
+      :HYPERSPACE,
+      :APPLIANCE,
+      :MENTALBLOCK,
+      :CORRUPTION,
+      :MULTITOOL,
+      :SHROUD,
+      # Abilities intended to be inherent properties of a certain species
+      :COMATOSE,
+      :RKSSYSTEM
+    ]
+    return if !data.is_a?(Hash)
+    for i in pkmn
+      abil = GameData::Species.get(i).abilities
+      habil = GameData::Species.get(i).hidden_abilities
+      for j in 0...abil.length
+        loop do
+          abil[j] = abilities.sample
+          break if !ability_blacklist.include?(abil[j])
+        end
+      end
+      for k in 0...habil.length
+        loop do
+          habil[k] = abilities.sample
+          break if !ability_blacklist.include?(habil[k])
+        end
+      end
+    end
+    return pkmn
+  end
   #-----------------------------------------------------------------------------
   #  randomizes map encounters
   #-----------------------------------------------------------------------------
@@ -129,7 +190,7 @@ module EliteBattle
       :STATIC => proc{ next EliteBattle.randomizeStatic },
       :GIFTS => proc{ next EliteBattle.randomizeStatic },
       :ITEMS => proc{ next EliteBattle.randomizeItems },
-     # :ABILITIES => proc{ next EliteBattle.randomizeAbilities }
+      :ABILITIES => proc{ next EliteBattle.randomizeAbilities }
     }
     # applies randomized data for specified rule sets
     for key in EliteBattle.get_data(:RANDOMIZER, :Metrics, :RULES)
@@ -175,7 +236,7 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   def self.randomizerSelection
     # list of all possible rules
-    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS]
+    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES]
     # list of rule descriptions
     desc = [
       _INTL("Randomize Trainer parties"),
@@ -183,7 +244,7 @@ module EliteBattle
       _INTL("Randomize Static encounters"),
       _INTL("Randomize Gifted Pokémon"),
       _INTL("Randomize Items"),
-     # _INTL("Randomize Abilities")
+      _INTL("Randomize Abilities")
     ]
     # default
     added = []; cmd = 0
