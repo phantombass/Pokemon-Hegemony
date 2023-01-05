@@ -1031,12 +1031,12 @@ PBAI::ScoreHandler.add("004") do |score, ai, user, target, move|
     PBAI.log("+ 60 for putting the target to sleep")
   end
   sleep = false
-  user.opposing_side.party.each do |pkmn|
+  user.side.party.each do |pkmn|
     if pkmn.status == :SLEEP
       sleep = true
     end
   end
-  if ai.battle.rules["sleepclause"] == true && sleep == true
+  if ai.battle.rules["sleepclause"] == true && sleep == true && $game_switches[899] == true
     score = 0
     PBAI.log("*0 because Sleep Clause is in effect")
   end
