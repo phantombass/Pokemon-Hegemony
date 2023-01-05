@@ -2004,6 +2004,7 @@ class PokeBattle_Move_0C1 < PokeBattle_Move
 
   def pbBaseDamage(baseDmg,user,target)
     i = @beatUpList.shift   # First element in array, and removes it from array
+    i = 0 if @beatUpList == nil
     atk = @battle.pbParty(user.index)[i].baseStats[:ATTACK]
     return 5+(atk/10)
   end
