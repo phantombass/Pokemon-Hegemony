@@ -472,16 +472,12 @@ end
 
 # Encourage using moves that can cause paralysis.
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
-  if move.is_a?(PokeBattle_ParalysisMove) && !target.paralyzed? && target.can_paralyze?(user, move) && !ai.battle.wildBattle?
+  if move.is_a?(PokeBattle_ParalysisMove) && !target.paralyzed? && target.can_paralyze?(user, move)
     chance = move.pbAdditionalEffectChance(user, target)
     chance = 100 if chance == 0
     if chance > 0 && chance <= 100
       score += chance
       PBAI.log("+ #{chance} for being able to paralyze the target")
-    end
-    if user.role.id = :SPEEDCONTROL
-      score += 100
-      PBAI.log("+ 100 for being a #{user.role.name} role")
     end
   end
   next score
@@ -2306,6 +2302,15 @@ PBAI::ScoreHandler.add("05B") do |score, ai, user, target, move|
   else
     score = 0
     PBAI.log("* 0 because Tailwind is already up")
+  end
+  next score
+end
+
+#Glare/Thunder Wave
+PBAI::ScoreHandler.add("007") do |score, ai, user, target, move|
+  if target.status == :NONE && target.can_paralyze?(user, move) && user.role.id == :SPEEDCONTROL
+    score += 100
+    PBAI.log("+ 100 for being a #{user.role.name} role")
   end
   next score
 end
