@@ -63,6 +63,7 @@ module EliteBattle
     end
     return data
   end
+  
   #-----------------------------------------------------------------------------
   #  randomizes map encounters
   #-----------------------------------------------------------------------------
@@ -127,7 +128,8 @@ module EliteBattle
       :ENCOUNTERS => proc{ next EliteBattle.randomizeEncounters },
       :STATIC => proc{ next EliteBattle.randomizeStatic },
       :GIFTS => proc{ next EliteBattle.randomizeStatic },
-      :ITEMS => proc{ next EliteBattle.randomizeItems }
+      :ITEMS => proc{ next EliteBattle.randomizeItems },
+     # :ABILITIES => proc{ next EliteBattle.randomizeAbilities }
     }
     # applies randomized data for specified rule sets
     for key in EliteBattle.get_data(:RANDOMIZER, :Metrics, :RULES)
@@ -180,7 +182,8 @@ module EliteBattle
       _INTL("Randomize Wild encounters"),
       _INTL("Randomize Static encounters"),
       _INTL("Randomize Gifted Pokémon"),
-      _INTL("Randomize Items")
+      _INTL("Randomize Items"),
+     # _INTL("Randomize Abilities")
     ]
     # default
     added = []; cmd = 0
