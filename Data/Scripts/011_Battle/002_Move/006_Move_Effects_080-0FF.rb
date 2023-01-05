@@ -1938,6 +1938,7 @@ class PokeBattle_Move_0BF < PokeBattle_Move
   end
 
   def pbBaseDamage(baseDmg,user,target)
+    @calcBaseDmg = 0 if @calcBaseDmg == nil
     @calcBaseDmg += baseDmg if !target.damageState.disguise || !target.damageState.iceface
     return @calcBaseDmg
   end

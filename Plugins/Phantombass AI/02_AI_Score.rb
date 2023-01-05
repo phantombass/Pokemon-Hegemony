@@ -479,6 +479,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to paralyze the target")
     end
+    if user.role.id = :SPEEDCONTROL
+      score += 100
+      PBAI.log("+ 100 for being a #{user.role.name} role")
+    end
   end
   next score
 end
@@ -1090,6 +1094,10 @@ PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, t
     if user.role.id == :HAZARDLEAD
       score += 50
       PBAI.log("+ 50 for being a #{user.role.name}")
+    end
+    if user.role.id == :SPEEDCONTROL && move.function == "153" && !user.opposing_side.effects[PBEffects::StickyWeb]
+      score += 50
+      PBAI.log("+ 50 for being a #{user.role.name} role")
     end
     if ai.battle.field.weather == :Windy
       score = 0
