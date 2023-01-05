@@ -472,7 +472,7 @@ end
 
 # Encourage using moves that can cause paralysis.
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
-  if move.is_a?(PokeBattle_ParalysisMove) && !target.paralyzed? && target.can_paralyze?(user, move)
+  if move.is_a?(PokeBattle_ParalysisMove) && !target.paralyzed? && target.can_paralyze?(user, move) && !ai.battle.wildBattle?
     chance = move.pbAdditionalEffectChance(user, target)
     chance = 100 if chance == 0
     if chance > 0 && chance <= 100
