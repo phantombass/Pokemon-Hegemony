@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "2.0.25"
+  GAME_VERSION = "2.0.27"
 end
 
 def write_version
@@ -33,15 +33,21 @@ class Game_System
   end
 end
 
+module RandBoss
+  Var = 990
+end
+
 def randomizer_boss
   if $game_switches[907]
-    EliteBattle.toggle_randomizer if EliteBattle.randomizer?
+    EliteBattle.toggle_randomizer if $game_switches[RandBoss::Var] == false
+    $game_switches[RandBoss::Var] = true
   end
 end
 
 def randomizer_on
   if $game_switches[907]
-    EliteBattle.toggle_randomizer if !EliteBattle.randomizer?
+    EliteBattle.toggle_randomizer if $game_switches[RandBoss::Var]
+    $game_switches[RandBoss::Var] = false
   end
 end
 
