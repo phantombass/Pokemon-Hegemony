@@ -479,10 +479,6 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to paralyze the target")
     end
-    if user.role.id = :SPEEDCONTROL
-      score += 100
-      PBAI.log("+ 100 for being a #{user.role.name} role")
-    end
   end
   next score
 end
@@ -2306,6 +2302,15 @@ PBAI::ScoreHandler.add("05B") do |score, ai, user, target, move|
   else
     score = 0
     PBAI.log("* 0 because Tailwind is already up")
+  end
+  next score
+end
+
+#Glare/Thunder Wave
+PBAI::ScoreHandler.add("007") do |score, ai, user, target, move|
+  if target.status == :NONE && target.can_paralyze?(user, move) && user.role.id == :SPEEDCONTROL
+    score += 100
+    PBAI.log("+ 100 for being a #{user.role.name} role")
   end
   next score
 end
