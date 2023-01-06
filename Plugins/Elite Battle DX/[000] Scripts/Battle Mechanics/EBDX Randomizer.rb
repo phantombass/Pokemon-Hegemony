@@ -65,11 +65,11 @@ module EliteBattle
   end
 
   def self.randomizeAbilities
-    data = load_data("Data/species.dat")
+    pkmn = load_data("Data/species.dat")
     ability = load_data("Data/abilities.dat")
     abilities = []
     for i in 0...ability.keys.length
-      abilities.push(data.keys[i]) if i.odd?
+      abilities.push(ability.keys[i]) if i.odd?
     end
     ability_blacklist = [
       :BATTLEBOND,
@@ -109,23 +109,39 @@ module EliteBattle
       :COMATOSE,
       :RKSSYSTEM
     ]
-    return if !data.is_a?(Hash)
+    return if !pkmn.is_a?(Hash)
     return if !ability.is_a?(Hash)
-    for key in data.keys
-      for i in 0...data[key].abilities.length
-        loop do
-          data[key].abilities[i] = abilities.sample
-          break if !ability_blacklist.include?(data[key].abilities[i])
+    $new_ability = {
+      :pokemon => [],
+      :abilities => []
+    }
+    for key in pkmn.keys
+      abil = []
+      habil = []
+      if !key.is_a?(Symbol)
+        $new_ability[:pokemon].push(pkmn[key].id)
+        $new_ability[:pokemon].uniq!
+        for i in 0...pkmn[key].abilities.length
+          loop do
+            pkmn[key].abilities[i] = abilities.sample
+            break if !ability_blacklist.include?(pkmn[key].abilities[i])
+          end
+          abil.push([pkmn[key].abilities[i]])
         end
-      end
-      for i in 0...data[key].hidden_abilities.length
-        loop do
-          data[key].hidden_abilities[i] = abilities.sample
-          break if !ability_blacklist.include?(data[key].hidden_abilities[i])
+        for i in 0...pkmn[key].hidden_abilities.length
+          loop do
+            pkmn[key].hidden_abilities[i] = abilities.sample
+            break if !ability_blacklist.include?(pkmn[key].hidden_abilities[i])
+          end
+          habil.push([pkmn[key].hidden_abilities[i]])
         end
+        $new_ability[:abilities][key] = abil[0],(abil[1] == nil ? abil[0] : abil[1]),habil
+        $new_ability[:abilities][key].flatten!
+        $new_ability[:abilities].delete_at(key-1) if $new_ability[:abilities][key-1] == nil
       end
     end
-    return data
+    $game_variables[969] = $new_ability
+    return $new_ability
   end
   #-----------------------------------------------------------------------------
   #  randomizes map encounters
@@ -341,13 +357,19 @@ def randomizeItem(item)
   item = EliteBattle.getRandomizedData(item, :ITEMS, item)
   return item
 end
-=begin
-def randomAbility(species)
-  return species if !EliteBattle.get(:randomizer)
-  ability = EliteBattle.getRandomizedData(GameData::Species.get(species).abilities, :ABILITIES, GameData::Species.get(species).abilities)
-  return ability
+
+def getRandAbilities(species, ability_index)
+  array = $game_variables[969]
+  ability = array[:abilities]
+  pokemon = array[:pokemon]
+  idx = -1
+  for i in pokemon
+    idx += 1
+    break if i == species
+  end
+  return ability[idx][ability_index]
 end
-=end
+
 #===============================================================================
 #  aliasing to return randomized battlers
 #===============================================================================
@@ -396,7 +418,6 @@ alias pbAddPokemon_ebdx_randomizer pbAddPokemon unless defined?(pbAddPokemon_ebd
 def pbAddPokemon(*args)
   # randomizer
   args[0] = randomizeSpecies(args[0], false, true)
-  #args[0].ability_index = randomAbility(args[0])
   # gives Pokemon
   return pbAddPokemon_ebdx_randomizer(*args)
 end

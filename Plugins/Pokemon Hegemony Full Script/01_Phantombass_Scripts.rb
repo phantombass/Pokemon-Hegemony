@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "2.1.4"
+  GAME_VERSION = "2.1.5"
 end
 
 def write_version
@@ -50,7 +50,6 @@ def randomizer_on
     $game_switches[RandBoss::Var] = false
   end
 end
-
 
 LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,88,90,93,95,98,100]
 
@@ -1402,26 +1401,26 @@ class PokeBattle_Battle
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :Windy
-        next if !b.pbOwnSide.effects[PBEffects::StealthRock] && b.pbOwnSide.effects[PBEffects::Spikes] == 0 && !b.pbOwnSide.effects[PBEffects::StickyWeb] && b.pbOwnSide.effects[PBEffects::ToxicSpikes] == 0
-        if b[0].pbOwnSide.effects[PBEffects::StealthRock] || b[0].pbOpposingSide.effects[PBEffects::StealthRock]
-          b[0].pbOwnSide.effects[PBEffects::StealthRock]      = false
-          b[0].pbOpposingSide.effects[PBEffects::StealthRock] = false
+        next if !b.pbOwnSide.effects[PBEffects::StealthRock] && !b.pbOwnSide.effects[PBEffects::CometShards] && b.pbOwnSide.effects[PBEffects::Spikes] == 0 && !b.pbOwnSide.effects[PBEffects::StickyWeb] && b.pbOwnSide.effects[PBEffects::ToxicSpikes] == 0
+        if b.pbOwnSide.effects[PBEffects::StealthRock] || b.pbOpposingSide.effects[PBEffects::StealthRock]
+          b.pbOwnSide.effects[PBEffects::StealthRock]      = false
+          b.pbOpposingSide.effects[PBEffects::StealthRock] = false
         end
-        if b[0].pbOwnSide.effects[PBEffects::Spikes]>0 || b[0].pbOpposingSide.effects[PBEffects::Spikes]>0
-          b[0].pbOwnSide.effects[PBEffects::Spikes]      = 0
-          b[0].pbOpposingSide.effects[PBEffects::Spikes] = 0
+        if b.pbOwnSide.effects[PBEffects::Spikes]>0 || b.pbOpposingSide.effects[PBEffects::Spikes]>0
+          b.pbOwnSide.effects[PBEffects::Spikes]      = 0
+          b.pbOpposingSide.effects[PBEffects::Spikes] = 0
         end
-        if b[0].pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || b[0].pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
-          b[0].pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
-          b[0].pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
+        if b.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || b.pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
+          b.pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
+          b.pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
         end
-        if b[0].pbOwnSide.effects[PBEffects::StickyWeb] || b[0].pbOpposingSide.effects[PBEffects::StickyWeb]
-          b[0].pbOwnSide.effects[PBEffects::StickyWeb]      = false
-          b[0].pbOpposingSide.effects[PBEffects::StickyWeb] = false
+        if b.pbOwnSide.effects[PBEffects::StickyWeb] || b.pbOpposingSide.effects[PBEffects::StickyWeb]
+          b.pbOwnSide.effects[PBEffects::StickyWeb]      = false
+          b.pbOpposingSide.effects[PBEffects::StickyWeb] = false
         end
-        if b[0].pbOwnSide.effects[PBEffects::CometShards] || b[0].pbOpposingSide.effects[PBEffects::CometShards]
-          b[0].pbOwnSide.effects[PBEffects::CometShards]      = false
-          b[0].pbOpposingSide.effects[PBEffects::CometShards] = false
+        if b.pbOwnSide.effects[PBEffects::CometShards] || b.pbOpposingSide.effects[PBEffects::CometShards]
+          b.pbOwnSide.effects[PBEffects::CometShards]      = false
+          b.pbOpposingSide.effects[PBEffects::CometShards] = false
         end
       end
     end
