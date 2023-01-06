@@ -67,6 +67,7 @@ module EliteBattle
   def self.randomizeAbilities
     pkmn = load_data("Data/species.dat")
     ability = load_data("Data/abilities.dat")
+    trainer = load_data("Data/trainers.dat")
     abilities = []
     for i in 0...ability.keys.length
       abilities.push(ability.keys[i]) if i.odd?
@@ -111,6 +112,14 @@ module EliteBattle
     ]
     return if !pkmn.is_a?(Hash)
     return if !ability.is_a?(Hash)
+    return if !trainer.is_a?(Hash)
+    for key in trainer.keys
+      # skip numeric trainers
+      # iterate through party
+      for i in 0...data[key].pokemon.length
+        data[key].pokemon[i].delete(:ability) if data[key].pokemon[i].key?(:ability)
+      end
+    end
     $new_ability = {
       :pokemon => [],
       :abilities => []
