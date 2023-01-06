@@ -116,8 +116,8 @@ module EliteBattle
     for key in trainer.keys
       # skip numeric trainers
       # iterate through party
-      for i in 0...data[key].pokemon.length
-        data[key].pokemon[i].delete(:ability) if data[key].pokemon[i].key?(:ability)
+      for i in 0...trainer[key].pokemon.length
+        trainer[key].pokemon[i].delete(:ability) if trainer[key].pokemon[i].key?(:ability)
       end
     end
     $new_ability = {
