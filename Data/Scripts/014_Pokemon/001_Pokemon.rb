@@ -481,11 +481,11 @@ class Pokemon
       sp_data = species_data
       abil_index = ability_index
       if abil_index >= 2   # Hidden ability
-        @ability = ![:ABILITIES].include?($PokemonGlobal.randomizerRules) ? sp_data.hidden_abilities[abil_index - 2] : getRandAbilities(species,2)
+        @ability = $game_variables[969] == 0 ? sp_data.hidden_abilities[abil_index - 2] : getRandAbilities(species,2)
         abil_index = (@personalID & 1) if !@ability
       end
       if !@ability   # Natural ability or no hidden ability defined
-        @ability = ![:ABILITIES].include?($PokemonGlobal.randomizerRules) ? (sp_data.abilities[abil_index] || sp_data.abilities[0]) : (getRandAbilities(species,abil_index) || getRandAbilities(species,0))
+        @ability = $game_variables[969] == 0 ? (sp_data.abilities[abil_index] || sp_data.abilities[0]) : (getRandAbilities(species,abil_index) || getRandAbilities(species,0))
       end
     end
     return @ability
@@ -1080,9 +1080,8 @@ class Pokemon
 
   # @return [Hash<Integer>] this Pokémon's base stats, a hash with six key/value pairs
   def baseStats
-    this_base_stats = species_data.base_stats
+    this_base_stats =  $game_variables[970] != 0 ? getRandStats(species_data) : species_data.base_stats
     ret = {}
-    this_base_stats = getRandStats(species_data) if ![:STATS].include?($PokemonGlobal.randomizerRules)
     GameData::Stat.each_main { |s| ret[s.id] = this_base_stats[s.id] }
     return ret
   end
