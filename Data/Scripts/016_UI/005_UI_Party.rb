@@ -478,7 +478,7 @@ class PokemonParty_Scene
   def pbEndScene
     pbFadeOutAndHide(@sprites) { update }
     pbDisposeSpriteHash(@sprites)
-    $viewport_stats.dispose if $game_variables[970] != 0
+    $viewport_stats.dispose if (($game_variables[970] != 0 || $game_variables[970] != nil) && $viewport_stats != nil)
     @viewport.dispose
   end
 

@@ -81,6 +81,7 @@ module EliteBattle
       :FORECAST,
       :MULTITYPE,
       :POWERCONSTRUCT,
+      :WONDERGUARD,
       :SCHOOLING,
       :SHIELDSDOWN,
       :STANCECHANGE,
