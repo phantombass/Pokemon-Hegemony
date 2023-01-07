@@ -25,7 +25,7 @@ module EliteBattle
 
   def self.ironmonKaizo
     # list of all possible rules
-    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES]
+    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES, :STATS]
     # list of rule descriptions
     # default
     added = []
@@ -63,7 +63,9 @@ module EliteBattle
     end
     return data
   end
-
+  #-----------------------------------------------------------------------------
+  #  randomizes abilities per pokemon
+  #-----------------------------------------------------------------------------
   def self.randomizeAbilities
     pkmn = load_data("Data/species.dat")
     ability = load_data("Data/abilities.dat")
@@ -153,6 +155,65 @@ module EliteBattle
     return $new_ability
   end
   #-----------------------------------------------------------------------------
+  #  randomizes compiled pokemon base stats
+  #-----------------------------------------------------------------------------
+  def self.randomizeStats
+    data = load_data("Data/species.dat")
+    $new_stats = {
+      :pokemon => [],
+      :stats => {
+        :HP => [],
+        :ATTACK => [],
+        :DEFENSE => [],
+        :SPECIAL_ATTACK => [],
+        :SPECIAL_DEFENSE => [],
+        :SPEED => []
+      }
+    }
+    randStat = 0
+    return if !data.is_a?(Hash)
+    for key in data.keys
+      bst = 0
+      rem_stat = 0
+      species = data[key].id
+      next if $new_stats[:pokemon].include?(species)
+      for i in data[key].base_stats.keys
+        bst += data[key].base_stats[i]
+      end
+      for stat in data[key].base_stats.keys
+        if data[key].base_stats[stat] == 1
+          data[key].base_stats[stat] = 1
+          bst -= 1
+          rem_stat += 1
+          next
+        end
+        loop do
+          randStat = rand(bst-rem_stat)
+          if bst-rem_stat <= 5
+            randStat = 5
+          end
+          break if (randStat>4 && randStat<201)
+        end
+        data[key].base_stats[stat] = randStat
+        if stat == :SPEED
+          data[key].base_stats[stat] = bst-rem_stat < 5 ? 5 : bst-rem_stat
+          if data[key].base_stats[stat] > 200
+            diff = data[key].base_stats[stat] - 200
+            data[key].base_stats[stat] = 200
+            rand2 = rand(5)
+            stats = [:HP,:ATTACK,:DEFENSE,:SPECIAL_ATTACK,:SPECIAL_DEFENSE]
+            data[key].base_stats[stats[rand]] += diff
+          end
+        end
+        rem_stat += data[key].base_stats[stat]
+        $new_stats[:stats][stat].push(data[key].base_stats[stat])
+      end
+      $new_stats[:pokemon].push(data[key].id)
+    end
+    $game_variables[970] = $new_stats
+    return data
+  end
+  #-----------------------------------------------------------------------------
   #  randomizes map encounters
   #-----------------------------------------------------------------------------
   def self.randomizeEncounters
@@ -217,7 +278,8 @@ module EliteBattle
       :STATIC => proc{ next EliteBattle.randomizeStatic },
       :GIFTS => proc{ next EliteBattle.randomizeStatic },
       :ITEMS => proc{ next EliteBattle.randomizeItems },
-      :ABILITIES => proc{ next EliteBattle.randomizeAbilities }
+      :ABILITIES => proc{ next EliteBattle.randomizeAbilities },
+      :STATS => proc { next EliteBattle.randomizeStats }
     }
     # applies randomized data for specified rule sets
     for key in EliteBattle.get_data(:RANDOMIZER, :Metrics, :RULES)
@@ -263,7 +325,7 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   def self.randomizerSelection
     # list of all possible rules
-    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES]
+    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES, :STATS]
     # list of rule descriptions
     desc = [
       _INTL("Randomize Trainer parties"),
@@ -271,7 +333,8 @@ module EliteBattle
       _INTL("Randomize Static encounters"),
       _INTL("Randomize Gifted Pokémon"),
       _INTL("Randomize Items"),
-      _INTL("Randomize Abilities")
+      _INTL("Randomize Abilities"),
+      _INTL("Randomize Base Stats")
     ]
     # default
     added = []; cmd = 0
@@ -377,6 +440,30 @@ def getRandAbilities(species, ability_index)
     break if i == species
   end
   return ability[idx][ability_index]
+end
+
+def getRandStats(species)
+  pkmn = GameData::Species.get(species).id
+  array = $game_variables[970]
+  stats = array[:stats]
+  stt = [:HP,:ATTACK,:DEFENSE,:SPECIAL_ATTACK,:SPECIAL_DEFENSE,:SPEED]
+  stat = {:HP => 0,
+          :ATTACK => 0,
+          :DEFENSE => 0,
+          :SPECIAL_ATTACK => 0,
+          :SPECIAL_DEFENSE => 0,
+          :SPEED => 0
+          }
+  pokemon = array[:pokemon]
+  idx = -1
+  for i in pokemon
+    idx += 1
+    break if i == pkmn
+  end
+  for i in stt
+    stat[i] = stats[i][idx]
+  end
+  return stat
 end
 
 #===============================================================================
