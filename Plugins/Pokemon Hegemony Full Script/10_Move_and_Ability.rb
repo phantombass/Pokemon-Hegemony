@@ -1549,7 +1549,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:MEDUSOID,
 BattleHandlers::AbilityOnSwitchIn.add(:DIMENSIONSHIFT,
   proc { |ability,battler,battle|
     battle.pbShowAbilitySplash(battler)
-    if $gym_gimmick == true && battle.field.effects[PBEffects::TrickRoom] < 0
+    if $gym_gimmick == true && $Trainer.badge_count == 4
       battle.pbDisplay(_INTL("The dimensions are unchanged!"))
     else
       if battle.field.effects[PBEffects::TrickRoom] > 0
