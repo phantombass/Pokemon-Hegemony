@@ -481,11 +481,11 @@ class Pokemon
       sp_data = species_data
       abil_index = ability_index
       if abil_index >= 2   # Hidden ability
-        @ability = !EliteBattle.get(:randomizer) ? sp_data.hidden_abilities[abil_index - 2] : getRandAbilities(species,2)
+        @ability = ![:ABILITIES].include?($PokemonGlobal.randomizerRules) ? sp_data.hidden_abilities[abil_index - 2] : getRandAbilities(species,2)
         abil_index = (@personalID & 1) if !@ability
       end
       if !@ability   # Natural ability or no hidden ability defined
-        @ability = !EliteBattle.get(:randomizer) ? (sp_data.abilities[abil_index] || sp_data.abilities[0]) : (getRandAbilities(species,abil_index) || getRandAbilities(species,0))
+        @ability = ![:ABILITIES].include?($PokemonGlobal.randomizerRules) ? (sp_data.abilities[abil_index] || sp_data.abilities[0]) : (getRandAbilities(species,abil_index) || getRandAbilities(species,0))
       end
     end
     return @ability
@@ -517,7 +517,7 @@ class Pokemon
   def getAbilityList
     ret = []
     sp_data = species_data
-    if EliteBattle.get(:randomizer)
+    if [:ABILITIES].include?($PokemonGlobal.randomizerRules)
       array = $game_variables[969]
       ability = array[:abilities][sp_data.id_number - 1]
       ability.uniq!
@@ -1082,6 +1082,7 @@ class Pokemon
   def baseStats
     this_base_stats = species_data.base_stats
     ret = {}
+    this_base_stats = getRandStats(species_data) if ![:STATS].include?($PokemonGlobal.randomizerRules)
     GameData::Stat.each_main { |s| ret[s.id] = this_base_stats[s.id] }
     return ret
   end
