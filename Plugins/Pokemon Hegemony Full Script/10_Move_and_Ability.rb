@@ -4353,7 +4353,7 @@ class PokeBattle_Move_534 < PokeBattle_Move
       user.pbOpposingSide.effects[PBEffects::StickyWeb] = false
       @battle.pbDisplay(_INTL("The sticky web has disappeared from the ground around the opposing team!"))
     end
-    @battle.allOtherSideBattlers(user).each do |b|
+    @battle.eachOtherSideBattler(user.index) do |b|
       b.effects[PBEffects::Substitute] = 0
       tidy = true if !tidy
     end
