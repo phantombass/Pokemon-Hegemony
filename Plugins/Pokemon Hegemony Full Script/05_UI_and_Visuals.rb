@@ -2227,6 +2227,7 @@ class PokemonPartyScreen
         end
       end
       commands[commands.length]                   = _INTL("Cancel")
+      $viewport_stats.dispose if $viewport_stats != nil
       command = @scene.pbShowCommands(_INTL("Do what with {1}?",pkmn.name),commands)
       havecommand = false
       cmdMoves.each_with_index do |cmd, i|
@@ -2267,12 +2268,15 @@ class PokemonPartyScreen
       end
       next if havecommand
       if cmdSummary>=0 && command==cmdSummary
+        $viewport_stats.dispose if $viewport_stats != nil
         @scene.pbSummary(pkmnid) {
           @scene.pbSetHelpText((@party.length>1) ? _INTL("Choose a Pokémon.") : _INTL("Choose Pokémon or cancel."))
         }
       elsif cmdDebug>=0 && command==cmdDebug
+        $viewport_stats.dispose if $viewport_stats != nil
         pbPokemonDebug(pkmn,pkmnid)
       elsif cmdStats>=0 && command==cmdStats
+        $viewport_stats.dispose if $viewport_stats != nil
         @viewport1 = Viewport.new(0, 0, Graphics.width, Graphics.height)
         @viewport1.z = 99999
         $viewport_stats = @viewport1
@@ -2280,9 +2284,9 @@ class PokemonPartyScreen
         @sprites = {}
         pkmn_info = "HP: #{pkmn.baseStats[:HP]}\nAttack: #{pkmn.baseStats[:ATTACK]}\nDefense: #{pkmn.baseStats[:DEFENSE]}\nSpecial Attack: #{pkmn.baseStats[:SPECIAL_ATTACK]}\nSpecial Defense: #{pkmn.baseStats[:SPECIAL_DEFENSE]}\nSpeed: #{pkmn.baseStats[:SPEED]}"
         $pkmn_data = pkmn_info
-        @sprites["scene"] = Window_AdvancedTextPokemon.newWithSize($pkmn_data,250,5,255,220,@viewport1)
+        @sprites["scene"] = Window_AdvancedTextPokemon.newWithSize($pkmn_data,250,5,300,220,@viewport1)
         pbSetSmallFont(@sprites["scene"].contents)
-        @sprites["scene"].resizeToFit2($pkmn_data,255,220)
+        @sprites["scene"].resizeToFit2($pkmn_data,300,220)
         @sprites["scene"].visible = true
         $pkmn_info = @sprites["scene"]
       elsif cmdSwitch>=0 && command==cmdSwitch
