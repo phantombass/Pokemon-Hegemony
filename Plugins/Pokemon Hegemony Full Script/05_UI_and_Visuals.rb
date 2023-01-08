@@ -2475,9 +2475,13 @@ class Scene_Credits
   Some resources from the Pokémon Reborn team.
 
   Updated Move Animations:
-  StCooler, DarryBD99, WolfPP, ardicoozer, riddlemeree
+  StCooler
+  DarryBD99
+  WolfPP
+  ardicoozer
+  riddlemeree
 
-  Regional Variant and Fakemon Sprites:
+  Regional Variant Sprites:
   Phantombass
 
   Rotom Dex Front Sprite:
@@ -2493,6 +2497,17 @@ class Scene_Credits
   KingOfThe-X-Roads on Deviantart
   Anarlaurendil on Deviantart
   @_zerudez on nitter.net
+
+  Gen 9 Sprites:
+  The-King-Of-Roads-X
+  Mak
+  leParagon
+  Caruban
+  Azria
+  Mashirosakura
+  aR0y2810
+  Katten
+  Jinxed
 
   Perfect Kyurem Sprite:
   Caleb
@@ -2520,7 +2535,12 @@ class Scene_Credits
 
   Also thanks to:
 
-  Tilly and Zoe...for walking all over my keyboard many times during development.
+  Tilly and Zoe...for walking all over my keyboard
+  many times during development.
+
+  My Discord server:
+  You guys have been super patient as I ironed out bugs.
+  You guys rock!
 
 {INSERTS_PLUGIN_CREDITS_DO_NOT_REMOVE}
 
