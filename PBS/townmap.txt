@@ -120,7 +120,7 @@ Point = 29,4,Abandoned Space Station,,,,,
 [1]
 Filename = mapRegion1.png
 Name = Armadia Region
-Point = 2,3,Yttrius Coast,,336,25,19,
+Point = 2,3,Yttrius Coast,,336,12,12,
 Point = 22,2,Port Lithum,Pokémon Dojo,263,5,12,
 Point = 28,6,Ferro Village,Pokémon Day Care,266,8,5,
 Point = 22,9,Plumbum Town,Plumbum Ruins,277,26,8,
@@ -146,7 +146,7 @@ Point = 9,8,Route 33,,,,,
 Point = 4,10,Route 34,,,,,
 Point = 4,17,Route 35,,,,,
 Point = 9,13,Titanus Apex,Titanus Temple,350,24,17,
-Point = 2,17,Kalium Sanctuary,Pokémon Dojo,341,8,14,
+Point = 2,17,Kallim Sanctuary,Pokémon Dojo,341,8,14,
 Point = 4,14,Route 35,,,,,
 Point = 10,16,Mt. Titanus,,,,,
 Point = 10,17,Alumi Steppes,Pokémon Dojo,346,7,25,
