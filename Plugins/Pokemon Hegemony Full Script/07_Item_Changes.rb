@@ -1620,7 +1620,7 @@ BattleHandlers::ItemOnSwitchIn.add(:FILTERORB,
     battler.ability_id = :FILTER
     if ability != battler.ability_id
       battle.pbShowAbilitySplash(battler,false,true)
-      battle.pbDisplay(_INTL("{1}'s Sap Sipper Orb lights up!",battler.name))
+      battle.pbDisplay(_INTL("{1}'s Filter Orb lights up!",battler.name))
       battle.pbHideAbilitySplash(battler)
       battler.ability_id = ability
     end

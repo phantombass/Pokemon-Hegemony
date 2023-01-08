@@ -259,7 +259,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
     PBAI.log("+ 100 for attempting to do last minute damage to the target with priority")
   end
   if user.turnCount > 0 && move.function == "012"
-    score = 0
+    score = -1000
     PBAI.log("* 0 to prevent Fake Out failing")
   end
   next score
@@ -380,7 +380,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ 200 for being in a Double battle")
       end
     elsif user.turnCount != 0 && move.function == "012"
-      score = 0
+      score = -1000
       PBAI.log("* 0 to stop Fake Out beyond turn 1")
     end
   end
@@ -442,8 +442,8 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("* 0 to encourage switching when Choice Locked into something bad")
       end
     else
-      score = 0
-      PBAI.log("* 0 for being Choice locked")
+      score = -1000
+      PBAI.log("- 1000 for being Choice locked")
     end
   end
   next score
