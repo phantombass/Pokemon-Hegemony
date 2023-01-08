@@ -1789,6 +1789,11 @@ MapPosition = 1,11,1
 # House
 MapPosition = 1,8,5
 #-------------------------------
+[364]
+# Hidden Grotto - Route 34
+MapPosition = 1,5,12
+SnapEdges = true
+#-------------------------------
 [365]
 # Hidden Grotto - Route 35
 MapPosition = 1,4,15

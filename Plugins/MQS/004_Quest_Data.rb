@@ -81,7 +81,7 @@ module QuestModule
     :Stage74 => "Challenge the Dojo.",
     :Stage75 => "Report back to Joseph.",
     :Stage76 => "Head to the Yttrius Coast Ruins.",
-    :Stage77 => "Make your way to the Kallim Sanctuary Ruins.",
+    :Stage77 => "Head to the Kallim Sanctuary Ruins.",
     :Stage78 => "Challenge the Dojo.",
     :Stage79 => "Report back to Joseph.",
     :Stage80 => "Challenge the Dojo.",
