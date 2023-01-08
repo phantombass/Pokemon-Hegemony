@@ -429,8 +429,14 @@ class NewDexNav
       navRand = rand(3)
       itemRand = rand(3)
       $game_variables[400] = navRand
-      navAbil1 = GameData::Species.get_species_form(searchmon,form).abilities
-      hAbil = GameData::Species.get_species_form(searchmon,form).hidden_abilities
+      mon = GameData::Species.get_species_form(searchmon,form)
+      randAbil = []
+      for i in 0..2
+        randAbil.push(getRandAbilities(searchmon,i))
+      end
+      p randAbil
+      navAbil1 = $game_variables[969] == nil ? GameData::Species.get_species_form(searchmon,form).abilities : [randAbil[0],randAbil[1]]
+      hAbil = $game_variables[969] == nil ? GameData::Species.get_species_form(searchmon,form).hidden_abilities : randAbil[2]
       navItemCommon = GameData::Species.get(searchmon).wild_item_common
       navItemUncommon = GameData::Species.get(searchmon).wild_item_uncommon
       navItemRare = GameData::Species.get(searchmon).wild_item_rare
@@ -443,12 +449,25 @@ class NewDexNav
         $game_variables[401] = navItemRare
       end
       navItem = $game_variables[401]
-        hAbil = hAbil.length == 0 ? GameData::Species.get_species_form(searchmon,form).abilities : GameData::Species.get_species_form(searchmon,form).hidden_abilities
-      if navAbil1.length == 1
-        navAbil = [navAbil1[0],navAbil1[0],hAbil[0]]
+      if $game_variables[969] == nil
+        hAbil = hAbil.length == 0 ? nil : GameData::Species.get_species_form(searchmon,form).hidden_abilities
       else
-        navAbil = [navAbil1[0],navAbil1[1],hAbil[0]]
+        hAbil = hAbil == nil ? nil : randAbil[2]
       end
+      if $game_variables[969] == nil
+        if navAbil1.length == 1
+          navAbil = [navAbil1[0],navAbil1[0],hAbil[0]]
+        else
+          navAbil = [navAbil1[0],navAbil1[1],hAbil[0]]
+        end
+      else
+        if navAbil1.length == 1
+          navAbil = [navAbil1[0],navAbil1[0],hAbil]
+        else
+          navAbil = [navAbil1[0],navAbil1[1],hAbil]
+        end
+      end
+      p navAbil
       ab = GameData::Ability.get(navAbil[navRand]).name
       Graphics.update
       if $currentDexSearch[1] == nil
