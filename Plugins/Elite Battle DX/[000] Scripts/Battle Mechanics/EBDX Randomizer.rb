@@ -440,6 +440,8 @@ def getRandAbilities(species, ability_index)
     idx += 1
     break if i == species
   end
+#  p pokemon
+ # p ability[idx][ability_index]
   return ability[idx][ability_index]
 end
 
