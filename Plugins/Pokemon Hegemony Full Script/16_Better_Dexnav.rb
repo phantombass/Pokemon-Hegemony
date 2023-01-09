@@ -431,10 +431,11 @@ class NewDexNav
       $game_variables[400] = navRand
       mon = GameData::Species.get_species_form(searchmon,form)
       randAbil = []
-      for i in 0..2
-        randAbil.push(getRandAbilities(searchmon,i))
+      if ($game_variables[969] != 0 || $game_variables[969] != nil)
+        for i in 0..2
+          randAbil.push(getRandAbilities(searchmon,i))
+        end
       end
-  
       navAbil1 = $game_variables[969] == nil ? GameData::Species.get_species_form(searchmon,form).abilities : [randAbil[0],randAbil[1]]
       hAbil = $game_variables[969] == nil ? GameData::Species.get_species_form(searchmon,form).hidden_abilities : randAbil[2]
       navItemCommon = GameData::Species.get(searchmon).wild_item_common
