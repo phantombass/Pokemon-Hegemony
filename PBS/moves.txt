@@ -831,7 +831,7 @@
 992,DEEPFREEZE,Deep Freeze,00C,0,ICE,Status,90,10,100,NearOther,0,bef,"The target chilled to the bone and inflicting frostbite."
 993,SPRINGTIDESTORM,Springtide Storm,519,105,FAIRY,Special,95,5,30,NearOther,0,abefr,"The user attacks by wrapping the target in fierce winds that may lower the target's Defense and Sp.Def."
 994,BEATUP2,Beat Up,0C1,1,DARK,Physical,100,10,0,NearAlly,0,bef,"The user gets all the party Pokémon to attack the foe. The more party Pokémon, the more damage."
-995,ROLLINGFOG,Rolling Fog,521,70,FAIRY,Special,100,20,0,NearOther,0,bef,"The user attacks with deep fog rising from the ground. This move's power doubles when the target is on Misty Terrain."
+995,ROLLINGFOG,Rolling Fog,521,70,FAIRY,Special,100,20,0,AllNearFoes,0,bef,"The user attacks with deep fog rising from the ground. This move's power doubles when the target is on Misty Terrain."
 996,RAGEFIST,Rage Fist,522,50,GHOST,Physical,100,15,0,NearOther,0,abefj,"The more times the user has been hit by attacks, the greater this move's power."
 997,ELECTRODRIFT,Electro Drift,523,100,ELECTRIC,Special,100,5,0,NearOther,0,bef,"Gains power if Super Effective."
 998,COLLISIONCOURSE,Collision Course,523,100,FIGHTING,Physical,100,5,0,NearOther,0,abef,"Gains power if Super Effective."

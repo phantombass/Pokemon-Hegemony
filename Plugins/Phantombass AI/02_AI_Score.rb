@@ -1719,6 +1719,47 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
   next score
 end
 
+# Curse
+PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
+  if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(user.role.id) && !user.pbHasType?(:GHOST)
+    if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:DEFENSE)
+      score = 0
+      PBAI.log("* 0 for battler being max on Attack or Defense")
+    else
+      count = 0
+      user.moves.each do |m|
+        count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
+      end
+      t_count = 0
+      if target.used_moves != nil
+        target.used_moves.each do |tmove|
+          t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      end
+      add = user.turnCount == 0 ? 70 : 50
+      score += add
+      PBAI.log("+ #{add} for being a #{user.role.name}")
+      end
+      if count == 0 && t_count == 0
+        add = user.turnCount == 0 ? 60 : 40
+        score += add
+        PBAI.log("+ #{add} to boost to guarantee the kill")
+      elsif count > 0
+        score -= 100
+        PBAI.log("- 100 since the target can now be killed by an attack")
+      end
+      atk_boost = user.stages[:ATTACK]*20
+      def_boost = user.stages[:DEFENSE]*20
+      diff = atk_boost + def_boost
+      score -= diff
+      PBAI.log("- #{diff} for boosted stats") if diff > 0
+      PBAI.log("+ #{diff} for lowered stats") if diff < 0
+      score += 20 if user.should_switch?(target)
+      PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+    end
+  next score
+end
+
 # Nasty Plot
 PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
   if [:SETUPSWEEPER,:SPECIALBREAKER,:WINCON].include?(user.role.id)

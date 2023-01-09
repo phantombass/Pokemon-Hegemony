@@ -1686,3 +1686,16 @@ BattleHandlers::ItemOnSwitchIn.add(:WATERABSORBORB,
     end
   }
 )
+
+BattleHandlers::ItemOnSwitchIn.add(:DIMENSIONBLOCKORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :DIMENSIONBLOCK
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Water Absorb Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
