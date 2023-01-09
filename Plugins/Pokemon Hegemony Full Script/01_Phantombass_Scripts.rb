@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "2.1.19"
+  GAME_VERSION = "2.1.21"
 end
 
 def write_version
@@ -1351,11 +1351,10 @@ class PokeBattle_Battle
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :Hail
-        next if Settings::GEN_9_SNOW == true
         next if !b.takesHailDamage?
-        pbDisplay(_INTL("{1} is buffeted by the hail!",b.pbThis))
-        @scene.pbDamageAnimation(b)
-        b.pbReduceHP(b.totalhp/16,false)
+        pbDisplay(_INTL("{1} is buffeted by the hail!",b.pbThis)) if Settings::GEN_9_SNOW == false
+        @scene.pbDamageAnimation(b) if Settings::GEN_9_SNOW == false
+        b.pbReduceHP(b.totalhp/16,false) if Settings::GEN_9_SNOW == false
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :ShadowSky

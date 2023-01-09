@@ -270,11 +270,13 @@ module BattleScripts
   CHANCELLOR1 = {
     "afterLastOpp" => "I have to succeed at this. You will NOT stand in my way!",
     "turnStart0" => proc do
+      @scene.pbDisplay("The Harsh Sun is permanent!")
       @scene.pbTrainerSpeak("Why can't you just stay out of our business?!?")
       @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
       @battle.field.terrain = :Psychic
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
+      $gym_weather = true
       @scene.pbDisplay("Yule set up a permanent Psychic Terrain!")
     end
   }
