@@ -1705,7 +1705,7 @@ SnapEdges = true
 # Mt. Titanus
 Outdoor = true
 ShowArea = true
-Weather = Rain,0
+Weather = Snow,100
 MapPosition = 1,10,16
 SnapEdges = true
 #-------------------------------
@@ -1713,7 +1713,7 @@ SnapEdges = true
 # Mt. Titanus
 Outdoor = true
 ShowArea = true
-Weather = Rain,0
+Weather = Snow,100
 MapPosition = 1,10,16
 SnapEdges = true
 #-------------------------------
@@ -1721,7 +1721,7 @@ SnapEdges = true
 # Titanus Apex
 Outdoor = true
 ShowArea = true
-Weather = Rain,0
+Weather = Snow,100
 MapPosition = 1,9,13
 SnapEdges = true
 #-------------------------------
