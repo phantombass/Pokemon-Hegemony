@@ -2908,7 +2908,7 @@ BattlerEnemyY = 19
 [ALCREMIE,1]
 FormName = Mega Alcremie
 MegaStone = ALCREMITE
-BaseStats = 60,65,105,94,130,141
+BaseStats = 65,60,105,94,130,141
 Abilities = TRIAGE
 HiddenAbility = TRIAGE
 Height = 2.4
