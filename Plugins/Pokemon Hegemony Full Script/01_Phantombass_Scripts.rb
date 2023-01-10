@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "2.1.24"
+  GAME_VERSION = "2.1.25"
 end
 
 def write_version
@@ -628,6 +628,7 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
+          $game_switches[73] = false
           for i in 197..203
             $game_switches[i] = false
           end
