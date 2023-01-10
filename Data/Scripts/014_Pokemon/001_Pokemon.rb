@@ -517,7 +517,7 @@ class Pokemon
   def getAbilityList
     ret = []
     sp_data = species_data
-    if [:ABILITIES].include?($PokemonGlobal.randomizerRules)
+    if $game_variables[969] != 0
       array = $game_variables[969]
       ability = array[:abilities][sp_data.id_number - 1]
       ability.uniq!

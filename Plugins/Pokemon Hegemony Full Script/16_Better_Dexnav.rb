@@ -425,6 +425,7 @@ class NewDexNav
       maps = GameData::MapMetadata.try_get($game_map.map_id)   # Map IDs for Zharonian Forme
       form = 0
       form = form
+      r = rand(2)
       $form_hunt = GameData::Species.get($currentDexSearch[0]).form
       navRand = rand(3)
       itemRand = rand(3)
@@ -455,6 +456,9 @@ class NewDexNav
         hAbil = hAbil.length == 0 ? nil : GameData::Species.get_species_form(searchmon,form).hidden_abilities
       else
         hAbil = hAbil == nil ? nil : randAbil[2]
+        if hAbil == nil
+          hAbil = randAbil[r]
+        end
       end
       if $game_variables[969] == 0
         if navAbil1.length == 1
@@ -463,10 +467,18 @@ class NewDexNav
           navAbil = [navAbil1[0],navAbil1[1],hAbil[0]]
         end
       else
-        if navAbil1.length == 1
-          navAbil = [navAbil1[0],navAbil1[0],hAbil]
+        if hAbil != nil
+          if navAbil1.length == 1
+            navAbil = [navAbil1[0],navAbil1[0],hAbil]
+          else
+            navAbil = [navAbil1[0],navAbil1[1],hAbil]
+          end
         else
-          navAbil = [navAbil1[0],navAbil1[1],hAbil]
+          if navAbil1.length == 1
+            navAbil = [navAbil1[0],navAbil1[0],navAbil1[0]]
+          else
+            navAbil = [navAbil1[0],navAbil1[1],navAbil1[r]]
+          end
         end
       end
       ab = GameData::Ability.get(navAbil[navRand]).name

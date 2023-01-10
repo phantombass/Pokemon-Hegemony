@@ -2523,6 +2523,7 @@ class Scene_Credits
   Tilesets:
   Ekat
   Idilio
+  lichenprincess
 
   Mapping: Phantombass
 
