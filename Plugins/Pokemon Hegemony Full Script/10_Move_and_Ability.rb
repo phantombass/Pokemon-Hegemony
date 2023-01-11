@@ -1091,12 +1091,7 @@ BattleHandlers::MoveImmunityTargetAbility.add(:GOODASGOLD,
     next false if battle.moldBreaker == true
     if show_message
       battle.pbShowAbilitySplash(target)
-      if Battle::Scene::USE_ABILITY_SPLASH
-        battle.pbDisplay(_INTL("It doesn't affect {1}...", target.pbThis(true)))
-      else
-        battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
-           target.pbThis, target.abilityName, move.name))
-      end
+      battle.pbDisplay(_INTL("It doesn't affect {1}...", target.pbThis(true)))
       battle.pbHideAbilitySplash(target)
     end
     next true
@@ -1130,18 +1125,13 @@ BattleHandlers::TargetAbilityOnHit.add(:LINGERINGAROMA,
     next if user.hasActiveItem?(:ABILITYSHIELD)
     oldAbil = nil
     battle.pbShowAbilitySplash(target) if user.opposes?(target)
-    if user.affectedByContactEffect?(Battle::Scene::USE_ABILITY_SPLASH)
+    if user.affectedByContactEffect?(true)
       oldAbil = user.ability
       battle.pbShowAbilitySplash(user, true, false) if user.opposes?(target)
       user.ability = ability
       battle.pbReplaceAbilitySplash(user) if user.opposes?(target)
-      if Battle::Scene::USE_ABILITY_SPLASH
-        battle.pbDisplay(_INTL("A lingering aroma clings to {1}!", user.pbThis(true)))
-        # battle.pbDisplay(_INTL("{1}'s Ability became {2}!", user.pbThis, user.abilityName))
-      else
-        battle.pbDisplay(_INTL("{1}'s Ability became {2} because of {3}!",
-           user.pbThis, user.abilityName, target.pbThis(true)))
-      end
+       battle.pbDisplay(_INTL("A lingering aroma clings to {1}!", user.pbThis(true)))
+      # battle.pbDisplay(_INTL("{1}'s Ability became {2}!", user.pbThis, user.abilityName))
       battle.pbHideAbilitySplash(user) if user.opposes?(target)
     end
     battle.pbHideAbilitySplash(target) if user.opposes?(target)
@@ -1395,12 +1385,7 @@ BattleHandlers::MoveImmunityTargetAbility.add(:WINDRIDER,
     next false if !move.windMove?
     if show_message
       battle.pbShowAbilitySplash(target)
-      if Battle::Scene::USE_ABILITY_SPLASH
         battle.pbDisplay(_INTL("It doesn't affect {1}...", target.pbThis(true)))
-      else
-        battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
-           target.pbThis, target.abilityName, move.name))
-      end
       if target.pbCanRaiseStatStage?(:ATTACK, target)
         target.pbRaiseStatStageByAbility(:ATTACK, 1, target, false)
       end
