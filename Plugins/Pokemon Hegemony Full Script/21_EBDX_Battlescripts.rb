@@ -169,7 +169,14 @@ module BattleScripts
 
   CHANCELLOR1 = {
     "afterLastOpp" => "I will not accept this. I WILL MAINTAIN CONTROL!",
-    "turnStart0" => "You can't seem to comprehend. I control EVERYTHING."
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("You can't seem to comprehend. I control EVERYTHING.")
+      @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.terrain = :Psychic
+      @battle.field.terrainDuration = -1
+      $gym_gimmick = true
+      @scene.pbDisplay("The battlefield got permanently weird!")
+    end
   }
   #==============================================================================
   # Post-Game

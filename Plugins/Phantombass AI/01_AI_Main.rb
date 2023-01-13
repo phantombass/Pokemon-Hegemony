@@ -795,6 +795,11 @@ class PBAI
       return false if fainted == party.length - 1
       return true
     end
+    def set_up_score
+      boosts = 0
+      GameData::Stat.each_battle { |s| boosts += self.battler.stages[s] if self.battler.stages[s] != nil}
+      return boosts
+    end
     def get_switch_score
       # Yields [score, pokemon_index]
       switch = false
@@ -823,6 +828,9 @@ class PBAI
         if factor < 2
           switch = true
         end
+      end
+      if self.set_up_score > 0
+        switch = self.set_up_score <= rand(2)
       end
       # Encored into bad move
       if self.effects[PBEffects::Encore] > 0

@@ -1693,7 +1693,7 @@ BattleHandlers::ItemOnSwitchIn.add(:DIMENSIONBLOCKORB,
     battler.ability_id = :DIMENSIONBLOCK
     if ability != battler.ability_id
       battle.pbShowAbilitySplash(battler,false,true)
-      battle.pbDisplay(_INTL("{1}'s Water Absorb Orb lights up!",battler.name))
+      battle.pbDisplay(_INTL("{1}'s Dimension Block Orb lights up!",battler.name))
       battle.pbHideAbilitySplash(battler)
       battler.ability_id = ability
     end
