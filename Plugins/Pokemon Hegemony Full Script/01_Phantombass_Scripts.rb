@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "3.0"
+  GAME_VERSION = "3.0.2"
 end
 
 def write_version
@@ -60,9 +60,9 @@ module Game
     $game_variables[106] = LEVEL_CAP[$game_system.level_cap]
   end
   def self.start_new
-    pbMessage(_INTL("Welcome to Pokémon Hegemony, a complete, non-profit fan game made by Phantombass."))
+    pbMessage(_INTL("Welcome to Pokémon Hegemony DX, a complete, non-profit fan game made by Phantombass."))
     pbMessage(_INTL("If you paid for this, contact the person who sent it to you for a refund immediately."))
-    pbMessage(_INTL("The current version is #{Settings::GAME_VERSION}, which includes a full post-game story."))
+    pbMessage(_INTL("The current version is #{Settings::GAME_VERSION}."))
     pbMessage(_INTL("I hope you enjoy your journey!"))
     if $game_map && $game_map.events
       $game_map.events.each_value { |event| event.clear_starting }
@@ -70,7 +70,6 @@ module Game
     $game_temp.common_event_id = 0 if $game_temp
     $PokemonTemp.begunNewGame = true
     $game_system.initialize
-    $mobile_mystery_gifts = []
     reset_custom_variables
     $scene = Scene_Map.new
     SaveData.load_new_game_values
