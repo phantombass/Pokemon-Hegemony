@@ -165,6 +165,12 @@ class PBAI
     elsif data[0] == :SWITCH
       # [:SWITCH, pokemon_index]
       @battle.pbRegisterSwitch(idxBattler, data[1])
+    elsif data[0] == :FLEE
+      pbSEPlay("Battle flee")
+      @battle.pbDisplay(_INTL("{1} fled from battle!",projection.pbThis))
+      @battle.decision = 3
+      @battle.scene.clearMessageWindow
+      @battle.scene.pbEndBattle(@battle.decision)
     else
       # [move_index, move_target]
       if data[0] == :ITEM
@@ -449,6 +455,12 @@ class PBAI
       switch_score = get_switch_score
       # Yields [score, pokemon_index]
       scores << [:SWITCH, *switch_score]
+      if @battle.rules["alwaysflee"] == true && !self.trapped?
+        flee_score = 100000
+      else
+        flee_score = 0
+      end
+      scores << [:FLEE, *flee_score]
 
       PBAI.log("=" * 10 + " Turn #{@battle.turnCount + 1} " + "=" * 10)
       # Gets the battler projections of the opposing side
@@ -531,6 +543,15 @@ class PBAI
             str += " << CHOSEN" if idx == 1
             str += "\n"
           end
+        elsif i == 2
+          #Flee
+          score = e[1]
+          if score > 0
+            str += "\nFLEE: #{score} => #{finalPerc}" + " percent"
+            str += " << CHOSEN" if idx == 1
+            str += "\n"
+          end
+
         #elsif i == -1
         #  str += "STRUGGLE: 100%"
         else
@@ -556,6 +577,8 @@ class PBAI
       elsif idx == 1
         # Index 1 means switching was chosen
         return [:SWITCH, scores[1][2]]
+      elsif idx == 2
+        return [:FLEE, flee_score]
       end
       # Return [move_index, move_target]
       if idx
@@ -795,6 +818,11 @@ class PBAI
       return false if fainted == party.length - 1
       return true
     end
+    def set_up_score
+      boosts = 0
+      GameData::Stat.each_battle { |s| boosts += self.battler.stages[s] if self.battler.stages[s] != nil}
+      return boosts
+    end
     def get_switch_score
       # Yields [score, pokemon_index]
       switch = false
@@ -823,6 +851,9 @@ class PBAI
         if factor < 2
           switch = true
         end
+      end
+      if self.set_up_score > 0
+        switch = self.set_up_score <= rand(2)
       end
       # Encored into bad move
       if self.effects[PBEffects::Encore] > 0
@@ -1469,7 +1500,7 @@ class PBAI
     end
 
     def trapped?
-      return self.effects[PBEffects::Trapping] > 0
+      return self.trappedInBattle?
     end
 
     def discourage_making_contact_with?(target)

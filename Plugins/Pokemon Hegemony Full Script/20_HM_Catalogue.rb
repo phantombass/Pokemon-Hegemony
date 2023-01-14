@@ -115,12 +115,12 @@ class HMScreen
     @viewport3 = Viewport.new(0,0,Graphics.width,Graphics.height)
     @viewport3.z = 999999
     @sprites = {}
+    commands[cmdFly = commands.length]   = _INTL("Fly") if $game_switches[HMCatalogue::Fly]
     commands[cmdCut = commands.length]   = _INTL("Cut") if $game_switches[HMCatalogue::Cut]
     commands[cmdRockSmash = commands.length]   = _INTL("Rock Smash") if $game_switches[HMCatalogue::RockSmash]
     commands[cmdStrength = commands.length]   = _INTL("Strength") if $game_switches[HMCatalogue::Strength]
     commands[cmdFlash = commands.length]   = _INTL("Flash") if $game_switches[HMCatalogue::Flash]
     commands[cmdSurf = commands.length]   = _INTL("Surf") if $game_switches[HMCatalogue::Surf]
-    commands[cmdFly = commands.length]   = _INTL("Fly") if $game_switches[HMCatalogue::Fly]
     commands[cmdDive = commands.length]   = _INTL("Dive") if $game_switches[HMCatalogue::Dive]
     commands[cmdRockClimb = commands.length]   = _INTL("Rock Climb") if $game_switches[HMCatalogue::RockClimb]
     commands[cmdWaterfall = commands.length]   = _INTL("Waterfall") if $game_switches[HMCatalogue::Waterfall]
@@ -131,6 +131,28 @@ class HMScreen
         if cmd<0
         pbPlayCloseMenuSE
           break
+        elsif cmdFly>=0 && cmd==cmdFly
+          pbPlayDecisionSE
+          dispose
+          if !canUseMoveFly?
+            pbMessage(_INTL("You cannot use that here."))
+          else
+            ret = nil
+              pbFadeOutIn{
+              scene = PokemonRegionMap_Scene.new(-1,false)
+              screen = PokemonRegionMapScreen.new(scene)
+              ret = screen.pbStartFlyScreen
+              next 0 if !ret
+            if ret
+              $PokemonTemp.flydata = ret
+              $game_temp.in_menu = false
+              useMoveFly
+              dispose
+              @scene.pbEndScene
+            end
+          }
+          break
+          end
         elsif cmdCut>=0 && cmd==cmdCut
           pbPlayDecisionSE
           dispose
@@ -170,28 +192,6 @@ class HMScreen
           else
             useMoveSurf
             break
-          end
-        elsif cmdFly>=0 && cmd==cmdFly
-          pbPlayDecisionSE
-          dispose
-          if !canUseMoveFly?
-            pbMessage(_INTL("You cannot use that here."))
-          else
-            ret = nil
-              pbFadeOutIn{
-              scene = PokemonRegionMap_Scene.new(-1,false)
-              screen = PokemonRegionMapScreen.new(scene)
-              ret = screen.pbStartFlyScreen
-              next 0 if !ret
-            if ret
-              $PokemonTemp.flydata = ret
-              $game_temp.in_menu = false
-              useMoveFly
-              dispose
-              @scene.pbEndScene
-            end
-          }
-          break
           end
         elsif cmdDive>=0 && cmd==cmdDive
           pbPlayDecisionSE

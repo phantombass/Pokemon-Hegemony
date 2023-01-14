@@ -337,7 +337,7 @@ class PokeBattle_Battler
         user.pbFaint if user.fainted?
         @battle.pbGainExp   # In case user is KO'd by this
         user.pbItemHPHealCheck
-        if user.pbAbilitiesOnDamageTaken(oldHP)
+        if user.pbAbilitiesOnDamageTaken
           user.pbEffectsOnSwitchIn(true)
         end
       end

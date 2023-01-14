@@ -150,3 +150,9 @@ GameData::Role.register({
   :id_number    => 20,
   :name         => _INTL("Offensive Pivot")
 })
+
+GameData::Role.register({
+  :id           => :STATPASS,
+  :id_number    => 21,
+  :name         => _INTL("Stat Pass")
+})

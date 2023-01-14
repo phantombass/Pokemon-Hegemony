@@ -240,7 +240,7 @@ end
 # or make a rough estimate.
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   # Apply this logic only for priority moves
-  next if move.priority <= 0 || move.function == "0D4" || move.statusMove? # Bide
+  next if move.priority <= 0 || move.function == "0D4" || move.statusMove? || target.hasActiveAbility?([:ARMORTAIL,:QUEENLYMAJESTY,:DAZZLING])
   # Calculate the damage this priority move will do.
   # The AI kind of cheats here, because this takes all items, berries, abilities, etc. into account.
   # It is worth for the effect though; the AI using a priority move to prevent
@@ -508,9 +508,9 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         add = chance * 1.4 * move.pbNumHits(user, [target])
         score += add
         PBAI.log("+ #{add} for being able to badly poison the target")
-        if move.statusMove? && (target.pbHasType?(:POISON) || target.pbHasType?(:STEEL) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
-          score = 0
-          PBAI.log("* 0 because the target cannot be poisoned")
+        if move.statusMove? && ((target.pbHasType?(:POISON) || target.pbHasType?(:STEEL) && !user.hasActiveAbility?([:NITRIC,:CORROSION])) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
+          score -= 1000
+          PBAI.log("- 1000 because the target cannot be poisoned")
         end
       else
         add = chance * move.pbNumHits(user, [target])
@@ -1254,10 +1254,10 @@ end
 # Whirlwind, Roar, Circle Throw, Dragon Tail, U-Turn, Volt Switch
 PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
   if user.bad_against?(target) && user.level >= target.level &&
-     !target.has_ability?(:SUCTIONCUPS) && !target.effects[PBEffects::Ingrain] && move.function != "0EE"
+     !target.has_ability?(:SUCTIONCUPS) && !target.effects[PBEffects::Ingrain] && !["0EE","151","529","0ED"].include?(move.function)
     score += 100
     PBAI.log("+ 100 for forcing our target to switch and we're bad against our target")
-  elsif move.function == "0EE"
+  elsif ["0EE","151","529","0ED"].include?(move.function)
     if [:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:HAZARDLEAD].include?(user.role.id)
       score += 40
       PBAI.log("+ 40 for being a #{user.role.name}")
@@ -1277,6 +1277,10 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
     if user.bad_against?(target) && user.faster_than?(target)
       score += 40
       PBAI.log("+ 40 for switching against a bad matchup")
+    end
+    if user.effects[PBEffects::Substitute] > 0 && move.function == "538"
+      score - 1000
+      PBAI.log("- 1000 because we already have a Substitute")
     end
     kill = 0
     for i in user.moves
@@ -1301,6 +1305,57 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
       PBAI.log("#{boosts} for not wasting boosted stats")
     end
   end
+  next score
+end
+
+# Shed Tail
+PBAI::ScoreHandler.add("538") do |score, ai, user, target, move|
+    if [:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:HAZARDLEAD].include?(user.role.id)
+      score += 40
+      PBAI.log("+ 40 for being a #{user.role.name}")
+    end
+    if user.trapped? && user.can_switch?
+      score += 100
+      PBAI.log("+ 100 for escaping a trap")
+    end
+    if target.faster_than?(user) && !user.bad_against?(target)
+      score += 20
+      PBAI.log("+ 20 for making a more favorable matchup")
+    end
+    if user.bad_against?(target) && target.faster_than?(user)
+      score += 40
+      PBAI.log("+ 40 for gaining switch initiative against a bad matchup")
+    end
+    if user.bad_against?(target) && user.faster_than?(target)
+      score += 40
+      PBAI.log("+ 40 for switching against a bad matchup")
+    end
+    if user.effects[PBEffects::Substitute] > 0
+      score - 1000
+      PBAI.log("- 1000 because we already have a Substitute")
+    end
+    kill = 0
+    for i in user.moves
+      kill += 1 if user.get_move_damage(target,i) >= target.hp
+    end
+    fnt = 0
+    user.side.party.each do |pkmn|
+      fnt +=1 if pkmn.fainted?
+    end
+    diff = user.side.party.length - fnt
+    if user.should_switch?(target) && kill == 0 && diff > 1
+      score += 100
+      PBAI.log("+ 100 for predicting the target to switch, being unable to kill, and having something to switch to")
+    end
+    boosts = 0
+    GameData::Stat.each_battle { |s| boosts += user.stages[s] if user.stages[s] != nil}
+    boosts *= -10
+    score += boosts
+    if boosts > 0
+      PBAI.log("+ #{boosts} for switching to reset lowered stats")
+    elsif boosts < 0
+      PBAI.log("#{boosts} for not wasting boosted stats")
+    end
   next score
 end
 
@@ -2171,7 +2226,7 @@ PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
   next score
 end
 
-#Rage Powder
+#Rage Powder/Ally Switch
 PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
   if ai.battle.pbSideSize(0) == 2
     ally = false
@@ -2352,6 +2407,15 @@ PBAI::ScoreHandler.add("007") do |score, ai, user, target, move|
   if target.status == :NONE && target.can_paralyze?(user, move) && user.role.id == :SPEEDCONTROL
     score += 100
     PBAI.log("+ 100 for being a #{user.role.name} role")
+  end
+  next score
+end
+
+# Pursuit
+PBAI::ScoreHandler.add("088") do |score, ai, user, target, move|
+  if user.should_switch?(target)
+    score += 100
+    PBAI.log("+ 100 for predicting the switch")
   end
   next score
 end

@@ -2183,7 +2183,7 @@ BattleHandlers::EOREffectAbility.add(:BADDREAMS,
       end
       battle.pbHideAbilitySplash(battler)
       b.pbItemHPHealCheck
-      b.pbAbilitiesOnDamageTaken(oldHP)
+      b.pbAbilitiesOnDamageTaken
       b.pbFaint if b.fainted?
     end
   }

@@ -167,7 +167,7 @@ class PokeBattle_Battler
       next if !b.abilityActive?
       BattleHandlers.triggerTargetAbilityAfterMoveUse(b.ability,b,user,move,switchedBattlers,@battle)
       if !switchedBattlers.include?(b.index) && move.damagingMove?
-        if b.pbAbilitiesOnDamageTaken(b.damageState.initialHP)   # Emergency Exit, Wimp Out
+        if b.pbAbilitiesOnDamageTaken   # Emergency Exit, Wimp Out
           switchWimpOut.push(b.index)
         end
       end
@@ -181,7 +181,7 @@ class PokeBattle_Battler
     # User's ability (Emergency Exit, Wimp Out)
     if !switchedBattlers.include?(user.index) && move.damagingMove?
       hpNow = user.hp if user.hp<hpNow   # In case HP was lost because of Life Orb
-      if user.pbAbilitiesOnDamageTaken(user.initialHP,hpNow)
+      if user.pbAbilitiesOnDamageTaken
         @battle.moldBreaker = false
         user.pbEffectsOnSwitchIn(true)
         switchedBattlers.push(user.index)

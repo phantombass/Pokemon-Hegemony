@@ -2563,6 +2563,12 @@ class PokeBattle_Move_0D8 < PokeBattle_HealingMove
       else
         @healAmount = (user.totalhp/2.0).round
       end
+    when :Starstorm, :Eclipse
+      if @type == :FAIRY
+        @healAmount = (user.totalhp*2/3.0).round
+      else
+        @healAmount = (user.totalhp/4.0).round
+      end
     when :None, :StrongWinds
       @healAmount = (user.totalhp/2.0).round
     else

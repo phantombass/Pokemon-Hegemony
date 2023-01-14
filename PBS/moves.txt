@@ -873,3 +873,4 @@
 1034,POPULATIONBOMB,Population Bomb,542,20,NORMAL,Physical,90,10,0,NearOther,0,abefq,"The user's fellows gather in droves to perform a combo attack that hits the target one to ten times in a row."
 1035,ORDERUP,Order Up,543,80,DRAGON,Physical,100,10,0,NearOther,0,abef,"The user attacks with elegant poise. If the user has a Tatsugiri in its mouth, this move boosts one of the user's stats based on the Tatsugiri's form."
 1036,RAGINGBULL,Raging Bull,544,90,NORMAL,Physical,100,10,0,NearOther,0,abef,"The user performs a tackle like a raging bull. This move's type depends on the user's form. It can also break barriers, such as Light Screen and Reflect."
+1037,ASTRALBLADE,Astral Blade,0A9,90,COSMIC,Physical,100,15,0,NearOther,0,abefq,"The user attacks by slicing blade of stardust. The target's stat changes don't affect the damage."
