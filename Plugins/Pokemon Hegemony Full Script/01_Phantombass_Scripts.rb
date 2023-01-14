@@ -122,6 +122,7 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[DailyE4::Variable] = 1+rand(100)
       $game_variables[DailyE4::TimeNow] = $game_variables[DailyE4::LastTime]
     end
+    pbResetAllRoamers
 }
 
 def PokemonLoadScreen

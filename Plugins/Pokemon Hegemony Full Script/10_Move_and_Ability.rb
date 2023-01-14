@@ -1910,6 +1910,11 @@ class PokeBattle_Battler
         @battle.addBattlerHit(target)
     end
   end
+  def pbItemOnStatDropped(move_user = nil)
+    return false if !@statsDropped
+    return false if !itemActive?
+    return Battle::ItemEffects.triggerOnStatLoss(self.item, self, move_user, @battle)
+  end
   def immune_by_ability?(type,ability)
     if type == :COSMIC && ability == :DIMENSIONBLOCK
       return true
@@ -2128,6 +2133,14 @@ class PokeBattle_Battler
     @effects[PBEffects::Rollout]             = 0
     @effects[PBEffects::Roost]               = false
     @effects[PBEffects::SkyDrop]             = -1
+    @effects[PBEffects::Octolock]            = -1
+    @battle.eachBattler do |b|   # Other battlers no longer locked by self
+      b.effects[PBEffects::Octolock] = -1 if b.effects[PBEffects::Octolock] == @index
+    end
+    @effects[PBEffects::JawLock]             = -1
+    @battle.eachBattler do |b|   # Other battlers no longer blocked by self
+      b.effects[PBEffects::JawLock] = -1 if b.effects[PBEffects::JawLock] == @index
+    end
     @battle.eachBattler do |b|   # Other battlers no longer Sky Dropped by self
       b.effects[PBEffects::SkyDrop] = -1 if b.effects[PBEffects::SkyDrop]==@index
     end
@@ -2161,6 +2174,10 @@ class PokeBattle_Battler
     @effects[PBEffects::WaterSport]          = false
     @effects[PBEffects::WeightChange]        = 0
     @effects[PBEffects::Yawn]                = 0
+    @effects[PBEffects::GorillaTactics]      = nil
+    @effects[PBEffects::BallFetch]           = nil
+    @effects[PBEffects::Obstruct]            = false
+    @effects[PBEffects::TarShot]             = false
   end
   def pbUseMove(choice,specialUsage=false)
     # NOTE: This is intentionally determined before a multi-turn attack can
@@ -5504,6 +5521,7 @@ class PokeBattle_Move_538 < PokeBattle_Move_10C
     user.effects[PBEffects::Trapping]     = 0
     user.effects[PBEffects::TrappingMove] = nil
     user.effects[PBEffects::Substitute]   = @subLife
+    @battle.pbAnimation(GameData::Move.get(:SUBSTITUTE).id,@battle.battlers[1],@battle.battlers[1])
   end
 end
 
@@ -5611,12 +5629,12 @@ class PokeBattle_Battle
     #       Pack. That Eject Pack should trigger at the end of this method, but
     #       this resetting would prevent that from happening, so it is skipped
     #       and instead done earlier in def pbAttackPhaseSwitch.
-    #if !skip_event_reset
-    #  eachBattler do |b|
-    #    b.droppedBelowHalfHP = false
-    #    b.statsDropped = false
-    #  end
-    #end
+    if !skip_event_reset
+      eachBattler do |b|
+        b.droppedBelowHalfHP = false
+        b.statsLowered = false
+      end
+    end
     # For each battler that entered battle, in speed order
     pbPriority(true).each do |b|
       next if !battler_index.include?(b.index) || b.fainted?
@@ -5656,10 +5674,10 @@ class PokeBattle_Battle
       break if b.pbItemOnStatDropped
       break if b.pbAbilitiesOnDamageTaken
     end
-   # eachBattler do |b|
-   #   b.droppedBelowHalfHP = false
-   #   b.statsDropped = false
-   # end
+    eachBattler do |b|
+      b.droppedBelowHalfHP = false
+      b.statsLowered = false
+    end
   end
 end
 
@@ -6659,4 +6677,5 @@ module PBEffects
   Octolock            = 427
   OctolockUser        = 428
   BlunderPolicy       = 429
+  NeutralizingGas     = 430
 end

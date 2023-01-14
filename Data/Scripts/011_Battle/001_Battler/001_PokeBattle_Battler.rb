@@ -45,6 +45,7 @@ class PokeBattle_Battler
   attr_accessor :statsLowered  # Stats have been lowered this round
   attr_accessor :damageState
   attr_accessor :initialHP     # Set at the start of each move's usage
+  attr_accessor :droppedBelowHalfHP 
 
   #=============================================================================
   # Complex accessors

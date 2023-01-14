@@ -222,66 +222,6 @@ MultipleForms.register(:MIMEJR,{
 
 MultipleForms.copy(:MIMEJR,:RUFFLET)
 
-def update_forms_from_glitches
-  pbEachPokemon { |poke,_box|
-    species = poke.species
-    if species == :BASCULIN && poke.obtain_method == 1
-      poke.form = 2
-    end
-  }
-  $glitches_fixed = true
-end
-
-def pikachu_glitch_fix
-  pbEachPokemon { |poke,_box|
-    species = poke.species
-    if species == :PIKACHU2 && poke.ability == :STEAMENGINE
-      poke.ability = :STEAMPOWERED
-    end
-  }
-  $pika_fixed = true
-end
-
-def quest_fix
-  if $game_switches[214] == true && $game_switches[212] == false
-    $game_variables[Mission::Main] -= 1
-    $PokemonGlobal.quests.advanceQuestToStage(:Quest1,$game_variables[Mission::Main],"463F0000",false)
-    $game_switches[214] = false
-  end
-  $quest_fixed = true
-end
-
-def pokemon_league_fix
-  if $game_switches[12]
-    for i in 197..203
-      $game_switches[i] = false
-    end
-    $pokemon_league_fixed = true
-  end
-end
-
-def second_league_fix
-  if $game_switches[12]
-    $game_switches[195] = true
-  end
-  $second_league_fix = true
-end
-
-def intro_fix
-  if $game_variables[7] > 0
-    $game_switches[60] = true
-  end
-  $intro_fix = true
-end
-
-def annihilape_fix
-  $Trainer.party.each {|pkmn| 
-    pkmn.species = :ANNIHILAPE2 if pkmn.species == :ANNHILAPE2
-    pkmn.species = :ANNIHILAPE if pkmn.species == :ANNHILAPE
-  }
-  $annihilape_fix = true
-end
-
 def regigigas_open?
   regi = 0
   regis = [:REGIROCK,:REGICE,:REGISTEEL,:REGIELEKI,:REGIDRAGO]
@@ -300,17 +240,31 @@ def wartime_regigigas_open?
   return regi == 5
 end
 
+def keldeo?
+  sword = 0
+  swords = [:VIRIZION,:TERRAKION,:COBALION]
+  $Trainer.party.each {|pkmn|
+    regi += 1 if swords.include?(pkmn.species)
+  }
+  return sword == 3
+end
+
+def enamorus?
+  genie = 0
+  genies = [:LANDORUS,:THUNDURUS,:TORNADUS]
+  $Trainer.party.each {|pkmn|
+    genie += 1 if genies.include?(pkmn.species)
+  }
+  return genie == 3
+end
+
 Events.onMapUpdate+=proc {|sender,e|
-  update_forms_from_glitches if $glitches_fixed != true
-  pikachu_glitch_fix if $pika_fixed != true
-  quest_fix if $quest_fixed != true
-  pokemon_league_fix if $pokemon_league_fixed != true
-  second_league_fix if $second_league_fix != true
-  intro_fix if $intro_fix != true
-  annihilape_fix if $annihilape_fix != true
   $game_switches[218] = true
   $game_switches[284] = true if wartime_regigigas_open?
   $game_switches[285] = true if regigigas_open?
+  $game_switches[812] = true if keldeo?
+  $game_switches[837] = true if enamorus?
+  $game_switches[53] = true if $game_switches[258] == true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
   setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
   $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false && $game_switches[71] == true

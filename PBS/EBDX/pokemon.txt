@@ -9356,6 +9356,13 @@ BattlerPlayerX          = 22
 BattlerPlayerY          = 47
 BattlerEnemyX           = -3
 #-------------------------------
+[OVERQWIL2]
+BattlerEnemyY           = 43
+BattlerAltitude         = 12
+BattlerPlayerX          = 22
+BattlerPlayerY          = 47
+BattlerEnemyX           = -3
+#-------------------------------
 [REMORAID2]
 BattlerEnemyY           = 44
 BattlerAltitude         = 11
