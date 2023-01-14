@@ -3,7 +3,9 @@
 #                                 Version 19.1                                 #
 #                https://github.com/Maruno17/pokemon-essentials                #
 #==============================================================================#
-
+def intro_fix
+   $intro_fix = true
+end
 module Settings
   # The version of your game. It has to adhere to the MAJOR.MINOR.PATCH format.
   #GAME_VERSION = '1.0.0'
