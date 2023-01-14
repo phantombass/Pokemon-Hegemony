@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "2.1.27"
+  GAME_VERSION = "3.0"
 end
 
 def write_version
@@ -122,6 +122,7 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[DailyE4::Variable] = 1+rand(100)
       $game_variables[DailyE4::TimeNow] = $game_variables[DailyE4::LastTime]
     end
+    pbResetAllRoamers
 }
 
 def PokemonLoadScreen

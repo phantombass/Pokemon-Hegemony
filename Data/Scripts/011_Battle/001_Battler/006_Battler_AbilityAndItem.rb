@@ -59,12 +59,10 @@ class PokeBattle_Battler
   end
 
   # Used for Emergency Exit/Wimp Out.
-  def pbAbilitiesOnDamageTaken(oldHP,newHP=-1)
-    return false if !abilityActive?
-    newHP = @hp if newHP<0
+  def pbAbilitiesOnDamageTaken(move_user = nil)
     return false if !@droppedBelowHalfHP
-    ret = BattleHandlers.triggerAbilityOnHPDroppedBelowHalf(self.ability,self,@battle)
-    return ret   # Whether self has switched out
+    return false if !abilityActive?
+    return Battle::AbilityEffects.triggerOnHPDroppedBelowHalf(self.ability, self, move_user, @battle)
   end
 
   # Called when a Pokémon (self) enters battle, at the end of each move used,

@@ -161,10 +161,12 @@ class PokeBattle_Scene
   #-----------------------------------------------------------------------------
   alias pbShowWindow_ebdx pbShowWindow unless self.method_defined?(:pbShowWindow_ebdx)
   def pbShowWindow(windowtype)
-    @sprites["messageBox"].visible = (windowtype == MESSAGE_BOX ||
-                                      windowtype == COMMAND_BOX ||
-                                      windowtype == FIGHT_BOX)
-    @sprites["messageWindow"].visible = (windowtype == MESSAGE_BOX)
+    if @sprites["messageBox"] != nil
+      @sprites["messageBox"].visible = (windowtype == MESSAGE_BOX ||
+                                        windowtype == COMMAND_BOX ||
+                                        windowtype == FIGHT_BOX)
+      @sprites["messageWindow"].visible = (windowtype == MESSAGE_BOX)
+    end
   end
   #-----------------------------------------------------------------------------
   #  remove

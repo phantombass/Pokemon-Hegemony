@@ -367,3 +367,4 @@
 366,WINDRIDER,Wind Rider,"Boosts Attack in Tailwind or by wind damage."
 367,ZEROTOHERO,Zero to Hero,"Transforms into its Hero Form when it switches out."
 368,TRASHSHIELD,Trash Shield,"Takes more damage from weaknesses, less from all else."
+369,WEBWEAVER,Web Weaver,"Contact moves set Sticky Web."

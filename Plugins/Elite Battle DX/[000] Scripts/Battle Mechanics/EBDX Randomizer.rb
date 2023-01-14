@@ -46,22 +46,41 @@ module EliteBattle
     data = load_data("Data/trainers.dat")
     trainer_exclusions = EliteBattle.get_data(:RANDOMIZER, :Metrics, :EXCLUSIONS_TRAINERS)
     species_exclusions = EliteBattle.get_data(:RANDOMIZER, :Metrics, :EXCLUSIONS_SPECIES)
+    $new_trainers = {
+      :trainer => [],
+      :pokemon => {
+        :species => [],
+        :level => []
+      }
+    }
     return if !data.is_a?(Hash) # failsafe
     # iterate through each trainer
     for key in data.keys
       # skip numeric trainers
       next if !trainer_exclusions.nil? && trainer_exclusions.include?(data[key].id)
+      next if !$new_trainers[:trainer] != nil && key.is_a?(Array)
+      $new_trainers[:trainer].push(data[key].id)
       # iterate through party
+      pkmn = []
+      lvl = []
       for i in 0...data[key].pokemon.length
         next if !species_exclusions.nil? && species_exclusions.include?(data[key].pokemon[i][:species])
         data[key].pokemon[i][:species] = EliteBattle.all_species.sample
-        data[key].pokemon[i].delete(:moves) if data[key].pokemon[i].key?(:moves)
-        data[key].pokemon[i].delete(:ability) if data[key].pokemon[i].key?(:ability)
-        data[key].pokemon[i].delete(:role) if data[key].pokemon[i].key?(:role)
-        data[key].pokemon[i].delete(:ability_index) if data[key].pokemon[i].key?(:ability_index)
+        pkmn.push(data[key].pokemon[i][:species])
+        lvl.push(data[key].pokemon[i][:level])
+        $new_trainers[:pokemon][:species][key] = pkmn
+        $new_trainers[:pokemon][:level][key] = lvl
+        #data[key].pokemon[i].delete(:moves) if data[key].pokemon[i].key?(:moves)
+        #data[key].pokemon[i].delete(:ability) if data[key].pokemon[i].key?(:ability)
+        #data[key].pokemon[i].delete(:role) if data[key].pokemon[i].key?(:role)
+        #data[key].pokemon[i].delete(:ability_index) if data[key].pokemon[i].key?(:ability_index)
+        #data[key].pokemon[i].delete(:ev) if data[key].pokemon[i].key?(:ev)
+        #data[key].pokemon[i].delete(:iv) if data[key].pokemon[i].key?(:iv)
+        #data[key].pokemon[i].delete(:nature) if data[key].pokemon[i].key?(:nature)
       end
     end
-    return data
+    $game_variables[971] = $new_trainers
+    return $new_trainers
   end
   #-----------------------------------------------------------------------------
   #  randomizes abilities per pokemon
@@ -234,6 +253,7 @@ module EliteBattle
         end
       end
     end
+    $game_variables[972] = data
     return data
   end
   #-----------------------------------------------------------------------------
@@ -578,9 +598,18 @@ def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
   tr_type = tr_type_data.id
   # handle actual trainer data
   trainer_data = GameData::Trainer.try_get(tr_type, tr_name, tr_version)
-  key = [tr_type.to_sym, tr_name, tr_version]
+  idx = -1
+  new_trainers = $game_variables[971]
+  if $game_variables[971] != 0
+    for i in new_trainers[:trainer]
+      idx += 1
+      break if i[0] == tr_type && i[2] == tr_version
+    end
+    trainer_data = GameData::Trainer.try_get(new_trainers[:trainer][idx][0],new_trainers[:trainer][idx][1],new_trainers[:trainer][idx][2])
+  end
+ # key = [tr_type.to_sym, tr_name, tr_version]
   # attempt to randomize
-  trainer_data = EliteBattle.getRandomizedData(trainer_data, :TRAINERS, key)
+ # trainer_data = EliteBattle.getRandomizedData(trainer_data, :TRAINERS, key)
   return (trainer_data) ? trainer_data.to_trainer : nil
 end
 #===============================================================================
