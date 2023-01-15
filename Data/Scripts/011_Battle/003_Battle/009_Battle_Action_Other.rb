@@ -150,7 +150,6 @@ class PokeBattle_Battle
     battler = @battlers[idxBattler]
     return if !battler || !battler.pokemon
     return if !battler.hasMega? || battler.mega?
-    p $mega_flag
     return if $mega_flag == 1
     trainerName = pbGetOwnerName(idxBattler)
     # Break Illusion
