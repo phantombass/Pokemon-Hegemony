@@ -168,7 +168,7 @@ class PokeBattle_Battle
     battler.pokemon.makeMega
     battler.form = battler.pokemon.form
     $mega_flag = 1 if trainerName == $Trainer.name
-    p $mega_flag
+    #p $mega_flag
     battler.pbUpdate(true)
     @scene.pbChangePokemon(battler,battler.pokemon)
     @scene.pbRefreshOne(idxBattler)
