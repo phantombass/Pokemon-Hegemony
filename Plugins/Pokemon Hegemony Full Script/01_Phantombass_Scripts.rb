@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "3.0.2"
+  GAME_VERSION = "3.0.3"
 end
 
 def write_version
@@ -19,7 +19,7 @@ def reset_custom_variables
   $appliance = nil
   $currentDexSearch = nil
   $repel_toggle = false
-  #$mega_flag = 0
+  $mega_flag = 0
 end
 class Game_System
   attr_accessor :level_cap
@@ -898,7 +898,7 @@ class PokeBattle_Battle
   end
 
   def pbEndOfBattle
-    #$mega_flag = 0
+    $mega_flag = 0
     oldDecision = @decision
     @decision = 4 if @decision==1 && wildBattle? && @caughtPokemon.length>0
     case oldDecision
@@ -1450,7 +1450,6 @@ class PokeBattle_Battler
     end
     # Reset form
     @battle.peer.pbOnLeavingBattle(@battle,@pokemon,@battle.usedInBattle[idxOwnSide][@index/2])
-    #$mega_flag = 1 if mega? && idxOwnSide == 1
     @pokemon.makeUnmega if mega?
     @pokemon.makeUnprimal if primal?
     self.damage_done = 0 # Yamask
@@ -1626,7 +1625,7 @@ class PokeBattle_Battle
     return true if $DEBUG && Input.press?(Input::CTRL)
     return false if @battlers[idxBattler].effects[PBEffects::SkyDrop]>=0
     return false if !pbHasMegaRing?(idxBattler)
-    #return false if $mega_flag == 1
+    return false if $mega_flag == 1
     side  = @battlers[idxBattler].idxOwnSide
     owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
     return @megaEvolution[side][owner]==-1
