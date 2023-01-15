@@ -461,10 +461,18 @@ class NewDexNav
         end
       end
       if $game_variables[969] == 0
-        if navAbil1.length == 1
-          navAbil = [navAbil1[0],navAbil1[0],hAbil[0]]
+        if hAbil == nil
+          if navAbil1.length == 1
+            navAbil = [navAbil1[0],navAbil1[0],navAbil1[0]]
+          else
+            navAbil = [navAbil1[0],navAbil1[1],navAbil1[r]]
+          end
         else
-          navAbil = [navAbil1[0],navAbil1[1],hAbil[0]]
+          if navAbil1.length == 1
+            navAbil = [navAbil1[0],navAbil1[0],hAbil[0]]
+          else
+            navAbil = [navAbil1[0],navAbil1[1],hAbil[0]]
+          end
         end
       else
         if hAbil != nil
