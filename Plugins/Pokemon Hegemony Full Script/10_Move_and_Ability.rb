@@ -4490,21 +4490,22 @@ class PokeBattle_Move_17A < PokeBattle_Move
     super
     @swapEffects = [:Reflect, :LightScreen, :AuroraVeil, :SeaOfFire,
       :Swamp, :Rainbow, :Mist, :Safeguard, :StealthRock, :Spikes,
-      :StickyWeb, :ToxicSpikes,:Tailwind].map!{|e| getConst(PBEffects,e) }
+      :StickyWeb, :ToxicSpikes, :CometShards, :Tailwind].map!{|e| getConst(PBEffects,e) }
   end
 
   def pbMoveFailed(user,targets)
     sides = [user.pbOwnSide,user.pbOpposingSide]
     failed = true
     for i in 0...2
-      for j in @swapEffects
-        next if !sides[i].effects[j] || sides[i].effects[j] == 0
+      side = @battle.sides[i]
+      @swapEffects.each do |j|
+        next if !side.effects[j] || side.effects[j] == 0
         failed = false
         break
       end
     end
     if failed
-      @battle.pbDisplay(_INTL("But it failed..."))
+      @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
     return false
@@ -4512,13 +4513,14 @@ class PokeBattle_Move_17A < PokeBattle_Move
 
 
   def pbEffectGeneral(user)
-    for j in @swapEffects
-      user.pbSwapOwnSideEffect(j)
+    side0 = @battle.sides[0]
+    side1 = @battle.sides[1]
+    @swapEffects.each do |j|
+      side0.effects[j], side1.effects[j] = side1.effects[j], side0.effects[j]
     end
     @battle.pbDisplay(_INTL("{1} swapped the battle effects affecting each side of the field!",user.pbThis))
   end
 end
-
 
 
 #===============================================================================
