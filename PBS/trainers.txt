@@ -456,7 +456,7 @@ Pokemon = SANDSLASH,25
 	Form = 1
 	Ability = SLUSHRUSH
 	Moves = ICICLECRASH,SWORDSDANCE,BULLDOZE,IRONHEAD
-	Item = TARFRUBERRY
+	Item = FOCUSSASH
 	Role = WINCON
 #-------------------------------
 [SCIENTIST,Grunt,2]
@@ -5670,7 +5670,7 @@ Pokemon = GENGAR,25
 LoseText = "Get out of here, kid."
 Pokemon = METANG,25
 	Item = OCCABERRY
-	Moves = BULLETPUNCH,BRICKBREAK,ZENHEADBUTT,ICEPUNCH
+	Moves = BULLETPUNCH,BRICKBREAK,ASTROPUNCH,ICEPUNCH
 #-------------------------------
 [TEAMROCKET_F,Grunt,1]
 LoseText = "Get out of here, kid."
@@ -5682,7 +5682,7 @@ Pokemon = METAGROSS,45
 LoseText = "Hmm. Quite curious."
 Pokemon = METANG,25
 	Item = OCCABERRY
-	Moves = BULLETPUNCH,STEALTHROCK,ZENHEADBUTT,ICEPUNCH
+	Moves = BULLETPUNCH,STEALTHROCK,ASTROPUNCH,ICEPUNCH
 Pokemon = HAUNTER,25
 	Item = FOCUSSASH
 	Moves = SHADOWBALL,DAZZLINGGLEAM,THUNDERBOLT,DESTINYBOND
