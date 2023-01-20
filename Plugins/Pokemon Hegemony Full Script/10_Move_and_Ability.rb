@@ -121,6 +121,7 @@ class PokeBattle_Move
 
   def pbBeamMove?;            return beamMove?; end
   def pbSoundMove?;           return soundMove?; end
+  def pbHammerMove?;           return hammerMove?; end
 
   def pbNumHits(user,targets)
     if user.hasActiveAbility?(:PARENTALBOND) && pbDamagingMove? &&
@@ -3655,6 +3656,7 @@ class PokeBattle_Move
     def beamMove?;          return @flags[/p/]; end
     def slicingMove?;       return @flags[/q/]; end
     def windMove?;          return @flags[/r/]; end
+    def hammerMove?;        return @flags[/s/]; end
     def damageReducedByFreeze?;  return true;  end   # For Facade
     def pbHitEffectivenessMessages(user,target,numTargets=1)
       return if target.damageState.disguise
