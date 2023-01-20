@@ -2171,6 +2171,14 @@ def pbEggMoveScreen(pkmn)
   return retval
 end
 
+class Pokemon
+  def has_egg_move?
+    return false if egg? || shadowPokemon?
+    getEggMovesList.each { |m| return true if !hasMove?(m[1]) }
+    return false
+  end
+end
+
 class PokemonPartyScreen
   def pbPokemonScreen
     @scene.pbStartScene(@party,
@@ -2197,6 +2205,7 @@ class PokemonPartyScreen
       cmdSwitch  = -1
       cmdEvolve  = -1
       cmdRelearn = -1
+      cmdEgg     = -1
       cmdName    = -1
       cmdMail    = -1
       cmdItem    = -1
@@ -2217,11 +2226,13 @@ class PokemonPartyScreen
         if pkmn.mail
           commands[cmdMail = commands.length]     = _INTL("Mail")
           commands[cmdRelearn = commands.length]   = _INTL("Relearn Moves") if $game_switches[197] == false
+          commands[cmdEgg = commands.length]   = _INTL("Egg Moves") if $game_switches[197] == false && $game_switches[915] == true
           commands[cmdEvolve = commands.length]   = _INTL("Evolve")
           commands[cmdName = commands.length]     = _INTL("Nickname")
         else
           commands[cmdItem = commands.length]     = _INTL("Item")
           commands[cmdRelearn = commands.length]   = _INTL("Relearn Moves") if $game_switches[197] == false
+          commands[cmdEgg = commands.length]   = _INTL("Egg Moves") if $game_switches[197] == false && $game_switches[915] == true
           commands[cmdEvolve = commands.length]   = _INTL("Evolve")
           commands[cmdName = commands.length]     = _INTL("Nickname")
         end
@@ -2301,6 +2312,12 @@ class PokemonPartyScreen
           pbRelearnMoveScreen(pkmn)
         else
           pbDisplay(_INTL("This Pokémon cannot relearn any moves."))
+        end
+      elsif cmdEgg>=0 && command==cmdEgg
+        if pkmn.has_egg_move?
+          pbEggMoveScreen(pkmn)
+        else
+          pbDisplay(_INTL("This Pokémon has no available egg moves."))
         end
       elsif cmdEvolve>=0 && command==cmdEvolve
         evoreqs = {}
