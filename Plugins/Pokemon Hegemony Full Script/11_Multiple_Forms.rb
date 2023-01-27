@@ -41,8 +41,7 @@ MultipleForms.register(:PALKIA,{
 
 MultipleForms.register(:PALAFIN, {
   "getFormOnLeavingBattle" => proc { |pkmn, battle, usedInBattle, endBattle|
-    next if !endBattle || !usedInBattle || !pkmn.fainted?
-    next 0 
+    next 0 if endBattle || !usedInBattle || pkmn.fainted?
   }
 })
 
