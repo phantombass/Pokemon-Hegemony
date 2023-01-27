@@ -691,7 +691,7 @@ class PokemonSummary_Scene
     commands = []
     ids = []
     pkmn = @pokemon
-    if EliteBattle.get(:randomizer)
+    if $game_variables[969] != 0
       spec_num = GameData::Species.get(pkmn.species).id_number
       array = $game_variables[969]
       ability = array[:abilities][spec_num - 1]
