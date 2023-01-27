@@ -1398,10 +1398,6 @@ ItemHandlers::UseOnPokemon.add(:ABILITYPATCH,proc { |item,pkmn,scene|
   for j in abils
     abilsarr.push([j[1],j[0]]) if j[0] && j[1]<2 && pkmn.ability_index != j[1]
   end
-  if pkmn.isSpecies?(:ZYGARDE) || pkmn.isSpecies?(:YAMASK) || pkmn.isSpecies?(:COFAGRIGUS) || pkmn.isSpecies?(:RUNERIGUS) || pkmn.isSpecies?(:ARCHEN) || pkmn.isSpecies?(:ARCHEOPS) || pkmn.isSpecies?(:CASTFORM) || pkmn.isSpecies?(:TYPENULL) || pkmn.isSpecies?(:SILVALLY)
-    scene.pbDisplay(_INTL("It won't have any effect."))
-    next false
-  end
   if pkmn.ability_index != 2
     abilRand = rand(hiddenArr.length)
     newabil = hiddenArr[abilRand]
@@ -1410,6 +1406,10 @@ ItemHandlers::UseOnPokemon.add(:ABILITYPATCH,proc { |item,pkmn,scene|
     abilRand = rand(abilsarr.length)
     newabil = abilsarr[abilRand]
     abilMarker = 0
+  end
+  if newabil == nil
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
   end
   newabilname = GameData::Ability.get(newabil[1]).name
   if scene.pbConfirm(_INTL("Would you like to change {1}'s Ability to {2}?",pkmn.name,newabilname))

@@ -113,6 +113,7 @@ class PokeBattle_Move
   def pbChangeUsageCounters(user,specialUsage)
     user.effects[PBEffects::FuryCutter]   = 0
     user.effects[PBEffects::ParentalBond] = 0
+    user.effects[PBEffects::EchoChamber] = 0
     user.effects[PBEffects::Ambidextrous] = 0
     user.effects[PBEffects::ProtectRate]  = 1
     @battle.field.effects[PBEffects::FusionBolt]  = false
@@ -135,12 +136,18 @@ class PokeBattle_Move
       user.effects[PBEffects::Ambidextrous] = 3
       return 2
     end
+    if user.hasActiveAbility?(:ECHOCHAMBER) && pbDamagingMove? && soundMove? &&
+       !chargingTurnMove? && targets.length==1
+      # Record that Parental Bond applies, to weaken the second attack
+      user.effects[PBEffects::EchoChamber] = 3
+      return 2
+    end
     return 1
   end
 
   def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
     return if !showAnimation
-    if (user.effects[PBEffects::ParentalBond]==1 || user.effects[PBEffects::Ambidextrous]==1)
+    if (user.effects[PBEffects::ParentalBond]==1 || user.effects[PBEffects::Ambidextrous]==1 || user.effects[PBEffects::EchoChamber] == 1)
       @battle.pbCommonAnimation("ParentalBond",user,targets)
     else
       @battle.pbAnimation(id,user,targets,hitNum)
@@ -483,6 +490,9 @@ class PokeBattle_Move
       multipliers[:base_damage_multiplier] /= 4
     end
     if user.effects[PBEffects::Ambidextrous]==1
+      multipliers[:base_damage_multiplier] /= 4
+    end
+    if user.effects[PBEffects::EchoChamber]==1
       multipliers[:base_damage_multiplier] /= 4
     end
     # Other
@@ -2120,6 +2130,7 @@ class PokeBattle_Battler
     @effects[PBEffects::Outrage]             = 0
     @effects[PBEffects::ParentalBond]        = 0
     @effects[PBEffects::Ambidextrous]        = 0
+    @effects[PBEffects::EchoChamber]         = 0
     @effects[PBEffects::PickupItem]          = nil
     @effects[PBEffects::PickupUse]           = 0
     @effects[PBEffects::Pinch]               = false
@@ -2831,6 +2842,7 @@ class PokeBattle_Battler
     # Count a hit for Parental Bond (if it applies)
     user.effects[PBEffects::ParentalBond] -= 1 if user.effects[PBEffects::ParentalBond] > 0
     user.effects[PBEffects::Ambidextrous] -= 1 if user.effects[PBEffects::Ambidextrous] > 0
+    user.effects[PBEffects::EchoChamber] -= 1 if user.effects[PBEffects::EchoChamber] > 0
     # Accuracy check (accuracy/evasion calc)
     if hitNum == 0 || move.successCheckPerHit?
       targets.each do |b|
@@ -3671,7 +3683,7 @@ class PokeBattle_Move
         end
       end
       # Effectiveness message, for moves with 1 hit
-      if !multiHitMove? && (user.effects[PBEffects::ParentalBond]==0 || user.effects[PBEffects::Ambidextrous]==0)
+      if !multiHitMove? && (user.effects[PBEffects::ParentalBond]==0 || user.effects[PBEffects::Ambidextrous]==0 || user.effects[PBEffects::EchoChamber]==0)
         pbEffectivenessMessage(user,target,numTargets)
       end
       if target.damageState.substitute && target.effects[PBEffects::Substitute]==0
@@ -6684,4 +6696,5 @@ module PBEffects
   OctolockUser        = 428
   BlunderPolicy       = 429
   NeutralizingGas     = 430
+  EchoChamber         = 431
 end
