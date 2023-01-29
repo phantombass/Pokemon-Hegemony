@@ -1678,7 +1678,7 @@ class PokeBattle_Battle
     @battleAI.sides[1].set_trainers(@opponent)
   end
 
-  def pbRecallAndReplace(idxBattler, idxParty, batonPass = false)
+  def pbRecallAndReplace(idxBattler, idxParty, randomReplacement = false, batonPass = false)
     if @battlers[idxBattler].fainted?
       $doubles_switch = nil
       $d_switch = 0

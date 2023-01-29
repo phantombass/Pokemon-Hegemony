@@ -18,10 +18,9 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("I'm very curious to see how you handle this battle style.")
       if $game_switches[LvlCap::Expert]
-        @battle.battlers[1].pbOwnSide.effects[PBEffects::AuroraVeil] = 1
+        $gym_hazard = true
         @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
-        $gym_gimmick = true
-        @scene.pbDisplay("Hazel set a permanent Aurora Veil!")
+        @scene.pbDisplay("A mysterious force prevents hazard removal!")
       end
     end
   }
