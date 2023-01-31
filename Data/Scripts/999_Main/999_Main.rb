@@ -1,3 +1,9 @@
+Events.onMapUpdate+=proc {|sender,e|
+  if $game_switches[197]
+    $game_switches[210] = false
+  end
+}
+
 class Scene_DebugIntro
   def main
     Graphics.transition(0)
