@@ -422,6 +422,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{chance} for being able to burn the target")
       end
     end
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.pbCanBurn?)
+      score -= 1000
+      PBAI.log("- 1000 for not being able to status")
+    end
   end
   next score
 end
@@ -465,6 +469,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{chance} for being able to frostbite the target")
       end
     end
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.pbCanFreeze?)
+      score -= 1000
+      PBAI.log("- 1000 for not being able to status")
+    end
   end
   next score
 end
@@ -478,6 +486,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
     if chance > 0 && chance <= 100
       score += chance
       PBAI.log("+ #{chance} for being able to paralyze the target")
+    end
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.pbCanParalyze?)
+      score -= 1000
+      PBAI.log("- 1000 for not being able to status")
     end
   end
   next score
@@ -508,7 +520,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         add = chance * 1.4 * move.pbNumHits(user, [target])
         score += add
         PBAI.log("+ #{add} for being able to badly poison the target")
-        if move.statusMove? && ((target.pbHasType?(:POISON) || target.pbHasType?(:STEEL) && !user.hasActiveAbility?([:NITRIC,:CORROSION])) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
+        if move.statusMove? && ((target.pbHasType?(:POISON) || target.pbHasType?(:STEEL) && !user.hasActiveAbility?([:NITRIC,:CORROSION])) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE,:MAGICBOUNCE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
           score -= 1000
           PBAI.log("- 1000 because the target cannot be poisoned")
         end
@@ -1096,8 +1108,12 @@ PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, t
       PBAI.log("+ 50 for being a #{user.role.name} role")
     end
     if ai.battle.field.weather == :Windy
-      score = 0
-      PBAI.log("* 0 because Windy weather prevents hazards")
+      score -= 1000
+      PBAI.log("- 1000 because Windy weather prevents hazards")
+    end
+    if target.hasActiveAbility?(:MAGICBOUNCE)
+      score -= 1000
+      PBAI.log("- 1000 because hazards will be set on our side")
     end
   end
   next score
@@ -2190,6 +2206,7 @@ PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
 end
 
 #Expanding Force
+=begin
 PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
   if ai.battle.field.terrain == :Psychic
     score += 100
@@ -2225,6 +2242,7 @@ PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
   end
   next score
 end
+=end
 
 #Rage Powder/Ally Switch
 PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
@@ -2404,7 +2422,7 @@ end
 
 #Glare/Thunder Wave
 PBAI::ScoreHandler.add("007") do |score, ai, user, target, move|
-  if target.status == :NONE && target.can_paralyze?(user, move) && user.role.id == :SPEEDCONTROL
+  if target.status == :NONE && target.pbCanParalyze? && user.role.id == :SPEEDCONTROL && !target.hasActiveAbility?(:MAGICBOUNCE)
     score += 100
     PBAI.log("+ 100 for being a #{user.role.name} role")
   end
