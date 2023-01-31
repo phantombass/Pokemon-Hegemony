@@ -609,6 +609,7 @@ def pbStartOver(gameover=false)
             $game_switches[i] = false
           end
           $game_switches[209] = false
+          $game_switches[210] = false
           $game_switches[899] = false
           if $game_switches[283] == true && $game_switches[239] == true
             $game_switches[283] = false
@@ -633,6 +634,7 @@ def pbStartOver(gameover=false)
             $game_switches[i] = false
           end
           $game_switches[209] = false
+          $game_switches[210] = false
           $game_switches[899] = false
           if $game_switches[283] == true && $game_switches[239] == true
             $game_switches[283] = false
@@ -658,6 +660,7 @@ def pbStartOver(gameover=false)
             $game_switches[i] = false
           end
           $game_switches[209] = false
+          $game_switches[210] = false
           $game_switches[899] = false
           if $game_switches[283] == true && $game_switches[239] == true
             $game_switches[283] = false
@@ -682,6 +685,7 @@ def pbStartOver(gameover=false)
           $game_switches[119] = false
           $game_switches[94] = false
           $game_switches[209] = false
+          $game_switches[210] = false
           $game_switches[899] = false
           for i in 197..203
             $game_switches[i] = false
@@ -730,6 +734,7 @@ def pbStartOver(gameover=false)
       $game_switches[119] = false
       $game_switches[94] = false
       $game_switches[209] = false
+      $game_switches[210] = false
       $game_switches[899] = false
       for i in 197..203
         $game_switches[i] = false
