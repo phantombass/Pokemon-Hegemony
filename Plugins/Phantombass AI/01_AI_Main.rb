@@ -160,6 +160,7 @@ class PBAI
     data = projection.choose_move
     if data.nil?
       # Struggle
+      data = []
       data[0] = :USE_MOVE
       @battle.pbAutoChooseMove(idxBattler)
     elsif data[0] == :SWITCH
@@ -552,8 +553,8 @@ class PBAI
             str += "\n"
           end
 
-        #elsif i == -1
-        #  str += "STRUGGLE: 100%"
+       # elsif i == -1
+          #str += "STRUGGLE: 100 percent"
         else
           move_index, score, target, target_name = e
           name = @battler.moves[move_index].name
