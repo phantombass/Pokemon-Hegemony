@@ -112,6 +112,65 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next score
 end
 
+#Prefer sound moves if a substitute is up or if holding Throat Spray
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.soundMove?
+  dmg = user.get_move_damage(target, move)
+  if target.effects[PBEffects::Substitute] > 0 && dmg >= target.hp
+    score += 100
+    PBAI.log("+ 100 for being able to kill behind a Substitute")
+  end
+  if user.hasActiveItem?(:THROATSPRAY)
+    score += 100
+    PBAI.log("+ 100 for activating Throat Spray")
+    if [:SETUPSWEEPER,:WINCON,:SPECIALBREAKER].include?(user.role.id)
+      score += 50
+      PBAI.log("+ 50 for being a #{user.role.name}")
+    end
+  end
+  next score
+end
+
+#Prefer slicing moves if you have Sharpness
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.slicingMove?
+  if user.hasActiveAbility?(:SHARPNESS)
+    score += 100
+    PBAI.log("+ 100 for Sharpness boost")
+  end
+  next score
+end
+
+#Prefer Beam moves if you have Tight Focus
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.beamMove?
+  if user.hasActiveAbility?(:TIGHTFOCUS)
+    score += 100
+    PBAI.log("+ 100 for Tight Focus boost")
+  end
+  next score
+end
+
+#Prefer Biting moves if you have Strong Jaw
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.bitingMove?
+  if user.hasActiveAbility?(:STRONGJAW)
+    score += 100
+    PBAI.log("+ 100 for Strong Jaw boost")
+  end
+  next score
+end
+
+#Prefer Punching moves if you have Iron Fist
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.punchingMove?
+  if user.hasActiveAbility?(:IRONFIST)
+    score += 100
+    PBAI.log("+ 100 for Iron Fist boost")
+  end
+  next score
+end
+
 
 # Increase/decrease score for each positive/negative stat boost the move gives the user
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
@@ -1354,6 +1413,10 @@ PBAI::ScoreHandler.add("538") do |score, ai, user, target, move|
       score - 1000
       PBAI.log("- 1000 because we already have a Substitute")
     end
+    if !user.can_switch?
+      score -= 1000
+      PBAI.log("- 1000 because we cannot pass a Substitute")
+    end
     kill = 0
     for i in user.moves
       kill += 1 if user.get_move_damage(target,i) >= target.hp
@@ -1617,9 +1680,9 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
   next score
 end
 
-# Haze
+# 
 PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
-  if user.side.flags[:will_haze] && ai.battle.pbSideSize(0) == 2
+  if user.side.flags[:will_] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for another battler will already use haze")
   else
@@ -1778,9 +1841,16 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
-      elsif count > 0
-        score -= 100
-        PBAI.log("- 100 since the target can now be killed by an attack")
+      elsif count == 0 && t_count == 0 && !user.faster_than?(target) && move.function != "024"
+        add = user.turnCount == 0 ? 60 : 40
+        score += add
+        PBAI.log("+ #{add} to boost to guaranteed outspeed and kill")
+      elsif count > 0 && user.faster_than?(target)
+        score -= 1000
+        PBAI.log("- 1000 since the target can now be outsped and killed")
+      elsif count > 0 && t_count == 0
+        score -= 500
+        PBAI.log("- 500 since the target can now be killed and cannot kill back")
       end
       atk_boost = user.stages[:ATTACK]*20
       def_boost = user.stages[:DEFENSE]*20
@@ -1892,16 +1962,23 @@ PBAI::ScoreHandler.add("02B", "02C", "14E") do |score, ai, user, target, move|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
         end
       end
-      # As long as the target's stat stages are more advantageous than ours (i.e. net < 0), Haze is a good choice
+      add = user.turnCount == 0 ? 70 : 50
+      score += add
+      PBAI.log("+ #{add} for being a #{user.role.name}")
       if count == 0 && t_count == 0
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
-        score += 40
-        PBAI.log("+ 40 for being a #{user.role.name}")
-      elsif count > 0
-        score -= 100
-        PBAI.log("- 100 since the target can now be killed by an attack")
+      elsif count == 0 && t_count == 0 && !user.faster_than?(target) && move.function != "02C"
+        add = user.turnCount == 0 ? 60 : 40
+        score += add
+        PBAI.log("+ #{add} to boost to guaranteed outspeed and kill")
+      elsif count > 0 && user.faster_than?(target)
+        score -= 1000
+        PBAI.log("- 1000 since the target can now be outsped and killed")
+      elsif count > 0 && t_count == 0
+        score -= 500
+        PBAI.log("- 500 since the target can now be killed and cannot kill back")
       end
     end
     atk_boost = user.stages[:SPECIAL_ATTACK]*20
@@ -2012,6 +2089,10 @@ PBAI::ScoreHandler.add("0EA") do |score, ai, user, target, move|
     score = 0
     PBAI.log("* 0 for being the last Pokémon in the party")
   end
+  if !user.can_switch?
+      score -= 1000
+      PBAI.log("- 1000 because we cannot Teleport")
+    end
   next score
 end
 
@@ -2088,8 +2169,8 @@ PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
       PBAI.log("+ 50 for having Custap Berry's boosted priority on Destiny Bond")
     end
   end
-  score = 0 if user.effects[PBEffects::DestinyBondPrevious] == true
-  PBAI.log("* 0 for having used Destiny Bond the previous turn")
+  score -= 1000 if user.effects[PBEffects::DestinyBondPrevious] == true
+  PBAI.log("- 1000 for having used Destiny Bond the previous turn")
   next score
 end
 
@@ -2155,6 +2236,15 @@ PBAI::ScoreHandler.add("512") do |score, ai, user, target, move|
   if user.opposing_side.effects[PBEffects::StealthRock] != true
     score += 50
     PBAI.log("+ 50 for being able to set Stealth Rocks")
+  end
+  next score
+end
+
+#Ceaseless Edge
+PBAI::ScoreHandler.add("522") do |score, ai, user, target, move|
+  if user.opposing_side.effects[PBEffects::Spikes] < 3
+    score += 50
+    PBAI.log("+ 50 for being able to set Spikes")
   end
   next score
 end
@@ -2412,10 +2502,10 @@ end
 PBAI::ScoreHandler.add("05B") do |score, ai, user, target, move|
   if user.own_side.effects[PBEffects::Tailwind] <= 0
     score += 200
-    PBAI.log("+ 100 for setting up to outspeed")
+    PBAI.log("+ 200 for setting up to outspeed")
     if user.role.id == :SPEEDCONTROL
       score += 100
-      PBAI.log("+ 50 for being a #{user.role.name}")
+      PBAI.log("+ 100 for being a #{user.role.name}")
     end
   else
     score = 0
@@ -2426,7 +2516,7 @@ end
 
 #Glare/Thunder Wave
 PBAI::ScoreHandler.add("007") do |score, ai, user, target, move|
-  if target.status == :NONE && target.pbCanParalyze? && user.role.id == :SPEEDCONTROL && !target.hasActiveAbility?(:MAGICBOUNCE)
+  if target.status == :NONE && target.can_paralyze?(user,move) && user.role.id == :SPEEDCONTROL && !target.hasActiveAbility?(:MAGICBOUNCE) && move.statusMove?
     score += 100
     PBAI.log("+ 100 for being a #{user.role.name} role")
   end

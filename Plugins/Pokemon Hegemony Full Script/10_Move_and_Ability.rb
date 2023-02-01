@@ -94,7 +94,7 @@ class PokeBattle_Battle
   end
 
 end
-class PokeBattle_Move_522 < PokeBattle_Move
+class PokeBattle_Move_552 < PokeBattle_Move
   def pbBaseDamage(baseDmg, user, target)
     rage_hit = @battle.getBattlerHit(user)
     dmg = [baseDmg + 50  * rage_hit,350].min
