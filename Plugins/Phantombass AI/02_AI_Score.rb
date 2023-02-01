@@ -422,7 +422,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{chance} for being able to burn the target")
       end
     end
-    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.pbCanBurn?)
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_burn?(user, move))
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -469,7 +469,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{chance} for being able to frostbite the target")
       end
     end
-    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.pbCanFreeze?)
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_freeze?(user, move))
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -487,7 +487,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to paralyze the target")
     end
-    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.pbCanParalyze?)
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_paralyze?(user, move))
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -504,6 +504,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
     if chance > 0 && chance <= 100
       score += chance
       PBAI.log("+ #{chance} for being able to put the target to sleep")
+    end
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_sleep?(user, move))
+      score -= 1000
+      PBAI.log("- 1000 for not being able to status")
     end
   end
   next score

@@ -3439,16 +3439,17 @@ class PokeBattle_Battler
         return false
       end
       # Silk Trap
-        if target.effects[PBEffects::SilkTrap] && move.damagingMove?
+        if target.effects[PBEffects::SilkTrap] && move.damagingMove? && !unseenfist
           if show_message
-            @battle.pbCommonAnimation("SilkTrap", target)
+            @battle.pbCommonAnimation("SpikyShield", target)
             @battle.pbDisplay(_INTL("{1} protected itself!", target.pbThis))
           end
           target.damageState.protected = true
           @battle.successStates[user.index].protected = true
-          if move.pbContactMove?(user) && user.affectedByContactEffect? &&
-            user.pbCanLowerStatStage?(:SPEED, target)
-             user.pbLowerStatStage(:SPEED, 1, target)
+          if move.pbContactMove?(user) && user.affectedByContactEffect?
+            if user.pbCanLowerStatStage?(:SPEED)
+              user.pbLowerStatStage(:SPEED, 1, nil)
+            end
           end
           return false
         end
