@@ -1485,7 +1485,7 @@ class PBAI
         return true if self.get_move_damage(target,i) >= target.hp
         return true if i.priority > 0 && i.damagingMove? && self.get_move_damage(target,i) >= target.hp
       end
-      return true if target.bad_against?(self) && self.faster_than?(target)
+      return true if target.bad_against?(self) && self.faster_than?(target) && kill == false
       return false
     end
 
@@ -1506,13 +1506,14 @@ class PBAI
 
     def discourage_making_contact_with?(target)
       return false if has_ability?(:LONGREACH)
+      return false if hasActiveItem?(:PROTECTIVEPADS)
       bad_abilities = [:WEAKARMOR, :STAMINA, :IRONBARBS, :ROUGHSKIN, :PERISHBODY]
       return true if bad_abilities.any? { |a| target.has_ability?(a) }
       return true if target.has_ability?(:CUTECHARM) && target.can_attract?(self)
       return true if (target.has_ability?(:GOOEY) || target.has_ability?(:TANGLINGHAIR)) && faster_than?(target)
       return true if target.has_item?(:ROCKYHELMET)
       return true if target.has_ability?(:EFFECTSPORE) && !has_type?(:GRASS) && !has_ability?(:OVERCOAT)
-      return true if (target.has_ability?(:STATIC) || target.has_ability?(:POISONPOINT) || target.has_ability?(:FLAMEBODY)) && !has_non_volatile_status?
+      return true if (target.has_ability?(:STATIC) || target.has_ability?(:POISONPOINT) || target.has_ability?(:FLAMEBODY) || target.has_ability?(:ICEBODY)) && !has_non_volatile_status?
     end
 
     def get_move_damage(target, move)
