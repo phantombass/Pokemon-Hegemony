@@ -2553,9 +2553,9 @@ class PokeBattle_Move_0D8 < PokeBattle_HealingMove
     case @battle.pbWeather
     when :Sun, :HarshSun
       if !user.hasUtilityUmbrella
-        @healAmount = (user.totalhp*2/3.0).round
+        @healAmount = @type == :FAIRY ? (user.totalhp/2.0).round : (user.totalhp*2/3.0).round
       else
-        @healAmount = (user.totalhp/2.0).round
+        @healAmount = @type == :FAIRY ? (user.totalhp/4.0).round : (user.totalhp/2.0).round
       end
     when :Rain, :HeavyRain
       if !user.hasUtilityUmbrella?
