@@ -171,6 +171,27 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next score
 end
 
+#Prefer Sound moves if you have Punk Rock
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.soundMove?
+  if user.hasActiveAbility?(:PUNKROCK)
+    score += 100
+    PBAI.log("+ 100 for Punk Rock boost")
+  end
+  next score
+end
+
+#Prefer weaker Sound moves if you have Subwoofer
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.soundMove?
+  next if move.base_damage > 70
+  if user.hasActiveAbility?(:SUBWOOFER)
+    score += 100
+    PBAI.log("+ 100 for Subwoofer boost")
+  end
+  next score
+end
+
 
 # Increase/decrease score for each positive/negative stat boost the move gives the user
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
@@ -1505,7 +1526,17 @@ PBAI::ScoreHandler.add("0D8") do |score, ai, user, target, move|
   heal_factor = 0.5
   case ai.battle.pbWeather
   when :Sun, :HarshSun
-    heal_factor = 2.0 / 3.0
+    if move.type != :FAIRY
+      heal_factor = 2.0 / 3.0
+    else
+      heal_factor = 0.25
+    end
+  when :Starstorm, :Eclipse
+    if move.type == :FAIRY
+      heal_factor = 2.0 / 3.0
+    else
+      heal_factor = 0.25
+    end
   when :None, :StrongWinds
     heal_factor = 0.5
   else
@@ -1680,9 +1711,9 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
   next score
 end
 
-# 
+# Haze
 PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
-  if user.side.flags[:will_] && ai.battle.pbSideSize(0) == 2
+  if user.side.flags[:will_haze] && ai.battle.pbSideSize(0) == 2
     score -= 30
     PBAI.log("- 30 for another battler will already use haze")
   else
@@ -1703,6 +1734,10 @@ PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
       add = -net * 20
       score += add
       PBAI.log("+ #{add} to reset disadvantageous stat stages")
+      if user.role.id == :STALLBREAKER
+        score += 30
+        PBAI.log("+ 30 for being a #{user.role.name}")
+      end
     else
       score -= 30
       PBAI.log("- 30 for our stat stages are advantageous")
@@ -2148,8 +2183,8 @@ PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
       PBAI.log("+ 30 for capitalizing on target's predicted switch")
     end
   else
-    score = 0
-    PBAI.log("* 0 for already having a Substitute")
+    score -= 1000
+    PBAI.log("- 1000 for already having a Substitute")
   end
   next score
 end
@@ -2259,8 +2294,8 @@ PBAI::ScoreHandler.add("11F") do |score, ai, user, target, move|
       PBAI.log("+ 50 for being a #{user.role.name}")
     end
   else
-    score = 0
-    PBAI.log("* 0 to not undo Trick Room") if ai.battle.field.effects[PBEffects::TrickRoom] != 0
+    score -= 1000
+    PBAI.log("- 1000 to not undo Trick Room") if ai.battle.field.effects[PBEffects::TrickRoom] != 0
   end
   next score
 end
@@ -2292,15 +2327,14 @@ PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
     if pro > 0
       PBAI.log("+ #{pro} to predict around Protect")
     else
-      score = 0
-      PBAI.log("* 0 because the target has Protect and can choose it")
+      score -= 1000
+      PBAI.log("- 1000 because the target has Protect and can choose it")
     end
   end
   next score
 end
 
 #Expanding Force
-=begin
 PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
   if ai.battle.field.terrain == :Psychic
     score += 100
@@ -2309,34 +2343,10 @@ PBAI::ScoreHandler.add("190") do |score, ai, user, target, move|
       score += 50
       PBAI.log("+ 50 for being in a Double battle")
     end
-  else
-    ally = false
-    b = nil
-    target.battler.eachAlly do |battler|
-      ally = true if battler == user.battler
-      b = battler if ally == true
-    end
-    if ally == true
-      weak_to_psychic = true if (b.pbHasType?([:POISON,:COSMIC,:FIGHTING]) && !b.pbHasType?(:DARK))
-      resists_psychic = true if (b.pbHasType?([:DARK,:STEEL,:PSYCHIC]) || b.hasActiveAbility?(:TELEPATHY))
-      weak_to_psychic = false if resists_psychic == true
-      if ai.battle.pbSideSize(0) == 2
-        if weak_to_psychic
-          score = 0
-          PBAI.log("* 0 for being in a Double battle & ally is weak to Psychic")
-        elsif resists_psychic
-          score += 100
-          PBAI.log("+ 100 for being in a Double battle & ally resists Psychic")
-        else
-          score += 50
-          PBAI.log("+ 50 for being in a double battle")
-        end
-      end
-    end
   end
   next score
 end
-=end
+
 
 #Rage Powder/Ally Switch
 PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
@@ -2362,8 +2372,8 @@ PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
       end
     end
   else
-    score = 0
-    PBAI.log("* 0 because move will fail")
+    score -= 1000
+    PBAI.log("- 1000 because move will fail")
   end
   next score
 end
@@ -2406,8 +2416,8 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
       score += 20 if user.should_switch?(target)
       PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
       if user.faster_than?(target) && user.is_special_attacker?
-        score = 0
-        PBAI.log("* 0 because we outspeed and Special Attackers don't factor Attack")
+        score -= 1000
+        PBAI.log("- 1000 because we outspeed and Special Attackers don't factor Attack")
       end
     end
   next score
@@ -2508,8 +2518,8 @@ PBAI::ScoreHandler.add("05B") do |score, ai, user, target, move|
       PBAI.log("+ 100 for being a #{user.role.name}")
     end
   else
-    score = 0
-    PBAI.log("* 0 because Tailwind is already up")
+    score -= 1000
+    PBAI.log("- 1000 because Tailwind is already up")
   end
   next score
 end
