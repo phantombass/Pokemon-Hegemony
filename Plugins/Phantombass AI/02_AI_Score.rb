@@ -171,6 +171,26 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next score
 end
 
+#Prefer Bomb moves if you have Ballistic
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.bombMove?
+  if user.hasActiveAbility?(:BALLISTIC)
+    score += 100
+    PBAI.log("+ 100 for Ballistic boost")
+  end
+  next score
+end
+
+#Prefer Pulse moves if you have Mega Launcher
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if !move.pulseMove?
+  if user.hasActiveAbility?(:MEGALAUNCHER)
+    score += 100
+    PBAI.log("+ 100 for Mega Launcher boost")
+  end
+  next score
+end
+
 #Prefer Sound moves if you have Punk Rock
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next if !move.soundMove?
