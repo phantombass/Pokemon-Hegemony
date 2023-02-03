@@ -2473,6 +2473,7 @@ class HallOfFame_Scene
     nuzlocke = $game_switches[73] ? " Nuzlocke" : ""
     kaizo = $game_switches[LvlCap::Kaizo] ? " Kaizo" : ""
     ironmon = $game_switches[LvlCap::Ironmon] ? " Ironmon" : ""
+    randomizer = $game_switches[LvlCap::Randomizer] ? "Randomized " : ""
     if $game_switches[900] && !$game_switches[903]
       mode = " Hard Mode"
     elsif $game_switches[900] && $game_switches[903]
@@ -2483,7 +2484,7 @@ class HallOfFame_Scene
     post = $game_switches[300] ? "Post-Game " : ""
     pbDrawTextPositions(overlay,[[_INTL("Welcome to the Hall of Fame!"),
        Graphics.width/2,Graphics.height-80,2,BASECOLOR,SHADOWCOLOR]])
-       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}{6}",post,inverse,mode,kaizo,ironmon,nuzlocke),
+       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}{6}",randomizer,inverse,mode,kaizo,ironmon,post,nuzlocke),
           Graphics.width/2,Graphics.height-56,2,BASECOLOR,SHADOWCOLOR]])
   end
 end
