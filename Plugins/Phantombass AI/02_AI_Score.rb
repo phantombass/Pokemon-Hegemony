@@ -204,8 +204,7 @@ end
 #Prefer weaker Sound moves if you have Subwoofer
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next if !move.soundMove?
-  next if move.base_damage > 70
-  if user.hasActiveAbility?(:SUBWOOFER)
+  if user.hasActiveAbility?(:SUBWOOFER) && move.baseDamage > 70
     score += 100
     PBAI.log("+ 100 for Subwoofer boost")
   end
