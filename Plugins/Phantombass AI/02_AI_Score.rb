@@ -1218,6 +1218,17 @@ PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, t
       score -= 1000
       PBAI.log("- 1000 because hazards will be set on our side")
     end
+    if $game_switches[LvlCap::Expert]
+      for i in target.moves
+        if ["035","02A","032","10D","02B","02C","14E","032","024","026","518"].include?(i.function)
+          setup = true
+        end
+      end
+      if setup == true
+        score -= 1000
+        PBAI.log("- 1000 to counter setup leads vs hazard leads")
+      end
+    end
   end
   next score
 end
@@ -1726,6 +1737,17 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
       score += 30
       PBAI.log("+ 30 for being a #{user.role.name}")
     end
+    if $game_switches[LvlCap::Expert]
+      for i in target.moves
+        if ["035","02A","032","10D","02B","02C","14E","032","024","026","518"].include?(i.function)
+          setup = true
+        end
+      end
+      if setup == true
+        score += 100
+        PBAI.log("+ 100 to counter setup")
+      end
+    end
   end
   next score
 end
@@ -1800,9 +1822,15 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
       end
       t_count = 0
-      if target.used_moves != nil
-        target.used_moves.each do |tmove|
+      if $game_switches[LvlCap::Expert] == true
+        target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      else
+        if target.used_moves != nil
+          target.used_moves.each do |tmove|
+            t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+          end
         end
       end
       add = user.turnCount == 0 ? 90 : 70
@@ -1842,9 +1870,15 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
       end
       t_count = 0
-      if target.used_moves != nil
-        target.used_moves.each do |tmove|
+      if $game_switches[LvlCap::Expert] == true
+        target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      else
+        if target.used_moves != nil
+          target.used_moves.each do |tmove|
+            t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+          end
         end
       end
       # As long as the target's stat stages are more advantageous than ours (i.e. net < 0), Haze is a good choice
@@ -1882,9 +1916,15 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
       end
       t_count = 0
-      if target.used_moves != nil
-        target.used_moves.each do |tmove|
+      if $game_switches[LvlCap::Expert] == true
+        target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      else
+        if target.used_moves != nil
+          target.used_moves.each do |tmove|
+            t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+          end
         end
       end
       add = user.turnCount == 0 ? 70 : 50
@@ -1930,9 +1970,15 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
       end
       t_count = 0
-      if target.used_moves != nil
-        target.used_moves.each do |tmove|
+      if $game_switches[LvlCap::Expert] == true
+        target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      else
+        if target.used_moves != nil
+          target.used_moves.each do |tmove|
+            t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+          end
         end
       end
       add = user.turnCount == 0 ? 70 : 50
@@ -1971,9 +2017,15 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) >= target.hp && m.specialMove?
       end
       t_count = 0
-      if target.used_moves != nil
-        target.used_moves.each do |tmove|
+      if $game_switches[LvlCap::Expert] == true
+        target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      else
+        if target.used_moves != nil
+          target.used_moves.each do |tmove|
+            t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+          end
         end
       end
       # As long as the target's stat stages are more advantageous than ours (i.e. net < 0), Haze is a good choice
@@ -2011,9 +2063,15 @@ PBAI::ScoreHandler.add("02B", "02C", "14E") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) >= target.hp && m.specialMove?
       end
       t_count = 0
-      if target.used_moves != nil
-        target.used_moves.each do |tmove|
+      if $game_switches[LvlCap::Expert] == true
+        target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      else
+        if target.used_moves != nil
+          target.used_moves.each do |tmove|
+            t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+          end
         end
       end
       add = user.turnCount == 0 ? 70 : 50
@@ -2051,8 +2109,14 @@ end
 PBAI::ScoreHandler.add("18C") do |score, ai, user, target, move|
   if ai.battle.field.terrain == :Grassy
     pri = 0
-    for i in target.used_moves
-      pri += 1 if i.priority > 0 && i.damagingMove?
+    if $game_switches[LvlCap::Expert] == true
+      for i in target.moves
+        pri += 1 if i.priority > 0 && i.damagingMove?
+      end
+    else
+      for i in target.used_moves
+        pri += 1 if i.priority > 0 && i.damagingMove?
+      end
     end
     if target.faster_than?(user)
       score += 50
@@ -2172,9 +2236,16 @@ end
 PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
   dmg = 0
   sound = 0
-  for i in target.used_moves
-    dmg += 1 if target.get_move_damage(user,i) >= user.totalhp/4
-    sound += 1 if i.soundMove? && i.damagingMove?
+  if $game_switches[LvlCap::Expert]
+    for i in target.moves
+      dmg += 1 if target.get_move_damage(user,i) >= user.totalhp/4
+      sound += 1 if i.soundMove? && i.damagingMove?
+    end
+  else
+    for i in target.used_moves
+      dmg += 1 if target.get_move_damage(user,i) >= user.totalhp/4
+      sound += 1 if i.soundMove? && i.damagingMove?
+    end
   end
   if user.effects[PBEffects::Substitute] == 0
     if user.turnCount == 0 && dmg == 0
@@ -2211,8 +2282,14 @@ end
 #Destiny Bond
 PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
   dmg = 0
-  for i in target.used_moves
-    dmg += 1 if target.get_move_damage(user,i) >= user.hp
+  if $game_switches[LvlCap::Expert]
+    for i in target.moves
+      dmg += 1 if target.get_move_damage(user,i) >= user.hp
+    end
+  else
+    for i in target.used_moves
+      dmg += 1 if target.get_move_damage(user,i) >= user.hp
+    end
   end
   if dmg > 0
     dbond = 50*dmg
@@ -2336,9 +2413,16 @@ PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
     PBAI.log("+ 500 for being unable to switch and will likely outprioritize the target")
   end
   protect = false
-  for i in target.used_moves
-    protect = true if i.function == "0AA"
-    break
+  if $game_switches[LvlCap::Expert]
+    for i in target.moves
+      protect = true if i.function == "0AA"
+      break
+    end
+  else
+    for i in target.used_moves
+      protect = true if i.function == "0AA"
+      break
+    end
   end
   if protect == true
     pro = 50 * target.effects[PBEffects::ProtectRate]
@@ -2409,9 +2493,15 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
       end
       t_count = 0
-      if target.used_moves != nil
-        target.used_moves.each do |tmove|
+      if $game_switches[LvlCap::Expert]
+        target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+        end
+      else
+        if target.used_moves != nil
+          target.used_moves.each do |tmove|
+            t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
+          end
         end
       end
       add = user.turnCount == 0 ? 70 : 50
