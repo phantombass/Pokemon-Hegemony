@@ -1703,7 +1703,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:ZEROTOHERO,
 
 BattleHandlers::StatusImmunityAbility.add(:FAIRYBUBBLE,
   proc { |ability,battler,status|
-    next true if status =! :NONE
+    next true if status != :NONE
   }
 )
 
