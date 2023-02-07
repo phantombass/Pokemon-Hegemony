@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "3.2.10"
+  GAME_VERSION = "3.2.11"
 end
 
 def write_version
@@ -1630,7 +1630,7 @@ class PokeBattle_Battle
     return true if $DEBUG && Input.press?(Input::CTRL)
     return false if @battlers[idxBattler].effects[PBEffects::SkyDrop]>=0
     return false if !pbHasMegaRing?(idxBattler)
-    return false if $mega_flag == 1
+    return false if $mega_flag == 1 && @battlers[idxBattler].idxOwnSide == 0
     side  = @battlers[idxBattler].idxOwnSide
     owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
     return @megaEvolution[side][owner]==-1
