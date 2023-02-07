@@ -2145,11 +2145,11 @@ PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
     score += 300
     PBAI.log("+ 300 for receiving an incoming Wish")
   end
-  if ai.battle.pbSideSize(0) == 2 && user.effects[PBEffects::ProtectRate] == 0
+  if ai.battle.pbSideSize(0) == 2 && user.effects[PBEffects::ProtectRate] == 1
     score += 50
     PBAI.log("+ 50 for encouraging use of Protect in Double battles")
   end
-  if user.effects[PBEffects::Substitute] > 0 && user.effects[PBEffects::ProtectRate] == 0
+  if user.effects[PBEffects::Substitute] > 0 && user.effects[PBEffects::ProtectRate] == 1
     if user.hasActiveAbility?(:SPEEDBOOST) && target.faster_than?(user)
       score += 100
       PBAI.log("+ 100 for boosting speed to outspeed opponent")
@@ -2168,7 +2168,7 @@ PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
     PBAI.log("+ 500 for getting a status to benefit their ability")
   end
   if (target.status == :POISON || target.status == :BURN || target.status == :FROZEN)
-    protect = 60 - user.effects[PBEffects::ProtectRate] * 40
+    protect = 100 - user.effects[PBEffects::ProtectRate] * 40
     score += protect
     PBAI.log("+ #{protect} for stalling status damage")
     if user.role.id == :TOXICSTALLER && target.status == :POISON
@@ -2182,6 +2182,11 @@ PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
   end
   score += 60 if user.flags[:should_protect] == true
   PBAI.log("+ 60 because there are no better moves") if user.flags[:should_protect] == true
+  if user.effects[PBEffects::ProtectRate] > 1
+    protect = user.effects[PBEffects::ProtectRate] * 100
+    score -= protect
+    PBAI.log("- #{protect} to prevent potential Protect failure")
+  end
   next score
 end
 

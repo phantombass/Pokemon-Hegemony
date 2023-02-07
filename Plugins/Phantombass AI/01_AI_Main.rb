@@ -446,6 +446,9 @@ class PBAI
       # An array of scores in the format of [move_index, score, target]
       scores = []
 
+      $target = []
+      $target_ind = -1
+
       # Calculates whether to use an item
       item_score = get_item_score
       # Yields [score, item, target&]
@@ -473,6 +476,7 @@ class PBAI
       end
       targets.each do |target|
         next if target.nil?
+        $target.push(target)
         PBAI.log("Moves for #{@battler.pokemon.name} against #{target.pokemon.name}")
         # Calculate a score for all the user's moves
         for i in 0..3
@@ -559,6 +563,9 @@ class PBAI
           name = @battler.moves[move_index].name
           str += "\nMOVE(#{target_name}) #{name}: #{score} => #{finalPerc}" + " percent"
           str += " << CHOSEN" if i == idx
+          if i == idx
+            $target_ind = target
+          end
           str += "\n"
         end
       end
@@ -584,7 +591,7 @@ class PBAI
       if idx
         choice = scores[idx]
         move = @battler.moves[choice[0]]
-        target = opposing_side.battlers[choice[2]]
+        target = $target[$target_ind%2]
         if ["15B", "0D5", "0D6", "0D7", "0D8", "0D9"].include?(move.function)
           self.flags[:will_be_healed] = true
         elsif move.function == "0DF"
@@ -913,8 +920,7 @@ class PBAI
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible
             score = (75 * hi_off_score * (switch_to_dark_type ? 2.0 : 1.0)).round
-            score += 50 if [:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
-            score += 30 if [:DEFENSIVEPIVOT,:STALLBREAKER].include?(proj.pokemon.role)
+            score += 50 if [:HAZARDLEAD,:PHYSICALWALL,:SPECIALWALL,:CLERIC,:SETUPSWEEPER,:OFFENSIVEPIVOT,:STALLBREAKER,:DEFENSIVEPIVOT].include?(proj.pokemon.role)
             index = party.index(proj.pokemon)
             return [score, index]
           end
@@ -937,8 +943,7 @@ class PBAI
           if eligible && hi_off_score >= 1.0
             # Better choice than the current battler, so let's switch to this pokemon
             score = (100 * hi_off_score).round
-            score += 30 if [:OFFENSIVEPIVOT,:PHYSICALWALL,:SPECIALWALL,:CLERIC].include?(proj.pokemon.role)
-            score += 15 if [:STALLBREAKER].include?(proj.pokemon.role)
+            score += 30 if [:HAZARDLEAD,:PHYSICALWALL,:SPECIALWALL,:CLERIC,:SETUPSWEEPER,:OFFENSIVEPIVOT,:STALLBREAKER,:DEFENSIVEPIVOT].include?(proj.pokemon.role)
             index = party.index(proj.pokemon)
             return [score, index]
           end
