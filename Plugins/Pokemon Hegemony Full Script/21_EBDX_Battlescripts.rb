@@ -122,6 +122,10 @@ module BattleScripts
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
         @scene.pbDisplay("The battlefield got permanently misty!")
+        @battle.field.weather = :HeavyRain
+        @battle.field.weatherDuration = -1
+        $gym_weather = true
+        @scene.pbDisplay("Jackson set permanent Heavy Rain!")
       end
     end
   }
