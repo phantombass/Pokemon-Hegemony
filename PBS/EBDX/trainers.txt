@@ -151,7 +151,7 @@ BattleVS         = plasmaSM
 #-------------------------------
 [CHANCELLOR]
 BattleBGM        = B2W2-ColressBattle.ogg
-BattleScript	 = CHANCELLOR1
+BattleScript	 = CHANCELLOR
 BattleVS         = plasmaSM
 Ace = 6
 #-------------------------------
@@ -298,4 +298,10 @@ Ace				 = 6
 BattleBGM        = HGSS-278-BattleChampion.ogg 
 BattleVS         = plasmaSM
 Ace				 = 6
+#-------------------------------
+[CHANCELLOR,Yule,1]
+BattleBGM        = B2W2-ColressBattle.ogg
+BattleScript	 = CHANCELLOR
+BattleVS         = plasmaSM
+Ace = 6
 #-------------------------------
