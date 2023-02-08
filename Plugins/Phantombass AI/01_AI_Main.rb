@@ -1172,6 +1172,9 @@ class PBAI
           return true if target.hasActiveAbility?(:LEGENDARMOR)
         when :DARK
           return true if target.hasActiveAbility?(:UNTAINTED)
+        when :ROCK
+          return true if target.hasActiveAbility?(:SCALER)
+          return true if target.hasActiveItem?(:SCALERORB)
         when :COSMIC
           return true if target.hasActiveAbility?(:DIMENSIONBLOCK)
           return true if target.hasActiveItem?(:DIMENSIONBLOCKORB)
