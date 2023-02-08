@@ -150,8 +150,8 @@ class PokeBattle_Battle
     battler = @battlers[idxBattler]
     return if !battler || !battler.pokemon
     return if !battler.hasMega? || battler.mega?
-    return if $mega_flag == 1
     trainerName = pbGetOwnerName(idxBattler)
+    return if $mega_flag == 1 && trainerName == $Trainer.name
     # Break Illusion
     if battler.hasActiveAbility?(:ILLUSION)
       BattleHandlers.triggerTargetAbilityOnHit(battler.ability,nil,battler,nil,self)
