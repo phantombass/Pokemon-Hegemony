@@ -837,6 +837,7 @@ class PBAI
       switch_to_dark_type = false
       # The AI's party
       party = @battle.pbParty(@battler.index)
+      target_strong_moves = false
 
       $d_switch = 0
       $d_switch = 1 if $doubles_switch != nil
@@ -917,6 +918,11 @@ class PBAI
           eligible = true
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
+          self.opposing_side.battlers.each do |target|
+            target_strong_moves = proj.battler.get_move_switch_scores(target)
+            break if target_strong_moves == true
+          end
+          eligible = false if target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible
             score = (75 * hi_off_score * (switch_to_dark_type ? 2.0 : 1.0)).round
@@ -939,6 +945,10 @@ class PBAI
           eligible = true
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
+          self.opposing_side.battlers.each do |target|
+            target_strong_moves = proj.battler.get_move_switch_scores(target)
+            break if target_strong_moves == true
+          end
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible && hi_off_score >= 1.0
             # Better choice than the current battler, so let's switch to this pokemon
@@ -951,6 +961,28 @@ class PBAI
         end
       end
       return [0, 0]
+    end
+
+    def get_move_switch_scores(target)
+      should_switch = true
+      if $game_switches[LvlCap::Expert]
+        for i in target.moves
+          if self.calculate_move_matchup(i.id) > 1
+            should_switch = false
+          end
+        end
+      else
+        if target.used_moves != nil
+          for i in target.used_moves
+            if self.calculate_move_matchup(i.id) > 1
+              should_switch = false
+            end
+          end
+        else
+          should_switch = true
+        end
+      end
+      return should_switch
     end
 
     def get_optimal_switch_choice

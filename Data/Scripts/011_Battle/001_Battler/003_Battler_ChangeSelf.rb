@@ -149,8 +149,10 @@ class PokeBattle_Battler
     pbUpdate(true)
     @hp = @totalhp-oldDmg
     @effects[PBEffects::WeightChange] = 0 if Settings::MECHANICS_GENERATION >= 6
-    @battle.scene.pbChangePokemon(self,@pokemon)
-    @battle.scene.pbRefreshOne(@index)
+    if !hasActiveAbility?(:ZEROTOHERO)
+      @battle.scene.pbChangePokemon(self,@pokemon)
+      @battle.scene.pbRefreshOne(@index)
+    end
     @battle.pbDisplay(msg) if msg && msg!=""
     PBDebug.log("[Form changed] #{pbThis} changed from form #{oldForm} to form #{newForm}")
     @battle.pbSetSeen(self)
@@ -267,6 +269,12 @@ class PokeBattle_Battler
         newForm += 2
       elsif @hp > @totalhp/2 && newForm >= 2
         newForm -= 2
+      end
+      if form == 0 && @battle.pbWeather == (:Sun || :HarshSun)
+        newForm += 2
+      end
+      if form == 1 && [:Hail,:Sleet].include?(@battle.pbWeather)
+        newForm += 2
       end
       if newForm != @form
         @battle.pbShowAbilitySplash(self,true)
