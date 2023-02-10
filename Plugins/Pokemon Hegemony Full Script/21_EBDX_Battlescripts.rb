@@ -117,15 +117,20 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("I don't plan on losing to some punk.")
       if $game_switches[LvlCap::Expert]
-        @scene.pbAnimation(GameData::Move.get(:MISTYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-        @battle.field.terrain = :Misty
+        @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
-        @scene.pbDisplay("The battlefield got permanently misty!")
+        @scene.pbDisplay("The battlefield got permanently weird!")
         @battle.field.weather = :HeavyRain
         @battle.field.weatherDuration = -1
         $gym_weather = true
         @scene.pbDisplay("Jackson set permanent Heavy Rain!")
+        @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.battlers[1].pbOwnSide.effects[PBEffects::Safeguard] = 1
+        @battle.battlers[1].effects[PBEffects::Taunt] = 1
+        $gym_taunt = true
+        @scene.pbDisplay("Jackson's team is protected from status and prevents your status moves!")
       end
     end
   }
@@ -142,7 +147,16 @@ module BattleScripts
 
   ARMY1 = {
     "afterLastOpp" => "How interesting...",
-    "turnStart0" => "Stop while you can kid. You're way out of your depth."
+    "turnStart0" => proc do 
+      @scene.pbTrainerSpeak("Stop while you can kid. You're way out of your depth.")
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:WISH).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.weather = :Eclipse
+        @battle.field.weatherDuration = -1
+        $gym_weather = true
+        @scene.pbDisplay("Ahab set permanent Eclipse!")
+      end
+    end
   }
 
   ARMY2 = {
@@ -157,7 +171,24 @@ module BattleScripts
 
   NAVY1 = {
     "afterLastOpp" => "Ah, I see yer point. Well said, yungin.",
-    "turnStart0" => "Ye may as well be a criminal showing up at a time like this."
+    "turnStart0" => proc do
+      @scene.pbTrainerSpeak("Ye may as well be a criminal showing up at a time like this.")
+      if $game_switches[LvlCap::Expert]
+        if $game_variables[51] <= 5
+          @scene.pbAnimation(GameData::Move.get(:HAIL).id,@battle.battlers[1],@battle.battlers[1])
+          @battle.field.weather = :Sleet
+          @battle.field.weatherDuration = -1
+          $gym_weather = true
+          @scene.pbDisplay("Eugene set permanent Sleet!")
+        else
+          @scene.pbAnimation(GameData::Move.get(:Rain).id,@battle.battlers[1],@battle.battlers[1])
+          @battle.field.weather = :HeavyRain
+          @battle.field.weatherDuration = -1
+          $gym_weather = true
+          @scene.pbDisplay("Eugene set permanent Heavy Rain!")
+        end
+      end
+    end
   }
 
   NAVY2 = {
@@ -167,7 +198,16 @@ module BattleScripts
 
   AIRFORCE1 = {
     "afterLastOpp" => "I do believe we are getting to the best part of this match!",
-    "turnStart0" => "It's not that I don't trust you kiddo. I've just got to do my due diligence."
+    "turnStart0" => proc do 
+      @scene.pbTrainerSpeak("It's not that I don't trust you kiddo. I've just got to do my due diligence.")
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.weather = :StrongWinds
+        @battle.field.weatherDuration = -1
+        $gym_weather = true
+        @scene.pbDisplay("Winston set permanent Delta Stream!")
+      end
+    end
   }
 
   CHANCELLOR = {

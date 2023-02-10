@@ -1686,6 +1686,7 @@ BattleHandlers::DamageCalcUserAbility.add(:FAIRYBUBBLE,
 BattleHandlers::AbilityOnSwitchOut.add(:ZEROTOHERO,
   proc { |ability, battler, endOfBattle|
     next if battler.form == 1
+    next if endOfBattle
     PBDebug.log("[Ability triggered] #{battler.pbThis}'s #{battler.abilityName}")
     battler.pbChangeForm(1,"")
   }
@@ -3288,6 +3289,42 @@ class PokeBattle_Battler
     ]
     return ability_blacklist.include?(abil.id)
   end
+  def ability_orb_held?(check_item)
+    ability_orbs = [
+      :UNSHAKENORB,
+      :SAPSIPPERORB,
+      :LIGHTNINGRODORB,
+      :FILTERORB,
+      :FLASHFIREORB,
+      :SCALERORB,
+      :MEDUSOIDORB,
+      :DIMENSIONBLOCKORB,
+      :INTIMIDATEORB,
+      :ILLUMINATEORB,
+      :LEVITATEORB,
+      :EARTHEATERORB,
+      :WATERABSORBORB
+    ]
+    return ability_orbs.include?(check_item)
+  end
+  def unlosableItem?(check_item)
+    return false if !check_item
+    return true if GameData::Item.get(check_item).is_mail?
+    return false if @effects[PBEffects::Transform]
+    return true if ability_orb_held?(GameData::Item.get(check_item).id)
+    #return true if itemCorroded?
+    # Items that change a Pokémon's form
+    if mega?   # Check if item was needed for this Mega Evolution
+      return true if @pokemon.species_data.mega_stone == check_item
+    else   # Check if item could cause a Mega Evolution
+      GameData::Species.each do |data|
+        next if data.species != @species || data.unmega_form != @form
+        return true if data.mega_stone == check_item
+      end
+    end
+    # Other unlosable items
+    return GameData::Item.get(check_item).unlosable?(@species, self.ability)
+  end
   def ungainableAbility?(abil = nil)
     abil = @ability_id if !abil
     abil = GameData::Ability.try_get(abil)
@@ -3399,18 +3436,6 @@ class PokeBattle_Battler
         @battle.successStates[user.index].protected = true
         return false
       end
-      if target.effects[PBEffects::Obstruct] && !unseenfist
-        @battle.pbCommonAnimation("Obstruct",target)
-        @battle.pbDisplay(_INTL("{1} protected itself!",target.pbThis))
-        target.damageState.protected = true
-        @battle.successStates[user.index].protected = true
-        if move.pbContactMove?(user) && user.affectedByContactEffect?
-          if user.pbCanLowerStatStage?(:DEFENSE)
-            user.pbLowerStatStage(:DEFENSE,2,nil)
-          end
-        end
-        return false
-      end
       # King's Shield
       if target.effects[PBEffects::KingsShield] && move.damagingMove? && !unseenfist
         @battle.pbCommonAnimation("KingsShield",target)
@@ -3420,6 +3445,19 @@ class PokeBattle_Battler
         if move.pbContactMove?(user) && user.affectedByContactEffect?
           if user.pbCanLowerStatStage?(:ATTACK)
             user.pbLowerStatStage(:ATTACK, (Settings::MECHANICS_GENERATION >= 8) ? 1 : 2, nil)
+          end
+        end
+        return false
+      end
+      # Obstruct
+      if target.effects[PBEffects::Obstruct] && !unseenfist
+        @battle.pbCommonAnimation("Obstruct",target)
+        @battle.pbDisplay(_INTL("{1} protected itself!",target.pbThis))
+        target.damageState.protected = true
+        @battle.successStates[user.index].protected = true
+        if move.pbContactMove?(user) && user.affectedByContactEffect?
+          if user.pbCanLowerStatStage?(:DEFENSE)
+            user.pbLowerStatStage(:DEFENSE, 2, nil)
           end
         end
         return false
@@ -5712,6 +5750,9 @@ class PokeBattle_Battle
     eachBattler do |b|
       b.droppedBelowHalfHP = false
       b.statsLowered = false
+      if $gym_taunt && b[battler_index].idxOwnSide == 0
+        b.effects[PBEffects::Taunt] = 1
+      end 
     end
   end
 end
@@ -6361,9 +6402,11 @@ class PokeBattle_Battle
       battler.droppedBelowHalfHP = false
     end
     # Taunt
-    pbEORCountDownBattlerEffect(priority,PBEffects::Taunt) { |battler|
-      pbDisplay(_INTL("{1}'s taunt wore off!",battler.pbThis))
-    }
+    if !$gym_gimmick
+      pbEORCountDownBattlerEffect(priority,PBEffects::Taunt) { |battler|
+        pbDisplay(_INTL("{1}'s taunt wore off!",battler.pbThis))
+      }
+    end
     # Encore
     priority.each do |b|
       next if b.fainted? || b.effects[PBEffects::Encore]==0
@@ -6442,8 +6485,10 @@ class PokeBattle_Battle
       pbEORCountDownSideEffect(side,PBEffects::LightScreen,
          _INTL("{1}'s Light Screen wore off!",@battlers[side].pbTeam))
       # Safeguard
-      pbEORCountDownSideEffect(side,PBEffects::Safeguard,
-         _INTL("{1} is no longer protected by Safeguard!",@battlers[side].pbTeam))
+      if $gym_gimmick != true
+        pbEORCountDownSideEffect(side,PBEffects::Safeguard,
+           _INTL("{1} is no longer protected by Safeguard!",@battlers[side].pbTeam))
+      end
       # Mist
       pbEORCountDownSideEffect(side,PBEffects::Mist,
          _INTL("{1} is no longer protected by mist!",@battlers[side].pbTeam))
