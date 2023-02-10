@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "3.2.13"
+  GAME_VERSION = "3.3"
 end
 
 def write_version
@@ -16,6 +16,8 @@ end
 def reset_custom_variables
   $gym_gimmick = false
   $gym_weather = false
+  $gym_hazard = false
+  $gym_taunt = false
   $appliance = nil
   $currentDexSearch = nil
   $repel_toggle = false
@@ -904,6 +906,10 @@ class PokeBattle_Battle
 
   def pbEndOfBattle
     $mega_flag = 0
+    $gym_gimmick = false
+    $gym_weather = false
+    $gym_hazard = false
+    $gym_taunt = false
     oldDecision = @decision
     @decision = 4 if @decision==1 && wildBattle? && @caughtPokemon.length>0
     case oldDecision

@@ -102,6 +102,18 @@ BattleScript	 = ARMY1
 [ARMYBOSS,Ahab,1]
 BattleScript	 = ARMY2
 #-------------------------------
+[ARMYBOSS,Ahab,2]
+BattleScript	 = ARMY1
+#-------------------------------
+[ARMYBOSS,Ahab,3]
+BattleScript	 = ARMY2
+#-------------------------------
+[ARMYBOSS,Ahab,4]
+BattleScript	 = ARMY1
+#-------------------------------
+[ARMYBOSS,Ahab,5]
+BattleScript	 = ARMY2
+#-------------------------------
 [NAVYBOSS]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
@@ -207,6 +219,9 @@ BattleVS         = classicVS
 BattleVS         = classicVS
 #-------------------------------
 [COOLTRAINER_M,Will,4]
+BattleVS         = classicVS
+#-------------------------------
+[GUARD,Admin,2]
 BattleVS         = classicVS
 #-------------------------------
 #Post-Game
