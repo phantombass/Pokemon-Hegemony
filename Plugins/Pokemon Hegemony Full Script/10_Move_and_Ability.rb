@@ -158,6 +158,7 @@ class PokeBattle_Move
   #=============================================================================
   def pbBaseType(user)
     ret = @type
+    return ret if user.nil?
     if ret && user.abilityActive?
       ret = BattleHandlers.triggerMoveBaseTypeModifierAbility(user.ability,user,self,ret)
     end
@@ -167,6 +168,7 @@ class PokeBattle_Move
   def pbCalcType(user)
     @powerBoost = false
     ret = pbBaseType(user)
+    return ret if user.nil?
     if ret && GameData::Type.exists?(:ELECTRIC)
       if @battle.field.effects[PBEffects::IonDeluge] && ret == :NORMAL
         ret = :ELECTRIC

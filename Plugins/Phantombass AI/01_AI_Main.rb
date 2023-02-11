@@ -919,7 +919,7 @@ class PBAI
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
           self.opposing_side.battlers.each do |target|
-            target_strong_moves = proj.battler.get_move_switch_scores(target)
+            target_strong_moves = proj.get_move_switch_scores(target)
             break if target_strong_moves == true
           end
           eligible = false if target_strong_moves == true
@@ -946,9 +946,10 @@ class PBAI
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
           self.opposing_side.battlers.each do |target|
-            target_strong_moves = proj.battler.get_move_switch_scores(target)
+            target_strong_moves = proj.get_move_switch_scores(target)
             break if target_strong_moves == true
           end
+          eligible = false if target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible && hi_off_score >= 1.0
             # Better choice than the current battler, so let's switch to this pokemon
