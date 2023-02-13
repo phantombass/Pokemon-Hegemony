@@ -965,25 +965,25 @@ class PBAI
     end
 
     def get_move_switch_scores(target)
-      should_switch = true
+      skip_switch = false
       if $game_switches[LvlCap::Expert]
         for i in target.moves
           if self.calculate_move_matchup(i.id) > 1
-            should_switch = false
+            skip_switch = true
           end
         end
       else
         if target.used_moves != nil
           for i in target.used_moves
             if self.calculate_move_matchup(i.id) > 1
-              should_switch = false
+              skip_switch = true
             end
           end
         else
-          should_switch = true
+          skip_switch = false
         end
       end
-      return should_switch
+      return skip_switch
     end
 
     def get_optimal_switch_choice
