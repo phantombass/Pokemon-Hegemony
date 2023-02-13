@@ -181,7 +181,7 @@ module BattleScripts
           $gym_weather = true
           @scene.pbDisplay("Eugene set permanent Sleet!")
         else
-          @scene.pbAnimation(GameData::Move.get(:Rain).id,@battle.battlers[1],@battle.battlers[1])
+          @scene.pbAnimation(GameData::Move.get(:RAINDANCE).id,@battle.battlers[1],@battle.battlers[1])
           @battle.field.weather = :HeavyRain
           @battle.field.weatherDuration = -1
           $gym_weather = true
