@@ -965,6 +965,7 @@ class PBAI
     end
 
     def get_move_switch_scores(target)
+      return false if wildBattle?
       skip_switch = false
       if $game_switches[LvlCap::Expert]
         for i in target.moves
