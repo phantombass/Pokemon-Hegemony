@@ -207,6 +207,11 @@ module EliteBattle
           rem_stat += 1
           next
         end
+        if data[key].id == :MIMIKYU && stat == :HP
+          data[key].base_stats[stat] = data[key].base_stats[stat]
+          bst -= data[key].base_stats[stat]
+          rem_stat += data[key].base_stats[stat]
+        end
         loop do
           randStat = rand(bst-rem_stat)
           if bst-rem_stat <= 5
