@@ -908,6 +908,7 @@ class PBAI
       end
       calc = 0
       self.opposing_side.battlers.each do |target|
+        next if @battle.wildBattle?
         for i in user.moves
           dmg = user.get_move_damage(target, i)
           calc += 1 if dmg >= target.totalhp/4
