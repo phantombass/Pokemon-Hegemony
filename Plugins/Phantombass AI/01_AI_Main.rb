@@ -1,4 +1,4 @@
-Essentials::ERROR_TEXT += "[Phantombass AI v2.0]\r\n"
+Essentials::ERROR_TEXT += "[Phantombass AI v1.0]\r\n"
 
 class PBAI
   attr_reader :battle
