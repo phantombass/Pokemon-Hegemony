@@ -221,7 +221,7 @@ end
 #Don't switch when set up
 PBAI::SwitchHandler.add do |score,ai,user,target|
 	if [:SETUPSWEEPER,:WINCON].include?(user.role.id)
-		if self.set_up_score >= 2
+		if user.set_up_score >= 2
 			score -= 500
 		end
 	end
