@@ -1,3 +1,5 @@
+Essentials::ERROR_TEXT += "[Phantombass AI v2.0]\r\n"
+
 class PBAI
   attr_reader :battle
   attr_reader :sides
@@ -856,12 +858,12 @@ class PBAI
         opposing_side.battlers.each do |pkmn|
           factor += pkmn.calculate_move_matchup(choiced_move_name)
         end
-        if factor < 2
+        if (factor < 1 && @battle.pbSideSize(0) == 1) || (factor < 2 && @battle.pbSideSize(0) == 2)
           switch = true
         end
       end
       if self.set_up_score > 0
-        switch = self.set_up_score <= rand(2)
+        switch = self.set_up_score <= 1
       end
       # Encored into bad move
       if self.effects[PBEffects::Encore] > 0
@@ -904,6 +906,17 @@ class PBAI
       if self.trapped?
         switch = false
       end
+      calc = 0
+      self.opposing_side.battlers.each do |target|
+        for i in user.moves
+          dmg = user.get_move_damage(target, i)
+          calc += 1 if dmg >= target.totalhp/4
+        end
+      end
+      if calc == 0
+        switch = true
+      end
+
       # Get the optimal switch choice by type
       scores = get_optimal_switch_choice
       # If we should switch due to effects in battle
@@ -914,6 +927,7 @@ class PBAI
           availscores = availscores.select { |e| e[2].pokemon.types.include?(:DARK) }
         end
         while availscores.size > 0
+          score = 0
           hi_off_score, hi_def_score, proj = availscores[0]
           eligible = true
           eligible = false if proj.battler != nil # Already active
@@ -922,11 +936,21 @@ class PBAI
             target_strong_moves = proj.get_move_switch_scores(target)
             break if target_strong_moves == true
           end
+          self.opposing_side.battlers.each do |target|
+            next if target.nil?
+            score = 0
+            score = PBAI::SwitchHandler.trigger_general(score,@ai,self,target)
+            target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+            if target_moves != nil
+              for i in target_moves
+                score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
+              end
+            end
+            eligible = false if score <= 300
+          end
           eligible = false if target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible
-            score = (75 * hi_off_score * (switch_to_dark_type ? 2.0 : 1.0)).round
-            score += 50 if [:HAZARDLEAD,:PHYSICALWALL,:SPECIALWALL,:CLERIC,:SETUPSWEEPER,:OFFENSIVEPIVOT,:STALLBREAKER,:DEFENSIVEPIVOT].include?(proj.pokemon.role)
             index = party.index(proj.pokemon)
             return [score, index]
           end
@@ -940,6 +964,7 @@ class PBAI
       if curr_score < 1.0 && !self.trapped?
         availscores = scores.select { |e|!e[2].fainted?}
         while availscores.size > 0
+          score = 0
           hi_off_score, hi_def_score, proj = availscores[0]
           $doubles_switch = proj if $d_switch == 0
           eligible = true
@@ -949,12 +974,22 @@ class PBAI
             target_strong_moves = proj.get_move_switch_scores(target)
             break if target_strong_moves == true
           end
+          self.opposing_side.battlers.each do |target|
+            next if target.nil?
+            score = 0
+            score = PBAI::SwitchHandler.trigger_general(score,@ai,self,target)
+            target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+            if target_moves != nil
+              for i in target_moves
+                score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
+              end
+            end
+            eligible = false if score <= 300
+          end
           eligible = false if target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
-          if eligible && hi_off_score >= 1.0
+          if eligible #&& hi_off_score >= 1.0
             # Better choice than the current battler, so let's switch to this pokemon
-            score = (100 * hi_off_score).round
-            score += 30 if [:HAZARDLEAD,:PHYSICALWALL,:SPECIALWALL,:CLERIC,:SETUPSWEEPER,:OFFENSIVEPIVOT,:STALLBREAKER,:DEFENSIVEPIVOT].include?(proj.pokemon.role)
             index = party.index(proj.pokemon)
             return [score, index]
           end

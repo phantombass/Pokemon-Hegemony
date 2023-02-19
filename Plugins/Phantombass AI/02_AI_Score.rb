@@ -1748,6 +1748,10 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
         PBAI.log("+ 100 to counter setup")
       end
     end
+    if user.flags[:should_taunt]
+      score += 50
+      PBAI.log("+ 50 for stallbreaking")
+    end
   end
   next score
 end
@@ -1779,6 +1783,8 @@ PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
         score += 30
         PBAI.log("+ 30 for being a #{user.role.name}")
       end
+      score += 50 if user.flags[:should_haze]
+      PBAI.log("+ 50 for preventing the target from setting up")
     else
       score -= 30
       PBAI.log("- 30 for our stat stages are advantageous")
@@ -1854,6 +1860,8 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
       PBAI.log("+ #{diff} for lowered stats") if diff < 0
       score += 20 if user.should_switch?(target)
       PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+      score += 50 if user.flags[:should_setup]
+      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   next score
 end
@@ -1899,6 +1907,8 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
       PBAI.log("+ #{diff} for lowered stats") if diff < 0
       score += 20 if user.should_switch?(target)
       PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+      score += 50 if user.flags[:should_setup]
+      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   end
   next score
@@ -1954,6 +1964,8 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
       PBAI.log("+ #{diff} for lowered stats") if diff < 0
       score += 20 if user.should_switch?(target)
       PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+      score += 50 if @side.flags[:should_setup]
+      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   next score
 end
@@ -2001,6 +2013,8 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
       PBAI.log("+ #{diff} for lowered stats") if diff < 0
       score += 20 if user.should_switch?(target)
       PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+      score += 50 if user.flags[:should_setup]
+      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   next score
 end
@@ -2046,6 +2060,8 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
       PBAI.log("+ #{diff} for lowered stats") if diff < 0
       score += 20 if user.should_switch?(target)
       PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+      score += 50 if user.flags[:should_setup]
+      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   end
   next score
@@ -2101,6 +2117,8 @@ PBAI::ScoreHandler.add("02B", "02C", "14E") do |score, ai, user, target, move|
     PBAI.log("+ #{diff} for lowered stats") if diff < 0
     score += 20 if user.should_switch?(target)
     PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+    score += 50 if user.flags[:should_setup]
+    PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
   end
   next score
 end
