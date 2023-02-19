@@ -1964,7 +1964,7 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
       PBAI.log("+ #{diff} for lowered stats") if diff < 0
       score += 20 if user.should_switch?(target)
       PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-      score += 50 if @side.flags[:should_setup]
+      score += 50 if user.flags[:should_setup]
       PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   next score
