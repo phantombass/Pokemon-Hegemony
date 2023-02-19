@@ -397,49 +397,6 @@ class PokeBattle_Move
     return target.defense, target.stages[:DEFENSE]+6
   end
 
-  def pbCalcDamage(user,target,numTargets=1)
-    return if statusMove?
-    if target.damageState.disguise
-      target.damageState.calcDamage = 1
-      return
-    end
-    stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-    stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-    # Get the move's type
-    type = @calcType   # nil is treated as physical
-    # Calculate whether this hit deals critical damage
-    target.damageState.critical = pbIsCritical?(user,target)
-    # Calcuate base power of move
-    baseDmg = pbBaseDamage(@baseDamage,user,target)
-    # Calculate user's attack stat
-    atk, atkStage = pbGetAttackStats(user,target)
-    if !target.hasActiveAbility?(:UNAWARE) || @battle.moldBreaker
-      atkStage = 6 if target.damageState.critical && atkStage<6
-      atk = (atk.to_f*stageMul[atkStage]/stageDiv[atkStage]).floor
-    end
-    # Calculate target's defense stat
-    defense, defStage = pbGetDefenseStats(user,target)
-    if !user.hasActiveAbility?(:UNAWARE)
-      defStage = 6 if target.damageState.critical && defStage>6
-      defense = (defense.to_f*stageMul[defStage]/stageDiv[defStage]).floor
-    end
-    # Calculate all multiplier effects
-    multipliers = {
-      :base_damage_multiplier  => 1.0,
-      :attack_multiplier       => 1.0,
-      :defense_multiplier      => 1.0,
-      :final_damage_multiplier => 1.0
-    }
-    pbCalcDamageMultipliers(user,target,numTargets,type,baseDmg,multipliers)
-    # Main damage calculation
-    baseDmg = [(baseDmg * multipliers[:base_damage_multiplier]).round, 1].max
-    atk     = [(atk     * multipliers[:attack_multiplier]).round, 1].max
-    defense = [(defense * multipliers[:defense_multiplier]).round, 1].max
-    damage  = (((2.0 * user.level / 5 + 2).floor * baseDmg * atk / defense).floor / 50).floor + 2
-    damage  = [(damage  * multipliers[:final_damage_multiplier]).round, 1].max
-    target.damageState.calcDamage = damage
-  end
-
   def pbCalcDamageMultipliers(user,target,numTargets,type,baseDmg,multipliers)
     # Global abilities
     if (@battle.pbCheckGlobalAbility(:DARKAURA) && type == :DARK) ||
@@ -2889,6 +2846,7 @@ class PokeBattle_Battler
         # pbCalcDamage shows the "eat berry" animation for SE-weakening
         # berries, although the message about it comes after the additional
         # effect below
+        move.pbStealStats(user, b, targets.length) if move.function == "15D"
         move.pbCalcDamage(user, b, targets.length)   # Stored in damageState.calcDamage
         # Lessen damage dealt because of False Swipe/Endure/etc.
         move.pbReduceDamage(user, b)   # Stored in damageState.hpLost
@@ -2997,16 +2955,6 @@ class PokeBattle_Battler
       @battle.pbDisplay(_INTL("The {1} weakened the damage to {2}!", b.itemName, b.pbThis(true)))
       b.pbConsumeItem
     end
-    # Steam Engine (goes here because it should be after stat changes caused by
-    # the move)
-#    if [:FIRE, :WATER].include?(move.calcType)
-#      targets.each do |b|
-#        next if b.damageState.unaffected
-#        next if b.damageState.calcDamage == 0 || b.damageState.substitute
-#        next if !b.hasActiveAbility?(:STEAMENGINE)
-#        b.pbRaiseStatStageByAbility(:SPEED, 6, b) if b.pbCanRaiseStatStage?(:SPEED, b)
-#      end
-#    end
     # Fainting
     targets.each { |b| b.pbFaint if b&.fainted? }
     user.pbFaint if user.fainted?
