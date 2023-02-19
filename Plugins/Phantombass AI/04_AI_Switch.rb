@@ -139,8 +139,21 @@ end
 
 #Matchup
 PBAI::SwitchHandler.add do |score,ai,user,target|
-	score += user.get_offense_score(target) * 75
-	score += target.get_offense_score(user) * 100
+	off_score = user.get_offense_score(target)
+	def_score = target.get_offense_score(user)
+	if def_score > off_score
+		score += 0
+	elsif off_score > def_score
+		score += (off_score-def_score)*100
+		if user.role.id == :OFFENSIVEPIVOT
+			score += 50
+		end
+	else
+		score += 0
+	end
+	if off_score < 2 && def_score < 1 && user.defensive?
+		score += 50
+	end
 	next score
 end
 
