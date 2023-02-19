@@ -1389,7 +1389,7 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
     PBAI.log("+ 100 for forcing our target to switch and we're bad against our target")
   elsif ["0EE","151","529","0ED"].include?(move.function)
     if [:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:HAZARDLEAD].include?(user.role.id)
-      score += 40
+      score += 40 if user.can_switch?
       PBAI.log("+ 40 for being a #{user.role.name}")
     end
     if user.trapped? && user.can_switch?
@@ -1818,6 +1818,7 @@ end
 
 # Shell Smash
 PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
+  count = 0
   if [:SETUPSWEEPER,:PHYSICALBREAKER,:SPECIALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:SPECIAL_ATTACK)
       score = 0
@@ -1868,6 +1869,7 @@ end
 
 # Swords Dance
 PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
+  count = 0
   if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:ATTACK)
       score = 0
@@ -1916,8 +1918,9 @@ end
 
 # Bulk Up, Victory Dance, Dragon Dance
 PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
+  count = 0
   if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(user.role.id)
-    if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:DEFENSE)
+    if user.statStageAtMax?(:ATTACK) && user.statStageAtMax?(:DEFENSE)
       score = 0
       PBAI.log("* 0 for battler being max on Attack or Defense")
     else
@@ -1972,8 +1975,9 @@ end
 
 # Curse
 PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
+  count = 0
   if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(user.role.id) && !user.pbHasType?(:GHOST)
-    if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:DEFENSE)
+    if user.statStageAtMax?(:ATTACK) && user.statStageAtMax?(:DEFENSE)
       score = 0
       PBAI.log("* 0 for battler being max on Attack or Defense")
     else
@@ -2021,6 +2025,7 @@ end
 
 # Nasty Plot
 PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
+  count = 0
   if [:SETUPSWEEPER,:SPECIALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:SPECIAL_ATTACK)
       score = 0
@@ -2067,8 +2072,9 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
   next score
 end
 
-# Calm Mind/Quiver Dance/Geomancy
-PBAI::ScoreHandler.add("02B", "02C", "14E") do |score, ai, user, target, move|
+# Calm Mind/Quiver Dance/Geomancy/Tail Glow
+PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, move|
+  count = 0
   if [:SETUPSWEEPER,:SPECIALBREAKER,:WINCON].include?(user.role.id)
     if user.statStageAtMax?(:SPECIAL_ATTACK)
       score = 0
