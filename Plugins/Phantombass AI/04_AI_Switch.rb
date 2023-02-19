@@ -227,6 +227,7 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
 	end
 	if ai.battle.positions[user.index].effects[PBEffects::Wish] > 0 && user.hp <= user.totalhp/3
 		score += 200
+		score += 100 if user.setup?
 	end
 	next score
 end
