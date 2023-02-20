@@ -828,8 +828,14 @@ class PBAI
       return true
     end
     def set_up_score
-      boosts = 0
-      GameData::Stat.each_battle { |s| boosts += self.battler.stages[s] if self.battler.stages[s] != nil}
+      boosts = []
+      GameData::Stat.each_battle { |s| 
+        if self.battler.stages[s] != nil
+          boosts.push(self.battler.stages[s])
+        else
+          boost.push(0)
+        end
+      }
       return boosts
     end
     def get_switch_score
@@ -862,8 +868,29 @@ class PBAI
           switch = true
         end
       end
-      if self.set_up_score > 0
-        switch = self.set_up_score <= 1
+      for i in self.set_up_score
+        sum = 0
+        sum += i
+        if i <= 2
+          switch = true
+        else
+          if sum > 2
+            switch = false
+          end
+        end
+      end
+      if self.effects[PBEffects::Toxic] > 1
+        switch = true
+      end
+      if self.own_side.effects[:ToxicSpikes] > 0
+        if party.any? { |pkmn| pkmn.types.include?(:POISON) }
+          switch = true
+        end
+      end
+      if self.own_side.effects[:CometShards] > 0
+        if party.any? { |pkmn| pkmn.types.include?(:COSMIC) }
+          switch = true
+        end
       end
       # Encored into bad move
       if self.effects[PBEffects::Encore] > 0

@@ -183,61 +183,14 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
 	end
 end
 
-#Reset Toxic turns
-PBAI::SwitchHandler.add do |score,ai,user,target|
-	score += user.effects[PBEffects::Toxic] * 50
-	next score
-end
-
-#Reset Lowered stats
-PBAI::SwitchHandler.add do |score,ai,user,target|
-	boosts = 0
-	GameData::Stat.each_battle { |s| boosts += 1 if (user.battler.stages[s] != nil && user.battler.stages[s] < 0)}
-	score += (boosts * 30)
-	next score
-end
-
-#Choice-locked modifier
-PBAI::SwitchHandler.add do |score,ai,user,target|
-	if user.choice_locked?
-		choiced_move_name = GameData::Move.get(user.effects[PBEffects::ChoiceBand])
-    factor = 0
-    user.opposing_side.battlers.each do |pkmn|
-      factor += pkmn.calculate_move_matchup(choiced_move_name)
-    end
-    if (factor < 1 && ai.battle.pbSideSize(0) == 1) || (factor < 2 && ai.battle.pbSideSize(0) == 2)
-      score += 150
-    end
-  end
-	next score
-end
-
-#Preserve Win Condition
-PBAI::SwitchHandler.add do |score,ai,user,target|
-	if user.role.id == :WINCON && user.can_switch?
-		score += 100
-	end
-	next score
-end
-
 #Health Related
 PBAI::SwitchHandler.add do |score,ai,user,target|
-	if user.role.id != :WINCON && user.hp <= user.totalhp/4
+	if user.hp <= user.totalhp/4
 		score -= 100
 	end
 	if ai.battle.positions[user.index].effects[PBEffects::Wish] > 0 && user.hp <= user.totalhp/3
 		score += 200
 		score += 100 if user.setup?
-	end
-	next score
-end
-
-#Don't switch when set up
-PBAI::SwitchHandler.add do |score,ai,user,target|
-	if [:SETUPSWEEPER,:WINCON].include?(user.role.id)
-		if user.set_up_score >= 2
-			score -= 500
-		end
 	end
 	next score
 end
@@ -253,5 +206,12 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
   hazard_score = (rocks*12.5) + (spikes*12.5) + (comet*12.5) + (tspikes*6.25)
   if hazard_score >= ((user.hp/user.totalhp)*100).round
   	score -= 500
+  end
+  #Switch in to absorb hazards
+  if tspikes > 0 && (user.pbHasType?(:POISON) && !user.airborne?) || user.hasActiveAbility?(:GALEFORCE)
+  	score += 200
+  end
+  if comet > 0 && (user.pbHasType?(:COSMIC) && !user.airborne? && !user.hasActiveAbility?(:MAGICGUARD)) || user.hasActiveAbility?(:GALEFORCE)
+  	score += 200
   end
 end
