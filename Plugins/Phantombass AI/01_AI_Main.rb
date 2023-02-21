@@ -833,7 +833,7 @@ class PBAI
         if self.battler.stages[s] != nil
           boosts.push(self.battler.stages[s])
         else
-          boost.push(0)
+          boosts.push(0)
         end
       }
       return boosts
@@ -871,7 +871,7 @@ class PBAI
       for i in self.set_up_score
         sum = 0
         sum += i
-        if i <= 2
+        if i < 0
           switch = true
         else
           if sum > 2
