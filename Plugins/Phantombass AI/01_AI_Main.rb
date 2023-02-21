@@ -838,14 +838,13 @@ class PBAI
       }
       return boosts
     end
-    def get_switch_score
-      # Yields [score, pokemon_index]
+    def ai_should_switch?
       switch = false
       # Used to render Future Sight useless
-      switch_to_dark_type = false
+      $switch_to_dark_type = false
       # The AI's party
       party = @battle.pbParty(@battler.index)
-      target_strong_moves = false
+      $target_strong_moves = false
 
       $d_switch = 0
       $d_switch = 1 if $doubles_switch != nil
@@ -882,12 +881,14 @@ class PBAI
       if self.effects[PBEffects::Toxic] > 1
         switch = true
       end
-      if self.own_side.effects[:ToxicSpikes] > 0
+      tspikes = self.own_side.effects[PBEffects::ToxicSpikes] == nil ? 0 : self.own_side.effects[PBEffects::ToxicSpikes]
+      comet = self.own_side.effects[PBEffects::CometShards] == nil ? 0 : self.own_side.effects[PBEffects::CometShards]
+      if tspikes > 0
         if party.any? { |pkmn| pkmn.types.include?(:POISON) }
           switch = true
         end
       end
-      if self.own_side.effects[:CometShards] > 0
+      if comet > 0
         if party.any? { |pkmn| pkmn.types.include?(:COSMIC) }
           switch = true
         end
@@ -926,7 +927,7 @@ class PBAI
           # but not if we're already close to dying anyway.
           if !self.may_die_next_round?
             switch = true
-            switch_to_dark_type = true
+            $switch_to_dark_type = true
           end
         end
       end
@@ -944,14 +945,19 @@ class PBAI
       if calc == 0
         switch = true
       end
+      return switch
+    end
 
+    def get_switch_score
+      party = @battle.pbParty(@battler.index)
+      switch = ai_should_switch?
       # Get the optimal switch choice by type
       scores = get_optimal_switch_choice
       # If we should switch due to effects in battle
       if switch
         availscores = scores.select { |e| !e[2].fainted?}
         # Switch to a dark type instead of the best type matchup
-        if switch_to_dark_type
+        if $switch_to_dark_type
           availscores = availscores.select { |e| e[2].pokemon.types.include?(:DARK) }
         end
         while availscores.size > 0
@@ -961,8 +967,8 @@ class PBAI
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
           self.opposing_side.battlers.each do |target|
-            target_strong_moves = proj.get_move_switch_scores(target)
-            break if target_strong_moves == true
+            $target_strong_moves = proj.get_move_switch_scores(target)
+            break if $target_strong_moves == true
           end
           self.opposing_side.battlers.each do |target|
             next if target.nil?
@@ -976,7 +982,7 @@ class PBAI
             end
             eligible = false if score <= 300
           end
-          eligible = false if target_strong_moves == true
+          eligible = false if $target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible
             index = party.index(proj.pokemon)
@@ -999,8 +1005,8 @@ class PBAI
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
           self.opposing_side.battlers.each do |target|
-            target_strong_moves = proj.get_move_switch_scores(target)
-            break if target_strong_moves == true
+            $target_strong_moves = proj.get_move_switch_scores(target)
+            break if $target_strong_moves == true
           end
           self.opposing_side.battlers.each do |target|
             next if target.nil?
@@ -1014,7 +1020,7 @@ class PBAI
             end
             eligible = false if score <= 300
           end
-          eligible = false if target_strong_moves == true
+          eligible = false if $target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible #&& hi_off_score >= 1.0
             # Better choice than the current battler, so let's switch to this pokemon
