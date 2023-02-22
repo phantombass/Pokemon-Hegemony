@@ -568,7 +568,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{chance} for being able to frostbite the target")
       end
     end
-    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_freeze?(user, move))
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_freeze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK))
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -586,7 +586,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to paralyze the target")
     end
-    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_paralyze?(user, move))
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_paralyze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK))
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -604,7 +604,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to put the target to sleep")
     end
-    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_sleep?(user, move))
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK))
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -632,6 +632,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         score += add
         PBAI.log("+ #{add} for being able to poison the target")
       end
+    end
+    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK))
+      score -= 1000
+      PBAI.log("- 1000 for not being able to status")
     end
   end
   next score
@@ -2664,9 +2668,14 @@ end
 
 #Glare/Thunder Wave
 PBAI::ScoreHandler.add("007") do |score, ai, user, target, move|
-  if target.status == :NONE && target.can_paralyze?(user,move) && user.role.id == :SPEEDCONTROL && !target.hasActiveAbility?(:MAGICBOUNCE) && move.statusMove?
+  next score if target.status != :NONE
+  if target.status == :NONE && !target.paralyzed? &&target.can_paralyze?(user,move) && user.role.id == :SPEEDCONTROL && !target.hasActiveAbility?(:MAGICBOUNCE) && move.statusMove?
     score += 100
     PBAI.log("+ 100 for being a #{user.role.name} role")
+    if target.pbHasType(:DARK) && user.hasActiveAbility?(:PRANKSTER)
+      score -= 1000
+      PBAI.log("- 1000 for Prankster moves failing on Dark-types")
+    end
   end
   next score
 end
