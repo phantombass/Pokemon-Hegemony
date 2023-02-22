@@ -192,10 +192,10 @@ end
 PBAI::SwitchHandler.add_type(:FIRE) do |score,ai,user,target|
 	if $switch_flags[:fire] == true
 	  if user.hasActiveAbility?([:FLASHFIRE,:STEAMENGINE,:WELLBAKEDBODY]) || user.hasActiveItem?(:FLASHFIREORB)
-	    score += 100
+	    score += 200
 	  end
 	  if user.hasActiveAbility?(:THERMALEXCHANGE) 
-	    score += 60
+	    score += 120
 	  end
 	end
 	next score
@@ -204,7 +204,7 @@ end
 PBAI::SwitchHandler.add_type(:WATER) do |score,ai,user,target|
 	if $switch_flags[:water] == true
 	  if user.hasActiveAbility?([:WATERABSORB,:DRYSKIN,:STORMDRAIN,:STEAMENGINE,:WATERCOMPACTION]) || user.hasActiveItem?(:WATERABSORBORB)
-	    score += 100
+	    score += 200
 	  end
 	end
 	next score
@@ -213,7 +213,7 @@ end
 PBAI::SwitchHandler.add_type(:GRASS) do |score,ai,user,target|
 	if $switch_flags[:grass] == true
 	  if user.hasActiveAbility?(:SAPSIPPER) || user.hasActiveItem?(:SAPSIPPERORB)
-	    score += 100
+	    score += 200
 	  end
 	end
 	next score
@@ -222,7 +222,7 @@ end
 PBAI::SwitchHandler.add_type(:ELECTRIC) do |score,ai,user,target|
 	if $switch_flags[:electric] == true
 	  if user.hasActiveAbility?([:VOLTABSORB,:LIGHTNINGROD,:MOTORDRIVE]) || user.hasActiveItem?(:LIGHTNINGRODORB)
-	    score += 100
+	    score += 200
 	  end
 	end
 	next score
@@ -231,7 +231,7 @@ end
 PBAI::SwitchHandler.add_type(:GROUND) do |score,ai,user,target|
 	if $switch_flags[:ground] == true
 	  if user.hasActiveAbility?(:EARTHEATER) || user.hasActiveItem?(:EARTHEATERORB) || user.airborne?
-	    score += 100
+	    score += 200
 	  end
 	end
 	next score
@@ -242,7 +242,7 @@ PBAI::SwitchHandler.add_type(:DARK) do |score,ai,user,target|
 	party = ai.battle.pbParty(user.index)
 	if $switch_flags[:dark] == true
 	  if user.hasActiveAbility?(:UNTAINTED)
-	    score += 100
+	    score += 200
 	  end
 	  if pos.effects[PBEffects::FutureSightCounter] == 1 && user.pbHasType?(:DARK)
 	  	score += 300
@@ -254,10 +254,10 @@ end
 PBAI::SwitchHandler.add_type(:COSMIC) do |score,ai,user,target|
 	if $switch_flags[:cosmic] == true
 	  if user.hasActiveAbility?(:DIMENSIONBLOCK) || user.hasActiveItem?(:DIMENSIONBLOCKORB)
-	    score += 100
+	    score += 200
 	  end
 	  if user.own_side.effects[PBEffects::CometShards] && user.pbHasType?(:COSMIC)
-	  	score += 100
+	  	score += 200
 	  end
 	end
 	next score
@@ -266,7 +266,7 @@ end
 PBAI::SwitchHandler.add do |score,ai,user,target|
 	if $switch_flags[:poison] == true && user.pbHasType?(:POISON)
 	  if user.own_side.effects[PBEffects::ToxicSpikes]
-	  	score += 100
+	  	score += 200
 	  end
 	end
 	next score
@@ -275,7 +275,7 @@ end
 PBAI::SwitchHandler.add_type(:ROCK) do |score,ai,user,target|
 	if $switch_flags[:rock] == true
 	  if user.hasActiveAbility?(:SCALER) || user.hasActiveItem?(:SCALERORB)
-	    score += 100
+	    score += 200
 	  end
 	end
 	next score
@@ -516,39 +516,19 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
   user.opposing_side.battlers.each do |target|
   	next if target.nil?
   	if target.is_physical_attacker? && user.role.id == :PHYSICALWALL
-  		score += 100
+  		score += 200
   	end
   	if target.is_special_attacker? && user.role.id == :SPECIALWALL
-  		score += 100
+  		score += 200
   	end
   	if target.defensive? && ![:PHYSICALWALL,:SPECIALWALL].include?(user.role.id)
   		if [:DEFENSIVEPIVOT,:CLERIC,:TOXICSTALLER,:HAZARDLEAD].include?(user.role.id)
-  			score += 75
+  			score += 150
   		else
-  			score += 50
+  			score += 100
   		end
   	end
   end
-	next score
-end
-
-#Future Sight
-PBAI::SwitchHandler.add do |score,ai,user,target|
-	party = ai.battle.pbParty(user.index)
-	pos = ai.battle.positions[user.index]
-	switch_to_dark_type = false
-    # If Future Sight will hit at the end of the round
-    if pos.effects[PBEffects::FutureSightCounter] == 1
-      # And if we have a dark type in our party
-      if party.any? { |pkmn| pkmn.types.include?(:DARK) }
-        # We should switch to a dark type,
-        # but not if we're already close to dying anyway.
-        switch_to_dark_type = true
-      end
-    end
-    if switch_to_dark_type
-    	score += 300 if user.pokemon.types.include?(:DARK)
-    end
 	next score
 end
 
@@ -559,15 +539,15 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
 	if def_score > off_score
 		score += 0
 	elsif off_score > def_score
-		score += (off_score-def_score)*100
+		score += (off_score-def_score)*200
 		if user.role.id == :OFFENSIVEPIVOT
-			score += 50
+			score += 100
 		end
 	else
 		score += 0
 	end
 	if off_score < 2 && def_score < 1 && user.defensive?
-		score += 50
+		score += 100
 	end
 	next score
 end
@@ -606,11 +586,11 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
 		score -= 100
 	end
 	if ai.battle.positions[user.index].effects[PBEffects::Wish] > 0 && user.hp <= user.totalhp/3
-		score += 200
-		score += 100 if user.setup?
+		score += 400
+		score += 200 if user.setup?
 	end
 	if $switch_flags[:need_cleric] && user.role.id == :CLERIC
-		score += 200
+		score += 400
 	end
 	next score
 end
@@ -629,9 +609,9 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
   end
   #Switch in to absorb hazards
   if tspikes > 0 && (user.pbHasType?(:POISON) && !user.airborne?) || user.hasActiveAbility?(:GALEFORCE)
-  	score += 200
+  	score += 400
   end
   if comet > 0 && (user.pbHasType?(:COSMIC) && !user.airborne? && !user.hasActiveAbility?(:MAGICGUARD)) || user.hasActiveAbility?(:GALEFORCE)
-  	score += 200
+  	score += 400
   end
 end
