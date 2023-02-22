@@ -1172,7 +1172,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:ORICHALCUMPULSE,
 )
 BattleHandlers::DamageCalcUserAbility.add(:ORICHALCUMPULSE,
   proc { |ability, user, target, move, mults, baseDmg, type|
-    mults[:attack_multiplier] *= 1.5 if move.physicalMove? && [:Sun, :HarshSun].include?(user.effectiveWeather)
+    mults[:attack_multiplier] *= 1.5 if move.physicalMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather)
   }
 )
 

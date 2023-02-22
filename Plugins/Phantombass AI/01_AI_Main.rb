@@ -1,4 +1,4 @@
-Essentials::ERROR_TEXT += "[Phantombass AI v1.0]\r\n"
+Essentials::ERROR_TEXT += "[Phantombass AI v1.2]\r\n"
 
 class PBAI
   attr_reader :battle
@@ -12,6 +12,7 @@ class PBAI
     @sides = [Side.new(self, 0), Side.new(self, 1, wild_battle)]
     $d_switch = 0
     $doubles_switch = nil
+    $switch_flags = {}
     PBAI.log("AI initialized")
   end
 
@@ -840,116 +841,18 @@ class PBAI
     end
     def ai_should_switch?
       switch = false
-      # Used to render Future Sight useless
-      $switch_to_dark_type = false
-      # The AI's party
-      party = @battle.pbParty(@battler.index)
-      $target_strong_moves = false
-
-      $d_switch = 0
-      $d_switch = 1 if $doubles_switch != nil
-
-      # If the pokemon is struggling
-      if !@battle.pbCanChooseAnyMove?(@battler.index)
-        switch = true
-      end
-      # If the pokemon is perish songed and will die next turn
-      if self.effects[PBEffects::PerishSong] == 1
-        switch = true
-      end
-      if self.choice_locked?
-        choiced_move_name = GameData::Move.get(self.effects[PBEffects::ChoiceBand])
-        factor = 0
-        opposing_side.battlers.each do |pkmn|
-          factor += pkmn.calculate_move_matchup(choiced_move_name)
-        end
-        if (factor < 1 && @battle.pbSideSize(0) == 1) || (factor < 2 && @battle.pbSideSize(0) == 2)
-          switch = true
-        end
-      end
-      for i in self.set_up_score
-        sum = 0
-        sum += i
-        if i < 0
-          switch = true
-        else
-          if sum > 2
-            switch = false
-          end
-        end
-      end
-      if self.effects[PBEffects::Toxic] > 1
-        switch = true
-      end
-      tspikes = self.own_side.effects[PBEffects::ToxicSpikes] == nil ? 0 : self.own_side.effects[PBEffects::ToxicSpikes]
-      comet = self.own_side.effects[PBEffects::CometShards] == nil ? 0 : self.own_side.effects[PBEffects::CometShards]
-      if tspikes > 0
-        if party.any? { |pkmn| pkmn.types.include?(:POISON) }
-          switch = true
-        end
-      end
-      if comet > 0
-        if party.any? { |pkmn| pkmn.types.include?(:COSMIC) }
-          switch = true
-        end
-      end
-      # Encored into bad move
-      if self.effects[PBEffects::Encore] > 0
-        encored_move_index = @battler.pbEncoredMoveIndex
-        if encored_move_index >= 0
-          encored_move = @battler.moves[encored_move_index]
-          if encored_move.statusMove?
-            switch = true
-          else
-            dmgs = @damage_dealt.select { |e| e[1] == encored_move.id }
-            if dmgs.size > 0
-              last_dmg = dmgs[-1]
-              # Bad move if it did less than 25% damage
-              if last_dmg[3] < 0.25
-                switch = true
-              end
-            else
-              # No record of dealing damage with this move,
-              # which probably means the target is immune somehow,
-              # or the user happened to miss. Don't risk being stuck in
-              # a bad move in any case, and switch.
-              switch = true
-            end
-          end
-        end
-      end
-      pos = @battle.positions[@battler.index]
-      # If Future Sight will hit at the end of the round
-      if pos.effects[PBEffects::FutureSightCounter] == 1
-        # And if we have a dark type in our party
-        if party.any? { |pkmn| pkmn.types.include?(:DARK) }
-          # We should switch to a dark type,
-          # but not if we're already close to dying anyway.
-          if !self.may_die_next_round?
-            switch = true
-            $switch_to_dark_type = true
-          end
-        end
-      end
-      if self.trapped?
-        switch = false
-      end
-      calc = 0
       self.opposing_side.battlers.each do |target|
-        next if @battle.wildBattle?
-        for i in self.moves
-          dmg = self.get_move_damage(target, i)
-          calc += 1 if dmg >= target.totalhp/4
-        end
-      end
-      if calc == 0
-        switch = true
+        next if target.nil?
+        switch = PBAI::SwitchHandler.trigger_out(switch,@ai,self,target)
       end
       return switch
     end
 
     def get_switch_score
       party = @battle.pbParty(@battler.index)
+      $d_switch = 0
+      $d_switch = 1 if $doubles_switch != nil
+      target_strong_moves = false
       switch = ai_should_switch?
       # Get the optimal switch choice by type
       scores = get_optimal_switch_choice
@@ -967,8 +870,8 @@ class PBAI
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
           self.opposing_side.battlers.each do |target|
-            $target_strong_moves = proj.get_move_switch_scores(target)
-            break if $target_strong_moves == true
+            target_strong_moves = proj.get_move_switch_scores(target)
+            break if target_strong_moves == true
           end
           self.opposing_side.battlers.each do |target|
             next if target.nil?
@@ -1005,8 +908,8 @@ class PBAI
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
           self.opposing_side.battlers.each do |target|
-            $target_strong_moves = proj.get_move_switch_scores(target)
-            break if $target_strong_moves == true
+            target_strong_moves = proj.get_move_switch_scores(target)
+            break if target_strong_moves == true
           end
           self.opposing_side.battlers.each do |target|
             next if target.nil?
@@ -1712,6 +1615,7 @@ class PBAI
 
     def end_of_round
       @flags = {}
+      $switch_flags = {}
       $doubles_switch = nil
       $d_switch = 0
       $test_trigger = false
@@ -1776,6 +1680,7 @@ class PBAI
     end
     def end_of_round
       @battlers.each { |proj| proj.end_of_round if proj }
+      $switch_flags = {}
       @flags = {}
     end
   end
