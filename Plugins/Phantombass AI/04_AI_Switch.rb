@@ -2,6 +2,7 @@ class PBAI
   class SwitchHandler
     @@GeneralCode = []
     @@TypeCode = []
+    @@SwitchOutCode = []
 
 	  def self.add(&code)
 	   	@@GeneralCode << code
@@ -9,6 +10,10 @@ class PBAI
 
 	  def self.add_type(*type,&code)
 			@@TypeCode << code
+	  end
+
+	  def self.add_out(&code)
+	  	@@SwitchOutCode << code
 	  end
 
 		def self.trigger(list,score,ai,user,target)
@@ -26,19 +31,12 @@ class PBAI
 		  return self.trigger(@@GeneralCode,score,ai,user,target)
 		end
 
+		def self.trigger_out(switch,ai,user,target)
+		  return self.trigger(@@SwitchOutCode,switch,ai,user,target)
+		end
+
 		def self.trigger_type(type,score,ai,user,target)
-			target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
-			if target_moves != nil
-	  		for i in target_moves
-					$has_move_type = true if i.type == type && i.damagingMove? && user.calculate_move_matchup(i.id) > 1    
-			  end
-			end
-			if $has_move_type
-		  	return self.trigger(@@TypeCode,score,ai,user,target)
-		  else
-		  	score += 0
-		  	return score
-		  end
+		  return self.trigger(@@TypeCode,score,ai,user,target)
 		end
   end
 end
@@ -47,58 +45,468 @@ end
 #Type Immunity Modifiers
 #=======================
 
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for i in target_moves
+		has_move = true if i.type == :FIRE && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
+	end
+	if $game_switches[LvlCap::Expert]
+		if has_move
+			switch = true
+		end
+	else
+		if has_move && target.pbHasType?(:FIRE)
+			switch = true
+		end
+	end
+	$switch_flags[:fire] = true if switch
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for i in target_moves
+		has_move = true if i.type == :WATER && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
+	end
+	if $game_switches[LvlCap::Expert]
+		if has_move
+			switch = true
+		end
+	else
+		if has_move && target.pbHasType?(:WATER)
+			switch = true
+		end
+	end
+	$switch_flags[:water] = true if switch
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for i in target_moves
+		has_move = true if i.type == :GRASS && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
+	end
+	if $game_switches[LvlCap::Expert]
+		if has_move
+			switch = true
+		end
+	else
+		if has_move && target.pbHasType?(:GRASS)
+			switch = true
+		end
+	end
+	$switch_flags[:grass] = true if switch
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for i in target_moves
+		has_move = true if i.type == :ELECTRIC && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
+	end
+	if $game_switches[LvlCap::Expert]
+		if has_move
+			switch = true
+		end
+	else
+		if has_move && target.pbHasType?(:ELECTRIC)
+			switch = true
+		end
+	end
+	$switch_flags[:electric] = true if switch
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for i in target_moves
+		has_move = true if i.type == :GROUND && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
+	end
+	if $game_switches[LvlCap::Expert]
+		if has_move
+			switch = true
+		end
+	else
+		if has_move && target.pbHasType?(:GROUND)
+			switch = true
+		end
+	end
+	$switch_flags[:ground] = true if switch
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for i in target_moves
+		has_move = true if i.type == :ROCK && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
+	end
+	if $game_switches[LvlCap::Expert]
+		if has_move
+			switch = true
+		end
+	else
+		if has_move && target.pbHasType?(:ROCK)
+			switch = true
+		end
+	end
+	$switch_flags[:rock] = true if switch
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for i in target_moves
+		has_move = true if i.type == :COSMIC && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
+	end
+	if $game_switches[LvlCap::Expert]
+		if has_move
+			switch = true
+		end
+	else
+		if has_move && target.pbHasType?(:COSMIC)
+			switch = true
+		end
+	end
+	$switch_flags[:cosmic] = true if switch
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for i in target_moves
+		has_move = true if i.type == :DARK && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
+	end
+	if $game_switches[LvlCap::Expert]
+		if has_move
+			switch = true
+		end
+	else
+		if has_move && target.pbHasType?(:DARK)
+			switch = true
+		end
+	end
+	$switch_flags[:dark] = true if switch
+	next switch
+end
+
 PBAI::SwitchHandler.add_type(:FIRE) do |score,ai,user,target|
-  if user.hasActiveAbility?([:FLASHFIRE,:STEAMENGINE,:WELLBAKEDBODY]) || user.hasActiveItem?(:FLASHFIREORB)
-    score += 100
-  end
-  if user.hasActiveAbility?(:THERMALEXCHANGE)
-    score += 60
-  end
+	if $switch_flags[:fire] == true
+	  if user.hasActiveAbility?([:FLASHFIRE,:STEAMENGINE,:WELLBAKEDBODY]) || user.hasActiveItem?(:FLASHFIREORB)
+	    score += 100
+	  end
+	  if user.hasActiveAbility?(:THERMALEXCHANGE) 
+	    score += 60
+	  end
+	end
 	next score
 end
 
 PBAI::SwitchHandler.add_type(:WATER) do |score,ai,user,target|
-  if user.hasActiveAbility?([:WATERABSORB,:DRYSKIN,:STORMDRAIN,:STEAMENGINE,:WATERCOMPACTION]) || user.hasActiveItem?(:WATERABSORBORB)
-    score += 100
-  end
+	if $switch_flags[:water] == true
+	  if user.hasActiveAbility?([:WATERABSORB,:DRYSKIN,:STORMDRAIN,:STEAMENGINE,:WATERCOMPACTION]) || user.hasActiveItem?(:WATERABSORBORB)
+	    score += 100
+	  end
+	end
 	next score
 end
 
 PBAI::SwitchHandler.add_type(:GRASS) do |score,ai,user,target|
+	if $switch_flags[:grass] == true
 	  if user.hasActiveAbility?(:SAPSIPPER) || user.hasActiveItem?(:SAPSIPPERORB)
 	    score += 100
 	  end
+	end
 	next score
 end
 
 PBAI::SwitchHandler.add_type(:ELECTRIC) do |score,ai,user,target|
-	  if user.hasActiveAbility?([:VOLTABSORB,:LIGHTNINGROD]) || user.hasActiveItem?(:LIGHTNINGRODORB)
+	if $switch_flags[:electric] == true
+	  if user.hasActiveAbility?([:VOLTABSORB,:LIGHTNINGROD,:MOTORDRIVE]) || user.hasActiveItem?(:LIGHTNINGRODORB)
 	    score += 100
 	  end
+	end
 	next score
 end
 
 PBAI::SwitchHandler.add_type(:GROUND) do |score,ai,user,target|
+	if $switch_flags[:ground] == true
 	  if user.hasActiveAbility?(:EARTHEATER) || user.hasActiveItem?(:EARTHEATERORB) || user.airborne?
 	    score += 100
 	  end
+	end
 	next score
 end
 
 PBAI::SwitchHandler.add_type(:DARK) do |score,ai,user,target|
+	pos = ai.battle.positions[user.index]
+	party = ai.battle.pbParty(user.index)
+	if $switch_flags[:dark] == true
 	  if user.hasActiveAbility?(:UNTAINTED)
 	    score += 100
 	  end
+	  if pos.effects[PBEffects::FutureSightCounter] == 1 && user.pbHasType?(:DARK)
+	  	score += 300
+	  end
+	end
 	next score
 end
 
 PBAI::SwitchHandler.add_type(:COSMIC) do |score,ai,user,target|
+	if $switch_flags[:cosmic] == true
 	  if user.hasActiveAbility?(:DIMENSIONBLOCK) || user.hasActiveItem?(:DIMENSIONBLOCKORB)
 	    score += 100
 	  end
+	  if user.own_side.effects[PBEffects::CometShards] && user.pbHasType?(:COSMIC)
+	  	score += 100
+	  end
+	end
 	next score
 end
 
+PBAI::SwitchHandler.add do |score,ai,user,target|
+	if $switch_flags[:poison] == true && user.pbHasType?(:POISON)
+	  if user.own_side.effects[PBEffects::ToxicSpikes]
+	  	score += 100
+	  end
+	end
+	next score
+end
+
+PBAI::SwitchHandler.add_type(:ROCK) do |score,ai,user,target|
+	if $switch_flags[:rock] == true
+	  if user.hasActiveAbility?(:SCALER) || user.hasActiveItem?(:SCALERORB)
+	    score += 100
+	  end
+	end
+	next score
+end
+
+#=======================
+# Switch Out Modifiers
+#=======================
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	if !ai.battle.pbCanChooseAnyMove?(user.index)
+    switch = true
+  end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	if user.effects[PBEffects::PerishSong] == 1
+    switch = true
+  end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	if user.choice_locked?
+    choiced_move_name = GameData::Move.get(user.effects[PBEffects::ChoiceBand])
+    factor = 0
+    user.opposing_side.battlers.each do |pkmn|
+      factor += pkmn.calculate_move_matchup(choiced_move_name)
+    end
+    if (factor < 1 && ai.battle.pbSideSize(0) == 1) || (factor < 2 && ai.battle.pbSideSize(0) == 2)
+      switch = true
+    end
+  end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	for i in user.set_up_score
+    sum = 0
+    sum += i
+    if i < 0
+      switch = true
+    else
+      if sum > 2
+        switch = false
+      end
+    end
+  end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	if user.effects[PBEffects::Toxic] > 1
+    switch = true
+  end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	party = ai.battle.pbParty(user.index)
+	if user.status != :NONE
+		if party.any? {|pkmn| pkmn.role.id == :CLERIC}
+    	switch = true
+    	$switch_flags[:need_cleric] = true
+    end
+    if user.hasActiveAbility?(:NATURALCURE)
+    	switch = true
+    end
+    if user.hasActiveAbility?(:GUTS)
+    	switch = false
+    end
+  end
+	next switch
+end
+
+#Matchup
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	calc = 0
+	damage = 0
+	if target.bad_against?(user) && target_moves != nil
+		user.opposing_side.battlers.each do |target|
+		  next if ai.battle.wildBattle?
+			for i in target_moves
+			  dmg = target.get_move_damage(user, i)
+			  calc += 1 if (dmg >= user.hp/2 || dmg >= user.totalhp/2)
+			end
+		end
+		user.opposing_side.battlers.each do |target|
+		  next if ai.battle.wildBattle?
+		  for i in user.moves
+		    dmg = user.get_move_damage(target, i)
+		    damage += 1 if (dmg >= target.hp/2 || dmg >= target.totalhp/2)
+		  end
+		end
+		if user.faster_than?(target) && damage >= 0 && calc == 0
+			switch = false
+		end
+		if user.faster_than?(target) && damage == 0 && calc > 0
+			switch = true
+		end
+		if target.faster_than?(user) && damage >= 0 && calc == 0
+			switch = false
+		end
+		if target.faster_than?(user) && calc > 0
+			switch = true
+		end
+	elsif target.bad_against?(user) && target_moves == nil
+		switch = false
+	end
+	if user.bad_against?(target) && !user.trapped?
+		switch = true
+	end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	calc = 0
+	damage = 0
+	user.opposing_side.battlers.each do |target|
+	  next if ai.battle.wildBattle?
+	  next if target_moves == nil
+		for i in target_moves
+		  calc += 1 if i.damagingMove?
+		end
+	end
+	user.opposing_side.battlers.each do |target|
+	  next if ai.battle.wildBattle?
+	  for i in user.moves
+	    dmg = user.get_move_damage(target, i)
+	    damage += 1 if dmg >= target.totalhp/2
+	  end
+	end
+	if calc <= 1 && damage == 0
+		switch = true
+		$switch_flags[:setup_fodder] = true
+	else
+		switch = false
+	end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	pos = ai.battle.positions[user.index]
+	party = ai.battle.pbParty(user.index)
+	tspikes = user.own_side.effects[PBEffects::ToxicSpikes] == nil ? 0 : user.own_side.effects[PBEffects::ToxicSpikes]
+	comet = user.own_side.effects[PBEffects::CometShards] == nil ? 0 : user.own_side.effects[PBEffects::CometShards]
+	if tspikes > 0
+	  if party.any? { |pkmn| pkmn.types.include?(:POISON) }
+	    switch = true
+	    $switch_flags[:poison] = true
+	  end
+	end
+	if comet > 0
+	  if party.any? { |pkmn| pkmn.types.include?(:COSMIC) }
+	    switch = true
+	    $switch_flags[:cosmic] = true
+	  end
+	end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	if user.effects[PBEffects::Encore] > 0
+    encored_move_index = user.pbEncoredMoveIndex
+    if encored_move_index >= 0
+      encored_move = user.moves[encored_move_index]
+      if encored_move.statusMove?
+        switch = true
+      else
+        dmgs = self.damage_dealt.select { |e| e[1] == encored_move.id }
+        if dmgs.size > 0
+          last_dmg = dmgs[-1]
+          # Bad move if it did less than 25% damage
+          if last_dmg[3] < 0.25
+            switch = true
+          end
+        else
+          # No record of dealing damage with this move,
+          # which probably means the target is immune somehow,
+          # or the user happened to miss. Don't risk being stuck in
+          # a bad move in any case, and switch.
+          switch = true
+        end
+      end
+    end
+  end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	pos = ai.battle.positions[user.index]
+	party = ai.battle.pbParty(user.index)
+  # If Future Sight will hit at the end of the round
+  if pos.effects[PBEffects::FutureSightCounter] == 1
+    # And if we have a dark type in our party
+    if party.any? { |pkmn| pkmn.types.include?(:DARK) }
+      # We should switch to a dark type,
+      # but not if we're already close to dying anyway.
+      if !self.may_die_next_round?
+        switch = true
+        $switch_flags[:dark] = true
+      end
+    end
+  end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	if user.trapped?
+    switch = false
+  end
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	calc = 0
+	user.opposing_side.battlers.each do |target|
+	  next if ai.battle.wildBattle?
+	  for i in user.moves
+	    dmg = user.get_move_damage(target, i)
+	    calc += 1 if dmg >= target.totalhp/3
+	  end
+	end
+	if calc == 0
+	  switch = true
+	end
+	next switch
+end
 #=======================
 #Other Modifiers
 #=======================
@@ -112,6 +520,13 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
   	end
   	if target.is_special_attacker? && user.role.id == :SPECIALWALL
   		score += 100
+  	end
+  	if target.defensive? && ![:PHYSICALWALL,:SPECIALWALL].include?(user.role.id)
+  		if [:DEFENSIVEPIVOT,:CLERIC,:TOXICSTALLER,:HAZARDLEAD].include?(user.role.id)
+  			score += 75
+  		else
+  			score += 50
+  		end
   	end
   end
 	next score
@@ -168,18 +583,20 @@ end
 
 #Identifying Setup Fodder
 PBAI::SwitchHandler.add do |score,ai,user,target|
-	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
-	off = 0
-	if target_moves != nil
-		for i in target_moves
-			dmg = user.get_move_damage(target, i)
-			off += 1 if i.damagingMove? && dmg >= user.totalhp/2
-	  end
-	  if off == 0
-	  	score += 400
-	  	user.flags[:should_setup] = true
-	  	user.flags[:should_taunt] = true
-	  end
+	if $switch_flags[:setup_fodder]
+		target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+		off = 0
+		if target_moves != nil
+			for i in target_moves
+				dmg = user.get_move_damage(target, i)
+				off += 1 if i.damagingMove? && dmg >= user.totalhp/2
+		  end
+		  if off == 0
+		  	score += 400
+		  	user.flags[:should_setup] = true
+		  	user.flags[:should_taunt] = true
+		  end
+		end
 	end
 end
 
@@ -191,6 +608,9 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
 	if ai.battle.positions[user.index].effects[PBEffects::Wish] > 0 && user.hp <= user.totalhp/3
 		score += 200
 		score += 100 if user.setup?
+	end
+	if $switch_flags[:need_cleric] && user.role.id == :CLERIC
+		score += 200
 	end
 	next score
 end
