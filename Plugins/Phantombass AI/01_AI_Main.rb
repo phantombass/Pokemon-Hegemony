@@ -883,7 +883,7 @@ class PBAI
                 score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
               end
             end
-            eligible = false if score <= 300
+            eligible = false if score <= 400
           end
           eligible = false if $target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
