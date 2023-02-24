@@ -20,11 +20,22 @@ class PBAI
 			return score if list.nil?
 			list = [list] if !list.is_a?(Array)
 			list.each do |code|
-		  	next if code.nil?
-		  		newscore = code.call(score,ai,user,target)
-		  		score = newscore if newscore.is_a?(Numeric)
-		  	end
+	  	next if code.nil?
+	  		newscore = code.call(score,ai,user,target)
+	  		score = newscore if newscore.is_a?(Numeric)
+	  	end
 		  return score
+		end
+
+		def self.out_trigger(list,switch,ai,user,target)
+			return switch if list.nil?
+			list = [list] if !list.is_a?(Array)
+			list.each do |code|
+	  	next if code.nil?
+	  		newswitch = code.call(switch,ai,user,target)
+	  		switch = newswitch if ![true,false].include?(switch)
+	  	end
+		  return switch
 		end
 
 		def self.trigger_general(score,ai,user,target)
@@ -32,7 +43,7 @@ class PBAI
 		end
 
 		def self.trigger_out(switch,ai,user,target)
-		  return self.trigger(@@SwitchOutCode,switch,ai,user,target)
+		  return self.out_trigger(@@SwitchOutCode,switch,ai,user,target)
 		end
 
 		def self.trigger_type(type,score,ai,user,target)
@@ -48,6 +59,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for i in target_moves
+		next if target_moves == nil
 		has_move = true if i.type == :FIRE && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
 	end
 	if $game_switches[LvlCap::Expert]
@@ -66,6 +78,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for i in target_moves
+		next if target_moves == nil
 		has_move = true if i.type == :WATER && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
 	end
 	if $game_switches[LvlCap::Expert]
@@ -84,6 +97,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for i in target_moves
+		next if target_moves == nil
 		has_move = true if i.type == :GRASS && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
 	end
 	if $game_switches[LvlCap::Expert]
@@ -102,6 +116,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for i in target_moves
+		next if target_moves == nil
 		has_move = true if i.type == :ELECTRIC && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
 	end
 	if $game_switches[LvlCap::Expert]
@@ -120,6 +135,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for i in target_moves
+		next if target_moves == nil
 		has_move = true if i.type == :GROUND && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
 	end
 	if $game_switches[LvlCap::Expert]
@@ -131,6 +147,10 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 			switch = true
 		end
 	end
+	if target.inTwoTurnAttack?("0CA")
+		switch = true
+		$switch_flags[:digging] = true
+	end
 	$switch_flags[:ground] = true if switch
 	next switch
 end
@@ -138,6 +158,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for i in target_moves
+		next if target_moves == nil
 		has_move = true if i.type == :ROCK && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
 	end
 	if $game_switches[LvlCap::Expert]
@@ -156,6 +177,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for i in target_moves
+		next if target_moves == nil
 		has_move = true if i.type == :COSMIC && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
 	end
 	if $game_switches[LvlCap::Expert]
@@ -174,6 +196,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for i in target_moves
+		next if target_moves == nil
 		has_move = true if i.type == :DARK && i.damagingMove? && user.calculate_move_matchup(i.id) > 1
 	end
 	if $game_switches[LvlCap::Expert]
@@ -233,6 +256,14 @@ PBAI::SwitchHandler.add_type(:GROUND) do |score,ai,user,target|
 	  if user.hasActiveAbility?(:EARTHEATER) || user.hasActiveItem?(:EARTHEATERORB) || user.airborne?
 	    score += 200
 	  end
+	  for i in target.moves
+	  	if user.calculate_move_matchup(i.id) < 1 && i.function == "0CA"
+	  		dig = true
+	  	end
+	  end
+	  if dig == true && $switch_flags[:digging] == true
+	  	score += 150
+	  end
 	end
 	next score
 end
@@ -243,6 +274,8 @@ PBAI::SwitchHandler.add_type(:DARK) do |score,ai,user,target|
 	if $switch_flags[:dark] == true
 	  if user.hasActiveAbility?(:UNTAINTED)
 	    score += 200
+	  elsif user.hasActiveAbility?(:JUSTIFIED)
+	  	score += 150
 	  end
 	  if pos.effects[PBEffects::FutureSightCounter] == 1 && user.pbHasType?(:DARK)
 	  	score += 300
@@ -320,7 +353,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
     if i < 0
       switch = true
     else
-      if sum > 2
+      if sum >= 2
         switch = false
       end
     end
@@ -338,7 +371,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	party = ai.battle.pbParty(user.index)
 	if user.status != :NONE
-		if party.any? {|pkmn| pkmn.role.id == :CLERIC}
+		if party.any? {|pkmn| pkmn.role.id == :CLERIC && user.role.id != :CLERIC}
     	switch = true
     	$switch_flags[:need_cleric] = true
     end
@@ -361,6 +394,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 		user.opposing_side.battlers.each do |target|
 		  next if ai.battle.wildBattle?
 			for i in target_moves
+				next if target_moves == nil
 			  dmg = target.get_move_damage(user, i)
 			  calc += 1 if (dmg >= user.hp/2 || dmg >= user.totalhp/2)
 			end
@@ -387,7 +421,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	elsif target.bad_against?(user) && target_moves == nil
 		switch = false
 	end
-	if user.bad_against?(target) && !user.trapped?
+	if user.bad_against?(target)
 		switch = true
 	end
 	next switch
@@ -412,10 +446,8 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	  end
 	end
 	if calc <= 1 && damage == 0
-		switch = true
+		switch = user.setup? ? false : true
 		$switch_flags[:setup_fodder] = true
-	else
-		switch = false
 	end
 	next switch
 end
@@ -557,7 +589,7 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
 	boosts = 0
 	GameData::Stat.each_battle { |s| boosts += target.battler.stages[s] if target.battler.stages[s] != nil}
 	score += (boosts * 10)
-	user.flags[:should_haze] if boosts >= 2
+	$learned_flags[:has_setup].push(target) if boosts >= 1
 	next score
 end
 
@@ -568,13 +600,14 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
 		off = 0
 		if target_moves != nil
 			for i in target_moves
+				next if target_moves == nil
 				dmg = user.get_move_damage(target, i)
 				off += 1 if i.damagingMove? && dmg >= user.totalhp/2
 		  end
 		  if off == 0
 		  	score += 400
-		  	user.flags[:should_setup] = true
-		  	user.flags[:should_taunt] = true
+		  	$learned_flags[:setup_fodder].push(target)
+		  	$learned_flags[:should_taunt].push(target)
 		  end
 		end
 	end

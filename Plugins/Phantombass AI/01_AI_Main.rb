@@ -13,6 +13,11 @@ class PBAI
     $d_switch = 0
     $doubles_switch = nil
     $switch_flags = {}
+    $learned_flags = {
+      :setup_fodder => [],
+      :has_setup => [],
+      :should_taunt => []
+    }
     PBAI.log("AI initialized")
   end
 
@@ -840,7 +845,7 @@ class PBAI
       return boosts
     end
     def ai_should_switch?
-      switch = false
+      switch = nil
       self.opposing_side.battlers.each do |target|
         next if target.nil?
         switch = PBAI::SwitchHandler.trigger_out(switch,@ai,self,target)
@@ -852,15 +857,16 @@ class PBAI
       party = @battle.pbParty(@battler.index)
       $d_switch = 0
       $d_switch = 1 if $doubles_switch != nil
-      target_strong_moves = false
+      $target_strong_moves = false
       switch = ai_should_switch?
       # Get the optimal switch choice by type
       scores = get_optimal_switch_choice
       # If we should switch due to effects in battle
+      PBAI.log("\nShould switch = #{switch}")
       if switch
         availscores = scores.select { |e| !e[2].fainted?}
         # Switch to a dark type instead of the best type matchup
-        if $switch_to_dark_type
+        if $switch_flags[:dark]
           availscores = availscores.select { |e| e[2].pokemon.types.include?(:DARK) }
         end
         while availscores.size > 0
@@ -869,10 +875,6 @@ class PBAI
           eligible = true
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
-          self.opposing_side.battlers.each do |target|
-            target_strong_moves = proj.get_move_switch_scores(target)
-            break if target_strong_moves == true
-          end
           self.opposing_side.battlers.each do |target|
             next if target.nil?
             score = 0
@@ -885,8 +887,8 @@ class PBAI
             end
             eligible = false if score <= 400
           end
-          eligible = false if $target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
+          PBAI.log("\n#{proj.pokemon.name} => #{score} => (#{eligible})")
           if eligible
             index = party.index(proj.pokemon)
             return [score, index]
@@ -894,7 +896,6 @@ class PBAI
           availscores.delete_at(0)
         end
       end
-
       curr_score = scores.find { |e| e[2] == self }[0]
       # If the current battler is not very effective offensively in any of its types,
       # then we see if there is a battler that is super effective in at least one of its types.
@@ -908,10 +909,6 @@ class PBAI
           eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
           self.opposing_side.battlers.each do |target|
-            target_strong_moves = proj.get_move_switch_scores(target)
-            break if target_strong_moves == true
-          end
-          self.opposing_side.battlers.each do |target|
             next if target.nil?
             score = 0
             score = PBAI::SwitchHandler.trigger_general(score,@ai,self,target)
@@ -921,10 +918,10 @@ class PBAI
                 score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
               end
             end
-            eligible = false if score <= 300
+            eligible = false if score <= 400
           end
-          eligible = false if $target_strong_moves == true
           eligible = false if proj == $doubles_switch && $d_switch == 1
+          PBAI.log("\n#{proj.pokemon.name} => #{score} => (#{eligible})")
           if eligible #&& hi_off_score >= 1.0
             # Better choice than the current battler, so let's switch to this pokemon
             index = party.index(proj.pokemon)
@@ -934,29 +931,6 @@ class PBAI
         end
       end
       return [0, 0]
-    end
-
-    def get_move_switch_scores(target)
-      return false if @battle.wildBattle?
-      skip_switch = false
-      if $game_switches[LvlCap::Expert]
-        for i in target.moves
-          if self.calculate_move_matchup(i.id) > 1
-            skip_switch = true
-          end
-        end
-      else
-        if target.used_moves != nil
-          for i in target.used_moves
-            if self.calculate_move_matchup(i.id) > 1
-              skip_switch = true
-            end
-          end
-        else
-          skip_switch = false
-        end
-      end
-      return skip_switch
     end
 
     def get_optimal_switch_choice
@@ -976,14 +950,12 @@ class PBAI
         next [offensive_score, defensive_score, proj]
       end
       scores.sort! do |a,b|
-        ret = (b[0] <=> a[0])
-        next ret if ret != 0
-        # Tie-breaker for pokemon with identical offensive effectiveness
-        # Prefer the one with the best defense against the targets
-        # Lower is better, so a <=> b instead of b <=> a to get ascending order
         ret = (a[1] <=> b[1])
         next ret if ret != 0
-        # Tie-breaker for pokemon with identical defensive effectiveness
+
+        ret = (b[0] <=> a[0])
+        next ret if ret != 0
+
         next b[2].pokemon.level <=> a[2].pokemon.level
       end
       #PBAI.log(scores.map { |e| e[2].pokemon.name + ": (#{e[0]}, #{e[1]})" }.join("\n"))

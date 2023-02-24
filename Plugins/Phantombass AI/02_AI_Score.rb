@@ -1732,7 +1732,8 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
     PBAI.log("- 30 for the target is already Taunted")
   else
     weight = 0
-    target.used_moves.each do |proj|
+    target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+    target_moves.each do |proj|
       weight += 25 if proj.statusMove?
     end
     score += weight
@@ -1752,7 +1753,7 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
         PBAI.log("+ 100 to counter setup")
       end
     end
-    if user.flags[:should_taunt]
+    if target.include?($learned_flags[:should_taunt])
       score += 50
       PBAI.log("+ 50 for stallbreaking")
     end
@@ -1787,7 +1788,7 @@ PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
         score += 30
         PBAI.log("+ 30 for being a #{user.role.name}")
       end
-      score += 50 if user.flags[:should_haze]
+      score += 50 if target.include?($learned_flags[:has_setup])
       PBAI.log("+ 50 for preventing the target from setting up")
     else
       score -= 30
@@ -1830,7 +1831,7 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
     else
       count = 0
       user.moves.each do |m|
-        count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
+        count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.physicalMove?
       end
       t_count = 0
       if $game_switches[LvlCap::Expert] == true
@@ -1852,21 +1853,21 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
         add = user.turnCount == 0 ? 80 : 60
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
+        atk_boost = user.stages[:ATTACK]*20
+        spa_boost = user.stages[:SPECIAL_ATTACK]*20
+        spe_boost = user.stages[:SPEED]*20
+        diff = atk_boost + spa_boost + spe_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.should_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+        score += 50 if target.include?($learned_flags[:setup_fodder])
+        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
-      atk_boost = user.stages[:ATTACK]*20
-      spa_boost = user.stages[:SPECIAL_ATTACK]*20
-      spe_boost = user.stages[:SPEED]*20
-      diff = atk_boost + spa_boost + spe_boost
-      score -= diff
-      PBAI.log("- #{diff} for boosted stats") if diff > 0
-      PBAI.log("+ #{diff} for lowered stats") if diff < 0
-      score += 20 if user.should_switch?(target)
-      PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-      score += 50 if user.flags[:should_setup]
-      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   next score
 end
@@ -1881,7 +1882,7 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
     else
       count = 0
       user.moves.each do |m|
-        count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
+        count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.physicalMove?
       end
       t_count = 0
       if $game_switches[LvlCap::Expert] == true
@@ -1902,19 +1903,19 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
         PBAI.log("+ #{add} to boost to guarantee the kill")
         score += 40
         PBAI.log("+ 40 for being a #{user.role.name}")
+        atk_boost = user.stages[:ATTACK]*20
+        diff = atk_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.should_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+        score += 50 if target.include?($learned_flags[:setup_fodder])
+        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
       elsif count > 0
         score -= 100
-        PBAI.log("- 100 since the target can now be killed by an attack")
+        PBAI.log("- 100 since the target can now be 2HKO'd by an attack")
       end
-      atk_boost = user.stages[:ATTACK]*20
-      diff = atk_boost
-      score -= diff
-      PBAI.log("- #{diff} for boosted stats") if diff > 0
-      PBAI.log("+ #{diff} for lowered stats") if diff < 0
-      score += 20 if user.should_switch?(target)
-      PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-      score += 50 if user.flags[:should_setup]
-      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   end
   next score
@@ -1930,7 +1931,7 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
     else
       count = 0
       user.moves.each do |m|
-        count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
+        count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.physicalMove?
       end
       t_count = 0
       if $game_switches[LvlCap::Expert] == true
@@ -1952,10 +1953,30 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
+        atk_boost = user.stages[:ATTACK]*20
+        def_boost = user.stages[:DEFENSE]*20
+        diff = atk_boost + def_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.should_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+        score += 50 if target.include?($learned_flags[:setup_fodder])
+        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
       elsif count == 0 && t_count == 0 && !user.faster_than?(target) && move.function != "024"
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guaranteed outspeed and kill")
+        atk_boost = user.stages[:ATTACK]*20
+        def_boost = user.stages[:DEFENSE]*20
+        diff = atk_boost + def_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.should_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+        score += 50 if target.include?($learned_flags[:setup_fodder])
+        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
       elsif count > 0 && user.faster_than?(target)
         score -= 1000
         PBAI.log("- 1000 since the target can now be outsped and killed")
@@ -1963,16 +1984,6 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
         score -= 500
         PBAI.log("- 500 since the target can now be killed and cannot kill back")
       end
-      atk_boost = user.stages[:ATTACK]*20
-      def_boost = user.stages[:DEFENSE]*20
-      diff = atk_boost + def_boost
-      score -= diff
-      PBAI.log("- #{diff} for boosted stats") if diff > 0
-      PBAI.log("+ #{diff} for lowered stats") if diff < 0
-      score += 20 if user.should_switch?(target)
-      PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-      score += 50 if user.flags[:should_setup]
-      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   next score
 end
@@ -1987,7 +1998,7 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
     else
       count = 0
       user.moves.each do |m|
-        count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
+        count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.physicalMove?
       end
       t_count = 0
       if $game_switches[LvlCap::Expert] == true
@@ -2009,20 +2020,20 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
+        atk_boost = user.stages[:ATTACK]*20
+        def_boost = user.stages[:DEFENSE]*20
+        diff = atk_boost + def_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.should_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+        score += 50 if target.include?($learned_flags[:setup_fodder])
+        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
-      atk_boost = user.stages[:ATTACK]*20
-      def_boost = user.stages[:DEFENSE]*20
-      diff = atk_boost + def_boost
-      score -= diff
-      PBAI.log("- #{diff} for boosted stats") if diff > 0
-      PBAI.log("+ #{diff} for lowered stats") if diff < 0
-      score += 20 if user.should_switch?(target)
-      PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-      score += 50 if user.flags[:should_setup]
-      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   next score
 end
@@ -2037,7 +2048,7 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
     else
       count = 0
       user.moves.each do |m|
-        count += 1 if user.get_move_damage(target, m) >= target.hp && m.specialMove?
+        count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.specialMove?
       end
       t_count = 0
       if $game_switches[LvlCap::Expert] == true
@@ -2058,19 +2069,19 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
         PBAI.log("+ #{add} to boost to guarantee the kill")
         score += 40
         PBAI.log("+ 40 for being a #{user.role.name}")
+        atk_boost = user.stages[:SPECIAL_ATTACK]*20
+        diff = atk_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.should_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+        score += 50 if target.include?($learned_flags[:setup_fodder])
+        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
-      atk_boost = user.stages[:SPECIAL_ATTACK]*20
-      diff = atk_boost
-      score -= diff
-      PBAI.log("- #{diff} for boosted stats") if diff > 0
-      PBAI.log("+ #{diff} for lowered stats") if diff < 0
-      score += 20 if user.should_switch?(target)
-      PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-      score += 50 if user.flags[:should_setup]
-      PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
     end
   end
   next score
@@ -2086,7 +2097,7 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
     else
       count = 0
       user.moves.each do |m|
-        count += 1 if user.get_move_damage(target, m) >= target.hp && m.specialMove?
+        count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.specialMove?
       end
       t_count = 0
       if $game_switches[LvlCap::Expert] == true
@@ -2107,10 +2118,30 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
+        atk_boost = user.stages[:SPECIAL_ATTACK]*20
+        def_boost = user.stages[:SPECIAL_DEFENSE]*20
+        diff = atk_boost + def_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.should_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+        score += 50 if target.include?($learned_flags[:setup_fodder])
+        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
       elsif count == 0 && t_count == 0 && !user.faster_than?(target) && move.function != "02C"
         add = user.turnCount == 0 ? 60 : 40
         score += add
         PBAI.log("+ #{add} to boost to guaranteed outspeed and kill")
+        atk_boost = user.stages[:SPECIAL_ATTACK]*20
+        def_boost = user.stages[:SPECIAL_DEFENSE]*20
+        diff = atk_boost + def_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.should_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
+        score += 50 if target.include?($learned_flags[:setup_fodder])
+        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
       elsif count > 0 && user.faster_than?(target)
         score -= 1000
         PBAI.log("- 1000 since the target can now be outsped and killed")
@@ -2119,16 +2150,6 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
         PBAI.log("- 500 since the target can now be killed and cannot kill back")
       end
     end
-    atk_boost = user.stages[:SPECIAL_ATTACK]*20
-    def_boost = user.stages[:SPECIAL_DEFENSE]*20
-    diff = atk_boost + def_boost
-    score -= diff
-    PBAI.log("- #{diff} for boosted stats") if diff > 0
-    PBAI.log("+ #{diff} for lowered stats") if diff < 0
-    score += 20 if user.should_switch?(target)
-    PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-    score += 50 if user.flags[:should_setup]
-    PBAI.log("+ 50 for using the target as setup fodder") if user.flags[:should_setup]
   end
   next score
 end
