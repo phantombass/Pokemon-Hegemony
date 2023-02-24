@@ -883,9 +883,10 @@ class PBAI
             if target_moves != nil
               for i in target_moves
                 score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
+                score /= hi_def_score
+                score *= hi_off_score
               end
             end
-            eligible = false if score <= 400
           end
           eligible = false if proj == $doubles_switch && $d_switch == 1
           PBAI.log("\n#{proj.pokemon.name} => #{score} => (#{eligible})")
@@ -916,9 +917,10 @@ class PBAI
             if target_moves != nil
               for i in target_moves
                 score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
+                score /= hi_def_score
+                score *= hi_off_score
               end
             end
-            eligible = false if score <= 400
           end
           eligible = false if proj == $doubles_switch && $d_switch == 1
           PBAI.log("\n#{proj.pokemon.name} => #{score} => (#{eligible})")
@@ -955,10 +957,10 @@ class PBAI
 
         ret = (b[0] <=> a[0])
         next ret if ret != 0
-
+        next (b[2].pokemon.defense + b[2].pokemon.spdef) <=> (a[2].pokemon.defense + a[2].pokemon.spdef)
         next b[2].pokemon.level <=> a[2].pokemon.level
       end
-      #PBAI.log(scores.map { |e| e[2].pokemon.name + ": (#{e[0]}, #{e[1]})" }.join("\n"))
+      PBAI.log(scores.map { |e| e[2].pokemon.name + ": (#{e[0]}, #{e[1]})" }.join("\n"))
       return scores
     end
     # Calculates the score of the move against a specific target
