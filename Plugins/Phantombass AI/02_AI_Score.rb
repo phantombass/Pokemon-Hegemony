@@ -1862,8 +1862,8 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
         PBAI.log("+ #{diff} for lowered stats") if diff < 0
         score += 20 if user.should_switch?(target)
         PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-        score += 50 if target.include?($learned_flags[:setup_fodder])
-        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
+        score += 50 if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
+        PBAI.log("+ 50 for using the target as setup fodder") if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
@@ -1910,8 +1910,8 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
         PBAI.log("+ #{diff} for lowered stats") if diff < 0
         score += 20 if user.should_switch?(target)
         PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-        score += 50 if target.include?($learned_flags[:setup_fodder])
-        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
+        score += 50 if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
+        PBAI.log("+ 50 for using the target as setup fodder") if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be 2HKO'd by an attack")
@@ -1961,8 +1961,8 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
         PBAI.log("+ #{diff} for lowered stats") if diff < 0
         score += 20 if user.should_switch?(target)
         PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-        score += 50 if target.include?($learned_flags[:setup_fodder])
-        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
+        score += 50 if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
+        PBAI.log("+ 50 for using the target as setup fodder") if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
       elsif count == 0 && t_count == 0 && !user.faster_than?(target) && move.function != "024"
         add = user.turnCount == 0 ? 60 : 40
         score += add
@@ -1975,8 +1975,8 @@ PBAI::ScoreHandler.add("024", "518", "026") do |score, ai, user, target, move|
         PBAI.log("+ #{diff} for lowered stats") if diff < 0
         score += 20 if user.should_switch?(target)
         PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-        score += 50 if target.include?($learned_flags[:setup_fodder])
-        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
+        score += 50 if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
+        PBAI.log("+ 50 for using the target as setup fodder") if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
       elsif count > 0 && user.faster_than?(target)
         score -= 1000
         PBAI.log("- 1000 since the target can now be outsped and killed")
@@ -2028,8 +2028,8 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
         PBAI.log("+ #{diff} for lowered stats") if diff < 0
         score += 20 if user.should_switch?(target)
         PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-        score += 50 if target.include?($learned_flags[:setup_fodder])
-        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
+        score += 50 if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
+        PBAI.log("+ 50 for using the target as setup fodder") if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
@@ -2076,8 +2076,8 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
         PBAI.log("+ #{diff} for lowered stats") if diff < 0
         score += 20 if user.should_switch?(target)
         PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-        score += 50 if target.include?($learned_flags[:setup_fodder])
-        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
+        score += 50 if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
+        PBAI.log("+ 50 for using the target as setup fodder") if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
@@ -2126,8 +2126,8 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
         PBAI.log("+ #{diff} for lowered stats") if diff < 0
         score += 20 if user.should_switch?(target)
         PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-        score += 50 if target.include?($learned_flags[:setup_fodder])
-        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
+        score += 50 if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
+        PBAI.log("+ 50 for using the target as setup fodder") if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
       elsif count == 0 && t_count == 0 && !user.faster_than?(target) && move.function != "02C"
         add = user.turnCount == 0 ? 60 : 40
         score += add
@@ -2140,8 +2140,8 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
         PBAI.log("+ #{diff} for lowered stats") if diff < 0
         score += 20 if user.should_switch?(target)
         PBAI.log("+ 20 for predicting the switch") if user.should_switch?(target)
-        score += 50 if target.include?($learned_flags[:setup_fodder])
-        PBAI.log("+ 50 for using the target as setup fodder") if target.include?($learned_flags[:setup_fodder])
+        score += 50 if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
+        PBAI.log("+ 50 for using the target as setup fodder") if (target.include?($learned_flags[:setup_fodder]) && $learned_flags[:setup_fodder] != nil)
       elsif count > 0 && user.faster_than?(target)
         score -= 1000
         PBAI.log("- 1000 since the target can now be outsped and killed")

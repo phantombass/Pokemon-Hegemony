@@ -5278,6 +5278,12 @@ class PokeBattle_Move_525 < PokeBattle_Move
   end
 end
 
+class PokeBattle_Battler
+  def pbAbilityOnTerrainChange
+    BattleHandlers.triggerOnTerrainChange(ability, battler, battle)
+  end
+end
+
 class PokeBattle_Move_526 < PokeBattle_Move
   def pbFailsAgainstTarget?(user, target)
     if target.effects[PBEffects::SaltCure]

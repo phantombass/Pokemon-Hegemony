@@ -431,23 +431,28 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	calc = 0
 	damage = 0
+	flag1 = false
+	flag2 = false
 	user.opposing_side.battlers.each do |target|
 	  next if ai.battle.wildBattle?
 	  next if target_moves == nil
 		for i in target_moves
 		  calc += 1 if i.damagingMove?
 		end
-	end
-	user.opposing_side.battlers.each do |target|
-	  next if ai.battle.wildBattle?
-	  for i in user.moves
+		if calc <= 0
+			flag1 = true
+		end
+		for i in user.moves
 	    dmg = user.get_move_damage(target, i)
 	    damage += 1 if dmg >= target.totalhp/2
 	  end
-	end
-	if calc <= 1 && damage == 0
-		switch = user.setup? ? false : true
-		$switch_flags[:setup_fodder] = true
+	  if damage == 0
+	  	flag2 = true
+	  end
+	  if flag1 == true && flag2 == true
+	  	$switch_flags[:setup_fodder].push(target)
+	  	switch = user.setup? ? false : true
+	  end
 	end
 	next switch
 end
