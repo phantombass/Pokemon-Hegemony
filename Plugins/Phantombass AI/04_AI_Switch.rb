@@ -450,7 +450,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	  	flag2 = true
 	  end
 	  if flag1 == true && flag2 == true
-	  	$switch_flags[:setup_fodder].push(target)
+	  	$learned_flags[:setup_fodder].push(target)
 	  	switch = user.setup? ? false : true
 	  end
 	end
@@ -461,7 +461,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	pos = ai.battle.positions[user.index]
 	party = ai.battle.pbParty(user.index)
 	tspikes = user.own_side.effects[PBEffects::ToxicSpikes] == nil ? 0 : user.own_side.effects[PBEffects::ToxicSpikes]
-	comet = user.own_side.effects[PBEffects::CometShards] == nil ? 0 : user.own_side.effects[PBEffects::CometShards]
+	comet = user.own_side.effects[PBEffects::CometShards] == false ? 0 : 1
 	if tspikes > 0
 	  if party.any? { |pkmn| pkmn.types.include?(:POISON) }
 	    switch = true
@@ -569,26 +569,6 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
 	next score
 end
 
-#Matchup
-PBAI::SwitchHandler.add do |score,ai,user,target|
-	off_score = user.get_offense_score(target)
-	def_score = target.get_offense_score(user)
-	if def_score > off_score
-		score += 0
-	elsif off_score > def_score
-		score += (off_score-def_score)*200
-		if user.role.id == :OFFENSIVEPIVOT
-			score += 100
-		end
-	else
-		score += 0
-	end
-	if off_score < 2 && def_score < 1 && user.defensive?
-		score += 100
-	end
-	next score
-end
-
 #Setup Prevention
 PBAI::SwitchHandler.add do |score,ai,user,target|
 	boosts = 0
@@ -652,4 +632,37 @@ PBAI::SwitchHandler.add do |score,ai,user,target|
   if comet > 0 && (user.pbHasType?(:COSMIC) && !user.airborne? && !user.hasActiveAbility?(:MAGICGUARD)) || user.hasActiveAbility?(:GALEFORCE)
   	score += 400
   end
+  next score
+end
+
+PBAI::SwitchHandler.add do |score,ai,user,target|
+	if $switch_flags[:move] != nil
+	   lastMove = $switch_flags[:move]
+	   next if lastMove == nil
+	   immune = 0
+	   immune = user.calculate_move_matchup(lastMove.id) == 0 ? 600 : (300/user.calculate_move_matchup(lastMove.id))
+	   immune = 0 if immune < 300
+	   score += immune
+ 	end
+  next score
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,user,target|
+	prevDmg = user.get_damage_by_user(target)
+  if prevDmg.size > 0 && prevDmg != 0
+    lastDmg = prevDmg[-1]
+    lastMove = PokeBattle_Move.from_pokemon_move(ai.battle,Pokemon::Move.new(lastDmg[1]))
+    switch = true if user.calculate_move_matchup(lastMove.id) > 1
+    $switch_flags[:move] = lastMove if switch == true
+  end
+  next switch
+end
+
+#Matchup
+PBAI::SwitchHandler.add do |score,ai,user,target|
+	off_score = user.get_offense_score(target)
+	def_score = target.get_offense_score(user)
+	score *= off_score
+	score *= (1/def_score)
+	next score
 end
