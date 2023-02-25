@@ -450,7 +450,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,user,target|
 	  	flag2 = true
 	  end
 	  if flag1 == true && flag2 == true
-	  	$switch_flags[:setup_fodder].push(target)
+	  	$learned_flags[:setup_fodder].push(target)
 	  	switch = user.setup? ? false : true
 	  end
 	end
