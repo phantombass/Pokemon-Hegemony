@@ -5280,7 +5280,7 @@ end
 
 class PokeBattle_Battler
   def pbAbilityOnTerrainChange
-    BattleHandlers.triggerOnTerrainChange(ability, battler, battle)
+    BattleHandlers.triggerOnTerrainChange(self.ability, self.battler, @battle)
   end
 end
 
