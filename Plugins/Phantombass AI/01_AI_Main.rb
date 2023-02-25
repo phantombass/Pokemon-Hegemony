@@ -16,7 +16,8 @@ class PBAI
     $learned_flags = {
       :setup_fodder => [],
       :has_setup => [],
-      :should_taunt => []
+      :should_taunt => [],
+      :move => nil
     }
     PBAI.log("AI initialized")
   end
@@ -883,13 +884,12 @@ class PBAI
             if target_moves != nil
               for i in target_moves
                 score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
-                score /= hi_def_score
-                score *= hi_off_score
               end
             end
+            PBAI.log("\n#{proj.pokemon.name} => #{score}")
           end
           eligible = false if proj == $doubles_switch && $d_switch == 1
-          PBAI.log("\n#{proj.pokemon.name} => #{score} => (#{eligible})")
+          eligible = false if score < 300
           if eligible
             index = party.index(proj.pokemon)
             return [score, index]
@@ -917,13 +917,12 @@ class PBAI
             if target_moves != nil
               for i in target_moves
                 score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
-                score /= hi_def_score
-                score *= hi_off_score
               end
             end
+            PBAI.log("\n#{proj.pokemon.name} => #{score}")
           end
           eligible = false if proj == $doubles_switch && $d_switch == 1
-          PBAI.log("\n#{proj.pokemon.name} => #{score} => (#{eligible})")
+          eligible = false if score < 300
           if eligible #&& hi_off_score >= 1.0
             # Better choice than the current battler, so let's switch to this pokemon
             index = party.index(proj.pokemon)
@@ -932,6 +931,7 @@ class PBAI
           availscores.delete_at(0)
         end
       end
+      $switch_flags[:move] = nil
       return [0, 0]
     end
 
@@ -954,7 +954,6 @@ class PBAI
       scores.sort! do |a,b|
         ret = (a[1] <=> b[1])
         next ret if ret != 0
-
         ret = (b[0] <=> a[0])
         next ret if ret != 0
         next (b[2].pokemon.defense + b[2].pokemon.spdef) <=> (a[2].pokemon.defense + a[2].pokemon.spdef)
@@ -1130,7 +1129,7 @@ class PBAI
       # Type effectiveness
       return true if (move.damagingMove? && Effectiveness.ineffective?(typeMod))
       # Immunity due to ability/item/other effects
-      if @skill >= PBTrainerAI.mediumSkill
+#      if @skill >= PBTrainerAI.mediumSkill
         case type
         when :GROUND
           return true if target.airborne? && !move.hitsFlyingTargets?
@@ -1179,7 +1178,7 @@ class PBAI
                        target.opposes?(@battler)
         return true if move.priority > 0 && @battle.field.terrain == :Psychic &&
                        target.affectedByTerrain? && target.opposes?(@battler)
-      end
+#      end
       return false
     end
 
@@ -1570,6 +1569,30 @@ class PBAI
       # Return 1.0+ value if self is good against the target
       user_types = self.pbTypes(true)
       target_types = target.pbTypes(true)
+      immune = {
+        :ability => [
+          [:FLASHFIRE,:WELLBAKEDBODY,:STEAMENGINE],
+          [:WATERABSORB,:STORMDRAIN,:DRYSKIN,:WATERCOMPACTION,:STEAMENGINE],
+          [:SAPPSIPPER],
+          [:VOLTABSORB,:LIGHTNINGROD,:MOTORDRIVE],
+          [:LEVITATE,:EARTHEATER],
+          [:SCALER],
+          [:UNTAINTED],
+          [:DIMENSIONBLOCK]
+        ],
+        :item => [
+          [:FLASHFIREORB],
+          [:WATERABSORBORB],
+          [:SAPSIPPERORB],
+          [:LIGHTNINGRODORB],
+          [:EARTHEATERORB,:LEVITATEORB,:AIRBALLOON],
+          [:SCALERORB],
+          [:UNTAINTEDORB],
+          [:DIMENSIONBLOCKORB]
+        ],
+        :type => [:FIRE,:WATER,:GRASS,:ELECTRIC,:GROUND,:ROCK,:DARK,:COSMIC]
+      }
+      target_ability = target.pokemon.ability_id
       max = 0
       user_types.each do |user_type|
         next unless self.has_usable_move_type?(user_type)
@@ -1580,6 +1603,10 @@ class PBAI
             mod *= eff
           else
             mod *= eff
+          end
+          for i in 0..7
+            mod *= 0.0 if immune[:ability][i].include?(target_ability) && immune[:type][i] == user_type && !@battle.moldBreaker
+            mod *= 0.0 if immune[:item][i].include?(target.pokemon.item_id) && immune[:type][i] == user_type
           end
         end
         max = mod if mod > max
