@@ -1430,13 +1430,19 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
       PBAI.log("+ 100 for predicting the target to switch, being unable to kill, and having something to switch to")
     end
     boosts = 0
+    o_boost = 0
     GameData::Stat.each_battle { |s| boosts += user.stages[s] if user.stages[s] != nil}
     boosts *= -10
     score += boosts
+    GameData::Stat.each_battle { |s| o_boost += target.stages[s] if target.stages[s] != nil}
     if boosts > 0
       PBAI.log("+ #{boosts} for switching to reset lowered stats")
     elsif boosts < 0
       PBAI.log("#{boosts} for not wasting boosted stats")
+    end
+    if o_boost > 0
+      score += 200
+      PBAI.log("+ 200 to switch on setup")
     end
   end
   next score

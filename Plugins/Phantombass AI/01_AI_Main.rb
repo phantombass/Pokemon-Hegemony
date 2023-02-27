@@ -174,12 +174,12 @@ class PBAI
     elsif data[0] == :SWITCH
       # [:SWITCH, pokemon_index]
       @battle.pbRegisterSwitch(idxBattler, data[1])
-    elsif data[0] == :FLEE
-      pbSEPlay("Battle flee")
-      @battle.pbDisplay(_INTL("{1} fled from battle!",projection.pbThis))
-      @battle.decision = 3
-      @battle.scene.clearMessageWindow
-      @battle.scene.pbEndBattle(@battle.decision)
+   # elsif data[0] == :FLEE
+   #   pbSEPlay("Battle flee")
+   #   @battle.pbDisplay(_INTL("{1} fled from battle!",projection.pbThis))
+   #   @battle.decision = 3
+   #   @battle.scene.clearMessageWindow
+   #   @battle.scene.pbEndBattle(@battle.decision)
     else
       # [move_index, move_target]
       if data[0] == :ITEM
@@ -201,7 +201,7 @@ class PBAI
   #=============================================================================
   def pbDefaultChooseNewEnemy(idxBattler, party)
     proj = self.battler_to_projection(@battle.battlers[idxBattler])
-    scores = proj.get_optimal_switch_choice
+    scores = proj.get_best_switch_choice
     scores.each do |_, _, proj|
       pkmn = proj.pokemon
       index = @battle.pbParty(idxBattler).index(pkmn)
@@ -467,12 +467,14 @@ class PBAI
       switch_score = get_switch_score
       # Yields [score, pokemon_index]
       scores << [:SWITCH, *switch_score]
-      if @battle.rules["alwaysflee"] == true && !self.trapped?
-        flee_score = 100000
-      else
-        flee_score = 0
-      end
-      scores << [:FLEE, *flee_score]
+  #    if @battle.rules["alwaysflee"] == true && !self.trapped?
+   #     flee_score = 100000
+    #  elsif !@battle.wildBattle?
+    #    flee_score = 0
+    #  else
+    #    flee_score = 0
+    #  end
+    #  scores << [:FLEE, *flee_score]
 
       PBAI.log("=" * 10 + " Turn #{@battle.turnCount + 1} " + "=" * 10)
       # Gets the battler projections of the opposing side
@@ -556,14 +558,14 @@ class PBAI
             str += " << CHOSEN" if idx == 1
             str += "\n"
           end
-        elsif i == 2
+      #  elsif i == 2
           #Flee
-          score = e[1]
-          if score > 0
-            str += "\nFLEE: #{score} => #{finalPerc}" + " percent"
-            str += " << CHOSEN" if idx == 1
-            str += "\n"
-          end
+         # score = e[1]
+        #  if score > 0
+        #    str += "\nFLEE: #{score} => #{finalPerc}" + " percent"
+        #    str += " << CHOSEN" if idx == 1
+        #    str += "\n"
+         # end
 
        # elsif i == -1
           #str += "STRUGGLE: 100 percent"
@@ -593,8 +595,8 @@ class PBAI
       elsif idx == 1
         # Index 1 means switching was chosen
         return [:SWITCH, scores[1][2]]
-      elsif idx == 2
-        return [:FLEE, flee_score]
+   #   elsif idx == 2
+    #    return [:FLEE, flee_score]
       end
       # Return [move_index, move_target]
       if idx
@@ -856,6 +858,8 @@ class PBAI
 
     def get_switch_score
       party = @battle.pbParty(@battler.index)
+      return [0,0] if party.length == 1
+      return [0,0] if !self.can_switch?
       $d_switch = 0
       $d_switch = 1 if $doubles_switch != nil
       $target_strong_moves = false
@@ -864,71 +868,34 @@ class PBAI
       scores = get_optimal_switch_choice
       # If we should switch due to effects in battle
       PBAI.log("\nShould switch = #{switch}")
-      if switch
-        availscores = scores.select { |e| !e[2].fainted?}
+      if switch == true
+        availscores = scores.select { |e| !e[1].fainted?}
         # Switch to a dark type instead of the best type matchup
-        if $switch_flags[:dark]
-          availscores = availscores.select { |e| e[2].pokemon.types.include?(:DARK) }
-        end
-        while availscores.size > 0
+        #if $switch_flags[:dark]
+        #  availscores = availscores.select { |e| e[1].pokemon.types.include?(:DARK) }
+        #end
+        for i in 0..availscores.size
           score = 0
-          hi_off_score, hi_def_score, proj = availscores[0]
-          eligible = true
-          eligible = false if proj.battler != nil # Already active
-          eligible = false if proj.pokemon.egg? # Egg
+          score, proj = availscores[i]
           self.opposing_side.battlers.each do |target|
             next if target.nil?
-            score = 0
-            score = PBAI::SwitchHandler.trigger_general(score,@ai,self,target)
+            score = PBAI::SwitchHandler.trigger_general(score,@ai,self,proj,target)
             target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
             if target_moves != nil
               for i in target_moves
-                score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
+                score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,proj,target)
               end
             end
             PBAI.log("\n#{proj.pokemon.name} => #{score}")
           end
+          eligible = true
+          eligible = false if proj.battler != nil # Already active
+          eligible = false if proj.pokemon.egg? # Egg
           eligible = false if proj == $doubles_switch && $d_switch == 1
-          eligible = false if score < 300
           if eligible
             index = party.index(proj.pokemon)
             return [score, index]
           end
-          availscores.delete_at(0)
-        end
-      end
-      curr_score = scores.find { |e| e[2] == self }[0]
-      # If the current battler is not very effective offensively in any of its types,
-      # then we see if there is a battler that is super effective in at least one of its types.
-      if curr_score < 1.0 && !self.trapped?
-        availscores = scores.select { |e|!e[2].fainted?}
-        while availscores.size > 0
-          score = 0
-          hi_off_score, hi_def_score, proj = availscores[0]
-          $doubles_switch = proj if $d_switch == 0
-          eligible = true
-          eligible = false if proj.battler != nil # Already active
-          eligible = false if proj.pokemon.egg? # Egg
-          self.opposing_side.battlers.each do |target|
-            next if target.nil?
-            score = 0
-            score = PBAI::SwitchHandler.trigger_general(score,@ai,self,target)
-            target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
-            if target_moves != nil
-              for i in target_moves
-                score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
-              end
-            end
-            PBAI.log("\n#{proj.pokemon.name} => #{score}")
-          end
-          eligible = false if proj == $doubles_switch && $d_switch == 1
-          eligible = false if score < 300
-          if eligible #&& hi_off_score >= 1.0
-            # Better choice than the current battler, so let's switch to this pokemon
-            index = party.index(proj.pokemon)
-            return [score, index]
-          end
-          availscores.delete_at(0)
         end
       end
       $switch_flags[:move] = nil
@@ -936,6 +903,50 @@ class PBAI
     end
 
     def get_optimal_switch_choice
+      party = @battle.pbParty(self.index)
+      matchup = party.map do |pkmn|
+        proj = @ai.pokemon_to_projection(pkmn)
+        if !proj
+          raise "No projection found for party member #{pkmn.name}"
+        end
+        offensive_score = 1.0
+        defensive_score = 1.0
+        self.opposing_side.battlers.each do |target|
+          next if target.nil?
+          offensive_score *= proj.get_offense_score(target)
+          defensive_score *= target.get_offense_score(proj)
+        end
+        next [offensive_score, defensive_score, proj]
+      end
+      matchup.sort! do |a,b|
+        ret = (a[1] <=> b[1])
+        next ret if ret != 0
+        ret = (b[0] <=> a[0])
+        next ret if ret != 0
+        next (b[2].pokemon.defense + b[2].pokemon.spdef) <=> (a[2].pokemon.defense + a[2].pokemon.spdef)
+        next b[2].pokemon.level <=> a[2].pokemon.level
+      end
+      #PBAI.log(scores.map { |e| e[2].pokemon.name + ": (#{e[0]}, #{e[1]})" }.join("\n"))
+      scores = matchup.map do |e|
+        proj = @ai.pokemon_to_projection(e[2].pokemon)
+        if !proj
+          raise "No projection found for party member #{e[2].pokemon.name}"
+        end
+        score = 200
+        score += e[0] * 100
+        score -= e[1] * 100
+        next [score,proj]
+      end
+      scores.sort! do |a,b|
+        ret = b[0] <=> a[0]
+        next ret if ret != 0
+        next b[1].pokemon.hp <=> b[1].pokemon.hp
+      end
+      PBAI.log(scores.map {|f| f[1].pokemon.name + "=> #{f[0]}"}.join("\n"))
+      return scores
+    end
+
+    def get_best_switch_choice
       party = @battle.pbParty(self.index)
       scores = party.map do |pkmn|
         proj = @ai.pokemon_to_projection(pkmn)
