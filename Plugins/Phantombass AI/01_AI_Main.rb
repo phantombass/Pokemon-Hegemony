@@ -858,6 +858,8 @@ class PBAI
 
     def get_switch_score
       party = @battle.pbParty(@battler.index)
+      return [0,0] if party.length == 1
+      return [0,0] if !self.can_switch?
       $d_switch = 0
       $d_switch = 1 if $doubles_switch != nil
       $target_strong_moves = false
@@ -875,16 +877,13 @@ class PBAI
         for i in 0..availscores.size
           score = 0
           score, proj = availscores[i]
-          pkmnidx = party.index(proj.pokemon)
-          mon = party[pkmnidx]
-          pkmn = @ai.pokemon_to_projection(mon)
           self.opposing_side.battlers.each do |target|
             next if target.nil?
-            score = PBAI::SwitchHandler.trigger_general(score,@ai,self,pkmn,target)
+            score = PBAI::SwitchHandler.trigger_general(score,@ai,self,proj,target)
             target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
             if target_moves != nil
               for i in target_moves
-                score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,pkmn,target)
+                score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,proj,target)
               end
             end
             PBAI.log("\n#{proj.pokemon.name} => #{score}")
