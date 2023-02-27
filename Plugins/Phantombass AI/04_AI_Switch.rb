@@ -369,6 +369,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
     else
       if sum >= 2
         switch = false
+        $switch_flags[:switch] = 2000
       end
     end
   end
@@ -394,6 +395,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
     end
     if battler.hasActiveAbility?(:GUTS)
     	switch = false
+    	$switch_flags[:switch] = 2000
     end
   end
 	next switch
@@ -498,6 +500,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	if battler.trapped?
     switch = false
+    $switch_flags[:switch] = 2000
   end
 	next switch
 end
@@ -673,25 +676,27 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 		end
 		if battler.faster_than?(target) && damage >= 0 && calc == 0
 			switch = false
+			$switch_flags[:switch] = 2000
 		end
 		if battler.faster_than?(target) && damage == 0 && calc > 0
 			switch = true
 		end
 		if target.faster_than?(battler) && damage >= 0 && calc == 0
 			switch = false
+			$switch_flags[:switch] = 2000
 		end
 		if target.faster_than?(battler) && calc > 0
 			switch = true
 		end
 	elsif target.bad_against?(battler) && target_moves == nil
 		switch = false
+		$switch_flags[:switch] = 2000
 	end
 	next switch
 end
 
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
-	off_score = battler.get_offense_score(target)
-	def_score = target.get_offense_score(battler)
+	best = battler.get_optimal_switch_choice
 	move = 0
 	for i in battler.moves
 		move += 1 if target.calculate_move_matchup(i.id) > 1
@@ -702,13 +707,35 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	elsif move == 0
 		switch = true
 	end
+	if ((best[0][1] == battler)  && (best[0][0] == best[1][0]) || (best[1][1] == battler)  && (best[0][0] == best[1][0]))
+		switch = false
+		$switch_flags[:switch] = 2000
+	end
 	next switch
 end
 
 PBAI::SwitchHandler.add do |score,ai,battler,target|
+	if battler.setup?
+		if battler.is_physical_attacker? && battler.stages[:ATTACK] != nil
+			if battler.stages[:ATTACK] > 0
+				$switch_flags[:switch] = 2000
+			end
+		elsif battler.is_special_attacker? && battler.stages[:SPECIAL_ATTACK] != nil
+			if battler.stages[:SPECIAL_ATTACK] > 0
+				$switch_flags[:switch] = 2000
+			end
+		end
+	end
+	next score
+end
+
+
+
+PBAI::SwitchHandler.add do |score,ai,battler,target|
 	next if $switch_flags[:switch] == nil
-	score -= $switch_flags[:switch]
-	PBAI.log("- 2000")
+	switch = $switch_flags[:switch]
+	score -= switch
+	PBAI.log("- #{switch}")
 	next score
 end
 #curr_score = scores.find { |e| e[2] == self }[0]
