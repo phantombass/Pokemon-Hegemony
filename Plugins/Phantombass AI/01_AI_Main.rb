@@ -1,4 +1,4 @@
-Essentials::ERROR_TEXT += "[Phantombass AI v1.2]\r\n"
+Essentials::ERROR_TEXT += "[Phantombass AI v1.3]\r\n"
 
 class PBAI
   attr_reader :battle
@@ -869,7 +869,7 @@ class PBAI
       # If we should switch due to effects in battle
       PBAI.log("\nShould switch = #{switch}")
       if switch == true
-        availscores = scores.select { |e| !e[1].fainted?}
+        availscores = scores.select { |e| !e[1].fainted? && e[0] > 0}
         # Switch to a dark type instead of the best type matchup
         #if $switch_flags[:dark]
         #  availscores = availscores.select { |e| e[1].pokemon.types.include?(:DARK) }
