@@ -1158,6 +1158,12 @@ PBAI::ScoreHandler.add("004") do |score, ai, user, target, move|
   if sleep == true
     score = 0
     PBAI.log("*0 because Sleep Clause is in effect")
+  else
+    if target.set_up_score > 0
+      score += 100
+      PBAI.log("+ 100 for sleeping a setup mon")
+      $switch_flags[:switch] = 2000
+    end
   end
   next score
 end
@@ -1224,7 +1230,7 @@ PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, t
     end
     if $game_switches[LvlCap::Expert]
       for i in target.moves
-        if ["035","02A","032","10D","02B","02C","14E","032","024","026","518"].include?(i.function)
+        if ["035","02A","032","10D","02B","02C","14E","032","024","026","518"].include?(i.function) && !user.hasActiveAbility?(:UNAWARE)
           setup = true
         end
       end
@@ -1326,6 +1332,10 @@ PBAI::ScoreHandler.add("0DD") do |score, ai, user, target, move|
   add = dmg / 2
   score += add
   PBAI.log("+ #{add} for hp gained")
+  if user.hasActiveAbility?(:VAMPIRIC)
+    score += 50
+    PBAI.log("+ 50 for having a beneficial ability")
+  end
   next score
 end
 
@@ -1386,12 +1396,23 @@ end
 
 
 # Whirlwind, Roar, Circle Throw, Dragon Tail, U-Turn, Volt Switch
-PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, target, move|
   if user.bad_against?(target) && user.level >= target.level &&
-     !target.has_ability?(:SUCTIONCUPS) && !target.effects[PBEffects::Ingrain] && !["0EE","151","529","0ED"].include?(move.function)
+     !target.has_ability?(:SUCTIONCUPS) && !target.effects[PBEffects::Ingrain] && !["0EE","151","529"].include?(move.function)
     score += 100
     PBAI.log("+ 100 for forcing our target to switch and we're bad against our target")
-  elsif ["0EE","151","529","0ED"].include?(move.function)
+    o_boost = 0
+    faint = 0
+    GameData::Stat.each_battle { |s| o_boost += target.stages[s] if target.stages[s] != nil}
+    target.side.party.each do |pkmn|
+      faint +=1 if pkmn.fainted?
+    end
+    if o_boost > 0 && faint > 1
+      score += 300
+      PBAI.log("+ 300 for forcing out a set up mon")
+    end
+    $switch_flags[:switch] = 2000
+  elsif ["0EE","151","529"].include?(move.function)
     if [:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:HAZARDLEAD].include?(user.role.id)
       score += 40 if user.can_switch?
       PBAI.log("+ 40 for being a #{user.role.name}")
@@ -1432,7 +1453,7 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
     boosts = 0
     o_boost = 0
     GameData::Stat.each_battle { |s| boosts += user.stages[s] if user.stages[s] != nil}
-    boosts *= -10
+    boosts *= -50
     score += boosts
     GameData::Stat.each_battle { |s| o_boost += target.stages[s] if target.stages[s] != nil}
     if boosts > 0
@@ -1440,7 +1461,8 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE") do |score, ai, user, target, move|
     elsif boosts < 0
       PBAI.log("#{boosts} for not wasting boosted stats")
     end
-    if o_boost > 0
+    if o_boost > 0 && diff > 1
+      $switch_flags[:switch] = 2000
       score += 200
       PBAI.log("+ 200 to switch on setup")
     end
@@ -1759,7 +1781,7 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
         PBAI.log("+ 100 to counter setup")
       end
     end
-    if target.include?($learned_flags[:should_taunt])
+    if $learned_flags[:should_taunt].include?(target)
       score += 50
       PBAI.log("+ 50 for stallbreaking")
     end
