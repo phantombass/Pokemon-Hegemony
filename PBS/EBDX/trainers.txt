@@ -218,6 +218,9 @@ BattleVS         = classicVS
 [HIKER,Tucker,4]
 BattleVS         = classicVS
 #-------------------------------
+[RUINMANIAC,Andy,4]
+BattleVS         = classicVS
+#-------------------------------
 [COOLTRAINER_M,Will,4]
 BattleVS         = classicVS
 #-------------------------------
