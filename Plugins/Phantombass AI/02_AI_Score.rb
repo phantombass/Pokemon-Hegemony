@@ -1162,7 +1162,6 @@ PBAI::ScoreHandler.add("004") do |score, ai, user, target, move|
     if target.set_up_score > 0
       score += 100
       PBAI.log("+ 100 for sleeping a setup mon")
-      $switch_flags[:switch] = 2000
     end
   end
   next score
@@ -1411,11 +1410,26 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, t
       score += 300
       PBAI.log("+ 300 for forcing out a set up mon")
     end
-    $switch_flags[:switch] = 2000
+    
   elsif ["0EE","151","529"].include?(move.function)
     if [:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:HAZARDLEAD].include?(user.role.id)
       score += 40 if user.can_switch?
       PBAI.log("+ 40 for being a #{user.role.name}")
+    end
+    boosts = 0
+    o_boost = 0
+    GameData::Stat.each_battle { |s| boosts += user.stages[s] if user.stages[s] != nil}
+    boosts *= -50
+    score += boosts
+    GameData::Stat.each_battle { |s| o_boost += target.stages[s] if target.stages[s] != nil}
+    if boosts > 0
+      PBAI.log("+ #{boosts} for switching to reset lowered stats")
+    elsif boosts < 0
+      PBAI.log("#{boosts} for not wasting boosted stats")
+    end
+    if o_boost > 0  
+      score += 200
+      PBAI.log("+ 200 to switch on setup")
     end
     if user.trapped? && user.can_switch?
       score += 100
@@ -1430,8 +1444,8 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, t
       PBAI.log("+ 40 for gaining switch initiative against a bad matchup")
     end
     if user.bad_against?(target) && user.faster_than?(target)
-      score += 40
-      PBAI.log("+ 40 for switching against a bad matchup")
+      score += 100
+      PBAI.log("+ 100 for switching against a bad matchup")
     end
     if user.effects[PBEffects::Substitute] > 0 && move.function == "538"
       score - 1000
@@ -1449,22 +1463,6 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, t
     if user.should_switch?(target) && kill == 0 && diff > 1
       score += 100
       PBAI.log("+ 100 for predicting the target to switch, being unable to kill, and having something to switch to")
-    end
-    boosts = 0
-    o_boost = 0
-    GameData::Stat.each_battle { |s| boosts += user.stages[s] if user.stages[s] != nil}
-    boosts *= -50
-    score += boosts
-    GameData::Stat.each_battle { |s| o_boost += target.stages[s] if target.stages[s] != nil}
-    if boosts > 0
-      PBAI.log("+ #{boosts} for switching to reset lowered stats")
-    elsif boosts < 0
-      PBAI.log("#{boosts} for not wasting boosted stats")
-    end
-    if o_boost > 0 && diff > 1
-      $switch_flags[:switch] = 2000
-      score += 200
-      PBAI.log("+ 200 to switch on setup")
     end
   end
   next score
