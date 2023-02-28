@@ -33,7 +33,7 @@ class PBAI
 			list.each do |code|
 	  	next if code.nil?
 	  		newswitch = code.call(switch,ai,battler,target)
-	  		switch = newswitch if ![true,false].include?(switch)
+	  		switch = newswitch if !newswitch.nil?
 	  	end
 		  return switch
 		end
@@ -361,18 +361,11 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 end
 
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
-	for i in battler.set_up_score
-    sum = 0
-    sum += i
-    if i < 0
-      switch = true
-    else
-      if sum >= 2
-        switch = false
-        $switch_flags[:switch] = 2000
-      end
-    end
-  end
+	if battler.set_up_score > 0
+		switch = false
+	elsif battler.set_up_score < 0
+		switch = true
+	end
 	next switch
 end
 
@@ -395,7 +388,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
     end
     if battler.hasActiveAbility?(:GUTS)
     	switch = false
-    	$switch_flags[:switch] = 2000
+    	
     end
   end
 	next switch
@@ -500,7 +493,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	if battler.trapped?
     switch = false
-    $switch_flags[:switch] = 2000
+    
   end
 	next switch
 end
@@ -653,122 +646,77 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
   next switch
 end
 
-#Matchup
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
+	best = battler.get_optimal_switch_choice
+	move = 0
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	calc = 0
 	damage = 0
-	if target.bad_against?(battler) && target_moves != nil
+	pivot = nil
+	if target.bad_against?(battler)
 		battler.opposing_side.battlers.each do |target|
 		  next if ai.battle.wildBattle?
 			for i in target_moves
 				next if target_moves == nil
 			  dmg = target.get_move_damage(battler, i)
-			  calc += 1 if (dmg >= battler.hp/2 || dmg >= battler.totalhp/2)
+			  calc += 1 if (dmg >= battler.hp/2)
 			end
 		end
 		battler.opposing_side.battlers.each do |target|
 		  next if ai.battle.wildBattle?
 		  for i in battler.moves
 		    dmg = battler.get_move_damage(target, i)
-		    damage += 1 if (dmg >= target.hp/2 || dmg >= target.totalhp/2)
+		    damage += 1 if (dmg >= target.hp/2)
 		  end
 		end
-		if battler.faster_than?(target) && damage >= 0 && calc == 0
+		if battler.faster_than?(target) && damage > 0 && calc == 0
 			switch = false
-			$switch_flags[:switch] = 2000
 		end
 		if battler.faster_than?(target) && damage == 0 && calc > 0
 			switch = true
 		end
-		if target.faster_than?(battler) && damage >= 0 && calc == 0
+		if target.faster_than?(battler) && damage > 0 && calc == 0
 			switch = false
-			$switch_flags[:switch] = 2000
 		end
 		if target.faster_than?(battler) && calc > 0
 			switch = true
 		end
+		for i in battler.moves
+			move += 1 if target.calculate_move_matchup(i.id) > 1
+		end	
+		if move > 0 && battler.faster_than?(target)
+			switch = false
+		elsif move == 0
+			switch = true
+		end
 	elsif target.bad_against?(battler) && target_moves == nil
 		switch = false
-		$switch_flags[:switch] = 2000
+	end
+	if ((best[0][1] == battler)  && (best[0][0] == best[1][0]) || (best[1][1] == battler)  && (best[0][0] == best[1][0]))
+		switch = false
 	end
 	next switch
 end
 
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
-	best = battler.get_optimal_switch_choice
-	move = 0
-	for i in battler.moves
-		move += 1 if target.calculate_move_matchup(i.id) > 1
-	end	
-	if move > 0 && battler.faster_than?(target)
-		switch = false
-		$switch_flags[:switch] = 2000
-	elsif move == 0
-		switch = true
-	end
-	if ((best[0][1] == battler)  && (best[0][0] == best[1][0]) || (best[1][1] == battler)  && (best[0][0] == best[1][0]))
-		switch = false
-		$switch_flags[:switch] = 2000
+	if battler.setup?
+		if battler.is_physical_attacker? && battler.stages[:ATTACK] != nil
+			if battler.stages[:ATTACK] > 0
+				switch = false
+			end
+		elsif battler.is_special_attacker? && battler.stages[:SPECIAL_ATTACK] != nil
+			if battler.stages[:SPECIAL_ATTACK] > 0
+				switch = false
+			end
+		end
 	end
 	next switch
 end
 
-PBAI::SwitchHandler.add do |score,ai,battler,target|
-	if battler.setup?
-		if battler.is_physical_attacker? && battler.stages[:ATTACK] != nil
-			if battler.stages[:ATTACK] > 0
-				$switch_flags[:switch] = 2000
-			end
-		elsif battler.is_special_attacker? && battler.stages[:SPECIAL_ATTACK] != nil
-			if battler.stages[:SPECIAL_ATTACK] > 0
-				$switch_flags[:switch] = 2000
-			end
-		end
-	end
-	next score
-end
 
 
-
-PBAI::SwitchHandler.add do |score,ai,battler,target|
+PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	next if $switch_flags[:switch] == nil
 	switch = $switch_flags[:switch]
-	score -= switch
-	PBAI.log("- #{switch}")
-	next score
+	next switch
 end
-#curr_score = scores.find { |e| e[2] == self }[0]
-      # If the current battler is not very effective offensively in any of its types,
-      # then we see if there is a battler that is super effective in at least one of its types.
- #     if curr_score < 1.0 && !self.trapped?
-  #      availscores = scores.select { |e|!e[2].fainted?}
-   #     while availscores.size > 0
-    #      score = 0
-     #     hi_off_score, hi_def_score, proj = availscores[0]
-      #    $doubles_switch = proj if $d_switch == 0
-       #   eligible = true
-        # eligible = false if battler.battler != nil # Already active
-         # eligible = false if battler.pokemon.egg? # Egg
-          #self.opposing_side.battlers.each do |target|
-           # next if target.nil?
-            #score = 0
-            #score = PBAI::SwitchHandler.trigger_general(score,@ai,self,target)
- #           target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
-  #          if target_moves != nil
-   #           for i in target_moves
-    #            score = PBAI::SwitchHandler.trigger_type(i.type,score,@ai,self,target)
-     #         end
-      #      end
-       #     PBAI.log("\n#{battler.pokemon.name} => #{score}")
-        #  end
-         # eligible = false if proj == $doubles_switch && $d_switch == 1
-          #eligible = false if score < 300
- #         if eligible #&& hi_off_score >= 1.0
-  #          # Better choice than the current battler, so let's switch to this pokemon
-   #         index = party.index(battler.pokemon)
-    #        return [score, index]
-     #     end
-      #    availscores.delete_at(0)
-       # end
-     # end

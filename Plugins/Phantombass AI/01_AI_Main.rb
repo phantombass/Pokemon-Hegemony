@@ -838,6 +838,7 @@ class PBAI
     end
     def set_up_score
       boosts = []
+      score = 0
       GameData::Stat.each_battle { |s| 
         if self.battler.stages[s] != nil
           boosts.push(self.battler.stages[s])
@@ -845,7 +846,10 @@ class PBAI
           boosts.push(0)
         end
       }
-      return boosts
+      for i in boosts
+        score += i
+      end
+      return score
     end
     def ai_should_switch?
       switch = nil
@@ -869,7 +873,13 @@ class PBAI
       # If we should switch due to effects in battle
       PBAI.log("\nShould switch = #{switch}")
       if switch == true
-        availscores = scores.select { |e| !e[1].fainted? && e[0] > 0}
+        for i in scores
+          next if i[1] != self
+          if i[0] >= 0 && self.turnCount == 0
+            return [0,0]
+          end
+        end
+        availscores = scores.select { |e| !e[1].fainted? }
         # Switch to a dark type instead of the best type matchup
         #if $switch_flags[:dark]
         #  availscores = availscores.select { |e| e[1].pokemon.types.include?(:DARK) }
