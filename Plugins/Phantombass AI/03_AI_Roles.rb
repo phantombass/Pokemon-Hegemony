@@ -156,3 +156,9 @@ GameData::Role.register({
   :id_number    => 21,
   :name         => _INTL("Stat Pass")
 })
+
+GameData::Role.register({
+  :id           => :WEATHERTERRAIN,
+  :id_number    => 22,
+  :name         => _INTL("Weather/Terrain Setter")
+})
