@@ -3988,133 +3988,143 @@ class PokeBattle_Move_516 < PokeBattle_Move
     if target != nil && !target.fainted?
       type1 = target.type1
       type2 = target.type2
-      case type1
-      when :NORMAL
-        case type2
-        when :GHOST, :PSYCHIC, :FAIRY, :POISON, :DARK, :ROCK, type1; $appliance = 13
-        when :FLYING, :DRAGON; $appliance = 10
-        when :GROUND, :WATER, :ELECTRIC; $appliance = 12
-        when :BUG,:COSMIC,:ICE,:GRASS,:STEEL; $appliance = 8
-        when :FIGHTING; $appliance = 11
-        when :FIRE; $appliance = 9
+      type3 = target.effects[PBEffects::Type3]
+      if type3 != nil
+        case type3
+        when :DARK, :COSMIC; $appliance = 8
+        when :GHOST; $appliance = 13
         end
-      when :FIGHTING
-        case type2
-        when :ROCK, :ELECTRIC; $appliance = 12
-        when :STEEL, :ICE, :COSMIC; $appliance = 8
-        when :FIRE; $appliance = 9
-        when :NORMAL,:FIGHTING,:FLYING,:GROUND,:BUG,:GHOST,:WATER,:GRASS,:PSYCHIC,:DRAGON,:DARK,:FAIRY,:POISON; $appliance = 11
-        end
-      when :FLYING
-        case type2
-        when :GROUND,:DRAGON,:GRASS,:ELECTRIC,:PSYCHIC,:NORMAL,:GHOST,:DARK, type1; $appliance = 10
-        when :FIRE,:WATER; $appliance = 9
-        when :FIGHTING; $appliance = 11
-        when :STEEL,:BUG,:COSMIC; $appliance = 8
-        when :POISON,:FAIRY,:ICE,:ROCK; $appliance = 13
-        end
-      when :ROCK
-        case type2
-        when :ICE, :DARK, :FLYING, :BUG, :PSYCHIC, :FAIRY, :POISON, :NORMAL, :GRASS, :DRAGON, :GHOST, type1; $appliance = 13
-        when :GROUND, :WATER, :ELECTRIC, :COSMIC; $appliance = 12
-        when :STEEL, :FIGHTING, :FIRE; $appliance = 9
-        end
-      when :GROUND
-        case type2
-        when :WATER,:ELECTRIC,:COSMIC; $appliance = 12
-        when :DRAGON, :FLYING, :GRASS; $appliance = 10
-        when :NORMAL,:FIGHTING,:POISON,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY,:ROCK, type1; $appliance = 9
-        end
-      when :POISON
-        case type2
-        when :DARK, :PSYCHIC, :ELECTRIC, :ROCK,:GHOST,:FAIRY,type1,:NORMAL; $appliance = 13
-        when :BUG, :ICE,:COSMIC,:GRASS,:STEEL; $appliance = 8
-        when :FLYING, :DRAGON; $appliance = 10
-        when :FIRE,:GROUND,:WATER; $appliance = 9
-        when :FIGHTING; $appliance = 11
-        end
-      when :BUG
-        case type2
-        when type1, :NORMAL, :GRASS, :FIGHTING,:POISON,:DARK,:GHOST,:DRAGON,:FAIRY,:FLYING,:WATER; $appliance = 11
-        when :STEEL, :COSMIC,:ICE,:PSYCHIC,:ELECTRIC; $appliance = 8
-        when :ROCK,:FIRE,:GROUND; $appliance = 9
-        end
-      when :GHOST
-        case type2
-        when :FIGHTING; $appliance = 11
-        when :GROUND,:FIRE,:WATER; $appliance = 9
-        when :BUG,:COSMIC,:STEEL,:ICE,:GRASS; $appliance = 8
-        when :NORMAL,:FLYING,:POISON,:FAIRY,:ROCK,:ELECTRIC,:PSYCHIC,:DRAGON,:DARK, type1; $appliance = 13
-        end
-      when :STEEL
-        case type2
-        when :WATER,:FIRE,:ROCK,:GROUND; $appliance = 9
-        when :DRAGON,:DARK,:NORMAL,:FLYING,:POISON,:BUG,:GHOST,:STEEL,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:FAIRY,:COSMIC, type1; $appliance = 8
-        end
-      when :GRASS
-        case type2
-        when :STEEL, :COSMIC, :ICE, :FAIRY, :PSYCHIC; $appliance = 8
-        when :DRAGON, :GROUND, :FLYING, :ELECTRIC; $appliance = 10
-        when :ROCK; $appliance = 13
-        when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :WATER, type1,:DARK; $appliance = 11
-        end
-      when :FIRE
-        case type2
-        when :GRASS; $appliance = 11
-        when :COSMIC; $appliance = 8
-        when :NORMAL,:FLYING,:ELECTRIC,:DRAGON,:POISON,:GROUND,:ROCK,:WATER,:BUG,:GHOST,:STEEL,:PSYCHIC,:ICE,:DARK,:FAIRY,:FIGHTING, type1; $appliance = 9
-        end
-      when :WATER
-        case type2
-        when :FIRE,:FLYING,:POISON,:DRAGON,:STEEL; $appliance = 9
-        when :GRASS,:BUG; $appliance = 11
-        when :ICE; $appliance = 10
-        when :NORMAL,:FIGHTING,:PSYCHIC,:ELECTRIC,:DARK,:FAIRY,:COSMIC, type1,:GHOST,:GROUND,:ROCK; $appliance = 12
-        end
-      when :ELECTRIC
-        case type2
-        when :FLYING,:GRASS,:GROUND,:DRAGON; $appliance = 10
-        when :WATER,:ROCK,:GHOST,:PSYCHIC,type1,:DARK,:NORMAL,:FAIRY,:FIGHTING; $appliance = 12
-        when :BUG,:ICE,:STEEL,:COSMIC,:POISON; $appliance = 8
-        when :FIRE; $appliance = 9
-        end
-      when :ICE
-        case type2
-        when :ROCK,:GROUND,:FIRE; $appliance = 9
-        when :WATER; $appliance = 10
-        when :GRASS, :BUG, :STEEL, :COSMIC, :FAIRY, type1, :NORMAL,:GHOST,:PSYCHIC,:FIGHTING,:DARK,:DRAGON,:FLYING,:POISON,:ELECTRIC; $appliance = 8
-        end
-      when :PSYCHIC
-        case type2
-        when :FIGHTING,:GRASS,:BUG; $appliance = 11
-        when :FIRE,:STEEL,:ICE,:COSMIC; $appliance = 9
-        when :GROUND; $appliance = 12
-        when :DRAGON; $appliance = 10
-        when :NORMAL,:DARK,:FAIRY,:POISON,:ROCK,:GHOST,:ELECTRIC,:FLYING,:WATER, type1; $appliance = 13
-        end
-      when :DRAGON
-        case type2
-        when :FIGHTING; $appliance = 11
-        when :FIRE,:ICE,:STEEL,:ROCK,:WATER; $appliance = 9
-        when :NORMAL,:DARK,:PSYCHIC,:GROUND,:FLYING,:GRASS,:POISON,:BUG,:GHOST,:ELECTRIC,type1,:FAIRY,:COSMIC; $appliance = 10
-        end
-      when :DARK
-        case type2
-        when :NORMAL,:FLYING,:GHOST,:DRAGON,:FAIRY,:POISON,:PSYCHIC,:ROCK,type1; $appliance = 13
-        when :GRASS,:FIRE,:STEEL,:ICE,:COSMIC,:BUG; $appliance = 8
-        when :FIGHTING; $appliance = 11
-        when :GROUND,:WATER,:ELECTRIC; $appliance = 12
-        end
-      when :FAIRY
-        case type2
-        when :FIRE,:COSMIC,:STEEL; $appliance = 8
-        when :NORMAL,:FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:WATER,:GRASS,:ICE,:ELECTRIC,:DRAGON,:DARK,:ROCK,:PSYCHIC,:GHOST, type1; $appliance = 13
-        end
-      when :COSMIC
-        case type2
-        when :WATER,:ROCK,:GROUND; $appliance = 12
-        when :FIGHTING; $appliance = 11
-        when :NORMAL,:ICE,:GRASS,:BUG,:STEEL,:FAIRY,:GHOST,:POISON,:FLYING,:FIRE,:ELECTRIC,:PSYCHIC,:DRAGON,type1; $appliance = 8
+      else
+        case type1
+        when :NORMAL
+          case type2
+          when :GHOST, :PSYCHIC, :FAIRY, :POISON, :DARK, :ROCK, type1; $appliance = 13
+          when :FLYING, :DRAGON; $appliance = 10
+          when :GROUND, :WATER, :ELECTRIC; $appliance = 12
+          when :BUG,:COSMIC,:ICE,:GRASS,:STEEL; $appliance = 8
+          when :FIGHTING; $appliance = 11
+          when :FIRE; $appliance = 9
+          end
+        when :FIGHTING
+          case type2
+          when :ROCK, :ELECTRIC; $appliance = 12
+          when :STEEL, :ICE, :COSMIC; $appliance = 8
+          when :FIRE; $appliance = 9
+          when :NORMAL,:FIGHTING,:FLYING,:GROUND,:BUG,:GHOST,:WATER,:GRASS,:PSYCHIC,:DRAGON,:DARK,:FAIRY,:POISON; $appliance = 11
+          end
+        when :FLYING
+          case type2
+          when :GROUND,:DRAGON,:GRASS,:ELECTRIC,:PSYCHIC,:NORMAL,:GHOST,:DARK, type1; $appliance = 10
+          when :FIRE,:WATER; $appliance = 9
+          when :FIGHTING; $appliance = 11
+          when :STEEL,:BUG,:COSMIC; $appliance = 8
+          when :POISON,:FAIRY,:ICE,:ROCK; $appliance = 13
+          end
+        when :ROCK
+          case type2
+          when :ICE, :DARK, :FLYING, :BUG, :PSYCHIC, :FAIRY, :POISON, :NORMAL, :GRASS, :DRAGON, :GHOST, type1; $appliance = 13
+          when :GROUND, :WATER, :ELECTRIC, :COSMIC; $appliance = 12
+          when :STEEL, :FIGHTING, :FIRE; $appliance = 9
+          end
+        when :GROUND
+          case type2
+          when :WATER,:ELECTRIC,:COSMIC; $appliance = 12
+          when :DRAGON, :FLYING, :GRASS; $appliance = 10
+          when :NORMAL,:FIGHTING,:POISON,:BUG,:GHOST,:STEEL,:FIRE,:PSYCHIC,:ICE,:DARK,:FAIRY,:ROCK, type1; $appliance = 9
+          end
+        when :POISON
+          case type2
+          when :DARK, :PSYCHIC, :ELECTRIC, :ROCK,:GHOST,:FAIRY,type1,:NORMAL; $appliance = 13
+          when :BUG, :ICE,:COSMIC,:GRASS,:STEEL; $appliance = 8
+          when :FLYING, :DRAGON; $appliance = 10
+          when :FIRE,:GROUND,:WATER; $appliance = 9
+          when :FIGHTING; $appliance = 11
+          end
+        when :BUG
+          case type2
+          when type1, :NORMAL, :GRASS, :FIGHTING,:POISON,:DARK,:GHOST,:DRAGON,:FAIRY,:FLYING,:WATER; $appliance = 11
+          when :STEEL, :COSMIC,:ICE,:PSYCHIC,:ELECTRIC; $appliance = 8
+          when :ROCK,:FIRE,:GROUND; $appliance = 9
+          end
+        when :GHOST
+          case type2
+          when :FIGHTING; $appliance = 11
+          when :GROUND,:FIRE,:WATER; $appliance = 9
+          when :BUG,:COSMIC,:STEEL,:ICE,:GRASS; $appliance = 8
+          when :NORMAL,:FLYING,:POISON,:FAIRY,:ROCK,:ELECTRIC,:PSYCHIC,:DRAGON,:DARK, type1; $appliance = 13
+          end
+        when :STEEL
+          case type2
+          when :WATER,:FIRE,:ROCK,:GROUND; $appliance = 9
+          when :DRAGON,:DARK,:NORMAL,:FLYING,:POISON,:BUG,:GHOST,:STEEL,:GRASS,:ELECTRIC,:PSYCHIC,:ICE,:FAIRY,:COSMIC, type1; $appliance = 8
+          end
+        when :GRASS
+          case type2
+          when :STEEL, :COSMIC, :ICE, :FAIRY, :PSYCHIC; $appliance = 8
+          when :DRAGON, :GROUND, :FLYING, :ELECTRIC; $appliance = 10
+          when :ROCK; $appliance = 13
+          when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :WATER, type1,:DARK; $appliance = 11
+          end
+        when :FIRE
+          case type2
+          when :GRASS; $appliance = 11
+          when :COSMIC; $appliance = 8
+          when :NORMAL,:FLYING,:ELECTRIC,:DRAGON,:POISON,:GROUND,:ROCK,:WATER,:BUG,:GHOST,:STEEL,:PSYCHIC,:ICE,:DARK,:FAIRY,:FIGHTING, type1; $appliance = 9
+          end
+        when :WATER
+          case type2
+          when :FIRE,:FLYING,:POISON,:DRAGON,:STEEL; $appliance = 9
+          when :GRASS,:BUG; $appliance = 11
+          when :ICE; $appliance = 10
+          when :NORMAL,:FIGHTING,:PSYCHIC,:ELECTRIC,:DARK,:FAIRY,:COSMIC, type1,:GHOST,:GROUND,:ROCK; $appliance = 12
+          end
+        when :ELECTRIC
+          case type2
+          when :FLYING,:GRASS,:GROUND,:DRAGON; $appliance = 10
+          when :WATER,:ROCK,:GHOST,:PSYCHIC,type1,:DARK,:NORMAL,:FAIRY,:FIGHTING; $appliance = 12
+          when :BUG,:ICE,:STEEL,:COSMIC,:POISON; $appliance = 8
+          when :FIRE; $appliance = 9
+          end
+        when :ICE
+          case type2
+          when :ROCK,:GROUND,:FIRE; $appliance = 9
+          when :WATER; $appliance = 10
+          when :DRAGON, :FAIRY, :PSYCHIC, :POISON, :ROCK, type1; $appliance = 13
+          when :GRASS, :BUG, :STEEL, :COSMIC, :NORMAL,:GHOST,:FIGHTING,:DARK,:FLYING,:ELECTRIC; $appliance = 8
+          end
+        when :PSYCHIC
+          case type2
+          when :FIGHTING,:GRASS,:BUG; $appliance = 11
+          when :FIRE,:STEEL,:ICE,:COSMIC; $appliance = 9
+          when :GROUND; $appliance = 12
+          when :DRAGON; $appliance = 10
+          when :NORMAL,:DARK,:FAIRY,:POISON,:ROCK,:GHOST,:ELECTRIC,:FLYING,:WATER, type1; $appliance = 13
+          end
+        when :DRAGON
+          case type2
+          when :FIGHTING; $appliance = 11
+          when :ICE; $appliance = 13
+          when :FIRE,:STEEL,:ROCK,:WATER; $appliance = 9
+          when :NORMAL,:DARK,:PSYCHIC,:GROUND,:FLYING,:GRASS,:POISON,:BUG,:GHOST,:ELECTRIC,type1,:FAIRY,:COSMIC; $appliance = 10
+          end
+        when :DARK
+          case type2
+          when :NORMAL,:FLYING,:GHOST,:DRAGON,:FAIRY,:POISON,:PSYCHIC,:ROCK,type1; $appliance = 13
+          when :GRASS,:FIRE,:STEEL,:ICE,:COSMIC,:BUG; $appliance = 8
+          when :FIGHTING; $appliance = 11
+          when :GROUND,:WATER,:ELECTRIC; $appliance = 12
+          end
+        when :FAIRY
+          case type2
+          when :FIRE,:COSMIC,:STEEL; $appliance = 8
+          when :NORMAL,:FIGHTING,:FLYING,:POISON,:GROUND,:BUG,:WATER,:GRASS,:ICE,:ELECTRIC,:DRAGON,:DARK,:ROCK,:PSYCHIC,:GHOST, type1; $appliance = 13
+          end
+        when :COSMIC
+          case type2
+          when :WATER,:ROCK,:GROUND; $appliance = 12
+          when :FIGHTING; $appliance = 11
+          when :NORMAL,:ICE,:GRASS,:BUG,:STEEL,:FAIRY,:GHOST,:POISON,:FLYING,:FIRE,:ELECTRIC,:PSYCHIC,:DRAGON,type1; $appliance = 8
+          end
         end
       end
       case $appliance
