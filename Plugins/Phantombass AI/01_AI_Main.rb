@@ -992,7 +992,7 @@ class PBAI
       # we won't choose a Ground move, for instance.
       if target.side == @side
         # The target is an ally
-        return nil if move.function != "0DF" # Heal Pulse
+        return nil if !["0DF","0C1"].include?(move.function) # Heal Pulse
         # Move score calculation will only continue if the target is not an ally,
         # or if it is an ally, then the move must be Heal Pulse (0DF).
       end
