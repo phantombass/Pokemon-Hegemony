@@ -5829,7 +5829,7 @@ end
 
 class PokeBattle_Move_522 < PokeBattle_Move
   def canSetSpikes?(user)
-    return false if user.pbOpposingSide.effects[PBEffects::Spikes] < 3
+    return true if user.pbOpposingSide.effects[PBEffects::Spikes] < 3
     return false if @battle.pbWeather == :Windy
     return true
   end
@@ -5837,7 +5837,7 @@ class PokeBattle_Move_522 < PokeBattle_Move
     if canSetSpikes?(user)
       @battle.scene.pbAnimation(GameData::Move.get(:SPIKES).id,user,user)
       user.pbOpposingSide.effects[PBEffects::Spikes] += 1
-      @battle.pbDisplay(_INTL("Pointed stones float in the air around {1}!",user.pbOpposingTeam(true)))
+      @battle.pbDisplay(_INTL("Spikes were scattered around {1}'s feet!",user.pbOpposingTeam(true)))
     end
   end
 end
