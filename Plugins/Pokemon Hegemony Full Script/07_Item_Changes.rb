@@ -85,6 +85,23 @@ ItemHandlers::UseOnPokemon.add(:REVIVALHERB,proc { |item,pkmn,scene|
   next true
 })
 
+def give_ability_orb
+  item_list = [
+      :INTIMIDATEORB,
+      :SAPSIPPERORB,
+      :FLASHFIREORB,
+      :LEVITATEORB,
+      :ILLUMINATEORB,
+      :FILTERORB,
+      :WATERABSORBORB,
+      :LIGHTNINGRODORB,
+      :MEDUSOIDORB
+    ]
+  gift = rand(item_list.length)
+  pbReceiveItem(gift,1)
+  vSS(@event_id,"A")
+end
+
 class PokeBattle_Battler
   def hasActiveItem?(check_item, ignore_fainted = false)
     return false if !itemActive?(ignore_fainted)
@@ -104,7 +121,10 @@ class PokeBattle_Battler
       :WATERABSORBORB,
       :DIMENSIONBLOCKORB,
       :EARTHEATERORB,
-      :LIGHTNINGRODORB
+      :LIGHTNINGRODORB,
+      :SCALERORB,
+      :UNSHAKENORB,
+      :MEDUSOIDORB
     ]
     return item_list.include?(item.id)
   end
