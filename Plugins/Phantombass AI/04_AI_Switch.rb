@@ -545,8 +545,8 @@ end
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	boosts = 0
 	GameData::Stat.each_battle { |s| boosts += target.battler.stages[s] if target.battler.stages[s] != nil}
-	score += (boosts * 10)
-	PBAI.log("+ #{boosts*10}")
+	#score += (boosts * 10)
+	#PBAI.log("+ #{boosts*10}")
 	$learned_flags[:has_setup].push(target) if boosts >= 1
 	next score
 end
