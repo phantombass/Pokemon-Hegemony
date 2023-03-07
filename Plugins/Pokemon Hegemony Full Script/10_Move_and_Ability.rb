@@ -3990,9 +3990,16 @@ class PokeBattle_Move_516 < PokeBattle_Move
       type2 = target.type2
       type3 = target.effects[PBEffects::Type3]
       if type3 != nil
-        case type3
-        when :DARK, :COSMIC; $appliance = 8
-        when :GHOST; $appliance = 13
+        if type3 == :COSMIC
+          $appliance = 8
+        elsif type3 == :DARK
+          if type2 == :DRAGON
+            $appliance = 10
+          else
+            $appliance = 8
+          end
+        elsif type3 ==  :GHOST
+          $appliance = 13
         end
       else
         case type1
@@ -4063,7 +4070,7 @@ class PokeBattle_Move_516 < PokeBattle_Move
           when :STEEL, :COSMIC, :ICE, :FAIRY, :PSYCHIC; $appliance = 8
           when :DRAGON, :GROUND, :FLYING, :ELECTRIC; $appliance = 10
           when :ROCK; $appliance = 13
-          when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :WATER, type1,:DARK; $appliance = 11
+          when :NORMAL, :FIGHTING, :POISON, :BUG, :GHOST, :WATER, type1,:DARK,:FIRE; $appliance = 11
           end
         when :FIRE
           case type2
