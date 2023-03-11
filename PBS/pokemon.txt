@@ -7008,7 +7008,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 32
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Evolutions = DUDUNSPARCE,Item,COSMICSTONE
+Evolutions = DUDUNSPARCE,HasMove,HYPERDRILL
 #-------------------------------
 [207]
 Name = Gligar
@@ -35790,7 +35790,7 @@ Type1 = NORMAL
 Type2 = COSMIC
 BaseStats = 125,100,80,55,85,75
 GenderRate = Female50Percent
-GrowthRate = Parabolic
+GrowthRate = Medium
 BaseExp = 182
 EffortPoints = 2,0,0,0,0,0
 Rareness = 45
