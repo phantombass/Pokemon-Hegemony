@@ -98,8 +98,9 @@ def give_ability_orb
       :MEDUSOIDORB
     ]
   gift = rand(item_list.length)
-  pbReceiveItem(gift,1)
-  vSS(@event_id,"A")
+  orb = item_list[gift]
+  pbReceiveItem(orb,1)
+  vSS(@event_id,"B")
 end
 
 class PokeBattle_Battler
