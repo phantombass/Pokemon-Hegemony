@@ -601,10 +601,7 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
   tspikes = battler.own_side.effects[PBEffects::ToxicSpikes] > 0 ? battler.own_side.effects[PBEffects::ToxicSpikes] : 0
   comet = battler.own_side.effects[PBEffects::CometShards] ? 1 : 0
   hazard_score = (rocks*12.5) + (spikes*12.5) + (comet*12.5) + (tspikes*6.25)
-  if hazard_score >= ((battler.hp/battler.totalhp)*100).round
-  	score -= 500
-  	PBAI.log("- 500")
-  end
+
   #Switch in to absorb hazards
   if tspikes > 0 && (battler.pbHasType?(:POISON) && !battler.airborne?) || battler.hasActiveAbility?(:GALEFORCE)
   	score += 400
