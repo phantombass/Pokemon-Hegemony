@@ -65,7 +65,7 @@ class PBAI
       e = 0 if e < weights.sum/2 && test > 0
       e = 0 if e < weights.sum*0.3 && lower_test > 0
       diff = e - avg
-      next [0, ((e - diff * factor) * 100).round].max
+      next [0, ((e - diff * factor) * 100).floor].max
     end
     return weighted_rand(newweights)
   end
@@ -249,6 +249,14 @@ class PBAI
     end
     def opposing_side
       return @side.opposing_side
+    end
+
+    def damage_taken
+      return @damage_taken
+    end
+
+    def damage_dealt
+      return @damage_dealt
     end
 
     def index
@@ -567,8 +575,8 @@ class PBAI
         #    str += "\n"
          # end
 
-       # elsif i == -1
-          #str += "STRUGGLE: 100 percent"
+        elsif i == -1
+          str += "STRUGGLE: 100 percent"
         else
           move_index, score, target, target_name = e
           name = @battler.moves[move_index].name
@@ -1052,7 +1060,7 @@ class PBAI
       end
       # Take 10% of the final score if the move is disabled and thus unusable
       if @battler.effects[PBEffects::DisableMove] == move.id
-        score *= 0
+        score = 0
         PBAI.log("* 0 for the move being disabled")
       end
       PBAI.log("= #{score}")
@@ -1088,10 +1096,10 @@ class PBAI
            "098", "099", "09A", "0F7", "113"
         baseDmg = move.pbBaseDamage(baseDmg,@battler,target)
       when "086"   # Acrobatics
-        baseDmg *= 2 if !self.item || self.hasActiveItem?(:FLYINGGEM)
+        baseDmg *= 2 if !@battler.item || @battler.hasActiveItem?(:FLYINGGEM)
       when "08D"   # Gyro Ball
         targetSpeed = target.effective_speed
-        userSpeed = self.effective_speed
+        userSpeed = @battler.effective_speed
         baseDmg = [[(25*targetSpeed/userSpeed).floor,150].min,1].max
       when "094"   # Present
         baseDmg = 50
@@ -1108,7 +1116,7 @@ class PBAI
       when "0BF"   # Triple Kick
         baseDmg *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
       when "0C0"   # Fury Attack
-        if self.hasActiveAbility?(:SKILLLINK)
+        if @battler.hasActiveAbility?(:SKILLLINK)
           baseDmg *= 5
         else
           baseDmg = (baseDmg * 31 / 10).floor    # Average damage dealt
