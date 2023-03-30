@@ -1099,7 +1099,7 @@ class PBAI
         baseDmg *= 2 if !@battler.item || @battler.hasActiveItem?(:FLYINGGEM)
       when "08D"   # Gyro Ball
         targetSpeed = target.effective_speed
-        userSpeed = @battler.effective_speed
+        userSpeed = user.effective_speed
         baseDmg = [[(25*targetSpeed/userSpeed).floor,150].min,1].max
       when "094"   # Present
         baseDmg = 50
