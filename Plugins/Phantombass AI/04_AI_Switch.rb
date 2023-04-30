@@ -379,7 +379,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	party = ai.battle.pbParty(battler.index)
 	if battler.status != :NONE
-		if party.any? {|pkmn| pkmn.role.id == :CLERIC && battler.role.id != :CLERIC}
+		if party.any? {|pkmn| pkmn.role.id == :CLERIC && battler.role != :CLERIC}
     	switch = true
     	$switch_flags[:need_cleric] = true
     end
@@ -520,16 +520,16 @@ end
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
   battler.opposing_side.battlers.each do |target|
   	next if target.nil?
-  	if target.is_physical_attacker? && battler.role.id == :PHYSICALWALL
+  	if target.is_physical_attacker? && battler.role == :PHYSICALWALL
   		score += 200
   		PBAI.log("+ 200")
   	end
-  	if target.is_special_attacker? && battler.role.id == :SPECIALWALL
+  	if target.is_special_attacker? && battler.role == :SPECIALWALL
   		score += 200
   		PBAI.log("+ 200")
   	end
-  	if target.defensive? && ![:PHYSICALWALL,:SPECIALWALL].include?(battler.role.id)
-  		if [:DEFENSIVEPIVOT,:CLERIC,:TOXICSTALLER,:HAZARDLEAD].include?(battler.role.id)
+  	if target.defensive? && ![:PHYSICALWALL,:SPECIALWALL].include?(battler.role)
+  		if [:DEFENSIVEPIVOT,:CLERIC,:TOXICSTALLER,:LEAD].include?(battler.role)
   			score += 150
   			PBAI.log("+ 150")
   		else
@@ -545,8 +545,9 @@ end
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	boosts = 0
 	GameData::Stat.each_battle { |s| boosts += target.battler.stages[s] if target.battler.stages[s] != nil}
-	#score += (boosts * 10)
-	#PBAI.log("+ #{boosts*10}")
+	plus = boosts * 10
+	score += plus
+	PBAI.log("+ #{plus} to prevent setup")
 	$learned_flags[:has_setup].push(target) if boosts >= 1
 	next score
 end
@@ -585,7 +586,7 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 		score += 200 if battler.setup?
 		PBAI.log("+ 200")
 	end
-	if $switch_flags[:need_cleric] && battler.role.id == :CLERIC
+	if $switch_flags[:need_cleric] && battler.role == :CLERIC
 		score += 400
 		PBAI.log("+ 400")
 	end

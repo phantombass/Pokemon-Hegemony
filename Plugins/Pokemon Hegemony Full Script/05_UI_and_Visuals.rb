@@ -1342,41 +1342,46 @@ class BattleSceneRoom
   end
 
   def setTerrain
-    for ter in [["Electric",[:Electric]],["Grassy",[:Grassy]],["Misty",[:Misty]],["Psychic",[:Psychic]],["Poison",[:Poison]]]
-      proceed = false
-      for cond in (ter[1].is_a?(Array) ? ter[1] : [ter[1]])
-        proceed = true if @battle.field.terrain == cond
+    if $gym_gimmick != true
+      for ter in [["Electric",[:Electric]],["Grassy",[:Grassy]],["Misty",[:Misty]],["Psychic",[:Psychic]],["Poison",[:Poison]]]
+        proceed = false
+        for cond in (ter[1].is_a?(Array) ? ter[1] : [ter[1]])
+          proceed = true if @battle.field.terrain == cond
+        end
+        eval("delete" + ter[0]) unless proceed
+        eval("draw"  + ter[0]) if proceed
       end
-      eval("delete" + ter[0]) unless proceed
-      eval("draw"  + ter[0]) if proceed
     end
   end
 
   def updateTerrain
-    self.setTerrain
-    for j in 0...2
-      next if !@sprites["t_gr#{j}"]
-      @sprites["t_gr#{j}"].update
-    end
-    for j in 0...2
-      next if !@sprites["t_misty#{j}"]
-      @sprites["t_misty#{j}"].update
-    end
-    for j in 0...2
-      next if !@sprites["t_tox#{j}"]
-      @sprites["t_tox#{j}"].update
-    end
-    for j in 0...2
-      next if !@sprites["t_ele#{j}"]
-      @sprites["t_ele#{j}"].update
-    end
-    for j in 0...2
-      next if !@sprites["t_psy#{j}"]
-      @sprites["t_psy#{j}"].update
+    if $gym_gimmick != true
+      self.setTerrain
+      for j in 0...2
+        next if !@sprites["t_gr#{j}"]
+        @sprites["t_gr#{j}"].update
+      end
+      for j in 0...2
+        next if !@sprites["t_misty#{j}"]
+        @sprites["t_misty#{j}"].update
+      end
+      for j in 0...2
+        next if !@sprites["t_tox#{j}"]
+        @sprites["t_tox#{j}"].update
+      end
+      for j in 0...2
+        next if !@sprites["t_ele#{j}"]
+        @sprites["t_ele#{j}"].update
+      end
+      for j in 0...2
+        next if !@sprites["t_psy#{j}"]
+        @sprites["t_psy#{j}"].update
+      end
     end
   end
 
   def drawElectric
+    if $gym_gimmick != true
     for j in 0...2
       next if @sprites["t_ele#{j}"]
       @sprites["t_ele#{j}"] = ScrollingSprite.new(@viewport)
@@ -1388,7 +1393,9 @@ class BattleSceneRoom
       @sprites["t_ele#{j}"].direction = j == 0 ? 1 : -1
     end
   end
+  end
   def drawGrassy
+    if $gym_gimmick != true
     for j in 0...2
       next if @sprites["t_gr#{j}"]
       @sprites["t_gr#{j}"] = ScrollingSprite.new(@viewport)
@@ -1400,7 +1407,9 @@ class BattleSceneRoom
       @sprites["t_gr#{j}"].direction = j == 0 ? 1 : -1
     end
   end
+  end
   def drawMisty
+    if $gym_gimmick != true
     for j in 0...2
       next if @sprites["t_misty#{j}"]
       @sprites["t_misty#{j}"] = ScrollingSprite.new(@viewport)
@@ -1413,7 +1422,9 @@ class BattleSceneRoom
       @sprites["t_misty#{j}"].direction = j == 0 ? 1 : -1
     end
   end
+  end
   def drawPsychic
+    if $gym_gimmick != true
     for j in 0...2
       next if @sprites["t_psy#{j}"]
       @sprites["t_psy#{j}"] = ScrollingSprite.new(@viewport)
@@ -1425,7 +1436,9 @@ class BattleSceneRoom
       @sprites["t_psy#{j}"].direction = j == 0 ? 1 : -1
     end
   end
+  end
   def drawPoison
+    if $gym_gimmick != true
     for j in 0...2
       next if @sprites["t_tox#{j}"]
       @sprites["t_tox#{j}"] = ScrollingSprite.new(@viewport)
@@ -1437,6 +1450,7 @@ class BattleSceneRoom
       @sprites["t_tox#{j}"].speed = 1
       @sprites["t_tox#{j}"].direction = j == 0 ? 1 : -1
     end
+  end
   end
   def deleteElectric
     for j in 0...2

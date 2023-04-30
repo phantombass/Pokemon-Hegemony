@@ -498,6 +498,7 @@ def pbTrainerBattle(trainerID, trainerName, endSpeech=nil,
   setBattleRule("outcomeVar",outcomeVar) if outcomeVar!=1
   setBattleRule("canLose") if canLose
   setBattleRule("double") if doubleBattle || $PokemonTemp.waitingTrainer
+  @battle.doublebattle = true if doubleBattle
   # Perform the battle
   if $PokemonTemp.waitingTrainer
     decision = pbTrainerBattleCore($PokemonTemp.waitingTrainer[0],
@@ -522,6 +523,7 @@ def pbDoubleTrainerBattle(trainerID1, trainerName1, trainerPartyID1, endSpeech1,
   setBattleRule("outcomeVar",outcomeVar) if outcomeVar!=1
   setBattleRule("canLose") if canLose
   setBattleRule("double")
+  @battle.duoblebattle = true
   # Perform the battle
   decision = pbTrainerBattleCore(
      [trainerID1,trainerName1,trainerPartyID1,endSpeech1],

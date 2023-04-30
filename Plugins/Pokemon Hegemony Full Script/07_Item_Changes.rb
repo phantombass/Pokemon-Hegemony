@@ -1034,6 +1034,16 @@ BattleHandlers::WeatherExtenderItem.add(:WEATHERROCK,
   }
 )
 
+BattleHandlers::TerrainStatBoostItem.add(:TOXICSEED,
+  proc { |item,battler,battle|
+    next false if battle.field.terrain != :Poison
+    next false if !battler.pbCanRaiseStatStage?(:SPEED,battler)
+    itemName = GameData::Item.get(item).name
+    battle.pbCommonAnimation("UseItem",battler)
+    next battler.pbRaiseStatStageByCause(:SPEED,1,battler,itemName)
+  }
+)
+
 ItemHandlers::UseOnPokemon.add(:RARECANDY,proc { |item,pkmn,scene|
   if pkmn.level>=GameData::GrowthRate.max_level || pkmn.shadowPokemon? || (pkmn.level>=LEVEL_CAP[$game_system.level_cap] && $game_switches[Settings::LEVEL_CAP_SWITCH] == true) || (pkmn.fainted? && $game_switches[73])
     scene.pbDisplay(_INTL("It won't have any effect."))
