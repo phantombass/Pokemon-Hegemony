@@ -1,6 +1,7 @@
 class PokeBattle_Battler
   # Fundamental to this object
   attr_reader   :battle
+  attr_reader :personalID
   attr_accessor :index
   # The Pokémon and its properties
   attr_reader   :pokemon
@@ -556,6 +557,9 @@ class PokeBattle_Battler
 
   def takesIndirectDamage?(showMsg=false)
     return false if fainted?
+    if hasActiveAbility?(:TOXICBOOST) && self.status == :POISON
+      return false
+    end
     if hasActiveAbility?(:MAGICGUARD)
       if showMsg
         @battle.pbShowAbilitySplash(self)
@@ -801,5 +805,9 @@ class PokeBattle_Battler
       return @battle.battlers[i] if @battle.battlers[i]
     end
     return @battle.battlers[(@index^1)]
+  end
+
+  def pbOppositeOpposing
+    return @battle.doublebattle ? @battle.battlers[(@index^3)] : @battle.battlers[(@index^1)]
   end
 end

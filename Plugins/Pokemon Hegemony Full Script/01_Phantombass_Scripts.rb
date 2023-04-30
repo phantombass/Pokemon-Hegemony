@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "3.7.3"
+  GAME_VERSION = "4.0.0"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -355,25 +355,27 @@ class PokeBattle_Battle
     return true
   end
   def removeAllHazards
-    if @battlers[0].pbOwnSide.effects[PBEffects::StealthRock] || @battlers[0].pbOpposingSide.effects[PBEffects::StealthRock]
-      @battlers[0].pbOwnSide.effects[PBEffects::StealthRock]      = false
-      @battlers[0].pbOpposingSide.effects[PBEffects::StealthRock] = false
-    end
-    if @battlers[0].pbOwnSide.effects[PBEffects::Spikes]>0 || @battlers[0].pbOpposingSide.effects[PBEffects::Spikes]>0
-      @battlers[0].pbOwnSide.effects[PBEffects::Spikes]      = 0
-      @battlers[0].pbOpposingSide.effects[PBEffects::Spikes] = 0
-    end
-    if @battlers[0].pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || @battlers[0].pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
-      @battlers[0].pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
-      @battlers[0].pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
-    end
-    if @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb] || @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb]
-      @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb]      = false
-      @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb] = false
-    end
-    if @battlers[0].pbOwnSide.effects[PBEffects::CometShards] || @battlers[0].pbOpposingSide.effects[PBEffects::CometShards]
-      @battlers[0].pbOwnSide.effects[PBEffects::CometShards]      = false
-      @battlers[0].pbOpposingSide.effects[PBEffects::CometShards] = false
+    if $gym_weather == false
+      if @battlers[0].pbOwnSide.effects[PBEffects::StealthRock] || @battlers[0].pbOpposingSide.effects[PBEffects::StealthRock]
+        @battlers[0].pbOwnSide.effects[PBEffects::StealthRock]      = false
+        @battlers[0].pbOpposingSide.effects[PBEffects::StealthRock] = false
+      end
+      if @battlers[0].pbOwnSide.effects[PBEffects::Spikes]>0 || @battlers[0].pbOpposingSide.effects[PBEffects::Spikes]>0
+        @battlers[0].pbOwnSide.effects[PBEffects::Spikes]      = 0
+        @battlers[0].pbOpposingSide.effects[PBEffects::Spikes] = 0
+      end
+      if @battlers[0].pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || @battlers[0].pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
+        @battlers[0].pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
+        @battlers[0].pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
+      end
+      if @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb] || @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb]
+        @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb]      = false
+        @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb] = false
+      end
+      if @battlers[0].pbOwnSide.effects[PBEffects::CometShards] || @battlers[0].pbOpposingSide.effects[PBEffects::CometShards]
+        @battlers[0].pbOwnSide.effects[PBEffects::CometShards]      = false
+        @battlers[0].pbOpposingSide.effects[PBEffects::CometShards] = false
+      end
     end
   end
   def poisonAllPokemon
@@ -851,6 +853,7 @@ class PokeBattle_Battle
     @scene.pbStartBattle(self)
     # Show trainers on both sides sending out Pokémon
     pbStartBattleSendOut(sendOuts)
+
     # Weather announcement
     weather_data = GameData::BattleWeather.try_get(@field.weather)
     pbCommonAnimation(weather_data.animation) if weather_data
