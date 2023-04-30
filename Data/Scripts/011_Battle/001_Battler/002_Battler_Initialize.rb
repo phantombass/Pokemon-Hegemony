@@ -41,6 +41,7 @@ class PokeBattle_Battler
     raise _INTL("An egg can't be an active Pokémon.") if pkmn.egg?
     @name         = pkmn.name
     @species      = pkmn.species
+    @personalID   = pkmn.personalID
     @form         = pkmn.form
     @level        = pkmn.level
     @hp           = pkmn.hp

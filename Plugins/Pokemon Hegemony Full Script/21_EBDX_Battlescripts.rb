@@ -1,10 +1,105 @@
 module BattleScripts
+  #============
+  #Mini Bosses
+  #============
+  HELUM = {
+    "turnStart0" => proc do
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:GRASSYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @sprites["battlebg"].reconfigure(:GRASSY, :DISTORTION)
+        @battle.field.terrain = :Grassy
+        @battle.field.terrainDuration = -1
+        $gym_gimmick = true
+        @scene.pbDisplay("The battlefield got permanently grassy!")
+      end
+    end
+  }
+  OGAN = {
+    "turnStart0" => proc do
+      if $game_switches[LvlCap::Expert]
+        $gym_hazard = true
+        @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
+        @scene.pbDisplay("A mysterious force prevents hazard removal!")
+      end
+    end
+  }
+  NEONN = {
+    "turnStart0" => proc do
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:WISH).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.weather = :Starstorm
+        @battle.field.weatherDuration = -1
+        $gym_weather = true
+        @scene.pbDisplay("Stars permanently filled the sky!")
+        @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+      end
+    end
+  }
+
+  NITRO = {
+    "turnStart0" => proc do
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.battlers[1].pbOwnSide.effects[PBEffects::Tailwind] = 1
+        $gym_gimmick = true
+        @scene.pbDisplay("A permanent Tailwind blew in behind Gail's team!")
+      end
+    end
+  }
+
+  KRYPTO = {
+    "turnStart0" => proc do
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.weather = :StrongWinds
+        $gym_weather = true
+        @scene.pbDisplay("A Delta Stream brewed!")
+        @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+      end
+    end
+  }
+
+  CHLOROS = {
+    "turnStart0" => proc do
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @sprites["battlebg"].reconfigure(:GRASSY, :PSYCHIC)
+        @battle.field.terrain = :Psychic
+        @battle.field.terrainDuration = -1
+        @battle.field.effects[PBEffects::TrickRoom] = 1
+        $gym_gimmick = true
+        @scene.pbDisplay("The battlefield got permanently weird!")
+        @scene.pbDisplay("The dimensions were permanently twisted!")
+      end
+    end
+}
+
+  CAPITOL = {
+    "turnStart0" => proc do
+      if $game_switches[LvlCap::Expert]
+          @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
+          @sprites["battlebg"].reconfigure(:GRASSY, :POISON)
+          @battle.field.terrain = :Poison
+          @battle.field.terrainDuration = -1
+          $gym_gimmick = true
+          @scene.pbAnimation(GameData::Move.get(:RAINDANCE).id,@battle.battlers[1],@battle.battlers[1])
+          @battle.field.weather = :AcidRain
+          @battle.field.weatherDuration = -1
+          $gym_weather = true
+          @scene.pbDisplay("The battlefield got permanently toxic!")
+      end
+    end
+  }
+  #============
+  #Gym Leaders
+  #============
   TURNER = {
     "afterLastOpp" => "My last Pokémon. Time to switch up my approach!",
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("Let's see just how prepared you are!")
       if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:GRASSYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @sprites["battlebg"].reconfigure(:GRASSY, :DISTORTION)
         @battle.field.terrain = :Grassy
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -79,6 +174,7 @@ module BattleScripts
       @scene.pbTrainerSpeak("Things are about to get real twisted in here!")
       if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         @battle.field.effects[PBEffects::TrickRoom] = 1
@@ -96,6 +192,7 @@ module BattleScripts
       if $game_switches[LvlCap::Expert]
         if $game_variables[28] < 4
           @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
+          @sprites["battlebg"].reconfigure(:POISON, :DISTORTION)
           @battle.field.terrain = :Poison
           @battle.field.terrainDuration = -1
           $gym_gimmick = true
@@ -118,6 +215,7 @@ module BattleScripts
       @scene.pbTrainerSpeak("I don't plan on losing to some punk.")
       if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -215,6 +313,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("You can't seem to comprehend. I control EVERYTHING.")
       @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
       @battle.field.terrain = :Psychic
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
@@ -276,6 +375,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("YAY! Battle time!")
       @scene.pbAnimation(GameData::Move.get(:ELECTRICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @sprites["battlebg"].reconfigure(:ELECTRIC, :DISTORTION)
       @battle.field.terrain = :Electric
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
@@ -311,6 +411,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("Let's get this show going!")
       @scene.pbAnimation(GameData::Move.get(:MISTYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @sprites["battlebg"].reconfigure(:MISTY, :DISTORTION)
       @battle.field.terrain = :Misty
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
@@ -323,6 +424,7 @@ module BattleScripts
       @scene.pbDisplay("The Harsh Sun is permanent!")
       @scene.pbTrainerSpeak("Why can't you just stay out of our business?!?")
       @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
       @battle.field.terrain = :Psychic
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
@@ -343,6 +445,7 @@ module BattleScripts
   WINSLOWLEAGUE = {
     "turnStart0" => proc do
       @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         @battle.field.effects[PBEffects::TrickRoom] = 1
@@ -391,7 +494,8 @@ module BattleScripts
   }
   VINCENTLEAGUE = {
     "turnStart0" => proc do
-      @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
+      @sprites["battlebg"].reconfigure(:POISON, :DISTORTION)
         @battle.field.terrain = :Poison
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -412,6 +516,7 @@ module BattleScripts
   JOSEPHTERRAIN = {
     "turnStart0" => proc do
       @scene.pbAnimation(GameData::Move.get(:ELECTRICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+      @sprites["battlebg"].reconfigure(:ELECTRIC, :DISTORTION)
         @battle.field.terrain = :Electric
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -419,4 +524,12 @@ module BattleScripts
       @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
     end
   }
+end
+
+module EnviromentEBDX
+  GRASSY = { "base" => "Grassy" }
+  PSYCHIC = { "base" => "Psychic" }
+  MISTY = { "base" => "Misty" }
+  ELECTRIC = { "base" => "Electric" }
+  POISON = { "base" => "Poison" }
 end

@@ -991,3 +991,9 @@
 972,GIMMIGHOULCOIN,Gimmighoul Coin,Gimmighoul Coins,1,5000,"An item that accidentally dropped by a Pokémon. It seems that Gimmighoul treasure and hoard these.",0,0,0,
 973,EARTHEATERORB,Earth Eater Orb,Earth Eater Orbs,1,0,"A glowing orb that gives the holder Earth Eater as a second ability.",0,0,0,
 974,WATERABSORBORB,Water Absorb Orb,Water Absorb Orbs,1,0,"A glowing orb that gives the holder Water Absorb as a second ability.",0,0,0,
+975,TOXICSEED,Toxic Seed,Toxic Seeds,1,4000,"An item to be held by a Pokémon. It boosts Speed on Poison Terrain. It can only be used once.",0,0,0,
+976,WISHINGSTAR,Wishing Star,Wishing Stars,8,0,"A star that holds great power.",0,0,6,
+977,TM135,TM135,TM135s,4,10000,"This move's power doubles when the target is on Electric Terrain.",3,0,0,RISINGVOLTAGE
+978,TM136,TM136,TM136s,4,10000,"This move's power doubles when the target is on Misty Terrain.",3,0,0,ROLLINGFOG
+979,TM137,TM137,TM137s,4,10000,"Power goes up and damages all opposing Pokémon on Psychic Terrain.",3,0,0,EXPANDINGFORCE
+980,TM138,TM138,TM138s,4,10000,"The user utilizes the power of the terrain to attack.",3,0,0,TERRAINPULSE

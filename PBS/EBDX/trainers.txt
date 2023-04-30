@@ -227,6 +227,33 @@ BattleVS         = classicVS
 [GUARD,Admin,2]
 BattleVS         = classicVS
 #-------------------------------
+# Gym Trainer Mini Bosses
+#-------------------------------
+[LASS,Matilda,4]
+BattleVS         = classicVS
+BattleScript	 = HELUM
+#-------------------------------
+[HIKER,Ethan,4]
+BattleVS         = classicVS
+BattleScript	 = OGAN
+#-------------------------------
+[HIKER,Melvin,4]
+BattleVS         = classicVS
+BattleScript	 = NEONN
+#-------------------------------
+[TAMER,Alex,4]
+BattleVS         = classicVS
+BattleScript	 = KRYPTO
+#-------------------------------
+[COOLTRAINER_M,Keith,4]
+BattleVS         = classicVS
+BattleScript	 = CHLOROS
+#-------------------------------
+[COOLTRAINER_F,Robin,4]
+BattleVS         = classicVS
+BattleScript	 = NITRO
+Ace = 5
+#-------------------------------
 #Post-Game
 #-------------------------------
 [DOJO_Jasper]

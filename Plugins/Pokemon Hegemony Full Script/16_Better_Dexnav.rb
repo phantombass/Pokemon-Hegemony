@@ -119,78 +119,38 @@ class NewDexNav
     enc_list4 = encounter_tables[enc_type4]
     enc_list5 = encounter_tables[enc_type5]
     encdata = []
-    eLength = enc_list.length-1
-    eLength2 = enc_list2.length-1 if enc_list2 != nil
-    eLength3 = enc_list3.length-1 if enc_list3 != nil
-    eLength4 = enc_list4.length-1 if enc_list4 != nil
-    eLength5 = enc_list5.length-1 if enc_list5 != nil
-      e1 = enc_list[0][1] if eLength >= 0
-      e2 = enc_list[1][1] if eLength >= 1
-      e3 = enc_list[2][1] if eLength >= 2
-      e4 = enc_list[3][1] if eLength >= 3
-      e5 = enc_list[4][1] if eLength >= 4
-      e6 = enc_list[5][1] if eLength >= 5
-      e7 = enc_list[6][1] if eLength >= 6
-      e8 = enc_list[7][1] if eLength >= 7
-      e9 = enc_list[8][1] if eLength >= 8
-      e10 = enc_list[9][1] if eLength >= 9
-      e11 = enc_list[10][1] if eLength >= 10
-      e12 = enc_list[11][1] if eLength >= 11
+    encdata_1 = []
+    encdata_2 = []
+    encdata_3 = []
+    encdata_4 = []
+    encdata_5 = []
+    eLength = enc_list.length
+    eLength2 = enc_list2.length if enc_list2 != nil
+    eLength3 = enc_list3.length if enc_list3 != nil
+    eLength4 = enc_list4.length if enc_list4 != nil
+    eLength5 = enc_list5.length if enc_list5 != nil
+    for i in 0...eLength
+      encdata_1.push(enc_list[i][1])
+    end
       if enc_list2 != nil
-        e13 = enc_list2[0][1] if eLength2 >= 0
-        e14 = enc_list2[1][1] if eLength2 >= 1
-        e15 = enc_list2[2][1] if eLength2 >= 2
-        e16 = enc_list2[3][1] if eLength2 >= 3
-        e17 = enc_list2[4][1] if eLength2 >= 4
-        e18 = enc_list2[5][1] if eLength2 >= 5
-        e19 = enc_list2[6][1] if eLength2 >= 6
-        e20 = enc_list2[7][1] if eLength2 >= 7
-        e21 = enc_list2[8][1] if eLength2 >= 8
-        e22 = enc_list2[9][1] if eLength2 >= 9
-        e23 = enc_list2[10][1] if eLength2 >= 10
-        e24 = enc_list2[11][1] if eLength2 >= 11
+        for i in 0...eLength2
+          encdata_2.push(enc_list2[i][1])
+        end
       end
       if enc_list3 != nil
-        e25 = enc_list3[0][1] if eLength3 >= 0
-        e26 = enc_list3[1][1] if eLength3 >= 1
-        e27 = enc_list3[2][1] if eLength3 >= 2
-        e28 = enc_list3[3][1] if eLength3 >= 3
-        e29 = enc_list3[4][1] if eLength3 >= 4
-        e30 = enc_list3[5][1] if eLength3 >= 5
-        e31 = enc_list3[6][1] if eLength3 >= 6
-        e32 = enc_list3[7][1] if eLength3 >= 7
-        e33 = enc_list3[8][1] if eLength3 >= 8
-        e34 = enc_list3[9][1] if eLength3 >= 9
-        e35 = enc_list3[10][1] if eLength3 >= 10
-        e36 = enc_list3[11][1] if eLength3 >= 11
+        for i in 0...eLength3
+          encdata_3.push(enc_list3[i][1])
+        end
       end
       if enc_list4 != nil
-        e37 = enc_list4[0][1] if eLength4 >= 0
-        e38 = enc_list4[1][1] if eLength4 >= 1
-        e39 = enc_list4[2][1] if eLength4 >= 2
-        e40 = enc_list4[3][1] if eLength4 >= 3
-        e41 = enc_list4[4][1] if eLength4 >= 4
-        e42 = enc_list4[5][1] if eLength4 >= 5
-        e43 = enc_list4[6][1] if eLength4 >= 6
-        e44 = enc_list4[7][1] if eLength4 >= 7
-        e45 = enc_list4[8][1] if eLength4 >= 8
-        e46 = enc_list4[9][1] if eLength4 >= 9
-        e47 = enc_list4[10][1] if eLength4 >= 10
-        e48 = enc_list4[11][1] if eLength4 >= 11
+        for i in 0...eLength4
+          encdata_4.push(enc_list4[i][1])
+        end
       end
       if enc_list5 != nil
-        e49 = enc_list5[0][1] if eLength5 >= 0
-        e50 = enc_list5[1][1] if eLength5 >= 1
-        e51 = enc_list5[2][1] if eLength5 >= 2
-        e52 = enc_list5[3][1] if eLength5 >= 3
-        e53 = enc_list5[4][1] if eLength5 >= 4
-        e54 = enc_list5[5][1] if eLength5 >= 5
-        e55 = enc_list5[6][1] if eLength5 >= 6
-        e56 = enc_list5[7][1] if eLength5 >= 7
-        e57 = enc_list5[8][1] if eLength5 >= 8
-        e58 = enc_list5[9][1] if eLength5 >= 9
-        e59 = enc_list5[10][1] if eLength5 >= 10
-        e60 = enc_list5[11][1] if eLength5 >= 11
+        for i in 0...eLength5
+          encdata_5.push(enc_list5[i][1])
+        end
       end
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
       if GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :StairLeft || GameData::TerrainTag.get(pLoc).id == :StairRight
@@ -255,20 +215,29 @@ class NewDexNav
       end
       case terr
       when 0
-        encdata = [e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12]
+        encdata.push(encdata_1) 
       when 1
-        encdata = [e13,e14,e15,e16,e17,e18,e19,e20,e21,e22,e23,e24]
+        encdata.push(encdata_2)
       when 2
-        encdata = [e25,e26,e27,e28,e29,e30,e31,e32,e33,e34,e35,e36]
+        encdata.push(encdata_3)
       when 3
-        encdata = [e37,e38,e39,e40,e41,e42,e43,e44,e45,e46,e47,e48]
+        encdata.push(encdata_4)
       when 4
-        encdata = [e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14,e15,e16,e17,e18,e19,e20,e21,e22,e23,e24,e25,e26,e27,e28,e29,e30,e31,e32,e33,e34,e35,e36]
+        encdata.push(encdata_1)
+        encdata.push(encdata_2)
+        encdata.push(encdata_3)
       when 5
-        encdata = [e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14,e15,e16,e17,e18,e19,e20,e21,e22,e23,e24,e25,e26,e27,e28,e29,e30,e31,e32,e33,e34,e35,e36,e37,e38,e39,e40,e41,e42,e43,e44,e45,e46,e47,e48]
+        encdata.push(encdata_1)
+        encdata.push(encdata_2)
+        encdata.push(encdata_3)
+        encdata.push(encdata_4)
       when 6
-        encdata = [e13,e14,e15,e16,e17,e18,e19,e20,e21,e22,e23,e24,e25,e26,e27,e28,e29,e30,e31,e32,e33,e34,e35,e36,e37,e38,e39,e40,e41,e42,e43,e44,e45,e46,e47,e48,e49,e50,e51,e52,e53,e54,e55,e56,e57,e58,e59,e60]
+        encdata.push(encdata_2)
+        encdata.push(encdata_3)
+        encdata.push(encdata_4)
+        encdata.push(encdata_5)
       end
+      encdata = encdata.flatten
       encdata = encdata.uniq
       encdata = encdata.compact
 
