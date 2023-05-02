@@ -688,6 +688,54 @@ class PokemonSummary_Scene
     end
   end
 
+  def set_Status
+    pkmn = @pokemon
+    if pkmn.egg?
+      pbDisplay(_INTL("{1} is an egg.", pkmn.name))
+    elsif pkmn.hp <= 0
+      pbDisplay(_INTL("{1} is fainted, can't change status.", pkmn.name))
+    else
+      cmd = 0
+      commands = [_INTL("[Cure]")]
+      ids = [:NONE]
+      GameData::Status.each do |s|
+        next if s.id == :NONE
+        commands.push(s.name)
+        ids.push(s.id)
+      end
+      loop do
+        cmd = screen.pbShowCommands(_INTL("Set {1}'s status.", pkmn.name), commands, cmd)
+        break if cmd < 0
+        case cmd
+        when 0   # Cure
+          pkmn.heal_status
+          pbDisplay(_INTL("{1}'s status was cured.", pkmn.name))
+          pbRefreshSingle(pkmnid)
+        else   # Give status problem
+          count = 0
+          cancel = false
+          if ids[cmd] == :SLEEP
+            params = ChooseNumberParams.new
+            params.setRange(0, 9)
+            params.setDefaultValue(3)
+            count = pbMessageChooseNumber(
+               _INTL("Set the Pokémon's sleep count."), params) { screen.pbUpdate }
+            cancel = true if count <= 0
+          end
+          if !cancel
+            pkmn.status      = ids[cmd]
+            pkmn.statusCount = count
+            dorefresh = true
+          end
+          if dorefresh
+            drawPage(@page)
+            break
+          end
+        end
+      end
+    end
+  end
+
   def change_Ability
     commands = []
     ids = []
@@ -1141,10 +1189,12 @@ class PokemonSummary_Scene
       cmdNature = -1
       cmdStatChange = -1
       cmdAbility = -1
+      cmdStatus = -1
       min_grind_commands[cmdLevel = min_grind_commands.length] = _INTL("Set Level") if (@page == 2 || @page == 3 || @page == 4)
       min_grind_commands[cmdNature = min_grind_commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
       min_grind_commands[cmdStatChange = min_grind_commands.length] = _INTL("Change EVs/IVs") if @page == 3 || @page == 4
       min_grind_commands[cmdAbility = min_grind_commands.length] = _INTL("Change Ability") if @page == 2 || @page == 3 || @page == 4
+      min_grind_commands[cmdStatus = min_grind_commands.length] = _INTL("Set Status") if @page == 2 || @page == 3 || @page == 4
       min_command = pbShowCommands(min_grind_commands)
       if cmdLevel>=0 && min_command==cmdLevel
         change_Level
@@ -1154,6 +1204,8 @@ class PokemonSummary_Scene
         change_Stats
       elsif cmdAbility>=0 && min_command==cmdAbility
         change_Ability
+      elsif cmdStatus>=0 && min_command==cmdStatus
+        set_Status
       end
     elsif cmdMark>=0 && command==cmdMark
       dorefresh = pbMarking(@pokemon)

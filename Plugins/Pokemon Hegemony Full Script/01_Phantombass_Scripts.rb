@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.0.1"
+  GAME_VERSION = "4.0.2"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -841,6 +841,7 @@ class PokeBattle_Battle
     if $game_switches[899] && $game_switches[900]
       pbHegemonyClauses
     end
+    $weather_form = false
     sendOuts = pbSetUpSides
     olditems = []
     pbParty(0).each_with_index do |pkmn,i|
