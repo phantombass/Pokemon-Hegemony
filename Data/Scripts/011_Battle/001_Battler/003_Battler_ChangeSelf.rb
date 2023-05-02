@@ -220,6 +220,22 @@ class PokeBattle_Battler
         @battle.pbHideAbilitySplash(self)
       end
     end
+    if isSpecies?(:DARMANITAN) && hasActiveAbility?(:ZENMODE)
+      if @form == 0 && @battle.pbWeather == (:Sun || :HarshSun)
+        newForm = 2
+        $weather_form = true
+      end
+      if @form == 1 && [:Hail,:Sleet].include?(@battle.pbWeather)
+        newForm = 3
+        $weather_form = true
+      end
+      if newForm != @form
+        @battle.pbShowAbilitySplash(self,true)
+        @battle.pbHideAbilitySplash(self)
+        pbChangeForm(newForm,_INTL("{1} triggered!",abilityName))
+        p @form
+      end
+    end
   end
 
   def pbCheckFormOnTerrainChange
@@ -263,19 +279,13 @@ class PokeBattle_Battler
     # Form changes upon entering battle and when the terrain changes
     pbCheckFormOnTerrainChange if !endOfRound
     # Darmanitan - Zen Mode
-    if isSpecies?(:DARMANITAN) && self.ability == :ZENMODE
+    if isSpecies?(:DARMANITAN) && self.ability == :ZENMODE && $weather_form == false
       newForm = @form
-      if @hp <= @totalhp/2 && newForm < 2
-        newForm += 2
-      elsif @hp > @totalhp/2 && newForm >= 2
-        newForm -= 2
-      end
-      if form == 0 && @battle.pbWeather == (:Sun || :HarshSun)
-        newForm += 2
-      end
-      if form == 1 && [:Hail,:Sleet].include?(@battle.pbWeather)
-        newForm += 2
-      end
+        if @hp <= @totalhp/2 && newForm < 2
+          newForm += 2
+        elsif @hp > @totalhp/2 && newForm >= 2
+          newForm -= 2
+        end
       if newForm != @form
         @battle.pbShowAbilitySplash(self,true)
         pbChangeForm(newForm,_INTL("{1} triggered!",abilityName))

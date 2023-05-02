@@ -560,6 +560,9 @@ class PokeBattle_Battler
     if hasActiveAbility?(:TOXICBOOST) && self.status == :POISON
       return false
     end
+    if hasActiveAbility?(:FLAREBOOST) && self.status == :BURN
+      return false
+    end
     if hasActiveAbility?(:MAGICGUARD)
       if showMsg
         @battle.pbShowAbilitySplash(self)

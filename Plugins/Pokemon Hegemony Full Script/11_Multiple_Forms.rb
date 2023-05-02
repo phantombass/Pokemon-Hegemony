@@ -191,6 +191,21 @@ class PokeBattle_Battler
         pbChangeForm(0,_INTL("{1} transformed!",pbThis))
       end
     end
+    if isSpecies?(:DARMANITAN) && hasActiveAbility?(:ZENMODE) && $weather_form == false
+      if @form == 0 && @battle.pbWeather == (:Sun || :HarshSun)
+        newForm = 2
+        $weather_form = true
+      end
+      if @form == 1 && [:Hail,:Sleet].include?(@battle.pbWeather)
+        newForm = 3
+        $weather_form = true
+      end
+      if newForm != @form
+        @battle.pbShowAbilitySplash(self,true)
+        pbChangeForm(newForm,_INTL("{1} triggered!",abilityName))
+        @battle.pbHideAbilitySplash(self)
+      end
+    end
   end
 end
 
