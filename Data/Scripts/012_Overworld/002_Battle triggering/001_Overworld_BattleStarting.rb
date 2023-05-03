@@ -523,7 +523,6 @@ def pbDoubleTrainerBattle(trainerID1, trainerName1, trainerPartyID1, endSpeech1,
   setBattleRule("outcomeVar",outcomeVar) if outcomeVar!=1
   setBattleRule("canLose") if canLose
   setBattleRule("double")
-  @battle.doublebattle = true
   # Perform the battle
   decision = pbTrainerBattleCore(
      [trainerID1,trainerName1,trainerPartyID1,endSpeech1],
