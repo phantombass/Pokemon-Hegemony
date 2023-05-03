@@ -543,12 +543,24 @@ end
 
 #Setup Prevention
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
-	boosts = 0
-	GameData::Stat.each_battle { |s| boosts += target.battler.stages[s] if target.battler.stages[s] != nil}
-	plus = boosts * 10
-	score += plus
-	PBAI.log("+ #{plus} to prevent setup")
-	$learned_flags[:has_setup].push(target) if boosts >= 1
+	setup = 0
+	off = 0
+	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
+	for move in battler.moves
+		dmg = battler.get_move_damage(target, move)
+		off += 1 if i.damagingMove? && dmg >= battler.totalhp/2
+	end
+	if target_moves != nil
+		for i in target_moves
+			if ["035","02A","032","10D","02B","02C","14E","032","024","026","518"].include?(i.function) && off == 0
+				setup += 1
+			end
+		end
+		add = setup * 100
+		score += add
+		PBAI.log("+ #{add} to prevent setup")
+		$learned_flags[:has_setup].push(target) if setup >= 1
+	end
 	next score
 end
 
