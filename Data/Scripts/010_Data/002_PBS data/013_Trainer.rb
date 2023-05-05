@@ -25,7 +25,7 @@ module GameData
       "Gender"       => [:gender,        "e", { "M" => 0, "m" => 0, "Male" => 0, "male" => 0, "0" => 0,
                                                 "F" => 1, "f" => 1, "Female" => 1, "female" => 1, "1" => 1 }],
       "Nature"       => [:nature,        "e", :Nature],
-      "Roles"         => [:roles,          "e", :Role],
+      "Role"         => [:role,          "e", :Role],
       "IV"           => [:iv,            "uUUUUU"],
       "EV"           => [:ev,            "uUUUUU"],
       "Happiness"    => [:happiness,     "u"],
@@ -132,9 +132,13 @@ module GameData
           else
             pkmn.reset_moves
           end
-          for i in pkmn_data[:roles]
-            pkmn.add_role(i)
-          end
+		  if pkmn_data[:roles]
+			 for i in pkmn_data[:roles]
+				pkmn.add_role(i)
+			 end
+		  else
+			pkmn.add_role(:NONE)
+		  end
           pkmn.ability_index = pkmn_data[:ability_index]
           pkmn.ability = pkmn_data[:ability]
           pkmn.gender = pkmn_data[:gender] || ((trainer.male?) ? 0 : 1)

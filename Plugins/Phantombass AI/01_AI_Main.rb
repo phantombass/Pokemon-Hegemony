@@ -921,7 +921,7 @@ class PBAI
         for i in 0..availscores.size
           score = 0
           score, proj = availscores[i]
-          if proj.battler != nil
+          if proj != nil
             self.opposing_side.battlers.each do |target|
               next if target.nil?
               score = PBAI::SwitchHandler.trigger_general(score,@ai,self,proj,target)
