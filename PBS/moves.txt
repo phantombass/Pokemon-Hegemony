@@ -879,3 +879,4 @@
 1040,REFLECTION,Reflection,0BD,40,STEEL,Special,100,10,0,NearOther,0,befp,"The user shoots mystical beams from its eyes to inflict damage. The target is hit twice in a row."
 1041,ANCIENTCRY,Ancient Cry,504,95,DRAGON,Special,100,10,0,AllNearFoes,0,befk,"The user lets out a cry learned from the ancient past, which even damages Fairies."
 1042,STONEHAMMER,Stone Hammer,00F,100,NORMAL,Physical,100,10,30,NearOther,0,abes,"The user crashes a giant stone hammer into the foe. It may also make the target flinch."
+1043,HYDROSTEAM,Hydro Steam,550,80,WATER,Physical,100,10,30,NearOther,0,abes,"Boosted power in the Sun."

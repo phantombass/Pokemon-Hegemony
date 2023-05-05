@@ -997,3 +997,4 @@
 978,TM136,TM136,TM136s,4,10000,"This move's power doubles when the target is on Misty Terrain.",3,0,0,ROLLINGFOG
 979,TM137,TM137,TM137s,4,10000,"Power goes up and damages all opposing Pokémon on Psychic Terrain.",3,0,0,EXPANDINGFORCE
 980,TM138,TM138,TM138s,4,10000,"The user utilizes the power of the terrain to attack.",3,0,0,TERRAINPULSE
+981,TM139,TM139,TM139s,4,10000,"The target is hit twice in a row.",3,0,0,DUALWINGBEAT
