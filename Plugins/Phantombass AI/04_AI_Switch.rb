@@ -379,7 +379,7 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	party = ai.battle.pbParty(battler.index)
 	if battler.status != :NONE
-		if party.any? {|pkmn| pkmn.role.id == :CLERIC && battler.role != :CLERIC}
+		if party.any? {|pkmn| [:CLERIC].include?(pkmn.roles) && !battler.has_role(:CLERIC)}
     	switch = true
     	$switch_flags[:need_cleric] = true
     end
@@ -518,18 +518,22 @@ end
 
 #Defensive Role modifiers
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
+	roles = []
+    for i in battler.roles
+      roles.push(i)
+    end
   battler.opposing_side.battlers.each do |target|
   	next if target.nil?
-  	if target.is_physical_attacker? && battler.role == :PHYSICALWALL
+  	if target.is_physical_attacker? && battler.has_role?(:PHYSICALWALL)
   		score += 200
   		PBAI.log("+ 200")
   	end
-  	if target.is_special_attacker? && battler.role == :SPECIALWALL
+  	if target.is_special_attacker? && battler.has_role?(:SPECIALWALL)
   		score += 200
   		PBAI.log("+ 200")
   	end
-  	if target.defensive? && ![:PHYSICALWALL,:SPECIALWALL].include?(battler.role)
-  		if [:DEFENSIVEPIVOT,:CLERIC,:TOXICSTALLER,:LEAD].include?(battler.role)
+  	if target.defensive? && ![:PHYSICALWALL,:SPECIALWALL].include?(roles)
+  		if [:DEFENSIVEPIVOT,:CLERIC,:TOXICSTALLER,:LEAD].include?(roles)
   			score += 150
   			PBAI.log("+ 150")
   		else
@@ -545,10 +549,11 @@ end
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	setup = 0
 	off = 0
+	add = 0
 	target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
 	for move in battler.moves
 		dmg = battler.get_move_damage(target, move)
-		off += 1 if i.damagingMove? && dmg >= battler.totalhp/2
+		off += 1 if move.damagingMove? && dmg >= battler.totalhp/2
 	end
 	if target_moves != nil
 		for i in target_moves
@@ -556,10 +561,12 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 				setup += 1
 			end
 		end
+	end
+	if setup >= 1
 		add = setup * 100
 		score += add
 		PBAI.log("+ #{add} to prevent setup")
-		$learned_flags[:has_setup].push(target) if setup >= 1
+		$learned_flags[:has_setup].push(target)
 	end
 	next score
 end
@@ -598,7 +605,7 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 		score += 200 if battler.setup?
 		PBAI.log("+ 200")
 	end
-	if $switch_flags[:need_cleric] && battler.role == :CLERIC
+	if $switch_flags[:need_cleric] && battler.has_role?(:CLERIC)
 		score += 400
 		PBAI.log("+ 400")
 	end
@@ -614,8 +621,10 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
   tspikes = battler.own_side.effects[PBEffects::ToxicSpikes] > 0 ? battler.own_side.effects[PBEffects::ToxicSpikes] : 0
   comet = battler.own_side.effects[PBEffects::CometShards] ? 1 : 0
   hazard_score = (rocks*13) + (spikes*13) + (comet*13) + (tspikes*13)
-  score -= hazard_score
-  PBAI.log("- #{hazard_score}")
+  if hazard_score > 0
+  	score -= hazard_score
+  	PBAI.log("- #{hazard_score}")
+  end
 
   #Switch in to absorb hazards
   if tspikes > 0 && (battler.pbHasType?(:POISON) && !battler.airborne?) || battler.hasActiveAbility?(:GALEFORCE)

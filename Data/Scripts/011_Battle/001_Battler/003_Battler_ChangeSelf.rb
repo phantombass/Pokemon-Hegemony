@@ -233,7 +233,6 @@ class PokeBattle_Battler
         @battle.pbShowAbilitySplash(self,true)
         @battle.pbHideAbilitySplash(self)
         pbChangeForm(newForm,_INTL("{1} triggered!",abilityName))
-        p @form
       end
     end
   end
