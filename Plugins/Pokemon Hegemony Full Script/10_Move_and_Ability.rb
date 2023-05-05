@@ -525,7 +525,7 @@ class PokeBattle_Move
     when :Sun, :HarshSun
       if type == :FIRE
         multipliers[:final_damage_multiplier] *= 1.5
-      elsif type == :WATER && !target.hasActiveAbility?(:STEAMPOWERED)
+      elsif type == :WATER && !target.hasActiveAbility?(:STEAMPOWERED) && @function != "550"
         multipliers[:final_damage_multiplier] /= 2
       end
     when :Rain, :HeavyRain
@@ -6692,6 +6692,14 @@ class PokeBattle_Move_519 < PokeBattle_TargetMultiStatDownMove
   def initialize(battle,move)
     super
     @statDown = [:DEFENSE,1,:SPECIAL_DEFENSE,1]
+  end
+end
+
+class PokeBattle_Move_550 < PokeBattle_Move
+
+  def pbBaseDamage(baseDmg, user, target)
+    baseDmg *= 1.5 if [:Sun, :HarshSun].include?(@battle.pbWeather)
+    return baseDmg
   end
 end
 #=============

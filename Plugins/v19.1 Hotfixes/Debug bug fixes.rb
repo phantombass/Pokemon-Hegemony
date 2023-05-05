@@ -464,6 +464,15 @@ module Compiler
           property_value = [property_value] if !property_value.is_a?(Array)
           property_value.uniq!
           property_value.compact!
+        when "Roles"
+            property_value = [property_value] if !property_value.is_a?(Array)
+            property_value.uniq!
+            property_value.compact!
+            property_value.each do |role|
+              if !GameData::Role.exists?(role.to_sym)
+                raise _INTL("Value {1} isn't a defined Role.\r\n{2}", role, FileLineData.linereport)
+              end
+            end
         when "IV"
           property_value = [property_value] if !property_value.is_a?(Array)
           property_value.compact!

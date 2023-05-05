@@ -36483,3 +36483,35 @@ BattlerEnemyY = 16
 BattlerShadowX = 0
 BattlerShadowSize = 1
 #-------------------------------
+[1116]
+Name = Walking Wake
+InternalName = WALKINGWAKE
+Type1 = WATER
+Type2 = DRAGON
+BaseStats = 99,83,91,109,125,83
+GenderRatio = Genderless
+GrowthRate = Slow
+BaseExp = 295
+EffortPoints = 0,0,0,0,3,0
+Rareness = 5
+Happiness = 0
+Abilities = PROTOSYNTHESIS
+Moves = 1,LEER,1,ROAR,1,TWISTER,1,AQUAJET,7,BITE,14,WATERPULSE,21,NOBLEROAR,28,DRAGONBREATH,35,BREAKINGSWIPE,42,DRAGONRUSH,56,HYDROSTEAM,63,DRAGONPULSE,70,OUTRAGE,77,FLAMETHROWER,84,HYDROPUMP
+TutorMoves = TAKEDOWN,AGILITY,SCARYFACE,PROTECT,FIREFANG,WATERPULSE,LOWKICK,CHILLINGWATER,FACADE,SNARL,SWIFT,MUDSHOT,DRAGONTAIL,ENDURE,SUNNYDAY,RAINDANCE,BODYSLAM,SLEEPTALK,WATERFALL,DRAGONCLAW,REST,DRAGONDANCE,SUBSTITUTE,CRUNCH,LIQUIDATION,DRAGONPULSE,SURF,FLAMETHROWER,HYDROPUMP,GIGAIMPACT,OUTRAGE,HURRICANE,HYPERBEAM,DRACOMETEOR
+Compatibility = Undiscovered
+StepsToHatch = 12800
+Height = 3.5
+Weight = 280.0
+Color = Blue
+Shape = BipedalTail
+Habitat = Rare
+Category = Paradox
+Pokedex = .
+Generation = 9
+BattlerPlayerX = 0
+BattlerPlayerY = 52
+BattlerEnemyX = 0
+BattlerEnemyY = 16
+BattlerShadowX = 0
+BattlerShadowSize = 1
+#-------------------------------
