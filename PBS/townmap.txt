@@ -214,6 +214,9 @@ Point = 5,5,Route 31,,,,,
 Point = 3,5,Route 32,,,,,
 Point = 2,5,Route 32,,,,,
 Point = 2,4,Route 32,,,,,
-
-
-
+#-------------------------------
+[2]
+Filename = mapRegion2.png
+Name = Hoenn Region
+Point = 28,11,Mossdeep City,Space Station,372,11,7,
+Point = 28,10,Mossdeep City,Space Station,372,11,7,

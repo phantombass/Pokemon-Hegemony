@@ -936,7 +936,7 @@ class PBAI
           end
           $doubles_switch = proj if $d_switch == 0
           eligible = true
-          eligible = false if proj.battler != nil # Already active
+         # eligible = false if proj.battler != nil # Already active
           eligible = false if proj.pokemon.egg? # Egg
           eligible = false if proj == $doubles_switch && $d_switch == 1
           if eligible

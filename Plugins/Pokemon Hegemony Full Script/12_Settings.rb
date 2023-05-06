@@ -67,6 +67,7 @@ module Settings
     return [
       [_INTL("Parthenia Pokédex"), 0],
       [_INTL("Armadia Pokédex"), 1],
+      [_INTL("Hoenn Pokédex"), 2],
       _INTL("National Pokédex")
     ]
   end
