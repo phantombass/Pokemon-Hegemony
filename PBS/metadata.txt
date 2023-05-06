@@ -1814,3 +1814,15 @@ SnapEdges = true
 # Hidden Grotto - Route 36
 MapPosition = 1,6,17
 SnapEdges = true
+#-------------------------------
+[372]
+# Mossdeep City
+Outdoor = true
+ShowArea = true
+MapPosition = 2,28,10
+SnapEdges = true
+#-------------------------------
+[373]
+# Deep Space
+ShowArea = true
+SnapEdges = true

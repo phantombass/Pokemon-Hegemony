@@ -116,3 +116,6 @@ BattleEnv = TEMPLE
 [367]
 BattleEnv = CHAMPION
 #===================
+[373]
+BattleEnv = DIMENSION
+#===================
