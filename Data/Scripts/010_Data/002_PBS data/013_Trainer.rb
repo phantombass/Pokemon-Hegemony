@@ -25,7 +25,7 @@ module GameData
       "Gender"       => [:gender,        "e", { "M" => 0, "m" => 0, "Male" => 0, "male" => 0, "0" => 0,
                                                 "F" => 1, "f" => 1, "Female" => 1, "female" => 1, "1" => 1 }],
       "Nature"       => [:nature,        "e", :Nature],
-      "Roles"         => [:roles,          "e", :Role],
+      "Role"         => [:role,          "e", :Role],
       "IV"           => [:iv,            "uUUUUU"],
       "EV"           => [:ev,            "uUUUUU"],
       "Happiness"    => [:happiness,     "u"],
