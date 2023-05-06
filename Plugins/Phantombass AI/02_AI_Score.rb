@@ -1741,7 +1741,7 @@ PBAI::ScoreHandler.add("0A2") do |score, ai, user, target, move|
     PBAI.log("+ #{add} based on enemy and physical enemy count")
     if user.has_role?(:SCREENS)
       score += 40
-      PBAI.log("+ 40 for being the #{user.role.name} role")
+      PBAI.log("+ 40")
     end
   end
   next score
@@ -1769,7 +1769,7 @@ PBAI::ScoreHandler.add("0A3") do |score, ai, user, target, move|
     PBAI.log("+ #{add} based on enemy and special enemy count")
     if user.has_role?(:SCREENS)
       score += 40
-      PBAI.log("+ 40 for being the #{user.role.name} role")
+      PBAI.log("+ 40")
     end
   end
   next score
@@ -1796,7 +1796,7 @@ PBAI::ScoreHandler.add("167") do |score, ai, user, target, move|
     PBAI.log("+ #{add} based on enemy count")
     if user.has_role?(:SCREENS)
       score += 40
-      PBAI.log("+ 40 for being the #{user.role.name} role")
+      PBAI.log("+ 40")
     end
   end
   next score
