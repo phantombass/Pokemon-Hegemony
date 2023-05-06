@@ -132,13 +132,13 @@ module GameData
           else
             pkmn.reset_moves
           end
-		  if pkmn_data[:roles]
-			 for i in pkmn_data[:roles]
-				pkmn.add_role(i)
-			 end
-		  else
-			pkmn.add_role(:NONE)
-		  end
+          if !pkmn_data[:roles]
+            pkmn.add_role(:NONE)
+          else
+            for i in pkmn_data[:roles]
+              pkmn.add_role(i)
+            end
+          end
           pkmn.ability_index = pkmn_data[:ability_index]
           pkmn.ability = pkmn_data[:ability]
           pkmn.gender = pkmn_data[:gender] || ((trainer.male?) ? 0 : 1)
