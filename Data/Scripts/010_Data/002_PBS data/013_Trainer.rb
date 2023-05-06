@@ -132,8 +132,12 @@ module GameData
           else
             pkmn.reset_moves
           end
-          for i in pkmn_data[:roles]
-            pkmn.add_role(i)
+          if !pkmn_data[:roles]
+            pkmn.add_role(:NONE)
+          else
+            for i in pkmn_data[:roles]
+              pkmn.add_role(i)
+            end
           end
           pkmn.ability_index = pkmn_data[:ability_index]
           pkmn.ability = pkmn_data[:ability]
