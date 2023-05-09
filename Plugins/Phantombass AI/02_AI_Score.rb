@@ -2619,6 +2619,14 @@ PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
           PBAI.log("+ 250")
         end
       end
+      if user.has_role?(:REDIRECTION) && mon.setup?
+          score += 150
+          PBAI.log("+ 150")
+        end
+      if $chosen_move.id == :PROTECT
+        score = 0
+        PBAI.log("* 0 for not wasting a turn.")
+      end
     end
   else
     score -= 1000
