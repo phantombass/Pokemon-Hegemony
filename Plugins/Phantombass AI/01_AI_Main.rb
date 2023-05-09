@@ -13,6 +13,7 @@ class PBAI
     $d_switch = 0
     $doubles_switch = nil
     $switch_flags = {}
+    $chosen_move = nil
   	$spam_block_flags = {
   	  :haze_flag => [], #A pokemon has haze, so the AI registers what mon knows Haze until it is gone
   	  :two_mon_flag => false, # Player switches between the same 2 mons 
@@ -75,7 +76,7 @@ class PBAI
       e = 0 if e < weights.sum/2 && test > 0
       e = 0 if e < weights.sum*0.3 && lower_test > 0
       diff = e - avg
-      next [0, ((e - diff * factor) * 100).round].max
+      next [0, ((e - diff * factor) * 100).to_i].max
     end
     return weighted_rand(newweights)
   end
@@ -610,6 +611,7 @@ class PBAI
           str += " << CHOSEN" if i == idx
           if i == idx
             $target_ind = target
+            $chosen_move = @battler.moves[move_index]
           end
           str += "\n"
         end
@@ -936,9 +938,12 @@ class PBAI
           end
           $doubles_switch = proj if $d_switch == 0
           eligible = true
-         # eligible = false if proj.battler != nil # Already active
-          eligible = false if proj.pokemon.egg? # Egg
-          eligible = false if proj == $doubles_switch && $d_switch == 1
+          eligible = false if proj.nil?
+          if proj != nil
+            eligible = false if proj.battler != nil # Already active
+            eligible = false if proj.pokemon.egg? # Egg
+            eligible = false if proj == $doubles_switch && $d_switch == 1
+          end
           if eligible
             index = party.index(proj.pokemon)
             return [score, index]
