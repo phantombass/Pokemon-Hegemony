@@ -4,81 +4,68 @@ module BattleScripts
   #============
   HELUM = {
     "turnStart0" => proc do
-      if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:GRASSYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
         @sprites["battlebg"].reconfigure(:GRASSY, :DISTORTION)
         @battle.field.terrain = :Grassy
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
         @scene.pbDisplay("The battlefield got permanently grassy!")
-      end
     end
   }
   OGAN = {
     "turnStart0" => proc do
-      if $game_switches[LvlCap::Expert]
         $gym_hazard = true
         @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
         @scene.pbDisplay("A mysterious force prevents hazard removal!")
-      end
     end
   }
   NEONN = {
     "turnStart0" => proc do
-      if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:WISH).id,@battle.battlers[1],@battle.battlers[1])
         @battle.field.weather = :Starstorm
         @battle.field.weatherDuration = -1
         $gym_weather = true
         @scene.pbDisplay("Stars permanently filled the sky!")
         @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
-      end
     end
   }
 
   NITRO = {
     "turnStart0" => proc do
-      if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
         @battle.battlers[1].pbOwnSide.effects[PBEffects::Tailwind] = 1
         $gym_gimmick = true
-        @scene.pbDisplay("A permanent Tailwind blew in behind Gail's team!")
-      end
+        @scene.pbDisplay("A permanent Tailwind blew in behind the opponent's team!")
     end
   }
 
   KRYPTO = {
     "turnStart0" => proc do
-      if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
         @battle.field.weather = :StrongWinds
         $gym_weather = true
         @scene.pbDisplay("A Delta Stream brewed!")
         @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
-      end
     end
   }
 
   CHLOROS = {
     "turnStart0" => proc do
-      if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-        @sprites["battlebg"].reconfigure(:GRASSY, :PSYCHIC)
+        @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         @battle.field.effects[PBEffects::TrickRoom] = 1
         $gym_gimmick = true
         @scene.pbDisplay("The battlefield got permanently weird!")
         @scene.pbDisplay("The dimensions were permanently twisted!")
-      end
     end
 }
 
   CAPITOL = {
     "turnStart0" => proc do
-      if $game_switches[LvlCap::Expert]
           @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
-          @sprites["battlebg"].reconfigure(:GRASSY, :POISON)
+          @sprites["battlebg"].reconfigure(:POISON, :DISTORTION)
           @battle.field.terrain = :Poison
           @battle.field.terrainDuration = -1
           $gym_gimmick = true
@@ -87,8 +74,25 @@ module BattleScripts
           @battle.field.weatherDuration = -1
           $gym_weather = true
           @scene.pbDisplay("The battlefield got permanently toxic!")
-      end
     end
+  }
+  BOSSPOKEMON = {
+    "turnStart0" => proc do
+        # hide databoxes
+        @scene.pbHideAllDataboxes
+        # show flavor text
+        EliteBattle.playCommonAnimation(:AURAFLARE, @scene, 1)
+        @vector.reset # AURAFLARE doesn't reset the vector by default
+        @scene.wait(16, true) # set true to anchor the sprites to vector
+        # raise battler Attack sharply (doesn't display text)
+        @scene.pbDisplay("It's a boss Pokémon!")
+        @scene.wait(16)
+        # play common animation
+        EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
+        @scene.wait(8)
+        # show databoxes
+        @scene.pbShowAllDataboxes
+      end
   }
   #============
   #Gym Leaders
