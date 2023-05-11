@@ -1091,7 +1091,7 @@ end
 # Wide Guard
 PBAI::ScoreHandler.add("0AC") do |score, ai, user, target, move|
   wide = 0
-  if @battle.doublebattle
+  if ai.battle.doublebattle
     target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
     if target_moves != nil
       for i in target_moves
