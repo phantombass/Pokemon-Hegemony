@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.2.1"
+  GAME_VERSION = "4.2.2"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -441,19 +441,22 @@ class PokeBattle_Battler
   end
   def unlosableItem?(check_item)
     return false if !check_item
-    return true if GameData::Item.get(check_item).is_mail?
+    item_data = GameData::Item.get(check_item)
+    return true if item_data.is_mail?
     return false if @effects[PBEffects::Transform]
-    #return true if itemCorroded?
     # Items that change a Pokémon's form
     if mega?   # Check if item was needed for this Mega Evolution
-      return true if @pokemon.species_data.mega_stone == check_item
+      return true if @pokemon.species_data.mega_stone == item_data.id
     else   # Check if item could cause a Mega Evolution
       GameData::Species.each do |data|
         next if data.species != @species || data.unmega_form != @form
-        return true if data.mega_stone == check_item
+        return true if data.mega_stone == item_data.id
       end
     end
-    if check_item == :ROTOMMULTITOOL || check_item == :WSHARPEDONITE || check_item == :WBLAZIKENITE || check_item == :WGARCHOMPITE || check_item == :WSCEPTILITE || check_item == :WSWAMPERTITE || check_item == :WCHIMECHONITE || check_item == :CHATOTITE || check_item == :CORVITE || check_item == :EMPOLEONITE || check_item == :TORTERRANITE || check_item == :INFERNITE || check_item == :CHIMECHONITE || check_item == :BEHEEYEMITE || check_item == :CASTFORMITE
+    if check_item == :ROTOMMULTITOOL || check_item == :CASTFORMITE
+      return true
+    end
+    if ability_orb_held?(check_item)
       return true
     end
     # Other unlosable items
@@ -1480,11 +1483,9 @@ class PokeBattle_Battler
     @battle.pbSetBattled(self)
   end
   def canConsumeBerry?
-    abil = []
-    @battle.eachOtherSideBattler do |b|
-      abil.push(b.ability)
-    end
-    return false if [:UNNERVE,:ASONEICE,:ASONEGHOST].include?(abil)
+    return false if @battle.pbCheckOpposingAbility(:UNNERVE,@index)
+    return false if @battle.pbCheckOpposingAbility(:ASONEICE,@index)
+    return false if @battle.pbCheckOpposingAbility(:ASONEGHOST,@index)
     return true
   end
   def takesEntryHazardDamage?
