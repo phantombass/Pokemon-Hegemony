@@ -54,16 +54,16 @@ class PBAI
   end
 
   def self.get_weights(factor, weights)
-    avg = weights.sum / weights.size.to_f
+    avg = (weights.sum / weights.size).to_f
     newweights = weights.map do |e|
       diff = e - avg
-      next [0, ((e - diff * factor) * 100).round].max
+      next [0, ((e - diff * factor) * 100).floor].max
     end
     return newweights
   end
 
   def self.weighted_factored_rand(factor, weights)
-    avg = weights.sum / weights.size.to_f
+    avg = (weights.sum / weights.size).to_f
     test = 0
     lower_test = 0
     weights.each do |w|
@@ -76,7 +76,7 @@ class PBAI
       e = 0 if e < weights.sum/2 && test > 0
       e = 0 if e < weights.sum*0.3 && lower_test > 0
       diff = e - avg
-      next [0, ((e - diff * factor) * 100).to_i].max
+      next [0, ((e - diff * factor) * 100).floor].max
     end
     return weighted_rand(newweights)
   end

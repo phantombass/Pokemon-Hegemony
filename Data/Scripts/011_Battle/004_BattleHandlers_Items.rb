@@ -146,6 +146,7 @@ BattleHandlers::HPHealItem.add(:ORANBERRY,
   proc { |item,battler,battle,forced|
     next false if !battler.canHeal?
     next false if !forced && !battler.canConsumePinchBerry?(false)
+    next false if !battler.canConsumePinchBerry?(false)
     battle.pbCommonAnimation("EatBerry",battler) if !forced && $test_trigger == false
     battler.pbRecoverHP((battler.hasActiveAbility?(:RIPEN))? 20 : 10)
     itemName = GameData::Item.get(item).name
@@ -175,6 +176,7 @@ BattleHandlers::HPHealItem.add(:SITRUSBERRY,
   proc { |item,battler,battle,forced|
     next false if !battler.canHeal?
     next false if !forced && !battler.canConsumePinchBerry?(false)
+    next false if !battler.canConsumePinchBerry?(false)
     battle.pbCommonAnimation("EatBerry",battler) if !forced && $test_trigger == false
     battler.pbRecoverHP(battler.totalhp/((battler.hasActiveAbility?(:RIPEN))? 2 : 4))
     itemName = GameData::Item.get(item).name
@@ -252,6 +254,7 @@ BattleHandlers::StatusCureItem.add(:CHESTOBERRY,
 BattleHandlers::StatusCureItem.add(:LUMBERRY,
   proc { |item,battler,battle,forced|
     next false if !forced && !battler.canConsumeBerry?
+    next false if !battler.canConsumeBerry?
     next false if battler.status == :NONE &&
                   battler.effects[PBEffects::Confusion]==0
     itemName = GameData::Item.get(item).name
