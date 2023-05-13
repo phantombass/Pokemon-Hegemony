@@ -76,7 +76,11 @@ class PBAI
       e = 0 if e < weights.sum/2 && test > 0
       e = 0 if e < weights.sum*0.3 && lower_test > 0
       diff = e - avg
-      next [0, ((e - diff * factor) * 100).floor].max
+      if (e-diff) >= 0
+        next [0, ((e - diff * factor) * 100).floor].max
+      else
+        next 0
+      end
     end
     return weighted_rand(newweights)
   end
