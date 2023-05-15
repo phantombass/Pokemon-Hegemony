@@ -78,6 +78,8 @@ class PBAI
       diff = e - avg
       if (e-diff) >= 0
         next [0, ((e - diff * factor) * 100).floor].max
+      elsif !(e-diff).is_a?(Float)
+        next 0
       else
         next 0
       end
