@@ -10113,6 +10113,26 @@ BattlerPlayerY = 6
 #ShadowX = 0
 #ShadowSize = 2
 #-------------------------------
+[WALKINGWAKE]
+SpriteScaleEnemy = 1
+SpriteScalePlayer = 1
+BattlerEnemyX =0
+BattlerPlayerY = 34
+BattlerPlayerX = 3
+BattlerPlayerY = 10
+#ShadowX = 0
+#ShadowSize = 3
+#-------------------------------
+[IRONLEAVES]
+SpriteScaleEnemy = 1
+SpriteScalePlayer = 1
+BattlerEnemyX =0
+BattlerPlayerY = 34
+BattlerPlayerX = 3
+BattlerPlayerY = 10
+#ShadowX = 0
+#ShadowSize = 3
+#-------------------------------
 [KLAWF]
 BattlerEnemyX =0
 BattlerPlayerY = 0
