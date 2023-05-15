@@ -6702,6 +6702,14 @@ class PokeBattle_Move_550 < PokeBattle_Move
     return baseDmg
   end
 end
+
+class PokeBattle_Move_551 < PokeBattle_Move
+
+  def pbBaseDamage(baseDmg, user, target)
+    baseDmg *= 1.5 if @battle.field.terrain == :Electric
+    return baseDmg
+  end
+end
 #=============
 #Effects
 #=============

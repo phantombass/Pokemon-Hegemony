@@ -998,3 +998,4 @@
 979,TM137,TM137,TM137s,4,10000,"Power goes up and damages all opposing Pokémon on Psychic Terrain.",3,0,0,EXPANDINGFORCE
 980,TM138,TM138,TM138s,4,10000,"The user utilizes the power of the terrain to attack.",3,0,0,TERRAINPULSE
 981,TM139,TM139,TM139s,4,10000,"The target is hit twice in a row.",3,0,0,DUALWINGBEAT
+982,TM140,TM140,TM140s,4,10000,"A consecutive three-kick attack that becomes more powerful with each successful hit.",3,0,0,TRIPLEAXEL
