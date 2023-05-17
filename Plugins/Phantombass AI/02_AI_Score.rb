@@ -1833,9 +1833,9 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
         PBAI.log("+ 100 to counter setup")
       end
     end
-    if $learned_flags[:should_taunt].include?(target)
-      score += 50
-      PBAI.log("+ 50 for stallbreaking")
+    if $learned_flags[:should_taunt].include?(target) || $spam_block_flags[:no_attacking_flag] == target
+      score += 150
+      PBAI.log("+ 150 for stallbreaking")
     end
   end
   next score
@@ -1953,6 +1953,10 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
     end
+    if $spam_block_flags[:haze_flag] == target
+      score = 0
+      PBAI.log("* 0 because target has Haze")
+    end
   next score
 end
 
@@ -2001,6 +2005,10 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
         PBAI.log("- 100 since the target can now be 2HKO'd by an attack")
       end
     end
+  end
+  if $spam_block_flags[:haze_flag] == target
+    score = 0
+    PBAI.log("* 0 because target has Haze")
   end
   next score
 end
@@ -2069,6 +2077,10 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
         PBAI.log("- 500 since the target can now be killed and cannot kill back")
       end
     end
+    if $spam_block_flags[:haze_flag] == target
+      score = 0
+      PBAI.log("* 0 because target has Haze")
+    end
   next score
 end
 
@@ -2119,6 +2131,10 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
     end
+    if $spam_block_flags[:haze_flag] == target
+      score = 0
+      PBAI.log("* 0 because target has Haze")
+    end
   next score
 end
 
@@ -2167,6 +2183,10 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
     end
+  end
+  if $spam_block_flags[:haze_flag] == target
+    score = 0
+    PBAI.log("* 0 because target has Haze")
   end
   next score
 end
@@ -2234,6 +2254,10 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
         PBAI.log("- 500 since the target can now be killed and cannot kill back")
       end
     end
+  end
+  if $spam_block_flags[:haze_flag] == target
+    score = 0
+    PBAI.log("* 0 because target has Haze")
   end
   next score
 end
@@ -2643,7 +2667,7 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
     for i in user.roles
       roles.push(i)
     end
-  if [:SETUPSWEEPER,:PHYSICALBREAKER,:WINCON].include?(roles)
+  if user.setup?
     if user.statStageAtMax?(:ATTACK) || user.statStageAtMax?(:SPEED)
       score = 0
       PBAI.log("* 0 for battler being max on Attack or Defense")
@@ -2689,6 +2713,10 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
         PBAI.log("- 1000 because we outspeed and Special Attackers don't factor Attack")
       end
     end
+    if $spam_block_flags[:haze_flag] == target
+      score = 0
+      PBAI.log("* 0 because target has Haze")
+    end
   next score
 end
 
@@ -2705,8 +2733,9 @@ PBAI::ScoreHandler.add("521") do |score, ai, user, target, move|
   next score
 end
 
+#Clangourous Soul
 PBAI::ScoreHandler.add("179") do |score, ai, user, target, move|
-  if user.has_role?(:SETUPSWEEPER)
+  if user.setup?
     score += 100
     PBAI.log("+ 100 for gaining an omni-boost")
     if user.hasActiveItem?(:THROATSPRAY)

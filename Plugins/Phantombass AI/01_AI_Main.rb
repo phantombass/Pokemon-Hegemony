@@ -1,4 +1,4 @@
-Essentials::ERROR_TEXT += "[Phantombass AI v2.0]\r\n"
+Essentials::ERROR_TEXT += "[Phantombass AI v2.1]\r\n"
 class PBAI
   attr_reader :battle
   attr_reader :sides
@@ -16,6 +16,8 @@ class PBAI
     $chosen_move = nil
   	$spam_block_flags = {
   	  :haze_flag => [], #A pokemon has haze, so the AI registers what mon knows Haze until it is gone
+      :switches => [],
+      :moves => [],
   	  :two_mon_flag => false, # Player switches between the same 2 mons 
   	  :triple_switch_flag => false, # Player switches 3 times in a row
   	  :no_attacking_flag => [], #Target has no attacking moves
@@ -529,6 +531,7 @@ class PBAI
       targets.each do |target|
         next if target.nil?
         $target.push(target)
+        set_flags(target) if $game_switches[LvlCap::Expert]
         PBAI.log("Moves for #{@battler.pokemon.name} against #{target.pokemon.name}")
         # Calculate a score for all the user's moves
         for i in 0..3
@@ -878,6 +881,29 @@ class PBAI
       return false if fainted == party.length - 1
       return true
     end
+    def set_flags(target)
+      PBAI.log("Setting flags...")
+      off_move = 4
+      for i in target.moves
+        if i.function == "051"
+          $spam_block_flags[:haze_flag] = target
+          PBAI.log("#{target.name} has been assigned Haze flag")
+        end
+        if i.statusMove?
+          off_move -= 1
+        end
+      end
+      PBAI.log("Offensive Move Count: #{off_move}")
+      if off_move == 0
+        $spam_block_flags[:no_attacking_flag] = target
+        PBAI.log("#{target.name} has been assigned No Attacking Flag")
+      end
+      if off_move < 2
+        $learned_flags[:should_taunt] = target
+        PBAI.log("#{target.name} has been assigned Should Taunt flag")
+      end
+     PBAI.log("End flag assignment.")
+   end
     def set_up_score
       boosts = []
       score = 0
