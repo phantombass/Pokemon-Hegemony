@@ -206,6 +206,9 @@ BattleVS         = classicVS
 [SCIENTIST,Grunt,102]
 BattleVS         = classicVS
 #-------------------------------
+[SCIENTIST,Grunt,103]
+BattleVS         = classicVS
+#-------------------------------
 [BUGCATCHER,Sheldon,4]
 BattleVS         = classicVS
 #-------------------------------
@@ -213,6 +216,12 @@ BattleVS         = classicVS
 BattleVS         = classicVS
 #-------------------------------
 [FISHERMAN,Dexter,4]
+BattleVS         = classicVS
+#-------------------------------
+[GENTLEMAN,Cameron,4]
+BattleVS         = classicVS
+#-------------------------------
+[BIRDKEEPER,Scott,4]
 BattleVS         = classicVS
 #-------------------------------
 [COOLTRAINER_F,Lisa,4]
