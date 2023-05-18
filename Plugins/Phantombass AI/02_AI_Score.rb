@@ -127,7 +127,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   if user.hasActiveItem?(:THROATSPRAY)
     score += 100
     PBAI.log("+ 100 for activating Throat Spray")
-    if [:SETUPSWEEPER,:WINCON,:SPECIALBREAKER].include?(roles)
+    if user.has_role?([:SETUPSWEEPER,:WINCON,:SPECIALBREAKER])#.include?(roles)
       score += 50
       PBAI.log("+ 50 ")
     end
@@ -356,10 +356,18 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   if target.hp <= target.totalhp/4
     score += 100
     PBAI.log("+ 100 for attempting to kill the target with priority")
+    if $spam_block_flags[:no_priority_flag].include?(target)
+      score += 100
+      PBAI.log("+ 100 for knowing target has no priority of its own")
+    end
   end
   if user.hp <= user.totalhp/4 && target.faster_than?(user)
     score += 100
     PBAI.log("+ 100 for attempting to do last minute damage to the target with priority")
+    if $spam_block_flags[:no_priority_flag].include?(target)
+      score += 100
+      PBAI.log("+ 100 for knowing target has no priority of its own")
+    end
   end
   if user.turnCount > 0 && move.function == "012"
     score = -1000
@@ -422,7 +430,7 @@ end
 # Prevent moves that fail in Primal Weather
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   if (ai.battle.pbWeather == :HarshSun && move.type == :WATER) || (ai.battle.pbWeather == :HeavyRain && move.type == :FIRE)
-    score = 0
+    score -= 1000
     PBAI.log("* 0 because the weather will make the move unusable")
   end
   next score
@@ -1357,8 +1365,8 @@ PBAI::ScoreHandler.add("0DC") do |score, ai, user, target, move|
   if !user.underdog?(target) && !target.has_type?(:GRASS) && target.effects[PBEffects::LeechSeed] == 0
     score += 60
     PBAI.log("+ 60 for sapping hp from the target")
-    score += 30 if [:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT].include?(roles)
-    PBAI.log("+ 30 ") if [:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT].include?(roles)
+    score += 30 if user.has_role?([:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT])#.include?(roles)
+    PBAI.log("+ 30 ") if user.has_role?([:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT])#.include?(roles)
   end
   next score
 end
@@ -1458,7 +1466,7 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, t
     for i in user.roles
       roles.push(i)
     end
-    if [:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:LEAD].include?(roles)
+    if user.has_role?([:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:LEAD])#.include?(roles)
       score += 40 if user.can_switch?
       PBAI.log("+ 40 ")
     end
@@ -1520,7 +1528,7 @@ PBAI::ScoreHandler.add("538") do |score, ai, user, target, move|
     for i in user.roles
       roles.push(i)
     end
-    if [:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:LEAD].include?(roles)
+    if user.has_role?([:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:LEAD])#.include?(roles)
       score += 40
       PBAI.log("+ 40 ")
     end
@@ -1604,7 +1612,7 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
       add = (factor * 250).round
       score += add
       PBAI.log("+ #{add} for we will likely die without healing")
-      if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:CLERIC].include?(roles)
+      if user.has_role?([:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:CLERIC])#.include?(roles)
         score += 40
         PBAI.log("+ 40 ")
       end
@@ -1612,7 +1620,7 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
       add = (factor * 125).round
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
-      if [:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:CLERIC].include?(roles)
+      if user.has_role?([:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:CLERIC])#.include?(roles)
         score += 40
         PBAI.log("+ 40 ")
       end
@@ -1868,7 +1876,7 @@ PBAI::ScoreHandler.add("051") do |score, ai, user, target, move|
       add = -net * 20
       score += add
       PBAI.log("+ #{add} to reset disadvantageous stat stages")
-      if [:STALLBREAKER,:PHAZER].include?(roles)
+      if user.has_role?([:STALLBREAKER,:PHAZER])##.include?(roles)
         score += 30
         PBAI.log("+ 30 ")
       end
@@ -1953,7 +1961,7 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
     end
-    if $spam_block_flags[:haze_flag] == target
+    if $spam_block_flags[:haze_flag].include?(target)
       score = 0
       PBAI.log("* 0 because target has Haze")
     end
@@ -2006,7 +2014,7 @@ PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
       end
     end
   end
-  if $spam_block_flags[:haze_flag] == target
+  if $spam_block_flags[:haze_flag].include?(target)
     score = 0
     PBAI.log("* 0 because target has Haze")
   end
@@ -2077,7 +2085,7 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
         PBAI.log("- 500 since the target can now be killed and cannot kill back")
       end
     end
-    if $spam_block_flags[:haze_flag] == target
+    if $spam_block_flags[:haze_flag].include?(target)
       score = 0
       PBAI.log("* 0 because target has Haze")
     end
@@ -2131,7 +2139,7 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
     end
-    if $spam_block_flags[:haze_flag] == target
+    if $spam_block_flags[:haze_flag].include?(target)
       score = 0
       PBAI.log("* 0 because target has Haze")
     end
@@ -2184,7 +2192,7 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
       end
     end
   end
-  if $spam_block_flags[:haze_flag] == target
+  if $spam_block_flags[:haze_flag].include?(target)
     score = 0
     PBAI.log("* 0 because target has Haze")
   end
@@ -2255,7 +2263,7 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
       end
     end
   end
-  if $spam_block_flags[:haze_flag] == target
+  if $spam_block_flags[:haze_flag].include?(target)
     score = 0
     PBAI.log("* 0 because target has Haze")
   end
@@ -2343,6 +2351,11 @@ PBAI::ScoreHandler.add("0AA") do |score, ai, user, target, move|
     protect = user.effects[PBEffects::ProtectRate] * 100
     score -= protect
     PBAI.log("- #{protect} to prevent potential Protect failure")
+  else
+    if user.turnCount == 0 && user.hasActiveAbility?(:SPEEDBOOST)
+      score += 100
+      PBAI.log("+ 100 for getting turn 1 Speed Boost")
+    end
   end
   next score
 end
@@ -2357,7 +2370,7 @@ PBAI::ScoreHandler.add("0EA") do |score, ai, user, target, move|
     score += 300
     PBAI.log("+ 300 for escaping the trap")
   end
-  if [:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:TOXICSTALLER,:LEAD].include?(roles)
+  if user.has_role?([:PHYSICALWALL,:SPECIALWALL,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:TOXICSTALLER,:LEAD])
     score += 50
     PBAI.log("+ 50 ")
   end
@@ -2422,9 +2435,9 @@ PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
       score += 100
       PBAI.log("+ 100 for Substituting on the first turn and being guaranteed to have a Sub stay up")
     end
-    if [:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:STALLBREAKER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:SETUPSWEEPER].include?(roles)
-      score += 30
-      PBAI.log("+ 30 ")
+    if user.has_role?([:TOXICSTALLER,:PHYSICALWALL,:SPECIALWALL,:STALLBREAKER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:SETUPSWEEPER,:WINCON])
+      score += 50
+      PBAI.log("+ 50")
     end
     if user.hp < user.totalhp/4
       score -= 100
@@ -2713,7 +2726,7 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
         PBAI.log("- 1000 because we outspeed and Special Attackers don't factor Attack")
       end
     end
-    if $spam_block_flags[:haze_flag] == target
+    if $spam_block_flags[:haze_flag].include?(target)
       score = 0
       PBAI.log("* 0 because target has Haze")
     end

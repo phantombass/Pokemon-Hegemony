@@ -49,7 +49,7 @@ def hashArrayToConstant(mod,hash)
   return hash
 end
 
-
+=begin
 STATUSTEXTS = ["status", "sleep", "poison", "burn", "paralysis", "ice"]
 STATSTRINGS = ["HP", "Attack", "Defense", "Speed", "Sp. Attack", "Sp. Defense"]
 
@@ -205,6 +205,7 @@ CHARGEMOVE = arrayToConstant(GameData::Move,[:BIDE, :GEOMANCY,:RAZORWIND, :SKULL
   :SOLARBLADE, :FREEZESHOCK, :ICEBURN, :METEORSHOWER])
 end
 
+=end
 class PokeBattle_Battle
   def typesInverted?
     return $PokemonTemp.battleRules["inverseBattle"] == true
