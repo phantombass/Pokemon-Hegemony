@@ -74,6 +74,19 @@ class PokeBattle_Battler
     return @roles
   end
 
+  def has_role?(role)
+    x = []
+    for i in @roles
+      x.push(i)
+      if role.is_a?(Array)
+        if role.include?(i)
+          return true
+        end
+      end
+    end
+    return x.include?(role) && !role.is_a?(Array)
+  end
+
   def role=(value)
     new_role = GameData::Role.try_get(value)
     @roles.push(new_role) ? new_role.id : nil

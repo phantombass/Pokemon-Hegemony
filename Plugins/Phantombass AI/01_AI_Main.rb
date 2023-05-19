@@ -200,6 +200,19 @@ class PBAI
       data = []
       data[0] = :USE_MOVE
       @battle.pbAutoChooseMove(idxBattler)
+    elsif @battle.wildBattle?
+      data = []
+      data[0] = :USE_MOVE
+      move = []
+      for i in projection.moves
+        move.push(i) if i.pp > 0
+      end
+      move_index = rand(move.length)
+      move_target = 0
+      # Register our move
+      @battle.pbRegisterMove(idxBattler, move_index, false)
+      # Register the move's target
+      @battle.pbRegisterTarget(idxBattler, move_target)
     elsif data[0] == :SWITCH
       # [:SWITCH, pokemon_index]
       @battle.pbRegisterSwitch(idxBattler, data[1])
