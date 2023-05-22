@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.3.3"
+  GAME_VERSION = "4.3.4"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -120,6 +120,7 @@ end
 Events.onMapChange += proc {| sender, e |
     # E4 Setting
     time = pbGetTimeNow
+    rotom_fix
     $game_variables[DailyE4::LastTime] = time.day
     if $game_variables[DailyE4::TimeNow] > $game_variables[DailyE4::LastTime] || $game_variables[DailyE4::TimeNow]<$game_variables[DailyE4::LastTime]
       $game_variables[DailyE4::Variable] = 1+rand(100)
@@ -171,6 +172,7 @@ def PokemonLoadScreen
         write_version
         Game.start_new
         reset_custom_variables
+        $rotom_fix = true
         repel_toggle = true
         return
       when cmd_mystery_gift
