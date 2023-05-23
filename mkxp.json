@@ -396,8 +396,8 @@
       "x": "JumpUp",
       "y": "JumpDown",
       "z": "Special",
-      "l": "(unused)",
-      "r": "(unused)"
+      "l": "Speed Up",
+      "r": "Infinite Repel"
     }
 
 }
