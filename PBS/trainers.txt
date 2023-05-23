@@ -2301,7 +2301,7 @@ Pokemon = CHIMECHO,89
 	Moves = CALMMIND,HYPERVOICE,RECOVER,PSYSHOCK
 	Roles = WINCON
 #-------------------------------
-[COOLTRAINER_F,Raquel,3]
+[COOLTRAINER_F,Raquel,4]
 LoseText = "Oh wow."
 Pokemon = TAPULELE,89
 	Nature = TIMID

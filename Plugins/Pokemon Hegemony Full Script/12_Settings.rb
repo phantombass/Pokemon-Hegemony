@@ -73,3 +73,15 @@ module Settings
   end
   GEN_9_SNOW = true
 end
+
+def rotom_fix
+  if $rotom_fix == nil && $game_variables[970] != 0
+    stats = pbGet(970)
+    for data in stats
+      if data[:pokemon] == :ROTOM
+        data[:stats][:HP] = 50
+      end
+    end
+  end
+  $rotom_fix = true
+end
