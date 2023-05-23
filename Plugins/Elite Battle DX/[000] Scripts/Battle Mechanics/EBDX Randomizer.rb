@@ -207,7 +207,7 @@ module EliteBattle
           rem_stat += 1
           next
         end
-        if data[key].id == :MIMIKYU && stat == :HP
+        if [:MIMIKYU,:ROTOM].include?(data[key].id) && stat == :HP
           data[key].base_stats[stat] = data[key].base_stats[stat]
           bst -= data[key].base_stats[stat]
           rem_stat += data[key].base_stats[stat]

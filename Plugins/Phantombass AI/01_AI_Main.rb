@@ -207,12 +207,16 @@ class PBAI
       for i in projection.moves
         move.push(i) if i.pp > 0
       end
-      move_index = rand(move.length)
-      move_target = 0
-      # Register our move
-      @battle.pbRegisterMove(idxBattler, move_index, false)
-      # Register the move's target
-      @battle.pbRegisterTarget(idxBattler, move_target)
+      if move == []
+        @battle.pbAutoChooseMove(idxBattler)
+      else
+        move_index = rand(move.length)
+        move_target = 0
+        # Register our move
+        @battle.pbRegisterMove(idxBattler, move_index, false)
+        # Register the move's target
+        @battle.pbRegisterTarget(idxBattler, move_target)
+      end
     elsif data[0] == :SWITCH
       # [:SWITCH, pokemon_index]
       @battle.pbRegisterSwitch(idxBattler, data[1])
@@ -983,7 +987,7 @@ class PBAI
       $d_switch = 0
       $d_switch = 1 if $doubles_switch != nil
       $target_strong_moves = false
-      switch = ai_should_switch?
+      switch = self.has_role?(:NONE) ? false : ai_should_switch?
       # Get the optimal switch choice by type
       scores = get_optimal_switch_choice
       # If we should switch due to effects in battle
