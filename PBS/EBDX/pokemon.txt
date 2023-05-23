@@ -9385,7 +9385,6 @@ BattlerPlayerY          = 62
 BattlerEnemyX           = 6
 #-------------------------------
 [WYRDEER]
-SpriteScaleEnemy		= 1
 BattlerEnemyY           = 35
 BattlerAltitude         = 0
 BattlerPlayerX          = 7
