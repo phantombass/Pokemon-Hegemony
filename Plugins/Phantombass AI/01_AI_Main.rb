@@ -207,7 +207,7 @@ class PBAI
       for i in projection.moves
         move.push(i) if i.pp > 0
       end
-      if move == []
+      if move.length == 0
         @battle.pbAutoChooseMove(idxBattler)
       else
         move_index = rand(move.length)
