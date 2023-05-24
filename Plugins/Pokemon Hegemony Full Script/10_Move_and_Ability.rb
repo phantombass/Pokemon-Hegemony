@@ -24,7 +24,7 @@ module BattleHandlers
   end
 
   def self.triggerOnTerrainChange(ability, battler, battle)
-    OnTerrainChange.trigger(ability, battler, battle)
+    OnTerrainChangeAbility.trigger(ability, battler, battle)
   end
 end
 #===============================================================================
@@ -5274,21 +5274,27 @@ end
 
 class PokeBattle_Move_525 < PokeBattle_Move
   def pbEffectGeneral(user)
+    terrain_change = false
     case @battle.field.terrain
     when :Electric
       @battle.pbDisplay(_INTL("The electricity disappeared from the battlefield."))
+      terrain_change = true
     when :Grassy
       @battle.pbDisplay(_INTL("The grass disappeared from the battlefield."))
+      terrain_change = true
     when :Misty
       @battle.pbDisplay(_INTL("The mist disappeared from the battlefield."))
+      terrain_change = true
     when :Psychic
       @battle.pbDisplay(_INTL("The weirdness disappeared from the battlefield."))
+      terrain_change = true
     when :Poison
       @battle.pbDisplay(_INTL("The toxic waste disappeared from the battlefield."))
+      terrain_change = true
     end
     @battle.field.terrain = :None
     @battle.eachBattler do |battler| 
-      battler.pbAbilityOnTerrainChange
+      battler.pbAbilityOnTerrainChange if terrain_change == true
     end
   end
 end
