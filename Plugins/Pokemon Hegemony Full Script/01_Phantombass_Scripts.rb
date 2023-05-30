@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.3.7"
+  GAME_VERSION = "4.3.8"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -445,20 +445,21 @@ class PokeBattle_Battler
     return false if !check_item
     item_data = GameData::Item.get(check_item)
     return true if item_data.is_mail?
+    return true if item_data.is_mega_stone?
     return false if @effects[PBEffects::Transform]
     # Items that change a Pokémon's form
-    if mega?   # Check if item was needed for this Mega Evolution
-      return true if @pokemon.species_data.mega_stone == item_data.id
-    else   # Check if item could cause a Mega Evolution
-      GameData::Species.each do |data|
-        next if data.species != @species || data.unmega_form != @form
-        return true if data.mega_stone == item_data.id
-      end
-    end
-    if check_item == :ROTOMMULTITOOL || check_item == :CASTFORMITE
+    #if mega?   # Check if item was needed for this Mega Evolution
+    #  return true if @pokemon.species_data.mega_stone == item_data.id
+    #else   # Check if item could cause a Mega Evolution
+    #  GameData::Species.each do |data|
+    #    next if data.species != @species || data.unmega_form != @form
+    #    return true if data.mega_stone == item_data.id
+    #  end
+    #end
+    if item_data == :ROTOMMULTITOOL || item_data == :CASTFORMITE || item_data == :REDORB || item_data == :BLUEORB
       return true
     end
-    if ability_orb_held?(check_item)
+    if ability_orb_held?(item_data)
       return true
     end
     # Other unlosable items
