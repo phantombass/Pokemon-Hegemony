@@ -9260,17 +9260,17 @@ Pokemon = CASTFORM,95
 #Level Trainer
 #-------------------------------
 [SCIENTIST1,Nivel]
-Pokemon = AUDINO,15
+Pokemon = BLISSEY,15
 	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
-Pokemon = AUDINO,15
+Pokemon = BLISSEY,15
 	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
-Pokemon = AUDINO,15
+Pokemon = BLISSEY,15
 	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
-Pokemon = AUDINO,15
+Pokemon = BLISSEY,15
 	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
-Pokemon = AUDINO,15
+Pokemon = BLISSEY,15
 	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
-Pokemon = AUDINO,15
+Pokemon = BLISSEY,15
 	Moves = MEMENTO,MEMENTO,MEMENTO,MEMENTO
 #-------------------------------
 [SCIENTIST1,Nivel,1]
