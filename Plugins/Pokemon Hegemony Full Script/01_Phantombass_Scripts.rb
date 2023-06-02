@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.3.8"
+  GAME_VERSION = "4.4.0"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -82,6 +82,7 @@ module Game
     $game_player.refresh
     $PokemonEncounters = PokemonEncounters.new
     $PokemonEncounters.setup($game_map.map_id)
+    $PokemonGlobal.repel = 0
     $game_map.autoplay
     $game_map.update
   end
@@ -165,6 +166,7 @@ def PokemonLoadScreen
         write_version
         Game.load(@save_data)
         reset_custom_variables
+        $PokemonGlobal.repel = 0
         $repel_toggle = true
         return
       when cmd_new_game

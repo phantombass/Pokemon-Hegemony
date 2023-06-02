@@ -2296,14 +2296,14 @@ class PokemonPartyScreen
       if !pkmn.egg?
         if pkmn.mail
           commands[cmdMail = commands.length]     = _INTL("Mail")
-          commands[cmdRelearn = commands.length]   = _INTL("Relearn Moves") if $game_switches[197] == false
+          commands[cmdRelearn = commands.length]   = _INTL("Relearn Moves") if $game_switches[197] == false && $game_switches[906] == false
           commands[cmdEgg = commands.length]   = _INTL("Egg Moves") if $game_switches[197] == false && $game_switches[915] == true
           commands[cmdEvolve = commands.length]   = _INTL("Evolve")
           commands[cmdName = commands.length]     = _INTL("Nickname")
         else
           commands[cmdItem = commands.length]     = _INTL("Item")
           commands[cmdRelearn = commands.length]   = _INTL("Relearn Moves") if $game_switches[197] == false
-          commands[cmdEgg = commands.length]   = _INTL("Egg Moves") if $game_switches[197] == false && $game_switches[915] == true
+          commands[cmdEgg = commands.length]   = _INTL("Egg Moves") if $game_switches[197] == false && $game_switches[915] == true && $game_switches[906] == false
           commands[cmdEvolve = commands.length]   = _INTL("Evolve")
           commands[cmdName = commands.length]     = _INTL("Nickname")
         end
