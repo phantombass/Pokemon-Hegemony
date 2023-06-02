@@ -25,7 +25,7 @@ module EliteBattle
 
   def self.ironmonKaizo
     # list of all possible rules
-    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES, :STATS]
+    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES, :STATS, :MOVES]
     # list of rule descriptions
     # default
     added = []
@@ -247,7 +247,6 @@ module EliteBattle
     data = load_data("Data/species.dat")
     move_data = load_data("Data/moves.dat")
     move_list = []
-    moves = []
     $new_moves = {
       :pokemon => [],
       :moves => []
@@ -258,15 +257,19 @@ module EliteBattle
       move_list.push(move) if !move.is_a?(Integer)
     end
     for key in data.keys
+      moveset = []
       species = data[key].id
       next if $new_moves[:pokemon].include?(species)
       ind = -1
       for i in data[key].moves
+        moves = []
         ind += 1
         i[1] = move_list[rand(move_list.length)]
-        moves[ind] = [i[0],i[1]]
+        moves.push(i[0])
+        moves.push(i[1])
+        moveset.push(moves)
       end
-      $new_moves[:moves].push(moves)
+      $new_moves[:moves].push(moveset)
       $new_moves[:pokemon].push(data[key].id)
     end
     $game_variables[973] = $new_moves
@@ -386,7 +389,7 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   def self.randomizerSelection
     # list of all possible rules
-    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES, :STATS]
+    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES, :STATS, :MOVES]
     # list of rule descriptions
     desc = [
       _INTL("Randomize Trainer parties"),
@@ -395,8 +398,8 @@ module EliteBattle
       _INTL("Randomize Gifted Pokémon"),
       _INTL("Randomize Items"),
       _INTL("Randomize Abilities"),
-      _INTL("Randomize Base Stats")
-      #_INTL("Randomize Level-Up Moves")
+      _INTL("Randomize Base Stats"),
+      _INTL("Randomize Level-Up Moves")
     ]
     # default
     added = []; cmd = 0
@@ -656,7 +659,7 @@ def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
   trainer_data = GameData::Trainer.try_get(tr_type, tr_name, tr_version)
   idx = -1
   new_trainers = $game_variables[971]
-  if new_trainers != 0 && $game_switches[RandBoss::Var] && EliteBattle.randomizerOn?
+  if new_trainers != 0 && $game_switches[RandBoss::Var] == false && EliteBattle.randomizerOn?
     for i in new_trainers[:trainer]
       idx += 1
       break if i[0] == tr_type && i[1] == tr_name && i[2] == tr_version
