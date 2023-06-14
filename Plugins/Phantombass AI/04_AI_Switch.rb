@@ -734,7 +734,10 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	next switch
 end
 
-
+PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
+	switch = false if battler.effects[PBEffects::PowerTrick]
+	next switch
+end
 
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	next if $switch_flags[:switch] == nil
