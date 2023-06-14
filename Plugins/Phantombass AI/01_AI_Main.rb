@@ -522,6 +522,8 @@ class PBAI
 
       $target = []
       $target_ind = -1
+      rand_trigger = false
+      immune = []
 
       # Calculates whether to use an item
       item_score = get_item_score
@@ -557,6 +559,9 @@ class PBAI
         if target.index != 1 && target.index != 3
           set_flags(target) if $game_switches[LvlCap::Expert]
         end
+        if target.hp < target.totalhp/5 && !$spam_block_flags[:no_priority_flag].include?(target) && self.turnCount > 0
+          rand_trigger = true
+        end
         PBAI.log("Moves for #{@battler.pokemon.name} against #{target.pokemon.name}")
         # Calculate a score for all the user's moves
         for i in 0..3
@@ -565,6 +570,7 @@ class PBAI
             next if move.pp <= 0
             target_type = move.pbTarget(@battler)
             target_index = target.index
+            immune.push(i) if target_is_immune?(move,target)
             if [:None,:User,:FoeSide,:BothSides,:UserSide].include?(GameData::Target.get(target_type).id)
               # If move has no targets, affects the user, a side or the whole field
               target_index = -1
@@ -580,22 +586,27 @@ class PBAI
         end
       end
 
-      # If absolutely no good options exist
-      if scores.size == 0
-        # Then just try to use the very first move with pp
-        healing = false
-        protect = false
-        for i in 0...4
-          move = @battler.moves[i]
-          next if move.nil?
-          if move.pp > 0
-            next if @battler.effects[PBEffects::DisableMove] == move.id
-            scores << [i, 1, 0, "internal"]
-          end
-          healing = true if move.healingMove?
+      m_ind = -1
+      s_ind = -1
+      for move in scores
+        m_ind += 1
+        scr = 0
+        scr += 1 if move[1] >= 200
+        if move[1] < 200
+          move[1] = 0
         end
-        user.flags[:should_heal] = true if healing == true
-        user.flags[:should_protect] = true if healing == false
+      end
+
+      # If absolutely no good options exist
+      if scores.size == 0 || scr == 0 || rand_trigger == true
+        # Then just try to use the very first move with pp
+        move = []
+        for i in 0...4
+          m = @battler.moves[i]
+          move.push(i) if m.pp > 0 && !m.nil? && @battler.effects[PBEffects::DisableMove] != m.id && !m.statusMove? && m.id != :FAKEOUT && !immune.include?(i)
+        end
+        scores << [move[rand(move.length)] , 1, 0, "internal"]
+        PBAI.log("Random offensive move because of all low scores")
       end
 
       # Map the numeric skill factor to a -4..1 range (not hard bounds)
@@ -1174,21 +1185,10 @@ class PBAI
         score = 0
         PBAI.log("* 0 for the target being immune")
       end
-      if score <= 100
-        score = 0
-        PBAI.log("* 0 to prefer better moves")
-      end
       # Take 10% of the final score if the move is disabled and thus unusable
       if @battler.effects[PBEffects::DisableMove] == move.id
         score = 0
         PBAI.log("* 0 for the move being disabled")
-      end
-      if target.hp < target.totalhp/5 && !$spam_block_flags[:no_priority_flag].include?(target)
-        if move.statusMove?
-          score = 0
-        else
-          score = 300
-        end
       end
       PBAI.log("= #{score}")
       return score
