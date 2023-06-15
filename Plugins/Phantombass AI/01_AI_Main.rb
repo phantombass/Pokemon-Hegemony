@@ -1,4 +1,4 @@
-Essentials::ERROR_TEXT += "[Phantombass AI v2.2]\r\n"
+Essentials::ERROR_TEXT += "[Phantombass AI v2.3]\r\n"
 class PBAI
   attr_reader :battle
   attr_reader :sides
@@ -559,7 +559,7 @@ class PBAI
         if target.index != 1 && target.index != 3
           set_flags(target) if $game_switches[LvlCap::Expert]
         end
-        if target.hp < target.totalhp/5 && !$spam_block_flags[:no_priority_flag].include?(target) && self.turnCount > 0
+        if target.hp < target.totalhp/5 && !$spam_block_flags[:no_priority_flag].include?(target) && self.turnCount > 0 && @battle.doublebattle == false
           rand_trigger = true
         end
         PBAI.log("Moves for #{@battler.pokemon.name} against #{target.pokemon.name}")
@@ -587,16 +587,40 @@ class PBAI
       end
 
       m_ind = -1
-      s_ind = -1
-      for move in scores
-        m_ind += 1
-        scr = 0
-        scr += 1 if move[1] >= 200
-        if move[1] < 200
-          move[1] = 0
+      s_ind = []
+      scr_ind = -1
+      scr = 0
+      if rand_trigger == false
+        for mv in scores
+          m_ind += 1
+          scr += 1 if mv[1] >= 200
+          if mv[1] < 200
+            mv[1] = 0
+          end
+        end
+        for i in scores
+          scr_ind += 1
+          s_ind << [i , scr_ind] if i[1] > 0
+        end
+        if s_ind.length > 1
+          s_ind.sort! do |a,b|
+            ret = b[0][1] <=> a[0][1]
+            next ret if ret != 0
+            next b[0][2] <=> a[0][2]
+          end
+          if s_ind[0][1] == s_ind[1][1]
+            indx = rand(2)
+            s_ind[indx][1] = 0
+            scores[[s_ind][indx][2]] = s_ind[indx]
+          end
+        end
+        for mvs in scores
+          next if s_ind.length <= 1
+          next if mvs[1] == 0
+          next if mvs == s_ind[0][0]
+          mvs[1] = 0
         end
       end
-
       # If absolutely no good options exist
       if scores.size == 0 || scr == 0 || rand_trigger == true
         # Then just try to use the very first move with pp
