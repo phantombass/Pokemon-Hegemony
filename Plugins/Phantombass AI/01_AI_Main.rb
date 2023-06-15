@@ -625,11 +625,11 @@ class PBAI
       if scores.size == 0 || scr == 0 || rand_trigger == true
         # Then just try to use the very first move with pp
         move = []
-        for i in 0...4
+        for i in 0...@battler.moves.length
           m = @battler.moves[i]
           move.push(i) if m.pp > 0 && !m.nil? && @battler.effects[PBEffects::DisableMove] != m.id && !m.statusMove? && m.id != :FAKEOUT && !immune.include?(i)
         end
-        scores << [move[rand(move.length)] , 1, 0, "internal"]
+        scores << [move[rand(move.length)] , 1, 0, "random"]
         PBAI.log("Random offensive move because of all low scores")
       end
 
