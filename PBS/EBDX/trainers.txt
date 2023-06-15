@@ -200,6 +200,15 @@ BattleVS         = classicVS
 [LASS,Sheena,4]
 BattleVS         = classicVS
 #-------------------------------
+[LADY,Edith,4]
+BattleVS         = classicVS
+#-------------------------------
+[LASS,Mary,4]
+BattleVS         = classicVS
+#-------------------------------
+[LASS,Sybil,4]
+BattleVS         = classicVS
+#-------------------------------
 [TEAMROCKET_M,Grunt,100]
 BattleVS         = classicVS
 #-------------------------------
