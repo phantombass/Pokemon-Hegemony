@@ -20,6 +20,7 @@ def reset_custom_variables
   $gym_weather = false
   $gym_hazard = false
   $gym_taunt = false
+  $gym_tailwind = false
   $appliance = nil
   $currentDexSearch = nil
   $repel_toggle = false
@@ -922,6 +923,7 @@ class PokeBattle_Battle
     $mega_flag = 0
     $gym_gimmick = false
     $gym_weather = false
+    $gym_tailwind = false
     $gym_hazard = false
     $gym_taunt = false
     oldDecision = @decision
