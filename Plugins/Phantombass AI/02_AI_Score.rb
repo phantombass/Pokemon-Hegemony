@@ -105,6 +105,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
     # Decrease the score more drastically if it has lower accuracy
     missing *= 2.0
   end
+  missing = 0 if user.hasActiveAbility?(:NOGUARD)
   if missing > 0
     score -= missing
     PBAI.log("- #{missing} for accuracy")
