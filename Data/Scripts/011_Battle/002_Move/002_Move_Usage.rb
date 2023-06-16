@@ -56,6 +56,8 @@ class PokeBattle_Move
   def pbOverrideSuccessCheckPerHit(user,target); return false; end
   def pbCrashDamage(user); end
   def pbInitialEffect(user,targets,hitNum); end
+  def pbDesignateTargetsForHit(targets, hitNum); return targets; end   # For Dragon Darts
+  def pbRepeatHit?; return false; end   # For Dragon Darts
 
   def pbShowAnimation(id,user,targets,hitNum=0,showAnimation=true)
     return if !showAnimation
@@ -283,7 +285,7 @@ class PokeBattle_Move
     end
     if target.damageState.critical
       if numTargets>1
-        @battle.pbDisplay(_INTL("A critical hit on {1}!",target.pbThis(true)))
+        @battle.pbDisplay(_INTL("\rA critical hit on {1}!",target.pbThis(true)))
       else
         @battle.pbDisplay(_INTL("A critical hit!"))
       end
@@ -355,6 +357,8 @@ class PokeBattle_Move
       target.effects[PBEffects::BideDamage] += damage
       target.effects[PBEffects::BideTarget] = user.index
     end
+    target.effects[PBEffects::Comeuppance]       = damage
+    target.effects[PBEffects::ComeuppanceTarget] = user.index
     target.damageState.fainted = true if target.fainted?
     target.lastHPLost = damage             # For Focus Punch
     target.tookDamage = true if damage>0   # For Assurance

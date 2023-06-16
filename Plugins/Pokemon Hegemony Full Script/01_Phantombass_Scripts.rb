@@ -4,8 +4,10 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "1.6.0"
+  GAME_VERSION = "4.4.5"
 end
+
+Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
 
 def write_version
   File.open("version.txt", "wb") { |f|
@@ -13,7 +15,17 @@ def write_version
     f.write("#{version}")
   }
 end
-
+def reset_custom_variables
+  $gym_gimmick = false
+  $gym_weather = false
+  $gym_hazard = false
+  $gym_taunt = false
+  $gym_tailwind = false
+  $appliance = nil
+  $currentDexSearch = nil
+  $repel_toggle = false
+  $mega_flag = 0
+end
 class Game_System
   attr_accessor :level_cap
   alias initialize_cap initialize
@@ -26,7 +38,25 @@ class Game_System
   end
 end
 
-LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,100]
+module RandBoss
+  Var = 990
+end
+
+def randomizer_boss
+  if $game_switches[907]
+    EliteBattle.toggle_randomizer if $game_switches[RandBoss::Var] == false
+    $game_switches[RandBoss::Var] = true
+  end
+end
+
+def randomizer_on
+  if $game_switches[907]
+    EliteBattle.toggle_randomizer if $game_switches[RandBoss::Var]
+    $game_switches[RandBoss::Var] = false
+  end
+end
+
+LEVEL_CAP = [9,13,18,22,27,29,37,40,43,48,55,59,65,68,71,72,76,79,80,83,85,88,90,93,95,98,100]
 
 module Game
   def self.level_cap_update
@@ -35,13 +65,17 @@ module Game
     $game_variables[106] = LEVEL_CAP[$game_system.level_cap]
   end
   def self.start_new
+    pbMessage(_INTL("Welcome to Pokémon Hegemony, a complete, non-profit fan game made by Phantombass."))
+    pbMessage(_INTL("If you paid for this, contact the person who sent it to you for a refund immediately."))
+    pbMessage(_INTL("The current version is #{Settings::GAME_VERSION}, which includes a full post-game story."))
+    pbMessage(_INTL("I hope you enjoy your journey!"))
     if $game_map && $game_map.events
       $game_map.events.each_value { |event| event.clear_starting }
     end
     $game_temp.common_event_id = 0 if $game_temp
     $PokemonTemp.begunNewGame = true
     $game_system.initialize
-    MobileMysteryGift.initialize
+    reset_custom_variables
     $scene = Scene_Map.new
     SaveData.load_new_game_values
     $MapFactory = PokemonMapFactory.new($data_system.start_map_id)
@@ -49,6 +83,7 @@ module Game
     $game_player.refresh
     $PokemonEncounters = PokemonEncounters.new
     $PokemonEncounters.setup($game_map.map_id)
+    $PokemonGlobal.repel = 0
     $game_map.autoplay
     $game_map.update
   end
@@ -73,9 +108,28 @@ module Game
       $PokemonSystem.language = pbChooseLanguage if save_data.empty?
       pbLoadMessages('Data/' + Settings::LANGUAGES[$PokemonSystem.language][1])
     end
+    reset_custom_variables
     write_version
   end
 end
+
+module DailyE4
+  Variable = 70
+  TimeNow = 71
+  LastTime = 72
+end
+
+Events.onMapChange += proc {| sender, e |
+    # E4 Setting
+    time = pbGetTimeNow
+    rotom_fix
+    $game_variables[DailyE4::LastTime] = time.day
+    if $game_variables[DailyE4::TimeNow] > $game_variables[DailyE4::LastTime] || $game_variables[DailyE4::TimeNow]<$game_variables[DailyE4::LastTime]
+      $game_variables[DailyE4::Variable] = 1+rand(100)
+      $game_variables[DailyE4::TimeNow] = $game_variables[DailyE4::LastTime]
+    end
+    pbResetAllRoamers
+}
 
 def PokemonLoadScreen
   def pbStartLoadScreen
@@ -112,17 +166,17 @@ def PokemonLoadScreen
         @scene.pbEndScene
         write_version
         Game.load(@save_data)
+        reset_custom_variables
+        $PokemonGlobal.repel = 0
         $repel_toggle = true
-        $appliance = nil
-        $currentDexSearch = nil
         return
       when cmd_new_game
         @scene.pbEndScene
         write_version
         Game.start_new
-        $repel_toggle = true
-        $appliance = nil
-        $currentDexSearch = nil
+        reset_custom_variables
+        $rotom_fix = true
+        repel_toggle = true
         return
       when cmd_mystery_gift
         pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
@@ -306,25 +360,27 @@ class PokeBattle_Battle
     return true
   end
   def removeAllHazards
-    if @battlers[0].pbOwnSide.effects[PBEffects::StealthRock] || @battlers[0].pbOpposingSide.effects[PBEffects::StealthRock]
-      @battlers[0].pbOwnSide.effects[PBEffects::StealthRock]      = false
-      @battlers[0].pbOpposingSide.effects[PBEffects::StealthRock] = false
-    end
-    if @battlers[0].pbOwnSide.effects[PBEffects::Spikes]>0 || @battlers[0].pbOpposingSide.effects[PBEffects::Spikes]>0
-      @battlers[0].pbOwnSide.effects[PBEffects::Spikes]      = 0
-      @battlers[0].pbOpposingSide.effects[PBEffects::Spikes] = 0
-    end
-    if @battlers[0].pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || @battlers[0].pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
-      @battlers[0].pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
-      @battlers[0].pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
-    end
-    if @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb] || @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb]
-      @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb]      = false
-      @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb] = false
-    end
-    if @battlers[0].pbOwnSide.effects[PBEffects::CometShards] || @battlers[0].pbOpposingSide.effects[PBEffects::CometShards]
-      @battlers[0].pbOwnSide.effects[PBEffects::CometShards]      = false
-      @battlers[0].pbOpposingSide.effects[PBEffects::CometShards] = false
+    if $gym_weather == false
+      if @battlers[0].pbOwnSide.effects[PBEffects::StealthRock] || @battlers[0].pbOpposingSide.effects[PBEffects::StealthRock]
+        @battlers[0].pbOwnSide.effects[PBEffects::StealthRock]      = false
+        @battlers[0].pbOpposingSide.effects[PBEffects::StealthRock] = false
+      end
+      if @battlers[0].pbOwnSide.effects[PBEffects::Spikes]>0 || @battlers[0].pbOpposingSide.effects[PBEffects::Spikes]>0
+        @battlers[0].pbOwnSide.effects[PBEffects::Spikes]      = 0
+        @battlers[0].pbOpposingSide.effects[PBEffects::Spikes] = 0
+      end
+      if @battlers[0].pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || @battlers[0].pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
+        @battlers[0].pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
+        @battlers[0].pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
+      end
+      if @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb] || @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb]
+        @battlers[0].pbOwnSide.effects[PBEffects::StickyWeb]      = false
+        @battlers[0].pbOpposingSide.effects[PBEffects::StickyWeb] = false
+      end
+      if @battlers[0].pbOwnSide.effects[PBEffects::CometShards] || @battlers[0].pbOpposingSide.effects[PBEffects::CometShards]
+        @battlers[0].pbOwnSide.effects[PBEffects::CometShards]      = false
+        @battlers[0].pbOpposingSide.effects[PBEffects::CometShards] = false
+      end
     end
   end
   def poisonAllPokemon
@@ -390,19 +446,23 @@ class PokeBattle_Battler
   end
   def unlosableItem?(check_item)
     return false if !check_item
-    return true if GameData::Item.get(check_item).is_mail?
+    item_data = GameData::Item.get(check_item)
+    return true if item_data.is_mail?
+    return true if item_data.is_mega_stone?
     return false if @effects[PBEffects::Transform]
-    #return true if itemCorroded?
     # Items that change a Pokémon's form
-    if mega?   # Check if item was needed for this Mega Evolution
-      return true if @pokemon.species_data.mega_stone == check_item
-    else   # Check if item could cause a Mega Evolution
-      GameData::Species.each do |data|
-        next if data.species != @species || data.unmega_form != @form
-        return true if data.mega_stone == check_item
-      end
+    #if mega?   # Check if item was needed for this Mega Evolution
+    #  return true if @pokemon.species_data.mega_stone == item_data.id
+    #else   # Check if item could cause a Mega Evolution
+    #  GameData::Species.each do |data|
+    #    next if data.species != @species || data.unmega_form != @form
+    #    return true if data.mega_stone == item_data.id
+    #  end
+    #end
+    if item_data == :ROTOMMULTITOOL || item_data == :CASTFORMITE || item_data == :REDORB || item_data == :BLUEORB
+      return true
     end
-    if check_item == :ROTOMMULTITOOL || check_item == :WSHARPEDONITE || check_item == :WBLAZIKENITE || check_item == :WGARCHOMPITE || check_item == :WSCEPTILITE || check_item == :WSWAMPERTITE || check_item == :WCHIMECHONITE || check_item == :CHATOTITE || check_item == :CORVITE || check_item == :EMPOLEONITE || check_item == :TORTERRANITE || check_item == :INFERNITE || check_item == :CHIMECHONITE || check_item == :BEHEEYEMITE || check_item == :CASTFORMITE
+    if ability_orb_held?(item_data)
       return true
     end
     # Other unlosable items
@@ -469,6 +529,20 @@ class Pokemon
          pkmn.status = :BURN
        end
   end
+  def shiny_locked?
+    blacklist = []
+    for i in 899..950
+      blacklist.push(i)
+    end
+    for j in 958..992
+      blacklist.push(j)
+    end
+    for k in 994..1012
+      blacklist.push(k)
+    end
+    pkmn = GameData::Species.get(self.species).id_number
+    return blacklist.include?(pkmn)
+  end
 end
 
 Events.onWildPokemonCreate+=proc {|sender,e|
@@ -489,6 +563,9 @@ Events.onWildPokemonCreate+=proc {|sender,e|
   if $game_map.map_id == 110
     formRand = rand(29)
     pokemon.form = formRand
+  end
+  if pokemon.shiny_locked?
+    pokemon.shiny = false
   end
 }
 
@@ -534,6 +611,7 @@ def pbStartOver(gameover=false)
             PokemonSelection.restore
           end
           $CanToggle = true
+          $gym_gimmick = false
           $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
           $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
           $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
@@ -542,17 +620,23 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
-          for i in 197..202
+          for i in 197..203
             $game_switches[i] = false
           end
           $game_switches[209] = false
+          $game_switches[210] = false
           $game_switches[899] = false
+          if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
+          randomizer_on
         elsif $game_map.map_id == 144 || $game_map.map_id == 145
           pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You were captured and sent back to the cell after losing the Nuzlocke..."))
           pbCancelVehicles
           pbRemoveDependencies
           $game_switches[Settings::STARTING_OVER_SWITCH] = true
           $CanToggle = true
+          $gym_gimmick = false
           $game_temp.player_new_map_id    = 144
           $game_temp.player_new_x         = 45
           $game_temp.player_new_y         = 6
@@ -560,11 +644,17 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
-          for i in 197..202
+          $game_switches[73] = false
+          for i in 197..203
             $game_switches[i] = false
           end
           $game_switches[209] = false
+          $game_switches[210] = false
           $game_switches[899] = false
+          if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
+          randomizer_on
         end
       else
         if $game_map.map_id == 144 || $game_map.map_id == 145
@@ -573,6 +663,7 @@ def pbStartOver(gameover=false)
           pbRemoveDependencies
           $game_switches[Settings::STARTING_OVER_SWITCH] = true
           $CanToggle = true
+          $gym_gimmick = false
           $game_temp.player_new_map_id    = 144
           $game_temp.player_new_x         = 45
           $game_temp.player_new_y         = 6
@@ -580,11 +671,16 @@ def pbStartOver(gameover=false)
           $game_map.refresh
           $game_switches[119] = false
           $game_switches[94] = false
-          for i in 197..202
+          for i in 197..203
             $game_switches[i] = false
           end
           $game_switches[209] = false
+          $game_switches[210] = false
           $game_switches[899] = false
+          if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
+          randomizer_on
         else
           pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
           pbCancelVehicles
@@ -594,6 +690,7 @@ def pbStartOver(gameover=false)
             PokemonSelection.restore
           end
           $CanToggle = true
+          $gym_gimmick = false
           $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
           $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
           $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
@@ -603,10 +700,15 @@ def pbStartOver(gameover=false)
           $game_switches[119] = false
           $game_switches[94] = false
           $game_switches[209] = false
+          $game_switches[210] = false
           $game_switches[899] = false
-          for i in 197..202
+          for i in 197..203
             $game_switches[i] = false
           end
+          if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
+          randomizer_on
         end
       end
     end
@@ -634,6 +736,7 @@ def pbStartOver(gameover=false)
       $game_switches[Settings::STARTING_OVER_SWITCH] = true
       $game_switches[73] = false
       $CanToggle = true
+      $gym_gimmick = false
       if $PokemonGlobal.pokemonSelectionOriginalParty!=nil
         PokemonSelection.restore
       end
@@ -646,10 +749,15 @@ def pbStartOver(gameover=false)
       $game_switches[119] = false
       $game_switches[94] = false
       $game_switches[209] = false
+      $game_switches[210] = false
       $game_switches[899] = false
-      for i in 197..202
+      for i in 197..203
         $game_switches[i] = false
       end
+      randomizer_on
+      if $game_switches[283] == true && $game_switches[239] == true
+            $game_switches[283] = false
+          end
     else
       $Trainer.heal_party
     end
@@ -742,6 +850,7 @@ class PokeBattle_Battle
     if $game_switches[899] && $game_switches[900]
       pbHegemonyClauses
     end
+    $weather_form = false
     sendOuts = pbSetUpSides
     olditems = []
     pbParty(0).each_with_index do |pkmn,i|
@@ -754,6 +863,7 @@ class PokeBattle_Battle
     @scene.pbStartBattle(self)
     # Show trainers on both sides sending out Pokémon
     pbStartBattleSendOut(sendOuts)
+
     # Weather announcement
     weather_data = GameData::BattleWeather.try_get(@field.weather)
     pbCommonAnimation(weather_data.animation) if weather_data
@@ -761,7 +871,7 @@ class PokeBattle_Battle
     when :Sun         then pbDisplay(_INTL("The sunlight is strong."))
     when :Rain        then pbDisplay(_INTL("It is raining."))
     when :Sandstorm   then pbDisplay(_INTL("A sandstorm is raging."))
-    when :Hail        then pbDisplay(_INTL("Hail is falling."))
+    when :Hail        then pbDisplay(_INTL("Snow is falling."))
     when :HarshSun    then pbDisplay(_INTL("The sunlight is extremely harsh."))
     when :HeavyRain   then pbDisplay(_INTL("It is raining heavily."))
     when :StrongWinds then pbDisplay(_INTL("The wind is strong."))
@@ -811,6 +921,11 @@ class PokeBattle_Battle
 
   def pbEndOfBattle
     $mega_flag = 0
+    $gym_gimmick = false
+    $gym_weather = false
+    $gym_tailwind = false
+    $gym_hazard = false
+    $gym_taunt = false
     oldDecision = @decision
     @decision = 4 if @decision==1 && wildBattle? && @caughtPokemon.length>0
     case oldDecision
@@ -1106,7 +1221,7 @@ class PokeBattle_Battle
     # Entry hazards
     # Stealth Rock
     if battler.pbOwnSide.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
-       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage?
+       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage? && !battler.hasActiveAbility?(:SCALER)
       bTypes = battler.pbTypes(true)
       eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
       if !Effectiveness.ineffective?(eff)
@@ -1154,7 +1269,7 @@ class PokeBattle_Battle
     # Toxic Spikes
     if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 && !battler.fainted? &&
        !battler.airborne?
-      if battler.pbHasType?(:POISON)
+      if battler.pbHasType?(:POISON) && !battler.hasActiveAbility?(:MAGICGUARD)
         battler.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
         pbDisplay(_INTL("{1} absorbed the poison spikes!",battler.pbThis))
       elsif battler.pbCanPoison?(nil,false) && battler.takesEntryHazardDamage?
@@ -1197,12 +1312,12 @@ class PokeBattle_Battle
       @field.weatherDuration = 1
     end
     # Weather wears off
-    if @field.weatherDuration==0
+    if @field.weatherDuration==0 && $gym_weather == false
       case @field.weather
       when :Sun       then pbDisplay(_INTL("The sunlight faded."))
       when :Rain      then pbDisplay(_INTL("The rain stopped."))
       when :Sandstorm then pbDisplay(_INTL("The sandstorm subsided."))
-      when :Hail      then pbDisplay(_INTL("The hail stopped."))
+      when :Hail      then pbDisplay(_INTL("The snow stopped."))
       when :ShadowSky then pbDisplay(_INTL("The shadow sky faded."))
       when :Starstorm then pbDisplay(_INTL("The stars have faded."))
       when :Storm then pbDisplay(_INTL("The storm has calmed."))
@@ -1239,7 +1354,7 @@ class PokeBattle_Battle
 #    when :Sun         then pbDisplay(_INTL("The sunlight is strong."))
 #    when :Rain        then pbDisplay(_INTL("Rain continues to fall."))
     when :Sandstorm   then pbDisplay(_INTL("The sandstorm is raging."))
-    when :Hail        then pbDisplay(_INTL("The hail is crashing down."))
+    when :Hail        then pbDisplay(_INTL("The snow is falling."))
 #    when :HarshSun    then pbDisplay(_INTL("The sunlight is extremely harsh."))
 #    when :HeavyRain   then pbDisplay(_INTL("It is raining heavily."))
 #    when :StrongWinds then pbDisplay(_INTL("The wind is strong."))
@@ -1265,9 +1380,9 @@ class PokeBattle_Battle
         b.pbFaint if b.fainted?
       when :Hail
         next if !b.takesHailDamage?
-        pbDisplay(_INTL("{1} is buffeted by the hail!",b.pbThis))
-        @scene.pbDamageAnimation(b)
-        b.pbReduceHP(b.totalhp/16,false)
+        pbDisplay(_INTL("{1} is buffeted by the hail!",b.pbThis)) if Settings::GEN_9_SNOW == false
+        @scene.pbDamageAnimation(b) if Settings::GEN_9_SNOW == false
+        b.pbReduceHP(b.totalhp/16,false) if Settings::GEN_9_SNOW == false
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :ShadowSky
@@ -1313,26 +1428,26 @@ class PokeBattle_Battle
         b.pbItemHPHealCheck
         b.pbFaint if b.fainted?
       when :Windy
-        next if !b.pbOwnSide.effects[PBEffects::StealthRock] && b.pbOwnSide.effects[PBEffects::Spikes] == 0 && !b.pbOwnSide.effects[PBEffects::StickyWeb] && b.pbOwnSide.effects[PBEffects::ToxicSpikes] == 0
-        if b[0].pbOwnSide.effects[PBEffects::StealthRock] || b[0].pbOpposingSide.effects[PBEffects::StealthRock]
-          b[0].pbOwnSide.effects[PBEffects::StealthRock]      = false
-          b[0].pbOpposingSide.effects[PBEffects::StealthRock] = false
+        next if !b.pbOwnSide.effects[PBEffects::StealthRock] && !b.pbOwnSide.effects[PBEffects::CometShards] && b.pbOwnSide.effects[PBEffects::Spikes] == 0 && !b.pbOwnSide.effects[PBEffects::StickyWeb] && b.pbOwnSide.effects[PBEffects::ToxicSpikes] == 0
+        if b.pbOwnSide.effects[PBEffects::StealthRock] || b.pbOpposingSide.effects[PBEffects::StealthRock]
+          b.pbOwnSide.effects[PBEffects::StealthRock]      = false
+          b.pbOpposingSide.effects[PBEffects::StealthRock] = false
         end
-        if b[0].pbOwnSide.effects[PBEffects::Spikes]>0 || b[0].pbOpposingSide.effects[PBEffects::Spikes]>0
-          b[0].pbOwnSide.effects[PBEffects::Spikes]      = 0
-          b[0].pbOpposingSide.effects[PBEffects::Spikes] = 0
+        if b.pbOwnSide.effects[PBEffects::Spikes]>0 || b.pbOpposingSide.effects[PBEffects::Spikes]>0
+          b.pbOwnSide.effects[PBEffects::Spikes]      = 0
+          b.pbOpposingSide.effects[PBEffects::Spikes] = 0
         end
-        if b[0].pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || b[0].pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
-          b[0].pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
-          b[0].pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
+        if b.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 || b.pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
+          b.pbOwnSide.effects[PBEffects::ToxicSpikes]      = 0
+          b.pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
         end
-        if b[0].pbOwnSide.effects[PBEffects::StickyWeb] || b[0].pbOpposingSide.effects[PBEffects::StickyWeb]
-          b[0].pbOwnSide.effects[PBEffects::StickyWeb]      = false
-          b[0].pbOpposingSide.effects[PBEffects::StickyWeb] = false
+        if b.pbOwnSide.effects[PBEffects::StickyWeb] || b.pbOpposingSide.effects[PBEffects::StickyWeb]
+          b.pbOwnSide.effects[PBEffects::StickyWeb]      = false
+          b.pbOpposingSide.effects[PBEffects::StickyWeb] = false
         end
-        if b[0].pbOwnSide.effects[PBEffects::CometShards] || b[0].pbOpposingSide.effects[PBEffects::CometShards]
-          b[0].pbOwnSide.effects[PBEffects::CometShards]      = false
-          b[0].pbOpposingSide.effects[PBEffects::CometShards] = false
+        if b.pbOwnSide.effects[PBEffects::CometShards] || b.pbOpposingSide.effects[PBEffects::CometShards]
+          b.pbOwnSide.effects[PBEffects::CometShards]      = false
+          b.pbOpposingSide.effects[PBEffects::CometShards] = false
         end
       end
     end
@@ -1362,7 +1477,6 @@ class PokeBattle_Battler
     end
     # Reset form
     @battle.peer.pbOnLeavingBattle(@battle,@pokemon,@battle.usedInBattle[idxOwnSide][@index/2])
-    $mega_flag = 1 if mega?
     @pokemon.makeUnmega if mega?
     @pokemon.makeUnprimal if primal?
     self.damage_done = 0 # Yamask
@@ -1376,11 +1490,9 @@ class PokeBattle_Battler
     @battle.pbSetBattled(self)
   end
   def canConsumeBerry?
-    abil = []
-    @battle.eachOtherSideBattler do |b|
-      abil.push(b.ability)
-    end
-    return false if [:UNNERVE,:ASONEICE,:ASONEGHOST].include?(abil)
+    return false if @battle.pbCheckOpposingAbility(:UNNERVE,@index)
+    return false if @battle.pbCheckOpposingAbility(:ASONEICE,@index)
+    return false if @battle.pbCheckOpposingAbility(:ASONEGHOST,@index)
     return true
   end
   def takesEntryHazardDamage?
@@ -1510,7 +1622,24 @@ class PokeBattle_Battler
     return true if @effects[PBEffects::Ingrain]
     return true if @effects[PBEffects::NoRetreat]
     return true if @battle.field.effects[PBEffects::FairyLock] > 0
+    return true if @effects[PBEffects::CommanderDondozo] >= 0
+    return true if @effects[PBEffects::CommanderTatsugiri]
     return false
+  end
+  alias proto_pbCheckFormOnWeatherChange pbCheckFormOnWeatherChange
+  def pbCheckFormOnWeatherChange(ability_changed = false)
+    ret = proto_pbCheckFormOnWeatherChange(ability_changed)
+    return ret if ret == false
+    if hasActiveAbility?(:PROTOSYNTHESIS) && !@effects[PBEffects::BoosterEnergy] && @effects[PBEffects::ParadoxStat]
+      if @item == :BOOSTERENERGY
+        pbHeldItemTriggered(@item)
+        @effects[PBEffects::BoosterEnergy] = true
+        @battle.pbDisplay(_INTL("{1} used its Booster Energy to activate Protosynthesis!", pbThis))
+      else
+        @battle.pbDisplay(_INTL("The effects of {1}'s Protosynthesis wore off!", pbThis(true)))
+        @effects[PBEffects::ParadoxStat] = nil
+      end
+    end
   end
 end
 class PokeBattle_Battle
@@ -1521,7 +1650,6 @@ class PokeBattle_Battle
     return true if $DEBUG && Input.press?(Input::CTRL)
     return false if @battlers[idxBattler].effects[PBEffects::SkyDrop]>=0
     return false if !pbHasMegaRing?(idxBattler)
-    return false if $mega_flag == 1
     side  = @battlers[idxBattler].idxOwnSide
     owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
     return @megaEvolution[side][owner]==-1

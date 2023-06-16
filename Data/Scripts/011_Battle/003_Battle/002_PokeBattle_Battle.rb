@@ -55,6 +55,7 @@ class PokeBattle_Battle
   attr_reader   :opponent         # Opponent trainer (or array of trainers)
   attr_accessor :items            # Items held by opponents
   attr_accessor :endSpeeches
+  attr_accessor :doublebattle
   attr_accessor :endSpeechesWin
   attr_accessor :party1starts     # Array of start indexes for each player-side trainer's party
   attr_accessor :party2starts     # Array of start indexes for each opponent-side trainer's party
@@ -108,6 +109,7 @@ class PokeBattle_Battle
     @positions         = []                            # Battler positions
     @battlers          = []
     @sideSizes         = [1,1]   # Single battle, 1v1
+    @doublebattle      = false
     @backdrop          = ""
     @backdropBase      = nil
     @time              = 0
@@ -115,8 +117,12 @@ class PokeBattle_Battle
     @turnCount         = 0
     @decision          = 0
     @caughtPokemon     = []
-    player   = [player] if !player.nil? && !player.is_a?(Array)
-    opponent = [opponent] if !opponent.nil? && !opponent.is_a?(Array)
+    if player && player.is_a?(Array) && player.length==0
+      player = player[0]
+    end
+    if opponent && opponent.is_a?(Array) && opponent.length==0
+      opponent = opponent[0]
+    end
     @player            = player     # Array of Player/NPCTrainer objects, or nil
     @opponent          = opponent   # Array of NPCTrainer objects, or nil
     @items             = nil
@@ -163,6 +169,9 @@ class PokeBattle_Battle
     @moldBreaker       = false
     @runCommand        = 0
     @nextPickupUse     = 0
+    @rage_hit = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
+    @activedAbility  = [Array.new(@party1.length, false), Array.new(@party2.length, false)]
+    @fainted_count   = [0,0]
     if GameData::Move.exists?(:STRUGGLE)
       @struggle = PokeBattle_Move.from_pokemon_move(self, Pokemon::Move.new(:STRUGGLE))
     else
@@ -222,7 +231,7 @@ class PokeBattle_Battle
     when 2
       n = pbSideSize(idxBattler%2)
       return [0,0,1][idxBattler/2] if n==3
-      return idxBattler/2   # Same as [0,1][idxBattler/2], i.e. 2 battler slots
+      return [0,1][idxBattler/2]   # Same as idxBattler/2, i.e. 2 battler slots
     when 3
       return idxBattler/2
     end
@@ -301,6 +310,15 @@ class PokeBattle_Battle
 
   def pbPartyOrder(idxBattler)
     return (opposes?(idxBattler)) ? @party2order : @party1order
+  end
+
+  def pbPartySingleOwner(battlerIndex)
+    party = pbParty(battlerIndex)
+    ownerparty = []
+    for i in 0...party.length
+      ownerparty.push(party[i]) if pbIsOwner?(battlerIndex,i) && !party[i].nil?
+    end
+    return ownerparty
   end
 
   def pbPartyStarts(idxBattler)
@@ -430,6 +448,11 @@ class PokeBattle_Battle
     @battlers.each { |b| yield b if b && !b.fainted? && !b.opposes?(idxBattler) }
   end
 
+  def allSameSideBattlers(idxBattler = 0)
+    idxBattler = idxBattler.index if idxBattler.respond_to?("index")
+    return @battlers.select { |b| b && !b.fainted? && !b.opposes?(idxBattler) }
+  end
+
   def eachOtherSideBattler(idxBattler=0)
     idxBattler = idxBattler.index if idxBattler.respond_to?("index")
     @battlers.each { |b| yield b if b && !b.fainted? && b.opposes?(idxBattler) }
@@ -463,6 +486,17 @@ class PokeBattle_Battle
     eachOtherSideBattler(idxBattler) do |b|
       next if nearOnly && !b.near?(idxBattler)
       return b if b.hasActiveAbility?(abil)
+    end
+    return nil
+  end
+
+  def pbCheckSideAbility(a,pkmn) #checks to see if your side has a pokemon with a certain ability.
+    for i in 0...4 # in order from own first, opposing first, own second, opposing second
+      if @battlers[i].hasActiveAbility?(a)
+        if @battlers[i]==pkmn || @battlers[i]==pkmn.pbPartner
+          return @battlers[i]
+        end
+      end
     end
     return nil
   end

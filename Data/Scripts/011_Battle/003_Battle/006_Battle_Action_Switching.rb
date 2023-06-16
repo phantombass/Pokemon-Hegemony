@@ -355,11 +355,11 @@ class PokeBattle_Battle
       eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
       if !Effectiveness.ineffective?(eff)
         eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
-        oldHP = battler.hp
+        #oldHP = battler.hp
         battler.pbReduceHP(battler.totalhp*eff/8,false)
         pbDisplay(_INTL("Pointed stones dug into {1}!",battler.pbThis))
         battler.pbItemHPHealCheck
-        if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+        if battler.pbAbilitiesOnDamageTaken  # Switched out
           return pbOnActiveOne(battler)   # For replacement battler
         end
       end
@@ -368,11 +368,11 @@ class PokeBattle_Battle
     if battler.pbOwnSide.effects[PBEffects::Spikes]>0 && battler.takesIndirectDamage? &&
        !battler.airborne? && battler.takesEntryHazardDamage?
       spikesDiv = [8,6,4][battler.pbOwnSide.effects[PBEffects::Spikes]-1]
-      oldHP = battler.hp
+      #oldHP = battler.hp
       battler.pbReduceHP(battler.totalhp/spikesDiv,false)
       pbDisplay(_INTL("{1} is hurt by the spikes!",battler.pbThis))
       battler.pbItemHPHealCheck
-      if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+      if battler.pbAbilitiesOnDamageTaken   # Switched out
         return pbOnActiveOne(battler)   # For replacement battler
       end
     end

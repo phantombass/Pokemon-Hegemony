@@ -1,6 +1,7 @@
 class PokeBattle_Battler
   # Fundamental to this object
   attr_reader   :battle
+  attr_reader :personalID
   attr_accessor :index
   # The Pokémon and its properties
   attr_reader   :pokemon
@@ -17,7 +18,7 @@ class PokeBattle_Battler
   attr_accessor :spatk
   attr_accessor :speed
   attr_accessor :stages
-  attr_accessor :role
+  attr_accessor :roles
   attr_reader   :totalhp
   attr_reader   :fainted    # Boolean to mark whether self has fainted properly
   attr_accessor :captured   # Boolean to mark whether self was captured
@@ -45,6 +46,7 @@ class PokeBattle_Battler
   attr_accessor :statsLowered  # Stats have been lowered this round
   attr_accessor :damageState
   attr_accessor :initialHP     # Set at the start of each move's usage
+  attr_accessor :droppedBelowHalfHP 
 
   #=============================================================================
   # Complex accessors
@@ -67,14 +69,27 @@ class PokeBattle_Battler
     return GameData::Ability.try_get(@ability_id)
   end
 
-  def role
-    @role = :NONE if (@role == "" || @role == nil)
-    return GameData::Role.try_get(@role)
+  def roles
+    @roles.push(:NONE) if (@roles == "" || @roles == nil)
+    return @roles
+  end
+
+  def has_role?(role)
+    x = []
+    for i in @roles
+      x.push(i)
+      if role.is_a?(Array)
+        if role.include?(i)
+          return true
+        end
+      end
+    end
+    return x.include?(role) && !role.is_a?(Array)
   end
 
   def role=(value)
     new_role = GameData::Role.try_get(value)
-    @role = (new_role) ? new_role.id : nil
+    @roles.push(new_role) ? new_role.id : nil
   end
 
   def ability=(value)
@@ -282,7 +297,7 @@ class PokeBattle_Battler
       speedMult = BattleHandlers.triggerSpeedCalcItem(self.item,self,speedMult)
     end
     # Other effects
-    speedMult *= 2 if pbOwnSide.effects[PBEffects::Tailwind]>0
+    speedMult *= 2 if (pbOwnSide.effects[PBEffects::Tailwind]>0 || pbOwnSide.effects[PBEffects::Tailwind]<0 && $gym_gimmick == true)
     speedMult /= 2 if pbOwnSide.effects[PBEffects::Swamp]>0
     # Paralysis
     if status == :PARALYSIS && !hasActiveAbility?(:QUICKFEET)
@@ -352,6 +367,10 @@ class PokeBattle_Battler
     return false if !type
     activeTypes = pbTypes(true)
     return activeTypes.include?(GameData::Type.get(type).id)
+  end
+
+  def pbHasType(type)
+    return pbHasType?(type)
   end
 
   def pbHasOtherType?(type)
@@ -525,7 +544,7 @@ class PokeBattle_Battler
     return true if pbHasType?(:FLYING)
     return true if hasActiveAbility?(:LEVITATE) && !@battle.moldBreaker
     return true if hasActiveAbility?(:MULTITOOL) && !@battle.moldBreaker
-    return true if hasActiveItem?(:AIRBALLOON)
+    return true if hasActiveItem?([:AIRBALLOON,:LEVITATEORB])
     return true if @effects[PBEffects::MagnetRise] > 0
     return true if @effects[PBEffects::Telekinesis] > 0
     return false
@@ -551,6 +570,12 @@ class PokeBattle_Battler
 
   def takesIndirectDamage?(showMsg=false)
     return false if fainted?
+    if hasActiveAbility?(:TOXICBOOST) && self.status == :POISON
+      return false
+    end
+    if hasActiveAbility?(:FLAREBOOST) && self.status == :BURN
+      return false
+    end
     if hasActiveAbility?(:MAGICGUARD)
       if showMsg
         @battle.pbShowAbilitySplash(self)
@@ -778,6 +803,10 @@ class PokeBattle_Battler
     @battle.battlers.each { |b| yield b if b && !b.fainted? && b.opposes?(@index) }
   end
 
+  def allAllies
+    return @battle.allSameSideBattlers(@index).reject { |b| b.index == @index }
+  end
+
   # Returns the battler that is most directly opposite to self. unfaintedOnly is
   # whether it should prefer to return a non-fainted battler.
   def pbDirectOpposing(unfaintedOnly=false)
@@ -792,5 +821,9 @@ class PokeBattle_Battler
       return @battle.battlers[i] if @battle.battlers[i]
     end
     return @battle.battlers[(@index^1)]
+  end
+
+  def pbOppositeOpposing
+    return @battle.doublebattle ? @battle.battlers[(@index^3)] : @battle.battlers[(@index^1)]
   end
 end

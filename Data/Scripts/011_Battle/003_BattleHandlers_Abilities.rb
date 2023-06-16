@@ -20,6 +20,12 @@ BattleHandlers::SpeedCalcAbility.add(:SANDRUSH,
   }
 )
 
+BattleHandlers::SpeedCalcAbility.add(:FLOWERGIFT,
+  proc { |ability,battler,mult|
+    next mult * 2 if [:Sun,:HarshSun].include?(battler.battle.pbWeather)
+  }
+)
+
 BattleHandlers::SpeedCalcAbility.add(:SLOWSTART,
   proc { |ability,battler,mult|
     next mult/2 if battler.effects[PBEffects::SlowStart]>0
@@ -35,12 +41,13 @@ BattleHandlers::SpeedCalcAbility.add(:SLUSHRUSH,
 BattleHandlers::SpeedCalcAbility.add(:SURGESURFER,
   proc { |ability,battler,mult|
     next mult*2 if battler.battle.field.terrain == :Electric
+    next mult*2 if battler.battle.pbWeather == :Storm
   }
 )
 
 BattleHandlers::SpeedCalcAbility.add(:SWIFTSWIM,
   proc { |ability,battler,mult|
-    next mult * 2 if [:Rain, :HeavyRain].include?(battler.battle.pbWeather) && !battler.hasUtilityUmbrella?
+    next mult * 2 if [:Rain, :HeavyRain, :Storm].include?(battler.battle.pbWeather) && !battler.hasUtilityUmbrella?
   }
 )
 
@@ -248,6 +255,16 @@ BattleHandlers::AbilityOnStatusInflicted.add(:SYNCHRONIZE,
              battler.pbThis,battler.abilityName,user.pbThis(true))
         end
         user.pbParalyze(nil,msg)
+        battler.battle.pbHideAbilitySplash(battler)
+      end
+    when :FROZEN
+      if user.pbCanFrostbiteSynchronize?(battler)
+        battler.battle.pbShowAbilitySplash(battler)
+        msg = nil
+        if !PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+          msg = _INTL("{1}'s {2} gave {3} frostbite!",battler.pbThis,battler.abilityName,user.pbThis(true))
+        end
+        user.pbFreeze(nil,msg)
         battler.battle.pbHideAbilitySplash(battler)
       end
     end
@@ -598,7 +615,7 @@ BattleHandlers::MoveBlockingAbility.add(:DAZZLING,
   }
 )
 
-BattleHandlers::MoveBlockingAbility.copy(:DAZZLING,:QUEENLYMAJESTY)
+BattleHandlers::MoveBlockingAbility.copy(:DAZZLING,:QUEENLYMAJESTY,:ARMORTAIL)
 
 #===============================================================================
 # MoveImmunityTargetAbility handlers
@@ -854,7 +871,7 @@ BattleHandlers::AccuracyCalcTargetAbility.add(:SANDVEIL,
 
 BattleHandlers::AccuracyCalcTargetAbility.add(:SNOWCLOAK,
   proc { |ability,mods,user,target,move,type|
-    mods[:evasion_multiplier] *= 1.25 if target.battle.pbWeather == :Hail
+    mods[:evasion_multiplier] *= 1.25 if [:Hail,:Sleet].include?(target.battle.pbWeather)
   }
 )
 
@@ -938,7 +955,7 @@ BattleHandlers::DamageCalcUserAbility.add(:FLASHFIRE,
 
 BattleHandlers::DamageCalcUserAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.physicalMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
+    if [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1174,7 +1191,7 @@ BattleHandlers::DamageCalcUserAllyAbility.add(:BATTERY,
 
 BattleHandlers::DamageCalcUserAllyAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.physicalMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
+    if [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1214,7 +1231,7 @@ BattleHandlers::DamageCalcTargetAbility.copy(:FILTER,:SOLIDROCK)
 
 BattleHandlers::DamageCalcTargetAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
+    if [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
       mults[:defense_multiplier] *= 1.5
     end
   }
@@ -1311,7 +1328,7 @@ BattleHandlers::DamageCalcTargetAbilityNonIgnorable.add(:SHADOWSHIELD,
 
 BattleHandlers::DamageCalcTargetAllyAbility.add(:FLOWERGIFT,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    if move.specialMove? && [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
+    if [:Sun, :HarshSun].include?(user.battle.pbWeather) && !target.hasUtilityUmbrella?
       mults[:defense_multiplier] *= 1.5
     end
   }
@@ -2032,7 +2049,7 @@ BattleHandlers::EORWeatherAbility.add(:DRYSKIN,
 
 BattleHandlers::EORWeatherAbility.add(:ICEBODY,
   proc { |ability,weather,battler,battle|
-    next unless weather == :Hail
+    next unless [:Hail,:Sleet].include?(weather)
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
     battler.pbRecoverHP(battler.totalhp/8)
@@ -2108,8 +2125,8 @@ BattleHandlers::EORHealingAbility.add(:HEALER,
 BattleHandlers::EORHealingAbility.add(:HYDRATION,
   proc { |ability,battler,battle|
     next if battler.status == :NONE
-    next if ![:Rain, :HeavyRain].include?(battle.pbWeather)
-    next if !battler.hasUtilityUmbrella?
+    next if ![:Rain,:Storm,:HeavyRain].include?(battle.pbWeather)
+    next if battler.hasUtilityUmbrella?
     battle.pbShowAbilitySplash(battler)
     oldStatus = battler.status
     battler.pbCureStatus(PokeBattle_SceneConstants::USE_ABILITY_SPLASH)
@@ -2176,7 +2193,7 @@ BattleHandlers::EOREffectAbility.add(:BADDREAMS,
       end
       battle.pbHideAbilitySplash(battler)
       b.pbItemHPHealCheck
-      b.pbAbilitiesOnDamageTaken(oldHP)
+      b.pbAbilitiesOnDamageTaken
       b.pbFaint if b.fainted?
     end
   }
@@ -2435,6 +2452,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:ELECTRICSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Electric
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:ELECTRICTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Electric)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }
@@ -2515,6 +2533,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:GRASSYSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Grassy
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:GRASSYTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Grassy)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }
@@ -2560,6 +2579,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:MISTYSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Misty
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:MISTYTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Misty)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }
@@ -2591,6 +2611,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:PSYCHICSURGE,
   proc { |ability,battler,battle|
     next if battle.field.terrain == :Psychic
     battle.pbShowAbilitySplash(battler)
+    battle.scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,battler,battler)
     battle.pbStartTerrain(battler, :Psychic)
     # NOTE: The ability splash is hidden again in def pbStartTerrain.
   }

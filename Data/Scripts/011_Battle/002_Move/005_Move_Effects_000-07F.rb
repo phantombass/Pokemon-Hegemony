@@ -405,20 +405,18 @@ class PokeBattle_Move_019 < PokeBattle_Move
   def worksWithNoTargets?; return true; end
 
   def pbMoveFailed?(user,targets)
-    failed = true
+    has_effect = false
     @battle.eachSameSideBattler(user) do |b|
-      next if b.status == :NONE
-      failed = false
+      has_effect = true if b.status != :NONE
       break
     end
-    if !failed
-      @battle.pbParty(user.index).each do |pkmn|
-        next if !pkmn || !pkmn.able? || pkmn.status == :NONE
-        failed = false
+    if has_effect != true
+      @battle.pbParty(user.index) do |pkmn|
+        has_effect = true if pkmn&.able? && pkmn.status != :NONE
         break
       end
     end
-    if failed
+    if has_effect != true
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -462,8 +460,7 @@ class PokeBattle_Move_019 < PokeBattle_Move
     # 5 version of this move, to make Pokémon out in battle get cured first.
     if pbTarget(user) == :UserSide
       @battle.eachSameSideBattler(user) do |b|
-        next if b.status == :NONE
-        pbAromatherapyHeal(b.pokemon,b)
+        pbAromatherapyHeal(b.pokemon,b) if b.status == :NONE
       end
     end
     # Cure all Pokémon in the user's and partner trainer's party.
@@ -1286,13 +1283,16 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
                     targetOpposingSide.effects[PBEffects::Spikes]>0 ||
                     targetOpposingSide.effects[PBEffects::ToxicSpikes]>0 ||
                     targetOpposingSide.effects[PBEffects::StickyWeb])
-    return false if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
+    return false if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None && $gym_gimmick == false
     return super
   end
 
   def pbEffectAgainstTarget(user,target)
     if target.pbCanLowerStatStage?(@statDown[0],user,self)
       target.pbLowerStatStage(@statDown[0],@statDown[1],user)
+    end
+    if $gym_gimmick == true && target.pbOwnSide.effects[PBEffects::AuroraVeil]<0
+      @battle.pbDisplay(_INTL("The enemy's Aurora Veil stayed up!"))
     end
     if target.pbOwnSide.effects[PBEffects::AuroraVeil]>0
       target.pbOwnSide.effects[PBEffects::AuroraVeil] = 0
@@ -1345,21 +1345,25 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
       @battle.pbDisplay(_INTL("{1} blew away sticky webs!",user.pbThis))
     end
     if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
-      case @battle.field.terrain
-      when :Electric
-        @battle.pbDisplay(_INTL("The electricity disappeared from the battlefield."))
-      when :Grassy
-        @battle.pbDisplay(_INTL("The grass disappeared from the battlefield."))
-      when :Misty
-        @battle.pbDisplay(_INTL("The mist disappeared from the battlefield."))
-      when :Psychic
-        @battle.pbDisplay(_INTL("The weirdness disappeared from the battlefield."))
+      if $gym_gimmick == false
+        case @battle.field.terrain
+        when :Electric
+          @battle.pbDisplay(_INTL("The electricity disappeared from the battlefield."))
+        when :Grassy
+          @battle.pbDisplay(_INTL("The grass disappeared from the battlefield."))
+        when :Misty
+          @battle.pbDisplay(_INTL("The mist disappeared from the battlefield."))
+        when :Psychic
+          @battle.pbDisplay(_INTL("The weirdness disappeared from the battlefield."))
+        end
+        @battle.field.terrain = :None
       end
-      @battle.field.terrain = :None
-    end
-    if @battle.field.weather == :Fog
-      @battle.pbDisplay(_INTL("{1} blew away the deep fog!",user.pbThis))
-      @battle.field.weather = :None
+      if @battle.field.weather == :Fog
+        @battle.pbDisplay(_INTL("{1} blew away the deep fog!",user.pbThis))
+        @battle.field.weather = :None
+      end
+    else
+      @battle.pbDisplay(_INTL("The conditions cannot be removed from the Gym!"))
     end
   end
 end

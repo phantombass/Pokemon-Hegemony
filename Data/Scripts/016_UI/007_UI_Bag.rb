@@ -460,6 +460,7 @@ class PokemonBagScreen
       cmdGive     = -1
       cmdToss     = -1
       cmdDebug    = -1
+      cmdSort     = -1
       commands = []
       # Generate command list
       commands[cmdRead = commands.length]       = _INTL("Read") if itm.is_mail?
@@ -477,6 +478,7 @@ class PokemonBagScreen
       elsif pbCanRegisterItem?(item)
         commands[cmdRegister = commands.length] = _INTL("Register")
       end
+      commands[cmdSort = commands.length]       = _INTL("Sort")
       commands[cmdDebug = commands.length]      = _INTL("Debug") if $DEBUG
       commands[commands.length]                 = _INTL("Cancel")
       # Show commands generated above
@@ -505,6 +507,22 @@ class PokemonBagScreen
             @scene.pbRefresh
           }
         end
+      elsif cmdSort>=0 && command==cmdSort
+        sortarray = []
+        pock = @bag.lastpocket
+        for i in 0...$PokemonBag.pockets[pock].length
+          item = $PokemonBag.pockets[pock][i][0]
+          name = item.name
+          amt = $PokemonBag.pockets[pock][i][1]
+          sortarray.push [item,name,amt]
+        end
+        sortarray.sort! {|a,b| a[1]<=>b[1]}
+        for i in 0...$PokemonBag.pockets[pock].length
+          $PokemonBag.pockets[pock][i][0] = sortarray[i][0]
+          $PokemonBag.pockets[pock][i][1] = sortarray[i][2]
+        end
+        @scene.pbRefresh
+        @scene.pbDisplay(_INTL("Items sorted by name!"))
       elsif cmdToss>=0 && command==cmdToss   # Toss item
         qty = @bag.pbQuantity(item)
         if qty>1

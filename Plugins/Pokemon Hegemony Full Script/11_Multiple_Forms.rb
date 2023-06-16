@@ -39,6 +39,12 @@ MultipleForms.register(:PALKIA,{
   }
 })
 
+MultipleForms.register(:PALAFIN, {
+  "getFormOnLeavingBattle" => proc { |pkmn, battle, usedInBattle, endBattle|
+    next 0 if endBattle || !usedInBattle || pkmn.fainted?
+  }
+})
+
 MultipleForms.register(:ROTOM,{
   "getFormOnLeavingBattle" => proc { |pkmn,battle,usedInBattle,endBattle|
     $appliance = 7 if endBattle
@@ -185,6 +191,21 @@ class PokeBattle_Battler
         pbChangeForm(0,_INTL("{1} transformed!",pbThis))
       end
     end
+    if isSpecies?(:DARMANITAN) && hasActiveAbility?(:ZENMODE) && $weather_form == false
+      if @form == 0 && @battle.pbWeather == (:Sun || :HarshSun)
+        newForm = 2
+        $weather_form = true
+      end
+      if @form == 1 && [:Hail,:Sleet].include?(@battle.pbWeather)
+        newForm = 3
+        $weather_form = true
+      end
+      if newForm != @form
+        @battle.pbShowAbilitySplash(self,true)
+        pbChangeForm(newForm,_INTL("{1} triggered!",abilityName))
+        @battle.pbHideAbilitySplash(self)
+      end
+    end
   end
 end
 
@@ -203,31 +224,63 @@ MultipleForms.copy(:PIKACHU,:EXEGGCUTE)
 
 
 MultipleForms.register(:MIMEJR,{
-  "getForm" => proc { |pkmn|
-    next if pkmn.form_simple >= 2
-    maps = [105,106,107,108,109]
+  "getFormOnCreation" => proc { |pkmn|
+    maps = 83
+    maps = [83,105,106,107,108,109]
     if $game_map && maps.include?($game_map.map_id)
-      next 1  # Mt Nenox
+      next 1  # Boro Town
     end
     next 0
   }
 })
 
-def update_forms_from_glitches
-  pbEachPokemon { |poke,_box|
-    species = poke.species
-    if species == :BASCULIN && poke.obtain_method == 1
-      poke.form = 2
-    end
+MultipleForms.copy(:MIMEJR,:RUFFLET)
+
+def regigigas_open?
+  regi = 0
+  regis = [:REGIROCK,:REGICE,:REGISTEEL,:REGIELEKI,:REGIDRAGO]
+  $Trainer.party.each {|pkmn|
+    regi += 1 if regis.include?(pkmn.species)
   }
-  $glitches_fixed = true
+  return regi == 5
+end
+
+def wartime_regigigas_open?
+  regi = 0
+  regis = [:WREGIROCK,:WREGICE,:WREGISTEEL,:WREGIELEKI,:WREGIDRAGO]
+  $Trainer.party.each {|pkmn|
+    regi += 1 if regis.include?(pkmn.species)
+  }
+  return regi == 5
+end
+
+def keldeo?
+  sword = 0
+  swords = [:VIRIZION,:TERRAKION,:COBALION]
+  $Trainer.party.each {|pkmn|
+    regi += 1 if swords.include?(pkmn.species)
+  }
+  return sword == 3
+end
+
+def enamorus?
+  genie = 0
+  genies = [:LANDORUS,:THUNDURUS,:TORNADUS]
+  $Trainer.party.each {|pkmn|
+    genie += 1 if genies.include?(pkmn.species)
+  }
+  return genie == 3
 end
 
 Events.onMapUpdate+=proc {|sender,e|
-  update_forms_from_glitches if $glitches_fixed != true
+  $game_switches[218] = true
+  $game_switches[284] = true if wartime_regigigas_open?
+  $game_switches[285] = true if regigigas_open?
+  $game_switches[812] = true if keldeo?
+  $game_switches[837] = true if enamorus?
+  $game_switches[53] = true if $game_switches[258] == true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
   setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
-  #$game_switches[218] = true
   $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false && $game_switches[71] == true
   $game_switches[LvlCap::Rival] = false if $game_map.map_id != 251
   $game_switches[LvlCap::Gym] = false if $game_map.map_id != 251
