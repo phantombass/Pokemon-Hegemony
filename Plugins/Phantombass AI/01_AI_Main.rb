@@ -564,7 +564,7 @@ class PBAI
         end
         PBAI.log("Moves for #{@battler.pokemon.name} against #{target.pokemon.name}")
         # Calculate a score for all the user's moves
-        for i in 0..3
+        for i in 0...@battler.moves.length
           move = @battler.moves[i]
           if !move.nil?
             next if move.pp <= 0
@@ -625,9 +625,18 @@ class PBAI
       if scores.size == 0 || scr == 0 || rand_trigger == true
         # Then just try to use the very first move with pp
         move = []
-        for i in 0...@battler.moves.length
-          m = @battler.moves[i]
-          move.push(i) if m.pp > 0 && !m.nil? && @battler.effects[PBEffects::DisableMove] != m.id && !m.statusMove? && m.id != :FAKEOUT && !immune.include?(i)
+        sts = 0
+        if @battler.moves.length == 1
+          move.push(@battler.moves[0])
+        else
+          for i in 0...@battler.moves.length
+            m = @battler.moves[i]
+            sts += 1 if m.statusMove?
+            move.push(i) if m.pp > 0 && !m.nil? && @battler.effects[PBEffects::DisableMove] != m.id && !m.statusMove? && m.id != :FAKEOUT && !immune.include?(i)
+          end
+          if sts == 4 || move == []
+            move.push(@battler.moves[0])
+          end
         end
         scores << [move[rand(move.length)] , 1, 0, "random"]
         PBAI.log("Random offensive move because of all low scores")
@@ -681,14 +690,16 @@ class PBAI
           end
         else
           move_index, score, target, target_name = e
-          name = @battler.moves[move_index].name
-          str += "\nMOVE(#{target_name}) #{name}: #{score} => #{finalPerc}" + " percent"
-          str += " << CHOSEN" if i == idx
-          if i == idx
-            $target_ind = target
-            $chosen_move = @battler.moves[move_index]
+          if !@battle.wildBattle?
+            name = @battler.moves[move_index].name
+            str += "\nMOVE(#{target_name}) #{name}: #{score} => #{finalPerc}" + " percent"
+            str += " << CHOSEN" if i == idx
+            if i == idx
+              $target_ind = target
+              $chosen_move = @battler.moves[move_index]
+            end
+            str += "\n"
           end
-          str += "\n"
         end
       end
       str += "=" * 30
