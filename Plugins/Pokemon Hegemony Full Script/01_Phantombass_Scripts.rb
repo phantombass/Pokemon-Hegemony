@@ -4,11 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-<<<<<<< HEAD
-  GAME_VERSION = "4.4.6"
-=======
-  GAME_VERSION = "4.4.4"
->>>>>>> 0e6f38280bda221e2d3876d84bf21c7032944651
+  GAME_VERSION = "4.4.7"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
