@@ -6470,7 +6470,7 @@ class PokeBattle_Battle
       pbEORCountDownSideEffect(side,PBEffects::Mist,
          _INTL("{1} is no longer protected by mist!",@battlers[side].pbTeam))
       # Tailwind
-      if $gym_tailwind != true
+      if $gym_gimmick != true
         pbEORCountDownSideEffect(side,PBEffects::Tailwind,
            _INTL("{1}'s Tailwind petered out!",@battlers[side].pbTeam))
       end

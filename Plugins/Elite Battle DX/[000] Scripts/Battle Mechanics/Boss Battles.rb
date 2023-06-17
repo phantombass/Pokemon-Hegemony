@@ -139,6 +139,7 @@ module EliteBattle
   # 2v1 boss battle
   #-----------------------------------------------------------------------------
   def self.bossBattle(species, level, partysize = 2, cancatch = false, options = {})
+    $game_switches[908] = true
     data = {
       :species => randomizeSpecies(species, true),
       :level => level,

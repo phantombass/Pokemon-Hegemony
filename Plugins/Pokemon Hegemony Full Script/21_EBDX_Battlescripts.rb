@@ -34,7 +34,7 @@ module BattleScripts
     "turnStart0" => proc do
         @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
         @battle.battlers[1].pbOwnSide.effects[PBEffects::Tailwind] = 1
-        $gym_tailwind = true
+        $gym_gimmick = true
         @scene.pbDisplay("A permanent Tailwind blew in behind the opponent's team!")
     end
   }
@@ -146,7 +146,7 @@ module BattleScripts
       if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
         @battle.battlers[1].pbOwnSide.effects[PBEffects::Tailwind] = 1
-        $gym_tailwind = true
+        $gym_gimmick = true
         @scene.pbDisplay("A permanent Tailwind blew in behind Gail's team!")
       end
     end
