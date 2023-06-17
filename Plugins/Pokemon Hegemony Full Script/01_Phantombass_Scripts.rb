@@ -4,7 +4,11 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
+<<<<<<< HEAD
+  GAME_VERSION = "4.4.6"
+=======
   GAME_VERSION = "4.4.4"
+>>>>>>> 0e6f38280bda221e2d3876d84bf21c7032944651
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -924,6 +928,7 @@ class PokeBattle_Battle
     $gym_weather = false
     $gym_hazard = false
     $gym_taunt = false
+    $game_switches[908] = false
     oldDecision = @decision
     @decision = 4 if @decision==1 && wildBattle? && @caughtPokemon.length>0
     case oldDecision
