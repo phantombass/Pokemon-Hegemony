@@ -282,7 +282,7 @@ class PBAI
       @used_moves = []
       @shown_ability = false
       @shown_item = false
-      @skill = wild_pokemon ? 0 : 200
+      @skill = (wild_pokemon && !$game_switches[908]) ?  0 : 200
       @flags = {}
     end
 
@@ -562,6 +562,9 @@ class PBAI
         if target.hp < target.totalhp/5 && !$spam_block_flags[:no_priority_flag].include?(target) && self.turnCount > 0 && @battle.doublebattle == false
           rand_trigger = true
         end
+        if @battle.wildBattle? && $game_switches[908] == false
+          rand_trigger = true
+        end
         PBAI.log("Moves for #{@battler.pokemon.name} against #{target.pokemon.name}")
         # Calculate a score for all the user's moves
         for i in 0...@battler.moves.length
@@ -635,7 +638,7 @@ class PBAI
             move.push(i) if m.pp > 0 && !m.nil? && @battler.effects[PBEffects::DisableMove] != m.id && !m.statusMove? && m.id != :FAKEOUT && !immune.include?(i)
           end
           if sts == 4 || move == []
-            move.push(@battler.moves[0])
+            move.push(@battler.moves[rand(@battler.moves.length)])
           end
         end
         scores << [move[rand(move.length)] , 1, 0, "random"]
@@ -721,7 +724,7 @@ class PBAI
     #    return [:FLEE, flee_score]
       end
       # Return [move_index, move_target]
-      if idx
+      if idx && !@battle.wildBattle?
         choice = scores[idx]
         move = @battler.moves[choice[0]]
         target = $target[$target_ind%2]
