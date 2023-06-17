@@ -134,7 +134,7 @@ class PokeBattle_Battle
   def pbCalculatePriority(fullCalc=false,indexArray=nil)
     needRearranging = false
     if fullCalc
-      @priorityTrickRoom = (@field.effects[PBEffects::TrickRoom]>0 || @field.effects[PBEffects::TrickRoom]<0)
+      @priorityTrickRoom = (@field.effects[PBEffects::TrickRoom]>0)
       # Recalculate everything from scratch
       randomOrder = Array.new(maxBattlerIndex+1) { |i| i }
       (randomOrder.length-1).times do |i|   # Can't use shuffle! here

@@ -182,7 +182,11 @@ module PokeBattle_BattleCommon
     ultraBeast = [:NIHILEGO, :BUZZWOLE, :PHEROMOSA, :XURKITREE, :CELESTEELA,
                   :KARTANA, :GUZZLORD, :POIPOLE, :NAGANADEL, :STAKATAKA,
                   :BLACEPHALON].include?(pkmn.species)
-    catch_rate = BallHandlers.modifyCatchRate(ball,catch_rate,self,battler,ultraBeast)
+    if !ultraBeast || ball == :BEASTBALL
+      catch_rate = BallHandlers.modifyCatchRate(ball,catch_rate,self,battler,ultraBeast)
+    else
+      catch_rate /= 10
+    end
     # First half of the shakes calculation
     a = battler.totalhp
     b = battler.hp
@@ -192,9 +196,6 @@ module PokeBattle_BattleCommon
       x *= 2.5
     elsif battler.status != :NONE
       x *= 1.5
-    end
-    if $game_switches[75] || $game_switches[LvlCap::Ironmon]
-      x *= 10000
     end
     x = x.floor
     x = 1 if x<1

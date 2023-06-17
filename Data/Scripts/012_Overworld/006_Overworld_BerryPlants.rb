@@ -109,7 +109,7 @@ class BerryPlantSprite
   def updatePlantDetails(berryData)
     return berryData if berryData[0]==0
     berryvalues = GameData::BerryPlant.get(berryData[1])
-    timeperstage = berryvalues.hours_per_stage * 0.1
+    timeperstage = berryvalues.hours_per_stage * 3600
     timenow=pbGetTimeNow
     if berryData.length>6
       # Gen 4 growth mechanisms
@@ -459,7 +459,6 @@ def pbBerryPlant
         return
       end
       $PokemonBag.pbStoreItem(berry,berrycount)
-      playBerryPickME
       if berrycount>1
         pbMessage(_INTL("You picked the {1} \\c[1]{2}\\c[0].\\wtnp[30]",berrycount,itemname))
       else
@@ -522,7 +521,6 @@ def pbPickBerry(berry, qty = 1)
       return
     end
     $PokemonBag.pbStoreItem(berry,qty)
-    playBerryPickME
     if qty>1
       pbMessage(_INTL("You picked the {1} \\c[1]{2}\\c[0].\\wtnp[30]",qty,itemname))
     else

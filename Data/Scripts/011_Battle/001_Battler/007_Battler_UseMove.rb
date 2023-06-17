@@ -337,7 +337,7 @@ class PokeBattle_Battler
         user.pbFaint if user.fainted?
         @battle.pbGainExp   # In case user is KO'd by this
         user.pbItemHPHealCheck
-        if user.pbAbilitiesOnDamageTaken
+        if user.pbAbilitiesOnDamageTaken(oldHP)
           user.pbEffectsOnSwitchIn(true)
         end
       end
@@ -595,21 +595,23 @@ class PokeBattle_Battler
   #=============================================================================
   # Attack a single target
   #=============================================================================
-  def pbProcessMoveHit(move, user, targets, hitNum, skipAccuracyCheck)
+  def pbProcessMoveHit(move,user,targets,hitNum,skipAccuracyCheck)
     return false if user.fainted?
     # For two-turn attacks being used in a single turn
-    move.pbInitialEffect(user, targets, hitNum)
+    move.pbInitialEffect(user,targets,hitNum)
     numTargets = 0   # Number of targets that are affected by this hit
     # Count a hit for Parental Bond (if it applies)
-    user.effects[PBEffects::ParentalBond] -= 1 if user.effects[PBEffects::ParentalBond] > 0
-    user.effects[PBEffects::Ambidextrous] -= 1 if user.effects[PBEffects::Ambidextrous] > 0
-    user.effects[PBEffects::EchoChamber] -= 1 if user.effects[PBEffects::EchoChamber] > 0
+    user.effects[PBEffects::ParentalBond] -= 1 if user.effects[PBEffects::ParentalBond]>0
+    # Redirect Dragon Darts other hits
+    if move.function=="17C" && @battle.pbSideSize(targets[0].index)>1 && hitNum>0
+      targets = pbChangeTargets(move,user,targets,1)
+    end
+    targets.each { |b| b.damageState.resetPerHit }
     # Accuracy check (accuracy/evasion calc)
-    if hitNum == 0 || move.successCheckPerHit?
+    if hitNum==0 || move.successCheckPerHit?
       targets.each do |b|
-        b.damageState.missed = false
         next if b.damageState.unaffected
-        if pbSuccessCheckPerHit(move, user, b, skipAccuracyCheck)
+        if pbSuccessCheckPerHit(move,user,b,skipAccuracyCheck)
           numTargets += 1
         else
           b.damageState.missed     = true
@@ -617,14 +619,10 @@ class PokeBattle_Battler
         end
       end
       # If failed against all targets
-      if targets.length > 0 && numTargets == 0 && !move.worksWithNoTargets?
+      if targets.length>0 && numTargets==0 && !move.worksWithNoTargets?
         targets.each do |b|
           next if !b.damageState.missed || b.damageState.magicCoat
-          pbMissMessage(move, user, b)
-          if user.itemActive?
-            BattleHandlers.triggerUserItemOnMiss(user.item, user, b, move, hitNum, @battle)
-          end
-          break if move.pbRepeatHit?   # Dragon Darts only shows one failure message
+          pbMissMessage(move,user,b)
         end
         move.pbCrashDamage(user)
         user.pbItemHPHealCheck
@@ -633,74 +631,69 @@ class PokeBattle_Battler
       end
     end
     # If we get here, this hit will happen and do something
-    all_targets = targets
-    targets = move.pbDesignateTargetsForHit(targets, hitNum)   # For Dragon Darts
-    targets.each { |b| b.damageState.resetPerHit }
     #---------------------------------------------------------------------------
     # Calculate damage to deal
     if move.pbDamagingMove?
       targets.each do |b|
         next if b.damageState.unaffected
         # Check whether Substitute/Disguise will absorb the damage
-        move.pbCheckDamageAbsorption(user, b)
+        move.pbCheckDamageAbsorption(user,b)
         # Calculate the damage against b
         # pbCalcDamage shows the "eat berry" animation for SE-weakening
         # berries, although the message about it comes after the additional
         # effect below
-        move.pbCalcDamage(user, b, targets.length)   # Stored in damageState.calcDamage
+        move.pbCalcDamage(user,b,targets.length)   # Stored in damageState.calcDamage
         # Lessen damage dealt because of False Swipe/Endure/etc.
-        move.pbReduceDamage(user, b)   # Stored in damageState.hpLost
+        move.pbReduceDamage(user,b)   # Stored in damageState.hpLost
       end
     end
     # Show move animation (for this hit)
-    move.pbShowAnimation(move.id, user, targets, hitNum)
+    move.pbShowAnimation(move.id,user,targets,hitNum)
     # Type-boosting Gem consume animation/message
     if user.effects[PBEffects::GemConsumed] && hitNum == 0
       # NOTE: The consume animation and message for Gems are shown now, but the
       #       actual removal of the item happens in def pbEffectsAfterMove.
-      @battle.pbCommonAnimation("UseItem", user)
+      @battle.pbCommonAnimation("UseItem",user)
       @battle.pbDisplay(_INTL("The {1} strengthened {2}'s power!",
-                              GameData::Item.get(user.effects[PBEffects::GemConsumed]).name, move.name))
+         GameData::Item.get(user.effects[PBEffects::GemConsumed]).name,move.name))
     end
     # Messages about missed target(s) (relevant for multi-target moves only)
-    if !move.pbRepeatHit?
-      targets.each do |b|
-        next if !b.damageState.missed
-        pbMissMessage(move, user, b)
-        if user.itemActive?
-          BattleHandlers.triggerUserItemOnMiss(user.item, user, b, move, hitNum, @battle)
-        end
-      end
+    targets.each do |b|
+      next if !b.damageState.missed
+      pbMissMessage(move,user,b)
     end
     # Deal the damage (to all allies first simultaneously, then all foes
     # simultaneously)
     if move.pbDamagingMove?
       # This just changes the HP amounts and does nothing else
-      targets.each { |b| move.pbInflictHPDamage(b) if !b.damageState.unaffected }
+      targets.each do |b|
+        next if b.damageState.unaffected
+        move.pbInflictHPDamage(b)
+      end
       # Animate the hit flashing and HP bar changes
-      move.pbAnimateHitAndHPLost(user, targets)
+      move.pbAnimateHitAndHPLost(user,targets)
     end
     # Self-Destruct/Explosion's damaging and fainting of user
-    move.pbSelfKO(user) if hitNum == 0
+    move.pbSelfKO(user) if hitNum==0
     user.pbFaint if user.fainted?
     if move.pbDamagingMove?
       targets.each do |b|
         next if b.damageState.unaffected
-        # NOTE: This method is also used for the OHKO special message.
-        move.pbHitEffectivenessMessages(user, b, targets.length)
+        # NOTE: This method is also used for the OKHO special message.
+        move.pbHitEffectivenessMessages(user,b,targets.length)
         # Record data about the hit for various effects' purposes
-        move.pbRecordDamageLost(user, b)
+        move.pbRecordDamageLost(user,b)
       end
       # Close Combat/Superpower's stat-lowering, Flame Burst's splash damage,
       # and Incinerate's berry destruction
       targets.each do |b|
         next if b.damageState.unaffected
-        move.pbEffectWhenDealingDamage(user, b)
+        move.pbEffectWhenDealingDamage(user,b)
       end
       # Ability/item effects such as Static/Rocky Helmet, and Grudge, etc.
       targets.each do |b|
         next if b.damageState.unaffected
-        pbEffectsOnMakingHit(move, user, b)
+        pbEffectsOnMakingHit(move,user,b)
       end
       # Disguise/Endure/Sturdy/Focus Sash/Focus Band messages
       targets.each do |b|
@@ -712,35 +705,35 @@ class PokeBattle_Battler
       @battle.pbPriority(true).each { |b| b.pbItemHPHealCheck }
       # Animate battlers fainting (checks all battlers rather than just targets
       # because Flame Burst's splash damage affects non-targets)
-      @battle.pbPriority(true).each { |b| b.pbFaint if b&.fainted? }
+      @battle.pbPriority(true).each { |b| b.pbFaint if b && b.fainted? }
     end
-    @battle.pbJudgeCheckpoint(user, move)
+    @battle.pbJudgeCheckpoint(user,move)
     # Main effect (recoil/drain, etc.)
     targets.each do |b|
       next if b.damageState.unaffected
-      move.pbEffectAgainstTarget(user, b)
+      move.pbEffectAgainstTarget(user,b)
     end
     move.pbEffectGeneral(user)
-    targets.each { |b| b.pbFaint if b&.fainted? }
+    targets.each { |b| b.pbFaint if b && b.fainted? }
     user.pbFaint if user.fainted?
     # Additional effect
     if !user.hasActiveAbility?(:SHEERFORCE)
       targets.each do |b|
-        next if b.damageState.calcDamage == 0
-        chance = move.pbAdditionalEffectChance(user, b)
-        next if chance <= 0
-        if @battle.pbRandom(100) < chance
-          move.pbAdditionalEffect(user, b)
+        next if b.damageState.calcDamage==0
+        chance = move.pbAdditionalEffectChance(user,b)
+        next if chance<=0
+        if @battle.pbRandom(100)<chance
+          move.pbAdditionalEffect(user,b)
         end
       end
     end
     # Make the target flinch (because of an item/ability)
     targets.each do |b|
       next if b.fainted?
-      next if b.damageState.calcDamage == 0 || b.damageState.substitute
-      chance = move.pbFlinchChance(user, b)
-      next if chance <= 0
-      if @battle.pbRandom(100) < chance
+      next if b.damageState.calcDamage==0 || b.damageState.substitute
+      chance = move.pbFlinchChance(user,b)
+      next if chance<=0
+      if @battle.pbRandom(100)<chance
         PBDebug.log("[Item/ability triggered] #{user.pbThis}'s King's Rock/Razor Fang or Stench")
         b.pbFlinch(user)
       end
@@ -752,17 +745,11 @@ class PokeBattle_Battler
     targets.each do |b|
       next if b.damageState.unaffected
       next if !b.damageState.berryWeakened
-      @battle.pbDisplay(_INTL("The {1} weakened the damage to {2}!", b.itemName, b.pbThis(true)))
+      @battle.pbDisplay(_INTL("The {1} weakened the damage to {2}!",b.itemName,b.pbThis(true)))
       b.pbConsumeItem
     end
-    # Fainting
-    targets.each { |b| b.pbFaint if b&.fainted? }
+    targets.each { |b| b.pbFaint if b && b.fainted? }
     user.pbFaint if user.fainted?
-    # Dragon Darts' second half of attack
-    if move.pbRepeatHit? && hitNum == 0 &&
-       targets.any? { |b| !b.fainted? && !b.damageState.unaffected }
-      pbProcessMoveHit(move, user, all_targets, 1, skipAccuracyCheck)
-    end
     return true
   end
 end

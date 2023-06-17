@@ -216,12 +216,6 @@ def pbSEPlay(param,volume=nil,pitch=nil)
   end
 end
 
-def playBerryPickME
-  if FileTest.audio_exist?("Audio/ME/Berry")
-    pbMEPlay("Berry",80)
-  end
-end
-
 # Stops SE playback.
 def pbSEFade(x=0.0); pbSEStop(x);end
 

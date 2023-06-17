@@ -71,7 +71,7 @@ class PokeBattle_Battler
       end
     end
     # Taunt
-    if (@effects[PBEffects::Taunt]>0 && move.statusMove?)
+    if @effects[PBEffects::Taunt]>0 && move.statusMove?
       if showMessages
         msg = _INTL("{1} can't use {2} after the taunt!",pbThis,move.name)
         (commandPhase) ? @battle.pbDisplayPaused(msg) : @battle.pbDisplay(msg)
@@ -213,13 +213,25 @@ class PokeBattle_Battler
     return true if skipAccuracyCheck
     # Check status problems and continue their effects/cure them
     case @status
+#    when :SLEEP
+#      self.statusCount -= 1
+#      if @statusCount<=0
+#        pbCureStatus
+#      else
+#        pbContinueStatus
+#        if !move.usableWhenAsleep?   # Snore/Sleep Talk
+#          @lastMoveFailed = true
+#          return false
+#        end
+#      end
     when :SLEEP
       self.statusCount -= 1
-      if @statusCount<=0
+      if @battle.pbRandom(100)<20
         pbCureStatus
       else
         pbContinueStatus
-        if !move.usableWhenAsleep?   # Snore/Sleep Talk
+        if @battle.pbRandom(100)<50
+          @battle.pbDisplay(_INTL("{1} is too drowsy to move.",pbThis))
           @lastMoveFailed = true
           return false
         end
@@ -433,7 +445,7 @@ class PokeBattle_Battler
     # Airborne-based immunity to Ground moves
     if move.damagingMove? && move.calcType == :GROUND &&
        target.airborne? && !move.hitsFlyingTargets?
-      if (target.hasActiveAbility?(:LEVITATE) || target.hasActiveAbility?(:MULTITOOL) || target.hasActiveItem?(:LEVITATEORB)) && !@battle.moldBreaker
+      if (target.hasActiveAbility?(:LEVITATE) || target.hasActiveAbility?(:MULTITOOL)) && !@battle.moldBreaker
         @battle.pbShowAbilitySplash(target)
         if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
           @battle.pbDisplay(_INTL("{1} avoided the attack!",target.pbThis))
@@ -455,77 +467,6 @@ class PokeBattle_Battler
         @battle.pbDisplay(_INTL("{1} makes Ground moves miss with Telekinesis!",target.pbThis))
         return false
       end
-    end
-    if move.damagingMove? && move.calcType == :GRASS && target.hasActiveItem?(:SAPSIPPERORB)
-      ability = target.ability_id
-      target.ability_id = :SAPSIPPER
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
-        if target.pbCanRaiseStatStage?(:ATTACK,target)
-          target.pbRaiseStatStage(:ATTACK,1,target)
-          battle.pbDisplay(_INTL("{1}'s {2} Orb boosted its Attack!",target.pbThis,target.abilityName))
-        else
-          battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
-        end
-        @battle.pbHideAbilitySplash(target)
-        user.ability_id = ability
-      end
-      return false
-    end
-    if move.damagingMove? && move.calcType == :ELECTRIC && target.hasActiveItem?(:LIGHTNINGRODORB)
-      ability = target.ability_id
-      target.ability_id = :LIGHTNINGROD
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
-        if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK,target)
-          target.pbRaiseStatStage(:SPECIAL_ATTACK,1,target)
-          battle.pbDisplay(_INTL("{1}'s {2} Orb boosted its Special Attack!",target.pbThis,target.abilityName))
-        else
-          battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
-        end
-        @battle.pbHideAbilitySplash(target)
-        user.ability_id = ability
-      end
-      return false
-    end
-    if move.damagingMove? && move.calcType == :FIRE && target.hasActiveItem?(:FLASHFIREORB)
-      ability = target.ability_id
-      target.ability_id = :FLASHFIRE
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
-        if !target.effects[PBEffects::FlashFire]
-          target.effects[PBEffects::FlashFire] = true
-            battle.pbDisplay(_INTL("The power of {1}'s Fire-type moves rose because of its {2} Orb!",target.pbThis(true),target.abilityName))
-        else
-            battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",
-               target.pbThis,target.abilityName,move.name))
-        end
-        @battle.pbHideAbilitySplash(target)
-        user.ability_id = ability
-      end
-      return false
-    end
-    if move.damagingMove? && move.calcType == :ROCK && target.hasActiveItem?(:SCALERORB)
-      ability = target.ability_id
-      target.ability_id = :SCALER
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
-        battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
-        @battle.pbHideAbilitySplash(target)
-        user.ability_id = ability
-      end
-      return false
-    end
-    if move.damagingMove? && move.calcType == :COSMIC && target.hasActiveItem?(:DIMENSIONBLOCKORB)
-      ability = target.ability_id
-      target.ability_id = :DIMENSIONBLOCK
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
-        battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
-        @battle.pbHideAbilitySplash(target)
-        user.ability_id = ability
-      end
-      return false
     end
     # Immunity to powder-based moves
     if move.powderMove?
@@ -622,5 +563,6 @@ class PokeBattle_Battler
     elsif !move.pbMissMessage(user,target)
       @battle.pbDisplay(_INTL("{1}'s attack missed!",user.pbThis))
     end
+    BattleHandlers.triggerUserItemOnMiss(user.item,user,target,move,@battle)
   end
 end

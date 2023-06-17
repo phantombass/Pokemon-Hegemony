@@ -25,7 +25,7 @@ module GameData
       "Gender"       => [:gender,        "e", { "M" => 0, "m" => 0, "Male" => 0, "male" => 0, "0" => 0,
                                                 "F" => 1, "f" => 1, "Female" => 1, "female" => 1, "1" => 1 }],
       "Nature"       => [:nature,        "e", :Nature],
-      "Roles"         => [:roles,          "*e", :Role],
+      "Role"         => [:role,          "e", :Role],
       "IV"           => [:iv,            "uUUUUU"],
       "EV"           => [:ev,            "uUUUUU"],
       "Happiness"    => [:happiness,     "u"],
@@ -115,80 +115,54 @@ module GameData
       trainer.items     = @items.clone
       trainer.lose_text = self.lose_text
       # Create each Pokémon owned by the trainer
-      randPkmn = $game_variables[971]
-      if $game_variables[971] == 0
-        @pokemon.each do |pkmn_data|
-          species = GameData::Species.get(pkmn_data[:species]).species
-          pkmn = Pokemon.new(species, pkmn_data[:level], trainer, false)
-          trainer.party.push(pkmn)
-          # Set Pokémon's properties if defined
-          if pkmn_data[:form]
-            pkmn.forced_form = pkmn_data[:form] if MultipleForms.hasFunction?(species, "getForm")
-            pkmn.form_simple = pkmn_data[:form]
-          end
-          pkmn.item = pkmn_data[:item]
-          if pkmn_data[:moves] && pkmn_data[:moves].length > 0
-            pkmn_data[:moves].each { |move| pkmn.learn_move(move) }
-          else
-            pkmn.reset_moves
-          end
-          if !pkmn_data[:roles]
-            pkmn.add_role(:NONE)
-          else
-            for i in pkmn_data[:roles]
-              pkmn.add_role(i)
-            end
-          end
-          pkmn.ability_index = pkmn_data[:ability_index]
-          pkmn.ability = pkmn_data[:ability]
-          pkmn.gender = pkmn_data[:gender] || ((trainer.male?) ? 0 : 1)
-          pkmn.shiny = (pkmn_data[:shininess]) ? true : false
-          pkmn.square_shiny = (pkmn_data[:square_shiny]) ? true : false
-          if pkmn_data[:nature]
-            pkmn.nature = pkmn_data[:nature]
-          else
-            nature = pkmn.species_data.id_number + GameData::TrainerType.get(trainer.trainer_type).id_number
-            pkmn.nature = nature % (GameData::Nature::DATA.length / 2)
-          end
-          GameData::Stat.each_main do |s|
-            if pkmn_data[:iv]
-              pkmn.iv[s.id] = pkmn_data[:iv][s.id]
-            else
-              pkmn.iv[s.id] = [pkmn_data[:level] / 2, Pokemon::IV_STAT_LIMIT].min
-            end
-            if pkmn_data[:ev]
-              pkmn.ev[s.id] = pkmn_data[:ev][s.id]
-            else
-              pkmn.ev[s.id] = [pkmn_data[:level] * 3 / 2, Pokemon::EV_LIMIT / 6].min
-            end
-          end
-          pkmn.happiness = pkmn_data[:happiness] if pkmn_data[:happiness]
-          pkmn.name = pkmn_data[:name] if pkmn_data[:name] && !pkmn_data[:name].empty?
-          if pkmn_data[:shadowness]
-            pkmn.makeShadow
-            pkmn.update_shadow_moves(true)
-            pkmn.shiny = false
-          end
-          pkmn.poke_ball = pkmn_data[:poke_ball] if pkmn_data[:poke_ball]
-          pkmn.calc_stats
+      @pokemon.each do |pkmn_data|
+        species = GameData::Species.get(pkmn_data[:species]).species
+        pkmn = Pokemon.new(species, pkmn_data[:level], trainer, false)
+        trainer.party.push(pkmn)
+        # Set Pokémon's properties if defined
+        if pkmn_data[:form]
+          pkmn.forced_form = pkmn_data[:form] if MultipleForms.hasFunction?(species, "getForm")
+          pkmn.form_simple = pkmn_data[:form]
         end
-      else
-        idx = -1
-        for i in randPkmn[:trainer]
-          idx += 1
-          break if i[0] == @trainer_type && i[2] == @version
-        end
-        randSpec = randPkmn[:pokemon][:species][idx]
-        randLvl = randPkmn[:pokemon][:level][idx]
-        idLvl = -1
-        randSpec.each do |pkmn_data|
-          idLvl += 1
-          species = GameData::Species.get(pkmn_data).species
-          pkmn = Pokemon.new(species, randLvl[idLvl], trainer, false)
-          trainer.party.push(pkmn)
+        pkmn.item = pkmn_data[:item]
+        if pkmn_data[:moves] && pkmn_data[:moves].length > 0
+          pkmn_data[:moves].each { |move| pkmn.learn_move(move) }
+        else
           pkmn.reset_moves
-          pkmn.calc_stats
         end
+        pkmn.role = pkmn_data[:role]
+        pkmn.ability_index = pkmn_data[:ability_index]
+        pkmn.ability = pkmn_data[:ability]
+        pkmn.gender = pkmn_data[:gender] || ((trainer.male?) ? 0 : 1)
+        pkmn.shiny = (pkmn_data[:shininess]) ? true : false
+        pkmn.square_shiny = (pkmn_data[:square_shiny]) ? true : false
+        if pkmn_data[:nature]
+          pkmn.nature = pkmn_data[:nature]
+        else
+          nature = pkmn.species_data.id_number + GameData::TrainerType.get(trainer.trainer_type).id_number
+          pkmn.nature = nature % (GameData::Nature::DATA.length / 2)
+        end
+        GameData::Stat.each_main do |s|
+          if pkmn_data[:iv]
+            pkmn.iv[s.id] = pkmn_data[:iv][s.id]
+          else
+            pkmn.iv[s.id] = [pkmn_data[:level] / 2, Pokemon::IV_STAT_LIMIT].min
+          end
+          if pkmn_data[:ev]
+            pkmn.ev[s.id] = pkmn_data[:ev][s.id]
+          else
+            pkmn.ev[s.id] = [pkmn_data[:level] * 3 / 2, Pokemon::EV_LIMIT / 6].min
+          end
+        end
+        pkmn.happiness = pkmn_data[:happiness] if pkmn_data[:happiness]
+        pkmn.name = pkmn_data[:name] if pkmn_data[:name] && !pkmn_data[:name].empty?
+        if pkmn_data[:shadowness]
+          pkmn.makeShadow
+          pkmn.update_shadow_moves(true)
+          pkmn.shiny = false
+        end
+        pkmn.poke_ball = pkmn_data[:poke_ball] if pkmn_data[:poke_ball]
+        pkmn.calc_stats
       end
       return trainer
     end

@@ -31,9 +31,6 @@ class PokeBattle_Battler
     if abilityActive?
       BattleHandlers.triggerAbilityOnSwitchOut(self.ability,self,false)
     end
-    if ability_orb_held?(self.item) && hasActiveAbility?(:NEUTRALIZINGGAS)
-      Battle::ItemEffects.triggerOnSwitchIn(self.item,self,false)
-    end
     # Reset form
     @battle.peer.pbOnLeavingBattle(@battle,@pokemon,@battle.usedInBattle[idxOwnSide][@index/2])
     # Treat self as fainted
@@ -53,16 +50,15 @@ class PokeBattle_Battler
       next if !b || !b.abilityActive?
       BattleHandlers.triggerAbilityOnBattlerFainting(b.ability,b,self,@battle)
     end
-    if ability_orb_held?(self.item) && hasActiveAbility?(:NEUTRALIZINGGAS)
-      BattleHandlers.triggerItemOnSwitchIn(self.item,self,false)
-    end
   end
 
   # Used for Emergency Exit/Wimp Out.
-  def pbAbilitiesOnDamageTaken(move_user = nil)
-    return false if !@droppedBelowHalfHP
+  def pbAbilitiesOnDamageTaken(oldHP,newHP=-1)
     return false if !abilityActive?
-    return BattleHandlers.triggerAbilityOnHPDroppedBelowHalf(self.ability, self, move_user, @battle)
+    newHP = @hp if newHP<0
+    return false if oldHP<@totalhp/2 || newHP>=@totalhp/2   # Didn't drop below half
+    ret = BattleHandlers.triggerAbilityOnHPDroppedBelowHalf(self.ability,self,@battle)
+    return ret   # Whether self has switched out
   end
 
   # Called when a Pokémon (self) enters battle, at the end of each move used,

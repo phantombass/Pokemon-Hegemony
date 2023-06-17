@@ -192,12 +192,3 @@ GameData::Target.register({
   :name             => _INTL("Both Sides"),
   :affects_foe_side => true
 })
-
-GameData::Target.register({
-  :id               => :AllAllies,
-  :id_number        => 10,
-  :name             => _INTL("All Allies"),
-  :num_targets      => 2,
-  :targets_all      => true,
-  :long_range       => true
-})

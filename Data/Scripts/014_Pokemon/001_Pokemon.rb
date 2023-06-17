@@ -88,7 +88,7 @@ class Pokemon
   attr_accessor :candies_fed
   # @return [Boolean] whether the Pokemon is a Brilliant Pokemon or no
   attr_accessor :brilliant
-  attr_accessor :roles
+  attr_accessor :role
 
   # Max total IVs
   IV_STAT_LIMIT = 31
@@ -481,11 +481,11 @@ class Pokemon
       sp_data = species_data
       abil_index = ability_index
       if abil_index >= 2   # Hidden ability
-        @ability = $game_variables[969] == 0 ? sp_data.hidden_abilities[abil_index - 2] : getRandAbilities(species,2)
+        @ability = sp_data.hidden_abilities[abil_index - 2]
         abil_index = (@personalID & 1) if !@ability
       end
       if !@ability   # Natural ability or no hidden ability defined
-        @ability = $game_variables[969] == 0 ? (sp_data.abilities[abil_index] || sp_data.abilities[0]) : (getRandAbilities(species,abil_index) || getRandAbilities(species,0))
+        @ability = sp_data.abilities[abil_index] || sp_data.abilities[0]
       end
     end
     return @ability
@@ -517,15 +517,8 @@ class Pokemon
   def getAbilityList
     ret = []
     sp_data = species_data
-    if $game_variables[969] != 0
-      array = $game_variables[969]
-      ability = array[:abilities][sp_data.id_number - 1]
-      ability.uniq!
-      ability.each_with_index { |a, i| ret.push([a, i]) if a }
-    else
-      sp_data.abilities.each_with_index { |a, i| ret.push([a, i]) if a }
-      sp_data.hidden_abilities.each_with_index { |a, i| ret.push([a, i + 2]) if a }
-    end
+    sp_data.abilities.each_with_index { |a, i| ret.push([a, i]) if a }
+    sp_data.hidden_abilities.each_with_index { |a, i| ret.push([a, i + 2]) if a }
     return ret
   end
 
@@ -543,15 +536,15 @@ class Pokemon
     return @nature
   end
 
-  def roles
-    @roles = [:NONE] if (@roles == [] || @roles == nil)
-    return @roles
+  def role
+    @role = :NONE if (@role == "" || @role == nil)
+    return GameData::Role.try_get(@role)
   end
 
-  def add_role(value)
+  def role=(value)
     return if value && !GameData::Role.exists?(value)
-    @roles.push(:NONE) if !value
-    @roles.push(GameData::Role.get(value).id)
+    @role = :NONE if !value
+    @role = (value) ? GameData::Role.get(value).id : value
   end
 
   # Sets this Pokémon's nature to a particular nature.
@@ -666,7 +659,7 @@ class Pokemon
   # Returns the list of moves this Pokémon can learn by levelling up.
   # @return [Array<Array<Integer,Symbol>>] this Pokémon's move list, where every element is [level, move ID]
   def getMoveList
-    return $game_variables[973] != 0 ? getRandMoves(self.species) : species_data.moves
+    return species_data.moves
   end
 
   # Sets this Pokémon's movelist to the default movelist it originally had.
@@ -1080,7 +1073,7 @@ class Pokemon
 
   # @return [Hash<Integer>] this Pokémon's base stats, a hash with six key/value pairs
   def baseStats
-    this_base_stats =  $game_variables[970] != 0 ? getRandStats(species_data) : species_data.base_stats
+    this_base_stats = species_data.base_stats
     ret = {}
     GameData::Stat.each_main { |s| ret[s.id] = this_base_stats[s.id] }
     return ret
@@ -1183,7 +1176,6 @@ class Pokemon
     @shiny            = nil
     @ability_index    = nil
     @ability          = nil
-    @roles            = []
     @nature           = nil
     @nature_for_stats = nil
     @item             = nil

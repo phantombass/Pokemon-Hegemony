@@ -102,18 +102,6 @@ BattleScript	 = ARMY1
 [ARMYBOSS,Ahab,1]
 BattleScript	 = ARMY2
 #-------------------------------
-[ARMYBOSS,Ahab,2]
-BattleScript	 = ARMY1
-#-------------------------------
-[ARMYBOSS,Ahab,3]
-BattleScript	 = ARMY2
-#-------------------------------
-[ARMYBOSS,Ahab,4]
-BattleScript	 = ARMY1
-#-------------------------------
-[ARMYBOSS,Ahab,5]
-BattleScript	 = ARMY2
-#-------------------------------
 [NAVYBOSS]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
@@ -163,7 +151,7 @@ BattleVS         = plasmaSM
 #-------------------------------
 [CHANCELLOR]
 BattleBGM        = B2W2-ColressBattle.ogg
-BattleScript	 = CHANCELLOR
+BattleScript	 = CHANCELLOR1
 BattleVS         = plasmaSM
 Ace = 6
 #-------------------------------
@@ -171,28 +159,7 @@ Ace = 6
 BattleBGM        = HGSS-278-BattleChampion.ogg
 BattleVS         = plasmaSM
 #-------------------------------
-# Mini Bosses
-#-------------------------------
-[LASS,Matilda,4]
-BattleVS         = classicVS
-#-------------------------------
-[HIKER,Ethan,4]
-BattleVS         = classicVS
-#-------------------------------
-[HIKER,Melvin,4]
-BattleVS         = classicVS
-#-------------------------------
-[TAMER,Alex,4]
-BattleVS         = classicVS
-#-------------------------------
-[COOLTRAINER_M,Keith,4]
-BattleVS         = classicVS
-#-------------------------------
-[COOLTRAINER_F,Robin,4]
-BattleVS         = classicVS
-#-------------------------------
-[COOLTRAINER_F,Kathy,4]
-BattleVS         = classicVS
+#Mini Bosses
 #-------------------------------
 [BUGCATCHER,Cale,4]
 BattleVS         = classicVS
@@ -200,22 +167,10 @@ BattleVS         = classicVS
 [LASS,Sheena,4]
 BattleVS         = classicVS
 #-------------------------------
-[LADY,Edith,4]
-BattleVS         = classicVS
-#-------------------------------
-[LASS,Mary,4]
-BattleVS         = classicVS
-#-------------------------------
-[LASS,Sybil,4]
-BattleVS         = classicVS
-#-------------------------------
 [TEAMROCKET_M,Grunt,100]
 BattleVS         = classicVS
 #-------------------------------
 [SCIENTIST,Grunt,102]
-BattleVS         = classicVS
-#-------------------------------
-[SCIENTIST,Grunt,103]
 BattleVS         = classicVS
 #-------------------------------
 [BUGCATCHER,Sheldon,4]
@@ -227,28 +182,13 @@ BattleVS         = classicVS
 [FISHERMAN,Dexter,4]
 BattleVS         = classicVS
 #-------------------------------
-[GENTLEMAN,Cameron,4]
-BattleVS         = classicVS
-#-------------------------------
-[BIRDKEEPER,Scott,4]
-BattleVS         = classicVS
-#-------------------------------
 [COOLTRAINER_F,Lisa,4]
 BattleVS         = classicVS
 #-------------------------------
 [COOLTRAINER_F,Marge,4]
 BattleVS         = classicVS
 #-------------------------------
-[COOLTRAINER_F,Raquel,4]
-BattleVS         = classicVS
-#-------------------------------
 [COOLTRAINER_M,Zack,4]
-BattleVS         = classicVS
-#-------------------------------
-[COOLTRAINER_M,Tony,4]
-BattleVS         = classicVS
-#-------------------------------
-[COOLTRAINER_M,Matt,4]
 BattleVS         = classicVS
 #-------------------------------
 [RUINMANIAC,Darius,4]
@@ -256,109 +196,4 @@ BattleVS         = classicVS
 #-------------------------------
 [HIKER,Tucker,4]
 BattleVS         = classicVS
-#-------------------------------
-[RUINMANIAC,Andy,4]
-BattleVS         = classicVS
-#-------------------------------
-[COOLTRAINER_M,Will,4]
-BattleVS         = classicVS
-#-------------------------------
-[GUARD,Admin,2]
-BattleVS         = classicVS
-#-------------------------------
-#Post-Game
-#-------------------------------
-[DOJO_Jasper]
-BattleBGM        = DPPT-Gym Leader.ogg
-BattleVS         = plasmaSM
-BattleScript	 = JASPER
-Ace				 = 6
-#-------------------------------
-[DOJO_Apollo]
-BattleBGM        = DPPT-Gym Leader.ogg
-BattleVS         = plasmaSM
-BattleScript	 = APOLLO
-Ace				 = 6
-#-------------------------------+
-[DOJO_Luna]
-BattleBGM        = DPPT-Gym Leader.ogg
-BattleVS         = plasmaSM
-BattleScript	 = LUNA
-Ace				 = 6
-#-------------------------------
-[DOJO_Maloki]
-BattleBGM        = DPPT-Gym Leader.ogg
-BattleVS         = plasmaSM
-BattleScript	 = MALOKI
-Ace				 = 6
-#-------------------------------
-[DOJO_Juliet]
-BattleBGM        = DPPT-Gym Leader.ogg
-BattleVS         = plasmaSM
-BattleScript	 = JULIET
-Ace				 = 6
-#-------------------------------
-[DOJO_Olaf]
-BattleBGM        = DPPT-Gym Leader.ogg
-BattleVS         = plasmaSM
-BattleScript	 = OLAF
-Ace				 = 6
-#-------------------------------
-[DOJO_Wendy]
-BattleBGM        = DPPT-Gym Leader.ogg
-BattleVS         = plasmaSM
-BattleScript	 = WENDY
-Ace				 = 6
-#-------------------------------
-[DOJO_Adam]
-BattleBGM        = DPPT-Gym Leader.ogg
-BattleVS         = plasmaSM
-BattleScript	 = ADAM
-Ace				 = 6
-#-------------------------------
-[LEAGUE_Astrid]
-BattleBGM        = Goldeneye - Cradle.ogg
-BattleVS         = plasmaSM
-BattleScript	 = ASTRIDLEAGUE
-Ace				 = 6
-#-------------------------------
-[LEAGUE_Winslow]
-BattleBGM        = Goldeneye - Cradle.ogg
-BattleVS         = plasmaSM
-BattleScript	 = WINSLOWLEAGUE
-Ace				 = 6
-#-------------------------------
-[LEAGUE_Eugene]
-BattleBGM        = Goldeneye - Cradle.ogg
-BattleVS         = plasmaSM
-Ace				 = 6
-#-------------------------------
-[LEAGUE_Armand]
-BattleBGM        = Goldeneye - Cradle.ogg
-BattleVS         = plasmaSM
-BattleScript	 = ARMANDLEAGUE
-Ace				 = 6
-#-------------------------------
-[LEAGUE_Vincent]
-BattleBGM        = Goldeneye - Cradle.ogg
-BattleVS         = plasmaSM
-BattleScript	 = VINCENTLEAGUE
-Ace				 = 6
-#-------------------------------
-[LEAGUE_Winston]
-BattleBGM        = Goldeneye - Cradle.ogg
-BattleVS         = plasmaSM
-BattleScript	 = WINSTONLEAGUE
-Ace				 = 6
-#-------------------------------
-[CHAMPION]
-BattleBGM        = HGSS-278-BattleChampion.ogg 
-BattleVS         = plasmaSM
-Ace				 = 6
-#-------------------------------
-[CHANCELLOR,Yule,1]
-BattleBGM        = B2W2-ColressBattle.ogg
-BattleScript	 = CHANCELLOR
-BattleVS         = plasmaSM
-Ace = 6
 #-------------------------------

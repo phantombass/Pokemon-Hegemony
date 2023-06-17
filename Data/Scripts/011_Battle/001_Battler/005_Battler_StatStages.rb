@@ -21,15 +21,6 @@ class PokeBattle_Battler
     return true
   end
 
-  def pbItemCertainStatGainCheck(user, stat, increment = 1, item_to_use = nil)
-    return if fainted?
-    return if !item_to_use && !itemActive?
-    itm = item_to_use || self.item
-    if BattleHandlers.triggerCertainStatGainItem(itm, self, stat, user, increment, @battle, !item_to_use)
-      pbHeldItemTriggered(itm, item_to_use.nil?, false)
-    end
-  end
-
   def pbRaiseStatStageBasic(stat,increment,ignoreContrary=false)
     if !@battle.moldBreaker
       # Contrary
@@ -69,10 +60,6 @@ class PokeBattle_Battler
     if abilityActive?
       BattleHandlers.triggerAbilityOnStatGain(self.ability,self,stat,user)
     end
-    @battle.eachOtherSideBattler(user.index) do |b|
-      b.pbItemCertainStatGainCheck(user, stat, increment)
-      BattleHandlers.triggerCertainStatGainAbility(b.ability, b, @battle, stat, user, increment) if b.abilityActive?
-    end
     @statsRaised = true
     return true
   end
@@ -102,10 +89,6 @@ class PokeBattle_Battler
     # Trigger abilities upon stat gain
     if abilityActive?
       BattleHandlers.triggerAbilityOnStatGain(self.ability,self,stat,user)
-    end
-    @battle.eachOtherSideBattler(user.index) do |b|
-      b.pbItemCertainStatGainCheck(user, stat, increment)
-      BattleHandlers.triggerCertainStatGainAbility(b.ability, b, @battle, stat, user, increment) if b.abilityActive?
     end
     @statsRaised = true
     return true
@@ -290,14 +273,6 @@ class PokeBattle_Battler
         @battle.pbDisplay(_INTL("{1}'s substitute protected it from {2}'s {3}!",
            pbThis,user.pbThis(true),user.abilityName))
       end
-      return false
-    end
-    if hasActiveAbility?(:GUARDDOG)
-      @battle.pbShowAbilitySplash(self)
-      if Battle::Scene::USE_ABILITY_SPLASH
-        pbRaiseStatStageByCause(:ATTACK, 1, self, abilityName)#pbRaiseStatStageByAbility(:ATTACK, 1, user, false)
-      end
-      @battle.pbHideAbilitySplash(self)
       return false
     end
     # NOTE: These checks exist to ensure appropriate messages are shown if

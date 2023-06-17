@@ -1,4 +1,4 @@
-{^"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
+{7"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
 ["Goldeneye - Cradle.ogg@["classicVS"LEADER_Blaine{@{	@
 ["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"Ace[i"LEADER_Sabrina{@{	@
 ["Gym Leader.ogg@["plasmaSM@["
@@ -20,10 +20,6 @@ HAZEL@![i"LEADER_Erika{@{	@
 ["Goldeneye - Cradle.ogg@["plasmaSM"ROCKETBOSS,Armand{@{@["MILITIA1"ROCKETBOSS,Armand,6{@{@["MILITIA2"ARMYBOSS{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"ARMYBOSS,Ahab,0{@{@["
 ARMY1"ARMYBOSS,Ahab,1{@{@["
-ARMY2"ARMYBOSS,Ahab,2{@{@["
-ARMY1"ARMYBOSS,Ahab,3{@{@["
-ARMY2"ARMYBOSS,Ahab,4{@{@["
-ARMY1"ARMYBOSS,Ahab,5{@{@["
 ARMY2"NAVYBOSS{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"NAVYBOSS,Eugene{@{@["
 NAVY1"NAVYBOSS,Eugene,1{@{@["
@@ -36,22 +32,5 @@ NAVY2"AIRFORCEBOSS{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"DEFCORP{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"PSYCORP{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"CHANCELLOR{@{	@
-["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM@![i"POKEMONTRAINER_Joseph{@{@
-[" HGSS-278-BattleChampion.ogg@["plasmaSM"LASS,Matilda,4{@{@["classicVS"HIKER,Ethan,4{@{@["classicVS"HIKER,Melvin,4{@{@["classicVS"TAMER,Alex,4{@{@["classicVS"COOLTRAINER_M,Keith,4{@{@["classicVS"COOLTRAINER_F,Robin,4{@{@["classicVS"COOLTRAINER_F,Kathy,4{@{@["classicVS"BUGCATCHER,Cale,4{@{@["classicVS"LASS,Sheena,4{@{@["classicVS"LADY,Edith,4{@{@["classicVS"LASS,Mary,4{@{@["classicVS"LASS,Sybil,4{@{@["classicVS"TEAMROCKET_M,Grunt,100{@{@["classicVS"SCIENTIST,Grunt,102{@{@["classicVS"SCIENTIST,Grunt,103{@{@["classicVS"BUGCATCHER,Sheldon,4{@{@["classicVS"FISHERMAN,Robert,4{@{@["classicVS"FISHERMAN,Dexter,4{@{@["classicVS"GENTLEMAN,Cameron,4{@{@["classicVS"BIRDKEEPER,Scott,4{@{@["classicVS"COOLTRAINER_F,Lisa,4{@{@["classicVS"COOLTRAINER_F,Marge,4{@{@["classicVS"COOLTRAINER_F,Raquel,4{@{@["classicVS"COOLTRAINER_M,Zack,4{@{@["classicVS"COOLTRAINER_M,Tony,4{@{@["classicVS"COOLTRAINER_M,Matt,4{@{@["classicVS"RUINMANIAC,Darius,4{@{@["classicVS"HIKER,Tucker,4{@{@["classicVS"RUINMANIAC,Andy,4{@{@["classicVS"COOLTRAINER_M,Will,4{@{@["classicVS"GUARD,Admin,2{@{@["classicVS"DOJO_Jasper{@{	@
-["DPPT-Gym Leader.ogg@["plasmaSM@["JASPER@![i"DOJO_Apollo{@{	@
-["DPPT-Gym Leader.ogg@["plasmaSM@["APOLLO@![i"DOJO_Luna{@{	@
-["DPPT-Gym Leader.ogg@["plasmaSM@["	LUNA@![i"DOJO_Maloki{@{	@
-["DPPT-Gym Leader.ogg@["plasmaSM@["MALOKI@![i"DOJO_Juliet{@{	@
-["DPPT-Gym Leader.ogg@["plasmaSM@["JULIET@![i"DOJO_Olaf{@{	@
-["DPPT-Gym Leader.ogg@["plasmaSM@["	OLAF@![i"DOJO_Wendy{@{	@
-["DPPT-Gym Leader.ogg@["plasmaSM@["
-WENDY@![i"DOJO_Adam{@{	@
-["DPPT-Gym Leader.ogg@["plasmaSM@["	ADAM@![i"LEAGUE_Astrid{@{	@
-["Goldeneye - Cradle.ogg@["plasmaSM@["ASTRIDLEAGUE@![i"LEAGUE_Winslow{@{	@
-["Goldeneye - Cradle.ogg@["plasmaSM@["WINSLOWLEAGUE@![i"LEAGUE_Eugene{@{@
-["Goldeneye - Cradle.ogg@["plasmaSM@![i"LEAGUE_Armand{@{	@
-["Goldeneye - Cradle.ogg@["plasmaSM@["ARMANDLEAGUE@![i"LEAGUE_Vincent{@{	@
-["Goldeneye - Cradle.ogg@["plasmaSM@["VINCENTLEAGUE@![i"LEAGUE_Winston{@{	@
-["Goldeneye - Cradle.ogg@["plasmaSM@["WINSTONLEAGUE@![i"CHAMPION{@{@
-[" HGSS-278-BattleChampion.ogg@["plasmaSM@![i"CHANCELLOR,Yule,1{@{	@
-["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM@![i
+["B2W2-ColressBattle.ogg@["CHANCELLOR1@["plasmaSM@![i"POKEMONTRAINER_Joseph{@{@
+[" HGSS-278-BattleChampion.ogg@["plasmaSM"BUGCATCHER,Cale,4{@{@["classicVS"LASS,Sheena,4{@{@["classicVS"TEAMROCKET_M,Grunt,100{@{@["classicVS"SCIENTIST,Grunt,102{@{@["classicVS"BUGCATCHER,Sheldon,4{@{@["classicVS"FISHERMAN,Robert,4{@{@["classicVS"FISHERMAN,Dexter,4{@{@["classicVS"COOLTRAINER_F,Lisa,4{@{@["classicVS"COOLTRAINER_F,Marge,4{@{@["classicVS"COOLTRAINER_M,Zack,4{@{@["classicVS"RUINMANIAC,Darius,4{@{@["classicVS"HIKER,Tucker,4{@{@["classicVS

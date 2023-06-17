@@ -242,7 +242,6 @@ class PokeBattle_Battle
       logMsg += "Single "
     elsif @sideSizes[0]==2 && @sideSizes[1]==2
       logMsg += "Double "
-      @doublebattle = true
     elsif @sideSizes[0]==3 && @sideSizes[1]==3
       logMsg += "Triple "
     else

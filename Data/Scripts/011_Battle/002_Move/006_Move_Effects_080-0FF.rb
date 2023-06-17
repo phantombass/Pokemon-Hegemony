@@ -476,7 +476,7 @@ class PokeBattle_Move_096 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
     # NOTE: Unnerve does not stop a Pokémon using this move.
     item = user.item
-    if !item || !item.is_berry? || !user.itemActive? || item.id == nil
+    if !item || !item.is_berry? || !user.itemActive?
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -1938,7 +1938,6 @@ class PokeBattle_Move_0BF < PokeBattle_Move
   end
 
   def pbBaseDamage(baseDmg,user,target)
-    @calcBaseDmg = 0 if @calcBaseDmg == nil
     @calcBaseDmg += baseDmg if !target.damageState.disguise || !target.damageState.iceface
     return @calcBaseDmg
   end
@@ -2004,14 +2003,9 @@ class PokeBattle_Move_0C1 < PokeBattle_Move
   end
 
   def pbBaseDamage(baseDmg,user,target)
-    if user.opposes? && user.has_role?(:TARGETALLY)
-      return 5
-    else
-      i = @beatUpList.shift if @beatUpList != nil  # First element in array, and removes it from array
-      i = 0 if @beatUpList == nil
-      atk = (user.opposes? && @battle.wildBattle?) ? user.pokemon.baseStats[:ATTACK] : @battle.pbParty(user.index)[i].baseStats[:ATTACK]
-      return 5+(atk/10)
-    end
+    i = @beatUpList.shift   # First element in array, and removes it from array
+    atk = @battle.pbParty(user.index)[i].baseStats[:ATTACK]
+    return 5+(atk/10)
   end
 end
 
@@ -2052,7 +2046,6 @@ class PokeBattle_Move_0C4 < PokeBattle_TwoTurnMove
         @powerHerb = false
         @chargingTurn = true
         @damagingTurn = true
-        return false
       end
     end
     return ret
@@ -2557,21 +2550,15 @@ class PokeBattle_Move_0D8 < PokeBattle_HealingMove
     case @battle.pbWeather
     when :Sun, :HarshSun
       if !user.hasUtilityUmbrella
-        @healAmount = @type == :FAIRY ? (user.totalhp/2.0).round : (user.totalhp*2/3.0).round
+        @healAmount = (user.totalhp*2/3.0).round
       else
-        @healAmount = @type == :FAIRY ? (user.totalhp/4.0).round : (user.totalhp/2.0).round
+        @healAmount = (user.totalhp/2.0).round
       end
     when :Rain, :HeavyRain
       if !user.hasUtilityUmbrella?
         @healAmount = (user.totalhp/4.0).round
       else
         @healAmount = (user.totalhp/2.0).round
-      end
-    when :Starstorm, :Eclipse
-      if @type == :FAIRY
-        @healAmount = (user.totalhp*2/3.0).round
-      else
-        @healAmount = (user.totalhp/4.0).round
       end
     when :None, :StrongWinds
       @healAmount = (user.totalhp/2.0).round

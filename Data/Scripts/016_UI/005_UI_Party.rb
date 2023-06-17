@@ -478,7 +478,6 @@ class PokemonParty_Scene
   def pbEndScene
     pbFadeOutAndHide(@sprites) { update }
     pbDisposeSpriteHash(@sprites)
-    $viewport_stats.dispose if (($game_variables[970] != 0 || $game_variables[970] != nil) && $viewport_stats != nil)
     @viewport.dispose
   end
 
@@ -1189,7 +1188,6 @@ class PokemonPartyScreen
       commands   = []
       cmdSummary = -1
       cmdDebug   = -1
-      cmdStats   = -1
       cmdMoves   = [-1] * pkmn.numMoves
       cmdSwitch  = -1
       cmdMail    = -1
@@ -1197,7 +1195,6 @@ class PokemonPartyScreen
       # Build the commands
       commands[cmdSummary = commands.length]      = _INTL("Summary")
       commands[cmdDebug = commands.length]        = _INTL("Debug") if $DEBUG
-      commands[cmdStats = commands.length]        = _INTL("Base Stats")
       if !pkmn.egg?
         # Check for hidden moves and add any that were found
         pkmn.moves.each_with_index do |m, i|
@@ -1278,20 +1275,6 @@ class PokemonPartyScreen
         }
       elsif cmdDebug>=0 && command==cmdDebug
         pbPokemonDebug(pkmn,pkmnid)
-      elsif cmdStats>=0 && command==cmdStats
-        @viewport1 = Viewport.new(0, 0, Graphics.width, Graphics.height)
-        @viewport1.z = 99999
-        $viewport_stats = @viewport1
-        pkmn = @party[pkmnid]
-        species = pkmn.species
-        @sprites = {}
-        pkmn_info = "HP: #{species.base_stats[:HP]}\nAttack: #{species.base_stats[:ATTACK]}\nDefense: #{species.base_stats[:DEFENSE]}\nSpecial Attack: #{species.base_stats[:SPECIAL_ATTACK]}\nSpecial Defense: #{species.base_stats[:SPECIAL_DEFENSE]}\nSpeed: #{species.base_stats[:SPEED]}"
-        $pkmn_data = pkmn_info
-        @sprites["scene"] = Window_AdvancedTextPokemon.newWithSize($pkmn_data,250,5,255,220,@viewport1)
-        pbSetSmallFont(@sprites["scene"].contents)
-        @sprites["scene"].resizeToFit2($pkmn_data,255,220)
-        @sprites["scene"].visible = true
-        $pkmn_info = @sprites["scene"]
       elsif cmdSwitch>=0 && command==cmdSwitch
         @scene.pbSetHelpText(_INTL("Move to where?"))
         oldpkmnid = pkmnid

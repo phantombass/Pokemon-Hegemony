@@ -118,7 +118,6 @@ class PokeBattle_Scene
     pbShowWindow(MESSAGE_BOX)
     cw = @sprites["messageWindow"]
     cw.setText(msg)
-    msg.gsub!(/\\r/i,"<c3=E00808,D0D0C8>")
     PBDebug.log(msg)
     yielded = false
     i = 0

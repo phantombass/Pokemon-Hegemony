@@ -165,28 +165,24 @@ end
 
 
 #===============================================================================
-# Ends the opposing side's Light Screen, Reflect and Aurora Veil. (Brick Break,
+# Ends the opposing side's Light Screen, Reflect and Aurora Break. (Brick Break,
 # Psychic Fangs)
 #===============================================================================
 class PokeBattle_Move_10A < PokeBattle_Move
   def ignoresReflect?; return true; end
 
   def pbEffectGeneral(user)
-    if $gym_gimmick == false
-      if user.pbOpposingSide.effects[PBEffects::LightScreen]>0
-        user.pbOpposingSide.effects[PBEffects::LightScreen] = 0
-        @battle.pbDisplay(_INTL("{1}'s Light Screen wore off!",user.pbOpposingTeam))
-      end
-      if user.pbOpposingSide.effects[PBEffects::Reflect]>0
-        user.pbOpposingSide.effects[PBEffects::Reflect] = 0
-        @battle.pbDisplay(_INTL("{1}'s Reflect wore off!",user.pbOpposingTeam))
-      end
-      if user.pbOpposingSide.effects[PBEffects::AuroraVeil]>0
-        user.pbOpposingSide.effects[PBEffects::AuroraVeil] = 0
-        @battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!",user.pbOpposingTeam))
-      end
-    else
-      @battle.pbDisplay(_INTL("The screens could not be removed!"))
+    if user.pbOpposingSide.effects[PBEffects::LightScreen]>0
+      user.pbOpposingSide.effects[PBEffects::LightScreen] = 0
+      @battle.pbDisplay(_INTL("{1}'s Light Screen wore off!",user.pbOpposingTeam))
+    end
+    if user.pbOpposingSide.effects[PBEffects::Reflect]>0
+      user.pbOpposingSide.effects[PBEffects::Reflect] = 0
+      @battle.pbDisplay(_INTL("{1}'s Reflect wore off!",user.pbOpposingTeam))
+    end
+    if user.pbOpposingSide.effects[PBEffects::AuroraVeil]>0
+      user.pbOpposingSide.effects[PBEffects::AuroraVeil] = 0
+      @battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!",user.pbOpposingTeam))
     end
   end
 
@@ -1801,10 +1797,6 @@ class PokeBattle_Move_154 < PokeBattle_Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    if @battle.field.terrain != :Electric && @battle.field.terrain != :None && $gym_gimmick == true
-      @battle.pbDisplay(_INTL("But the Gym's terrain couldn't be removed!"))
-      return true
-    end
     return false
   end
 
@@ -1826,10 +1818,6 @@ class PokeBattle_Move_155 < PokeBattle_Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    if @battle.field.terrain != :Grassy && @battle.field.terrain != :None && $gym_gimmick == true
-      @battle.pbDisplay(_INTL("But the Gym's terrain couldn't be removed!"))
-      return true
-    end
     return false
   end
 
@@ -1849,10 +1837,6 @@ class PokeBattle_Move_156 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
     if @battle.field.terrain == :Misty
       @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    if @battle.field.terrain != :Misty && @battle.field.terrain != :None && $gym_gimmick == true
-      @battle.pbDisplay(_INTL("But the Gym's terrain couldn't be removed!"))
       return true
     end
     return false
@@ -2028,7 +2012,7 @@ end
 class PokeBattle_Move_15D < PokeBattle_Move
   def ignoresSubstitute?(user); return true; end
 
-  def pbStealStats(user,target,numTargets=1)
+  def pbCalcDamage(user,target,numTargets=1)
     if target.hasRaisedStatStages?
       pbShowAnimation(@id,user,target,1)   # Stat stage-draining animation
       @battle.pbDisplay(_INTL("{1} stole the target's boosted stats!",user.pbThis))
@@ -2036,12 +2020,15 @@ class PokeBattle_Move_15D < PokeBattle_Move
       GameData::Stat.each_battle do |s|
         next if target.stages[s.id] <= 0
         if user.pbCanRaiseStatStage?(s.id,user,self)
-          showAnim = false if user.pbRaiseStatStage(s.id,target.stages[s.id],user,showAnim)
+          if user.pbRaiseStatStage(s.id,target.stages[s.id],user,showAnim)
+            showAnim = false
+          end
         end
         target.statsLowered = true
         target.stages[s.id] = 0
       end
     end
+    super
   end
 end
 
@@ -2243,7 +2230,7 @@ end
 #===============================================================================
 class PokeBattle_Move_167 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
-    if @battle.pbWeather != :Hail && @battle.pbWeather != :Sleet
+    if @battle.pbWeather != :Hail
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -2583,10 +2570,6 @@ class PokeBattle_Move_173 < PokeBattle_Move
   def pbMoveFailed?(user,targets)
     if @battle.field.terrain == :Psychic
       @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    if @battle.field.terrain != :Psychic && @battle.field.terrain != :None && $gym_gimmick == true
-      @battle.pbDisplay(_INTL("But the Gym's terrain couldn't be removed!"))
       return true
     end
     return false

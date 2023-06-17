@@ -3,6 +3,7 @@
 #                                 Version 19.1                                 #
 #                https://github.com/Maruno17/pokemon-essentials                #
 #==============================================================================#
+
 module Settings
   # The version of your game. It has to adhere to the MAJOR.MINOR.PATCH format.
   #GAME_VERSION = '1.0.0'
@@ -181,7 +182,7 @@ module Settings
     return _INTL("Bill")
   end
   # The number of boxes in Pokémon storage.
-  NUM_STORAGE_BOXES   = 50
+  NUM_STORAGE_BOXES   = 30
   # Whether putting a Pokémon into Pokémon storage will heal it. IF false, they
   # are healed by the Recover All: Entire Party event command (at Poké Centers).
   HEAL_STORED_POKEMON = (MECHANICS_GENERATION < 8)
@@ -276,9 +277,7 @@ module Settings
     44 => [5, 21, 28, 31, 39, 41,     47, 66, 69],
     47 => [5, 21, 28, 31, 39, 41, 44,     66, 69],
     66 => [5, 21, 28, 31, 39, 41, 44, 47,     69],
-    69 => [5, 21, 28, 31, 39, 41, 44, 47, 66    ],
-    264 => [265,271,284,288,297,300,307,310,311,316,323,324,334,335,337,339,340,345],
-    77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]
+    69 => [5, 21, 28, 31, 39, 41, 44, 47, 66    ]
   }
   # A set of arrays, each containing the details of a roaming Pokémon. The
   # information within each array is as follows:
@@ -290,23 +289,15 @@ module Settings
   #   * Name of BGM to play for that encounter (optional).
   #   * Roaming areas specifically for this Pokémon (optional).
   ROAMING_SPECIES = [
-    [:LATIAS, 70, 53, 0, "DPPT - Legendary Pokemon",],
-    [:LATIOS, 70, 53, 0, "DPPT - Legendary Pokemon",],
-    [:LANDORUS, 70, 53, 0, "DPPT - Legendary Pokemon",{264 => [265,271,284,288,297,300,307,310,311,316,323,324,334,335,337,339,340,345]}],
-    [:THUNDURUS, 70, 53, 0, "DPPT - Legendary Pokemon",{264 => [265,271,284,288,297,300,307,310,311,316,323,324,334,335,337,339,340,345]}],
-    [:TORNADUS, 70, 53, 0, "DPPT - Legendary Pokemon",{264 => [265,271,284,288,297,300,307,310,311,316,323,324,334,335,337,339,340,345]}],
-    [:COBALION, 70, 53, 1, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
-    [:TERRAKION, 70, 53, 1, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
-    [:VIRIZION, 70, 53, 1, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
-    [:RAIKOU, 70, 53, 1, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
-    [:ENTEI, 70, 53, 1, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
-    [:SUICUNE, 70, 53, 0, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
-    [:UXIE, 70, 53, 1, "DPPT - Legendary Pokemon",{264 => [265,271,284,288,297,300,307,310,311,316,323,324,334,335,337,339,340,345]}],
-    [:AZELF, 70, 53, 1, "DPPT - Legendary Pokemon",{264 => [265,271,284,288,297,300,307,310,311,316,323,324,334,335,337,339,340,345]}],
-    [:MESPRIT, 70, 53, 1, "DPPT - Legendary Pokemon",{264 => [265,271,284,288,297,300,307,310,311,316,323,324,334,335,337,339,340,345]}],
-    [:ZAPDOS_1, 70, 54, 1, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
-    [:MOLTRES_1, 70, 54, 1, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
-    [:ARTICUNO_1, 70, 54, 1, "DPPT - Legendary Pokemon",{77 => [80,83,88,91,97,99,113,128,129,133,136,151,159,160,167,174,175,184,187,212,214,225,240,241]}],
+    [:LATIAS, 30, 53, 0, "Battle roaming"],
+    [:LATIOS, 30, 53, 0, "Battle roaming"],
+    [:KYOGRE, 40, 54, 2, nil, {
+      2  => [   21, 31    ],
+      21 => [2,     31, 69],
+      31 => [2, 21,     69],
+      69 => [   21, 31    ]
+    }],
+    [:ENTEI, 40, 55, 1, nil]
   ]
 
   #=============================================================================
@@ -448,5 +439,4 @@ end
 module Essentials
   VERSION = "19.1"
   ERROR_TEXT = ""
-  MKXPZ_VERSION = "2.4"
 end
