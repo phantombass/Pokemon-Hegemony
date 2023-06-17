@@ -25,11 +25,11 @@ module EliteBattle
 
   def self.ironmonKaizo
     # list of all possible rules
-    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS]
+    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES, :STATS, :MOVES]
     # list of rule descriptions
     # default
     added = []
-    for i in 0...modifiers.length
+    for i in 0..modifiers.length
       added.push(modifiers[i])
     end
     # adds randomizer rules
@@ -44,22 +44,235 @@ module EliteBattle
   def self.randomizeTrainers
     # loads compiled data and creates new array
     data = load_data("Data/trainers.dat")
-    trainer_exclusions = EliteBattle.get_data(:RANDOMIZER, :Metrics, :EXCLUSIONS_TRAINERS)
-    species_exclusions = EliteBattle.get_data(:RANDOMIZER, :Metrics, :EXCLUSIONS_SPECIES)
+    trainer_exclusions = $game_switches[906] ? nil : [:RIVAL2,:LEADER_Brock,:LEADER_Misty,:LEADER_Surge,:LEADER_Erika,:LEADER_Sabrina,:LEADER_Blaine,:LEADER_Winslow,:LEADER_Jackson,:OFFCORP,:DEFCORP,:PSYCORP,:ROCKETBOSS,:CHAMPION,:ARMYBOSS,:NAVYBOSS,:AIRFORCEBOSS,:GUARDBOSS,:CHANCELLOR,:DOJO_Luna,:DOJO_Apollo,:DOJO_Jasper,:DOJO_Maloki,:DOJO_Juliet,:DOJO_Adam,:DOJO_Wendy,:LEAGUE_Astrid,:LEAGUE_Winslow,:LEAGUE_Eugene,:LEAGUE_Armand,:LEAGUE_Winston,:LEAGUE_Vincent]
+    species_exclusions = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
+    $new_trainers = {
+      :trainer => [],
+      :pokemon => {
+        :species => [],
+        :level => []
+      }
+    }
     return if !data.is_a?(Hash) # failsafe
     # iterate through each trainer
     for key in data.keys
       # skip numeric trainers
-      next if !trainer_exclusions.nil? && trainer_exclusions.include?(data[key].id)
+      next if !trainer_exclusions.nil? && trainer_exclusions.include?(data[key].id[0])
+      next if !$new_trainers[:trainer] != nil && key.is_a?(Array)
+      $new_trainers[:trainer].push(data[key].id)
       # iterate through party
+      pkmn = []
+      lvl = []
       for i in 0...data[key].pokemon.length
         next if !species_exclusions.nil? && species_exclusions.include?(data[key].pokemon[i][:species])
         data[key].pokemon[i][:species] = EliteBattle.all_species.sample
-        data[key].pokemon[i].delete(:moves) if data[key].pokemon[i].key?(:moves)
-        data[key].pokemon[i].delete(:ability) if data[key].pokemon[i].key?(:ability)
-        data[key].pokemon[i].delete(:ability_index) if data[key].pokemon[i].key?(:ability_index)
+        pkmn.push(data[key].pokemon[i][:species])
+        lvl.push(data[key].pokemon[i][:level])
+        $new_trainers[:pokemon][:species][key] = pkmn
+        $new_trainers[:pokemon][:level][key] = lvl
+        #data[key].pokemon[i].delete(:moves) if data[key].pokemon[i].key?(:moves)
+        #data[key].pokemon[i].delete(:ability) if data[key].pokemon[i].key?(:ability)
+        #data[key].pokemon[i].delete(:role) if data[key].pokemon[i].key?(:role)
+        #data[key].pokemon[i].delete(:ability_index) if data[key].pokemon[i].key?(:ability_index)
+        #data[key].pokemon[i].delete(:ev) if data[key].pokemon[i].key?(:ev)
+        #data[key].pokemon[i].delete(:iv) if data[key].pokemon[i].key?(:iv)
+        #data[key].pokemon[i].delete(:nature) if data[key].pokemon[i].key?(:nature)
       end
     end
+    $game_variables[971] = $new_trainers
+    return $new_trainers
+  end
+  #-----------------------------------------------------------------------------
+  #  randomizes abilities per pokemon
+  #-----------------------------------------------------------------------------
+  def self.randomizeAbilities
+    pkmn = load_data("Data/species.dat")
+    ability = load_data("Data/abilities.dat")
+    trainer = load_data("Data/trainers.dat")
+    abilities = []
+    for i in 0...ability.keys.length
+      abilities.push(ability.keys[i]) if i.odd?
+    end
+    ability_blacklist = [
+      :BATTLEBOND,
+      :DISGUISE,
+      :FLOWERGIFT,                                        # This can be stopped
+      :FORECAST,
+      :MULTITYPE,
+      :POWERCONSTRUCT,
+      :WONDERGUARD,
+      :SCHOOLING,
+      :SHIELDSDOWN,
+      :STANCECHANGE,
+      :ZENMODE,
+      :DUAT,
+      :ACCLIMATE,
+      :WORMHOLE,
+      :PINDROP,
+      :BOREALIS,
+      :BAROMETRIC,
+      :DESERTSTORM,
+      :ASHCOVER,
+      :ASHRUSH,
+      :MUGGYAIR,
+      :FIGHTERSWRATH,
+      :ELECTROSTATIC,
+      :BAILOUT,
+      :IMPATIENT,
+      :TIMEWARP,
+      :HYPERSPACE,
+      :APPLIANCE,
+      :MENTALBLOCK,
+      :CORRUPTION,
+      :CLOUDCOVER,
+      :MULTITOOL,
+      :SHROUD,
+      :ZEROTOHERO,
+      # Abilities intended to be inherent properties of a certain species
+      :COMATOSE,
+      :RKSSYSTEM
+    ]
+    return if !pkmn.is_a?(Hash)
+    return if !ability.is_a?(Hash)
+    return if !trainer.is_a?(Hash)
+    for key in trainer.keys
+      # skip numeric trainers
+      # iterate through party
+      for i in 0...trainer[key].pokemon.length
+        trainer[key].pokemon[i].delete(:ability) if trainer[key].pokemon[i].key?(:ability)
+      end
+    end
+    $new_ability = {
+      :pokemon => [],
+      :abilities => []
+    }
+    for key in pkmn.keys
+      abil = []
+      habil = []
+      if !key.is_a?(Symbol)
+        $new_ability[:pokemon].push(pkmn[key].id)
+        $new_ability[:pokemon].uniq!
+        for i in 0...pkmn[key].abilities.length
+          loop do
+            pkmn[key].abilities[i] = abilities.sample
+            break if !ability_blacklist.include?(pkmn[key].abilities[i])
+          end
+          abil.push([pkmn[key].abilities[i]])
+        end
+        for i in 0...pkmn[key].hidden_abilities.length
+          loop do
+            pkmn[key].hidden_abilities[i] = abilities.sample
+            break if !ability_blacklist.include?(pkmn[key].hidden_abilities[i])
+          end
+          habil.push([pkmn[key].hidden_abilities[i]])
+        end
+        $new_ability[:abilities][key] = abil[0],(abil[1] == nil ? abil[0] : abil[1]),habil
+        $new_ability[:abilities][key].flatten!
+        $new_ability[:abilities].delete_at(key-1) if $new_ability[:abilities][key-1] == nil
+      end
+    end
+    $game_variables[969] = $new_ability
+    return $new_ability
+  end
+  #-----------------------------------------------------------------------------
+  #  randomizes compiled pokemon base stats
+  #-----------------------------------------------------------------------------
+  def self.randomizeStats
+    data = load_data("Data/species.dat")
+    $new_stats = {
+      :pokemon => [],
+      :stats => {
+        :HP => [],
+        :ATTACK => [],
+        :DEFENSE => [],
+        :SPECIAL_ATTACK => [],
+        :SPECIAL_DEFENSE => [],
+        :SPEED => []
+      }
+    }
+    randStat = 0
+    return if !data.is_a?(Hash)
+    for key in data.keys
+      bst = 0
+      rem_stat = 0
+      species = data[key].id
+      next if $new_stats[:pokemon].include?(species)
+      for i in data[key].base_stats.keys
+        bst += data[key].base_stats[i]
+      end
+      for stat in data[key].base_stats.keys
+        if data[key].base_stats[stat] == 1
+          data[key].base_stats[stat] = 1
+          bst -= 1
+          rem_stat += 1
+          next
+        end
+        if [:MIMIKYU,:ROTOM].include?(data[key].id) && stat == :HP
+          data[key].base_stats[stat] = data[key].base_stats[stat]
+          bst -= data[key].base_stats[stat]
+          rem_stat += data[key].base_stats[stat]
+        end
+        loop do
+          randStat = rand(bst-rem_stat)
+          if bst-rem_stat <= 5
+            randStat = 5
+          end
+          break if (randStat>4 && randStat<201)
+        end
+        data[key].base_stats[stat] = randStat
+        if stat == :SPEED
+          data[key].base_stats[stat] = bst-rem_stat < 5 ? 5 : bst-rem_stat
+          if data[key].base_stats[stat] > 200
+            diff = data[key].base_stats[stat] - 200
+            data[key].base_stats[stat] = 200
+            rand2 = rand(5)
+            stats = [:HP,:ATTACK,:DEFENSE,:SPECIAL_ATTACK,:SPECIAL_DEFENSE]
+            data[key].base_stats[stats[rand]] += diff
+          end
+        end
+        rem_stat += data[key].base_stats[stat]
+        $new_stats[:stats][stat].push(data[key].base_stats[stat])
+      end
+      $new_stats[:pokemon].push(data[key].id)
+    end
+    $game_variables[970] = $new_stats
+    return data
+  end
+
+    #-----------------------------------------------------------------------------
+  #  randomizes compiled pokemon level up moves
+  #-----------------------------------------------------------------------------
+
+  def self.randomizeMoves
+    data = load_data("Data/species.dat")
+    move_data = load_data("Data/moves.dat")
+    move_list = []
+    $new_moves = {
+      :pokemon => [],
+      :moves => []
+      }
+    randStat = 0
+    return if !data.is_a?(Hash) || !move_data.is_a?(Hash)
+    for move in move_data.keys
+      move_list.push(move) if !move.is_a?(Integer)
+    end
+    for key in data.keys
+      moveset = []
+      species = data[key].id
+      next if $new_moves[:pokemon].include?(species)
+      ind = -1
+      for i in data[key].moves
+        moves = []
+        ind += 1
+        i[1] = move_list[rand(move_list.length)]
+        moves.push(i[0])
+        moves.push(i[1])
+        moveset.push(moves)
+      end
+      $new_moves[:moves].push(moveset)
+      $new_moves[:pokemon].push(data[key].id)
+    end
+    $game_variables[973] = $new_moves
     return data
   end
   #-----------------------------------------------------------------------------
@@ -68,7 +281,7 @@ module EliteBattle
   def self.randomizeEncounters
     # loads map encounters
     data = load_data("Data/encounters.dat")
-    species_exclusions = EliteBattle.get_data(:RANDOMIZER, :Metrics, :EXCLUSIONS_SPECIES)
+    species_exclusions = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
     return if !data.is_a?(Hash) # failsafe
     # iterates through each map point
     for key in data.keys
@@ -82,6 +295,7 @@ module EliteBattle
         end
       end
     end
+    $game_variables[972] = data
     return data
   end
   #-----------------------------------------------------------------------------
@@ -108,9 +322,10 @@ module EliteBattle
     for org in GameData::Item.values
       loop do
         item = GameData::Item.values.sample
-        break if GameData::Item.get(item).is_key_item?
+        break if !GameData::Item.get(item).is_key_item?
       end
       new[org] = item
+
     end
     return new
   end
@@ -125,7 +340,10 @@ module EliteBattle
       :ENCOUNTERS => proc{ next EliteBattle.randomizeEncounters },
       :STATIC => proc{ next EliteBattle.randomizeStatic },
       :GIFTS => proc{ next EliteBattle.randomizeStatic },
-      :ITEMS => proc{ next EliteBattle.randomizeItems }
+      :ITEMS => proc{ next EliteBattle.randomizeItems },
+      :ABILITIES => proc{ next EliteBattle.randomizeAbilities },
+      :STATS => proc { next EliteBattle.randomizeStats },
+      :MOVES => proc { next EliteBattle.randomizeMoves }
     }
     # applies randomized data for specified rule sets
     for key in EliteBattle.get_data(:RANDOMIZER, :Metrics, :RULES)
@@ -171,14 +389,17 @@ module EliteBattle
   #-----------------------------------------------------------------------------
   def self.randomizerSelection
     # list of all possible rules
-    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS]
+    modifiers = [:TRAINERS, :ENCOUNTERS, :STATIC, :GIFTS, :ITEMS, :ABILITIES, :STATS, :MOVES]
     # list of rule descriptions
     desc = [
       _INTL("Randomize Trainer parties"),
       _INTL("Randomize Wild encounters"),
       _INTL("Randomize Static encounters"),
       _INTL("Randomize Gifted Pokémon"),
-      _INTL("Randomize Items")
+      _INTL("Randomize Items"),
+      _INTL("Randomize Abilities"),
+      _INTL("Randomize Base Stats"),
+      _INTL("Randomize Level-Up Moves")
     ]
     # default
     added = []; cmd = 0
@@ -237,13 +458,14 @@ end
 #===============================================================================
 def randomizeSpecies(species, static = false, gift = false)
   return species if !EliteBattle.get(:randomizer)
+  return species if $game_switches[RandBoss::Var]
   pokemon = nil
   if species.is_a?(Pokemon)
     pokemon = species.clone
     species = pokemon.species
   end
   # if defined as an exclusion rule, species will not be randomized
-  excl = EliteBattle.get_data(:RANDOMIZER, :Metrics, :EXCLUSIONS_SPECIES)
+    excl = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
   if !excl.nil? && excl.is_a?(Array)
     for ent in excl
       return (pokemon.nil? ? species : pokemon) if species == ent
@@ -273,6 +495,58 @@ def randomizeItem(item)
   item = EliteBattle.getRandomizedData(item, :ITEMS, item)
   return item
 end
+
+def getRandAbilities(species, ability_index)
+  array = $game_variables[969]
+  ability = array[:abilities]
+  pokemon = array[:pokemon]
+  idx = -1
+  for i in pokemon
+    idx += 1
+    break if i == species
+  end
+#  p pokemon
+ # p ability[idx][ability_index]
+  return ability[idx][ability_index]
+end
+
+def getRandStats(species)
+  pkmn = GameData::Species.get(species).id
+  array = $game_variables[970]
+  stats = array[:stats]
+  stt = [:HP,:ATTACK,:DEFENSE,:SPECIAL_ATTACK,:SPECIAL_DEFENSE,:SPEED]
+  stat = {:HP => 0,
+          :ATTACK => 0,
+          :DEFENSE => 0,
+          :SPECIAL_ATTACK => 0,
+          :SPECIAL_DEFENSE => 0,
+          :SPEED => 0
+          }
+  pokemon = array[:pokemon]
+  idx = -1
+  for i in pokemon
+    idx += 1
+    break if i == pkmn
+  end
+  for i in stt
+    stat[i] = stats[i][idx]
+  end
+  return stat
+end
+
+def getRandMoves(species)
+  pkmn = GameData::Species.get(species).id
+  array = $game_variables[973]
+  moves = array[:moves]
+  pokemon = array[:pokemon]
+  idx = -1
+  for i in pokemon
+    idx += 1
+    break if i == pkmn
+  end
+  return moves[idx]
+end
+
 #===============================================================================
 #  aliasing to return randomized battlers
 #===============================================================================
@@ -377,14 +651,25 @@ end
 #===============================================================================
 def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
   # handle trainer type process
+  trainer_exclusions = [:RIVAL2,:LEADER_Brock,:LEADER_Misty,:LEADER_Surge,:LEADER_Erika,:LEADER_Sabrina,:LEADER_Blaine,:LEADER_Winslow,:LEADER_Jackson,:OFFCORP,:DEFCORP,:PSYCORP,:ROCKETBOSS,:CHAMPION,:ARMYBOSS,:NAVYBOSS,:AIRFORCEBOSS,:GUARDBOSS,:CHANCELLOR,:DOJO_Luna,:DOJO_Apollo,:DOJO_Jasper,:DOJO_Maloki,:DOJO_Juliet,:DOJO_Adam,:DOJO_Wendy,:LEAGUE_Astrid,:LEAGUE_Winslow,:LEAGUE_Eugene,:LEAGUE_Armand,:LEAGUE_Winston,:LEAGUE_Vincent]
   tr_type_data = GameData::TrainerType.try_get(tr_type)
   raise _INTL("Trainer type {1} does not exist.", tr_type) if !tr_type_data
   tr_type = tr_type_data.id
   # handle actual trainer data
   trainer_data = GameData::Trainer.try_get(tr_type, tr_name, tr_version)
-  key = [tr_type.to_sym, tr_name, tr_version]
+  idx = -1
+  new_trainers = $game_variables[971]
+  if new_trainers != 0 && $game_switches[RandBoss::Var] == false && EliteBattle.randomizerOn?
+    for i in new_trainers[:trainer]
+      idx += 1
+      break if i[0] == tr_type && i[1] == tr_name && i[2] == tr_version
+    end
+    rand_trainer_data = GameData::Trainer.try_get(new_trainers[:trainer][idx][0],new_trainers[:trainer][idx][1],new_trainers[:trainer][idx][2])
+    return (rand_trainer_data) ? rand_trainer_data.to_trainer : nil
+  end
+ # key = [tr_type.to_sym, tr_name, tr_version]
   # attempt to randomize
-  trainer_data = EliteBattle.getRandomizedData(trainer_data, :TRAINERS, key)
+ # trainer_data = EliteBattle.getRandomizedData(trainer_data, :TRAINERS, key)
   return (trainer_data) ? trainer_data.to_trainer : nil
 end
 #===============================================================================

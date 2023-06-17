@@ -59,9 +59,9 @@ module PokemonSelection
     ret=pbHasEligible?
     pbBattleChallenge.pbCancel
     return ret
-    end
+  end
 
-    def self.choose(min=1, max=6, canCancel=false, acceptFainted=false)
+  def self.choose(min=1, max=6, canCancel=false, acceptFainted=false)
     if $PokemonGlobal.pokemonSelectionOriginalParty
       raise "Can't choose a new party until restore the old one"
     end
@@ -69,7 +69,7 @@ module PokemonSelection
     pbBattleChallenge.set("pokemonSelectionRules",7,self.rules(min,max))
     loop do
         pbEntryScreen
-      validPartyChosen=(pbBattleChallenge.getParty!=nil)
+      validPartyChosen=(pbBattleChallenge.getParty != nil)
       break if(canCancel || validPartyChosen)
       break if pbBattleChallenge.getParty==nil
       Kernel.pbMessage(_INTL("Choose a Pokémon."))
@@ -85,15 +85,15 @@ module PokemonSelection
     return validPartyChosen
   end
 
-    def self.restore(*args)
-      hasSavedTeam=($PokemonGlobal.pokemonSelectionOriginalParty!=nil)
-      if hasSavedTeam
-        $Trainer.party=$PokemonGlobal.pokemonSelectionOriginalParty
-        $PokemonGlobal.pokemonSelectionOriginalParty=nil
-      end
-      return hasSavedTeam
+  def self.restore(*args)
+    hasSavedTeam=($PokemonGlobal.pokemonSelectionOriginalParty != nil)
+    if hasSavedTeam
+      $Trainer.party=$PokemonGlobal.pokemonSelectionOriginalParty
+      $PokemonGlobal.pokemonSelectionOriginalParty=nil
     end
+    return hasSavedTeam
   end
+end
 
   class PokemonRuleSet # Redefined to fix a bug
     def hasValidTeam?(team)

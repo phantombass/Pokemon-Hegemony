@@ -533,46 +533,24 @@ DebugMenuCommands.register("addpokemon", {
   }
 })
 
-DebugMenuCommands.register("demoparty", {
+DebugMenuCommands.register("fixpokemon", {
   "parent"      => "pokemonmenu",
-  "name"        => _INTL("Give Demo Party"),
-  "description" => _INTL("Give yourself 6 preset Pokémon. They overwrite the current party."),
+  "name"        => _INTL("Fix Invalid Pokémon"),
+  "description" => _INTL("Give yourself a Pokémon to replace a broken one."),
   "effect"      => proc {
-    party = []
-    species = [:PIKACHU, :PIDGEOTTO, :KADABRA, :GYARADOS, :DIGLETT, :CHANSEY]
-    for id in species
-      party.push(id) if GameData::Species.exists?(id)
-    end
-    $Trainer.party.clear
-    # Generate Pokémon of each species at level 20
-    party.each do |species|
-      pkmn = Pokemon.new(species, 20)
-      $Trainer.party.push(pkmn)
-      $Trainer.pokedex.register(pkmn)
-      $Trainer.pokedex.set_owned(species)
-      case species
-      when :PIDGEOTTO
-        pkmn.learn_move(:FLY)
-      when :KADABRA
-        pkmn.learn_move(:FLASH)
-        pkmn.learn_move(:TELEPORT)
-      when :GYARADOS
-        pkmn.learn_move(:SURF)
-        pkmn.learn_move(:DIVE)
-        pkmn.learn_move(:WATERFALL)
-      when :DIGLETT
-        pkmn.learn_move(:DIG)
-        pkmn.learn_move(:CUT)
-        pkmn.learn_move(:HEADBUTT)
-        pkmn.learn_move(:ROCKSMASH)
-      when :CHANSEY
-        pkmn.learn_move(:SOFTBOILED)
-        pkmn.learn_move(:STRENGTH)
-        pkmn.learn_move(:SWEETSCENT)
+    species = pbChooseSpeciesList
+      if species
+        params = ChooseNumberParams.new
+        params.setRange(1, GameData::GrowthRate.max_level)
+        params.setInitialValue(5)
+        params.setCancelValue(0)
+        level = pbMessageChooseNumber(_INTL("Set the Pokémon's level."), params)
+        $Trainer.party.each {|pkmn| 
+          pkmn.species = :ANNIHILAPE2 if pkmn.species == :ANNHILAPE2
+          pkmn.species = :ANNIHILAPE if pkmn.species == :ANNHILAPE
+        }
       end
-      pkmn.record_first_moves
-    end
-    pbMessage(_INTL("Filled party with demo Pokémon."))
+      pbAddPokemon(species, level) if level > 0
   }
 })
 

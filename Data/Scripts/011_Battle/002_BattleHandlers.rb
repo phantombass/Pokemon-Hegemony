@@ -368,8 +368,8 @@ module BattleHandlers
     ItemOnStatLoss.trigger(item,battler,user,move,switched,battle)
   end
 
-  def self.triggerUserItemOnMiss(item,user,target,move,battle)
-    UserItemOnMiss.trigger(item,user,target,move,battle)
+  def self.triggerUserItemOnMiss(item,user,target,move,hit_num,battle)
+    UserItemOnMiss.trigger(item,user,target,move,hit_num,battle)
   end
 
   #=============================================================================
@@ -556,6 +556,56 @@ def pbBattleMoveImmunityStatAbility(user,target,move,moveType,immuneType,stat,in
   return true
 end
 
+def ability_orb_ability(item)
+  case item
+  when :SAPSIPPERORB
+    return :SAPSIPPER
+  when :FLASHFIREORB
+    return :FLASHFIRE
+  end
+  return nil
+end
+
+def pbBattleMoveImmunityStatAbilityOrb(item,user,target,move,moveType,immuneType,stat,increment,battle)
+  return false if user.index==target.index
+  return false if moveType != immuneType
+  ability = user.ability_id
+  user.ability_id = ability_orb_ability(item)
+  if ability != user.ability_id
+    battle.pbShowAbilitySplash(target)
+    if target.pbCanRaiseStatStage?(stat,target)
+      target.pbRaiseStatStageByCause(stat,increment,target,item.name)
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
+           target.pbThis,item.name,move.name))
+    end
+    battle.pbHideAbilitySplash(target)
+    user.ability_id = ability
+  end
+  return true
+end
+
+def pbBattleMoveImmunityAbilityOrbFlashFire(item,user,target,move,moveType,immuneType,battle)
+  return false if user.index==target.index
+  return false if moveType != immuneType
+  ability = user.ability_id
+  user.ability_id = ability_orb_ability(item)
+  if ability != battler.ability_id
+    battle.pbShowAbilitySplash(target)
+    if !target.effects[PBEffects::FlashFire]
+      target.effects[PBEffects::FlashFire] = true
+        battle.pbDisplay(_INTL("The power of {1}'s Fire-type moves rose because of its {2}!",
+           target.pbThis(true),item.name))
+    else
+        battle.pbDisplay(_INTL("{1}'s {2} made {3} ineffective!",
+           target.pbThis,item.name,move.name))
+    end
+    battle.pbHideAbilitySplash(target)
+    user.ability_id = ability
+  end
+  return true
+end
+
 # For abilities that grant immunity to moves of a particular type, and heals the
 # ability's bearer by 1/4 of its total HP instead.
 def pbBattleMoveImmunityHealAbility(user,target,move,moveType,immuneType,battle)
@@ -596,6 +646,7 @@ end
 def pbBattleTypeWeakingBerry(type,moveType,target,mults)
   return if moveType != type
   return if Effectiveness.resistant?(target.damageState.typeMod) && moveType != :NORMAL
+  return if !target.canConsumeBerry?
   mults[:final_damage_multiplier] /= target.hasActiveAbility?(:RIPEN)? 4 : 2
   target.damageState.berryWeakened = true
   target.battle.pbCommonAnimation("EatBerry",target)
