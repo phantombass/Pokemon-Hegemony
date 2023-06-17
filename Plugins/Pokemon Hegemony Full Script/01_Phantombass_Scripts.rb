@@ -921,6 +921,7 @@ class PokeBattle_Battle
   def pbEndOfBattle
     $mega_flag = 0
     $gym_gimmick = false
+    $gym_tailwind = false
     $gym_weather = false
     $gym_hazard = false
     $gym_taunt = false
