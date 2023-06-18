@@ -212,6 +212,9 @@ BattleVS         = classicVS
 [TEAMROCKET_M,Grunt,100]
 BattleVS         = classicVS
 #-------------------------------
+[TEAMROCKET_F,Grunt,101]
+BattleVS         = classicVS
+#-------------------------------
 [SCIENTIST,Grunt,102]
 BattleVS         = classicVS
 #-------------------------------
