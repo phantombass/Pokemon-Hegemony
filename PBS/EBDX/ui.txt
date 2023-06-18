@@ -51,7 +51,7 @@ MegaButtonGraphic  = megaButton
 SelectorGraphic    = cmdSel
 CategoryGraphic    = category
 TypeGraphic        = types
-ShowTypeAdvantage  = false
+ShowTypeAdvantage  = true
 #-------------------------------
 [BAGMENU]
 Shade             = shade
