@@ -5593,6 +5593,89 @@ class PokeBattle_Battle
     end
   end
 
+  def pbOnActiveOne(battler)
+    return false if battler.fainted?
+    # Introduce Shadow Pokémon
+    if battler.opposes? && battler.shadowPokemon?
+      pbCommonAnimation("Shadow",battler)
+      pbDisplay(_INTL("Oh!\nA Shadow Pokémon!"))
+    end
+    # Record money-doubling effect of Amulet Coin/Luck Incense
+    if !battler.opposes? && [:AMULETCOIN, :LUCKINCENSE].include?(battler.item_id)
+      @field.effects[PBEffects::AmuletCoin] = true
+    end
+    # Update battlers' participants (who will gain Exp/EVs when a battler faints)
+    eachBattler { |b| b.pbUpdateParticipants }
+    # Healing Wish / Lunar Dance
+    pbActivateHealingWish(battler)
+    # Entry hazards
+    # Stealth Rock
+    if battler.pbOwnSide.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
+       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage?
+      bTypes = battler.pbTypes(true)
+      eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
+      if !Effectiveness.ineffective?(eff)
+        eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
+        #oldHP = battler.hp
+        battler.pbReduceHP(battler.totalhp*eff/8,false)
+        pbDisplay(_INTL("Pointed stones dug into {1}!",battler.pbThis))
+        battler.pbItemHPHealCheck
+        if battler.pbAbilitiesOnDamageTaken  # Switched out
+          return pbOnActiveOne(battler)   # For replacement battler
+        end
+      end
+    end
+    # Spikes
+    if battler.pbOwnSide.effects[PBEffects::Spikes]>0 && battler.takesIndirectDamage? &&
+       !battler.airborne? && battler.takesEntryHazardDamage?
+      spikesDiv = [8,6,4][battler.pbOwnSide.effects[PBEffects::Spikes]-1]
+      #oldHP = battler.hp
+      battler.pbReduceHP(battler.totalhp/spikesDiv,false)
+      pbDisplay(_INTL("{1} is hurt by the spikes!",battler.pbThis))
+      battler.pbItemHPHealCheck
+      if battler.pbAbilitiesOnDamageTaken   # Switched out
+        return pbOnActiveOne(battler)   # For replacement battler
+      end
+    end
+    # Toxic Spikes
+    if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]>0 && !battler.fainted? &&
+       !battler.airborne?
+      if battler.pbHasType?(:POISON)
+        battler.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
+        pbDisplay(_INTL("{1} absorbed the poison spikes!",battler.pbThis))
+      elsif battler.pbCanPoison?(nil,false) && battler.takesEntryHazardDamage?
+        if battler.pbOwnSide.effects[PBEffects::ToxicSpikes]==2
+          battler.pbPoison(nil,_INTL("{1} was badly poisoned by the poison spikes!",battler.pbThis),true)
+        else
+          battler.pbPoison(nil,_INTL("{1} was poisoned by the poison spikes!",battler.pbThis))
+        end
+      end
+    end
+    # Sticky Web
+    if battler.pbOwnSide.effects[PBEffects::StickyWeb] && !battler.fainted? &&
+       !battler.airborne? && battler.takesEntryHazardDamage?
+      pbDisplay(_INTL("{1} was caught in a sticky web!",battler.pbThis))
+      if battler.pbCanLowerStatStage?(:SPEED)
+        stickyuser = (battler.pbOwnSide.effects[PBEffects::StickyWebUser] > -1 ?
+          battlers[battler.pbOwnSide.effects[PBEffects::StickyWebUser]] : nil)
+        battler.pbLowerStatStage(:SPEED,1,stickyuser)
+        battler.pbItemStatRestoreCheck
+      end
+    end
+    # Battler faints if it is knocked out because of an entry hazard above
+    if battler.fainted?
+      battler.pbFaint
+      pbGainExp
+      pbJudge
+      return false
+    end
+    battler.pbCheckForm
+    if $gym_taunt && !battler.opposes? && !battler.hasActiveAbility?([:OBLIVIOUS,:AROMAVEIL])
+      battler.effects[PBEffects::Taunt] = 1
+    end 
+    return true
+  end
+
   # Called when a Pokémon enters battle, and when Ally Switch is used.
   def pbEffectsOnBattlerEnteringPosition(battler)
     position = @positions[battler.index]
@@ -5727,9 +5810,6 @@ class PokeBattle_Battle
     eachBattler do |b|
       b.droppedBelowHalfHP = false
       b.statsLowered = false
-      if $gym_taunt && b[battler_index].idxOwnSide == 0
-        b.effects[PBEffects::Taunt] = 1
-      end 
     end
   end
 end
@@ -6379,7 +6459,7 @@ class PokeBattle_Battle
       battler.droppedBelowHalfHP = false
     end
     # Taunt
-    if !$gym_gimmick
+    if !$gym_taunt
       pbEORCountDownBattlerEffect(priority,PBEffects::Taunt) { |battler|
         pbDisplay(_INTL("{1}'s taunt wore off!",battler.pbThis))
       }
