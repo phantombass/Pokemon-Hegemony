@@ -271,7 +271,7 @@ class Interpreter
       Input.update
       pbUpdateSceneMap
       # Check for input and break if there is one
-      for i in 1..18
+      for i in 1..99
         ret = i if Input.trigger?(i)
       end
       break if ret != 0

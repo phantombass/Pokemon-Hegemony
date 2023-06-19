@@ -230,7 +230,8 @@ module BattleScripts
         @scene.pbDisplay("Jackson set permanent Heavy Rain!")
         @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
         @battle.battlers[1].pbOwnSide.effects[PBEffects::Safeguard] = 1
-        @battle.battlers[1].effects[PBEffects::Taunt] = 1
+        @battle.battlers[0].effects[PBEffects::Taunt] = 1
+        @battle.battlers[2].effects[PBEffects::Taunt] = 1
         $gym_taunt = true
         @scene.pbDisplay("Jackson's team is protected from status and prevents your status moves!")
       end
