@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.4.11"
+  GAME_VERSION = "4.4.12"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -174,6 +174,7 @@ def PokemonLoadScreen
         write_version
         Game.start_new
         reset_custom_variables
+        $PokemonGlobal.repel = 0
         $rotom_fix = true
         repel_toggle = true
         return

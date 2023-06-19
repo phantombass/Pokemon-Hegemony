@@ -382,6 +382,7 @@ end
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next if !move.is_a?(PokeBattle_FixedDamageMove) || move.function == "070" || move.function == "0D4"
   dmg = move.pbFixedDamage(user, target)
+  dmg = 0 if dmg == nil
   if dmg >= target.hp
     score += 175
     PBAI.log("+ 175 for this move's fixed damage being enough to knock out the target")

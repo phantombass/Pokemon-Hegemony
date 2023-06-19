@@ -221,6 +221,21 @@ BattleVS         = classicVS
 [SCIENTIST,Grunt,103]
 BattleVS         = classicVS
 #-------------------------------
+[SCIENTIST,Grunt,106]
+BattleVS         = classicVS
+#-------------------------------
+[SCIENTIST,Grunt,107]
+BattleVS         = classicVS
+#-------------------------------
+[SCIENTIST,Grunt,108]
+BattleVS         = classicVS
+#-------------------------------
+[SCIENTIST,Grunt,109]
+BattleVS         = classicVS
+#-------------------------------
+[SCIENTIST,Grunt,110]
+BattleVS         = classicVS
+#-------------------------------
 [BUGCATCHER,Sheldon,4]
 BattleVS         = classicVS
 #-------------------------------
