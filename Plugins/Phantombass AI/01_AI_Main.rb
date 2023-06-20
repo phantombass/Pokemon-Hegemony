@@ -693,14 +693,14 @@ class PBAI
           end
         else
           move_index, score, target, target_name = e
-          if !@battle.wildBattle?
+          if i == idx
+            $target_ind = target
+            $chosen_move = @battler.moves[move_index]
+          end
+          if !$DEBUG
             name = @battler.moves[move_index].name
             str += "\nMOVE(#{target_name}) #{name}: #{score} => #{finalPerc}" + " percent"
             str += " << CHOSEN" if i == idx
-            if i == idx
-              $target_ind = target
-              $chosen_move = @battler.moves[move_index]
-            end
             str += "\n"
           end
         end
