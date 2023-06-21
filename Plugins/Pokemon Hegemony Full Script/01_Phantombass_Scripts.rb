@@ -130,7 +130,7 @@ Events.onMapChange += proc {| sender, e |
     pbResetAllRoamers
 }
 
-def PokemonLoadScreen
+class PokemonLoadScreen
   def pbStartLoadScreen
     commands = []
     cmd_continue     = -1

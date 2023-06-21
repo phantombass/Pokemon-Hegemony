@@ -727,7 +727,7 @@ class PokemonSummary_Scene
             cancel = true if count <= 0
           end
           if !cancel
-            pkmn.status      = ids[cmd]
+            pkmn.status      = ids[cmd] if pkmn.pbCanInflictStatus?(ids[cmd])
             pkmn.statusCount = count
             dorefresh = true
           end
