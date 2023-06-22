@@ -718,16 +718,33 @@ class PokemonSummary_Scene
         else   # Give status problem
           count = 0
           cancel = false
-          if ids[cmd] == :SLEEP
-            params = ChooseNumberParams.new
-            params.setRange(0, 9)
-            params.setDefaultValue(3)
-            count = pbMessageChooseNumber(
-               _INTL("Set the Pokémon's sleep count."), params) { pbUpdate }
-            cancel = true if count <= 0
+          if ids[cmd] == :POISON && (pkmn.hasType?(:POISON) || pkmn.hasType?(:STEEL) || pkmn.hasAbility?([:IMMUNITY,:COMATOSE]))
+            pbDisplay(_INTL("This Pokémon cannot be poisoned."))
+            cancel = true
+          elsif ids[cmd] == :BURN && (pkmn.hasType?(:FIRE) || pkmn.hasAbility?([:WATERBUBBLE,:WATERVEIL,:FAIRYBUBBLE,:THERMALEXCHANGE,:COMATOSE]))
+            pbDisplay(_INTL("This Pokémon cannot be burned."))
+            cancel = true
+          elsif ids[cmd] == :SLEEP
+            if (pkmn.hasAbility?([:INSOMNIA,:CACOPHONY]))
+              pbDisplay(_INTL("This Pokémon cannot be put to sleep."))
+              cancel = true
+            else
+              params = ChooseNumberParams.new
+              params.setRange(0, 9)
+              params.setDefaultValue(3)
+              count = pbMessageChooseNumber(
+                 _INTL("Set the Pokémon's sleep count."), params) { pbUpdate }
+              cancel = true if count <= 0
+            end
+          elsif ids[cmd] == :FROZEN && (pkmn.hasType?(:ICE) || pkmn.hasAbility?([:MAGMAARMOR,:COMATOSE]))
+            pbDisplay(_INTL("This Pokémon cannot be frostbitten."))
+            cancel = true
+          elsif ids[cmd] == :PARALYSIS && (pkmn.hasType?(:ELECTRIC) || pkmn.hasAbility?([:LIMBER,:COMATOSE]))
+            pbDisplay(_INTL("This Pokémon cannot be paralyzed."))
+            cancel = true
           end
           if !cancel
-            pkmn.status      = ids[cmd] if pkmn.pbCanInflictStatus?(ids[cmd])
+            pkmn.status      = ids[cmd]
             pkmn.statusCount = count
             dorefresh = true
           end
