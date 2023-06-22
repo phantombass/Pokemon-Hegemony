@@ -684,18 +684,22 @@ class PBAI
          # end
 
         elsif i == -1
-          for move in @battler.moves
-            if move.pp > 0
-              i = 3
-            else
-              str += "STRUGGLE: 100 percent"
+          if !@battle.wildBattle?
+            for move in @battler.moves
+              if move.pp > 0
+                i = 3
+              else
+                str += "STRUGGLE: 100 percent"
+              end
             end
           end
         else
           move_index, score, target, target_name = e
           if i == idx
             $target_ind = target
-            $chosen_move = @battler.moves[move_index]
+            if !@battle.wildBattle?
+              $chosen_move = @battler.moves[move_index]
+            end
           end
           if $DEBUG
             name = @battler.moves[move_index].name

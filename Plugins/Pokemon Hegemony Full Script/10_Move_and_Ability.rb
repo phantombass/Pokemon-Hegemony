@@ -787,13 +787,12 @@ BattleHandlers::EORHealingAbility.add(:ASPIRANT,
   proc { |ability,battler,battle|
     wishHeal = $game_variables[103]
     $game_variables[101] -= 1
+    next if $game_variables[101]>0
     if $game_variables[101]==0
       wishMaker = $game_variables[102]
       battler.pbRecoverHP(wishHeal)
       battle.pbDisplay(_INTL("{1}'s wish came true!",wishMaker))
-    end
-    next if $game_variables[101]>0
-    if $game_variables[101]<0
+    elsif $game_variables[101]<0
       battle.pbShowAbilitySplash(battler)
       if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
         $game_variables[103] = (battler.totalhp/2)
