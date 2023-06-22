@@ -504,7 +504,7 @@ class Pokemon
   def hasAbility?(check_ability = nil)
     current_ability = self.ability
     return !current_ability.nil? if check_ability.nil?
-    return current_ability == check_ability
+    return current_ability.is_a?(Array) ? current_ability.include?(check_ability) : current_ability == check_ability
   end
 
   # @return [Boolean] whether this Pokémon has a hidden ability
