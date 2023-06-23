@@ -1171,8 +1171,15 @@ class Pokemon
   # @param withMoves [TrueClass, FalseClass] whether the Pokémon should have moves
   # @param rechech_form [TrueClass, FalseClass] whether to auto-check the form
   def initialize(species, level, owner = $Trainer, withMoves = true, recheck_form = true)
+    randSpec = pbGet(974)
     species_data = GameData::Species.get(species)
     @species          = species_data.species
+    if randSpec != 0
+      for mon in randSpec.keys
+        next if mon != @species
+        @species = randSpec[mon]
+      end
+    end
     @form             = species_data.form
     @forced_form      = nil
     @time_form_set    = nil
