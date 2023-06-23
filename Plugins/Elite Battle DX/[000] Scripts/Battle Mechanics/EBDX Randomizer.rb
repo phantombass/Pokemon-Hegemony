@@ -296,6 +296,7 @@ module EliteBattle
       end
     end
     $game_variables[972] = data
+    $game_variables[975] = data
     return data
   end
   #-----------------------------------------------------------------------------
@@ -473,11 +474,13 @@ def randomizeSpecies(species, static = false, gift = false)
     end
   end
   # randomizes static encounters
-  randStatic = pbGet(974)
-  if randStatic != 0
-    for mon in randStatic.keys
-      next if mon != species
-      species = randStatic[mon]
+  if static == true || gift == true
+    randStatic = pbGet(974)
+    if randStatic != 0
+      for mon in randStatic.keys
+        next if mon != species
+        species = randStatic[mon]
+      end
     end
   end
  # species = EliteBattle.getRandomizedData(species, :STATIC, species) if static
@@ -513,8 +516,6 @@ def getRandAbilities(species, ability_index)
     idx += 1
     break if i == species
   end
-#  p pokemon
- # p ability[idx][ability_index]
   return ability[idx][ability_index]
 end
 
@@ -553,6 +554,11 @@ def getRandMoves(species)
     break if i == pkmn
   end
   return moves[idx]
+end
+
+def getEncounter(map_id,map_version)
+  encounters = GameData::Encounter.get(map_id,map_version)
+  return encounters
 end
 
 #===============================================================================
@@ -695,10 +701,24 @@ module GameData
     def self.get(map_id, map_version = 0)
       validate map_id => Integer
       validate map_version => Integer
+      randEnc = pbGet(972)
+      #randEnc2 = pbGet(975)
+      #$game_variables[972] = randEnc2 if randEnc != randEnc2
       trial_key = sprintf("%s_%d", map_id, map_version).to_sym
-      key = (self::DATA.has_key?(trial_key)) ? trial_key : sprintf("%s_0", map_id).to_sym
-      data = get_ebdx(map_id, map_version)
-      return EliteBattle.getRandomizedData(data, :ENCOUNTERS, key)
+      key = randEnc == 0 ? ((self::DATA.has_key?(trial_key)) ? trial_key : sprintf("%s_0", map_id).to_sym) : ((randEnc.has_key?(trial_key)) ? trial_key : sprintf("%s_0", map_id).to_sym)
+      data = randEnc == 0 ? self::DATA[key] : randEnc[key]
+      #randRet = pbGet(974)
+      #if randEnc != 0 && data != nil
+      #  for type in data.types.keys
+      #    for mon in data.types[type]
+      #      for pkmn in randRet.keys
+      #        next if pkmn != mon[1]
+      #        mon[1] = randRet[pkmn]
+      #      end
+      #    end
+      #  end
+      #end
+      return data
     end
     #---------------------------------------------------------------------------
   end

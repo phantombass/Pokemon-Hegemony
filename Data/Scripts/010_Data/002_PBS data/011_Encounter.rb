@@ -16,10 +16,11 @@ module GameData
     # @param map_version [Integer, nil]
     # @return [Boolean] whether there is encounter data for the given map ID/version
     def self.exists?(map_id, map_version = 0)
+      randEnc = pbGet(972)
       validate map_id => [Integer]
       validate map_version => [Integer]
       key = sprintf("%s_%d", map_id, map_version).to_sym
-      return !self::DATA[key].nil?
+      return randEnc == 0 ? !self::DATA[key].nil? : !randEnc[key].nil?
     end
 
     # @param map_id [Integer]
@@ -28,11 +29,9 @@ module GameData
     def self.get(map_id, map_version = 0)
       validate map_id => Integer
       validate map_version => Integer
-      randEnc = pbGet(972)
       trial_key = sprintf("%s_%d", map_id, map_version).to_sym
       key = (self::DATA.has_key?(trial_key)) ? trial_key : sprintf("%s_0", map_id).to_sym
-      key = ((randEnc.has_key?(trial_key)) ? trial_key : sprintf("%s_0", map_id).to_sym) if $game_variables[972] != 0
-      return randEnc == 0 ? self::DATA[key] : randEnc[key]
+      return self::DATA[key]
     end
 
     # Yields all encounter data in order of their map and version numbers.
