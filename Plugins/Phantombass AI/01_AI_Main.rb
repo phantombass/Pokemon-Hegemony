@@ -687,7 +687,7 @@ class PBAI
           if !@battle.wildBattle?
             for move in @battler.moves
               if move.pp > 0
-                i = 3
+                i = 2
               else
                 str += "STRUGGLE: 100 percent"
               end
