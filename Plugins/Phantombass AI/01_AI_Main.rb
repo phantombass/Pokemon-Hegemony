@@ -697,7 +697,7 @@ class PBAI
           move_index, score, target, target_name = e
           if i == idx
             $target_ind = target
-            if !@battle.wildBattle?
+            if @battle.doublebattle
               $chosen_move = @battler.moves[move_index]
             end
           end

@@ -28,31 +28,50 @@ module GameData
     def self.get(map_id, map_version = 0)
       validate map_id => Integer
       validate map_version => Integer
+      randEnc = pbGet(972)
       trial_key = sprintf("%s_%d", map_id, map_version).to_sym
       key = (self::DATA.has_key?(trial_key)) ? trial_key : sprintf("%s_0", map_id).to_sym
-      return self::DATA[key]
+      key = ((randEnc.has_key?(trial_key)) ? trial_key : sprintf("%s_0", map_id).to_sym) if $game_variables[972] != 0
+      return randEnc == 0 ? self::DATA[key] : randEnc[key]
     end
 
     # Yields all encounter data in order of their map and version numbers.
     def self.each
-      keys = self::DATA.keys.sort do |a, b|
-        if self::DATA[a].map == self::DATA[b].map
-          self::DATA[a].version <=> self::DATA[b].version
-        else
-          self::DATA[a].map <=> self::DATA[b].map
+      randEnc = pbGet(972)
+      if randEnc == 0
+        keys = self::DATA.keys.sort do |a, b|
+          if self::DATA[a].map == self::DATA[b].map
+            self::DATA[a].version <=> self::DATA[b].version
+          else
+            self::DATA[a].map <=> self::DATA[b].map
+          end
         end
+        keys.each { |key| yield self::DATA[key] }
+      else
+        keys = randEnc.keys.sort do |a, b|
+          if randEnc[a].map == randEnc[b].map
+            randEnc[a].version <=> randEnc[b].version
+          else
+            randEnc[a].map <=> randEnc[b].map
+          end
+        end
+        keys.each { |key| yield randEnc[key] }
       end
-      keys.each { |key| yield self::DATA[key] }
     end
 
     # Yields all encounter data for the given version. Also yields encounter
     # data for version 0 of a map if that map doesn't have encounter data for
     # the given version.
     def self.each_of_version(version = 0)
+      randEnc = pbGet(972)
       self.each do |data|
         yield data if data.version == version
         if version > 0
-          yield data if data.version == 0 && !self::DATA.has_key?([data.map, version])
+          if randEnc == 0
+            yield data if data.version == 0 && !self::DATA.has_key?([data.map, version])
+          else
+            yield data if data.version == 0 && !randEnc.has_key?([data.map, version])
+          end
         end
       end
     end

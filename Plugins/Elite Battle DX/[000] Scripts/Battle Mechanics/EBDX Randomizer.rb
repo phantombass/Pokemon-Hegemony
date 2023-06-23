@@ -310,6 +310,7 @@ module EliteBattle
       new[org] = array[i]
       array.delete_at(i)
     end
+    $game_variables[974] = new
     return new
   end
   #-----------------------------------------------------------------------------
@@ -472,8 +473,15 @@ def randomizeSpecies(species, static = false, gift = false)
     end
   end
   # randomizes static encounters
-  species = EliteBattle.getRandomizedData(species, :STATIC, species) if static
-  species = EliteBattle.getRandomizedData(species, :GIFTS, species) if gift
+  randStatic = pbGet(974)
+  if randStatic != 0
+    for mon in randStatic.keys
+      next if mon != species
+      species = randStatic[mon]
+    end
+  end
+ # species = EliteBattle.getRandomizedData(species, :STATIC, species) if static
+ # species = EliteBattle.getRandomizedData(species, :GIFTS, species) if gift
   if !pokemon.nil?
     pokemon.species = species
     pokemon.calc_stats
