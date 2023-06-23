@@ -474,7 +474,6 @@ def randomizeSpecies(species, static = false, gift = false)
   end
   # randomizes static encounters
   randStatic = pbGet(974)
-  p randStatic
   if randStatic != 0
     for mon in randStatic.keys
       next if mon != species
