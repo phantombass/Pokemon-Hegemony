@@ -15,6 +15,7 @@ def write_version
     f.write("#{version}")
   }
 end
+
 def reset_custom_variables
   $gym_gimmick = false
   $gym_weather = false
