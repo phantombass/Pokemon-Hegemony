@@ -275,7 +275,8 @@ class PokemonEncounters
     if !enc_type || !GameData::EncounterType.exists?(enc_type)
       raise ArgumentError.new(_INTL("Encounter type {1} does not exist", enc_type))
     end
-    enc_list = @encounter_tables[enc_type]
+    randEnc = getEncounter($game_map.map_id,$PokemonGlobal.encounter_version)
+    enc_list = Randomizer.active?(:ENCOUNTERS) ? randEnc.types[enc_type] : @encounter_tables[enc_type]
     return nil if !enc_list || enc_list.length == 0
     # Static/Magnet Pull prefer wild encounters of certain types, if possible.
     # If they activate, they remove all Pokémon from the encounter table that do
