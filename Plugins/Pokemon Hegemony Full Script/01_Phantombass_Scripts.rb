@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.4.18"
+  GAME_VERSION = "4.4.19"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -44,14 +44,12 @@ end
 
 def randomizer_boss
   if $game_switches[907]
-    EliteBattle.toggle_randomizer if $game_switches[RandBoss::Var] == false
     $game_switches[RandBoss::Var] = true
   end
 end
 
 def randomizer_on
   if $game_switches[907]
-    EliteBattle.toggle_randomizer if $game_switches[RandBoss::Var]
     $game_switches[RandBoss::Var] = false
   end
 end
@@ -851,6 +849,7 @@ class PokeBattle_Battle
     if $game_switches[899] && $game_switches[900]
       pbHegemonyClauses
     end
+    self.rules["inverseBattle"] = true if $game_switches[909] == true && $game_map.map_id != 191
     $weather_form = false
     sendOuts = pbSetUpSides
     olditems = []

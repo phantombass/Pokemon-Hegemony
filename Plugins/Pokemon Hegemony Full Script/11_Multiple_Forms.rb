@@ -280,7 +280,6 @@ Events.onMapUpdate+=proc {|sender,e|
   $game_switches[837] = true if enamorus?
   $game_switches[53] = true if $game_switches[258] == true
   $game_switches[Settings::LEVEL_CAP_SWITCH] = true if $game_switches[LvlCap::Kaizo] == false
-  setBattleRule("inverseBattle") if $game_switches[909] == true && $game_map.map_id != 191
   $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false && $game_switches[71] == true
   $game_switches[LvlCap::Rival] = false if $game_map.map_id != 251
   $game_switches[LvlCap::Gym] = false if $game_map.map_id != 251
