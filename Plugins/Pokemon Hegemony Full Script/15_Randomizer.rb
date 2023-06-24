@@ -54,6 +54,7 @@ class Randomizer
   	end
 
   	def self.active?(type)
+  	    return false if @choices.nil?
   		return @choices.include?(type)
   	end
 
@@ -367,7 +368,7 @@ class Randomizer
 	  #-----------------------------------------------------------------------------
 
 	  def self.randomizeMoves
-	  	return !self.active?(:MOVES)
+	  	return if !self.active?(:MOVES)
 	    data = load_data("Data/species.dat")
 	    move_data = load_data("Data/moves.dat")
 	    move_list = []
