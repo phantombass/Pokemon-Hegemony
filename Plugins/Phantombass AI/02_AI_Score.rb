@@ -608,6 +608,10 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
+    if move.statusMove? && user.target_is_immune?(move,target)
+      score -= 1000
+      PBAI.log("- 1000 for being immune")
+    end
   end
   next score
 end
