@@ -698,7 +698,9 @@ class PBAI
           move_index, score, target, target_name = e
           if i == idx
             $target_ind = target
-            $chosen_move = @battler.moves[move_index]
+            if @battle.doublebattle
+                $chosen_move = @battler.moves[move_index]
+            end
           end
           name = @battler.moves[move_index].name
           str += "\nMOVE(#{target_name}) #{name}: #{score} => #{finalPerc}" + " percent"
@@ -2059,4 +2061,3 @@ BattleHandlers::AbilityOnSwitchIn.add(:FRISK,
     end
   }
 )
-
