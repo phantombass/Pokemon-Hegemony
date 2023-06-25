@@ -828,7 +828,7 @@ def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
   trainer_data = GameData::Trainer.try_get(tr_type, tr_name, tr_version)
   idx = -1
   new_trainers = Randomizer.trainers
-  if !new_trainers.nil? && !trainer_exclusions.include?(tr_type) && Randomizer.activated? && tr_version != 4 && tr_version < 100
+  if (!new_trainers.nil? || new_trainers == 0) && Randomizer.activated? && !trainer_exclusions.include?(tr_type)
     for i in new_trainers[:trainer]
       idx += 1
       break if i[0] == tr_type && i[1] == tr_name && i[2] == tr_version
@@ -840,6 +840,16 @@ def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
   # attempt to randomize
  # trainer_data = EliteBattle.getRandomizedData(trainer_data, :TRAINERS, key)
   return (trainer_data) ? trainer_data.to_trainer : nil
+end
+
+alias pbLoadTrainer_rand pbLoadTrainer unless defined?(pbLoadTrainer_rand)
+def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
+  ret = pbLoadTrainer_rand(tr_type, tr_name, tr_version)
+  ret.partyID = tr_version if ret
+  # try to load the next battle speech
+  speech = ret ? EliteBattle.get_trainer_data(tr_type, :BATTLESCRIPT, ret) : nil
+  EliteBattle.set(:nextBattleScript, (speech.is_a?(Hash) ? speech : speech.to_sym)) if !speech.nil?
+  return ret
 end
 
 class Pokemon
