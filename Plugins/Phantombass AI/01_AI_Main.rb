@@ -638,10 +638,11 @@ class PBAI
             move.push(i) if m.pp > 0 && !m.nil? && @battler.effects[PBEffects::DisableMove] != m.id && !m.statusMove? && m.id != :FAKEOUT && !immune.include?(i)
           end
           if sts == 4 || move == []
-            move.push(@battler.moves[rand(@battler.moves.length)])
+            move.push(rand(@battler.moves.length))
           end
         end
-        scores << [move[rand(move.length)] , 1, 0, "random"]
+        $rand_move = move[rand(move.length)]
+        scores << [$rand_move , 1, 0, "random"]
         PBAI.log("Random offensive move because of all low scores")
       end
 
@@ -697,16 +698,12 @@ class PBAI
           move_index, score, target, target_name = e
           if i == idx
             $target_ind = target
-            if @battle.doublebattle
-              $chosen_move = @battler.moves[move_index]
-            end
+            $chosen_move = @battler.moves[move_index]
           end
-          if $DEBUG
-            name = @battler.moves[move_index].name
-            str += "\nMOVE(#{target_name}) #{name}: #{score} => #{finalPerc}" + " percent"
-            str += " << CHOSEN" if i == idx
-            str += "\n"
-          end
+          name = @battler.moves[move_index].name
+          str += "\nMOVE(#{target_name}) #{name}: #{score} => #{finalPerc}" + " percent"
+          str += " << CHOSEN" if i == idx
+          str += "\n"
         end
       end
       str += "=" * 30
@@ -1347,6 +1344,7 @@ class PBAI
         when :ELECTRIC
           return true if target.hasActiveAbility?([:LIGHTNINGROD, :MOTORDRIVE, :VOLTABSORB])
           return true if target.hasActiveItem?(:LIGHTNINGRODORB)
+          return true if move.is_a?(PokeBattle_ParalysisMove) && move.statusMove? && (target.pbHasType?(:GROUND) || !target.pbCanParalyze?(@battler,false,move))
         when :DRAGON
           return true if target.hasActiveAbility?(:LEGENDARMOR)
         when :DARK

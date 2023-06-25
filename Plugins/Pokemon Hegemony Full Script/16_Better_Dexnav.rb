@@ -402,13 +402,13 @@ class NewDexNav
       mon = GameData::Species.get_species_form(searchmon,form)
       randAbil = []
 
-      if $game_variables[969] != 0
+      if Randomizer.active?(:ABILITIES)
         for i in 0..2
           randAbil.push(getRandAbilities(searchmon,i))
         end
       end
-      navAbil1 = $game_variables[969] == 0 ? GameData::Species.get_species_form(searchmon,form).abilities : [randAbil[0],randAbil[1]]
-      hAbil = $game_variables[969] == 0 ? GameData::Species.get_species_form(searchmon,form).hidden_abilities : randAbil[2]
+      navAbil1 = !Randomizer.active?(:ABILITIES) ? GameData::Species.get_species_form(searchmon,form).abilities : [randAbil[0],randAbil[1]]
+      hAbil = !Randomizer.active?(:ABILITIES) ? GameData::Species.get_species_form(searchmon,form).hidden_abilities : randAbil[2]
       navItemCommon = GameData::Species.get(searchmon).wild_item_common
       navItemUncommon = GameData::Species.get(searchmon).wild_item_uncommon
       navItemRare = GameData::Species.get(searchmon).wild_item_rare
@@ -421,7 +421,7 @@ class NewDexNav
         $game_variables[401] = navItemRare
       end
       navItem = $game_variables[401]
-      if $game_variables[969] == 0
+      if !Randomizer.active?(:ABILITIES)
         hAbil = hAbil.length == 0 ? nil : GameData::Species.get_species_form(searchmon,form).hidden_abilities
       else
         hAbil = hAbil == nil ? nil : randAbil[2]
@@ -429,7 +429,7 @@ class NewDexNav
           hAbil = randAbil[r]
         end
       end
-      if $game_variables[969] == 0
+      if !Randomizer.active?(:ABILITIES)
         if hAbil == nil
           if navAbil1.length == 1
             navAbil = [navAbil1[0],navAbil1[0],navAbil1[0]]
