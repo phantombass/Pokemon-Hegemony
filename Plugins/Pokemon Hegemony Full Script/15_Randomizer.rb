@@ -474,16 +474,19 @@ class Randomizer
 	  	pokemon = nil
 		  if species.is_a?(Pokemon)
 		    pokemon = species.clone
+		    level = pokemon.level
 		    species = pokemon.species
 		  end
 		  # if defined as an exclusion rule, species will not be randomized
 		    excl = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
 	  	for mon in @gift.keys
 	  		next if mon != species
+	  		next if excl.include?(mon)
 	  		species = @gift[mon]
 	  	end
 	    if !pokemon.nil?
 	      pokemon.species = species
+	      pokemon.level = level
 	      pokemon.calc_stats
 	      pokemon.reset_moves
 	    end
@@ -539,12 +542,17 @@ class Randomizer
 	  	if GameData::Item.get(item).is_machine?
 	  		loop do
 	        	itm = GameData::Item.values.sample
-	        	break if !GameData::Item.get(itm).is_key_item? && GameData::Item.get(itm).is_machine? && !excl.include?(GameData::Item.get(itm))
+	        	break if !GameData::Item.get(itm).is_key_item? && GameData::Item.get(itm).is_machine? && !excl.include?(itm)
+	      	end
+	    elsif GameData::Item.get(item).is_mega_stone?
+	    	loop do
+	        	itm = GameData::Item.values.sample
+	        	break if !GameData::Item.get(itm).is_key_item? && GameData::Item.get(itm).is_mega_stone? && !excl.include?(itm)
 	      	end
 	  	else
 		  	loop do
 	        	itm = GameData::Item.values.sample
-	        	break if !GameData::Item.get(itm).is_key_item? && !GameData::Item.get(itm).is_machine? && !excl.include?(GameData::Item.get(itm))
+	        	break if !GameData::Item.get(itm).is_key_item? && !GameData::Item.get(itm).is_machine? && !GameData::Item.get(itm).is_mega_stone? && !excl.include?(itm)
 	      	end
 	    end
 	  	return !self.active?(:ITEMS) ? item : itm
