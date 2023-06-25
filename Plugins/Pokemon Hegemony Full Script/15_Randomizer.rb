@@ -828,7 +828,7 @@ def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
   trainer_data = GameData::Trainer.try_get(tr_type, tr_name, tr_version)
   idx = -1
   new_trainers = Randomizer.trainers
-  if (!new_trainers.nil? || new_trainers == 0) && Randomizer.activated? && !trainer_exclusions.include?(tr_type)
+  if Randomizer.active?(:TRAINERS) && !trainer_exclusions.include?(tr_type)
     for i in new_trainers[:trainer]
       idx += 1
       break if i[0] == tr_type && i[1] == tr_name && i[2] == tr_version
