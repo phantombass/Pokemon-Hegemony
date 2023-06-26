@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.5.0"
+  GAME_VERSION = "4.5.1"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -1300,6 +1300,9 @@ class PokeBattle_Battle
       return false
     end
     battler.pbCheckForm
+    if $gym_taunt && !battler.opposes? && !battler.hasActiveAbility?([:OBLIVIOUS,:AROMAVEIL])
+      battler.effects[PBEffects::Taunt] = 1
+    end 
     return true
   end
 
