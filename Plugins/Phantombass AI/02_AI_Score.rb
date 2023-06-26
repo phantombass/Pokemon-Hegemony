@@ -1975,7 +1975,7 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
 end
 
 # Swords Dance
-PBAI::ScoreHandler.add("02E") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("02E","01C") do |score, ai, user, target, move|
   count = 0
   if user.setup?
     if user.statStageAtMax?(:ATTACK)
@@ -2844,12 +2844,16 @@ end
 #Glare/Thunder Wave
 PBAI::ScoreHandler.add("007") do |score, ai, user, target, move|
   next score if target.status != :NONE
-  if target.status == :NONE && !target.paralyzed? &&target.can_paralyze?(user,move) && user.has_role?(:SPEEDCONTROL) && !target.hasActiveAbility?(:MAGICBOUNCE) && move.statusMove?
+  if target.status == :NONE && !target.paralyzed? && target.can_paralyze?(user,move) && user.has_role?(:SPEEDCONTROL) && !target.hasActiveAbility?(:MAGICBOUNCE) && move.statusMove?
     score += 100
     PBAI.log("+ 100  role")
     if target.pbHasType(:DARK) && user.hasActiveAbility?(:PRANKSTER)
       score -= 1000
       PBAI.log("- 1000 for Prankster moves failing on Dark-types")
+    end
+    if user.target_is_immune?(move,target)
+      score -= 1000
+      PBAI.log("- 1000 for being immune")
     end
   end
   next score
