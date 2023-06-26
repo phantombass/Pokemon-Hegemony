@@ -200,7 +200,7 @@ class PBAI
       data = []
       data[0] = :USE_MOVE
       @battle.pbAutoChooseMove(idxBattler)
-    elsif @battle.wildBattle?
+    elsif data.nil? && @battle.wildBattle?
       data = []
       data[0] = :USE_MOVE
       move = []
@@ -229,7 +229,21 @@ class PBAI
     else
       # [move_index, move_target]
       if data[0] == :ITEM
-        data[0] = rand(projection.moves.length)
+        data[0] = :USE_MOVE
+        move = []
+        for i in projection.moves
+          move.push(i) if i.pp > 0
+        end
+        if move.length == 0
+          @battle.pbAutoChooseMove(idxBattler)
+        else
+          move_index = rand(move.length)
+          move_target = 0
+          # Register our move
+          @battle.pbRegisterMove(idxBattler, move_index, false)
+          # Register the move's target
+          @battle.pbRegisterTarget(idxBattler, move_target)
+        end
       end
       move_index, move_target = data
       # Mega evolve if we determine that we should
