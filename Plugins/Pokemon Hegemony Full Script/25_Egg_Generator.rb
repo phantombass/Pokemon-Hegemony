@@ -1,3 +1,37 @@
+def egglocke_generator
+  eggs = []
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    egg = GameData::Species.get(mon).get_baby_species
+    evos = GameData::Species.get(egg).get_family_evolutions
+    eggs.push(evos)
+  }
+  loop do
+    pkmn = Randomizer.all_species.sample
+    pkmn = GameData::Species.get(pkmn).get_baby_species
+    pkmn = Pokemon.new(pkmn,1)
+    pkmn.calc_stats
+    pkmn.name           = _INTL("Egg")
+    pkmn.steps_to_hatch = 20
+    pkmn.hatched_map    = 0
+    pkmn.obtain_method  = 1
+    2.times do
+      pkmn.learn_move(addRandomEggMove(pkmn.species))
+    end
+    return pkmn if !eggs.include?(pkmn.species) && pbHasEgg?(pkmn.species)
+  end
+end
+
+def addRandomEggMove(species)
+    baby = GameData::Species.get(species).get_baby_species
+    form = GameData::Species.get(species).form
+    egg = GameData::Species.get_species_form(baby,form).egg_moves
+    moveChoice = rand(egg.length)
+    moves = egg[moveChoice]
+    return moves
+end
+
+
 def grass_starter_eggs
   egg_list = [:BULBASAUR,:CHIKORITA,:TREECKO,:TURTWIG,:SNIVY,:CHESPIN,:ROWLET,:GROOKEY,:SPRIGATITO]
   eggs = []

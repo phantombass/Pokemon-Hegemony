@@ -452,13 +452,9 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
       if encored_move.statusMove?
         switch = true
       else
-        dmgs = battler.damage_dealt.select { |e| e[1] == encored_move.id }
-        if dmgs.size > 0
-          last_dmg = dmgs[-1]
-          # Bad move if it did less than 25% damage
-          if last_dmg[3] < 0.25
-            switch = true
-          end
+        dmg = battler.get_move_damage(target, encored_move)
+        if dmg > target.totalhp/3
+          switch = false
         else
           # No record of dealing damage with this move,
           # which probably means the target is immune somehow,

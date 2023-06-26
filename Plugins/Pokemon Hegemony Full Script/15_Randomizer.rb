@@ -762,7 +762,7 @@ end
 alias pbAddPokemon_randomizer pbAddPokemon unless defined?(pbAddPokemon_randomizer)
 def pbAddPokemon(*args)
   # randomizer
-  args[0] = Randomizer.gift(args[0])
+  args[0] = $game_switches[916] ? egglocke_generator : Randomizer.gift(args[0])
   # gives Pokemon
   return pbAddPokemon_randomizer(*args)
 end
@@ -770,7 +770,7 @@ end
 alias pbAddPokemonSilent_randomizer pbAddPokemonSilent unless defined?(pbAddPokemonSilent_randomizer)
 def pbAddPokemonSilent(*args)
   # randomizer
-  args[0] = Randomizer.gift(args[0])
+  args[0] = $game_switches[916] ? egglocke_generator : Randomizer.gift(args[0])
   # gives Pokemon
   return pbAddPokemonSilent_randomizer(*args)
 end
@@ -828,14 +828,6 @@ def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
   trainer_data = GameData::Trainer.try_get(tr_type, tr_name, tr_version)
   idx = -1
   new_trainers = Randomizer.trainers
-  if Randomizer.active?(:TRAINERS) && !trainer_exclusions.include?(tr_type)
-    for i in new_trainers[:trainer]
-      idx += 1
-      break if i[0] == tr_type && i[1] == tr_name && i[2] == tr_version
-    end
-    rand_trainer_data = GameData::Trainer.try_get(new_trainers[:trainer][idx][0],new_trainers[:trainer][idx][1],new_trainers[:trainer][idx][2])
-    return (rand_trainer_data) ? rand_trainer_data.to_trainer : nil
-  end
  # key = [tr_type.to_sym, tr_name, tr_version]
   # attempt to randomize
  # trainer_data = EliteBattle.getRandomizedData(trainer_data, :TRAINERS, key)

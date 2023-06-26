@@ -2557,11 +2557,12 @@ class HallOfFame_Scene
   def writeWelcome
     overlay=@sprites["overlay"].bitmap
     overlay.clear
-    inverse = $game_switches[909] ? "Inverse " : ""
-    nuzlocke = $game_switches[73] ? " Nuzlocke" : ""
+    inverse = $game_switches[909] ? " Inverse" : ""
+    nuzlocke = $game_switches[73] ? ($game_switches[916] ? "" : " Nuzlocke") : ""
     kaizo = $game_switches[LvlCap::Kaizo] ? " Kaizo" : ""
     ironmon = $game_switches[LvlCap::Ironmon] ? " Ironmon" : ""
-    randomizer = $game_switches[LvlCap::Randomizer] ? "Randomized " : ""
+    randomizer = $game_switches[LvlCap::Randomizer] ? "Randomized" : ""
+    egg = $game_switches[916] ? " Egglocke" : ""
     if $game_switches[900] && !$game_switches[903]
       mode = " Hard Mode"
     elsif $game_switches[900] && $game_switches[903]
@@ -2569,10 +2570,10 @@ class HallOfFame_Scene
     else
       mode = " Normal Mode"
     end
-    post = $game_switches[300] ? "Post-Game " : ""
+    post = $game_switches[300] ? " Post-Game" : ""
     pbDrawTextPositions(overlay,[[_INTL("Welcome to the Hall of Fame!"),
        Graphics.width/2,Graphics.height-80,2,BASECOLOR,SHADOWCOLOR]])
-       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}{6}",randomizer,inverse,mode,kaizo,ironmon,post,nuzlocke),
+       pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}{6}{7}",randomizer,inverse,mode,kaizo,ironmon,post,nuzlocke,egg),
           Graphics.width/2,Graphics.height-56,2,BASECOLOR,SHADOWCOLOR]])
   end
 end
