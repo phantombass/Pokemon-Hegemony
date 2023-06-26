@@ -204,8 +204,10 @@ class PBAI
       data = []
       data[0] = :USE_MOVE
       move = []
+      idx = -1
       for i in projection.moves
-        move.push(i) if i.pp > 0
+        idx += 1
+        move.push(idx) if i.pp > 0
       end
       if move.length == 0
         @battle.pbAutoChooseMove(idxBattler)
@@ -231,8 +233,10 @@ class PBAI
       if data[0] == :ITEM
         data[0] = :USE_MOVE
         move = []
+        idx = -1
         for i in projection.moves
-          move.push(i) if i.pp > 0
+          idx += 1
+          move.push(idx) if i.pp > 0
         end
         if move.length == 0
           @battle.pbAutoChooseMove(idxBattler)
