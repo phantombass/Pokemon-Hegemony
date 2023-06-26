@@ -1112,9 +1112,13 @@ PBAI::ScoreHandler.add("0AC") do |score, ai, user, target, move|
         wide += 40 if i.target == :AllNearFoes
       end
     end
+    score += wide
+    PBAI.log("+ #{wide} for dodging spread moves")
+    if user.has_role?(:SUPPORT)
+      score += 40
+      PBAI.log("+ 40 for being a Support role.")
+    end
   end
-  score += wide
-  PBAI.log("+ #{wide} for dodging spread moves")
   next score
 end
 

@@ -565,6 +565,7 @@ LoseText = "You're great!"
 Pokemon = FORRETRESS,32
 	Item = CUSTAPBERRY
 	Moves = STEALTHROCK,SPIKES,GYROBALL,EXPLOSION
+	Roles = LEAD
 #-------------------------------
 [HIKER,Ethan]
 LoseText = "You're great!"
@@ -628,9 +629,11 @@ LoseText = "Wow, awesome!"
 Pokemon = ONIX,28
 	Ability = STURDY
 	Moves = DRAGONBREATH,ROCKTOMB,BULLDOZE,GLARE
+	Roles = SPEEDCONTROL
 Pokemon = SCIZOR,28
 	Ability = TECHNICIAN
 	Moves = BULLETPUNCH,SWORDSDANCE,ROOST,BUGBITE
+	Roles = WINCON
 #-------------------------------
 [HIKER,Gaines]
 LoseText = "Wow, awesome!"
@@ -718,6 +721,7 @@ Pokemon = MEDITITE,30
 	Moves = FAKEOUT,STARSAP,FORCEPALM,ICEPUNCH
 Pokemon = LUNATONE,30
 	Moves = MOONBLAST,AURORABEAM,POWERGEM,COSMICPOWER
+	Roles = WINCON
 #-------------------------------
 [HIKER,Melvin]
 LoseText = "You're great!"
@@ -739,7 +743,7 @@ Pokemon = STONJOURNER,32
 	EV = 252,252,0,0,0,4
 	IV = 31,31,31,31,31,31
 	Moves = ROCKSLIDE,METEORMASH,WIDEGUARD,STARSAP
-	Roles = PHYSICALBREAKER
+	Roles = PHYSICALBREAKER,SUPPORT
 Pokemon = ESPATHRA,32
 	Ability = SPEEDBOOST
 	Item = LEFTOVERS
