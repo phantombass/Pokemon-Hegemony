@@ -5,7 +5,7 @@ module BattleScripts
   HELUM = {
     "turnStart0" => proc do
         @scene.pbAnimation(GameData::Move.get(:GRASSYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-        @sprites["battlebg"].reconfigure(:GRASSY, :DISTORTION)
+        @sprites["battlebg"].reconfigure(:GRASSY, Color.white)
         @battle.field.terrain = :Grassy
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -52,7 +52,7 @@ module BattleScripts
   CHLOROS = {
     "turnStart0" => proc do
         @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-        @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
+        @sprites["battlebg"].reconfigure(:PSYCHIC, Color.white)
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         @battle.field.effects[PBEffects::TrickRoom] = 1
@@ -65,7 +65,7 @@ module BattleScripts
   CAPITOL = {
     "turnStart0" => proc do
           @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
-          @sprites["battlebg"].reconfigure(:POISON, :DISTORTION)
+          @sprites["battlebg"].reconfigure(:POISON, Color.white)
           @battle.field.terrain = :Poison
           @battle.field.terrainDuration = -1
           $gym_gimmick = true
@@ -103,7 +103,7 @@ module BattleScripts
       @scene.pbTrainerSpeak("Let's see just how prepared you are!")
       if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:GRASSYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-        @sprites["battlebg"].reconfigure(:GRASSY, :DISTORTION)
+        @sprites["battlebg"].reconfigure(:GRASSY, Color.white)
         @battle.field.terrain = :Grassy
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -178,7 +178,7 @@ module BattleScripts
       @scene.pbTrainerSpeak("Things are about to get real twisted in here!")
       if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-        @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
+        @sprites["battlebg"].reconfigure(:PSYCHIC, Color.white)
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         @battle.field.effects[PBEffects::TrickRoom] = 1
@@ -196,7 +196,7 @@ module BattleScripts
       if $game_switches[LvlCap::Expert]
         if $game_variables[28] < 4
           @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
-          @sprites["battlebg"].reconfigure(:POISON, :DISTORTION)
+          @sprites["battlebg"].reconfigure(:POISON, Color.white)
           @battle.field.terrain = :Poison
           @battle.field.terrainDuration = -1
           $gym_gimmick = true
@@ -219,7 +219,7 @@ module BattleScripts
       @scene.pbTrainerSpeak("I don't plan on losing to some punk.")
       if $game_switches[LvlCap::Expert]
         @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-        @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
+        @sprites["battlebg"].reconfigure(:PSYCHIC, Color.white)
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -318,7 +318,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("You can't seem to comprehend. I control EVERYTHING.")
       @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-      @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
+      @sprites["battlebg"].reconfigure(:PSYCHIC, Color.white)
       @battle.field.terrain = :Psychic
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
@@ -380,7 +380,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("YAY! Battle time!")
       @scene.pbAnimation(GameData::Move.get(:ELECTRICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-      @sprites["battlebg"].reconfigure(:ELECTRIC, :DISTORTION)
+      @sprites["battlebg"].reconfigure(:ELECTRIC, Color.white)
       @battle.field.terrain = :Electric
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
@@ -416,7 +416,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("Let's get this show going!")
       @scene.pbAnimation(GameData::Move.get(:MISTYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-      @sprites["battlebg"].reconfigure(:MISTY, :DISTORTION)
+      @sprites["battlebg"].reconfigure(:MISTY, Color.white)
       @battle.field.terrain = :Misty
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
@@ -429,7 +429,7 @@ module BattleScripts
       @scene.pbDisplay("The Harsh Sun is permanent!")
       @scene.pbTrainerSpeak("Why can't you just stay out of our business?!?")
       @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-      @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
+      @sprites["battlebg"].reconfigure(:PSYCHIC, Color.white)
       @battle.field.terrain = :Psychic
       @battle.field.terrainDuration = -1
       $gym_gimmick = true
@@ -450,7 +450,7 @@ module BattleScripts
   WINSLOWLEAGUE = {
     "turnStart0" => proc do
       @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-      @sprites["battlebg"].reconfigure(:PSYCHIC, :DISTORTION)
+      @sprites["battlebg"].reconfigure(:PSYCHIC, Color.white)
         @battle.field.terrain = :Psychic
         @battle.field.terrainDuration = -1
         @battle.field.effects[PBEffects::TrickRoom] = 1
@@ -500,7 +500,7 @@ module BattleScripts
   VINCENTLEAGUE = {
     "turnStart0" => proc do
       @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
-      @sprites["battlebg"].reconfigure(:POISON, :DISTORTION)
+      @sprites["battlebg"].reconfigure(:POISON, Color.white)
         @battle.field.terrain = :Poison
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
@@ -521,7 +521,7 @@ module BattleScripts
   JOSEPHTERRAIN = {
     "turnStart0" => proc do
       @scene.pbAnimation(GameData::Move.get(:ELECTRICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-      @sprites["battlebg"].reconfigure(:ELECTRIC, :DISTORTION)
+      @sprites["battlebg"].reconfigure(:ELECTRIC, Color.white)
         @battle.field.terrain = :Electric
         @battle.field.terrainDuration = -1
         $gym_gimmick = true

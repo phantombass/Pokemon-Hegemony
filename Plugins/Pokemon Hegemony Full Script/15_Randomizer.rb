@@ -176,7 +176,6 @@ class Randomizer
 	    # iterate through each trainer
 	    for key in data.keys
 	      # skip numeric trainers
-	      next if !trainer_exclusions.nil? && trainer_exclusions.include?(data[key].id[0])
 	      next if !$new_trainers[:trainer] != nil && key.is_a?(Array)
 	      $new_trainers[:trainer].push(data[key].id)
 	      # iterate through party
