@@ -250,6 +250,24 @@ class PBAI
         end
       end
       move_index, move_target = data
+      if move_index.is_a?(Symbol)
+        move = []
+        idx = -1
+        for i in projection.moves
+          idx += 1
+          move.push(idx) if i.pp > 0
+        end
+        if move.length == 0
+          @battle.pbAutoChooseMove(idxBattler)
+        else
+          move_index = rand(move.length)
+          move_target = 0
+          # Register our move
+          @battle.pbRegisterMove(idxBattler, move_index, false)
+          # Register the move's target
+          @battle.pbRegisterTarget(idxBattler, move_target)
+        end
+      end
       # Mega evolve if we determine that we should
       @battle.pbRegisterMegaEvolution(idxBattler) if projection.should_mega_evolve?(idxBattler)
       # Register our move
