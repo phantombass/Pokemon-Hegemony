@@ -1529,13 +1529,9 @@ class PBAI
     def register_damage_taken(move, user, damage)
       user.used_moves << move if !user.used_moves.any? { |m| m.id == move.id }
       move = move.id
-      if self.nil?
         user.opposing_side.battlers.each do |battler|
           @damage_taken << [user, move, damage, damage / battler.totalhp.to_f]
         end
-      else
-        @damage_taken << [user, move, damage, damage / self.totalhp.to_f]
-      end
     end
 
     def get_damage_by_user(user)
