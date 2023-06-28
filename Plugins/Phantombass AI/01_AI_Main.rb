@@ -197,27 +197,25 @@ class PBAI
     data = projection.choose_move
     if data.nil? && !@battle.wildBattle?
       # Struggle
-      data = []
-      data[0] = :USE_MOVE
       @battle.pbAutoChooseMove(idxBattler)
     elsif data.nil? && @battle.wildBattle?
-      data = []
-      data[0] = :USE_MOVE
       move = []
       idx = -1
-      for i in projection.moves
+      for i in projection.battler.moves
         idx += 1
         move.push(idx) if i.pp > 0
       end
       if move.length == 0
         @battle.pbAutoChooseMove(idxBattler)
       else
-        move_index = rand(move.length)
+        move_index = move[rand(move.length)]
         move_target = 0
-        # Register our move
-        @battle.pbRegisterMove(idxBattler, move_index, false)
-        # Register the move's target
-        @battle.pbRegisterTarget(idxBattler, move_target)
+        data = [move_index,move_target]
+        @battle.pbRegisterMegaEvolution(idxBattler) if projection.should_mega_evolve?(idxBattler)
+      # Register our move
+      @battle.pbRegisterMove(idxBattler, move_index, false)
+      # Register the move's target
+      @battle.pbRegisterTarget(idxBattler, move_target)
       end
     elsif data[0] == :SWITCH
       # [:SWITCH, pokemon_index]
@@ -231,45 +229,23 @@ class PBAI
     else
       # [move_index, move_target]
       if data[0] == :ITEM
-        data[0] = :USE_MOVE
         move = []
         idx = -1
-        for i in projection.moves
+        for i in projection.battler.moves
           idx += 1
           move.push(idx) if i.pp > 0
         end
         if move.length == 0
           @battle.pbAutoChooseMove(idxBattler)
         else
-          move_index = rand(move.length)
-          move_target = 0
-          # Register our move
-          @battle.pbRegisterMove(idxBattler, move_index, false)
-          # Register the move's target
-          @battle.pbRegisterTarget(idxBattler, move_target)
+          move_index,move_target = data
         end
       end
-      move_index, move_target = data
-      if move_index.is_a?(Symbol)
-        move = []
-        idx = -1
-        for i in projection.moves
-          idx += 1
-          move.push(idx) if i.pp > 0
-        end
-        if move.length == 0
-          @battle.pbAutoChooseMove(idxBattler)
-        else
-          move_index = rand(move.length)
-          move_target = 0
-          # Register our move
-          @battle.pbRegisterMove(idxBattler, move_index, false)
-          # Register the move's target
-          @battle.pbRegisterTarget(idxBattler, move_target)
-        end
+      if move_index.nil?
+        move_index,move_target = data
       end
       # Mega evolve if we determine that we should
-      @battle.pbRegisterMegaEvolution(idxBattler) if projection.should_mega_evolve?(idxBattler)
+          @battle.pbRegisterMegaEvolution(idxBattler) if projection.should_mega_evolve?(idxBattler)
       # Register our move
       @battle.pbRegisterMove(idxBattler, move_index, false)
       # Register the move's target
@@ -1545,13 +1521,9 @@ class PBAI
 
     def register_damage_dealt(move, target, damage)
       move = move.id if move.is_a?(GameData::Move)
-      if target.nil?
         self.opposing_side.battlers.each do |targ|
           @damage_dealt << [targ, move, damage, damage / targ.totalhp.to_f]
         end
-      else
-        @damage_dealt << [target, move, damage, damage / target.totalhp.to_f]
-      end
     end
 
     def register_damage_taken(move, user, damage)
