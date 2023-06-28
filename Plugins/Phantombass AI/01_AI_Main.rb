@@ -238,7 +238,9 @@ class PBAI
         if move.length == 0
           @battle.pbAutoChooseMove(idxBattler)
         else
-          move_index,move_target = data
+        move_index = move[rand(move.length)]
+        move_target = 0
+        data = [move_index,move_target]
         end
       end
       if move_index.nil?
