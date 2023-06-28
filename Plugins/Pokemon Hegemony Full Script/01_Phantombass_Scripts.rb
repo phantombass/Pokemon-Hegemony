@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.5.6"
+  GAME_VERSION = "4.5.7"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -21,6 +21,7 @@ def reset_custom_variables
   $gym_weather = false
   $gym_hazard = false
   $gym_taunt = false
+  $gym_tailwind = false
   $appliance = nil
   $currentDexSearch = nil
   $repel_toggle = false
