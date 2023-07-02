@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.5.7"
+  GAME_VERSION = "4.5.8"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -1288,7 +1288,7 @@ class PokeBattle_Battle
       pbDisplay(_INTL("{1} was caught in a sticky web!",battler.pbThis))
       if battler.pbCanLowerStatStage?(:SPEED)
         stickyuser = (battler.pbOwnSide.effects[PBEffects::StickyWebUser] > -1 ?
-          battlers[battler.pbOwnSide.effects[PBEffects::StickyWebUser]] : nil)
+          battlers[battler.pbOwnSide.effects[PBEffects::StickyWebUser]] : battler)
         battler.pbLowerStatStage(:SPEED,1,stickyuser)
         battler.pbItemStatRestoreCheck
       end
