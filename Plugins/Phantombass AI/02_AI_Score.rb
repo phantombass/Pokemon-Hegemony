@@ -2605,10 +2605,10 @@ end
 PBAI::ScoreHandler.add("11F") do |score, ai, user, target, move|
   if ai.battle.field.effects[PBEffects::TrickRoom] == 0 && target.faster_than?(user)
     score += 100
-    PBAI.log("+ 50 for setting Trick Room to outspeed target")
+    PBAI.log("+ 100 for setting Trick Room to outspeed target")
     if user.has_role?(:TRICKROOMSETTER)
-      score += 100
-      PBAI.log("+ 50 ")
+      score += 200
+      PBAI.log("+ 200 ")
     end
   else
     score -= 1000
@@ -2786,7 +2786,7 @@ end
 
 #Clangourous Soul
 PBAI::ScoreHandler.add("179") do |score, ai, user, target, move|
-  if user.setup?
+  if user.setup? && user.turnCount == 0 && user.hp > user.totalhp/3
     score += 100
     PBAI.log("+ 100 for gaining an omni-boost")
     if user.hasActiveItem?(:THROATSPRAY)
@@ -2880,7 +2880,7 @@ end
 # Pursuit
 PBAI::ScoreHandler.add("088") do |score, ai, user, target, move|
   if user.predict_switch?(target)
-    score += 100
+    score += 150
     PBAI.log("+ 100 for predicting the switch")
   end
   next score
