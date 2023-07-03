@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.5.8"
+  GAME_VERSION = "4.5.9"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -1238,18 +1238,18 @@ class PokeBattle_Battle
       end
     end
     #Comet Shards
-    if battler.pbOwnSide.effects[PBEffects::CometShards] && battler.takesIndirectDamage? &&
+    if battler.pbHasType?(:COSMIC) && battler.pbOwnSide.effects[PBEffects::CometShards] && !battler.hasActiveItem?(:HEAVYDUTYBOOTS)
+        battler.pbOwnSide.effects[PBEffects::CometShards] = false
+        pbDisplay(_INTL("{1} absorbed the Comet Shards!",battler.pbThis))
+    elsif battler.pbOwnSide.effects[PBEffects::CometShards] && battler.takesIndirectDamage? &&
        GameData::Type.exists?(:COSMIC) && battler.takesEntryHazardDamage?
       bTypes = battler.pbTypes(true)
       eff = Effectiveness.calculate(:COSMIC, bTypes[0], bTypes[1], bTypes[2])
-      if battler.pbHasType?(:COSMIC)
-        battler.pbOwnSide.effects[PBEffects::CometShards] = false
-        pbDisplay(_INTL("{1} absorbed the Comet Shards!",battler.pbThis))
-      elsif !Effectiveness.ineffective?(eff)
+      if !Effectiveness.ineffective?(eff)
         eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
         oldHP = battler.hp
         battler.pbReduceHP(battler.totalhp*eff/8,false)
-        pbDisplay(_INTL("Pointed stones dug into {1}!",battler.pbThis))
+        pbDisplay(_INTL("Comet Shards dug into {1}!",battler.pbThis))
         battler.pbItemHPHealCheck
         if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
           return pbOnActiveOne(battler)   # For replacement battler
