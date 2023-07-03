@@ -754,6 +754,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 end
 
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
+    next score if !ai.battle.doublebattle
 	ally = battler.side.battlers.find {|proj| proj && proj != battler && !proj.fainted?}
 	for move in ally.moves
 		if ally.target_is_immune?(move,battler) && [:AllNearOthers,:AllBattlers,:BothSides].include?(move.pbTarget(battler))
