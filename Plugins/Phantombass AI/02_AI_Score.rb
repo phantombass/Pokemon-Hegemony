@@ -1036,7 +1036,7 @@ end
 
 # Glare/Thunder Wave
 PBAI::ScoreHandler.add("007") do |score, ai, user, target, move|
-  if move.statusMove? && !target_is_immune?(move,target) && !target.hasActiveAbility?([:LIMBER,:COMATOSE]) && user.has_role?(:SPEEDCONTROL)
+  if move.statusMove? && !user.target_is_immune?(move,target) && !target.hasActiveAbility?([:LIMBER,:COMATOSE]) && user.has_role?(:SPEEDCONTROL)
     score += 100
     PBAI.log("+ 100 for being able to paralyze and having the Speed Control role")
   end
