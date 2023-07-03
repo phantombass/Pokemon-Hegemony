@@ -1047,6 +1047,7 @@ class PBAI
       end
       return score
     end
+
     def ai_should_switch?
       switch = nil
       self.opposing_side.battlers.each do |target|

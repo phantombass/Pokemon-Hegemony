@@ -266,10 +266,17 @@ PBAI::SwitchHandler.add_type(:GROUND) do |score,ai,battler,proj,target|
 	  	if battler.calculate_move_matchup(i.id) < 1 && i.function == "0CA"
 	  		dig = true
 	  	end
+	  	if battler.calculate_move_matchup(i.id) > 1 && i.function == "0CA"
+	  		no_dig = true
+	  	end
 	  end
 	  if dig == true && $switch_flags[:digging] == true
 	  	score += 150
 	  	PBAI.log("+ 150")
+	  end
+	  if no_dig == true && $switch_flags[:digging] == true
+	  	score -= 1000
+	  	PBAI.log("- 1000")
 	  end
 	end
 	next score
@@ -733,6 +740,28 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	switch = false if battler.effects[PBEffects::PowerTrick]
 	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
+	next switch if !ai.battle.doublebattle
+	ally = battler.side.battlers.find {|proj| proj && proj != battler && !proj.fainted?}
+	for move in ally.moves
+		if ally.target_is_immune?(move,battler) && [:AllNearOthers,:AllBattlers,:BothSides].include?(move.pbTarget(battler))
+			switch = false
+		end
+	end
+	next switch
+end
+
+PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
+	ally = battler.side.battlers.find {|proj| proj && proj != battler && !proj.fainted?}
+	for move in ally.moves
+		if ally.target_is_immune?(move,battler) && [:AllNearOthers,:AllBattlers,:BothSides].include?(move.pbTarget(battler))
+			score += 100
+			PBAI.log("+ 100")
+		end
+	end
+  next score
 end
 
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|

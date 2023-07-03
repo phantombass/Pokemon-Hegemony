@@ -149,7 +149,7 @@ Pokemon = LUXIO,18
 	EV = 4,252,0,252,0,0
 	Nature = JOLLY
 	Item = MUSCLEBAND
-Pokemon = FLABEBE,18
+Pokemon = FLOETTE,18
 	Ability = ADAPTABILITY
 	Moves = WISH,DRAININGKISS,PROTECT,MAGICALLEAF
 	Roles = CLERIC,PHYSICALWALL
@@ -1008,6 +1008,7 @@ Pokemon = DARMANITAN,52
 	IV = 31,31,31,31,31,31
 	EV = 0,252,0,252,0,4
 	Moves = FLAREBLITZ,ROCKSLIDE,UTURN,EARTHQUAKE
+	Nature = JOLLY
 	Roles = PHYSICALBREAKER
 Pokemon = SIGILYPH,52
 	Item = LIFEORB
@@ -1015,6 +1016,7 @@ Pokemon = SIGILYPH,52
 	IV = 31,0,31,31,31,31
 	EV = 0,0,0,252,252,4
 	Moves = STARBEAM,WINDDRILL,ROOST,SCORCHINGSANDS
+	Nature = TIMID
 	Roles = WINCON
 #-------------------------------
 # Cassim Desert
@@ -1203,7 +1205,7 @@ Pokemon = PORYGONZ1,56
 	Roles = SPECIALBREAKER
 Pokemon = GALLADE,57
 	Item = GALLADITE
-	Ability = SHARPNESS
+	Ability = JUSTIFIED
 	Moves = PSYCHOCUT,NIGHTSLASH,SACREDSWORD,BULKUP
 	Nature = JOLLY
 	IV = 31,31,31,31,31,31
@@ -6113,6 +6115,7 @@ LoseText = "Ugh. Wasn't ready for that."
 Pokemon = HONEDGE,21
 	Item = COLBURBERRY
 	Moves = SHADOWSNEAK,SLASH,SWORDSDANCE,FURYCUTTER
+	Role = SETUPSWEEPER
 Pokemon = GASTLY,21
 	Item = BERRYJUICE
 	Moves = OMINOUSWIND,SLUDGE,HYPNOSIS,CURSE
@@ -6120,6 +6123,7 @@ Pokemon = ARON,21
 	Ability = STURDY
 	Item = BERRYJUICE
 	Moves = ROCKTOMB,METALCLAW,BULLDOZE,AUTOTOMIZE
+	Role = SETUPSWEEPER
 #-------------------------------
 [TEAMROCKET_M,Grunt,100]
 LoseText = "Ugh. Wasn't ready for that."
@@ -6146,7 +6150,7 @@ Pokemon = POLTEAGEIST,21
 	IV = 31,0,31,31,31,31
 	EV = 252,0,0,252,4,0
 	Nature = MODEST
-	Roles = SETUPSWEEPER
+	Roles = SETUPSWEEPER,WINCON
 #-------------------------------
 [TEAMROCKET_M,Grunt,1]
 LoseText = "Ugh. Wasn't ready for that."
