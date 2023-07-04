@@ -258,7 +258,7 @@ def keldeo?
   sword = 0
   swords = [:VIRIZION,:TERRAKION,:COBALION]
   $Trainer.party.each {|pkmn|
-    regi += 1 if swords.include?(pkmn.species)
+    sword += 1 if swords.include?(pkmn.species)
   }
   return sword == 3
 end
