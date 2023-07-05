@@ -745,7 +745,7 @@ class PBAI
       # Return [move_index, move_target]
       if idx && !@battle.wildBattle?
         choice = scores[idx]
-        if choice.is_a?(Symbol)
+        if choice[0].is_a?(Symbol)
             ind = -1
             loop do
                 ind += 1
