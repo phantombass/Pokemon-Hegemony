@@ -3831,7 +3831,7 @@ class PokeBattle_Move_049 < PokeBattle_TargetStatDownMove
     else
       @battle.pbDisplay(_INTL("The mysterious force prevents hazard removal!"))
     end
-    if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
+    if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None && $gym_gimmick == false
       case @battle.field.terrain
       when :Electric
         @battle.pbDisplay(_INTL("The electricity disappeared from the battlefield."))
@@ -6670,7 +6670,7 @@ def pbBattleTypeWeakingBerry(type,moveType,target,mults)
   return if Effectiveness.resistant?(target.damageState.typeMod) && moveType != :NORMAL
   mults[:final_damage_multiplier] /= target.hasActiveAbility?(:RIPEN)? 4 : 2
   target.damageState.berryWeakened = true
-  target.battle.pbCommonAnimation("EatBerry",target)
+  target.battle.pbCommonAnimation("EatBerry",target) if $test_trigger == false
 end
 
 class PokeBattle_Move_086 < PokeBattle_Move
