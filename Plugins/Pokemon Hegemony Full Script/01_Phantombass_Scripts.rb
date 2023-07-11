@@ -847,6 +847,7 @@ end
 class PokeBattle_Battle
   def pbStartBattleCore
     # Set up the battlers on each side
+    @battleAI.create_ai_objects
     if $game_switches[899] && $game_switches[900]
       pbHegemonyClauses
     end

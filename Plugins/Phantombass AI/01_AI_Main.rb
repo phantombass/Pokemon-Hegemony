@@ -1,4 +1,3 @@
-Essentials::ERROR_TEXT += "[Phantombass AI v2.3]\r\n"
 class PBAI
   attr_reader :battle
   attr_reader :sides
@@ -1929,17 +1928,19 @@ class PBAI
   end
 end
 
+=begin
+
 class PokeBattle_Battle
   attr_reader :battleAI
 
   alias ai_initialize initialize
   def initialize(*args)
     ai_initialize(*args)
-    @battleAI = PBAI.new(self, self.wildBattle?)
-    @battleAI.sides[0].set_party(@party1)
-    @battleAI.sides[0].set_trainers(@player)
-    @battleAI.sides[1].set_party(@party2)
-    @battleAI.sides[1].set_trainers(@opponent)
+    @battleAI = Battle::AI.new(self)
+   # @battleAI.sides[0].set_party(@party1)
+   # @battleAI.sides[0].set_trainers(@player)
+   # @battleAI.sides[1].set_party(@party2)
+   # @battleAI.sides[1].set_trainers(@opponent)
   end
 
   def pbRecallAndReplace(idxBattler, idxParty, randomReplacement = false, batonPass = false)
@@ -2079,3 +2080,4 @@ BattleHandlers::AbilityOnSwitchIn.add(:FRISK,
     end
   }
 )
+=end

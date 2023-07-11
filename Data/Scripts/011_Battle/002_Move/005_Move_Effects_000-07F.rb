@@ -68,7 +68,7 @@ class PokeBattle_Move_004 < PokeBattle_Move
   end
 
   def pbEffectAgainstTarget(user,target)
-    target.effects[PBEffects::Yawn] = 1
+    target.effects[PBEffects::Yawn] = 2
     @battle.pbDisplay(_INTL("{1} made {2} drowsy!",user.pbThis,target.pbThis(true)))
   end
 end
@@ -2746,7 +2746,7 @@ class PokeBattle_Move_07E < PokeBattle_Move
   def damageReducedByBurn?; return Settings::MECHANICS_GENERATION <= 5; end
 
   def pbBaseDamage(baseDmg,user,target)
-    baseDmg *= 2 if user.poisoned? || user.burned? || user.paralyzed?
+    baseDmg *= 2 if user.poisoned? || user.burned? || user.paralyzed? || user.frozen?
     return baseDmg
   end
 end

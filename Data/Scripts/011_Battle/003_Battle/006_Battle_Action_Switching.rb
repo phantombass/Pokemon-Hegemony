@@ -132,7 +132,7 @@ class PokeBattle_Battle
   # things happening (U-turn, Baton Pass, in def pbSwitch).
   def pbSwitchInBetween(idxBattler,checkLaxOnly=false,canCancel=false)
     return pbPartyScreen(idxBattler,checkLaxOnly,canCancel) if pbOwnedByPlayer?(idxBattler)
-    return @battleAI.pbDefaultChooseNewEnemy(idxBattler,pbParty(idxBattler))
+    return @battleAI.pbDefaultChooseNewEnemy(idxBattler)
   end
 
   #=============================================================================

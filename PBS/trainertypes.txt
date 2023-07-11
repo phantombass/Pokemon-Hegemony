@@ -104,5 +104,5 @@
 101,LEAGUE_Winslow,Elite Four,100,Battle Gym Leader,Battle victory leader,,Male,200,
 102,LEAGUE_Eugene,Elite Four,100,Battle Gym Leader,Battle victory leader,,Male,200,
 103,LEAGUE_Armand,Elite Four,100,Battle Gym Leader,Battle victory leader,,Male,200,
-104,LEAGUE_Winston,Gym Leader,100,Battle Gym Leader,Battle victory leader,,Male,200,
-105,LEAGUE_Vincent,Gym Leader,100,Battle Gym Leader,Battle victory leader,,Male,200,
+104,LEAGUE_Winston,Elite Four,100,Battle Gym Leader,Battle victory leader,,Male,200,
+105,LEAGUE_Vincent,Elite Four,100,Battle Gym Leader,Battle victory leader,,Male,200,

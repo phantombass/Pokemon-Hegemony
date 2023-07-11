@@ -355,7 +355,7 @@
 343,STOMPINGTANTRUM,Stomping Tantrum,166,75,GROUND,Physical,100,10,0,NearOther,0,abef,"The user attacks driven by frustration. Power increases if the user's previous move failed."
 344,BONECLUB,Bone Club,545,65,GROUND,Physical,100,20,10,NearOther,0,be,"The user clubs the target with a bone. It may also make the target flinch."
 345,MUDBOMB,Mud Bomb,047,65,GROUND,Special,100,10,30,NearOther,0,befn,"The user launches a hard-packed mud ball to attack. It may also lower the target's accuracy."
-346,BULLDOZE,Bulldoze,044,60,GROUND,Physical,100,20,100,AllNearOthers,0,bef,"The user strikes everything around it by stomping on the ground. It reduces hit Pokémon's Speed."
+346,BULLDOZE,Bulldoze,570,60,GROUND,Physical,100,20,100,AllNearOthers,0,bef,"The user strikes everything around it by stomping on the ground. It reduces hit Pokémon's Speed."
 347,MUDSHOT,Mud Shot,044,55,GROUND,Special,95,15,100,NearOther,0,bef,"The user attacks by hurling a blob of mud at the target. It also reduces the target's Speed."
 348,BONEMERANG,Bonemerang,546,50,GROUND,Physical,100,10,0,NearOther,0,bef,"The user throws the bone it holds. The bone loops to hit the target twice, and can hit Flying targets."
 349,SANDTOMB,Sand Tomb,0CF,35,GROUND,Physical,100,15,0,NearOther,0,bef,"The user traps the target inside a harshly raging sandstorm for four to five turns."
