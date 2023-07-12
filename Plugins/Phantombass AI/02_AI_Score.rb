@@ -648,6 +648,11 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         if move.statusMove? && ((target.pbHasType?(:POISON) || target.pbHasType?(:STEEL) && !user.hasActiveAbility?([:NITRIC,:CORROSION])) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE,:MAGICBOUNCE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
           score -= 1000
           PBAI.log("- 1000 because the target cannot be poisoned")
+        else
+          if user.has_role?(:TOXICSTALLER)
+            score += 50
+            PBAI.log("+ 50 for being a Toxic Staller")
+          end
         end
       else
         add = chance * move.pbNumHits(user, [target])
@@ -2074,7 +2079,7 @@ PBAI::ScoreHandler.add("02E","01C") do |score, ai, user, target, move|
       end
       # As long as the target's stat stages are more advantageous than ours (i.e. net < 0), Haze is a good choice
       if count == 0 && t_count == 0
-        add = user.turnCount == 0 ? 60 : 40
+        add = user.turnCount == 0 ? 80 : 50
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
         score += 40
@@ -2125,12 +2130,12 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
           end
         end
       end
-      add = user.turnCount == 0 ? 70 : 50
+      add = user.turnCount == 0 ? 80 : 50
       score += add
       PBAI.log("+ #{add} ")
       end
       if count == 0 && t_count == 0
-        add = user.turnCount == 0 ? 60 : 40
+        add = user.turnCount == 0 ? 80 : 50
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
         atk_boost = user.stages[:ATTACK]*20
@@ -2196,12 +2201,12 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
           end
         end
       end
-      add = user.turnCount == 0 ? 70 : 50
+      add = user.turnCount == 0 ? 80 : 50
       score += add
       PBAI.log("+ #{add} ")
       end
       if count == 0 && t_count == 0
-        add = user.turnCount == 0 ? 60 : 40
+        add = user.turnCount == 0 ? 80 : 50
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
         atk_boost = user.stages[:ATTACK]*20
@@ -2252,7 +2257,7 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
       end
       # As long as the target's stat stages are more advantageous than ours (i.e. net < 0), Haze is a good choice
       if count == 0 && t_count == 0
-        add = user.turnCount == 0 ? 60 : 40
+        add = user.turnCount == 0 ? 80 : 50
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
         score += 40
@@ -2303,11 +2308,11 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
           end
         end
       end
-      add = user.turnCount == 0 ? 70 : 50
+      add = user.turnCount == 0 ? 80 : 50
       score += add
       PBAI.log("+ #{add} ")
       if count == 0 && t_count == 0
-        add = user.turnCount == 0 ? 60 : 40
+        add = user.turnCount == 0 ? 80 : 50
         score += add
         PBAI.log("+ #{add} to boost to guarantee the kill")
         atk_boost = user.stages[:SPECIAL_ATTACK]*20
@@ -2942,6 +2947,15 @@ PBAI::ScoreHandler.add("07F","519","515","517") do |score, ai, user, target, mov
   if target.status != :NONE
     score += 200
     PBAI.log("+ 200 for abusing target's status")
+  end
+  next score
+end
+
+# Bolt Beak, Fishious Rend
+PBAI::ScoreHandler.add("178") do |score, ai, user, target, move|
+  if (user.faster_than?(target) && !user.target_is_immune?(move,target)) || user.predict_switch?(target)
+    score += 250
+    PBAI.log("+ 250 for getting double damage")
   end
   next score
 end

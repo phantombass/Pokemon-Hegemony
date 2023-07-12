@@ -596,6 +596,14 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	next score
 end
 
+#Battler Yawned
+PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
+	if battler.effects[PBEffects::Yawn] == 1
+		switch = true
+	end
+	next switch
+end
+
 #Health Related
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	if battler.hp <= battler.totalhp/4
@@ -634,7 +642,7 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
   	score += 400
   	PBAI.log("+ 400")
   end
-  if comet > 0 && (battler.pbHasType?(:COSMIC) && !battler.airborne? && !battler.hasActiveAbility?(:MAGICGUARD)) || battler.hasActiveAbility?(:GALEFORCE)
+  if comet > 0 && (battler.pbHasType?(:COSMIC) || battler.hasActiveAbility?(:GALEFORCE))
   	score += 400
   	PBAI.log("+ 400")
   end
@@ -723,15 +731,13 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 end
 
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
-	if battler.setup?
-		if battler.is_physical_attacker? && battler.stages[:ATTACK] != nil
-			if battler.stages[:ATTACK] > 0
-				switch = false
-			end
-		elsif battler.is_special_attacker? && battler.stages[:SPECIAL_ATTACK] != nil
-			if battler.stages[:SPECIAL_ATTACK] > 0
-				switch = false
-			end
+	if battler.is_physical_attacker? && battler.stages[:ATTACK] != nil
+		if battler.stages[:ATTACK] > 0
+			switch = false
+		end
+	elsif battler.is_special_attacker? && battler.stages[:SPECIAL_ATTACK] != nil
+		if battler.stages[:SPECIAL_ATTACK] > 0
+			switch = false
 		end
 	end
 	next switch
@@ -754,7 +760,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 end
 
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
-    next score if !ai.battle.doublebattle
+  next score if !ai.battle.doublebattle
 	ally = battler.side.battlers.find {|proj| proj && proj != battler && !proj.fainted?}
 	for move in ally.moves
 		if ally.target_is_immune?(move,battler) && [:AllNearOthers,:AllBattlers,:BothSides].include?(move.pbTarget(battler))

@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.5.15"
+  GAME_VERSION = "4.6.0"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -459,7 +459,8 @@ class PokeBattle_Battler
     #    return true if data.mega_stone == item_data.id
     #  end
     #end
-    if item_data == :ROTOMMULTITOOL || item_data == :CASTFORMITE || item_data == :REDORB || item_data == :BLUEORB
+    p item_data.id
+    if item_data.id == :ROTOMMULTITOOL || item_data.id == :CASTFORMITE || item_data.id == :REDORB || item_data.id == :BLUEORB
       return true
     end
     if ability_orb_held?(item_data)
@@ -847,7 +848,6 @@ end
 class PokeBattle_Battle
   def pbStartBattleCore
     # Set up the battlers on each side
-    @battleAI.create_ai_objects
     if $game_switches[899] && $game_switches[900]
       pbHegemonyClauses
     end
