@@ -230,6 +230,7 @@ end
 # Generic user's stat increase/decrease classes.
 #===============================================================================
 class PokeBattle_StatUpMove < PokeBattle_Move
+  attr_reader :statUp
   def pbMoveFailed?(user,targets)
     return false if damagingMove?
     return !user.pbCanRaiseStatStage?(@statUp[0],user,self,true)
@@ -250,6 +251,7 @@ end
 
 
 class PokeBattle_MultiStatUpMove < PokeBattle_Move
+  attr_reader :statUp
   def pbMoveFailed?(user,targets)
     return false if damagingMove?
     failed = true
@@ -290,6 +292,7 @@ end
 
 
 class PokeBattle_StatDownMove < PokeBattle_Move
+  attr_reader :statDown
   def pbEffectWhenDealingDamage(user,target)
     return if @battle.pbAllFainted?(target.idxOwnSide)
     showAnim = true
@@ -308,6 +311,7 @@ end
 # Generic target's stat increase/decrease classes.
 #===============================================================================
 class PokeBattle_TargetStatUpMove < PokeBattle_Move
+  attr_reader :statUp
   def pbFailsAgainstTarget?(user,target)
     return false if damagingMove?
     return !target.pbCanRaiseStatStage?(@statUp[0],user,self,true)
@@ -328,6 +332,7 @@ end
 
 
 class PokeBattle_TargetMultiStatUpMove < PokeBattle_Move
+  attr_reader :statUp
   def pbFailsAgainstTarget?(user,target)
     return false if damagingMove?
     failed = true
@@ -387,6 +392,7 @@ class PokeBattle_TargetMultiStatUpMove < PokeBattle_Move
 end
 
 class PokeBattle_TargetStatDownMove < PokeBattle_Move
+  attr_reader :statDown
   def pbFailsAgainstTarget?(user,target)
     return false if damagingMove?
     return !target.pbCanLowerStatStage?(@statDown[0],user,self,true)
@@ -407,6 +413,7 @@ end
 
 
 class PokeBattle_TargetMultiStatDownMove < PokeBattle_Move
+  attr_reader :statDown
   def pbFailsAgainstTarget?(user,target)
     return false if damagingMove?
     failed = true
