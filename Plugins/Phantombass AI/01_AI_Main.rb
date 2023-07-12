@@ -1,4 +1,3 @@
-Essentials::ERROR_TEXT += "[Phantombass AI v2.3]\r\n"
 class PBAI
   attr_reader :battle
   attr_reader :sides
@@ -343,17 +342,11 @@ class PBAI
     end
 
     def defensive?
-      for i in @battler.roles
-        return true if [:PHAZER,:SCREENS,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY,:REDIRECTION,:CLERIC,:LEAD,:SKILLSWAPALLY].include?(i)
-      end
-      return false
+      return self.has_role?([:PHAZER,:SCREENS,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:STALLBREAKER,:TRICKROOMSETTER,:TARGETALLY,:REDIRECTION,:CLERIC,:LEAD,:SKILLSWAPALLY])
     end
 
     def setup?
-      for i in @battler.roles
-        return true if [:SETUPSWEEPER,:WINCON,:PHYSICALBREAKER,:SPECIALBREAKER].include?(i)
-      end
-      return false
+      return self.has_role?([:SETUPSWEEPER,:WINCON,:PHYSICALBREAKER,:SPECIALBREAKER])
     end
 
     def totalhp
@@ -747,35 +740,37 @@ class PBAI
         choice = scores[idx]
         m = choice[0].to_int
         if m.is_a?(Symbol)
-            ind = -1
+          ind = -1
             loop do
                 ind += 1
                 break if @battler.moves[ind] == choice[0]
             end
-            choice[0] = ind
+          choice[0] = ind
         end
-        move = @battler.moves[choice[0]]
-        target = $target[$target_ind%2]
-        if ["15B", "0D5", "0D6", "0D7", "0D8", "0D9"].include?(move.function)
-          self.flags[:will_be_healed] = true
-        elsif move.function == "0DF"
-          target.flags[:will_be_healed] = true
-        elsif move.function == "0A1"
-          @side.flags[:will_luckychant] = true
-        elsif move.function == "0A2"
-          @side.flags[:will_reflect] = true
-        elsif move.function == "0A3"
-          @side.flags[:will_lightscreen] = true
-        elsif move.function == "051"
-          @side.flags[:will_haze] = true
-        elsif move.function == "167"
-          @side.flags[:will_auroraveil] = true
-        elsif move.function == "0BA"
-          target.flags[:will_be_taunted] = true
-        elsif move.function == "0B9"
-          target.flags[:will_be_disabled] = true
-        elsif move.function == "0BC"
-          target.flags[:will_be_encored] = true
+        if @battle.doublebattle
+          move = @battler.moves[choice[0]]
+          target = $target[$target_ind%2]
+          if ["15B", "0D5", "0D6", "0D7", "0D8", "0D9"].include?(move.function)
+            self.flags[:will_be_healed] = true
+          elsif move.function == "0DF"
+            target.flags[:will_be_healed] = true
+          elsif move.function == "0A1"
+            @side.flags[:will_luckychant] = true
+          elsif move.function == "0A2"
+            @side.flags[:will_reflect] = true
+          elsif move.function == "0A3"
+            @side.flags[:will_lightscreen] = true
+          elsif move.function == "051"
+            @side.flags[:will_haze] = true
+          elsif move.function == "167"
+            @side.flags[:will_auroraveil] = true
+          elsif move.function == "0BA"
+            target.flags[:will_be_taunted] = true
+          elsif move.function == "0B9"
+            target.flags[:will_be_disabled] = true
+          elsif move.function == "0BC"
+            target.flags[:will_be_encored] = true
+          end
         end
         return [choice[0], choice[2]]
       end
@@ -1929,13 +1924,14 @@ class PBAI
   end
 end
 
+
 class PokeBattle_Battle
   attr_reader :battleAI
 
   alias ai_initialize initialize
   def initialize(*args)
     ai_initialize(*args)
-    @battleAI = PBAI.new(self, self.wildBattle?)
+    @battleAI = PBAI.new(self,self.wildBattle?)
     @battleAI.sides[0].set_party(@party1)
     @battleAI.sides[0].set_trainers(@player)
     @battleAI.sides[1].set_party(@party2)

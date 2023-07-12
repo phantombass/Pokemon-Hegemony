@@ -46,7 +46,12 @@ class PokeBattle_Battler
   attr_accessor :statsLowered  # Stats have been lowered this round
   attr_accessor :damageState
   attr_accessor :initialHP     # Set at the start of each move's usage
-  attr_accessor :droppedBelowHalfHP 
+  attr_accessor :droppedBelowHalfHP
+  STAT_STAGE_MULTIPLIERS    = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+  STAT_STAGE_DIVISORS       = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+  ACC_EVA_STAGE_MULTIPLIERS = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
+  ACC_EVA_STAGE_DIVISORS    = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+  STAT_STAGE_MAXIMUM        = 6   # Is also the minimum (-6)
 
   #=============================================================================
   # Complex accessors
@@ -805,6 +810,11 @@ class PokeBattle_Battler
 
   def allAllies
     return @battle.allSameSideBattlers(@index).reject { |b| b.index == @index }
+  end
+
+  # Returns an array containing all unfainted opposing Pokémon.
+  def allOpposing
+    return @battle.allOtherSideBattlers(@index)
   end
 
   # Returns the battler that is most directly opposite to self. unfaintedOnly is

@@ -6750,3 +6750,96 @@ module PBEffects
   NeutralizingGas     = 430
   EchoChamber         = 431
 end
+
+class PokeBattle_Move_570 < PokeBattle_TargetStatDownMove
+  def initialize(battle,move)
+    super
+    @statDown = [:SPEED,1]
+  end
+
+  def pbBaseDamage(baseDmg,user,target)
+    if @battle.field.terrain == :Grassy
+      baseDmg = (baseDmg/2.0).round
+    end
+    return baseDmg
+  end
+end
+
+#===============================================================================
+# Weather-inducing move.
+#===============================================================================
+class PokeBattle_TerrainMove < PokeBattle_Move
+  def initialize(battle,move)
+    super
+    @terrainType = :None
+  end
+
+  def pbMoveFailed?(user,targets)
+    case @battle.field.weather
+    when @terrainType
+      @battle.pbDisplay(_INTL("But it failed!"))
+      return true
+    end
+    if $gym_terrain == true
+      @battle.pbDisplay(_INTL("But it failed!"))
+      return true
+    end
+    return false
+  end
+
+  def pbEffectGeneral(user)
+    @battle.pbStartTerrain(user,@terrainType)
+  end
+end
+
+#===============================================================================
+# For 5 rounds, creates an electric terrain which boosts Electric-type moves and
+# prevents Pokémon from falling asleep. Affects non-airborne Pokémon only.
+# (Electric Terrain)
+#===============================================================================
+class PokeBattle_Move_154 < PokeBattle_TerrainMove
+  def initialize(battle,move)
+    super
+    @terrainType = :Electric
+  end
+end
+
+
+
+#===============================================================================
+# For 5 rounds, creates a grassy terrain which boosts Grass-type moves and heals
+# Pokémon at the end of each round. Affects non-airborne Pokémon only.
+# (Grassy Terrain)
+#===============================================================================
+class PokeBattle_Move_155 < PokeBattle_TerrainMove
+  def initialize(battle,move)
+    super
+    @terrainType = :Grassy
+  end
+end
+
+
+
+#===============================================================================
+# For 5 rounds, creates a misty terrain which weakens Dragon-type moves and
+# protects Pokémon from status problems. Affects non-airborne Pokémon only.
+# (Misty Terrain)
+#===============================================================================
+class PokeBattle_Move_156 < PokeBattle_TerrainMove
+  def initialize(battle,move)
+    super
+    @terrainType = :Misty
+  end
+end
+
+#===============================================================================
+# For 5 rounds, creates a psychic terrain which boosts Psychic-type moves and
+# prevents Pokémon from being hit by >0 priority moves. Affects non-airborne
+# Pokémon only. (Psychic Terrain)
+#===============================================================================
+class PokeBattle_Move_173 < PokeBattle_TerrainMove
+  def initialize(battle,move)
+    super
+    @terrainType = :Psychic
+  end
+end
