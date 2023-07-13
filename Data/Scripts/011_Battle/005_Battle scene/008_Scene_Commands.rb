@@ -112,6 +112,7 @@ class PokeBattle_Scene
       # Actions
       if Input.trigger?(Input::USE)      # Confirm choice
         pbPlayDecisionSE
+        $spam_block_flags[:same_move].push(battler.moves[cw.index]) if !@battle.doublebattle
         break if yield cw.index
         needFullRefresh = true
         needRefresh = true
@@ -175,6 +176,7 @@ class PokeBattle_Scene
           idxPartyRet = i
           break
         end
+        $spam_block_flags[:triple_switch].push(:Switch)
         break if yield idxPartyRet, switchScreen
       elsif cmdSummary>=0 && command==cmdSummary   # Summary
         scene.pbSummary(idxParty,true)

@@ -5805,9 +5805,28 @@ class PokeBattle_Move_506 < PokeBattle_HealingMove
 end
 
 class PokeBattle_Move_507 < PokeBattle_Move
+  def pbFailsAgainstTarget?(user,target)
+    return false
+  end
   def pbEffectAgainstTarget(user,target)
     target.effects[PBEffects::StarSap] = user.index
     @battle.pbDisplay(_INTL("{1} was sapped!",target.pbThis))
+  end
+end
+
+#===============================================================================
+#  leech seed immunity for bosses
+#===============================================================================
+class PokeBattle_Move_507
+  alias starsap_ebdx pbFailsAgainstTarget? unless self.method_defined?(:starsap_ebdx)
+  def pbFailsAgainstTarget?(*args)
+    rule = EliteBattle.get_data(:BOSSBATTLES, :Metrics, :IMMUNITIES)
+    rule = rule.nil? ? false : rule.include?(:LEECHSEED)
+    if args[1] && args[1].immunity && rule
+      @battle.pbDisplay(_INTL("It doesn't affect {1}...", args[1].pbThis))
+      return true
+    end
+    return starsap_ebdx(*args)
   end
 end
 
