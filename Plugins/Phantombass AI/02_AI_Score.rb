@@ -438,6 +438,50 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next score
 end
 
+#Weather Weakened
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  case ai.battle.pbWeather
+  when :Rain
+    if move.type == :FIRE
+      score *= 0.5
+    elsif move.type == :WATER
+      score *= 1.5
+    end
+  when :Sun
+    if move.type == :WATER
+      score *= 0.5
+    elsif move.type == :FIRE
+      score *= 1.5
+    end
+  when :Sleet
+    if move.type == :FIRE
+      score *= 0.5
+    end
+  when :Eclipse
+    case move.type
+    when :FAIRY,:PSYCHIC
+      score *= 0.5
+    when :DARK,:GHOST
+      score *= 1.5
+    end
+  when :Windy
+    case move.type
+    when :ROCK,:ICE
+      score *= 0.5
+    end
+  when :StrongWinds
+    case move.type
+    when :DRAGON,:ICE,:FAIRY,:COSMIC,:ROCK,:ELECTRIC
+      score *= 0.5
+    end
+  when :AcidRain
+    if move.type == :POISON
+      score *= 1.5
+    end
+  end
+  next score
+end
+
 
 # Prefer moves that can thaw the user if the user is frozen
 PBAI::ScoreHandler.add do |score, ai, user, target, move|

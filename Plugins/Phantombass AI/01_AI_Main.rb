@@ -16,16 +16,16 @@ class PBAI
   	  :haze_flag => [], #A pokemon has haze, so the AI registers what mon knows Haze until it is gone
       :switches => [],
       :moves => [],
-      :flags_set => [],
-  	  :two_mon_flag => false, # Player switches between the same 2 mons 
-  	  :triple_switch_flag => false, # Player switches 3 times in a row
-  	  :no_attacking_flag => [], #Target has no attacking moves
-  	  :double_recover_flag => [], # Target uses a recovery move twice in a row
+      :flags_set => [], 
+  	  :triple_switch => [], # Player switches 3 times in a row
+  	  :no_attacking => [], #Target has no attacking moves
+  	  :double_recover => [], # Target uses a recovery move twice in a row
   	  :choiced_flag => [], #Target is choice-locked
-  	  :same_move_flag => false, # Target uses same move 3 times in a row
-  	  :initiative_flag => false, # Target uses an initiative move 3 times in a row
-  	  :double_intimidate_flag => false, # Target pivots between 2 Intimidators
-      :no_priority_flag => []
+  	  :same_move => [], # Target uses same move 3 times in a row
+  	  :initiative_flag => [], # Target uses an initiative move 3 times in a row
+  	  :double_intimidate => [], # Target pivots between 2 Intimidators
+      :no_priority_flag => [],
+      :choice => nil
   	}
     $learned_flags = {
       :setup_fodder => [],
@@ -33,6 +33,7 @@ class PBAI
       :should_taunt => [],
       :move => nil
     }
+    $spam_block_triggered = false
   end
 
   def self.battler_to_proj_index(battlerIndex)
@@ -523,10 +524,14 @@ class PBAI
       return @battle.pbCanMegaEvolve?(@battler.index)
     end
 
+    def check_spam_block(flag,target)
+      return PBAI::SpamHandler.trigger(flag,@ai,@battler,target)
+    end
+
     def choose_move
       # An array of scores in the format of [move_index, score, target]
       scores = []
-
+      target_choice = $spam_block_flags[:choice]
       $target = []
       $target_ind = -1
       rand_trigger = false
@@ -596,43 +601,60 @@ class PBAI
         end
       end
 
-      m_ind = -1
-      s_ind = []
-      scr_ind = -1
-      scr = 0
       if rand_trigger == false
+        m_ind = -1
+        s_ind = []
+        scrs = []
+        scr_ind = -1
+        scr = 0
         for mv in scores
           m_ind += 1
+          scrs << [mv,m_ind] if mv[1] > 0
           scr += 1 if mv[1] >= 200
-          if mv[1] < 200
-            mv[1] = 0
-          end
         end
-        for i in scores
-          scr_ind += 1
-          s_ind << [i , scr_ind] if i[1] > 0
-        end
-        if s_ind.length > 1
-          s_ind.sort! do |a,b|
+        if scr == 0
+          scrs.sort! do |a,b|
             ret = b[0][1] <=> a[0][1]
             next ret if ret != 0
             next b[0][2] <=> a[0][2]
           end
-          if s_ind[0][1] == s_ind[1][1]
-            indx = rand(2)
-            s_ind[indx][1] = 0
-            scores[[s_ind][indx][2]] = s_ind[indx]
+          if scrs[0][1] == scrs[1][1]
+            midx = rand(2)
+            scrs[midx][1] = 0
+            scores[[scrs][midx][2]] = scrs[midx]
           end
-        end
-        for mvs in scores
-          next if s_ind.length <= 1
-          next if mvs[1] == 0
-          next if mvs == s_ind[0][0]
-          mvs[1] = 0
+          for mov in scores
+            next if mov[1] == 0
+            next if mov == scrs[0][0]
+            mov[1] = 0
+          end
+        else
+          for i in scores
+            scr_ind += 1
+            s_ind << [i , scr_ind] if i[1] > 0
+          end
+          if s_ind.length > 1
+            s_ind.sort! do |a,b|
+              ret = b[0][1] <=> a[0][1]
+              next ret if ret != 0
+              next b[0][2] <=> a[0][2]
+            end
+            if s_ind[0][1] == s_ind[1][1]
+              indx = rand(2)
+              s_ind[indx][1] = 0
+              scores[[s_ind][indx][2]] = s_ind[indx]
+            end
+          end
+          for mvs in scores
+            next if s_ind.length <= 1
+            next if mvs[1] == 0
+            next if mvs == s_ind[0][0]
+            mvs[1] = 0
+          end
         end
       end
       # If absolutely no good options exist
-      if scores.size == 0 || scr == 0 || rand_trigger == true
+      if scores.size == 0 || rand_trigger == true
         # Then just try to use the very first move with pp
         move = []
         sts = 0
