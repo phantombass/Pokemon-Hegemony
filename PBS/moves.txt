@@ -727,7 +727,7 @@
 708,HYDROPUMP,Hydro Pump,000,110,WATER,Special,80,5,0,NearOther,0,bef,"The target is blasted by a huge volume of water launched under great pressure."
 709,ORIGINPULSE,Origin Pulse,000,110,WATER,Special,85,10,0,AllNearFoes,0,befm,"The user attacks opposing Pokémon with countless beams of light that glow a deep and brilliant blue."
 710,STEAMERUPTION,Steam Eruption,00A,110,WATER,Special,95,5,30,NearOther,0,befg,"The user immerses the target in superheated steam. This may also leave the target with a burn."
-711,CRABHAMMER,Crabhammer,000,100,WATER,Physical,90,10,0,NearOther,0,abefhs,"The target is hammered with a large pincer. Critical hits land more easily."
+711,CRABHAMMER,Crabhammer,000,100,WATER,Physical,100,10,0,NearOther,0,abefhs,"The target is hammered with a large pincer. Critical hits land more easily."
 712,AQUATAIL,Aqua Tail,000,90,WATER,Physical,100,10,0,NearOther,0,abef,"The user attacks by swinging its tail as if it were a vicious wave in a raging storm."
 713,MUDDYWATER,Muddy Water,047,90,WATER,Special,85,10,30,AllNearFoes,0,bef,"The user attacks by shooting muddy water at the opposing team. It may also lower the target's accuracy."
 714,SPARKLINGARIA,Sparkling Aria,15A,90,WATER,Special,100,10,100,AllNearFoes,0,befk,"The user bursts into song, emitting many bubbles. Any burnt Pokémon will be healed by these bubbles."

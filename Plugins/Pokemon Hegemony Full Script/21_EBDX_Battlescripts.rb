@@ -90,6 +90,7 @@ module BattleScripts
         # play common animation
         EliteBattle.playCommonAnimation(:ROAR, @scene, 1)
         @scene.wait(8)
+        $boss_mon = true
         # show databoxes
         @scene.pbShowAllDataboxes
       end

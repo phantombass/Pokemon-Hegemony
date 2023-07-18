@@ -493,7 +493,6 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next score
 end
 
-
 # Discourage using OHKO moves if the target is higher level or it has sturdy
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   if move.function == "070" # OHKO Move
@@ -847,7 +846,7 @@ end
 
 # Lower the score of multi-turn moves, because they likely have quite high power and thus score.
 PBAI::ScoreHandler.add_damaging do |score, ai, user, target, move|
-  if !user.has_item?(:POWERHERB) && (move.chargingTurnMove? || move.function == "0C2") # Hyper Beam
+  if !user.hasActiveItem?(:POWERHERB) && (move.chargingTurnMove? || move.function == "0C2") # Hyper Beam
     score -= 70
     PBAI.log("- 70 for requiring a charging turn")
   end

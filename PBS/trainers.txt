@@ -1509,6 +1509,13 @@ Pokemon = LYCANROC,67
 	Nature = JOLLY
 	Ability = TOUGHCLAWS
 	Moves = ACCELEROCK,CRUNCH,DRILLRUN,FIREFANG
+Pokemon = TINKATON,67
+	Item = UNSHAKENORB
+	Nature = JOLLY
+	Ability = GAVELPOWER
+	IV = 31,31,31,31,31,31
+	EV = 0,252,0,252,0,4
+	Moves = GIGATONHAMMER,CRABHAMMER,PLAYROUGH,HAMMERARM
 #-------------------------------
 # Route 11
 #-------------------------------
@@ -1518,6 +1525,8 @@ Pokemon = QUAGSIRE,68
 	Ability = UNAWARE
 	Nature = SASSY
 	Item = SAPSIPPERORB
+	IV = 31,31,31,31,31,31
+	EV = 252,4,0,0,0,252
 	Moves = CURSE,AMNESIA,RECOVER,WATERFALL
 	Roles = WINCON
 #-------------------------------
