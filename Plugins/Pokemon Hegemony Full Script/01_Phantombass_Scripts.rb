@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.6.1"
+  GAME_VERSION = "4.7.0"
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -25,6 +25,7 @@ def reset_custom_variables
   $appliance = nil
   $currentDexSearch = nil
   $repel_toggle = false
+  $boss_mon = false
   $mega_flag = 0
 end
 class Game_System
@@ -291,6 +292,7 @@ class PokeBattle_Battle
     if $game_switches[902] || $game_switches[903]
       self.rules["batonpassclause"] = true
     end
+    $boss_mon = false
   end
   def pbCanSwitch?(idxBattler,idxParty=-1,partyScene=nil)
     # Check whether party Pokémon can switch in
@@ -928,6 +930,7 @@ class PokeBattle_Battle
     $gym_weather = false
     $gym_hazard = false
     $gym_taunt = false
+    $boss_mon = false
     $game_switches[908] = false
     oldDecision = @decision
     @decision = 4 if @decision==1 && wildBattle? && @caughtPokemon.length>0

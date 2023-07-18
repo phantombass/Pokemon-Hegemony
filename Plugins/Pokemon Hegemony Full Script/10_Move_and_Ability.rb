@@ -200,10 +200,12 @@ class PokeBattle_Move
       ret = Effectiveness::NORMAL_EFFECTIVE_ONE if defType == :STEEL &&
                                                    Effectiveness.ineffective_type?(moveType, defType)
     end
-    # Miracle Eye
-    if target.effects[PBEffects::MiracleEye]
-      ret = Effectiveness::NORMAL_EFFECTIVE_ONE if defType == :DARK &&
-                                                   Effectiveness.ineffective_type?(moveType, defType)
+    if !$spam_block_flags
+      # Miracle Eye
+      if target.effects[PBEffects::MiracleEye]
+        ret = Effectiveness::NORMAL_EFFECTIVE_ONE if defType == :DARK &&
+                                                     Effectiveness.ineffective_type?(moveType, defType)
+      end
     end
     # Delta Stream's weather
     if @battle.pbWeather == :StrongWinds
@@ -1839,13 +1841,19 @@ BattleHandlers::DamageCalcUserAbility.add(:COMPOSURE,
 
 BattleHandlers::DamageCalcUserAbility.add(:AMPLIFIER,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    mults[:base_damage_multiplier] = (mults[:base_damage_multiplier]*1.5).round if move.soundMove?
+    mults[:base_damage_multiplier] = (mults[:base_damage_multiplier]*1.3).round if move.soundMove?
   }
 )
 
 BattleHandlers::DamageCalcUserAbility.add(:TIGHTFOCUS,
   proc { |ability,user,target,move,mults,baseDmg,type|
-    mults[:base_damage_multiplier] = (mults[:base_damage_multiplier]*1.5).round if move.beamMove?
+    mults[:base_damage_multiplier] = (mults[:base_damage_multiplier]*1.3).round if move.beamMove?
+  }
+)
+
+BattleHandlers::DamageCalcUserAbility.add(:GAVELPOWER,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    mults[:base_damage_multiplier] = (mults[:base_damage_multiplier]*1.5).round if move.hammerMove?
   }
 )
 
@@ -3321,7 +3329,7 @@ class PokeBattle_Battler
     return false if pbHasType?(:POISON) || pbHasType?(:STEEL)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
     return false if hasActiveAbility?([:OVERCOAT,:ACIDDRAIN,:TOXICRUSH,:ACCLIMATE,:FORECAST])
-    return false if hasActiveItem?(:SAFETYGOGGLES)
+    return false if hasActiveItem?([:SAFETYGOGGLES,:UTILITYUMBRELLA])
     return true
   end
   def takesStarstormDamage?
@@ -3329,7 +3337,7 @@ class PokeBattle_Battler
     return false if pbHasType?(:COSMIC)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
     return false if hasActiveAbility?([:OVERCOAT,:STARSPRINT,:ASTRALCLOAK,:ACCLIMATE,:FORECAST])
-    return false if hasActiveItem?(:SAFETYGOGGLES)
+    return false if hasActiveItem?([:SAFETYGOGGLES,:UTILITYUMBRELLA])
     return true
   end
   def pbSuccessCheckAgainstTarget(move,user,target)
@@ -3852,7 +3860,7 @@ end
 class PokeBattle_Move_087 < PokeBattle_Move
   def pbBaseDamage(baseDmg,user,target)
     baseDmg *= 2 if @battle.pbWeather != :None &&
-                    !([:Sun,:Rain,:HarshSun,:HeavyRain,:Storm].include?(@battle.pbWeather) && user.hasUtilityUmbrella?)
+                    !([:Sun,:Rain,:HarshSun,:HeavyRain,:Storm,:Starstorm,:AcidRain].include?(@battle.pbWeather) && user.hasUtilityUmbrella?)
     return baseDmg
   end
 
@@ -3878,7 +3886,7 @@ class PokeBattle_Move_087 < PokeBattle_Move
     when :AcidRain
       ret = :POISON if GameData::Type.exists?(:POISON)
     end
-    ret = :NORMAL if user.hasUtilityUmbrella? && [:FIRE,:WATER].include?(ret)
+    ret = :NORMAL if user.hasUtilityUmbrella? && [:FIRE,:WATER,:COSMIC,:POISON].include?(ret)
     return ret
   end
 
@@ -4471,11 +4479,17 @@ end
 #===============================================================================
 class PokeBattle_Move_178 < PokeBattle_Move
   def pbBaseDamage(baseDmg,user,target)
-    if @battle.choices[target.index][0]!=:None &&
-       ((@battle.choices[target.index][0]!=:UseMove &&
-       @battle.choices[target.index][0]==:Shift) || target.movedThisRound?)
+    if $spam_block_triggered == false
+      if @battle.choices[target.index][0]!=:None &&
+         ((@battle.choices[target.index][0]!=:UseMove &&
+         @battle.choices[target.index][0]==:Shift) || target.movedThisRound?)
+      else
+        baseDmg *= 2
+      end
     else
-      baseDmg *= 2
+      if $spam_block_flags[:choice].is_a?(Pokemon) || !target.movedThisRound?
+        baseDmg *= 2
+      end
     end
     return baseDmg
   end
