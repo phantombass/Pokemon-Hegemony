@@ -55,6 +55,14 @@ class PokeBattle_Scene
       # Actions
       if Input.trigger?(Input::C)                                               # Confirm choice
         pbSEPlay("EBDX/SE_Select2")
+        chosen_move = battler.moves[@fightWindow.index]
+        $spam_block_flags[:same_move].push(chosen_move) if !@battle.doublebattle
+        recover = ["0D6","0D5","0D8","1D6","0D9"]
+        initative = ["0EE","529","538","0ED","0EA","151"]
+        $spam_block_flags[:double_recover].push(chosen_move) if recover.include?(chosen_move.function) && !@battle.doublebattle
+        $spam_block_flags[:initiative_flag].push(chosen_move) if initative.include?(chosen_move.function) && !@battle.doublebattle
+        $spam_block_flags[:choice] = battler.moves[@fightWindow.index]
+        $spam_block_flags[:triple_switch].clear
         break if yield @fightWindow.index
       elsif Input.trigger?(Input::B)                                            # Cancel fight menu
         pbPlayCancelSE

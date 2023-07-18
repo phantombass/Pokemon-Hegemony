@@ -788,6 +788,7 @@ class PokeBattle_Battler
 
   # Returns the data structure for this battler's side.
   def pbOwnSide
+    return @battle.sides[0] if $spam_block_triggered && @index != 1
     return @battle.sides[idxOwnSide]
   end
 
