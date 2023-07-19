@@ -49,7 +49,7 @@ def hashArrayToConstant(mod,hash)
   return hash
 end
 
-Essentials::ERROR_TEXT += "[Phantombass AI v#{Phantombass_AI::VERSION}\r\n]"
+Essentials::ERROR_TEXT += "[Phantombass AI v#{Phantombass_AI::VERSION}}\r\n"
 
 =begin
 STATUSTEXTS = ["status", "sleep", "poison", "burn", "paralysis", "ice"]

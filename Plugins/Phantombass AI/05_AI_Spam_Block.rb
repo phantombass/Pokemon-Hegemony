@@ -46,7 +46,7 @@ end
 #Double Initiative
 PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag if $spam_block_triggered
-	initative = ["0EE","529","538","0ED","0EA","151"]
+	initiative = ["0EE","529","538","0ED","0EA","151"]
 	same_move = $spam_block_flags[:initiative_flag]
 	next flag if same_move.length < 2
 	check = 0
@@ -129,6 +129,6 @@ end
 #Boss Pokemon
 PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag if $spam_block_triggered
-	flag = true if $boss_mon
+	flag = true if $game_switches[990] && ai.battle.wildBattle?
 	next flag
 end

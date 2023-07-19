@@ -175,6 +175,11 @@ module PokeBattle_BattleCommon
       pkmn.makeUnprimal
       pkmn.update_shadow_moves if pkmn.shadowPokemon?
       pkmn.record_first_moves
+      if Settings::DISABLE_EVS
+        for key in pkmn.iv.keys
+          pkmn.iv[key] = 31
+        end
+      end
       # Reset form
       pkmn.forced_form = nil if MultipleForms.hasFunction?(pkmn.species,"getForm")
       @peer.pbOnLeavingBattle(self,pkmn,true,true)

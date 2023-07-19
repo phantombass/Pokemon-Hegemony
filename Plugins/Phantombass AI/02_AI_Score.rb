@@ -1633,7 +1633,7 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, t
       fnt +=1 if pkmn.fainted?
     end
     diff = user.side.party.length - fnt
-    if user.predict_switch?(target) && kill == 0 && diff > 1
+    if user.predict_switch?(target) && kill == 0 && diff > 1 && !$spam_block_triggered
       score += 100
       PBAI.log("+ 100 for predicting the target to switch, being unable to kill, and having something to switch to")
     end
@@ -2603,7 +2603,7 @@ PBAI::ScoreHandler.add("0E7") do |score, ai, user, target, move|
     end
   end
   if dmg > 0
-    dbond = 50*dmg
+    dbond = 100*dmg
     score += dbond
     PBAI.log("+ #{dbond} for being able to take down the opponent with Destiny Bond")
     if user.hasActiveItem?(:CUSTAPBERRY) && user.hp <= user.totalhp/4
