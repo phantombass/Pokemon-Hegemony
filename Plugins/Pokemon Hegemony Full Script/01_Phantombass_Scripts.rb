@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.7.1"
+  GAME_VERSION = "4.7.2"
   DISABLE_EVS = 902
 end
 
@@ -1051,7 +1051,7 @@ class PokeBattle_Battle
   end
 
   def pbGainEVsOne(idxParty,defeatedBattler)
-    if !Settings::DISABLE_EVS
+    if !$game_switches[Settings::DISABLE_EVS]
       pkmn = pbParty(0)[idxParty]   # The Pokémon gaining EVs from defeatedBattler
       evYield = defeatedBattler.pokemon.evYield
       # Num of effort points pkmn already has
