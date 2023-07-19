@@ -650,8 +650,8 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 end
 
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
-	if $switch_flags[:move] != nil
-   lastMove = $switch_flags[:move]
+	if ($switch_flags[:move] != nil) || ($spam_block_triggered && $spam_block_flags[:choice].is_a?(PokeBattle_Move))
+   lastMove = $spam_block_triggered && $spam_block_flags[:choice].is_a?(PokeBattle_Move) ? $spam_block_flags[:choice] : $switch_flags[:move]
    next if lastMove == nil
    matchup = battler.calculate_move_matchup(lastMove.id)
    immune = 0
@@ -749,6 +749,11 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 end
 
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
+	switch = false if battler.effects[PBEffects::Substitute] > 0
+	next switch
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	next switch if !ai.battle.doublebattle
 	ally = battler.side.battlers.find {|proj| proj && proj != battler && !proj.fainted?}
 	for move in ally.moves
@@ -766,6 +771,43 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 		if ally.target_is_immune?(move,battler) && [:AllNearOthers,:AllBattlers,:BothSides].include?(move.pbTarget(battler))
 			score += 100
 			PBAI.log("+ 100")
+		end
+	end
+  next score
+end
+
+PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
+	next switch if !$spam_block_triggered
+	next switch if !$spam_block_flags[:choice].is_a?(PokeBattle_Move)
+	nextMove = $spam_block_flags[:choice]
+	nextDmg = target.get_move_damage(battler,nextMove)
+  if nextDmg < battler.hp/2 || nextDmg < battler.totalhp/3
+  	switch = false
+  end
+  next switch
+end
+
+PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
+	if $spam_block_triggered && $spam_block_flags[:choice].is_a?(PokeBattle_Move)
+		nextMove = $spam_block_flags[:choice]
+		nextDmg = target.get_move_damage(battler,nextMove)
+		damage = 0
+		if nextDmg >= battler.hp
+			score -= 1000
+			PBAI.log("- 1000 because the battler will faint switching in")
+		else
+			if battler.faster_than?(target)
+				for move in battler.moves
+					damage += 1 if battler.get_move_damage(target,move) >= (target.hp || target.totalhp/2)
+				end
+				if damage > 0
+					score += 200
+					PBAI.log("+ 300 because battler can kill or do significant damage before being killed")
+				else
+					score -= 300
+					PBAI.log("- 300 because battler will be killed before it can kill")
+				end
+			end
 		end
 	end
   next score

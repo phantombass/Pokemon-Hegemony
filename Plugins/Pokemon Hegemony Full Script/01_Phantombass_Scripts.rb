@@ -4,7 +4,8 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.7.0"
+  GAME_VERSION = "4.7.1"
+  DISABLE_EVS = 902
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
@@ -1047,6 +1048,41 @@ class PokeBattle_Battle
     $game_switches[89] = false
     # return final output
     return @decision
+  end
+
+  def pbGainEVsOne(idxParty,defeatedBattler)
+    if !Settings::DISABLE_EVS
+      pkmn = pbParty(0)[idxParty]   # The Pokémon gaining EVs from defeatedBattler
+      evYield = defeatedBattler.pokemon.evYield
+      # Num of effort points pkmn already has
+      evTotal = 0
+      GameData::Stat.each_main { |s| evTotal += pkmn.ev[s.id] }
+      # Modify EV yield based on pkmn's held item
+      if !BattleHandlers.triggerEVGainModifierItem(pkmn.item,pkmn,evYield)
+        BattleHandlers.triggerEVGainModifierItem(@initialItems[0][idxParty],pkmn,evYield)
+      end
+      # Double EV gain because of Pokérus
+      if pkmn.pokerusStage>=1   # Infected or cured
+        evYield.each_key { |stat| evYield[stat] *= 2 }
+      end
+      # Gain EVs for each stat in turn
+      if pkmn.shadowPokemon? && pkmn.saved_ev
+        pkmn.saved_ev.each_value { |e| evTotal += e }
+        GameData::Stat.each_main do |s|
+          evGain = evYield[s.id].clamp(0, Pokemon::EV_STAT_LIMIT - pkmn.ev[s.id] - pkmn.saved_ev[s.id])
+          evGain = evGain.clamp(0, Pokemon::EV_LIMIT - evTotal)
+          pkmn.saved_ev[s.id] += evGain
+          evTotal += evGain
+        end
+      else
+        GameData::Stat.each_main do |s|
+          evGain = evYield[s.id].clamp(0, Pokemon::EV_STAT_LIMIT - pkmn.ev[s.id])
+          evGain = evGain.clamp(0, Pokemon::EV_LIMIT - evTotal)
+          pkmn.ev[s.id] += evGain
+          evTotal += evGain
+        end
+      end
+    end
   end
 
   def pbGainExpOne(idxParty,defeatedBattler,numPartic,expShare,expAll,showMessages=true)
