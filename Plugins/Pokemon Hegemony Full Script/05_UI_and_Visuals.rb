@@ -1213,7 +1213,7 @@ class PokemonSummary_Scene
       cmdStatus = -1
       min_grind_commands[cmdLevel = min_grind_commands.length] = _INTL("Set Level") if (@page == 2 || @page == 3 || @page == 4)
       min_grind_commands[cmdNature = min_grind_commands.length] = _INTL("Change Nature") if @page == 2 || @page == 3 || @page == 4
-      min_grind_commands[cmdStatChange = min_grind_commands.length] = _INTL("Change EVs/IVs") if (@page == 3 || @page == 4) && !Settings::DISABLE_EVS
+      min_grind_commands[cmdStatChange = min_grind_commands.length] = _INTL("Change EVs/IVs") if (@page == 3 || @page == 4) && !$game_switches[Settings::DISABLE_EVS]
       min_grind_commands[cmdAbility = min_grind_commands.length] = _INTL("Change Ability") if @page == 2 || @page == 3 || @page == 4
       min_grind_commands[cmdStatus = min_grind_commands.length] = _INTL("Set Status") if (@page == 2 || @page == 3 || @page == 4) && $game_switches[209] == false
       min_command = pbShowCommands(min_grind_commands)
