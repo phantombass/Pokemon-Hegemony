@@ -300,7 +300,7 @@ class PBAI
       @used_moves = []
       @shown_ability = false
       @shown_item = false
-      @skill = (wild_pokemon && !$game_switches[908]) ?  0 : 200
+      @skill = (wild_pokemon && !$game_switches[990]) ?  0 : 200
       @flags = {}
     end
 
@@ -1768,6 +1768,7 @@ class PBAI
         return true if i.priority > 0 && i.damagingMove? && self.get_move_damage(target,i) >= target.hp
       end
       return true if target.bad_against?(self) && self.faster_than?(target)
+      return false if $spam_block_triggered
       return false
     end
 
