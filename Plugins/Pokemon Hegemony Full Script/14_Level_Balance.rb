@@ -71,6 +71,9 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       else
         level = levelcap
       end
+      if $game_switches[Settings::DISABLE_EVS] && $game_switches[LvlCap::Hard]
+        level -= 2
+      end
       party[i].level = level
       #now we evolve the pokémon, if applicable
       #unused

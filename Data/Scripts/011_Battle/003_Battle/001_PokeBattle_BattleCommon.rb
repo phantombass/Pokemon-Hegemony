@@ -175,7 +175,7 @@ module PokeBattle_BattleCommon
       pkmn.makeUnprimal
       pkmn.update_shadow_moves if pkmn.shadowPokemon?
       pkmn.record_first_moves
-      if Settings::DISABLE_EVS
+      if $game_switches[75]
         for key in pkmn.iv.keys
           pkmn.iv[key] = 31
         end
