@@ -157,10 +157,14 @@ module GameData
             else
               pkmn.iv[s.id] = [pkmn_data[:level] / 2, Pokemon::IV_STAT_LIMIT].min
             end
-            if pkmn_data[:ev]
-              pkmn.ev[s.id] = pkmn_data[:ev][s.id]
+            if $game_switches[Settings::DISABLE_EVS]
+              pkmn.ev[s.id] = 0
             else
-              pkmn.ev[s.id] = [pkmn_data[:level] * 3 / 2, Pokemon::EV_LIMIT / 6].min
+              if pkmn_data[:ev]
+                pkmn.ev[s.id] = pkmn_data[:ev][s.id]
+              else
+                pkmn.ev[s.id] = [pkmn_data[:level] * 3 / 2, Pokemon::EV_LIMIT / 6].min
+              end
             end
           end
           pkmn.happiness = pkmn_data[:happiness] if pkmn_data[:happiness]
