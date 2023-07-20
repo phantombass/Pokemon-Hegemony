@@ -1124,8 +1124,7 @@ BattleHandlers::TargetAbilityOnHit.add(:LINGERINGAROMA,
       battle.pbHideAbilitySplash(user) if user.opposes?(target)
     end
     battle.pbHideAbilitySplash(target) if user.opposes?(target)
-    user.pbOnLosingAbility(oldAbil)
-    user.pbTriggerAbilityOnGainingIt
+    user.pbOnAbilityChanged(oldAbil) if oldAbil
   }
 )
 

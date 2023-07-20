@@ -216,6 +216,16 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next score
 end
 
+#Discount Status Moves if Taunted
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if user.effects[PBEffects::Taunt] == 0
+  if move.statusMove?
+      score -= 1000
+      PBAI.log("- 1000 to prevent failing")
+  end
+  next score
+end
+
 
 # Increase/decrease score for each positive/negative stat boost the move gives the user
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
