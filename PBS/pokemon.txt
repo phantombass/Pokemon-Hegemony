@@ -32366,7 +32366,7 @@ Evolutions = PORYGONZ1,HoldItem,CORRUPTEDDRIVE
 [975]
 Name = Porygon-Z
 InternalName = PORYGONZ1
-Type1 = NORMAL
+Type1 = DARK
 Type2 = COSMIC
 BaseStats = 85,80,70,90,135,75
 GenderRate = Genderless
@@ -35448,7 +35448,7 @@ Generation = 9
 [1078]
 Name = Glimmet
 InternalName = GLIMMET
-Type1 = ROCK
+Type1 = COSMIC
 Type2 = POISON
 BaseStats = 48,35,42,60,105,60
 GenderRate = Female50Percent
