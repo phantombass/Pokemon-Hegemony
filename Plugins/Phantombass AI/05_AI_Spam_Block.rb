@@ -129,6 +129,7 @@ end
 #Boss Pokemon
 PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag if $spam_block_triggered
-	flag = true if $game_switches[990] && ai.battle.wildBattle?
+	flag = true if $game_switches[908] && ai.battle.wildBattle?
+	$spam_block_triggered = flag
 	next flag
 end

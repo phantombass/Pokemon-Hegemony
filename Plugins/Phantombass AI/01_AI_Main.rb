@@ -797,7 +797,8 @@ class PBAI
     #    return [:FLEE, flee_score]
       end
       # Return [move_index, move_target]
-      if idx && !@battle.wildBattle?
+      wild = (@battle.wildBattle? && $game_switches[908] == false)
+      if idx && !wild
         choice = scores[idx]
         m = choice[0].to_int
         if m.is_a?(Symbol)
@@ -2120,7 +2121,7 @@ end
 class Array
   def sum
     n = 0
-    self.each { |e| n += e }
+    self.each { |e| n += !e.is_a?(Integer) ? 0 : e }
     n
   end
 end
