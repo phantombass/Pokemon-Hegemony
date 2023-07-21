@@ -218,10 +218,13 @@ end
 
 #Discount Status Moves if Taunted
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
-  next if user.effects[PBEffects::Taunt] == 0
-  if move.statusMove?
+  if move.statusMove? && user.effects[PBEffects::Taunt] > 0
       score -= 1000
       PBAI.log("- 1000 to prevent failing")
+  end
+  if $spam_block_triggered && move.statusMove? && target.faster_than?(user) && $spam_block_flags[:choice].is_a?(PokeBattle_Move) && $spam_block_flags[:choice].function == "0BA"
+    score -= 1000
+    PBAI.log("- 1000 because target is going for Taunt")
   end
   next score
 end
@@ -331,7 +334,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
     PBAI.log("+ #{accIncr} for target accuracy debuff")
   end
   # All remaining stat decrases are multiplied by 10 and added to the score.
-  if debuffs > 0
+  if debuffs > 0 && !target.hasActiveAbility?([:CLEARBODY,:WHITESMOKE,:FULLMETALBODY,:CONTRARY])
     total = 6 * stats.size
     eff = total
     target.stages.each_with_index do |value, stage|
@@ -354,7 +357,8 @@ end
 # or make a rough estimate.
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
   # Apply this logic only for priority moves
-  next if move.priority <= 0 || move.function == "0D4" || move.statusMove? || target.hasActiveAbility?([:ARMORTAIL,:QUEENLYMAJESTY,:DAZZLING])
+  next if move.priority <= 0 || move.function == "0D4" || move.statusMove? || target.hasActiveAbility?([:ARMORTAIL,:QUEENLYMAJESTY,:DAZZLING]) || (ai.battle.field.terrain == :Psychic && target.affectedByTerrain?)
+  next if move.statusMove? && user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)
   # Calculate the damage this priority move will do.
   # The AI kind of cheats here, because this takes all items, berries, abilities, etc. into account.
   # It is worth for the effect though; the AI using a priority move to prevent
@@ -588,11 +592,11 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{chance} for being able to burn the target")
       end
     end
-    if move.statusMove? && (user.pbHasMove?(:HEX) || user.pbHasMove?(:BITTERMALICE)||user.pbHasMove?(:BARBBARRAGE)||user.pbHasMove?(:INFERNALPARADE)) && target.can_burn?(user,move)
+    if move.statusMove? && (user.pbHasMove?(:HEX) || user.pbHasMove?(:BITTERMALICE)|| user.pbHasMove?(:BARBBARRAGE)|| user.pbHasMove?(:INFERNALPARADE)) && target.can_burn?(user,move)
       score += 200
       PBAI.log("+ 200 to set up for Hex-style spam")
     end
-    if move.statusMove? && (target.hasActiveAbility?(:MAGICBOUNCE) || !target.can_burn?(user, move))
+    if move.statusMove? && (target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD]) || !target.can_burn?(user, move))
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -639,7 +643,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{chance} for being able to frostbite the target")
       end
     end
-    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_freeze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK))
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_freeze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) && !target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD])
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -650,6 +654,7 @@ end
 
 # Encourage using moves that can cause paralysis.
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  next if target.hasActiveAbility?([:LIMBER,:PURIFYINGSALT,:GOODASGOLD,:FAIRYBUBBLE]) && move.statusMove?
   if move.is_a?(PokeBattle_ParalysisMove) && !target.paralyzed? && target.can_paralyze?(user, move)
     chance = move.pbAdditionalEffectChance(user, target)
     chance = 100 if chance == 0
@@ -657,7 +662,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to paralyze the target")
     end
-    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_paralyze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK))
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_paralyze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) && !target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD])
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -679,7 +684,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to put the target to sleep")
     end
-    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK))
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) && !target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD])
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -698,7 +703,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         add = chance * 1.4 * move.pbNumHits(user, [target])
         score += add
         PBAI.log("+ #{add} for being able to badly poison the target")
-        if move.statusMove? && ((target.pbHasType?(:POISON) || target.pbHasType?(:STEEL) && !user.hasActiveAbility?([:NITRIC,:CORROSION])) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE,:MAGICBOUNCE]) || target.status != :NONE || ai.battle.field.terrain == :Misty)
+        if move.statusMove? && ((target.pbHasType?(:POISON) || target.pbHasType?(:STEEL) && !user.hasActiveAbility?([:NITRIC,:CORROSION])) || target.hasActiveAbility?([:POISONHEAL,:IMMUNITY,:TOXICBOOST,:GUTS,:MARVELSCALE,:MAGICBOUNCE]) || target.status != :NONE || ai.battle.field.terrain == :Misty) 
           score -= 1000
           PBAI.log("- 1000 because the target cannot be poisoned")
         else
@@ -713,7 +718,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{add} for being able to poison the target")
       end
     end
-    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK))
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) && !target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD])
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -1977,6 +1982,11 @@ PBAI::ScoreHandler.add("0BA") do |score, ai, user, target, move|
     if $learned_flags[:should_taunt].include?(target) || $spam_block_flags[:no_attacking_flag] == target
       score += 150
       PBAI.log("+ 150 for stallbreaking")
+    end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(PokeBattle_Move) && ["035","02A","032","10D","02B","02C","14E","032","024","026","518"].include?($spam_block_flags[:choice].function)
+      buff = user.faster_than?(target) ? 300 : 150
+      score += buff
+      PBAI.log("+ #{buff} to prevent setup")
     end
   end
   if target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD])
