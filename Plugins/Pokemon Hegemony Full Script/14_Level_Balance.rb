@@ -17,6 +17,7 @@ module LvlCap
   Boss = 908                  #Switch for Ace Trainer Battles
   Hard = 900
   Expert = 903
+  Insane = 902
   Ironmon = 905
   Kaizo = 906
   Randomizer = 907
@@ -72,7 +73,8 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
         level = levelcap
       end
       if $game_switches[Settings::DISABLE_EVS] && $game_switches[LvlCap::Hard]
-        level -= 2
+        minus = $game_switches[LvlCap::Expert] ? 1 : 2
+        level -= minus
       end
       party[i].level = level
       #now we evolve the pokémon, if applicable

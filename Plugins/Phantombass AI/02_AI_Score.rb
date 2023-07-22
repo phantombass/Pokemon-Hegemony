@@ -643,7 +643,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{chance} for being able to frostbite the target")
       end
     end
-    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_freeze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) && !target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD])
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_freeze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) || target.hasActiveAbility?([:MAGMAARMOR,:COMATOSE,:PURIFYINGSALT,:GOODASGOLD])
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -654,7 +654,7 @@ end
 
 # Encourage using moves that can cause paralysis.
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
-  next if target.hasActiveAbility?([:LIMBER,:PURIFYINGSALT,:GOODASGOLD,:FAIRYBUBBLE]) && move.statusMove?
+  next if target.hasActiveAbility?([:LIMBER,:COMATOSE,:PURIFYINGSALT,:GOODASGOLD,:FAIRYBUBBLE]) && move.statusMove?
   if move.is_a?(PokeBattle_ParalysisMove) && !target.paralyzed? && target.can_paralyze?(user, move)
     chance = move.pbAdditionalEffectChance(user, target)
     chance = 100 if chance == 0
@@ -662,7 +662,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to paralyze the target")
     end
-    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_paralyze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) && !target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD])
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_paralyze?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) || target.hasActiveAbility?([:LIMBER,:COMATOSE,:PURIFYINGSALT,:FAIRYBUBBLE,:GOODASGOLD])
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -684,7 +684,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += chance
       PBAI.log("+ #{chance} for being able to put the target to sleep")
     end
-    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) && !target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD])
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) || target.hasActiveAbility?([:COMATOSE,:INSOMNIA,:VITALSPIRIT,:CACOPHONY,:PURIFYINGSALT,:GOODASGOLD])
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -718,7 +718,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
         PBAI.log("+ #{add} for being able to poison the target")
       end
     end
-    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_sleep?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) && !target.hasActiveAbility?([:WATERVEIL,:COMATOSE,:WATERBUBBLE,:FAIRYBUBBLE,:WELLBAKEDBODY,:STEAMENGINE,:FLASHFIRE,:PURIFYINGSALT,:GOODASGOLD])
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) || !target.can_poison?(user, move) || user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK)) || target.hasActiveAbility?([:IMMUNITY,:TOXICBOOST,:COMATOSE,:PURIFYINGSALT,:GOODASGOLD])
       score -= 1000
       PBAI.log("- 1000 for not being able to status")
     end
@@ -743,7 +743,7 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
       score += add
       PBAI.log("+ #{add} for being able to confuse the target")
     end
-    if move.statusMove? && target.hasActiveAbility?([:GOODASGOLD,:OWNTEMPO])
+    if move.statusMove? && (target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD,:OWNTEMPO]) || target.confused?)
       score -= 1000
       PBAI.log("- 1000 because it can't confuse")
     end
@@ -2108,6 +2108,10 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
+      if t_count > 0 && !user.can_switch?
+        score -= 1000
+        PBAI.log("- 1000 because setup is pointless.")
+      end
     end
     if $spam_block_flags[:haze_flag].include?(target)
       score = 0
@@ -2159,6 +2163,10 @@ PBAI::ScoreHandler.add("02E","01C") do |score, ai, user, target, move|
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be 2HKO'd by an attack")
+      end
+      if t_count > 0 && !user.can_switch?
+        score -= 1000
+        PBAI.log("- 1000 because setup is pointless.")
       end
     end
   end
@@ -2232,6 +2240,10 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
         score -= 500
         PBAI.log("- 500 since the target can now be killed and cannot kill back")
       end
+      if t_count > 0 && !user.can_switch?
+        score -= 1000
+        PBAI.log("- 1000 because setup is pointless.")
+      end
     end
     if $spam_block_flags[:haze_flag].include?(target)
       score = 0
@@ -2286,6 +2298,10 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
       end
+      if t_count > 0 && !user.can_switch?
+        score -= 1000
+        PBAI.log("- 1000 because setup is pointless.")
+      end
     end
     if $spam_block_flags[:haze_flag].include?(target)
       score = 0
@@ -2337,6 +2353,10 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
       elsif count > 0
         score -= 100
         PBAI.log("- 100 since the target can now be killed by an attack")
+      end
+      if t_count > 0 && !user.can_switch?
+        score -= 1000
+        PBAI.log("- 1000 because setup is pointless.")
       end
     end
   end
@@ -2408,6 +2428,10 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
       elsif count > 0 && t_count == 0
         score -= 500
         PBAI.log("- 500 since the target can now be killed and cannot kill back")
+      end
+      if t_count > 0 && !user.can_switch?
+        score -= 1000
+        PBAI.log("- 1000 because setup is pointless.")
       end
     end
   end

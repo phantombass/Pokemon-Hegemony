@@ -841,7 +841,7 @@
 1002,ICESPINNER,Ice Spinner,525,80,ICE,Physical,100,20,0,NearOther,0,abef,"The user covers its feet in thin ice and twirls around, slamming into the target. This move's spinning motion also destroys the terrain."
 1003,SALTCURE,Salt Cure,526,40,ROCK,Special,100,15,0,NearOther,0,bef,"The user salt cures the target, inflicting damage every turn. Steel and Water types are more strongly affected by this move."
 1004,BITTERBLADE,Bitter Blade,0DD,90,FIRE,Physical,100,10,0,NearOther,0,abefq,"The user focuses its bitter feelings toward the world of the living into a slashing attack. The user's HP is restored by up to half the damage taken by the target."
-1005,ARMORCANNON,Armor Cannon,03C,120,COSMIC,Physical,100,10,0,NearOther,0,bef,"The user shoots its own armor out as blazing projectiles. This also lowers the user's Defense and Sp. Def stats."
+1005,ARMORCANNON,Armor Cannon,03C,120,FIRE,Physical,100,10,0,NearOther,0,bef,"The user shoots its own armor out as blazing projectiles. This also lowers the user's Defense and Sp. Def stats."
 1006,AXEKICK,Axe Kick,527,130,FIGHTING,Physical,90,10,0,NearOther,0,abef,"The user attacks by kicking up into the air and slamming its heel down upon the target. This may also confuse the target. If it misses, the user takes damage instead."
 1007,AQUACUTTER,Aqua Cutter,000,70,WATER,Physical,100,15,0,NearOther,0,abefhq,"The user expels pressurized water to cut at the target like a blade. This move has a heightened chance of landing a critical hit."
 1008,JETPUNCH,Jet Punch,000,60,WATER,Physical,100,15,0,NearOther,1,abefj,"The user summons a torrent around its fist and punches at blinding speed. This move always goes first."

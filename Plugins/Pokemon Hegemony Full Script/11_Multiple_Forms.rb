@@ -247,7 +247,7 @@ end
 
 def wartime_regigigas_open?
   regi = 0
-  regis = [:WREGIROCK,:WREGICE,:WREGISTEEL,:WREGIELEKI,:WREGIDRAGO]
+  regis = [:REGIROCK2,:REGICE2,:REGISTEEL2,:REGIELEKI2,:REGIDRAGO2]
   $Trainer.party.each {|pkmn|
     regi += 1 if regis.include?(pkmn.species)
   }
@@ -283,5 +283,5 @@ Events.onMapUpdate+=proc {|sender,e|
   $game_switches[LvlCap::Switch] = true if $game_switches[LvlCap::Kaizo] == false && $game_switches[71] == true
   $game_switches[LvlCap::Rival] = false if $game_map.map_id != 251
   $game_switches[LvlCap::Gym] = false if $game_map.map_id != 251
-  $game_variables[105] = 100 if $game_switches[903] == true
+  $game_variables[105] = 100 if ($game_switches[903] == true || $game_switches[902] == true)
 }
