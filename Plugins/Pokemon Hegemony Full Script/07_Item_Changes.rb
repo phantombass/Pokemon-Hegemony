@@ -97,6 +97,7 @@ def give_ability_orb
       :LIGHTNINGRODORB,
       :MEDUSOIDORB
     ]
+  item_list = [:INTIMIDATEORB,:FLASHFIREORB,:LEVITATEORB,:ILLUMINATEORB,:FILTERORB,:WATERABSORBORB] if Restrictions.active?
   gift = rand(item_list.length)
   orb = item_list[gift]
   pbReceiveItem(orb,1)
