@@ -596,14 +596,6 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	next score
 end
 
-#Battler Yawned
-PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
-	if battler.effects[PBEffects::Yawn] == 1
-		switch = true
-	end
-	next switch
-end
-
 #Health Related
 PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	if battler.hp <= battler.totalhp/4
@@ -811,6 +803,14 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 		end
 	end
   next score
+end
+
+#Battler Yawned
+PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
+	if battler.effects[PBEffects::Yawn] == 1
+		switch = true
+	end
+	next switch
 end
 
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|

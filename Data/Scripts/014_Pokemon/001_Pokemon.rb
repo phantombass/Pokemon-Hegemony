@@ -755,6 +755,7 @@ class Pokemon
   # @return [Boolean] whether the Pokémon is compatible with the given move
   def compatible_with_move?(move_id)
     move_data = GameData::Move.try_get(move_id)
+    return false if Restrictions::BANNED_MOVES.include?(move_data.id) && Restrictions.active?
     return move_data && species_data.tutor_moves.include?(move_data.id)
   end
 

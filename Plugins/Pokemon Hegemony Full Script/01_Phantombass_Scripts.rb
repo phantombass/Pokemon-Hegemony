@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.7.7"
+  GAME_VERSION = "4.7.8"
   DISABLE_EVS = 917
 end
 
@@ -26,7 +26,6 @@ def reset_custom_variables
   $appliance = nil
   $currentDexSearch = nil
   $repel_toggle = false
-  $boss_mon = false
   $mega_flag = 0
 end
 class Game_System
@@ -63,7 +62,7 @@ module Game
   def self.level_cap_update
     $game_system.level_cap += 1
     $game_system.level_cap = LEVEL_CAP.size-1 if $game_system.level_cap >= LEVEL_CAP.size
-    $game_variables[106] = LEVEL_CAP[$game_system.level_cap]
+    $game_variables[106] = $game_switches[LvlCap::Insane] ? INSANE_LEVEL_CAP[$game_system.level_cap] : LEVEL_CAP[$game_system.level_cap]
   end
   def self.start_new
     pbMessage(_INTL("Welcome to Pokémon Hegemony, a complete, non-profit fan game made by Phantombass."))
@@ -293,7 +292,6 @@ class PokeBattle_Battle
     if $game_switches[902] || $game_switches[903]
       self.rules["batonpassclause"] = true
     end
-    $boss_mon = false
   end
   def pbCanSwitch?(idxBattler,idxParty=-1,partyScene=nil)
     # Check whether party Pokémon can switch in
@@ -1096,7 +1094,11 @@ class PokeBattle_Battle
     isPartic    = defeatedBattler.participants.include?(idxParty)
     hasExpShare = expShare.include?(idxParty)
     level = defeatedBattler.level
-    level_cap = $game_switches[Settings::LEVEL_CAP_SWITCH] ? LEVEL_CAP[$game_system.level_cap] : Settings::MAXIMUM_LEVEL
+    if $game_switches[LvlCap::Insane]
+      level_cap = $game_switches[Settings::LEVEL_CAP_SWITCH] ? INSANE_LEVEL_CAP[$game_system.level_cap] : Settings::MAXIMUM_LEVEL
+    else
+      level_cap = $game_switches[Settings::LEVEL_CAP_SWITCH] ? LEVEL_CAP[$game_system.level_cap] : Settings::MAXIMUM_LEVEL
+    end
     if $game_switches[Settings::LEVEL_CAP_SWITCH]
       level_cap_gap = growth_rate.exp_values[level_cap] - pkmn.exp
     end

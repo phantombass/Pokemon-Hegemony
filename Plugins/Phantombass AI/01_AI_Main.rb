@@ -38,6 +38,7 @@ class PBAI
       :move => nil
     }
     $spam_block_triggered = false
+    $test_trigger = false
   end
 
   def self.battler_to_proj_index(battlerIndex)
@@ -1264,6 +1265,7 @@ class PBAI
       end
       idx = -2
       #target = self.opposing_side.party.find {|mon| mon && mon.pokemon == target_choice} if $spam_block_triggered
+      $test_trigger = true
       if move.statusMove?
         # Start status moves off with a score of 30.
         # Since this makes status moves unlikely to be chosen when the other moves
@@ -1286,6 +1288,7 @@ class PBAI
       end
       # Trigger move-specific score modifier code
       score = PBAI::ScoreHandler.trigger_move(move, score, @ai, self, target)
+      $test_trigger = false
       # Prefer a different move if this move would also hit the user's ally and it is super effective against the ally
       # The target is not an ally to begin with (to exclude Heal Pulse and any other good ally-targeting moves)
       if target.side != @side
