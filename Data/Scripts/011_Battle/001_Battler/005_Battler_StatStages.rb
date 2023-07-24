@@ -9,7 +9,7 @@ class PokeBattle_Battler
   def pbCanRaiseStatStage?(stat,user=nil,move=nil,showFailMsg=false,ignoreContrary=false)
     return false if fainted?
     # Contrary
-    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
+    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !affectedByMoldBreaker?
       return pbCanLowerStatStage?(stat,user,move,showFailMsg,true)
     end
     # Check the stat stage
@@ -31,7 +31,7 @@ class PokeBattle_Battler
   end
 
   def pbRaiseStatStageBasic(stat,increment,ignoreContrary=false)
-    if !@battle.moldBreaker
+    if !affectedByMoldBreaker?
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
         return pbLowerStatStageBasic(stat,increment,true)
@@ -52,7 +52,7 @@ class PokeBattle_Battler
 
   def pbRaiseStatStage(stat,increment,user,showAnim=true,ignoreContrary=false)
     # Contrary
-    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
+    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !affectedByMoldBreaker?
       return pbLowerStatStage(stat,increment,user,showAnim,true)
     end
     # Perform the stat stage change
@@ -79,7 +79,7 @@ class PokeBattle_Battler
 
   def pbRaiseStatStageByCause(stat,increment,user,cause,showAnim=true,ignoreContrary=false)
     # Contrary
-    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
+    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !affectedByMoldBreaker?
       return pbLowerStatStageByCause(stat,increment,user,cause,showAnim,true)
     end
     # Perform the stat stage change
@@ -136,7 +136,7 @@ class PokeBattle_Battler
   def pbCanLowerStatStage?(stat,user=nil,move=nil,showFailMsg=false,ignoreContrary=false)
     return false if fainted?
     # Contrary
-    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
+    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !affectedByMoldBreaker?
       return pbCanRaiseStatStage?(stat,user,move,showFailMsg,true)
     end
     if !user || user.index!=@index   # Not self-inflicted
@@ -151,11 +151,11 @@ class PokeBattle_Battler
       end
       if abilityActive?
         return false if BattleHandlers.triggerStatLossImmunityAbility(
-           self.ability,self,stat,@battle,showFailMsg) if !@battle.moldBreaker
+           self.ability,self,stat,@battle,showFailMsg) if !affectedByMoldBreaker?
         return false if BattleHandlers.triggerStatLossImmunityAbilityNonIgnorable(
            self.ability,self,stat,@battle,showFailMsg)
       end
-      if !@battle.moldBreaker
+      if !affectedByMoldBreaker?
         eachAlly do |b|
           next if !b.abilityActive?
           return false if BattleHandlers.triggerStatLossImmunityAllyAbility(
@@ -173,7 +173,7 @@ class PokeBattle_Battler
   end
 
   def pbLowerStatStageBasic(stat,increment,ignoreContrary=false)
-    if !@battle.moldBreaker
+    if !affectedByMoldBreaker?
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
         return pbRaiseStatStageBasic(stat,increment,true)
@@ -194,7 +194,7 @@ class PokeBattle_Battler
 
   def pbLowerStatStage(stat, increment, user, showAnim = true, ignoreContrary = false, ignoreMirrorArmor = false)
     # Mirror Armor
-    if !ignoreMirrorArmor && hasActiveAbility?(:MIRRORARMOR) && !@battle.moldBreaker && pbCanLowerStatStage?(stat)
+    if !ignoreMirrorArmor && hasActiveAbility?(:MIRRORARMOR) && !affectedByMoldBreaker? && pbCanLowerStatStage?(stat)
       if user && user.index!=@index && !user.hasActiveAbility?(:MIRRORARMOR) && user.pbCanLowerStatStage?(stat,nil,nil,true)
         battle.pbShowAbilitySplash(self)
         user.pbLowerStatStageByAbility(stat,increment,user,false,false)
@@ -205,7 +205,7 @@ class PokeBattle_Battler
       return false
     end
     # Contrary
-    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
+    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !affectedByMoldBreaker?
       return pbRaiseStatStage(stat,increment,user,showAnim,true)
     end
     # Perform the stat stage change
@@ -228,7 +228,7 @@ class PokeBattle_Battler
 
   def pbLowerStatStageByCause(stat, increment, user, cause, showAnim = true, ignoreContrary = false, ignoreMirrorArmor = false)
     # Mirror Armor
-    if !ignoreMirrorArmor && hasActiveAbility?(:MIRRORARMOR) && !@battle.moldBreaker && pbCanLowerStatStage?(stat)
+    if !ignoreMirrorArmor && hasActiveAbility?(:MIRRORARMOR) && !affectedByMoldBreaker? && pbCanLowerStatStage?(stat)
       if user && user.index != @index && !user.hasActiveAbility?(:MIRRORARMOR) && user.pbCanLowerStatStage?(stat,nil,nil,true)
         battle.pbShowAbilitySplash(self)
         user.pbLowerStatStageByAbility(stat,increment,user,false,false)
@@ -237,7 +237,7 @@ class PokeBattle_Battler
       return false
     end
     # Contrary
-    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
+    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !affectedByMoldBreaker?
       return pbRaiseStatStageByCause(stat,increment,user,cause,showAnim,true)
     end
     # Perform the stat stage change

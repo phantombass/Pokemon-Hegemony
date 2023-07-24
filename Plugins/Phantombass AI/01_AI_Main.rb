@@ -653,17 +653,20 @@ class PBAI
           scr += 1 if mv[1] >= 200
         end
         if scr == 0
-          scrs.sort! do |a,b|
-            ret = b[0][1] <=> a[0][1]
-            next ret if ret != 0
-            next b[0][2] <=> a[0][2]
-          end
-          if scrs[0][1] == scrs[1][1]
-            midx = rand(2)
-            scrs[midx][1] = 0
-            scores[[scrs][midx][2]] = scrs[midx]
+          if scrs.length > 1
+            scrs.sort! do |a,b|
+              ret = b[0][1] <=> a[0][1]
+              next ret if ret != 0
+              next b[0][2] <=> a[0][2]
+            end
+            if scrs[0][1] == scrs[1][1]
+              midx = rand(2)
+              scrs[midx][1] = 0
+              scores[[scrs][midx][2]] = scrs[midx]
+            end
           end
           for mov in scores
+            next if scrs.length <= 1
             next if mov[1] == 0
             next if mov == scrs[0][0]
             mov[1] = 0
@@ -1465,6 +1468,7 @@ class PBAI
           return true if target.hasActiveAbility?(:OVERCOAT)
           return true if target.hasActiveItem?(:SAFETYGOGGLES)
         end
+        return true if move.windMove? && target.hasActiveAbility?(:WINDRIDER)
         return true if move.statusMove? && target.effects[PBEffects::Substitute] > 0 &&
                        !move.ignoresSubstitute?(@battler) && @battler.index != target.index
         return true if move.statusMove? && Settings::MECHANICS_GENERATION >= 7 &&

@@ -1547,6 +1547,11 @@ module PokeBattle_BattleCommon
   end
 end
 
+#================================
+# Ability Orbs
+#================================
+
+
 BattleHandlers::ItemOnSwitchIn.add(:LEVITATEORB,
   proc { |ability, battler, battle|
     ability = battler.ability_id
@@ -1628,6 +1633,19 @@ BattleHandlers::ItemOnSwitchIn.add(:SAPSIPPERORB,
     if ability != battler.ability_id
       battle.pbShowAbilitySplash(battler,false,true)
       battle.pbDisplay(_INTL("{1}'s Sap Sipper Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:LIGHTNINGRODORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :LIGHTNINGROD
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Lightning Rod Orb lights up!",battler.name))
       battle.pbHideAbilitySplash(battler)
       battler.ability_id = ability
     end
@@ -1729,5 +1747,33 @@ BattleHandlers::ItemOnSwitchIn.add(:DIMENSIONBLOCKORB,
       battle.pbHideAbilitySplash(battler)
       battler.ability_id = ability
     end
+  }
+)
+
+# Sheath
+BattleHandlers::DamageCalcUserItem.add(:SHEATH,
+  proc { |item, user, target, move, mults, baseDmg, type|
+    next if user.hasActiveAbility?(:SHARPNESS)
+    mults[:base_damage_multiplier] *= 1.2 if move.slicingMove?
+  }
+)
+
+# Mjolnir
+BattleHandlers::DamageCalcUserItem.add(:Mjolnir,
+  proc { |item, user, target, move, mults, baseDmg, type|
+    next if user.hasActiveAbility?(:GAVELPOWER)
+    mults[:base_damage_multiplier] *= 1.2 if move.hammerMove?
+  }
+)
+
+#=======================
+# Gen 9 Items
+#=======================
+
+# Punching Glove
+BattleHandlers::DamageCalcUserItem.add(:PUNCHINGGLOVE,
+  proc { |item, user, target, move, mults, baseDmg, type|
+    next if user.hasActiveAbility?(:IRONFIST)
+    mults[:base_damage_multiplier] *= 1.1 if move.punchingMove?
   }
 )

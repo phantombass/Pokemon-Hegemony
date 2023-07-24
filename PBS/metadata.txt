@@ -1826,3 +1826,19 @@ SnapEdges = true
 # Deep Space
 ShowArea = true
 SnapEdges = true
+#-------------------------------
+[378]
+# Area Zero
+Outdoor = false
+ShowArea = true
+SnapEdges = true
+#-------------------------------
+[379]
+# Liberty Garden
+Outdoor = false
+ShowArea = true
+SnapEdges = true
+#-------------------------------
+[380]
+# Liberty Garden
+SnapEdges = true

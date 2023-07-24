@@ -999,3 +999,14 @@
 980,TM138,TM138,TM138s,4,10000,"The user utilizes the power of the terrain to attack.",3,0,0,TERRAINPULSE
 981,TM139,TM139,TM139s,4,10000,"The target is hit twice in a row.",3,0,0,DUALWINGBEAT
 982,TM140,TM140,TM140s,4,10000,"A consecutive three-kick attack that becomes more powerful with each successful hit.",3,0,0,TRIPLEAXEL
+#---------------------------------------------
+# Gen 9 Items
+#---------------------------------------------
+983,ABILITYSHIELD,Ability Shield,Ability Shields,1,20000,"This shield protects the holder from having its Ability changed by others.",0,0,0,
+984,CLEARAMULET,Clear Amulet,Clear Amulets,1,30000,"It protects the holder from having its stats lowered.",0,0,0,
+985,MIRRORHERB,Mirror Herb,Mirror Herbs,1,30000,"This herb will allow the holder to mirror an opponent's stat increases once.",0,0,0,
+986,PUNCHINGGLOVE,Punching Glove,Punching Gloves,1,15000,"It boosts the holder's punching moves and prevents direct contact.",0,0,0,
+987,COVERTCLOAK,Covert Cloak,Covert Cloaks,1,20000,"It conceals the holder, protecting it from move's additional effects.",0,0,0,
+988,LOADEDDICE,Loaded Dice,Loaded Dices,1,20000,"It ensures the holder's multistrike moves hit more times.",0,0,0,
+989,SHEATH,Sheath,Sheaths,1,20000,"Boost the power of slicing moves.",0,0,0,
+990,MJOLNIR,Mjolnir,Mjolnirs,1,20000,"Boosts the power of hammer moves.",0,0,0,

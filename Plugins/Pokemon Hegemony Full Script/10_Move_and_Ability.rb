@@ -27,6 +27,24 @@ module BattleHandlers
     OnTerrainChangeAbility.trigger(ability, battler, battle)
   end
 end
+
+# Mirror Herb
+BattleHandlers::CertainStatGainItem.add(:MIRRORHERB,
+  proc { |item, battler, stat, user, increment, battle, forced|
+    next false if !battler.opposes?(user)
+    next false if battler.statStageAtMax?(stat)
+    increment.times.each do
+      battler.stages[stat] += 1 if !battler.statStageAtMax?(stat)
+    end
+    itemName = GameData::Item.get(item).name
+    PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
+    battle.pbCommonAnimation("UseItem", battler)# if !forced
+    battle.pbCommonAnimation("StatUp", battler)
+    battle.pbDisplay(_INTL("{1} copied {2}'s stat changes using its {3}!", battler.pbThis,user.pbThis(true),itemName))
+    next true
+  }
+)
+
 #===============================================================================
 # Item Effects
 #===============================================================================
@@ -123,7 +141,11 @@ class PokeBattle_Move
   def pbBeamMove?;            return beamMove?; end
   def pbSoundMove?;           return soundMove?; end
   def pbHammerMove?;           return hammerMove?; end
-
+  def headMove?
+    head = [:HEADSMASH,:HEADBUTT,:CROWNRUSH,:SKULLBLITZ,
+      :SKULLBASH,:HEADCHARGE,:IRONHEAD,:HEADLONGRUSH]
+    return @id.include?(head)
+  end
   def pbNumHits(user,targets)
     if user.hasActiveAbility?(:PARENTALBOND) && pbDamagingMove? &&
        !chargingTurnMove? && targets.length==1
@@ -301,7 +323,7 @@ class PokeBattle_Move
       BattleHandlers.triggerAccuracyCalcUserAllyAbility(b.ability,
          modifiers,user,target,self,@calcType)
     end
-    if target.abilityActive? && !@battle.moldBreaker
+    if target.abilityActive? && !affectedByMoldBreaker?
       BattleHandlers.triggerAccuracyCalcTargetAbility(target.ability,
          modifiers,user,target,self,@calcType)
     end
@@ -351,7 +373,7 @@ class PokeBattle_Move
     if c>=0 && user.abilityActive?
       c = BattleHandlers.triggerCriticalCalcUserAbility(user.ability,user,target,c)
     end
-    if c>=0 && target.abilityActive? && !@battle.moldBreaker
+    if c>=0 && target.abilityActive? && !affectedByMoldBreaker?
       c = BattleHandlers.triggerCriticalCalcTargetAbility(target.ability,user,target,c)
     end
     # Item effects that alter critical hit rate
@@ -416,7 +438,7 @@ class PokeBattle_Move
       BattleHandlers.triggerDamageCalcUserAbility(user.ability,
          user,target,self,multipliers,baseDmg,type)
     end
-    if !@battle.moldBreaker
+    if !affectedByMoldBreaker?
       # NOTE: It's odd that the user's Mold Breaker prevents its partner's
       #       beneficial abilities (i.e. Flower Gift boosting Atk), but that's
       #       how it works.
@@ -427,7 +449,7 @@ class PokeBattle_Move
       end
       if target.abilityActive?
         BattleHandlers.triggerDamageCalcTargetAbility(target.ability,
-           user,target,self,multipliers,baseDmg,type) if !@battle.moldBreaker
+           user,target,self,multipliers,baseDmg,type) if !affectedByMoldBreaker?
         BattleHandlers.triggerDamageCalcTargetAbilityNonIgnorable(target.ability,
            user,target,self,multipliers,baseDmg,type)
       end
@@ -692,7 +714,7 @@ class PokeBattle_Move
   # Additional effect chance
   #=============================================================================
   def pbAdditionalEffectChance(user,target,effectChance=0)
-    return 0 if target.hasActiveAbility?(:SHIELDDUST) && !@battle.moldBreaker
+    return 0 if target.hasActiveAbility?(:SHIELDDUST) && !affectedByMoldBreaker?
     ret = (effectChance>0) ? effectChance : @addlEffect
     if Settings::MECHANICS_GENERATION >= 6 || @function != "0A4"   # Secret Power
       ret *= 2 if user.hasActiveAbility?(:SERENEGRACE) ||
@@ -706,8 +728,8 @@ class PokeBattle_Move
   #       not here.
   def pbFlinchChance(user,target)
     return 0 if flinchingMove?
-    return 0 if target.hasActiveAbility?(:SHIELDDUST) && !@battle.moldBreaker
-    return 0 if target.hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
+    return 0 if target.hasActiveAbility?(:SHIELDDUST) && !affectedByMoldBreaker?
+    return 0 if target.hasActiveAbility?(:INNERFOCUS) && !affectedByMoldBreaker?
     ret = 0
     if user.hasActiveAbility?(:STENCH,true)
       ret = 10
@@ -732,6 +754,17 @@ module BattleHandlers
     return (ret!=nil) ? ret : false
   end
 end
+
+# Clear Amulet
+BattleHandlers::StatLossImmunityItem.add(:CLEARAMULET,
+  proc { |item, battler, stat, battle, showMessages|
+    if showMessages
+      itemName = GameData::Item.get(item).name
+      battle.pbDisplay(_INTL("{1}'s {2} prevents stat loss!", battler.pbThis, itemName))
+    end
+    next true
+  }
+)
 
 class PokeBattle_Move_00D < PokeBattle_FreezeMove
   def pbBaseAccuracy(user,target)
@@ -1917,7 +1950,7 @@ class PokeBattle_Battler
     return false if hasActiveAbility?(:UNSHAKEN)
     return false if hasActiveItem?(:UNSHAKENORB)
     # Contrary
-    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
+    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !affectedByMoldBreaker?
       return pbCanRaiseStatStage?(stat,user,move,showFailMsg,true)
     end
     if !user || user.index!=@index   # Not self-inflicted
@@ -1932,11 +1965,11 @@ class PokeBattle_Battler
       end
       if abilityActive?
         return false if BattleHandlers.triggerStatLossImmunityAbility(
-           self.ability,self,stat,@battle,showFailMsg) if !@battle.moldBreaker
+           self.ability,self,stat,@battle,showFailMsg) if !affectedByMoldBreaker?
         return false if BattleHandlers.triggerStatLossImmunityAbilityNonIgnorable(
            self.ability,self,stat,@battle,showFailMsg)
       end
-      if !@battle.moldBreaker
+      if !affectedByMoldBreaker?
         eachAlly do |b|
           next if !b.abilityActive?
           return false if BattleHandlers.triggerStatLossImmunityAllyAbility(
@@ -2625,7 +2658,7 @@ class PokeBattle_Battler
             magicCoater = b.index
             b.effects[PBEffects::MagicCoat] = false
             break
-          elsif b.hasActiveAbility?(:MAGICBOUNCE) && !@battle.moldBreaker &&
+          elsif b.hasActiveAbility?(:MAGICBOUNCE) && !affectedByMoldBreaker? &&
              !b.effects[PBEffects::MagicBounce]
             magicBouncer = b.index
             b.effects[PBEffects::MagicBounce] = true
@@ -2933,6 +2966,7 @@ class PokeBattle_Battler
     if !user.hasActiveAbility?(:SHEERFORCE)
       targets.each do |b|
         next if b.damageState.calcDamage == 0
+        next if b.hasActiveItem?(:COVERTCLOAK)
         chance = move.pbAdditionalEffectChance(user, b)
         next if chance <= 0
         if @battle.pbRandom(100) < chance
@@ -2972,7 +3006,7 @@ class PokeBattle_Battler
     return true
   end
   def pbFlinch(_user=nil)
-    if hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
+    if hasActiveAbility?(:INNERFOCUS) && !affectedByMoldBreaker?
       @effects[PBEffects::Flinch] = false
     else
       @effects[PBEffects::Flinch] = true
@@ -3117,7 +3151,7 @@ class PokeBattle_Battler
       end
     end
     # Uproar immunity
-    if newStatus == :SLEEP && !(hasActiveAbility?(:SOUNDPROOF) && !@battle.moldBreaker)
+    if newStatus == :SLEEP && !(hasActiveAbility?(:SOUNDPROOF) && !affectedByMoldBreaker?)
       @battle.eachBattler do |b|
         next if b.effects[PBEffects::Uproar]==0
         @battle.pbDisplay(_INTL("But the uproar kept {1} awake!",pbThis(true))) if showMessages
@@ -3157,7 +3191,7 @@ class PokeBattle_Battler
     immuneByAbility = false; immAlly = nil
     if BattleHandlers.triggerStatusImmunityAbilityNonIgnorable(self.ability,self,newStatus)
       immuneByAbility = true
-    elsif selfInflicted || !@battle.moldBreaker
+    elsif selfInflicted || !affectedByMoldBreaker?
       if abilityActive? && BattleHandlers.triggerStatusImmunityAbility(self.ability,self,newStatus)
         immuneByAbility = true
       else
@@ -3472,7 +3506,7 @@ class PokeBattle_Battler
         target.effects[PBEffects::MagicCoat] = false
         return false
       end
-      if target.hasActiveAbility?(:MAGICBOUNCE) && !@battle.moldBreaker &&
+      if target.hasActiveAbility?(:MAGICBOUNCE) && !affectedByMoldBreaker? &&
          !target.effects[PBEffects::MagicBounce]
         target.damageState.magicBounce = true
         target.effects[PBEffects::MagicBounce] = true
@@ -3497,7 +3531,7 @@ class PokeBattle_Battler
     # Airborne-based immunity to Ground moves
     if move.damagingMove? && move.calcType == :GROUND &&
        target.airborne? && !move.hitsFlyingTargets?
-      if (target.hasActiveAbility?(:LEVITATE) || target.hasActiveAbility?(:MULTITOOL) || target.hasActiveItem?(:LEVITATEORB)) && !@battle.moldBreaker
+      if (target.hasActiveAbility?(:LEVITATE) || target.hasActiveAbility?(:MULTITOOL) || target.hasActiveItem?(:LEVITATEORB)) && !affectedByMoldBreaker?
         @battle.pbShowAbilitySplash(target)
         if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
           @battle.pbDisplay(_INTL("{1} avoided the attack!",target.pbThis))
@@ -3629,7 +3663,7 @@ class PokeBattle_Battler
         return false
       end
       if Settings::MECHANICS_GENERATION >= 6
-        if target.hasActiveAbility?(:OVERCOAT) && !@battle.moldBreaker
+        if target.hasActiveAbility?(:OVERCOAT) && !affectedByMoldBreaker?
           @battle.pbShowAbilitySplash(target)
           if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
             @battle.pbDisplay(_INTL("It doesn't affect {1}...",target.pbThis(true)))
@@ -3699,7 +3733,7 @@ class PokeBattle_TargetMultiStatUpMove < PokeBattle_Move
       # NOTE: It's a bit of a faff to make sure the appropriate failure message
       #       is shown here, I know.
       canRaise = false
-      if target.hasActiveAbility?(:CONTRARY) && !@battle.moldBreaker
+      if target.hasActiveAbility?(:CONTRARY) && !affectedByMoldBreaker?
         for i in 0...@statUp.length/2
           next if target.statStageAtMin?(@statUp[i*2])
           canRaise = true
@@ -4991,7 +5025,7 @@ class PokeBattle_Move_18F < PokeBattle_Move
     return if user.fainted?
     return if target.damageState.substitute
     return if !target.item || target.unlosableItem?(target.item)
-    return if target.hasActiveAbility?(:STICKYHOLD) && !@battle.moldBreaker
+    return if target.hasActiveAbility?(:STICKYHOLD) && !affectedByMoldBreaker?
     itemName = target.itemName
     target.pbRemoveItem(false)
     @battle.pbDisplay(_INTL("{1} dropped its {2}!",target.pbThis,itemName))
@@ -6699,6 +6733,7 @@ def pbBattleTypeWeakingBerry(type,moveType,target,mults)
   return if target.battle.pbCheckOpposingAbility(:UNNERVE,@index)
   return if target.battle.pbCheckOpposingAbility(:ASONEICE,@index)
   return if target.battle.pbCheckOpposingAbility(:ASONEGHOST,@index)
+  return if target.battle.pbCheckOpposingAbility(:LIONSPRIDE,@index)
   return if Effectiveness.resistant?(target.damageState.typeMod) && moveType != :NORMAL
   mults[:final_damage_multiplier] /= target.hasActiveAbility?(:RIPEN)? 4 : 2
   target.damageState.berryWeakened = true
@@ -6875,3 +6910,66 @@ class PokeBattle_Move_173 < PokeBattle_TerrainMove
     @terrainType = :Psychic
   end
 end
+
+BattleHandlers::UserAbilityEndOfMove.add(:LIONSPRIDE,
+  proc { |ability,user,targets,move,battle|
+    next if battle.pbAllFainted?(user.idxOpposingSide)
+    numFainted = 0
+    targets.each { |b| numFainted += 1 if b.damageState.fainted }
+    next if numFainted==0 || !user.pbCanRaiseStatStage?(:SPECIAL_ATTACK,user) || user.fainted?
+    battle.pbShowAbilitySplash(user,false,true,GameData::Ability.get(:LIONSPRIDE).name)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      user.pbRaiseStatStage(:SPECIAL_ATTACK,numFainted,user)
+    else
+      user.pbRaiseStatStageByCause(:SPECIAL_ATTACK,numFainted,user,GameData::Ability.get(:LIONSPRIDE).name)
+    end
+    battle.pbHideAbilitySplash(user)
+  }
+)
+
+BattleHandlers::AbilityOnSwitchIn.copy(:ASONEGHOST,:LIONSPRIDE)
+
+BattleHandlers::DamageCalcUserAbility.add(:VOCALFRY,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    if move.soundMove? && move.damagingMove?
+      move.category = 0
+      mults[:base_damage_multiplier] = (mults[:base_damage_multiplier]*1.2).round
+    end
+  }
+)
+
+BattleHandlers::TrappingTargetAbility.add(:DEATHGRIP,
+  proc { |ability,switcher,bearer,battle|
+    next true if !switcher.hasActiveAbility?(:DEATHGRIP)
+  }
+)
+
+BattleHandlers::DamageCalcUserAllyAbility.add(:UNKNOWNPOWER,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    mults[:final_damage_multiplier] *= 1.3
+  }
+)
+
+BattleHandlers::DamageCalcUserAbility.add(:UNKNOWNPOWER,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    mults[:final_damage_multiplier] *= 1.3
+  }
+)
+
+BattleHandlers::DamageCalcTargetAbility.add(:UNKNOWNPOWER,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    mults[:defense_multiplier] *= 1.5
+  }
+)
+
+BattleHandlers::SpeedCalcAbility.add(:MEADOWRUSH,
+  proc { |ability,battler,mult|
+    next mult*2 if battler.battle.field.terrain == :Grassy
+  }
+)
+
+BattleHandlers::DamageCalcUserAbility.add(:ROCKHEAD,
+  proc { |ability,user,target,move,mults,baseDmg,type|
+    mults[:base_damage_multiplier] = (mults[:base_damage_multiplier]*1.2).round if move.headMove?
+  }
+)
