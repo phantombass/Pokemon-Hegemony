@@ -436,7 +436,7 @@ class PokemonPauseMenu
             pbMessage(_INTL("<c2=7FE00000>Leave the route and return to search again!</c2>"))
             pbShowMenu
           else
-            pbSave
+            Game.save
             @scene = NewDexNav.new
           end
           return

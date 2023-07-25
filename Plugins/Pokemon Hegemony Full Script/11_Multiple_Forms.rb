@@ -272,6 +272,17 @@ def enamorus?
   return genie == 3
 end
 
+def area_zero_cave?
+  paradox = [:IRONTHORNS,:IRONTREADS,:IRONBUNDLE,:IRONJUGULIS,:IRONMOTH,:IRONLEAVES,:IRONHANDS,:IRONVALIANT,
+    :FLUTTERMANE,:BRUTEBONNET,:GREATTUSK,:SANDYSHOCKS,:SLITHERWING,:WALKINGWAKE,:SCREAMTAIL,:ROARINGMOON]
+  dox = 0
+  pbEachPokemon { |poke,_box|
+    mon = poke.species
+    dox += 1 if paradox.include?(mon)
+  }
+  return dox == 16
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   $game_switches[218] = true
   $game_switches[284] = true if wartime_regigigas_open?

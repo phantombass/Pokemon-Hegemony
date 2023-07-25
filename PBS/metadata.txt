@@ -1842,3 +1842,7 @@ SnapEdges = true
 [380]
 # Liberty Garden
 SnapEdges = true
+#-------------------------------
+[381]
+# Area Zero
+SnapEdges = true

@@ -366,6 +366,7 @@ class PokeBattle_Move
   # Returns whether the move will be a critical hit.
   def pbIsCritical?(user,target)
     return false if target.pbOwnSide.effects[PBEffects::LuckyChant]>0
+    return false if target.hasActiveItem?(:MITHRILSHIELD)
     # Set up the critical hit ratios
     ratios = (Settings::NEW_CRITICAL_HIT_RATE_MECHANICS) ? [24,8,2,1] : [16,8,4,3,2]
     c = 0
@@ -433,6 +434,11 @@ class PokeBattle_Move
         multipliers[:base_damage_multiplier] *= 4 / 3.0
       end
     end
+    # Of Ruin Abilities
+    multipliers[:defense_multiplier] *= 0.75 if @battle.pbCheckGlobalAbility(:BEADSOFRUIN) && !user.hasActiveAbility?(:BEADSOFRUIN) && specialMove?
+    multipliers[:defense_multiplier] *= 0.75 if @battle.pbCheckGlobalAbility(:SWORDOFRUIN) && !user.hasActiveAbility?(:SWORDOFRUIN) && physicalMove?
+    multipliers[:attack_multiplier] *= 0.75 if @battle.pbCheckGlobalAbility(:TABLETSOFRUIN) && !user.hasActiveAbility?(:TABLETSOFRUIN) && physicalMove?
+    multipliers[:attack_multiplier] *= 0.75 if @battle.pbCheckGlobalAbility(:VESSELOFRUIN) && !user.hasActiveAbility?(:VESSELOFRUIN) && specialMove?
     # Ability effects that alter damage
     if user.abilityActive?
       BattleHandlers.triggerDamageCalcUserAbility(user.ability,
@@ -745,12 +751,17 @@ end
 module BattleHandlers
   StatLossImmunityAbilityNonIgnorableSandy = AbilityHandlerHash.new   # Unshaken
   StatLossImmunityItem               = ItemHandlerHash.new #Unshaken Orb
+  ItemOnFlinch                       = ItemHandlerHash.new
   def self.triggerStatLossImmunityAbilityNonIgnorableSandy(ability,battler,stat,battle,showMessages)
     ret = StatLossImmunityAbilityNonIgnorableSandy.trigger(ability,battler,stat,battle,showMessages)
     return (ret!=nil) ? ret : false
   end
   def self.triggerStatLossImmunityItem(ability,battler,stat,battle,showMessages)
     ret = StatLossImmunityItem.trigger(ability,battler,stat,battle,showMessages)
+    return (ret!=nil) ? ret : false
+  end
+  def self.triggerItemOnFlinch(item,battler,battle)
+    ret = ItemOnFlinch.trigger(item,battler,battle)
     return (ret!=nil) ? ret : false
   end
 end
@@ -763,6 +774,13 @@ BattleHandlers::StatLossImmunityItem.add(:CLEARAMULET,
       battle.pbDisplay(_INTL("{1}'s {2} prevents stat loss!", battler.pbThis, itemName))
     end
     next true
+  }
+)
+
+# Focus Policy
+BattleHandlers::ItemOnFlinch.add(:FOCUSPOLICY,
+  proc { |item,battler,battle|
+    battler.pbRaiseStatStageByAbility(:SPEED,2,battler)
   }
 )
 

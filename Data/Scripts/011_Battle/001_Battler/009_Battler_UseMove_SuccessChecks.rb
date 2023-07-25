@@ -244,6 +244,9 @@ class PokeBattle_Battler
       if abilityActive?
         BattleHandlers.triggerAbilityOnFlinch(self.ability,self,@battle)
       end
+      if hasActiveItem?(:FOCUSPOLICY)
+        BattleHandlers.triggerItemOnFlinch(self.item,self,@battle)
+      end
       @lastMoveFailed = true
       return false
     end

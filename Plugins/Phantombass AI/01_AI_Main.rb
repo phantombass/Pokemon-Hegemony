@@ -1074,10 +1074,12 @@ class PBAI
             prio += 1
           end
         end
+        $spam_block_flags[:haze_flag].push(target) if target.hasActiveAbility?(:UNAWARE)
+        PBAI.log("#{target.name} has been assigned Haze flag")
         PBAI.log("Offensive Move Count: #{off_move}")
         PBAI.log("Priority Move Count: #{prio}")
         if off_move == 0
-          $spam_block_flags[:no_attacking_flag].push(target)
+          $spam_block_flags[:no_attacking].push(target)
           PBAI.log("#{target.name} has been assigned No Attacking Flag")
         end
         if off_move < 2

@@ -35,6 +35,7 @@ class PokeBattle_Move
 
   def pbContactMove?(user)
     return false if user.hasActiveAbility?(:LONGREACH)
+    return false if user.hasActiveItem?(:PUNCHINGGLOVE) && punchingMove?
     return contactMove?
   end
 

@@ -1010,3 +1010,5 @@
 988,LOADEDDICE,Loaded Dice,Loaded Dices,1,20000,"It ensures the holder's multistrike moves hit more times.",0,0,0,
 989,SHEATH,Sheath,Sheaths,1,20000,"Boost the power of slicing moves.",0,0,0,
 990,MJOLNIR,Mjolnir,Mjolnirs,1,20000,"Boosts the power of hammer moves.",0,0,0,
+991,FOCUSPOLICY,Focus Policy,Focus Policies,1,20000,"Boosts Speed if the holder flinches.",0,0,0,
+992,MITHRILSHIELD,Mithril Shield,Mithril Shields,1,20000,"The holder is protected from critical hits.",0,0,0,

@@ -1759,7 +1759,7 @@ BattleHandlers::DamageCalcUserItem.add(:SHEATH,
 )
 
 # Mjolnir
-BattleHandlers::DamageCalcUserItem.add(:Mjolnir,
+BattleHandlers::DamageCalcUserItem.add(:MJOLNIR,
   proc { |item, user, target, move, mults, baseDmg, type|
     next if user.hasActiveAbility?(:GAVELPOWER)
     mults[:base_damage_multiplier] *= 1.2 if move.hammerMove?

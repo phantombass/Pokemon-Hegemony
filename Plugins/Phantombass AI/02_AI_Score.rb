@@ -953,6 +953,16 @@ PBAI::ScoreHandler.add_damaging do |score, ai, user, target, move|
   if ai.battle.doublebattle && [:AllNearFoes].include?(target_type)
     score += 100
     PBAI.log("+ 100 for being able to hit both targets")
+    for targ in user.opposing_side.battlers
+      targ_moves = $game_switches[LvlCap::Expert] ? targ.moves : targ.used_moves
+      if !targ_moves.nil?
+        spread = targ_moves.find {|mov| mov.function == "0AC"}
+      end
+      if spread
+        score -= 1000
+        PBAI.log("- 1000 to predict Wide Guard")
+      end
+    end
   elsif ai.battle.doublebattle && [:AllNearOthers,:AllBattlers,:BothSides].include?(target_type)
     if target_is_immune?(move,ally)
       score += 100
@@ -972,6 +982,16 @@ PBAI::ScoreHandler.add_damaging do |score, ai, user, target, move|
         change = diff == 0 ? -50 : diff
         score += change
         change > 0 ? PBAI.log("+ #{change}") : PBAI.log("#{change}")
+      end
+    end
+    for targ in user.opposing_side.battlers
+      targ_moves = $game_switches[LvlCap::Expert] ? targ.moves : targ.used_moves
+      if !targ_moves.nil?
+        spread = targ_moves.find {|mov| mov.function == "0AC"}
+      end
+      if spread
+        score -= 1000
+        PBAI.log("- 1000 to predict Wide Guard")
       end
     end
   end
@@ -1217,7 +1237,7 @@ PBAI::ScoreHandler.add("0AC") do |score, ai, user, target, move|
     target_moves = $game_switches[LvlCap::Expert] ? target.moves : target.used_moves
     if target_moves != nil
       for i in target_moves
-        wide += 40 if i.target == :AllNearFoes
+        wide += 40 if [:AllNearFoes,:AllNearOthers,:AllBattlers,:BothSides].include?(i.pbTarget(user))
       end
     end
     score += wide
@@ -1406,6 +1426,10 @@ PBAI::ScoreHandler.add("103", "104", "105", "153", "500") do |score, ai, user, t
         score -= 1000
         PBAI.log("- 1000 to counter setup leads vs hazard leads")
       end
+    end
+    if !target.can_switch? || !user.can_switch?
+      score -= 1000
+      PBAI.log("- 1000 hazards are useless, best to attack")
     end
   end
   next score
@@ -2120,8 +2144,8 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
   next score
 end
 
-# Swords Dance
-PBAI::ScoreHandler.add("02E","01C") do |score, ai, user, target, move|
+# Swords Dance, Power-up Punch, Static Surge
+PBAI::ScoreHandler.add("02E","01C","511") do |score, ai, user, target, move|
   count = 0
   if user.setup?
     if user.statStageAtMax?(:ATTACK)
@@ -2173,6 +2197,10 @@ PBAI::ScoreHandler.add("02E","01C") do |score, ai, user, target, move|
   if $spam_block_flags[:haze_flag].include?(target)
     score = 0
     PBAI.log("* 0 because target has Haze")
+  end
+  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+    score += 1000
+    PBAI.log("+ 1000 to set up on the switch")
   end
   next score
 end
@@ -2249,6 +2277,10 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
       score = 0
       PBAI.log("* 0 because target has Haze")
     end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+      score += 1000
+      PBAI.log("+ 1000 to set up on the switch")
+    end
   next score
 end
 
@@ -2307,6 +2339,10 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
       score = 0
       PBAI.log("* 0 because target has Haze")
     end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+      score += 1000
+      PBAI.log("+ 1000 to set up on the switch")
+    end
   next score
 end
 
@@ -2363,6 +2399,10 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
   if $spam_block_flags[:haze_flag].include?(target)
     score = 0
     PBAI.log("* 0 because target has Haze")
+  end
+  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+    score += 1000
+    PBAI.log("+ 1000 to set up on the switch")
   end
   next score
 end
@@ -2438,6 +2478,10 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, 
   if $spam_block_flags[:haze_flag].include?(target)
     score = 0
     PBAI.log("* 0 because target has Haze")
+  end
+  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+    score += 1000
+    PBAI.log("+ 1000 to set up on the switch")
   end
   next score
 end
@@ -3043,6 +3087,16 @@ PBAI::ScoreHandler.add("178") do |score, ai, user, target, move|
   if (user.faster_than?(target) && !user.target_is_immune?(move,target)) || user.predict_switch?(target)
     score += 250
     PBAI.log("+ 250 for getting double damage")
+  end
+  next score
+end
+
+#Knock Off
+PBAI::ScoreHandler.add("0F0") do |score, ai, user, target, move|
+  item = target.item
+  if !user.unlosableItem?(item)
+    score += 200
+    PBAI.log("+ 200 for removing items")
   end
   next score
 end

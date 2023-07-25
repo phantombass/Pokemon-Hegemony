@@ -757,9 +757,11 @@ class PokemonEntry
   end
 
   def pbStartScreen(helptext,minlength,maxlength,initialText,mode=-1,pokemon=nil)
+    $repel_toggle = false
     @scene.pbStartScene(helptext,minlength,maxlength,initialText,mode,pokemon)
     ret=@scene.pbEntry
     @scene.pbEndScene
+    $repel_toggle = true
     return ret
   end
 end
@@ -770,7 +772,6 @@ end
 #
 #===============================================================================
 def pbEnterText(helptext,minlength,maxlength,initialText="",mode=0,pokemon=nil,nofadeout=false)
-  $repel_toggle = false
   ret=""
   if ($PokemonSystem.textinput==1 rescue false)   # Keyboard
     pbFadeOutIn(99999,nofadeout) {
