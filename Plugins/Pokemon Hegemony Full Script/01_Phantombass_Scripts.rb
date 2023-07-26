@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.7.8"
+  GAME_VERSION = "5.0.0"
   DISABLE_EVS = 917
 end
 
@@ -129,6 +129,9 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[DailyE4::TimeNow] = $game_variables[DailyE4::LastTime]
     end
     pbResetAllRoamers
+    scene = Mission_Overlay.new
+    scene.pbShow
+    scene.pbEndScene if scene != nil
 }
 
 class PokemonLoadScreen
@@ -460,7 +463,6 @@ class PokeBattle_Battler
     #    return true if data.mega_stone == item_data.id
     #  end
     #end
-    p item_data.id
     if item_data.id == :ROTOMMULTITOOL || item_data.id == :CASTFORMITE || item_data.id == :REDORB || item_data.id == :BLUEORB
       return true
     end
@@ -469,6 +471,10 @@ class PokeBattle_Battler
     end
     # Other unlosable items
     return GameData::Item.get(check_item).unlosable?(@species, self.ability)
+  end
+
+  def affectedByMoldBreaker?
+    return @battle.moldBreaker && !hasActiveItem?(:ABILITYSHIELD)
   end
 end
 

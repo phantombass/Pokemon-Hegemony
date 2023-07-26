@@ -1437,7 +1437,7 @@ class PokeBattle_Move_04E < PokeBattle_TargetStatDownMove
       @battle.pbDisplay(_INTL("{1} is unaffected!",target.pbThis))
       return true
     end
-    if target.hasActiveAbility?(:OBLIVIOUS) && !@battle.moldBreaker
+    if target.hasActiveAbility?(:OBLIVIOUS) && !target.affectedByMoldBreaker?
       @battle.pbShowAbilitySplash(target)
       if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
         @battle.pbDisplay(_INTL("{1} is unaffected!",target.pbThis))
@@ -1452,7 +1452,7 @@ class PokeBattle_Move_04E < PokeBattle_TargetStatDownMove
 
   def pbAdditionalEffect(user,target)
     return if user.gender==2 || target.gender==2 || user.gender==target.gender
-    return if target.hasActiveAbility?(:OBLIVIOUS) && !@battle.moldBreaker
+    return if target.hasActiveAbility?(:OBLIVIOUS) && !target.affectedByMoldBreaker?
     super
   end
 end
@@ -2393,7 +2393,7 @@ class PokeBattle_Move_070 < PokeBattle_FixedDamageMove
       @battle.pbDisplay(_INTL("{1} is unaffected!",target.pbThis))
       return true
     end
-    if target.hasActiveAbility?(:STURDY) && !@battle.moldBreaker
+    if target.hasActiveAbility?(:STURDY) && !target.affectedByMoldBreaker?
       @battle.pbShowAbilitySplash(target)
       if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
         @battle.pbDisplay(_INTL("But it failed to affect {1}!",target.pbThis(true)))

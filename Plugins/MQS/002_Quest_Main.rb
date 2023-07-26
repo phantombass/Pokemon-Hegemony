@@ -68,7 +68,7 @@ class Player_Quests
       end
     end
     @active_quests.push(Quest.new(quest,color,story))
-    pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New quest discovered!</c2>\nCheck your quest log for more details!</ac>",QUEST_JINGLE))
+    pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New quest discovered!</c2>\nCheck your quest log for more details!</ac>",QUEST_JINGLE)) if quest != :Quest1
   end
 
   def failQuest(quest,color,story)
@@ -97,7 +97,7 @@ class Player_Quests
         @failed_quests.push(temp_quest)
         @active_quests.delete_at(i)
         found = true
-        pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Quest failed!</c2>\nYour quest log has been updated!</ac>",QUEST_FAIL))
+        pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Quest failed!</c2>\nYour quest log has been updated!</ac>",QUEST_FAIL)) if quest != :Quest1
         break
       end
     end
@@ -133,7 +133,7 @@ class Player_Quests
         @completed_quests.push(temp_quest)
         @active_quests.delete_at(i)
         found = true
-        pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Quest completed!</c2>\nYour quest log has been updated!</ac>",QUEST_JINGLE))
+        pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Quest completed!</c2>\nYour quest log has been updated!</ac>",QUEST_JINGLE)) if quest != :Quest1
         break
       end
     end
@@ -157,7 +157,7 @@ class Player_Quests
         if $game_switches[214] == true && $game_switches[212] == false
           pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New update!</c2>\nYour quest log has been corrected!</ac>",QUEST_JINGLE))
         else
-          pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New quest update!</c2></ac>",QUEST_JINGLE))
+          pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New quest update!</c2></ac>",QUEST_JINGLE)) if quest != :Quest1
         end
       end
       return if found
