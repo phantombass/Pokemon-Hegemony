@@ -284,6 +284,92 @@ BattleVS         = classicVS
 [GUARD,Admin,2]
 BattleVS         = classicVS
 #-------------------------------
+# Insane
+#-------------------------------
+[LASS,Matilda,6]
+BattleVS         = classicVS
+#-------------------------------
+[HIKER,Ethan,6]
+BattleVS         = classicVS
+#-------------------------------
+[HIKER,Melvin,6]
+BattleVS         = classicVS
+#-------------------------------
+[TAMER,Alex,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_M,Keith,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_F,Robin,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_F,Kathy,6]
+BattleVS         = classicVS
+#-------------------------------
+[BUGCATCHER,Cale,6]
+BattleVS         = classicVS
+#-------------------------------
+[LASS,Sheena,6]
+BattleVS         = classicVS
+#-------------------------------
+[LADY,Edith,6]
+BattleVS         = classicVS
+#-------------------------------
+[LASS,Mary,6]
+BattleVS         = classicVS
+#-------------------------------
+[LASS,Sybil,6]
+BattleVS         = classicVS
+#-------------------------------
+[BUGCATCHER,Sheldon,6]
+BattleVS         = classicVS
+#-------------------------------
+[FISHERMAN,Robert,6]
+BattleVS         = classicVS
+#-------------------------------
+[FISHERMAN,Dexter,6]
+BattleVS         = classicVS
+#-------------------------------
+[GENTLEMAN,Cameron,6]
+BattleVS         = classicVS
+#-------------------------------
+[BIRDKEEPER,Scott,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_F,Lisa,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_F,Marge,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_F,Raquel,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_M,Zack,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_M,Tony,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_M,Matt,6]
+BattleVS         = classicVS
+#-------------------------------
+[RUINMANIAC,Darius,6]
+BattleVS         = classicVS
+#-------------------------------
+[HIKER,Tucker,6]
+BattleVS         = classicVS
+#-------------------------------
+[RUINMANIAC,Andy,6]
+BattleVS         = classicVS
+#-------------------------------
+[COOLTRAINER_M,Will,6]
+BattleVS         = classicVS
+#-------------------------------
+[GUARD,Admin,4]
+BattleVS         = classicVS
+#-------------------------------
 #Post-Game
 #-------------------------------
 [DOJO_Jasper]
