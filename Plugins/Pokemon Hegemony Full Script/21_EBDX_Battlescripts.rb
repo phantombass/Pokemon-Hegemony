@@ -30,6 +30,18 @@ module BattleScripts
     end
   }
 
+  PSYCHICTERRAIN = {
+    "turnStart0" => proc do 
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.terrain = :Psychic
+        @battle.field.terrainDuration = -1
+        $gym_terrain  = true
+        @scene.pbDisplay("The trainer set permanent Psychic Terrain!")
+      end
+    end
+  }
+
   NITRO = {
     "turnStart0" => proc do
         @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
@@ -149,6 +161,14 @@ module BattleScripts
         @battle.battlers[1].pbOwnSide.effects[PBEffects::Tailwind] = 1
         $gym_tailwind = true
         @scene.pbDisplay("A permanent Tailwind blew in behind Gail's team!")
+        if $game_switches[LvlCap::Insane]
+          @scene.pbAnimation(GameData::Move.get(:HAIL).id,@battle.battlers[1],@battle.battlers[1])
+          @battle.field.weather = :Hail
+          @battle.field.weatherDuration = -1
+          $gym_weather = true
+          @scene.pbDisplay("Permanent snow began to fall!")
+          @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+        end
       end
     end
   }
@@ -202,6 +222,14 @@ module BattleScripts
           @battle.field.terrainDuration = -1
           $gym_gimmick = true
           @scene.pbDisplay("The battlefield got permanently toxic!")
+          if $game_switches[LvlCap::Insane]
+            @scene.pbAnimation(GameData::Move.get(:RAINDANCE).id,@battle.battlers[1],@battle.battlers[1])
+            @battle.field.weather = :AcidRain
+            @battle.field.weatherDuration = -1
+            $gym_weather = true
+            @scene.pbDisplay("The skies permanently filled with Acid Rain!")
+            @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+          end
         else
           @scene.pbAnimation(GameData::Move.get(:RAINDANCE).id,@battle.battlers[1],@battle.battlers[1])
           @battle.field.weather = :AcidRain
@@ -209,6 +237,13 @@ module BattleScripts
           $gym_weather = true
           @scene.pbDisplay("The skies permanently filled with Acid Rain!")
           @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+          if $game_switches[LvlCap::Insane]
+            @scene.pbAnimation(GameData::Move.get(:SLUDGEWAVE).id,@battle.battlers[1],@battle.battlers[1])
+            @sprites["battlebg"].reconfigure(:POISON, Color.white)
+            @battle.field.terrain = :Poison
+            @battle.field.terrainDuration = -1
+            $gym_gimmick = true
+          end
         end
       end
     end
@@ -494,7 +529,7 @@ module BattleScripts
       @battle.field.weather = :Windy
       @battle.field.weatherDuration = -1
       $gym_weather = true
-      @scene.pbDisplay("Winston set a permanent Wind!")
+      @scene.pbDisplay("The trainer set a permanent Wind!")
       @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
     end
   }
@@ -505,7 +540,7 @@ module BattleScripts
         @battle.field.terrain = :Poison
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
-      @scene.pbDisplay("Vincent set permanent Poison Terrain!")
+      @scene.pbDisplay("The trainer set permanent Poison Terrain!")
       @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
     end
   }
@@ -515,7 +550,7 @@ module BattleScripts
       @battle.field.weather = :Sandstorm
       @battle.field.weatherDuration = -1
       $gym_weather = true
-      @scene.pbDisplay("Joseph set a permanent Sandstorm!")
+      @scene.pbDisplay("The trainer set a permanent Sandstorm!")
       @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
     end
   }
@@ -526,7 +561,7 @@ module BattleScripts
         @battle.field.terrain = :Electric
         @battle.field.terrainDuration = -1
         $gym_gimmick = true
-      @scene.pbDisplay("Winslow set permanent Electric Terrain!")
+      @scene.pbDisplay("The trainer set permanent Electric Terrain!")
       @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
     end
   }

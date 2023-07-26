@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "4.7.9"
+  GAME_VERSION = "5.0.0"
   DISABLE_EVS = 917
 end
 
@@ -129,6 +129,9 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[DailyE4::TimeNow] = $game_variables[DailyE4::LastTime]
     end
     pbResetAllRoamers
+    scene = Mission_Overlay.new
+    scene.pbShow
+    scene.pbEndScene if scene != nil
 }
 
 class PokemonLoadScreen

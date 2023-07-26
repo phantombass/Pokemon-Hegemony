@@ -520,8 +520,17 @@ class Pokemon
     if Randomizer.active?(:ABILITIES)
       array = Randomizer.abilities
       ability = array[:abilities][sp_data.id_number - 1]
-      ability.uniq!
       ability.each_with_index { |a, i| ret.push([a, i]) if a }
+      if ret[0][0] == ret[1][0]
+        ret.delete_at(1)
+      end
+    elsif Restrictions.active?
+      array = Restrictions.abilities
+      ability = array[:abilities][sp_data.id_number - 1]
+      ability.each_with_index { |a, i| ret.push([a, i]) if a }
+      if ret[0][0] == ret[1][0]
+        ret.delete_at(1)
+      end
     else
       sp_data.abilities.each_with_index { |a, i| ret.push([a, i]) if a }
       sp_data.hidden_abilities.each_with_index { |a, i| ret.push([a, i + 2]) if a }

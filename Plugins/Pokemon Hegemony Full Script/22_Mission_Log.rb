@@ -113,3 +113,10 @@ def pbCompleteMission(num)
     $PokemonGlobal.quests.completeQuest(:Quest7,"56946F5A",false)
   end
 end
+
+Events.onStepTaken += proc {
+  if $mission_steps != 0
+    $mission_steps -= 1
+    $viewport_mission.dispose if $mission_steps == 0
+  end
+}

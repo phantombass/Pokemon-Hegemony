@@ -2145,7 +2145,7 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
 end
 
 # Swords Dance, Power-up Punch, Static Surge
-PBAI::ScoreHandler.add("02E","01C","511") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("02E","01C","511","028") do |score, ai, user, target, move|
   count = 0
   if user.setup?
     if user.statStageAtMax?(:ATTACK)
@@ -2408,7 +2408,7 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
 end
 
 # Calm Mind/Quiver Dance/Geomancy/Tail Glow
-PBAI::ScoreHandler.add("02B", "02C", "14E", "039") do |score, ai, user, target, move|
+PBAI::ScoreHandler.add("02B", "02C", "14E", "039","028") do |score, ai, user, target, move|
   count = 0
   if user.setup?
     if user.statStageAtMax?(:SPECIAL_ATTACK)
