@@ -3392,7 +3392,7 @@ class PokeBattle_Battler
     return false if !takesIndirectDamage?
     return false if pbHasType?(:POISON) || pbHasType?(:STEEL)
     return false if inTwoTurnAttack?("0CA","0CB")   # Dig, Dive
-    return false if hasActiveAbility?([:OVERCOAT,:ACIDDRAIN,:TOXICRUSH,:ACCLIMATE,:FORECAST])
+    return false if hasActiveAbility?([:OVERCOAT,:ACIDDRAIN,:TOXICRUSH,:ACCLIMATE,:FORECAST,:TOXICBOOST,:POISONHEAL,:IMMUNITY,:SLUDGERUSH])
     return false if hasActiveItem?([:SAFETYGOGGLES,:UTILITYUMBRELLA])
     return true
   end
