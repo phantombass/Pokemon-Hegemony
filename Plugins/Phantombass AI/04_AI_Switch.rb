@@ -804,7 +804,7 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	end
   next score
 end
-
+=begin
 #Weather Abusers
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	weather = [:DROUGHT,:DRIZZLE,:SANDSTREAM,:SANDSPIT,:DESOLATELAND,:PRIMORDIALSEA,:DELTASTREAM,:NIGHTFALL,:EQUINOX,:URBANCLOUD,:GALEFORCE,:SNOWWARNING,:HAILSTORM]
@@ -818,7 +818,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	end
 	next switch
 end
-
+=end
 #Battler Yawned
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	if battler.effects[PBEffects::Yawn] == 1
