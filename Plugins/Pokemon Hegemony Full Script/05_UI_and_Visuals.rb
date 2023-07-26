@@ -402,7 +402,7 @@ class PokemonPauseMenu
         pbPlayDecisionSE
         @scene.pbHideMenu
         @scene.pbHideLevelCap
-        pbMessage("Which would you like to do?\\ch[34,4,Access PC,Heal,Cancel]")
+        pbMessage("Which would you like to do?\\ch[34,4,Access PC,Heal: #{pbGet(74)},Cancel]")
         if $game_variables[34] == 0
          if $game_switches[209] == true
            pbMessage(_INTL("You cannot access the PC in here."))
@@ -420,8 +420,14 @@ class PokemonPauseMenu
             pbMessage(_INTL("You cannot use this in here."))
             pbShowMenu
           else
-            $Trainer.heal_party
-            pbMessage(_INTL("Your party was healed!"))
+            if $game_variables[74] > 0
+              $Trainer.heal_party
+              pbMessage(_INTL("Your party was healed!"))
+              $game_variables[74] -= 1
+            else
+              pbMessage(_INTL("You've run out of Heals!"))
+              pbMessage(_INTL("Please recharge at the PMC!"))
+            end
             pbShowMenu
           end
         else
@@ -436,7 +442,7 @@ class PokemonPauseMenu
             pbMessage(_INTL("<c2=7FE00000>Leave the route and return to search again!</c2>"))
             pbShowMenu
           else
-            pbSave
+            Game.save
             @scene = NewDexNav.new
           end
           return
@@ -761,9 +767,9 @@ class PokemonSummary_Scene
     commands = []
     ids = []
     pkmn = @pokemon
-    if $game_variables[969] != 0
+    if $game_variables[969] != 0 || $game_variables[Restriction_Info::Abilities] != 0
       spec_num = GameData::Species.get(pkmn.species).id_number
-      array = $game_variables[969]
+      array = !Randomizer.active?(:ABILITIES) ? $game_variables[Restriction_Info::Abilities] : $game_variables[969]
       ability = array[:abilities][spec_num - 1]
       habil = ability[2]
     end

@@ -321,7 +321,7 @@ class PokeBattle_Battler
     ret = (@pokemon) ? @pokemon.weight : 500
     ret += @effects[PBEffects::WeightChange]
     ret = 1 if ret<1
-    if abilityActive? && !@battle.moldBreaker
+    if abilityActive? && !affectedByMoldBreaker?
       ret = BattleHandlers.triggerWeightCalcAbility(self.ability,self,ret)
     end
     if itemActive?
@@ -547,8 +547,8 @@ class PokeBattle_Battler
     return false if @effects[PBEffects::SmackDown]
     return false if @battle.field.effects[PBEffects::Gravity] > 0
     return true if pbHasType?(:FLYING)
-    return true if hasActiveAbility?(:LEVITATE) && !@battle.moldBreaker
-    return true if hasActiveAbility?(:MULTITOOL) && !@battle.moldBreaker
+    return true if hasActiveAbility?(:LEVITATE) && !affectedByMoldBreaker?
+    return true if hasActiveAbility?(:MULTITOOL) && !affectedByMoldBreaker?
     return true if hasActiveItem?([:AIRBALLOON,:LEVITATEORB])
     return true if @effects[PBEffects::MagnetRise] > 0
     return true if @effects[PBEffects::Telekinesis] > 0
@@ -632,7 +632,7 @@ class PokeBattle_Battler
       return false
     end
     if Settings::MECHANICS_GENERATION >= 6
-      if hasActiveAbility?(:OVERCOAT) && !@battle.moldBreaker
+      if hasActiveAbility?(:OVERCOAT) && !affectedByMoldBreaker?
         if showMsg
           @battle.pbShowAbilitySplash(self)
           if PokeBattle_SceneConstants::USE_ABILITY_SPLASH

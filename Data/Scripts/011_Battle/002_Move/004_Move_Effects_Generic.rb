@@ -345,7 +345,7 @@ class PokeBattle_TargetMultiStatUpMove < PokeBattle_Move
       # NOTE: It's a bit of a faff to make sure the appropriate failure message
       #       is shown here, I know.
       canRaise = false
-      if target.hasActiveAbility?(:CONTRARY) && !@battle.moldBreaker
+      if target.hasActiveAbility?(:CONTRARY) && !target.affectedByMoldBreaker?
         for i in 0...@statUp.length/2
           next if target.statStageAtMin?(@statUp[i*2])
           canRaise = true
@@ -426,7 +426,7 @@ class PokeBattle_TargetMultiStatDownMove < PokeBattle_Move
       # NOTE: It's a bit of a faff to make sure the appropriate failure message
       #       is shown here, I know.
       canLower = false
-      if target.hasActiveAbility?(:CONTRARY) && !@battle.moldBreaker
+      if target.hasActiveAbility?(:CONTRARY) && !target.affectedByMoldBreaker?
         for i in 0...@statDown.length/2
           next if target.statStageAtMax?(@statDown[i*2])
           canLower = true
@@ -504,7 +504,7 @@ class PokeBattle_TwoTurnMove < PokeBattle_Move
     @damagingTurn = true
     # 0 at start of charging turn, move's ID at start of damaging turn
     if !user.effects[PBEffects::TwoTurnAttack]
-      @powerHerb = user.hasActiveItem?(:POWERHERB)
+      @powerHerb = user.hasActiveItem?(:POWERHERB) || user.hasActiveAbility?(:IMPATIENT)
       @chargingTurn = true
       @damagingTurn = @powerHerb
     end

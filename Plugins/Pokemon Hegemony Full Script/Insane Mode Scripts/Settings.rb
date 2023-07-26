@@ -19,13 +19,26 @@ class Restrictions
   attr_accessor :abilities
   attr_accessor :moves
 
-  def setup
+  def self.setup
     @abilities = $game_variables[Restriction_Info::Abilities]
     @moves = $game_variables[Restriction_Info::Moves]
   end
 
+  def self.start
+    self.restrict_abilities
+    self.restrict_moves
+  end
+
   def self.active?
     return $game_switches[LvlCap::Insane]
+  end
+
+  def self.abilities
+    return @abilities
+  end
+
+  def self.moves
+    return @moves
   end
 
   BANNED_MOVES = [:CALMMIND,:BULKUP,:SWORDSDANCE,:NASTYPLOT,:STATICSURGE,:TAILGLOW,:WORKUP,:HOWL,:AGILITY,:COSMICPOWER,:DEFENDORDER,
@@ -33,21 +46,22 @@ class Restrictions
     :SANDSTORM,:HAIL,:SNOWSCAPE,:STARSTORM,:TAUNT,:MAGICCOAT,:CURSE,:TAILWIND,:GRASSYTERRAIN,:PSYCHICTERRAIN,:MISTYTERRAIN,:ELECTRICTERRAIN,
     :COIL,:BELLYDRUM,:AMNESIA,:ACIDARMOR,:IRONDEFENSE,:NORETREAT,:OCTOLOCK,:SHIFTGEAR,:COTTONGUARD,:DRAGONDANCE,:STOCKPILE,:SPITUP,:SWALLOW,
     :PSYCHUP,:SNATCH,:PROTECT,:WIDEGUARD,:QUICKGUARD,:SUBSTITUTE,:PERISHSONG,:ROCKPOLISH,:AUTOTOMIZE,:GROWTH,:FIERYDANCE,:MEDITATE,:HONECLAWS,
-    :FLAMECHARGE,:CHARGEBEAM,:SCALESHOT,:POWERUPPUNCH,:CHARM,:TOXIC,:LEECHSEED,:DEFOG,:STRENGTHSAP,:FELLSTINGER,:TRICKROOM,:SKULLBASH,
+    :FLAMECHARGE,:CHARGEBEAM,:SCALESHOT,:POWERUPPUNCH,:CHARM,:TOXIC,:LEECHSEED,:DEFOG,:STRENGTHSAP,:FELLSTINGER,:SKULLBASH,
     :METEORBEAM,:CHILLYRECEPTION,:TRAILBLAZE,:SPICYEXTRACT,:SHELLSMASH,:FILLETAWAY,:AQUASTEP,:TORCHSONG,:STONEAXE,:CEASELESSEDGE
   ]
 
   ABILITY_CHANGES = {
     :UNSHAKEN => [:MOXIE,:GRIMNEIGH,:CHILLINGNEIGH,:CONTRARY,:DEFIANT,:COMPETITIVE,:SPEEDBOOST,:ANGERSHELL,:WEAKARMOR,:GUARDDOG],
-    :TELEPATHY => [:MISTYSURGE,:PSYCHICSURGE,:ELECTRICSURGE,:GRASSYSURGE,:TOXICSURGE,:SEEDSOWER],
+    :TELEPATHY => [:MISTYSURGE,:PSYCHICSURGE,:ELECTRICSURGE,:GRASSYSURGE,:TOXICSURGE,:SEEDSOWER,:DIMENSIONBLOCK],
     :SURGESURFER => [:HADRONENGINE],
     :MAGICGUARD => [:MAGICBOUNCE,:SPLINTER,:TOXICDEBRIS,:WEBWEAVER],
     :GRASSPELT => [:SAPSIPPER],
     :SLUSHRUSH => [:SNOWWARNING,:HAILSTORM,:SNOWCLOAK],
     :SANDRUSH => [:SANDSPIT,:SANDSTREAM,:SANDVEIL],
     :STARSPRINT => [:EQUINOX],
-    :CHLOROPHYLL => [:DROUGHT,:ORICHALCUMPULSE],
-    :SWIFTSWIM => [:DRIZZLE],
+    :BACKDRAFT => [:GALEFORCE,:DELTASTREAM],
+    :CHLOROPHYLL => [:DROUGHT,:ORICHALCUMPULSE,:DESOLATELAND],
+    :SWIFTSWIM => [:DRIZZLE,:PRIMORDIALSEA],
     :TOXICRUSH => [:URBANCLOUD],
     :UNTAINTED => [:NIGHTFALL],
     :DRYSKIN => [:STORMDRAIN],
@@ -63,6 +77,7 @@ class Restrictions
 
   def self.restrict_abilities
       return if !self.active?
+      PBAI.log("Restricting abilities...")
       pkmn = load_data("Data/species.dat")
       ability = load_data("Data/abilities.dat")
       abilities = []
@@ -83,25 +98,19 @@ class Restrictions
           $restricted_abilities[:pokemon].push(pkmn[key].id)
           $restricted_abilities[:pokemon].uniq!
           for i in 0...pkmn[key].abilities.length
-            loop do
-              pkmn[key].abilities[i] = abilities.sample
               for ab in restrictions.keys
-                if restrictions.keys[ab].include?(pkmn[key].abilities[i])
+                if restrictions[ab].include?(pkmn[key].abilities[i])
                   pkmn[key].abilities[i] = ab
                 end
               end
-            end
             abil.push([pkmn[key].abilities[i]])
           end
           for i in 0...pkmn[key].hidden_abilities.length
-            loop do
-              pkmn[key].hidden_abilities[i] = abilities.sample
               for ab in restrictions.keys
-                if restrictions.keys[ab].include?(pkmn[key].hidden_abilities[i])
+                if restrictions[ab].include?(pkmn[key].hidden_abilities[i])
                   pkmn[key].hidden_abilities[i] = ab
                 end
               end
-            end
             habil.push([pkmn[key].hidden_abilities[i]])
           end
           $restricted_abilities[:abilities][key] = abil[0],(abil[1] == nil ? abil[0] : abil[1]),habil
@@ -117,6 +126,7 @@ class Restrictions
 
     def self.restrict_moves
       return if !self.active?
+      PBAI.log("Restricting moves...")
       data = load_data("Data/species.dat")
       move_data = load_data("Data/moves.dat")
       restricted = Restrictions::BANNED_MOVES
@@ -146,4 +156,29 @@ class Restrictions
       $game_variables[Randomizer_Info::Movesets] = @moves if Randomizer.active?(:MOVES)
       return @moves
     end
+  end
+
+  def getRestrictedAbility(species,ability_index)
+    array = Restrictions.abilities
+    ability = array[:abilities]
+    pokemon = array[:pokemon]
+    idx = -1
+    for i in pokemon
+      idx += 1
+      break if i == species
+    end
+    return ability[idx][ability_index]
+  end
+
+  def getRestrictedMoves(species)
+    pkmn = GameData::Species.get(species).id
+    array = Restrictions.moves
+    moves = array[:moves]
+    pokemon = array[:pokemon]
+    idx = -1
+    for i in pokemon
+      idx += 1
+      break if i == pkmn
+    end
+    return moves[idx]
   end

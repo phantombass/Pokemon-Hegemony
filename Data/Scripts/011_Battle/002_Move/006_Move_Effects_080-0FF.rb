@@ -1783,7 +1783,7 @@ class PokeBattle_Move_0BA < PokeBattle_Move
     end
     return true if pbMoveFailedAromaVeil?(user,target)
     if Settings::MECHANICS_GENERATION >= 6 && target.hasActiveAbility?(:OBLIVIOUS) &&
-       !@battle.moldBreaker
+       !target.affectedByMoldBreaker?
       @battle.pbShowAbilitySplash(target)
       if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
         @battle.pbDisplay(_INTL("But it failed!"))
@@ -1934,7 +1934,7 @@ class PokeBattle_Move_0BF < PokeBattle_Move
 
   def pbOnStartUse(user,targets)
     @calcBaseDmg = 0
-    @accCheckPerHit = !user.hasActiveAbility?(:SKILLLINK)
+    @accCheckPerHit = !user.hasActiveAbility?(:SKILLLINK) && !user.hasActiveItem?(:LOADEDDICE)
   end
 
   def pbBaseDamage(baseDmg,user,target)
@@ -1964,7 +1964,9 @@ class PokeBattle_Move_0C0 < PokeBattle_Move
     ]
     r = @battle.pbRandom(hitChances.length)
     r = hitChances.length-1 if user.hasActiveAbility?(:SKILLLINK)
-    return hitChances[r]
+    chances = hitChances[r]
+    chances = 5 - rand(2) if user.hasActiveItem?(:LOADEDDICE)
+    return chances
   end
 
   def pbBaseDamage(baseDmg,user,target)
@@ -2023,6 +2025,7 @@ end
 class PokeBattle_Move_0C2 < PokeBattle_Move
   def pbEffectGeneral(user)
     user.effects[PBEffects::HyperBeam] = 2
+    user.effects[PBEffects::HyperBeam] = 1 if @user.hasActiveAbility(:IMPATIENT)
     user.currentMove = @id
   end
 end
@@ -2048,7 +2051,7 @@ class PokeBattle_Move_0C4 < PokeBattle_TwoTurnMove
   def pbIsChargingTurn?(user)
     ret = super
     if !user.effects[PBEffects::TwoTurnAttack]
-      if [:Sun, :HarshSun].include?(@battle.pbWeather) && !user.hasUtilityUmbrella?
+      if ([:Sun, :HarshSun].include?(@battle.pbWeather) && !user.hasUtilityUmbrella?) || user.hasActiveAbility?(:IMPATIENT)
         @powerHerb = false
         @chargingTurn = true
         @damagingTurn = true
@@ -3035,7 +3038,7 @@ class PokeBattle_Move_0EB < PokeBattle_Move
   def ignoresSubstitute?(user); return true; end
 
   def pbFailsAgainstTarget?(user,target)
-    if target.hasActiveAbility?(:SUCTIONCUPS) && !@battle.moldBreaker
+    if target.hasActiveAbility?(:SUCTIONCUPS) && !target.affectedByMoldBreaker?
       @battle.pbShowAbilitySplash(target)
       if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
         @battle.pbDisplay(_INTL("{1} anchors itself!",target.pbThis))
@@ -3123,7 +3126,7 @@ class PokeBattle_Move_0EC < PokeBattle_Move
       next if b.fainted? || b.damageState.unaffected || b.damageState.substitute
       next if switchedBattlers.include?(b.index)
       next if b.effects[PBEffects::Ingrain]
-      next if b.hasActiveAbility?(:SUCTIONCUPS) && !@battle.moldBreaker
+      next if b.hasActiveAbility?(:SUCTIONCUPS) && !b.affectedByMoldBreaker?
       newPkmn = @battle.pbGetReplacementPokemonIndex(b.index,true)   # Random
       next if newPkmn<0
       @battle.pbRecallAndReplace(b.index, newPkmn, true)
@@ -3183,6 +3186,7 @@ class PokeBattle_Move_0EE < PokeBattle_Move
     targetSwitched = true
     targets.each do |b|
       targetSwitched = false if !switchedBattlers.include?(b.index)
+      targetSwitched = true if b.hasActiveAbility?(:DEATHGRIP)
     end
     return if targetSwitched
     return if !@battle.pbCanChooseNonActive?(user.index)
@@ -3257,7 +3261,7 @@ class PokeBattle_Move_0F0 < PokeBattle_Move
     return if user.fainted?
     return if target.damageState.unaffected || target.damageState.substitute
     return if !target.item || target.unlosableItem?(target.item)
-    return if target.hasActiveAbility?(:STICKYHOLD) && !@battle.moldBreaker
+    return if target.hasActiveAbility?(:STICKYHOLD) && !target.affectedByMoldBreaker?
     itemName = target.itemName
     target.pbRemoveItem(false)
     @battle.pbDisplay(_INTL("{1} dropped its {2}!",target.pbThis,itemName))
@@ -3278,7 +3282,7 @@ class PokeBattle_Move_0F1 < PokeBattle_Move
     return if !target.item || user.item
     return if target.unlosableItem?(target.item)
     return if user.unlosableItem?(target.item)
-    return if target.hasActiveAbility?(:STICKYHOLD) && !@battle.moldBreaker
+    return if target.hasActiveAbility?(:STICKYHOLD) && !target.affectedByMoldBreaker?
     itemName = target.itemName
     user.item = target.item
     # Permanently steal the item from wild Pokémon
@@ -3321,7 +3325,7 @@ class PokeBattle_Move_0F2 < PokeBattle_Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    if target.hasActiveAbility?(:STICKYHOLD) && !@battle.moldBreaker
+    if target.hasActiveAbility?(:STICKYHOLD) && !target.affectedByMoldBreaker?
       @battle.pbShowAbilitySplash(target)
       if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
         @battle.pbDisplay(_INTL("But it failed to affect {1}!",target.pbThis(true)))
@@ -3411,7 +3415,7 @@ class PokeBattle_Move_0F4 < PokeBattle_Move
     return if user.fainted? || target.fainted?
     return if target.damageState.unaffected || target.damageState.substitute
     return if !target.item || !target.item.is_berry?
-    return if target.hasActiveAbility?(:STICKYHOLD) && !@battle.moldBreaker
+    return if target.hasActiveAbility?(:STICKYHOLD) && !target.affectedByMoldBreaker?
     item = target.item
     itemName = target.itemName
     target.pbRemoveItem
@@ -3654,7 +3658,7 @@ class PokeBattle_Move_0F7 < PokeBattle_Move
 
   def pbEffectAgainstTarget(user,target)
     return if target.damageState.substitute
-    return if target.hasActiveAbility?(:SHIELDDUST) && !@battle.moldBreaker
+    return if target.hasActiveAbility?(:SHIELDDUST) && !target.affectedByMoldBreaker?
     case user.item_id
     when :POISONBARB
       target.pbPoison(user) if target.pbCanPoison?(user,false,self)

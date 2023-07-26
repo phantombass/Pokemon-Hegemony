@@ -2086,7 +2086,7 @@ class PokeBattle_Move_160 < PokeBattle_Move
     #       has Contrary and is at +6" check too for symmetry. This move still
     #       works even if the stat stage cannot be changed due to an ability or
     #       other effect.
-    if !@battle.moldBreaker && target.hasActiveAbility?(:CONTRARY) &&
+    if !target.affectedByMoldBreaker? && target.hasActiveAbility?(:CONTRARY) &&
        target.statStageAtMax?(:ATTACK)
       @battle.pbDisplay(_INTL("But it failed!"))
       return true

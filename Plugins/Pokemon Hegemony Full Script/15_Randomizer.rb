@@ -164,7 +164,7 @@ class Randomizer
 	    # loads compiled data and creates new array
 	    data = load_data("Data/trainers.dat")
 	    trainer_exclusions = $game_switches[906] ? nil : [:RIVAL,:RIVAL2,:LEADER_Brock,:LEADER_Misty,:LEADER_Surge,:LEADER_Erika,:LEADER_Sabrina,:LEADER_Blaine,:LEADER_Winslow,:LEADER_Jackson,:OFFCORP,:DEFCORP,:PSYCORP,:ROCKETBOSS,:CHAMPION,:ARMYBOSS,:NAVYBOSS,:AIRFORCEBOSS,:GUARDBOSS,:CHANCELLOR,:DOJO_Luna,:DOJO_Apollo,:DOJO_Jasper,:DOJO_Maloki,:DOJO_Juliet,:DOJO_Adam,:DOJO_Wendy,:LEAGUE_Astrid,:LEAGUE_Winslow,:LEAGUE_Eugene,:LEAGUE_Armand,:LEAGUE_Winston,:LEAGUE_Vincent]
-	    species_exclusions = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
+	    species_exclusions = $game_switches[906] ? nil : [:SPINDA,:ROTOM]
 	    $new_trainers = {
 	      :trainer => [],
 	      :pokemon => {
@@ -407,7 +407,7 @@ class Randomizer
 	  	return if !self.active?(:ENCOUNTERS)
 	    # loads map encounters
 	    data = load_data("Data/encounters.dat")
-	    species_exclusions = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
+	    species_exclusions = $game_switches[906] ? nil : [:SPINDA,:ROTOM]
 	    return if !data.is_a?(Hash) # failsafe
 	    # iterates through each map point
 	    for key in data.keys
@@ -416,8 +416,10 @@ class Randomizer
 	        # cycle each definition
 	        for i in 0...data[key].types[type].length
 	          # set randomized species
-	          next if !species_exclusions.nil? && species_exclusions.include?(data[key].types[type][i][1])
-	          data[key].types[type][i][1] = Randomizer.all_species.sample
+	          loop do
+	          	data[key].types[type][i][1] = Randomizer.all_species.sample
+	          	next if !species_exclusions.nil? && species_exclusions.include?(data[key].types[type][i][1])
+	          end
 	        end
 	      end
 	    end
@@ -810,6 +812,7 @@ class PokemonLoadScreen
     ret = pbStartLoadScreen_randomizer
     # refresh current cache
     Randomizer.setup if Randomizer.activated?
+    Restrictions.setup if Restrictions.active?
     return ret
   end
 end
@@ -857,6 +860,7 @@ class Pokemon
       abil_index = ability_index
       if abil_index >= 2   # Hidden ability
         @ability = !Randomizer.active?(:ABILITIES) ? sp_data.hidden_abilities[abil_index - 2] : getRandAbilities(species,2)
+        @ability = getRestrictedAbility(species,2) if Restrictions.active?
         abil_index = (@personalID & 1) if !@ability
       end
       if !@ability   # Natural ability or no hidden ability defined
@@ -867,6 +871,12 @@ class Pokemon
   end
 
   def getMoveList
-    return Randomizer.active?(:MOVES) ? getRandMoves(self.species) : species_data.moves
+  	if Randomizer.active?(:MOVES)
+  		return Restrictions.active? ? getRestrictedMoves(self.species) : getRandMoves(self.species)
+  	elsif !Randomizer.active?(:MOVES) && Restrictions.active?
+  		return getRestrictedMoves(self.species)
+  	else
+  		return species_data.moves
+  	end
   end
 end
