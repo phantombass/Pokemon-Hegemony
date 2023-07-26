@@ -809,7 +809,9 @@ end
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	weather = [:DROUGHT,:DRIZZLE,:SANDSTREAM,:SANDSPIT,:DESOLATELAND,:PRIMORDIALSEA,:DELTASTREAM,:NIGHTFALL,:EQUINOX,:URBANCLOUD,:GALEFORCE,:SNOWWARNING,:HAILSTORM]
 	weather_move = [:RAINDANCE,:SANDSTORM,:SUNNYDAY,:SNOWSCAPE]
-	abuser = battler.side.party.find {|mon| mon.has_role?(:WEATHERTERRAINABUSER)}
+	abuser = battler.side.party.find {|mon|
+	pkmn = ai.pbMakeFakeBattler(mon)
+	pkmn.has_role?(:WEATHERTERRAINABUSER)}
 	changer = battler.opposing_side.battlers.find {|pkmn| pkmn.hasActiveAbility?(weather) || pkmn.hasMove?(weather_move) }
 	if battler.has_role?(:WEATHERTERRAIN) && !abuser.nil? && !changer.nil?
 		switch = true

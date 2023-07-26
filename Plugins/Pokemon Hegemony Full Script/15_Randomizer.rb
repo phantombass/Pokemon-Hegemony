@@ -250,7 +250,8 @@ class Randomizer
 	      :ZEROTOHERO,
 	      # Abilities intended to be inherent properties of a certain species
 	      :COMATOSE,
-	      :RKSSYSTEM
+	      :RKSSYSTEM,
+	      :GODLIKEPOWER
 	    ]
 	    return if !pkmn.is_a?(Hash)
 	    return if !ability.is_a?(Hash)
