@@ -7004,3 +7004,11 @@ BattleHandlers::DamageCalcUserAbility.add(:ROCKHEAD,
     mults[:base_damage_multiplier] = (mults[:base_damage_multiplier]*1.2).round if move.headMove?
   }
 )
+
+BattleHandlers::AbilityOnSwitchIn.add(:GODLIKEPOWER,
+  proc { |ability,battler,battle|
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("Time to get rekt.",battler.pbOpposingTeam))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
