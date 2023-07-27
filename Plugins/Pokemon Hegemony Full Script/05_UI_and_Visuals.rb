@@ -33,10 +33,11 @@ end
 class PokemonPauseMenu_Scene
   def pbStartScene
     if $game_switches[350] == false
+      $viewport_mission.dispose if !$viewport_mission.nil?
       @viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
       @viewport.z = 99999
       capColor = "90F090,000000"
-      levelCap = LEVEL_CAP[$game_system.level_cap]
+      levelCap = $game_switches[LvlCap::Insane] ? INSANE_LEVEL_CAP[$game_system.level_cap] : LEVEL_CAP[$game_system.level_cap]
       quest_stage = $PokemonGlobal.quests.active_quests[0].stage
       quest_info = $quest_data.getStageDescription(:Quest1,quest_stage)
       @sprites = {}
@@ -768,9 +769,9 @@ class PokemonSummary_Scene
     ids = []
     pkmn = @pokemon
     if $game_variables[969] != 0 || $game_variables[Restriction_Info::Abilities] != 0
-      spec_num = GameData::Species.get(pkmn.species).id_number
+      spec_num = GameData::Species.get_species_form(pkmn.species, pkmn.form_simple)
       array = !Randomizer.active?(:ABILITIES) ? $game_variables[Restriction_Info::Abilities] : $game_variables[969]
-      ability = array[:abilities][spec_num - 1]
+      ability = array[:abilities][spec_num.id_number - 1]
       habil = ability[2]
     end
     loop do
@@ -808,12 +809,13 @@ class PokemonSummary_Scene
       end
       case lvl
       when 0
-        pkmn.level = LEVEL_CAP[$game_system.level_cap]
+        pkmn.level = $game_switches[LvlCap::Insane] ? INSANE_LEVEL_CAP[$game_system.level_cap] : LEVEL_CAP[$game_system.level_cap]
         pkmn.calc_stats
         dorefresh = true
       when 1
         params = ChooseNumberParams.new
-        params.setRange(1, LEVEL_CAP[$game_system.level_cap])
+        cap = $game_switches[LvlCap::Insane] ? INSANE_LEVEL_CAP[$game_system.level_cap] : LEVEL_CAP[$game_system.level_cap]
+        params.setRange(1, cap)
         params.setDefaultValue(pkmn.level)
         level = pbMessageChooseNumber(
            _INTL("Set the Pokémon's level (max. {1}).", params.maxNumber), params) { pbUpdate }
