@@ -179,6 +179,7 @@ class PokeBattle_Scene
           break
         end
         $spam_block_flags[:triple_switch].push(:Switch)
+        $spam_block_flags[:protect_switch].push(:Switch)
         $spam_block_flags[:choice] = modParty[idxParty]
         break if yield idxPartyRet, switchScreen
       elsif cmdSummary>=0 && command==cmdSummary   # Summary

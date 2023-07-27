@@ -104,7 +104,7 @@ MultipleForms.register(:ROTOM,{
         end
       else
         # Just try to learn this form's unique move
-        if form < 8 && $appliance == nil
+        if form < 8 && $appliance == nil && pkmn.hasItem?(:ROTOMMULTITOOL)
           pbLearnMove(pkmn, new_move_id, true)
         end
       end

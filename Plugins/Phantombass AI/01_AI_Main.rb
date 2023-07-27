@@ -28,6 +28,7 @@ class PBAI
   	  :same_move => [], # Target uses same move 3 times in a row
   	  :initiative_flag => [], # Target uses an initiative move 2 times in a row
   	  :double_intimidate => [], # Target pivots between 2 Intimidators
+      :protect_switch => [],
       :no_priority_flag => [],
       :choice => nil
   	}
@@ -65,7 +66,8 @@ class PBAI
     avg = (weights.sum / weights.size).to_f
     newweights = weights.map do |e|
       diff = e - avg
-      next [0, ((e - diff * factor) * 100).floor].max
+      next [0, ((e - diff * factor) * 100).floor].max rescue FloatDomainError
+      next 0 if ret.nil?
     end
     return newweights
   end
