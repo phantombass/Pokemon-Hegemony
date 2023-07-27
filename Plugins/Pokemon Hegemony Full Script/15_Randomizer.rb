@@ -419,7 +419,7 @@ class Randomizer
 	          # set randomized species
 	          loop do
 	          	data[key].types[type][i][1] = Randomizer.all_species.sample
-	          	next if !species_exclusions.nil? && species_exclusions.include?(data[key].types[type][i][1])
+	          	break if !species_exclusions.nil? && !species_exclusions.include?(data[key].types[type][i][1])
 	          end
 	        end
 	      end
