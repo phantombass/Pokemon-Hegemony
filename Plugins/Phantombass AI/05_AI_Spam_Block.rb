@@ -126,6 +126,18 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag
 end
 
+#Protect into Switch
+PBAI::SpamHandler.add do |flag,ai,battler,target|
+	next flag if $spam_block_triggered
+	protect_switch = $spam_block_flags[:protect_switch]
+	next flag if protect_switch.length < 2
+	check = 0
+	for i in 1...protect_switch.length
+		flag = (protect_switch[i] == :Switch && protect_switch[i-1].is_a?(PokeBattle_ProtectMove))
+	end
+	next flag
+end
+
 #Boss Pokemon
 PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag if $spam_block_triggered

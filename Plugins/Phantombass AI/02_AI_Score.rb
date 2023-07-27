@@ -2656,8 +2656,8 @@ PBAI::ScoreHandler.add("10C") do |score, ai, user, target, move|
       PBAI.log("+ 50")
     end
     if user.hp < user.totalhp/4
-      score -= 100
-      PBAI.log("- 100 for being unable to Substitute")
+      score -= 10000
+      PBAI.log("- 10000 for being unable to Substitute")
     end
     if sound > 0
       score -= 30
@@ -3094,6 +3094,7 @@ end
 #Knock Off
 PBAI::ScoreHandler.add("0F0") do |score, ai, user, target, move|
   item = target.item
+  next score if item.nil?
   if !user.unlosableItem?(item)
     score += 200
     PBAI.log("+ 200 for removing items")
