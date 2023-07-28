@@ -40,7 +40,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
 #       end
 #     end
     if $game_switches && $game_switches[LvlCap::Switch] && $Trainer && $game_switches[Settings::LEVEL_CAP_SWITCH]
-       levelcap = LEVEL_CAP[$game_system.level_cap]
+       levelcap = $game_switches[LvlCap::Insane] ? INSANE_LEVEL_CAP[$game_system.level_cap] : LEVEL_CAP[$game_system.level_cap]
        badges = $Trainer.badge_count
        mlv = $Trainer.party.map { |e| e.level  }.max
       for i in 0...party.length
@@ -74,6 +74,7 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
       end
       if $game_switches[Settings::DISABLE_EVS] && $game_switches[LvlCap::Hard]
         minus = $game_switches[LvlCap::Expert] ? 1 : 2
+        #minus = 0 if $game_switches[LvlCap::Insane]
         level -= minus
       end
       party[i].level = level
