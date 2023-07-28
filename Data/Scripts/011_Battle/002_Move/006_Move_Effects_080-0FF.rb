@@ -3264,6 +3264,7 @@ class PokeBattle_Move_0F0 < PokeBattle_Move
     return if target.hasActiveAbility?(:STICKYHOLD) && !target.affectedByMoldBreaker?
     itemName = target.itemName
     target.pbRemoveItem(false)
+    target.item = nil
     @battle.pbDisplay(_INTL("{1} dropped its {2}!",target.pbThis,itemName))
   end
 end

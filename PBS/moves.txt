@@ -856,7 +856,7 @@
 1017,FILLETAWAY,Fillet Away,532,0,NORMAL,Status,0,10,0,User,0,d,"The user sharply boosts its Attack, Sp. Atk, and Speed stats by using its own HP."
 1018,HYPERDRILL,Hyper Drill,147,100,NORMAL,Physical,100,5,0,NearOther,0,abef,"The user spins the pointed part of its body at high speed to pierce the target. This attack can hit a target using a move such as Protect or Detect."
 1019,LUMINACRASH,Lumina Crash,04F,80,PSYCHIC,Special,100,20,100,NearOther,0,befn,"The user attacks by unleashing a peculiar light that even affects the mind. This also harshly lowers the target's Sp. Def stat."
-1020,MORTALSPIN,Mortal Spin,533,30,NORMAL,Physical,100,15,100,NearOther,0,abef,"The user performs a spin attack that can also eliminate the effects of such moves as Bind, Wrap, and Leech Seed. This also poisons opposing Pokémon."
+1020,MORTALSPIN,Mortal Spin,533,30,POISON,Physical,100,15,100,NearOther,0,abef,"The user performs a spin attack that can also eliminate the effects of such moves as Bind, Wrap, and Leech Seed. This also poisons opposing Pokémon."
 1021,POUNCE,Pounce,044,50,BUG,Physical,100,20,100,NearOther,0,abef,"The user attacks by pouncing on the target. This also lowers the target's Speed stat."
 1022,RUINATION,Ruination,06C,0,DARK,Status,90,10,0,NearOther,0,bef,"The user summons a ruinous disaster. This cuts the target's HP in half."
 1023,SNOWSCAPE,Snowscape,102,0,ICE,Status,0,10,0,BothSides,0,,"The user summons a hail storm lasting five turns. This boosts the Defense stats of Ice types."

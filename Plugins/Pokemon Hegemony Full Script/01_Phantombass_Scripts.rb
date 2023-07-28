@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.0.7"
+  GAME_VERSION = "5.0.8"
   DISABLE_EVS = 917
 end
 
@@ -1030,11 +1030,11 @@ class PokeBattle_Battle
     pbParty(0).each_with_index do |pkmn,i|
       next if !pkmn
       @peer.pbOnLeavingBattle(self,pkmn,@usedInBattle[0][i],true)   # Reset form
-      if pkmn.fainted? && $game_switches[902]
-        $PokemonBag.pbStoreItem(pkmn.item, 1) if pkmn.item
-        $Trainer.party.delete_at(pkmn.index)
-        $PokemonTemp.evolutionLevels.delete_at(pkmn.index)
-      end
+      #if pkmn.fainted? && $game_switches[902]
+      #  $PokemonBag.pbStoreItem(pkmn.item, 1) if pkmn.item
+      #  $Trainer.party.delete_at(pkmn.index)
+      #  $PokemonTemp.evolutionLevels.delete_at(pkmn.index)
+      #end
       if @opponent
         pkmn.item = $olditems[i]
       else
@@ -1270,7 +1270,7 @@ class PokeBattle_Battle
     # Entry hazards
     # Stealth Rock
     if battler.pbOwnSide.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
-       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage? && !battler.hasActiveAbility?(:SCALER)
+       GameData::Type.exists?(:ROCK) && battler.takesEntryHazardDamage? && !battler.hasActiveAbility?(:SCALER) && !battler.hasActiveItem?(:SCALERORB)
       bTypes = battler.pbTypes(true)
       eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
       if !Effectiveness.ineffective?(eff)
@@ -1334,10 +1334,10 @@ class PokeBattle_Battle
        !battler.airborne? && battler.takesEntryHazardDamage?
       pbDisplay(_INTL("{1} was caught in a sticky web!",battler.pbThis))
       if battler.pbCanLowerStatStage?(:SPEED)
-        stickyuser = (battler.pbOwnSide.effects[PBEffects::StickyWebUser] > -1 ?
-          battlers[battler.pbOwnSide.effects[PBEffects::StickyWebUser]] : battler)
-        battler.pbLowerStatStage(:SPEED,1,stickyuser)
-        battler.pbItemStatRestoreCheck
+        if battler.pbCanLowerStatStage?(:SPEED)
+          battler.pbLowerStatStage(:SPEED, 1, nil)
+          battler.pbItemStatRestoreCheck
+        end
       end
     end
     # Battler faints if it is knocked out because of an entry hazard above

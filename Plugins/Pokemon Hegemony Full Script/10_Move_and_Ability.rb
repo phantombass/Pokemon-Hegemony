@@ -5706,7 +5706,7 @@ class PokeBattle_Battle
     battler_side = battler.pbOwnSide
     # Stealth Rock
     if battler_side.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? &&
-       GameData::Type.exists?(:ROCK) && !battler.hasActiveItem?(:HEAVYDUTYBOOTS)
+       GameData::Type.exists?(:ROCK) && !battler.hasActiveItem?(:HEAVYDUTYBOOTS) && !battler.hasActiveItem?(:SCALERORB)
       bTypes = battler.pbTypes(true)
       eff = Effectiveness.calculate(:ROCK, bTypes[0], bTypes[1], bTypes[2])
       if !Effectiveness.ineffective?(eff)
@@ -5714,6 +5714,25 @@ class PokeBattle_Battle
         battler.pbReduceHP(battler.totalhp * eff / 8, false)
         pbDisplay(_INTL("Pointed stones dug into {1}!", battler.pbThis))
         battler.pbItemHPHealCheck
+      end
+    end
+    #Comet Shards
+    if battler.pbHasType?(:COSMIC) && battler.pbOwnSide.effects[PBEffects::CometShards] && !battler.hasActiveItem?(:HEAVYDUTYBOOTS)
+        battler.pbOwnSide.effects[PBEffects::CometShards] = false
+        pbDisplay(_INTL("{1} absorbed the Comet Shards!",battler.pbThis))
+    elsif battler.pbOwnSide.effects[PBEffects::CometShards] && battler.takesIndirectDamage? &&
+       GameData::Type.exists?(:COSMIC) && battler.takesEntryHazardDamage?
+      bTypes = battler.pbTypes(true)
+      eff = Effectiveness.calculate(:COSMIC, bTypes[0], bTypes[1], bTypes[2])
+      if !Effectiveness.ineffective?(eff)
+        eff = eff.to_f / Effectiveness::NORMAL_EFFECTIVE
+        oldHP = battler.hp
+        battler.pbReduceHP(battler.totalhp*eff/8,false)
+        pbDisplay(_INTL("Comet Shards dug into {1}!",battler.pbThis))
+        battler.pbItemHPHealCheck
+        if battler.pbAbilitiesOnDamageTaken(oldHP)   # Switched out
+          return pbOnActiveOne(battler)   # For replacement battler
+        end
       end
     end
     # Spikes
@@ -5920,6 +5939,7 @@ class PokeBattle_Move_512 < PokeBattle_Move
     return false if user.pbOpposingSide.effects[PBEffects::StealthRock]
     return false if user.pbOpposingSide.effects[PBEffects::CometShards]
     return false if @battle.pbWeather == :Windy
+    return false if Restrictions.active?
     return true
   end
   def pbEffectGeneral(user)
@@ -5935,6 +5955,7 @@ class PokeBattle_Move_522 < PokeBattle_Move
   def canSetSpikes?(user)
     return true if user.pbOpposingSide.effects[PBEffects::Spikes] < 3
     return false if @battle.pbWeather == :Windy
+    return false if Restrictions.active?
     return true
   end
   def pbEffectGeneral(user)

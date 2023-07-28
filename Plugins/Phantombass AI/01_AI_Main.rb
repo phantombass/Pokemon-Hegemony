@@ -66,8 +66,9 @@ class PBAI
     avg = (weights.sum / weights.size).to_f
     newweights = weights.map do |e|
       diff = e - avg
-      next [0, ((e - diff * factor) * 100).floor].max rescue FloatDomainError
+      ret = [0, ((e - diff * factor) * 100).floor].max rescue FloatDomainError
       next 0 if ret.nil?
+      next ret
     end
     return newweights
   end
@@ -95,6 +96,20 @@ class PBAI
       end
     end
     return weighted_rand(newweights)
+  end
+
+  def self.move_choice(scores)
+    choices = []
+    idx = 0
+    for i in 0...scores.length
+      choices.push(idx) if scores[i] > 0
+      idx += 1
+    end
+    if choices.length > 1
+      return choices[rand(choices.length)]
+    else
+      return choices[0]
+    end
   end
 
   def self.log(msg)
@@ -709,7 +724,7 @@ class PBAI
           for i in 0...@battler.moves.length
             m = @battler.moves[i]
             sts += 1 if m.statusMove?
-            move.push(i) if m.pp > 0 && !m.nil? && @battler.effects[PBEffects::DisableMove] != m.id && !m.statusMove? && m.id != :FAKEOUT && !immune.include?(i)
+            move.push(i) if m.pp > 0 && !m.nil? && @battler.effects[PBEffects::DisableMove] != m.id && !m.statusMove? && ![:FAKEOUT,:FIRSTIMPRESSION].include?(m.id) && !immune.include?(i)
           end
           if sts == 4 || move == []
             move.push(rand(@battler.moves.length))
@@ -723,10 +738,10 @@ class PBAI
       # Map the numeric skill factor to a -4..1 range (not hard bounds)
       skill = @skill / -50.0 + 1
       # Generate a random choice based on the skill factor and the score weights
-      idx = PBAI.weighted_factored_rand(skill, scores.map { |e| e[1] })
+      idx = PBAI.move_choice(scores.map { |e| e[1] })
       str = "=" * 30
       str += "\nSkill: #{@skill}"
-      weights = PBAI.get_weights(skill, scores.map { |e| e[1] })
+      weights = scores.map { |e| e[1] }
       total = weights.sum
       scores.each_with_index do |e, i|
         finalPerc = total == 0 ? 0 : (weights[i] / total.to_f * 100).round

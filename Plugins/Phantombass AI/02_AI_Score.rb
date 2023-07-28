@@ -2980,6 +2980,9 @@ PBAI::ScoreHandler.add("174") do |score, ai, user, target, move|
   if user.turnCount == 0 && ai.battle.field.terrain != :Psychic && !target.hasActiveAbility?([:ARMORTAIL,:DAZZLING,:QUEENLYMAJESTY])
     score += 200
     PBAI.log("+ 200 for getting priority damage")
+  else
+    score -= 1000
+    PBAI.log("- 1000 to discourage use after turn 1")
   end
   next score
 end
@@ -3094,10 +3097,28 @@ end
 #Knock Off
 PBAI::ScoreHandler.add("0F0") do |score, ai, user, target, move|
   item = target.item
+  dmg = 0
+  if $game_switches[LvlCap::Expert]
+    for i in target.moves
+      dmg += 1 if target.get_move_damage(user,i) >= user.hp
+    end
+  else
+    if target.used_moves != nil
+      for i in target.used_moves
+        dmg += 1 if target.get_move_damage(user,i) >= user.hp
+      end
+    else
+      dmg = 0
+    end
+  end
   next score if item.nil?
   if !user.unlosableItem?(item)
     score += 200
     PBAI.log("+ 200 for removing items")
+  end
+  if target.faster_than?(user) && dmg > 0
+    score -= 1000
+    PBAI.log("- 1000 to prioritize priority moves over removing items since we will die anyway")
   end
   next score
 end
