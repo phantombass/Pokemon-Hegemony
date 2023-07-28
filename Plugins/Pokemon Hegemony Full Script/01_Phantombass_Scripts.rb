@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.0.8"
+  GAME_VERSION = "5.0.9"
   DISABLE_EVS = 917
 end
 
@@ -580,7 +580,7 @@ Events.onEndBattle += proc { |_sender,e|
   $game_switches[89] = false
   $CanToggle = true
   $repel_toggle = true
-  if $game_switches[LvlCap::Ironmon] || $game_switches[902] == true
+  if $game_switches[LvlCap::Ironmon]
     for i in 0...$Trainer.party.length
       k = $Trainer.party.length - 1 - i
       if $Trainer.party[k].hp <= 0
@@ -1030,11 +1030,6 @@ class PokeBattle_Battle
     pbParty(0).each_with_index do |pkmn,i|
       next if !pkmn
       @peer.pbOnLeavingBattle(self,pkmn,@usedInBattle[0][i],true)   # Reset form
-      #if pkmn.fainted? && $game_switches[902]
-      #  $PokemonBag.pbStoreItem(pkmn.item, 1) if pkmn.item
-      #  $Trainer.party.delete_at(pkmn.index)
-      #  $PokemonTemp.evolutionLevels.delete_at(pkmn.index)
-      #end
       if @opponent
         pkmn.item = $olditems[i]
       else

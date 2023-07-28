@@ -1,5 +1,6 @@
 Settings::TIME_SHADING = false
 Settings::MECHANICS_GENERATION = 8
+Settings::HEAL_STORED_POKEMON = false
 Settings::SPEECH_WINDOWSKINS = [
 #    "speech hgss 1",
 #    "speech hgss 2",
