@@ -229,23 +229,7 @@ class PokeBattle_Battle
   #-----------------------------------------------------------------------------
   #  deletes all fainted battlers after battle (if rule is applied)
   #-----------------------------------------------------------------------------
-  alias pbEndOfBattle_ebdx_nuzlocke pbEndOfBattle unless self.method_defined?(:pbEndOfBattle_ebdx_nuzlocke)
-  def pbEndOfBattle
-    ret = pbEndOfBattle_ebdx_nuzlocke
-    # applies permadeath
-    data = EliteBattle.get_data(:NUZLOCKE, :Metrics, :RULES); data = [] if data.nil?
-    if EliteBattle.get(:nuzlocke) && data.include?(:PERMADEATH)
-      for i in 0...$Trainer.party.length
-        k = $Trainer.party.length - 1 - i
-        if $Trainer.party[k].hp <= 0
-          $PokemonBag.pbStoreItem($Trainer.party[k].item, 1) if $Trainer.party[k].item
-          $Trainer.party.delete_at(k)
-          $PokemonTemp.evolutionLevels.delete_at(k)
-        end
-      end
-    end
-    return ret
-  end
+
   #-----------------------------------------------------------------------------
   #  allows for the catching of only one Pokemon per route
   #-----------------------------------------------------------------------------

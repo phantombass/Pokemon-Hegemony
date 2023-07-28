@@ -2141,6 +2141,10 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
       score = 0
       PBAI.log("* 0 because target has Haze")
     end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
+      score += 1000
+      PBAI.log("+ 1000 to set up on the switch")
+    end
   next score
 end
 
@@ -2198,7 +2202,7 @@ PBAI::ScoreHandler.add("02E","01C","511","028") do |score, ai, user, target, mov
     score = 0
     PBAI.log("* 0 because target has Haze")
   end
-  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
     score += 1000
     PBAI.log("+ 1000 to set up on the switch")
   end
@@ -2277,7 +2281,7 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
       score = 0
       PBAI.log("* 0 because target has Haze")
     end
-    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
       score += 1000
       PBAI.log("+ 1000 to set up on the switch")
     end
@@ -2339,7 +2343,7 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
       score = 0
       PBAI.log("* 0 because target has Haze")
     end
-    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
       score += 1000
       PBAI.log("+ 1000 to set up on the switch")
     end
@@ -2400,7 +2404,7 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
     score = 0
     PBAI.log("* 0 because target has Haze")
   end
-  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
     score += 1000
     PBAI.log("+ 1000 to set up on the switch")
   end
@@ -2479,7 +2483,7 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039","028") do |score, ai, user, ta
     score = 0
     PBAI.log("* 0 because target has Haze")
   end
-  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && ai.battle.wildBattle? && user.set_up_score == 0
+  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
     score += 1000
     PBAI.log("+ 1000 to set up on the switch")
   end
