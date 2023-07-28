@@ -794,7 +794,7 @@ end
 class PokeBattle_Move_02D < PokeBattle_MultiStatUpMove
   def initialize(battle,move)
     super
-    @statUp = [:ATTACK,1,:DEFENSE,1,:SPECIAL_ATTACK,1,:SPECIAL_DEFENSE,1,:SPEED,1]
+    @statUp = [:ATTACK,1,:DEFENSE,1,:SPECIAL_ATTACK,1,:SPECIAL_DEFENSE,1,:SPEED,1] if !Restrictions.active?
   end
 end
 
@@ -1729,6 +1729,7 @@ class PokeBattle_Move_05C < PokeBattle_Move
        "05D",   # Sketch
        "069"    # Transform
     ]
+    @moveBlacklist += Restrictions::BANNED_MOVES if Restrictions.active?
   end
 
   def pbMoveFailed?(user,targets)
@@ -1779,6 +1780,7 @@ class PokeBattle_Move_05D < PokeBattle_Move
        # Struggle
        "002"    # Struggle
     ]
+    @moveBlacklist += Restrictions::BANNED_MOVES if Restrictions.active?
   end
 
   def pbMoveFailed?(user,targets)

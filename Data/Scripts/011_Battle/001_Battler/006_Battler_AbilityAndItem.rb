@@ -133,6 +133,7 @@ class PokeBattle_Battler
     return false if @battle.pbCheckOpposingAbility(:UNNERVE,@index)
     return false if @battle.pbCheckOpposingAbility(:ASONEICE,@index)
     return false if @battle.pbCheckOpposingAbility(:ASONEGHOST,@index)
+    return false if self.item == nil
     return true
   end
 
@@ -140,6 +141,7 @@ class PokeBattle_Battler
     return false if !canConsumeBerry?
     return true if @hp <= @totalhp / 4
     return true if @hp <= @totalhp / 2 && (!check_gluttony || hasActiveAbility?(:GLUTTONY))
+    return false if self.item == nil
     return false
   end
 

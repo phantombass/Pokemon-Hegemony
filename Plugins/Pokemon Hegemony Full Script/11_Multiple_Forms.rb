@@ -283,6 +283,19 @@ def area_zero_cave?
   return dox == 16
 end
 
+def apply_restrictions
+  if Restrictions.active?
+    pbEachPokemon { |poke,_box|
+      poke.record_first_moves
+      idx = 0
+      for i in poke.moves
+        poke.forget_move_at_index(idx) if Restrictions::BANNED_MOVES.include?(i.id)
+        idx += 1
+      end
+    }
+  end
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   $game_switches[218] = true
   $game_switches[284] = true if wartime_regigigas_open?
@@ -295,4 +308,5 @@ Events.onMapUpdate+=proc {|sender,e|
   $game_switches[LvlCap::Rival] = false if $game_map.map_id != 251
   $game_switches[LvlCap::Gym] = false if $game_map.map_id != 251
   $game_variables[105] = 100 if ($game_switches[903] == true || $game_switches[902] == true)
+  apply_restrictions
 }
