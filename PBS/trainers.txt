@@ -345,6 +345,41 @@ Pokemon = MONFERNO2,19
 	Item = BERRYJUICE
 	Roles = WINCON
 #-------------------------------
+[LASS,Matilda,6]
+LoseText = "You're great!"
+Pokemon = VOLTORB,19
+	Form = 1
+	Ability = COMPOSURE
+	Nature = MODEST
+	Item = WISEGLASSES
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Moves = ECHOEDVOICE,VOLTSWITCH,MEGADRAIN,SHOCKWAVE
+	Roles = SPECIALBREAKER,OFFENSIVEPIVOT
+Pokemon = ARCHEN,19
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Item = BERRYJUICE
+	Nature = JOLLY
+	Moves = UTURN,ROCKTHROW,PLUCK,ROOST
+	Roles = PHYSICALBREAKER,OFFENSIVEPIVOT
+Pokemon = QWILFISH,19
+	Ability = INTIMIDATE
+	Moves = FLIPTURN,POISONTAIL,AQUAJET,PINMISSILE
+	Nature = ADAMANT
+	EV = 252,252,0,4,0,0
+	IV = 31,31,31,31,31,31
+	Item = BLACKSLUDGE
+	Roles = OFFENSIVEPIVOT,PHYSICALBREAKER
+Pokemon = MONFERNO2,19
+	Ablity = ADAPTABILITY
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Nature = JOLLY
+	Moves = FAKEOUT,FEINTATTACK,STOMPINGTANTRUM,POWERUPPUNCH
+	Item = BERRYJUICE
+	Roles = WINCON
+#-------------------------------
 # Nenox Canyon
 #-------------------------------
 [HIKER,Nob]
