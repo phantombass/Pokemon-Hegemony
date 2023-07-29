@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.0.9"
+  GAME_VERSION = "5.0.10"
   DISABLE_EVS = 917
 end
 
@@ -599,7 +599,7 @@ def pbStartOver(gameover=false)
   end
   $Trainer.heal_party
   if $PokemonGlobal.pokecenterMapId && $PokemonGlobal.pokecenterMapId>=0
-    if $game_switches[902] || $game_switches[LvlCap::Ironmon]
+    if $game_switches[LvlCap::Ironmon]
       gameover = true
     end
     if gameover
