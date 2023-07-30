@@ -898,9 +898,9 @@ class Pokemon
 
   def getMoveList
   	if Randomizer.active?(:MOVES)
-  		return Restrictions.active? ? getRestrictedMoves(self.species) : getRandMoves(self.species)
+  		return Restrictions.active? ? getRestrictedMoves(species_data.id) : getRandMoves(species_data.id)
   	elsif !Randomizer.active?(:MOVES) && Restrictions.active?
-  		return getRestrictedMoves(self.species)
+  		return getRestrictedMoves(species_data.id)
   	else
   		return species_data.moves
   	end
