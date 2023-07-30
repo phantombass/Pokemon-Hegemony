@@ -1077,7 +1077,7 @@ class PBAI
       if !flags_set?(target)
         PBAI.log("No flags found.")
         PBAI.log("Setting flags...")
-        off_move = 4
+        off_move = target.moves.length
         prio = 0
         for i in target.moves
           if i.function == "051"
@@ -1091,15 +1091,17 @@ class PBAI
             prio += 1
           end
         end
-        $spam_block_flags[:haze_flag].push(target) if target.hasActiveAbility?(:UNAWARE)
-        PBAI.log("#{target.name} has been assigned Haze flag")
+        if target.hasActiveAbility?(:UNAWARE)
+          $spam_block_flags[:haze_flag].push(target) 
+          PBAI.log("#{target.name} has been assigned Haze flag")
+        end
         PBAI.log("Offensive Move Count: #{off_move}")
         PBAI.log("Priority Move Count: #{prio}")
         if off_move == 0
           $spam_block_flags[:no_attacking].push(target)
           PBAI.log("#{target.name} has been assigned No Attacking Flag")
         end
-        if off_move < 2
+        if off_move < target.moves.length - 2
           $learned_flags[:should_taunt].push(target)
           PBAI.log("#{target.name} has been assigned Should Taunt flag")
         end
