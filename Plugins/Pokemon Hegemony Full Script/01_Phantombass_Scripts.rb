@@ -929,12 +929,6 @@ class PokeBattle_Battle
 
   def pbEndOfBattle
     $mega_flag = 0
-    $gym_gimmick = false
-    $gym_tailwind = false
-    $gym_weather = false
-    $gym_hazard = false
-    $gym_taunt = false
-    $boss_mon = false
     $game_switches[908] = false
     oldDecision = @decision
     @decision = 4 if @decision==1 && wildBattle? && @caughtPokemon.length>0
@@ -1044,6 +1038,11 @@ class PokeBattle_Battle
     EliteBattle.set(:colorAlpha, 0)
     EliteBattle.set(:smAnim, false)
     $game_switches[89] = false
+    $gym_gimmick = false
+    $gym_tailwind = false
+    $gym_weather = false
+    $gym_hazard = false
+    $gym_taunt = false
     # return final output
     return @decision
   end
