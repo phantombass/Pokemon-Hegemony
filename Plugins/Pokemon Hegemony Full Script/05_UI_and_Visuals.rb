@@ -1981,6 +1981,18 @@ class BattleSceneRoom
   end
 end
 
+module MessageConfig
+  def self.pbSettingToTextSpeed(speed)
+    case speed
+    when 0 then return 2
+    when 1 then return 1
+    when 2 then return -2
+    when 3 then return -10
+    end
+    return TEXT_SPEED || 1
+  end
+end
+
 class PokemonOption_Scene
   def pbStartScene(inloadscreen=false)
     @sprites = {}
@@ -2024,7 +2036,7 @@ class PokemonOption_Scene
            end
          }
        ),
-       EnumOption.new(_INTL("Text Speed"),[_INTL("Slow"),_INTL("Normal"),_INTL("Fast")],
+       EnumOption.new(_INTL("Text Speed"),[_INTL("Slow"),_INTL("Normal"),_INTL("Fast"),_INTL("Instant")],
          proc { $PokemonSystem.textspeed },
          proc { |value|
            $PokemonSystem.textspeed = value
