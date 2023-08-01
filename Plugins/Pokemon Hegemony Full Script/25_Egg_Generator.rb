@@ -9,6 +9,7 @@ def egglocke_generator
   loop do
     pkmn = Randomizer.all_species.sample
     pkmn = GameData::Species.get(pkmn).get_baby_species
+    next if eggs.include?(pkmn)
     pkmn = Pokemon.new(pkmn,1)
     pkmn.calc_stats
     pkmn.name           = _INTL("Egg")
