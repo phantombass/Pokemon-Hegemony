@@ -106,141 +106,89 @@ class NewDexNav
   def getEncData
     mapid = $game_map.map_id
     encounters = GameData::Encounter.get(mapid, $PokemonGlobal.encounter_version)
-    return 0 if encounters == nil
-    enc_type = encounters.types.keys[0]
-    enc_type2 = encounters.types.keys[1]
-    enc_type3 = encounters.types.keys[2]
-    enc_type4 = encounters.types.keys[3]
-    enc_type5 = encounters.types.keys[4]
     encounter_tables = Marshal.load(Marshal.dump(encounters.types))
-    enc_list = encounter_tables[enc_type]
-    enc_list2 = encounter_tables[enc_type2]
-    enc_list3 = encounter_tables[enc_type3]
-    enc_list4 = encounter_tables[enc_type4]
-    enc_list5 = encounter_tables[enc_type5]
-    encdata = []
-    encdata_1 = []
-    encdata_2 = []
-    encdata_3 = []
-    encdata_4 = []
-    encdata_5 = []
-    eLength = enc_list.length
-    eLength2 = enc_list2.length if enc_list2 != nil
-    eLength3 = enc_list3.length if enc_list3 != nil
-    eLength4 = enc_list4.length if enc_list4 != nil
-    eLength5 = enc_list5.length if enc_list5 != nil
-    for i in 0...eLength
-      encdata_1.push(enc_list[i][1])
+    return 0 if encounters == nil
+    encounter = {}
+    enc = -1
+    encounters.types.each do |enc_type|
+     enc += 1
+     encounter.keys[enc] = enc_type[0]
+     encounter[enc_type[0]] = enc_type[1]
     end
-      if enc_list2 != nil
-        for i in 0...eLength2
-          encdata_2.push(enc_list2[i][1])
-        end
-      end
-      if enc_list3 != nil
-        for i in 0...eLength3
-          encdata_3.push(enc_list3[i][1])
-        end
-      end
-      if enc_list4 != nil
-        for i in 0...eLength4
-          encdata_4.push(enc_list4[i][1])
-        end
-      end
-      if enc_list5 != nil
-        for i in 0...eLength5
-          encdata_5.push(enc_list5[i][1])
-        end
-      end
+    encdata = []
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
       if GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :StairLeft || GameData::TerrainTag.get(pLoc).id == :StairRight
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
           $encTerr = :OldRod
         else
-          $encTerr = :Land if $PokemonEncounters.has_land_encounters?
-          $encTerr = :Cave if !$PokemonEncounters.has_land_encounters?
+          if $PokemonEncounters.has_land_encounters?
+            if PBDayNight.isNight?
+              $encTerr = :LandNight
+              $encTerr = :Land if !encounter.has_key?(:LandNight)
+            else
+              $encTerr = :Land
+            end
+          end
+          if !$PokemonEncounters.has_land_encounters?
+            if PBDayNight.isNight?
+              $encTerr = :CaveNight
+              $encTerr = :Cave if !encounter.has_key?(:CaveNight) 
+            else
+              $encTerr = :Cave
+            end
+          end
         end
       elsif GameData::TerrainTag.get(pLoc).id == :Rock
         if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
           $encTerr = :OldRod
         else
-          $encTerr = :Cave
-        end
-      elsif GameData::TerrainTag.get(pLoc).id == :HighBridge
-        if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          $encTerr = :OldRod
-        else
-          $encTerr = :HighBridge
-        end
-      elsif GameData::TerrainTag.get(pLoc).id == :Graveyard
-        if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          $encTerr = :OldRod
-        else
-          $encTerr = :Graveyard
-        end
-      elsif GameData::TerrainTag.get(pLoc).id == :Snow
-        if $MapFactory.getFacingTerrainTag== :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          $encTerr = :OldRod
-        else
-          $encTerr = :Snow if $PokemonEncounters.has_snow_encounters?
-        end
-      elsif GameData::TerrainTag.get(pLoc).id == :Sandy || GameData::TerrainTag.get(pLoc).id == :Sand
-        if $MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater
-          $encTerr = :OldRod
-        else
-          $encTerr = :Sandy if $PokemonEncounters.has_sandy_encounters?
-          $encTerr = :Cave if $PokemonEncounters.has_cave_encounters? && !$PokemonEncounters.has_sandy_encounters?
-          $encTerr = :Land if !$PokemonEncounters.has_cave_encounters? && !$PokemonEncounters.has_sandy_encounters?
+          if $PokemonEncounters.has_land_encounters?
+            if PBDayNight.isNight?
+              $encTerr = :LandNight
+              $encTerr = :Land if !encounter.has_key?(:LandNight)
+            else
+              $encTerr = :Land
+            end
+          end
+          if !$PokemonEncounters.has_land_encounters?
+            if PBDayNight.isNight?
+              $encTerr = :CaveNight
+              $encTerr = :Cave if !encounter.has_key?(:CaveNight) 
+            else
+              $encTerr = :Cave
+            end
+          end
         end
       elsif GameData::TerrainTag.get(pLoc).can_surf
         $encTerr = :OldRod
       elsif GameData::TerrainTag.get(pLoc).id == :Bridge
         $encTerr = :Water
       end
-      terr = 0
-      case $encTerr
-      when enc_type
-        terr = 0
-      when enc_type2
-        terr = 1
-      when enc_type3
-        terr = 2
-      when enc_type4
-        terr = 3
-      when enc_type5
-        terr = 4
-      end
       if $encTerr == :OldRod
-        terr += 4
-      end
-      case terr
-      when 0
-        encdata.push(encdata_1) 
-      when 1
-        encdata.push(encdata_2)
-      when 2
-        encdata.push(encdata_3)
-      when 3
-        encdata.push(encdata_4)
-      when 4
-        encdata.push(encdata_1)
-        encdata.push(encdata_2)
-        encdata.push(encdata_3)
-      when 5
-        encdata.push(encdata_1)
-        encdata.push(encdata_2)
-        encdata.push(encdata_3)
-        encdata.push(encdata_4)
-      when 6
-        encdata.push(encdata_2)
-        encdata.push(encdata_3)
-        encdata.push(encdata_4)
-        encdata.push(encdata_5)
+        encdata.push(encounter[:OldRod])
+        encdata.push(encounter[:GoodRod])
+        encdata.push(encounter[:SuperRod])
+        encdata.push(encounter[:Water])
+      else
+        encdata.push(encounter[$encTerr]) if encounter.has_key?($encTerr)
       end
       encdata = encdata.flatten
       encdata = encdata.uniq
       encdata = encdata.compact
-
+      idx = -1
+      for i in encdata
+        idx += 1
+        if i.is_a?(Integer)
+          encdata.delete_at(idx)
+        end
+      end
+      idx = -1
+      for i in encdata
+        idx += 1
+        if !i.is_a?(Symbol)
+          encdata.delete_at(idx)
+        end
+      end
       if $encTerr == nil
         @encarray = [7]
       else
@@ -401,14 +349,21 @@ class NewDexNav
       $game_variables[400] = navRand
       mon = GameData::Species.get_species_form(searchmon,form)
       randAbil = []
-
+      restAbil = []
       if Randomizer.active?(:ABILITIES)
         for i in 0..2
           randAbil.push(getRandAbilities(searchmon,i))
         end
       end
+      if Restrictions.active?
+        for i in 0..2
+          restAbil.push(getRestrictedAbility(searchmon,i))
+        end
+      end
       navAbil1 = !Randomizer.active?(:ABILITIES) ? GameData::Species.get_species_form(searchmon,form).abilities : [randAbil[0],randAbil[1]]
       hAbil = !Randomizer.active?(:ABILITIES) ? GameData::Species.get_species_form(searchmon,form).hidden_abilities : randAbil[2]
+      navAbil1 = Restrictions.active? ? [restAbil[0],restAbil[1]] : navAbil1
+      hAbil = Restrictions.active? ? restAbil[2] : hAbil
       navItemCommon = GameData::Species.get(searchmon).wild_item_common
       navItemUncommon = GameData::Species.get(searchmon).wild_item_uncommon
       navItemRare = GameData::Species.get(searchmon).wild_item_rare
@@ -421,7 +376,7 @@ class NewDexNav
         $game_variables[401] = navItemRare
       end
       navItem = $game_variables[401]
-      if !Randomizer.active?(:ABILITIES)
+      if !Randomizer.active?(:ABILITIES) && !Restrictions.active?
         hAbil = hAbil.length == 0 ? nil : GameData::Species.get_species_form(searchmon,form).hidden_abilities
       else
         hAbil = hAbil == nil ? nil : randAbil[2]
@@ -429,7 +384,7 @@ class NewDexNav
           hAbil = randAbil[r]
         end
       end
-      if !Randomizer.active?(:ABILITIES)
+      if !Randomizer.active?(:ABILITIES) && !Restrictions.active?
         if hAbil == nil
           if navAbil1.length == 1
             navAbil = [navAbil1[0],navAbil1[0],navAbil1[0]]
@@ -517,7 +472,15 @@ Events.onWildPokemonCreate+=proc {|sender,e|
     if $currentDexSearch != nil
       mapid = $game_map.map_id
       pLoc = $game_map.terrain_tag($game_player.x,$game_player.y)
-      if GameData::TerrainTag.get(pLoc).id == $encTerr || (GameData::TerrainTag.get(pLoc).id == :Sand && $encTerr == :Sandy) || ((GameData::TerrainTag.get(pLoc).id == :Rock || GameData::TerrainTag.get(pLoc).id == :Sand || GameData::TerrainTag.get(pLoc).id == :None) && $encTerr == :Cave) ||((GameData::TerrainTag.get(pLoc).id == :Grass || GameData::TerrainTag.get(pLoc).id == :None || GameData::TerrainTag.get(pLoc).id == :Sand) && $encTerr == :Land) || (($MapFactory.getFacingTerrainTag == :Water || $MapFactory.getFacingTerrainTag == :StillWater || $MapFactory.getFacingTerrainTag == :DeepWater) && $encTerr == :OldRod && (($PokemonBag.pbQuantity(:OLDROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :OldRod) || ($PokemonBag.pbQuantity(:GOODROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :GoodRod) || ($PokemonBag.pbQuantity(:SUPERROD)>0 && GameData::EncounterType.get($PokemonTemp.encounterType).id == :SuperRod)))
+      encounters = GameData::Encounter.get(mapid, $PokemonGlobal.encounter_version)
+      encounter = {}
+      enc = -1
+      encounters.types.each do |enc_type|
+       enc += 1
+       encounter.keys[enc] = enc_type[0]
+       encounter[enc_type[0]] = enc_type[1]
+      end
+      if encounter[GameData::EncounterType.get($PokemonTemp.encounterType).id].include?($currentDexSearch[0])
         pokemon.species = $currentDexSearch[0]
         $chainNav = [$currentDexSearch[0],0] if $chain == nil
         $chain = 0 if $chain == nil

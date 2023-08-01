@@ -296,6 +296,14 @@ def apply_restrictions
   end
 end
 
+def show_mission
+  if $mission_show
+    scene = Mission_Overlay.new
+    scene.pbShow
+    $mission_show = false
+  end
+end
+
 Events.onMapUpdate+=proc {|sender,e|
   $game_switches[218] = true
   $game_switches[284] = true if wartime_regigigas_open?
@@ -309,4 +317,5 @@ Events.onMapUpdate+=proc {|sender,e|
   $game_switches[LvlCap::Gym] = false if $game_map.map_id != 251
   $game_variables[105] = 100 if ($game_switches[903] == true || $game_switches[902] == true)
   apply_restrictions
+  show_mission
 }
