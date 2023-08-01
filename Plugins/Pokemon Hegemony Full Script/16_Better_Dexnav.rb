@@ -480,7 +480,9 @@ Events.onWildPokemonCreate+=proc {|sender,e|
        encounter.keys[enc] = enc_type[0]
        encounter[enc_type[0]] = enc_type[1]
       end
-      if encounter[GameData::EncounterType.get($PokemonTemp.encounterType).id].include?($currentDexSearch[0])
+      encdata = encounter[GameData::EncounterType.get($PokemonTemp.encounterType).id]
+      encdata = encdata.flatten
+      if encdata.include?($currentDexSearch[0])
         pokemon.species = $currentDexSearch[0]
         $chainNav = [$currentDexSearch[0],0] if $chain == nil
         $chain = 0 if $chain == nil
