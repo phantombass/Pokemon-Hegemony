@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.0.13"
+  GAME_VERSION = "5.0.14"
   DISABLE_EVS = 917
 end
 
@@ -26,6 +26,7 @@ def reset_custom_variables
   $appliance = nil
   $currentDexSearch = nil
   $repel_toggle = false
+  $mission_show = false
   $mega_flag = 0
 end
 class Game_System
@@ -133,6 +134,11 @@ Events.onMapChange += proc {| sender, e |
     scene.pbEndScene if scene != nil
 }
 
+Events.onAction += proc {| sender, e |
+    scene = Mission_Overlay.new
+    scene.pbEndScene if scene != nil
+}
+
 class PokemonLoadScreen
   def pbStartLoadScreen
     commands = []
@@ -171,6 +177,7 @@ class PokemonLoadScreen
         reset_custom_variables
         $PokemonGlobal.repel = 0
         $repel_toggle = true
+        $mission_show = true
         return
       when cmd_new_game
         @scene.pbEndScene
