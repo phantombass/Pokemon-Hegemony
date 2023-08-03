@@ -89,7 +89,7 @@ BattleVS         = plasmaSM
 [ROCKETBOSS,Armand]
 BattleScript	 = MILITIA1
 #-------------------------------
-[ROCKETBOSS,Armand,6]
+[ROCKETBOSS,Armand,8]
 BattleScript	 = MILITIA2
 #-------------------------------
 [ARMYBOSS]
