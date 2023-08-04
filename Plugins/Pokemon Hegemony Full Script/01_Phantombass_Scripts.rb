@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.0.16"
+  GAME_VERSION = "5.0.17"
   DISABLE_EVS = 917
 end
 
@@ -581,6 +581,8 @@ Events.onWildPokemonCreate+=proc {|sender,e|
   if pokemon.shiny_locked?
     pokemon.shiny = false
   end
+  scene = Mission_Overlay.new
+  scene.pbEndScene if scene != nil
 }
 
 Events.onEndBattle += proc { |_sender,e|

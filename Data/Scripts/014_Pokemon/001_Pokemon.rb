@@ -481,11 +481,11 @@ class Pokemon
       sp_data = species_data
       abil_index = ability_index
       if abil_index >= 2   # Hidden ability
-        @ability = Randomizer.abilites.nil? ? sp_data.hidden_abilities[abil_index - 2] : getRandAbilities(species,2)
+        @ability = sp_data.hidden_abilities[abil_index - 2]
         abil_index = (@personalID & 1) if !@ability
       end
       if !@ability   # Natural ability or no hidden ability defined
-        @ability = Randomizer.abilites.nil? ? (sp_data.abilities[abil_index] || sp_data.abilities[0]) : (getRandAbilities(species,abil_index) || getRandAbilities(species,0))
+        @ability = sp_data.abilities[abil_index] || sp_data.abilities[0]
       end
     end
     return @ability
@@ -517,7 +517,7 @@ class Pokemon
   def getAbilityList
     ret = []
     sp_data = species_data
-    if Randomizer.active?(:ABILITIES)
+    if Randomizer.active?(:ABILITIES) && !$game_switches[RandBoss::Var]
       array = Randomizer.abilities
       ability = array[:abilities][sp_data.id_number - 1]
       ability.each_with_index { |a, i| ret.push([a, i]) if a }
