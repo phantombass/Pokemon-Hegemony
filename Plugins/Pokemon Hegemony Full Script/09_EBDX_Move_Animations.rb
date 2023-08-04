@@ -4139,6 +4139,7 @@ EliteBattle.defineMoveAnimation(:COSMICFURY) do
   @sprites["battlebg"].focus
   pbDisposeSpriteHash(fp)
 end
+=begin
 EliteBattle.defineMoveAnimation(:CHILLINGCRY) do
   indexes = []
   max = @battle.pbSideSize(@targetIsPlayer ? 0 : 1)
@@ -4279,6 +4280,7 @@ EliteBattle.defineMoveAnimation(:CHILLINGCRY) do
   @vector.inc = 0.2
   pbDisposeSpriteHash(fp)
 end
+=end
 EliteBattle.defineMoveAnimation(:POLLENPUFF) do
   # configure animation
   @vector.set(@scene.getRealVector(@userIndex, @userIsPlayer))
