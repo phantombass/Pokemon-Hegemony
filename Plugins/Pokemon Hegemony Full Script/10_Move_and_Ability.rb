@@ -54,7 +54,11 @@ class Pokemon
     baby = GameData::Species.get(species).get_baby_species
     form = GameData::Species.get(baby).form
     egg = GameData::Species.get_species_form(baby,form).egg_moves
-    return egg
+    list = []
+    for move in egg
+      list.push(move) if !Restrictions::BANNED_MOVES.include?(move)
+    end
+    return Restrictions.active? ? list : egg
   end
   def has_egg_move?
     return false if egg? || shadowPokemon?
