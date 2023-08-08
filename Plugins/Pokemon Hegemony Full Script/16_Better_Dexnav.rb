@@ -106,7 +106,7 @@ class NewDexNav
   def getEncData
     mapid = $game_map.map_id
     encounters = GameData::Encounter.get(mapid, $PokemonGlobal.encounter_version)
-    encounter_tables = Marshal.load(Marshal.dump(encounters.types))
+    encounter_tables = encounters.nil? ? nil : Marshal.load(Marshal.dump(encounters.types))
     return 0 if encounters == nil
     encounter = {}
     enc = -1
