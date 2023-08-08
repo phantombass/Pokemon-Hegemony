@@ -30,6 +30,7 @@ class PBAI
   	  :double_intimidate => [], # Target pivots between 2 Intimidators
       :protect_switch => [],
       :no_priority_flag => [],
+      :fake_out_ghost_flag => [],
       :choice => nil
   	}
     $learned_flags = {
@@ -829,6 +830,10 @@ class PBAI
                 break if @battler.moves[ind] == choice[0]
             end
           choice[0] = ind
+        end
+        lmov = @battler.moves[choice[0]]
+        if lmov.id == :FAKEOUT
+            $spam_block_flags[:fake_out_ghost_flag].push(lmov.id)
         end
         if @battle.doublebattle
           move = @battler.moves[choice[0]]

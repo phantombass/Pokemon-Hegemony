@@ -180,6 +180,7 @@ class PokeBattle_Scene
         end
         $spam_block_flags[:triple_switch].push(:Switch)
         $spam_block_flags[:protect_switch].push(:Switch)
+        $spam_block_flags[:fake_out_ghost_flag].push(:Switch) if (modParty[idxParty].hasType?(:GHOST) || modParty[idxParty].hasAbility?([:ARMORTAIL,:DAZZLING,:QUEENLYMAJESTY,:PSYCHICSURGE]))
         $spam_block_flags[:choice] = modParty[idxParty]
         break if yield idxPartyRet, switchScreen
       elsif cmdSummary>=0 && command==cmdSummary   # Summary

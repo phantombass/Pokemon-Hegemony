@@ -417,7 +417,7 @@ class PokemonPauseMenu
           }
          end
         elsif $game_variables[34] == 1
-          if ($game_switches[209] == true && $game_switches[902] == true) || ($game_switches[209] == true && $game_switches[197] == true) || $game_map.map_id == 367
+          if ($game_switches[209] == true && $game_switches[197] == true) || $game_map.map_id == 367
             pbMessage(_INTL("You cannot use this in here."))
             pbShowMenu
           else
