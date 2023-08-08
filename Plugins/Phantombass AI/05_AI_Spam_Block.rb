@@ -138,6 +138,15 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag
 end
 
+#Switch to Ghost on Fake Out
+PBAI::SpamHandler.add do |flag,ai,battler,target|
+	next flag if $spam_block_triggered
+	protect_switch = $spam_block_flags[:fake_out_ghost_flag]
+	next flag if protect_switch.length < 2
+	flag = protect_switch.length == 2
+	next flag
+end
+
 #Boss Pokemon
 PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag if $spam_block_triggered

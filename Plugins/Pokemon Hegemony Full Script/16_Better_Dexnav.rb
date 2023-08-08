@@ -575,8 +575,12 @@ class DexNav
     maps = GameData::MapMetadata.try_get($game_map.map_id)
     form = GameData::Species.get(species).form
     egg = GameData::Species.get_species_form(baby,form).egg_moves
-    moveChoice = rand(egg.length)
-    moves = egg[moveChoice]
+    egg_restrict = []
+    for move in egg
+      egg_restrict.push(move) if !Restrictions::BANNED_MOVES.include?(move)
+    end
+    moveChoice = Restrictions.active? ? rand(egg_restrict.length) : rand(egg.length)
+    moves = Restrictions.active? ? egg_restrict[moveChoice] : egg[moveChoice]
     return moves
   end
 end
