@@ -106,7 +106,7 @@ class NewDexNav
   def getEncData
     mapid = $game_map.map_id
     encounters = GameData::Encounter.get(mapid, $PokemonGlobal.encounter_version)
-    encounter_tables = Marshal.load(Marshal.dump(encounters.types))
+    encounter_tables = encounters.nil? ? nil : Marshal.load(Marshal.dump(encounters.types))
     return 0 if encounters == nil
     encounter = {}
     enc = -1
@@ -575,8 +575,12 @@ class DexNav
     maps = GameData::MapMetadata.try_get($game_map.map_id)
     form = GameData::Species.get(species).form
     egg = GameData::Species.get_species_form(baby,form).egg_moves
-    moveChoice = rand(egg.length)
-    moves = egg[moveChoice]
+    egg_restrict = []
+    for move in egg
+      egg_restrict.push(move) if !Restrictions::BANNED_MOVES.include?(move)
+    end
+    moveChoice = Restrictions.active? ? rand(egg_restrict.length) : rand(egg.length)
+    moves = Restrictions.active? ? egg_restrict[moveChoice] : egg[moveChoice]
     return moves
   end
 end
