@@ -1,5 +1,5 @@
 module Phantombass_AI
-  VERSION = "3.1"
+  VERSION = "3.2"
 end
 
 class PBAI
@@ -571,6 +571,7 @@ class PBAI
         end
       end
       flag = false if !$game_switches[LvlCap::Expert]
+      flag = false if @battle.doublebattle
       PBAI.log("Spam Block Triggered") if flag
       return flag
     end
@@ -579,7 +580,7 @@ class PBAI
       # An array of scores in the format of [move_index, score, target]
       scores = []
       target_choice = $spam_block_flags[:choice]
-      spam_block = @ai.battle.doublebattle ? false : check_spam_block
+      spam_block = check_spam_block
       $target = []
       $target_ind = -1
       rand_trigger = false
