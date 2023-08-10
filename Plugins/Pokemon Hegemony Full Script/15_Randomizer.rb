@@ -889,11 +889,8 @@ class Pokemon
         abil_index = (@personalID & 1) if !@ability
       end
       if !@ability  # Natural ability or no hidden ability defined
-        @ability = !Randomizer.active?(:ABILITIES) ? (sp_data.abilities[abil_index] || sp_data.abilities[0]) : (getRandAbilities(abilities[:pokemon][sp_data.id_number-1],abil_index) || getRandAbilities(abilities[:abilities][sp_data.id_number-1],0))
+        @ability = (!Randomizer.active?(:ABILITIES) || $game_switches[RandBoss::Var]) ? (sp_data.abilities[abil_index] || sp_data.abilities[0]) : (getRandAbilities(abilities[:pokemon][sp_data.id_number-1],abil_index) || getRandAbilities(abilities[:abilities][sp_data.id_number-1],0))
         @ability = (getRestrictedAbility(abilities[:pokemon][sp_data.id_number-1],abil_index) || getRestrictedAbility(abilities[:pokemon][sp_data.id_number-1],0)) if Restrictions.active?
-      end
-      if !@ability && $game_switches[RandBoss::Var] && @owner.is_a?(NPCTrainer)
-      	@ability = sp_data.abilities[abil_index] || sp_data.abilities[0]
       end
     end
     return @ability
