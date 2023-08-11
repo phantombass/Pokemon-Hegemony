@@ -6755,22 +6755,21 @@ class PokeBattle_Battle
   end
 
   def pbEndPrimordialWeather
-    return if $gym_weather == true
     oldWeather = @field.weather
     # End Primordial Sea, Desolate Land, Delta Stream
     case @field.weather
     when :HarshSun
-      if !pbCheckGlobalAbility(:DESOLATELAND) && @field.weather != :HarshSun
+      if !pbCheckGlobalAbility(:DESOLATELAND)
         @field.weather = :None
         pbDisplay("The harsh sunlight faded!")
       end
     when :HeavyRain
-      if !pbCheckGlobalAbility(:PRIMORDIALSEA) && @field.weather != :HeavyRain
+      if !pbCheckGlobalAbility(:PRIMORDIALSEA)
         @field.weather = :None
         pbDisplay("The heavy rain has lifted!")
       end
     when :StrongWinds
-      if !pbCheckGlobalAbility(:DELTASTREAM) && @field.weather != :StrongWinds
+      if !pbCheckGlobalAbility(:DELTASTREAM)
         @field.weather = :None
         pbDisplay("The mysterious air current has dissipated!")
       end
@@ -6779,7 +6778,7 @@ class PokeBattle_Battle
       # Check for form changes caused by the weather changing
       eachBattler { |b| b.pbCheckFormOnWeatherChange }
       # Start up the default weather
-      pbStartWeather(nil,$game_screen.weather_type) if $game_screen.weather_type!= :None
+      pbStartWeather(nil,@field.defaultWeather) if @field.defaultWeather != :None
     end
   end
 end
