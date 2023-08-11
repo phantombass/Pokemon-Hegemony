@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.0.22"
+  GAME_VERSION = "5.0.23"
   DISABLE_EVS = 917
 end
 
@@ -567,6 +567,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
   abilRand = rand(100)
   if abilRand > 80 && $game_map.map_id == 91 && $currentDexSearch == nil
     pokemon.ability_index = 2
+    pokemon.level = 15
   end
   if $game_map.map_id == 78 || $game_map.map_id == 223 || $game_map.map_id == 226
     pokemon.form = 1
