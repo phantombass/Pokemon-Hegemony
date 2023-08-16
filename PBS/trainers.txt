@@ -7968,6 +7968,29 @@ Pokemon = INFERNAPE,80
 	Item = INFERNITE
 	Moves = CALMMIND,HEATWAVE,SLACKOFF,AURASPHERE
 #-------------------------------
+[ARMYBOSS,Ahab,7]
+LoseText = "Hmmph."
+Pokemon = GLALIE2,79
+	Nature = TIMID
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Ability = EARTHEATER
+	Item = THROATSPRAY
+	Moves = PALEOBEAM,DEATHTOLL,EARTHPOWER,PROTECT
+Pokemon = URSHIFU,79
+	Nature = ADAMANT
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Ability = UNSEENFIST
+	Item = LEFTOVERS
+	Moves = WICKEDBLOW,CLOSECOMBAT,SUBSTITUTE,IRONHEAD
+Pokemon = INFERNAPE,80
+	Nature = TIMID
+	EV = 0,0,0,252,252,4
+	IV = 31,31,31,31,31,31
+	Item = INFERNITE
+	Moves = CALMMIND,HEATWAVE,SLACKOFF,AURASPHERE
+#-------------------------------
 [OFFCORP,Bruce]
 LoseText = "Oh. That's unfortunate."
 Pokemon = OCTILLERY2,79
@@ -8021,6 +8044,32 @@ Pokemon = LOPUNNY,80
 	Moves = FAKEOUT,RETURN,DRAINPUNCH,ICEPUNCH
 #-------------------------------
 [OFFCORP,Bruce,4]
+LoseText = "Oh. That's unfortunate."
+Pokemon = OVERQWIL2,79
+	Nature = TIMID
+	EV = 0,0,0,252,252,4
+	IV = 31,0,31,31,31,31
+	Ability = STEAMENGINE
+	Item = EARTHEATERORB
+	Moves = SCALD,POLARITYPULSE,HEATWAVE,PROTECT
+Pokemon = KYUREM,79
+	Form = 1
+	Nature = TIMID
+	EV = 0,0,4,252,252,0
+	IV = 31,31,31,31,31,31
+	Ability = TURBOBLAZE
+	Item = LIFEORB
+	Moves = CHILLINGCRY,ROOST,FUSIONFLARE,DRACOMETEOR
+Pokemon = LOPUNNY,80
+	Nature = ADAMANT
+	EV = 0,252,0,252,0,4
+	IV = 31,31,31,31,31,31
+	Ability = GUTS
+	Happiness = 255
+	Item = LOPUNNITE
+	Moves = FAKEOUT,RETURN,DRAINPUNCH,ICEPUNCH
+#-------------------------------
+[OFFCORP,Bruce,6]
 LoseText = "Oh. That's unfortunate."
 Pokemon = OVERQWIL2,79
 	Nature = TIMID
@@ -11342,7 +11391,7 @@ Pokemon = ALCREMIE,95
 #-------------------------------
 # Post-Game Boss Battles
 #-------------------------------
-[OFFCORP,Bruce,7]
+[OFFCORP,Bruce,8]
 LoseText = "Sigh...here again, eh?"
 Pokemon = DARMANITAN,93
 	Form = 1
@@ -11390,7 +11439,7 @@ Pokemon = LOPUNNY,93
 	Item = LOPUNNITE
 	Moves = FAKEOUT,RETURN,DRAINPUNCH,ICEPUNCH
 #-------------------------------
-[OFFCORP,Bruce,9]
+[OFFCORP,Bruce,10]
 LoseText = "Sigh...here again, eh?"
 Pokemon = DARMANITAN,94
 	Form = 1
@@ -11444,7 +11493,7 @@ Pokemon = LOPUNNY,94
 	Moves = FAKEOUT,RETURN,DRAINPUNCH,ICEPUNCH
 	Roles = WINCON
 #-------------------------------
-[OFFCORP,Bruce,11]
+[OFFCORP,Bruce,12]
 LoseText = "Sigh...here again, eh?"
 Pokemon = DARMANITAN,95
 	Form = 1

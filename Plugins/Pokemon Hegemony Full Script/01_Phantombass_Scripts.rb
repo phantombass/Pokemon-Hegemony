@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.0.24"
+  GAME_VERSION = "5.0.25"
   DISABLE_EVS = 917
 end
 
@@ -616,7 +616,7 @@ def pbStartOver(gameover=false)
       pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back to a Pokémon Center."))
       pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]Pokémon Hegemony will now close..."))
       SaveData.delete_file
-      raise SystemExit.new
+      $game_temp.title_screen_calling = true
     else
       if $game_switches[73] == true
         if $game_map.map_id != 144 && $game_map.map_id != 145
