@@ -2586,9 +2586,7 @@ class HallOfFame_Scene
     if $game_switches[900] && !$game_switches[903]
       mode = " Hard Mode"
     elsif $game_switches[900] && $game_switches[903]
-      mode = " Expert Mode"
-    elsif $game_switches[902]
-      mode = " Insane Mode"
+      mode = $game_switches[902] ? " Insane Mode" : " Expert Mode"
     else
       mode = " Normal Mode"
     end
@@ -2599,7 +2597,7 @@ class HallOfFame_Scene
        Graphics.width/2,Graphics.height-88,2,BASECOLOR,SHADOWCOLOR]])
     pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}",post,mode,kaizo,ironmon),
           Graphics.width/2,Graphics.height-64,2,BASECOLOR,SHADOWCOLOR]])
-    pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}",randomizer,min,inverse,egg,nuzlocke),
+    pbDrawTextPositions(overlay,[[_INTL("{1}{2}{3}{4}{5}{6}",randomizer,evs,min,inverse,egg,nuzlocke),
           Graphics.width/2,Graphics.height-40,2,BASECOLOR,SHADOWCOLOR]])
   end
 end
