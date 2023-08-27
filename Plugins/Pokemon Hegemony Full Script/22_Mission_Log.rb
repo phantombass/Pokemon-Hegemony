@@ -7,7 +7,6 @@ class Mission_Overlay
     $mission_steps = 0
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 100000
-    $viewport_mission = @viewport
     @sprites = {}
 
     skin = MessageConfig.pbGetSystemFrame
@@ -58,7 +57,6 @@ class Mission_Overlay
 end
 
 def pbMissionUpdate(num)
-  scene = Mission_Overlay.new
   case num
   when 1
     $game_variables[Mission::Main] += 1
@@ -72,7 +70,6 @@ def pbMissionUpdate(num)
 end
 
 def pbNewMission(num)
-  scene = Mission_Overlay.new
   case num
   when 1
     $game_variables[Mission::Main] = 1
@@ -94,7 +91,6 @@ def pbNewMission(num)
 end
 
 def pbCompleteMission(num)
-  scene = Mission_Overlay.new
   case num
   when 1
     $PokemonGlobal.quests.completeQuest(:Quest1,"56946F5A",false)
@@ -117,6 +113,8 @@ end
 Events.onStepTaken += proc {
   if $mission_steps != 0
     $mission_steps -= 1
-    $viewport_mission.dispose if $mission_steps == 0
+    $mission.pbEndScene if $mission_steps == 0
   end
 }
+
+$mission = Mission_Overlay.new

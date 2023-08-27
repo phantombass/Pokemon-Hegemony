@@ -32,8 +32,8 @@ end
 
 class PokemonPauseMenu_Scene
   def pbStartScene
+    $mission.pbEndScene if !$mission.nil?
     if $game_switches[350] == false
-      $viewport_mission.dispose if !$viewport_mission.nil?
       @viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
       @viewport.z = 99999
       capColor = "90F090,000000"
@@ -770,7 +770,7 @@ class PokemonSummary_Scene
     pkmn = @pokemon
     if $game_variables[969] != 0 || $game_variables[Restriction_Info::Abilities] != 0
       spec_num = GameData::Species.get_species_form(pkmn.species, pkmn.form_simple)
-      array = !Randomizer.active?(:ABILITIES) ? $game_variables[Restriction_Info::Abilities] : $game_variables[969]
+      array = !Randomizer.active?(:ABILITIES) ? Restrictions.abilities : Randomizer.abilities
       ability = array[:abilities][spec_num.id_number - 1]
       habil = ability[2]
     end

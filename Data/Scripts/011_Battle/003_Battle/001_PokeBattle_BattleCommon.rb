@@ -213,7 +213,7 @@ module PokeBattle_BattleCommon
     elsif battler.status != :NONE
       x *= 1.5
     end
-    if $game_switches[75] || $game_switches[LvlCap::Ironmon]
+    if $game_switches[295] || $game_switches[LvlCap::Ironmon]
       x *= 10000
     end
     x = x.floor
