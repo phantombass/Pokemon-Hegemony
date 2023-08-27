@@ -237,6 +237,9 @@ class Randomizer
 	      :BAROMETRIC,
 	      :DESERTSTORM,
 	      :ASHCOVER,
+	      :SOOTSURGE,
+	      :WINDSURGE,
+	      :ASPIRANT,
 	      :ASHRUSH,
 	      :MUGGYAIR,
 	      :FIGHTERSWRATH,
@@ -255,7 +258,8 @@ class Randomizer
 	      # Abilities intended to be inherent properties of a certain species
 	      :COMATOSE,
 	      :RKSSYSTEM,
-	      :GODLIKEPOWER
+	      :GODLIKEPOWER,
+	      :HUNGERSWITCH
 	    ]
 	    return if !pkmn.is_a?(Hash)
 	    return if !ability.is_a?(Hash)
@@ -447,9 +451,11 @@ class Randomizer
 	  	new = {}
 	    array = Randomizer.all_species
 	    # shuffles up species indexes to load a different one
+	    excl = $game_switches[906] ? nil : [:SPINDA]
 	    for org in Randomizer.all_species
 	      i = rand(array.length)
 	      new[org] = array[i]
+	      new[org] = array[i+1] if excl.include?(array[i])
 	      array.delete_at(i)
 	    end
 	    @static = new
@@ -463,9 +469,11 @@ class Randomizer
 	  	new = {}
 	    array = Randomizer.all_species
 	    # shuffles up species indexes to load a different one
+	    excl = $game_switches[906] ? nil : [:SPINDA]
 	    for org in Randomizer.all_species
 	      i = rand(array.length)
 	      new[org] = array[i]
+	      new[org] = array[i+1] if excl.include?(array[i])
 	      array.delete_at(i)
 	    end
 	    @gift = new
@@ -496,10 +504,10 @@ class Randomizer
 		    species = pokemon.species
 		  end
 		  # if defined as an exclusion rule, species will not be randomized
-		    excl = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
+		    excl = $game_switches[906] ? nil : [:SPINDA]
 	  	for mon in @gift.keys
 	  		next if mon != species
-	  		next if excl.include?(mon)
+	  		next if excl.include?(@gift[mon])
 	  		species = @gift[mon]
 	  	end
 	    if !pokemon.nil?
@@ -519,7 +527,7 @@ class Randomizer
 		    species = pokemon.species
 		  end
 		# if defined as an exclusion rule, species will not be randomized
-		excl = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
+		excl = $game_switches[906] ? nil : [:SPINDA]
 	    if !pokemon.nil?
 	      pokemon.species = species
 	      pokemon.calc_stats
@@ -535,7 +543,7 @@ class Randomizer
 		    species = pokemon.species
 		  end
 		  # if defined as an exclusion rule, species will not be randomized
-		    excl = $game_switches[906] ? nil : [:SPINDA,:SUNKERN,:SUNFLORA]
+		    excl = $game_switches[906] ? nil : [:SPINDA]
 	  	for mon in @gift.keys
 	  		next if mon != species
 	  		species = @gift[mon]
@@ -615,6 +623,7 @@ class Randomizer
 	    added = @choices
 	    $game_variables[Randomizer_Info::Choices] = @choices
 	    msg = _INTL("Your selected Randomizer rules have been applied.")
+	    Randomizer.setup
 	    msg = _INTL("No Randomizer rules have been applied.") if added.length < 1
 	    msg = _INTL("Your selection has been cancelled.") if cmd < 0
 	    pbMessage(msg)

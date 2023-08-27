@@ -95,31 +95,52 @@ class Restrictions
         :abilities => []
       }
       restrictions = Restrictions::ABILITY_CHANGES
+      idx = -1
       for key in pkmn.keys
         abil = []
         habil = []
-        if !key.is_a?(Symbol)
-          $restricted_abilities[:pokemon].push(pkmn[key].id)
-          $restricted_abilities[:pokemon].uniq!
-          for i in 0...pkmn[key].abilities.length
-              for ab in restrictions.keys
-                if restrictions[ab].include?(pkmn[key].abilities[i])
-                  pkmn[key].abilities[i] = ab
+        if !Randomizer.active?(:ABILITIES)
+          if !key.is_a?(Symbol)
+            $restricted_abilities[:pokemon].push(pkmn[key].id)
+            $restricted_abilities[:pokemon].uniq!
+            for i in 0...pkmn[key].abilities.length
+                for ab in restrictions.keys
+                  if restrictions[ab].include?(pkmn[key].abilities[i])
+                    pkmn[key].abilities[i] = ab
+                  end
                 end
-              end
-            abil.push([pkmn[key].abilities[i]])
-          end
-          for i in 0...pkmn[key].hidden_abilities.length
-              for ab in restrictions.keys
-                if restrictions[ab].include?(pkmn[key].hidden_abilities[i])
-                  pkmn[key].hidden_abilities[i] = ab
+              abil.push([pkmn[key].abilities[i]])
+            end
+            for i in 0...pkmn[key].hidden_abilities.length
+                for ab in restrictions.keys
+                  if restrictions[ab].include?(pkmn[key].hidden_abilities[i])
+                    pkmn[key].hidden_abilities[i] = ab
+                  end
                 end
-              end
-            habil.push([pkmn[key].hidden_abilities[i]])
+              habil.push([pkmn[key].hidden_abilities[i]])
+            end
+            $restricted_abilities[:abilities][key] = abil[0],(abil[1] == nil ? abil[0] : abil[1]),habil
+            $restricted_abilities[:abilities][key].flatten!
+            $restricted_abilities[:abilities].delete_at(key-1) if $restricted_abilities[:abilities][key-1] == nil
           end
-          $restricted_abilities[:abilities][key] = abil[0],(abil[1] == nil ? abil[0] : abil[1]),habil
-          $restricted_abilities[:abilities][key].flatten!
-          $restricted_abilities[:abilities].delete_at(key-1) if $restricted_abilities[:abilities][key-1] == nil
+        else
+          if !key.is_a?(Symbol)
+            idx += 1
+            $restricted_abilities[:pokemon].push(pkmn[key].id)
+            $restricted_abilities[:pokemon].uniq!
+            abils = Randomizer.abilities[:abilities][idx]
+            for i in 0...abils.length
+                for ab in restrictions.keys
+                  if restrictions[ab].include?(abils[i])
+                    abils[i] = ab
+                  end
+                end
+              abil.push([abils[i]])
+            end
+            $restricted_abilities[:abilities][key] = abil[0],(abil[1] == nil ? abil[0] : abil[1]),abil[2]
+            $restricted_abilities[:abilities][key].flatten!
+            $restricted_abilities[:abilities].delete_at(key-1) if $restricted_abilities[:abilities][key-1] == nil
+          end
         end
       end
       @abilities = $restricted_abilities
