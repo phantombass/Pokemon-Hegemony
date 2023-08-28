@@ -44,7 +44,7 @@ class Mission_Overlay
     background.height = descwindow.height
     background.y = 0
     background.visible = true
-    $mission_steps = 10
+    $mission_steps = 5
   end
   def update
     pbUpdateSpriteHash(@sprites)
@@ -57,11 +57,12 @@ class Mission_Overlay
 end
 
 def pbMissionUpdate(num)
+  $mission = Mission_Overlay.new
   case num
   when 1
     $game_variables[Mission::Main] += 1
     $PokemonGlobal.quests.advanceQuestToStage(:Quest1,$game_variables[Mission::Main],"463F0000",false)
-    scene.pbShow
+    $mission.pbShow
   when 5
     $PokemonGlobal.quests.advanceQuestToStage(:Quest5,2,"463F0000",false)
   when 7
@@ -70,11 +71,12 @@ def pbMissionUpdate(num)
 end
 
 def pbNewMission(num)
+  $mission = Mission_Overlay.new
   case num
   when 1
     $game_variables[Mission::Main] = 1
     $PokemonGlobal.quests.activateQuest(:Quest1,"56946F5A",false)
-    scene.pbShow
+    $mission.pbShow
   when 2
     $PokemonGlobal.quests.activateQuest(:Quest2,"56946F5A",false)
   when 3
@@ -91,10 +93,11 @@ def pbNewMission(num)
 end
 
 def pbCompleteMission(num)
+  $mission = Mission_Overlay.new
   case num
   when 1
     $PokemonGlobal.quests.completeQuest(:Quest1,"56946F5A",false)
-    scene.pbShow
+    $mission.pbShow
   when 2
     $PokemonGlobal.quests.completeQuest(:Quest2,"56946F5A",false)
   when 3
@@ -116,5 +119,3 @@ Events.onStepTaken += proc {
     $mission.pbEndScene if $mission_steps == 0
   end
 }
-
-$mission = Mission_Overlay.new
