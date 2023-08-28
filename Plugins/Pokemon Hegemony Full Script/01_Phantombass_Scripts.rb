@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.0.28"
+  GAME_VERSION = "5.0.29"
   DISABLE_EVS = 917
 end
 
@@ -130,11 +130,11 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[DailyE4::TimeNow] = $game_variables[DailyE4::LastTime]
     end
     pbResetAllRoamers
-    $mission.pbEndScene if !$mission.nil?
+    $mission.pbEndScene if $mission != nil
 }
 
 Events.onAction += proc {| sender, e |
-    $mission.pbEndScene if !$mission.nil?
+  $mission.pbEndScene if $mission != nil
 }
 
 class PokemonLoadScreen
@@ -580,8 +580,7 @@ Events.onWildPokemonCreate+=proc {|sender,e|
   if pokemon.shiny_locked?
     pokemon.shiny = false
   end
-  scene = Mission_Overlay.new
-  scene.pbEndScene if scene != nil
+  $mission.pbEndScene if $mission != nil
 }
 
 Events.onEndBattle += proc { |_sender,e|

@@ -298,8 +298,7 @@ end
 
 def show_mission
   if $mission_show
-    scene = Mission_Overlay.new
-    scene.pbShow
+    $mission.pbShow
     $mission_show = false
   end
 end
@@ -317,5 +316,6 @@ Events.onMapUpdate+=proc {|sender,e|
   $game_switches[LvlCap::Gym] = false if $game_map.map_id != 251
   $game_variables[105] = 100 if ($game_switches[903] == true || $game_switches[902] == true)
   apply_restrictions
+  $mission = Mission_Overlay.new if $mission_show
   show_mission
 }

@@ -32,7 +32,7 @@ end
 
 class PokemonPauseMenu_Scene
   def pbStartScene
-    $mission.pbEndScene if !$mission.nil?
+    $mission.pbEndScene if $mission != nil
     if $game_switches[350] == false
       @viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
       @viewport.z = 99999
