@@ -40,7 +40,7 @@ class Randomizer
 	end
 
 	def self.abilities
-		return @abilities
+		return@abilities
 	end
 
 	def self.movesets
@@ -69,6 +69,25 @@ class Randomizer
 		@base_stats = $game_variables[Randomizer_Info::Base_Stats]
 		@abilities = $game_variables[Randomizer_Info::Abilities]
 		@movesets = $game_variables[Randomizer_Info::Movesets]
+	end
+
+	def self.clear
+		PBAI.log("Clearing randomizer options...")
+		$game_switches[Randomizer_Info::RandomizerOn] = false
+  		$game_variables[Randomizer_Info::Choices] = 0
+		$game_variables[Randomizer_Info::Trainers] = 0
+		$game_variables[Randomizer_Info::Encounters] = 0
+		$game_switches[Randomizer_Info::Items] = false
+		$game_variables[Randomizer_Info::Static] = 0
+		$game_variables[Randomizer_Info::Gift] = 0
+		$game_variables[Randomizer_Info::Base_Stats] = 0
+		$game_variables[Randomizer_Info::Abilities] = 0
+		$game_variables[Randomizer_Info::Movesets] = 0
+	end
+
+	def self.restricted
+		@abilities = Restrictions.abilities
+		@movesets = Restrictions.moves
 	end
 
 	def self.choose_options
@@ -621,7 +640,7 @@ class Randomizer
 	    # display confirmation message
 	    return if skip
 	    added = @choices
-	    $game_variables[Randomizer_Info::Choices] = @choices
+	    $game_variables[Randomizer_Info::Choices] = added
 	    msg = _INTL("Your selected Randomizer rules have been applied.")
 	    Randomizer.setup
 	    msg = _INTL("No Randomizer rules have been applied.") if added.length < 1
