@@ -41,6 +41,12 @@ class Restrictions
     return @moves
   end
 
+  def self.clear
+    PBAI.log("Clearing restrictions...")
+    $game_variables[Restriction_Info::Abilities] = 0
+    $game_variables[Restriction_Info::Moves] = 0
+  end
+
   BANNED_MOVES = [:CALMMIND,:BULKUP,:SWORDSDANCE,:NASTYPLOT,:STATICSURGE,:TAILGLOW,:WORKUP,:HOWL,:AGILITY,:COSMICPOWER,:DEFENDORDER,
     :QUIVERDANCE,:VICTORYDANCE,:GEOMANCY,:CLANGOROUSSOUL,:STEALTHROCK,:SPIKES,:TOXICSPIKES,:STICKYWEB,:COMETSHARDS,:RAINDANCE,:SUNNYDAY,
     :SANDSTORM,:HAIL,:SNOWSCAPE,:STARSTORM,:TAUNT,:MAGICCOAT,:CURSE,:TAILWIND,:GRASSYTERRAIN,:PSYCHICTERRAIN,:MISTYTERRAIN,:ELECTRICTERRAIN,
@@ -145,7 +151,6 @@ class Restrictions
       end
       @abilities = $restricted_abilities
       $game_variables[Restriction_Info::Abilities] = @abilities
-      $game_variables[Randomizer_Info::Abilities] = @abilities if Randomizer.active?(:ABILITIES)
       return @abilities
     end
 
@@ -178,7 +183,6 @@ class Restrictions
       end
       @moves = $restricted_moves
       $game_variables[Restriction_Info::Moves] = @moves
-      $game_variables[Randomizer_Info::Movesets] = @moves if Randomizer.active?(:MOVES)
       return @moves
     end
   end
