@@ -486,6 +486,7 @@ def useMoveFly
     if $game_switches[283] == true && $game_switches[239] == true
       $game_switches[283] = false
     end
+    $game_switches[150] = false
     randomizer_on
     $CanToggle = true
     $game_temp.player_new_direction = 2
