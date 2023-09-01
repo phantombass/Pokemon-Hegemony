@@ -2025,7 +2025,7 @@ end
 class PokeBattle_Move_0C2 < PokeBattle_Move
   def pbEffectGeneral(user)
     user.effects[PBEffects::HyperBeam] = 2
-    user.effects[PBEffects::HyperBeam] = 1 if @user.hasActiveAbility(:IMPATIENT)
+    user.effects[PBEffects::HyperBeam] = 1 if @user.hasActiveAbility?(:IMPATIENT)
     user.currentMove = @id
   end
 end
