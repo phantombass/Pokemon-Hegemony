@@ -55,6 +55,7 @@ class Randomizer
 
   	def self.active?(type)
   	    return false if @choices.nil?
+  	    return false if @choices == 0
   		return @choices.include?(type)
   	end
 
