@@ -134,7 +134,7 @@ class PokeBattle_Move_008 < PokeBattle_ParalysisMove
     case @battle.pbWeather
     when :Sun, :HarshSun
       return 50
-    when :Rain, :HeavyRain
+    when :Rain, :HeavyRain, :Storm
       return 0
     end
     return super
@@ -312,7 +312,7 @@ class PokeBattle_Move_015 < PokeBattle_ConfuseMove
     case @battle.pbWeather
     when :Sun, :HarshSun
       return 50
-    when :Rain, :HeavyRain
+    when :Rain, :HeavyRain, :Windy, :Storm
       return 0
     end
     return super

@@ -229,6 +229,15 @@ PBAI::ScoreHandler.add do |score, ai, user, target, move|
   next score
 end
 
+#Properly choose moves if Tormented
+PBAI::ScoreHandler.add do |score, ai, user, target, move|
+  if move == user.lastRegularMoveUsed && user.effects[PBEffects::Torment]
+      score -= 100000
+      PBAI.log("- 100000 to prevent failing")
+  end
+  next score
+end
+
 
 # Increase/decrease score for each positive/negative stat boost the move gives the user
 PBAI::ScoreHandler.add do |score, ai, user, target, move|
@@ -1676,6 +1685,10 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, t
       score += 100
       PBAI.log("+ 100 for predicting the target to switch, being unable to kill, and having something to switch to")
     end
+    if diff == 1
+      score -= 1000
+      PBAI.log("- 1000 to prefer stronger offensive moves if all other party members are fainted")
+    end
   end
   if target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) && move.statusMove?
     score -= 1000
@@ -1771,7 +1784,7 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
       score -= 10
       PBAI.log("- 10 for we will take more damage than we can heal if the target repeats their move")
     elsif user.is_healing_necessary?(0.65)
-      add = (factor * 250).round
+      add = (factor * 175).round
       score += add
       PBAI.log("+ #{add} for we will likely die without healing")
       if user.has_role?([:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:CLERIC])#.include?(roles)
@@ -1779,7 +1792,7 @@ PBAI::ScoreHandler.add("0D5", "0D6", "0D7") do |score, ai, user, target, move|
         PBAI.log("+ 40 ")
       end
     else
-      add = (factor * 125).round
+      add = (factor * 100).round
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
       if user.has_role?([:PHYSICALWALL,:SPECIALWALL,:TOXICSTALLER,:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:CLERIC])#.include?(roles)
@@ -1840,11 +1853,11 @@ PBAI::ScoreHandler.add("0D8") do |score, ai, user, target, move|
       score -= 10
       PBAI.log("- 10 for we will take more damage than we can heal if the target repeats their move")
     elsif user.is_healing_necessary?(heal_factor)
-      add = (factor * 250 * effi_factor).round
+      add = (factor * 175 * effi_factor).round
       score += add
       PBAI.log("+ #{add} for we will likely die without healing")
     else
-      add = (factor * 125 * effi_factor).round
+      add = (factor * 100 * effi_factor).round
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
     end
@@ -1873,11 +1886,11 @@ PBAI::ScoreHandler.add("16D") do |score, ai, user, target, move|
       score -= 10
       PBAI.log("- 10 for we will take more damage than we can heal if the target repeats their move")
     elsif user.is_healing_necessary?(0.65)
-      add = (factor * 250).round
+      add = (factor * 200).round
       score += add
       PBAI.log("+ #{add} for we will likely die without healing")
     else
-      add = (factor * 125).round
+      add = (factor * 100).round
       score += add
       PBAI.log("+ #{add} for we have lost some hp")
     end
@@ -2138,12 +2151,16 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
       end
     end
     if $spam_block_flags[:haze_flag].include?(target)
-      score = 0
-      PBAI.log("* 0 because target has Haze")
+      score -= 1000
+      PBAI.log("- 1000 because target has Haze")
     end
     if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
       score += 1000
       PBAI.log("+ 1000 to set up on the switch")
+    end
+    if user.set_up_score >= 2
+      score -= 1000
+      PBAI.log("- 1000 to encourage attacking")
     end
   next score
 end
@@ -2199,13 +2216,17 @@ PBAI::ScoreHandler.add("02E","01C","511","028") do |score, ai, user, target, mov
     end
   end
   if $spam_block_flags[:haze_flag].include?(target)
-    score = 0
-    PBAI.log("* 0 because target has Haze")
-  end
-  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
-    score += 1000
-    PBAI.log("+ 1000 to set up on the switch")
-  end
+      score -= 1000
+      PBAI.log("- 1000 because target has Haze")
+    end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
+      score += 1000
+      PBAI.log("+ 1000 to set up on the switch")
+    end
+    if user.set_up_score >= 2
+      score -= 1000
+      PBAI.log("- 1000 to encourage attacking")
+    end
   next score
 end
 
@@ -2278,12 +2299,16 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
       end
     end
     if $spam_block_flags[:haze_flag].include?(target)
-      score = 0
-      PBAI.log("* 0 because target has Haze")
+      score -= 1000
+      PBAI.log("- 1000 because target has Haze")
     end
     if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
       score += 1000
       PBAI.log("+ 1000 to set up on the switch")
+    end
+    if user.set_up_score >= 2
+      score -= 1000
+      PBAI.log("- 1000 to encourage attacking")
     end
   next score
 end
@@ -2340,12 +2365,16 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
       end
     end
     if $spam_block_flags[:haze_flag].include?(target)
-      score = 0
-      PBAI.log("* 0 because target has Haze")
+      score -= 1000
+      PBAI.log("- 1000 because target has Haze")
     end
     if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
       score += 1000
       PBAI.log("+ 1000 to set up on the switch")
+    end
+    if user.set_up_score >= 2
+      score -= 1000
+      PBAI.log("- 1000 to encourage attacking")
     end
   next score
 end
@@ -2401,13 +2430,17 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
     end
   end
   if $spam_block_flags[:haze_flag].include?(target)
-    score = 0
-    PBAI.log("* 0 because target has Haze")
-  end
-  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
-    score += 1000
-    PBAI.log("+ 1000 to set up on the switch")
-  end
+      score -= 1000
+      PBAI.log("- 1000 because target has Haze")
+    end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
+      score += 1000
+      PBAI.log("+ 1000 to set up on the switch")
+    end
+    if user.set_up_score >= 2
+      score -= 1000
+      PBAI.log("- 1000 to encourage attacking")
+    end
   next score
 end
 
@@ -2480,13 +2513,17 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039","028") do |score, ai, user, ta
     end
   end
   if $spam_block_flags[:haze_flag].include?(target)
-    score = 0
-    PBAI.log("* 0 because target has Haze")
-  end
-  if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
-    score += 1000
-    PBAI.log("+ 1000 to set up on the switch")
-  end
+      score -= 1000
+      PBAI.log("- 1000 because target has Haze")
+    end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
+      score += 1000
+      PBAI.log("+ 1000 to set up on the switch")
+    end
+    if user.set_up_score >= 2
+      score -= 1000
+      PBAI.log("- 1000 to encourage attacking")
+    end
   next score
 end
 
@@ -2943,8 +2980,16 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
       end
     end
     if $spam_block_flags[:haze_flag].include?(target)
-      score = 0
-      PBAI.log("* 0 because target has Haze")
+      score -= 1000
+      PBAI.log("- 1000 because target has Haze")
+    end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
+      score += 1000
+      PBAI.log("+ 1000 to set up on the switch")
+    end
+    if user.set_up_score >= 2
+      score -= 1000
+      PBAI.log("- 1000 to encourage attacking")
     end
   next score
 end
@@ -2976,6 +3021,18 @@ PBAI::ScoreHandler.add("179") do |score, ai, user, target, move|
       PBAI.log("+ 50 for predicting the switch")
     end
   end
+  if $spam_block_flags[:haze_flag].include?(target)
+      score -= 1000
+      PBAI.log("- 1000 because target has Haze")
+    end
+    if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
+      score += 1000
+      PBAI.log("+ 1000 to set up on the switch")
+    end
+    if user.set_up_score >= 2
+      score -= 1000
+      PBAI.log("- 1000 to encourage attacking")
+    end
   next score
 end
 
@@ -3123,6 +3180,24 @@ PBAI::ScoreHandler.add("0F0") do |score, ai, user, target, move|
   if target.faster_than?(user) && dmg > 0
     score -= 1000
     PBAI.log("- 1000 to prioritize priority moves over removing items since we will die anyway")
+  end
+  next score
+end
+
+# Hydro Steam
+PBAI::ScoreHandler.add("550") do |score, ai, user, target, move|
+  if ai.battle.pbWeather == :Sun
+    score += 200
+    PBAI.log("+ 200 for abusing Sun")
+  end
+  next score
+end
+
+# PsyBlade
+PBAI::ScoreHandler.add("551") do |score, ai, user, target, move|
+  if ai.battle.field.terrain == :Electric
+    score += 200
+    PBAI.log("+ 200 for abusing Electric Terrain")
   end
   next score
 end

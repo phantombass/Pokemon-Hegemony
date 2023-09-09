@@ -257,8 +257,12 @@ BattleVS         = classicVS
 [COOLTRAINER_F,Marge,4]
 BattleVS         = classicVS
 #-------------------------------
+[COOLTRAINER_M,Stefan,4]
+BattleVS         = classicVS
+#-------------------------------
 [COOLTRAINER_F,Raquel,4]
 BattleVS         = classicVS
+BattleScript	 = RIVAL2_Sun
 #-------------------------------
 [COOLTRAINER_M,Zack,4]
 BattleVS         = classicVS
@@ -280,6 +284,7 @@ BattleVS         = classicVS
 #-------------------------------
 [COOLTRAINER_M,Will,4]
 BattleVS         = classicVS
+BattleScript	 = RIVAL2_Sand
 #-------------------------------
 [GUARD,Admin,2]
 BattleVS         = classicVS
@@ -343,8 +348,12 @@ BattleVS         = classicVS
 [COOLTRAINER_F,Marge,6]
 BattleVS         = classicVS
 #-------------------------------
+[COOLTRAINER_M,Stefan,6]
+BattleVS         = classicVS
+#-------------------------------
 [COOLTRAINER_F,Raquel,6]
 BattleVS         = classicVS
+BattleScript	 = RIVAL2_Sun
 #-------------------------------
 [COOLTRAINER_M,Zack,6]
 BattleVS         = classicVS
@@ -366,6 +375,7 @@ BattleVS         = classicVS
 #-------------------------------
 [COOLTRAINER_M,Will,6]
 BattleVS         = classicVS
+BattleScript	 = RIVAL2_Sand
 #-------------------------------
 [GUARD,Admin,4]
 BattleVS         = classicVS
@@ -459,6 +469,33 @@ Ace				 = 6
 BattleBGM        = HGSS-278-BattleChampion.ogg 
 BattleVS         = plasmaSM
 Ace				 = 6
+#-------------------------------
+[RIVAL2,Rival,10]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = classicVS
+#-------------------------------
+[RIVAL2,Rival,11]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = classicVS
+#-------------------------------
+[RIVAL2,Rival,12]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = classicVS
+#-------------------------------
+[RIVAL2,Rival,110]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = classicVS
+BattleScript	 = RIVAL2_Sand
+#-------------------------------
+[RIVAL2,Rival,111]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = classicVS
+BattleScript	 = RIVAL2_Wind
+#-------------------------------
+[RIVAL2,Rival,112]
+BattleBGM        = Goldeneye - Cradle.ogg
+BattleVS         = classicVS
+BattleScript	 = RIVAL2_Sand
 #-------------------------------
 [CHANCELLOR,Yule,1]
 BattleBGM        = B2W2-ColressBattle.ogg

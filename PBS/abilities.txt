@@ -376,3 +376,4 @@
 375,MEADOWRUSH,Meadow Rush,"Doubles speed in Grassy Terrain."
 376,UNKNOWNPOWER,Unknown Power,"Boosts attacks and defenses of itself and allies."
 377,GODLIKEPOWER,God-like Power,"Makes this Mantyke cracked."
+378,PESTICIDE,Pesticide,"Immune to Bug, and poisons all Bugs if activated."

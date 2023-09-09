@@ -727,7 +727,8 @@ class PokeBattle_Move_09F < PokeBattle_Move
          :ICICLEPLATE => :ICE,
          :DRACOPLATE  => :DRAGON,
          :DREADPLATE  => :DARK,
-         :PIXIEPLATE  => :FAIRY
+         :PIXIEPLATE  => :FAIRY,
+         :STELLARPLATE => :COSMIC
       }
     elsif @id == :TECHNOBLAST
       @itemTypes = {
@@ -754,18 +755,41 @@ class PokeBattle_Move_09F < PokeBattle_Move
          :ICEMEMORY      => :ICE,
          :DRAGONMEMORY   => :DRAGON,
          :DARKMEMORY     => :DARK,
-         :FAIRYMEMORY    => :FAIRY
+         :FAIRYMEMORY    => :FAIRY,
+         :COSMICMEMORY   => :COSMIC
       }
+    end
+  end
+  def pbOnStartUse(user, targets)
+    if user.hasLegendPlateJudgment? && !targets.empty?
+      target = nil
+      targets.each do |b|
+        next if !b || b.fainted? || b.isCommander?
+        target = b
+      end
+      newType   = @battle.pbGetBestTypeJudgment(user, target, self, user.legendPlateType)
+      newForm   = GameData::Type.get(newType).icon_position
+      typeName  = GameData::Type.get(newType).name
+      @calcType = newType
+      if user.form != newForm
+        @battle.scene.pbArceusTransform(user.index, newType)
+        user.pbChangeForm(newForm,
+        _INTL("{1} transformed into the {2} type!", user.pbThis, typeName))
+      end
     end
   end
 
   def pbBaseType(user)
-    ret = :NORMAL
-    if user.itemActive?
-      @itemTypes.each do |item, itemType|
-        next if user.item != item
-        ret = itemType if GameData::Type.exists?(itemType)
-        break
+    if user.hasLegendPlateJudgment?
+      return user.legendPlateType
+    else
+      ret = :NORMAL
+      if user.itemActive?
+        @itemTypes.each do |item, itemType|
+          next if user.item != item
+          ret = itemType if GameData::Type.exists?(itemType)
+          break
+        end
       end
     end
     return ret
@@ -2025,7 +2049,7 @@ end
 class PokeBattle_Move_0C2 < PokeBattle_Move
   def pbEffectGeneral(user)
     user.effects[PBEffects::HyperBeam] = 2
-    user.effects[PBEffects::HyperBeam] = 1 if @user.hasActiveAbility?(:IMPATIENT)
+    user.effects[PBEffects::HyperBeam] = 1 if user.hasActiveAbility?(:IMPATIENT)
     user.currentMove = @id
   end
 end
