@@ -600,32 +600,6 @@ class PokeBattle_Move
       elsif type == :PSYCHIC
         multipliers[:final_damage_multiplier] /= 2
       end
-    when :Borealis
-      if type == :PSYCHIC
-        multipliers[:final_damage_multiplier] *= 1.5
-      elsif type == :DARK
-        multipliers[:final_damage_multiplier] /= 2
-      end
-    when :Rainbow
-      if type == :GRASS
-        multipliers[:final_damage_multiplier] *= 1.5
-      elsif type == :ICE
-        multipliers[:final_damage_multiplier] /= 2
-      end
-    when :Overcast
-      if type == :DARK
-        multipliers[:final_damage_multiplier] *= 1.5
-      elsif type == :GHOST
-        multipliers[:final_damage_multiplier] *= 1.5
-      elsif type == :FAIRY
-        multipliers[:final_damage_multiplier] /= 2
-      elsif type == :PSYCHIC
-        multipliers[:final_damage_multiplier] /= 2
-      end
-    when :VolcanicAsh
-      if type == :STEEL
-        multipliers[:final_damage_multiplier] *= 1.5
-      end
     when :Storm
       if type == :FIRE && !target.hasActiveAbility?(:STEAMPOWERED)
         multipliers[:final_damage_multiplier] /= 2
@@ -634,11 +608,8 @@ class PokeBattle_Move
       elsif type == :ELECTRIC
         multipliers[:final_damage_multiplier] *= 1.5
       end
-    when :Humid
-      if type == :BUG
-        multipliers[:final_damage_multiplier] *= 1.5
-      elsif type == :FIRE
-        multipliers[:final_damage_multiplier] /= 2
+      if windMove?
+        multipliers[:final_damage_multiplier] *= 1.3
       end
     when :Sleet
       if type == :FIRE
@@ -1936,9 +1907,19 @@ BattleHandlers::DamageCalcUserAbility.add(:VAMPIRIC,
   }
 )
 
-BattleHandlers::DamageCalcTargetAbility.add(:ICESCALES,
-  proc { |ability,user,target,move,mults,baseDmg,type|
-    mults[:defense_multiplier] *= 2 if move.specialMove? || !move.function=="122"   # Psyshock
+BattleHandlers::UserAbilityEndOfMove.add(:VAMPIRIC,
+  proc { |ability,user,targets,move,battle|
+    next if !move.bitingMove?
+    next if user.hp == user.totalhp
+    totalDamage = 0
+    for target in targets
+      totalDamage += target.damageState.totalHPLost
+    end
+    next if totalDamage<=0
+    battle.pbShowAbilitySplash(user,false,true,GameData::Ability.get(:VAMPIRIC).name)
+    user.pbRecoverHP(totalDamage/2)
+    battle.pbDisplay(_INTL("{1} sapped some HP.",user.pbThis))
+    battle.pbHideAbilitySplash(user)
   }
 )
 
@@ -1949,6 +1930,7 @@ BattleHandlers::DamageCalcTargetAbility.add(:PURIFYINGSALT,
 )
 
 class PokeBattle_Battler
+  attr_accessor :legendPlateType
   alias ragefist_pbEffectsOnMakingHit pbEffectsOnMakingHit
   def pbEffectsOnMakingHit(move, user, target)
     ragefist_pbEffectsOnMakingHit(move, user, target)
@@ -2090,6 +2072,7 @@ class PokeBattle_Battler
     @lastRoundMoveFailed   = false
     @movesUsed             = []
     @turnCount             = 0
+    @legendPlateType = nil
     @effects[PBEffects::Attract]             = -1
     @battle.eachBattler do |b|   # Other battlers no longer attracted to self
       b.effects[PBEffects::Attract] = -1 if b.effects[PBEffects::Attract]==@index
@@ -2234,7 +2217,7 @@ class PokeBattle_Battler
     # Start using the move
     pbBeginTurn(choice)
     # Force the use of certain moves if they're already being used
-    if usingMultiTurnAttack?
+    if usingMultiTurnAttack? && !hasActiveAbility?(:IMPATIENT)
       choice[2] = PokeBattle_Move.from_pokemon_move(@battle, Pokemon::Move.new(@currentMove))
       specialUsage = true
     elsif @effects[PBEffects::Encore]>0 && choice[1]>=0 &&
@@ -2246,6 +2229,22 @@ class PokeBattle_Battler
           choice[2] = @moves[idxEncoredMove]
           choice[3] = -1   # No target chosen
         end
+      elsif idxEncoredMove>=0 && !@battle.pbCanChooseMove?(@index,idxEncoredMove,false)
+        choice[1] = -1
+        choice[2] = @battle.struggle
+        choice[3] = -1
+      end
+    end
+    if @effects[PBEffects::GorillaTactics]  || @effects[PBEffects::ChoiceBand]
+      idx = -1
+      loop do
+        idx += 1
+        break if move[idx] == (@effects[PBEffects::GorillaTactics] || @effects[PBEffects::ChoiceBand])
+      end
+      if move[idx].pp == 0
+        choice[1] = -1
+        choice[2] = @battle.struggle
+        choice[3] = -1
       end
     end
     # Labels the move being used as "move"

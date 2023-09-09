@@ -1012,3 +1012,5 @@
 990,MJOLNIR,Mjolnir,Mjolnirs,1,20000,"Boosts the power of hammer moves.",0,0,0,
 991,FOCUSPOLICY,Focus Policy,Focus Policies,1,20000,"Boosts Speed if the holder flinches.",0,0,0,
 992,MITHRILSHIELD,Mithril Shield,Mithril Shields,1,20000,"The holder is protected from critical hits.",0,0,0,
+993,LEGENDPLATE,Legend Plate,Legend Plates,1,1000,"An item to be held by Arceus. It is a stone tablet that boosts the power of all moves Arceus uses.",0,0,0,
+994,DAZZLINGORB,Dazzling Orb,Dazzling Orbs,1,0,"A glowing orb that gives the holder Dazzling as a second ability.",0,0,0,
