@@ -44,7 +44,7 @@ class PokeBattle_Battler
     if @effects[PBEffects::ChoiceBand]
       if hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF]) &&
          pbHasMove?(@effects[PBEffects::ChoiceBand])
-        if move.id != @effects[PBEffects::ChoiceBand]
+        if move.id != @effects[PBEffects::ChoiceBand] && move.id != @battle.struggle.id
           if showMessages
             msg = _INTL("{1} allows the use of only {2}!",itemName,
                GameData::Move.get(@effects[PBEffects::ChoiceBand]).name)
@@ -59,7 +59,7 @@ class PokeBattle_Battler
     # Gorilla Tactics
     if @effects[PBEffects::GorillaTactics]
       if hasActiveAbility?(:GORILLATACTICS)
-        if move.id != @effects[PBEffects::GorillaTactics]
+        if move.id != @effects[PBEffects::GorillaTactics] && move.id != @battle.struggle.id
           if showMessages
             msg = _INTL("{1} allows the use of only {2} !",abilityName,GameData::Move.get(@effects[PBEffects::GorillaTactics]).name)
             (commandPhase) ? @battle.pbDisplayPaused(msg) : @battle.pbDisplay(msg)
@@ -511,6 +511,17 @@ class PokeBattle_Battler
     if move.damagingMove? && move.calcType == :ROCK && target.hasActiveItem?(:SCALERORB)
       ability = target.ability_id
       target.ability_id = :SCALER
+      if ability != target.ability_id
+        @battle.pbShowAbilitySplash(target)
+        battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+        @battle.pbHideAbilitySplash(target)
+        user.ability_id = ability
+      end
+      return false
+    end
+    if move.damagingMove? && move.priority > 0 && target.hasActiveItem?(:DAZZLINGORB)
+      ability = target.ability_id
+      target.ability_id = :DAZZLING
       if ability != target.ability_id
         @battle.pbShowAbilitySplash(target)
         battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))

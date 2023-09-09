@@ -95,9 +95,10 @@ def give_ability_orb
       :FILTERORB,
       :WATERABSORBORB,
       :LIGHTNINGRODORB,
-      :MEDUSOIDORB
+      :MEDUSOIDORB,
+      :DAZZLINGORB
     ]
-  item_list = [:INTIMIDATEORB,:FLASHFIREORB,:LEVITATEORB,:ILLUMINATEORB,:FILTERORB,:WATERABSORBORB] if Restrictions.active?
+  item_list = [:INTIMIDATEORB,:FLASHFIREORB,:LEVITATEORB,:ILLUMINATEORB,:FILTERORB,:WATERABSORBORB,:DAZZLINGORB] if Restrictions.active?
   gift = rand(item_list.length)
   orb = item_list[gift]
   pbReceiveItem(orb,1)
@@ -126,7 +127,8 @@ class PokeBattle_Battler
       :LIGHTNINGRODORB,
       :SCALERORB,
       :UNSHAKENORB,
-      :MEDUSOIDORB
+      :MEDUSOIDORB,
+      :DAZZLINGORB
     ]
     return item_list.include?(item.id)
   end
@@ -1745,6 +1747,19 @@ BattleHandlers::ItemOnSwitchIn.add(:DIMENSIONBLOCKORB,
     if ability != battler.ability_id
       battle.pbShowAbilitySplash(battler,false,true)
       battle.pbDisplay(_INTL("{1}'s Dimension Block Orb lights up!",battler.name))
+      battle.pbHideAbilitySplash(battler)
+      battler.ability_id = ability
+    end
+  }
+)
+
+BattleHandlers::ItemOnSwitchIn.add(:DAZZLINGORB,
+  proc { |ability, battler, battle|
+    ability = battler.ability_id
+    battler.ability_id = :DAZZLING
+    if ability != battler.ability_id
+      battle.pbShowAbilitySplash(battler,false,true)
+      battle.pbDisplay(_INTL("{1}'s Dazzling Orb lights up!",battler.name))
       battle.pbHideAbilitySplash(battler)
       battler.ability_id = ability
     end

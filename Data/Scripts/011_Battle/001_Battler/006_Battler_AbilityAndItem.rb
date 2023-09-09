@@ -70,6 +70,8 @@ class PokeBattle_Battler
   def pbContinualAbilityChecks(onSwitchIn=false)
     # Check for end of primordial weather
     @battle.pbEndPrimordialWeather
+    plateType = pbGetJudgmentType(@legendPlateType)
+    @legendPlateType = plateType
     # Trace
     if hasActiveAbility?(:TRACE)
       # NOTE: In Gen 5 only, Trace only triggers upon the Trace bearer switching

@@ -349,6 +349,42 @@ module BattleScripts
     end
   }
 
+  RIVAL2_Sand = {
+    "turnStart0" => proc do
+      rname = $game_variables[12]
+      @scene.pbAnimation(GameData::Move.get(:SANDSTORM).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Sandstorm
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("A sandstorm brewed!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange}
+    end
+  }
+
+  RIVAL2_Wind = {
+    "turnStart0" => proc do
+      rname = $game_variables[12]
+      @scene.pbAnimation(GameData::Move.get(:TAILWIND).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Windy
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("The wind picked up!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
+    end
+  }
+
+  RIVAL2_Sun = {
+    "turnStart0" => proc do
+      rname = $game_variables[12]
+      @scene.pbAnimation(GameData::Move.get(:SUNNYDAY).id,@battle.battlers[1],@battle.battlers[1])
+      @battle.field.weather = :Sun
+      @battle.field.weatherDuration = -1
+      $gym_weather = true
+      @scene.pbDisplay("The sunlight grew bright!")
+      @battle.eachBattler { |b| b.pbCheckFormOnWeatherChange }
+    end
+  }
+
   CHANCELLOR = {
     "afterLastOpp" => "I will not accept this. I WILL MAINTAIN CONTROL!",
     "turnStart0" => proc do

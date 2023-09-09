@@ -1086,7 +1086,7 @@ class PBAI
         off_move = target.moves.length
         prio = 0
         for i in target.moves
-          if i.function == "051"
+          if i.function == "051" || i.is_a?(PokeBattle_TargetStatDownMove) || i.is_a?(PokeBattle_TargetMultiStatDownMove)
             $spam_block_flags[:haze_flag].push(target)
             PBAI.log("#{target.name} has been assigned Haze flag")
           end
@@ -1105,7 +1105,8 @@ class PBAI
         PBAI.log("Priority Move Count: #{prio}")
         if off_move == 0
           $spam_block_flags[:no_attacking].push(target)
-          PBAI.log("#{target.name} has been assigned No Attacking Flag")
+          $learned_flags[:should_taunt].push(target)
+          PBAI.log("#{target.name} has been assigned No Attacking Flag and Should Taunt Flag")
         end
         if off_move < target.moves.length - 2
           $learned_flags[:should_taunt].push(target)
@@ -1459,7 +1460,7 @@ class PBAI
           return true if target.hasActiveAbility?(:EARTHEATER)
           return true if target.hasActiveItem?([:EARTHEATERORB,:LEVITATEORB])
         when :FIRE
-          return true if target.hasActiveAbility?([:FLASHFIRE, :STEAMENGINE])
+          return true if target.hasActiveAbility?([:FLASHFIRE, :STEAMENGINE, :WELLBAKEDBODY])
           return true if target.hasActiveItem?(:FLASHFIREORB)
         when :WATER
           return true if target.hasActiveAbility?([:DRYSKIN, :STORMDRAIN, :WATERABSORB, :IRRIGATION, :STEAMENGINE, :WATERCOMPACTION])
@@ -1503,6 +1504,7 @@ class PBAI
                        target.opposes?(@battler)
         return true if move.priority > 0 && @battle.field.terrain == :Psychic &&
                        target.affectedByTerrain? && target.opposes?(@battler)
+        return true if move.priority > 0 && (target.hasActiveAbility?([:DAZZLING,:QUEENLYMAJESTY,:ARMORTAIL]) || target.hasActiveItem?(:DAZZLINGORB))
 #      end
       return false
     end
