@@ -2239,7 +2239,7 @@ class PokeBattle_Battler
       idx = -1
       loop do
         idx += 1
-        break if move[idx] == (@effects[PBEffects::GorillaTactics] || @effects[PBEffects::ChoiceBand])
+        break if @moves[idx] == (@effects[PBEffects::GorillaTactics] || @effects[PBEffects::ChoiceBand])
       end
       if move[idx].pp == 0
         choice[1] = -1
