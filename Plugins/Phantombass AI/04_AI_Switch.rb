@@ -805,6 +805,38 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
   next score
 end
 
+PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
+	next switch if !$spam_block_triggered
+	next switch if !$spam_block_flags[:choice].is_a?(PokeBattle_Move)
+	nextMove = $spam_block_flags[:choice]
+	nextDmg = target.get_move_damage(battler,nextMove)
+  if (nextDmg < battler.hp/2 || nextDmg < battler.totalhp/3) && nextMove.id == :UTURN
+  	pkmn = false
+  	user.side.party.each do |mon|
+  		next if GameData::Species.get(mon).id != :ANNIHILAPE
+  		pkmn = true if GameData::Species.get(mon).id == :ANNIHILAPE
+  	end
+  	switch = false
+  end
+  next switch
+end
+
+PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
+	if $spam_block_triggered && $spam_block_flags[:choice].is_a?(PokeBattle_Move)
+		nextMove = $spam_block_flags[:choice]
+		nextDmg = target.get_move_damage(battler,nextMove)
+		damage = 0
+		if nextDmg >= battler.hp
+			score -= 1000
+			PBAI.log("- 1000 because the battler will faint switching in")
+		else
+			if nextMove.id == :UTURN && battler.battler.species == :ANNIHILAPE
+				score += 1000
+			end
+		end
+	end
+  next score
+end
 =begin
 #Weather Abusers
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
