@@ -586,6 +586,9 @@ class PokeBattle_Move
       if type == :ROCK || type == :ICE
         multipliers[:final_damage_multiplier] /= 2
       end
+      if windMove?
+        multipliers[:final_damage_multiplier] *= 1.2
+      end
     when :Fog
       if type == :DRAGON
 	      multipliers[:final_damage_multiplier] /= 2
@@ -607,9 +610,6 @@ class PokeBattle_Move
         multipliers[:final_damage_multiplier] *= 1.5
       elsif type == :ELECTRIC
         multipliers[:final_damage_multiplier] *= 1.5
-      end
-      if windMove?
-        multipliers[:final_damage_multiplier] *= 1.3
       end
     when :Sleet
       if type == :FIRE
