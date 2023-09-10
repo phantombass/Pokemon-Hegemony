@@ -2239,9 +2239,9 @@ class PokeBattle_Battler
       idx = -1
       loop do
         idx += 1
-        break if @moves[idx] == (@effects[PBEffects::GorillaTactics] || @effects[PBEffects::ChoiceBand])
+        break if @moves[idx].id == (@effects[PBEffects::GorillaTactics] || @effects[PBEffects::ChoiceBand])
       end
-      if move[idx].pp == 0
+      if @moves[idx].pp == 0
         choice[1] = -1
         choice[2] = @battle.struggle
         choice[3] = -1
