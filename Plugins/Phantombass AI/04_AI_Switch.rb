@@ -810,7 +810,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	next switch if !$spam_block_flags[:choice].is_a?(PokeBattle_Move)
 	nextMove = $spam_block_flags[:choice]
 	nextDmg = target.get_move_damage(battler,nextMove)
-  if (nextDmg < battler.hp/2 || nextDmg < battler.totalhp/3) && GameData::Move.get(nextMove).id == :UTURN
+  if (nextDmg < battler.hp/2 || nextDmg < battler.totalhp/3) && nextMove.id == :UTURN
   	pkmn = false
   	user.side.party.each do |mon|
   		next if GameData::Species.get(mon).id != :ANNIHILAPE
@@ -830,7 +830,7 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 			score -= 1000
 			PBAI.log("- 1000 because the battler will faint switching in")
 		else
-			if GameData::Move.get(nextMove).id == :UTURN && battler.battler.species == :ANNIHILAPE
+			if nextMove.id == :UTURN && battler.battler.species == :ANNIHILAPE
 				score += 1000
 			end
 		end

@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.1.0"
+  GAME_VERSION = "5.1.1"
   DISABLE_EVS = 917
 end
 
@@ -23,6 +23,7 @@ def reset_custom_variables
   $gym_hazard = false
   $gym_taunt = false
   $gym_tailwind = false
+  $gym_priority = false
   $appliance = nil
   $currentDexSearch = nil
   $repel_toggle = false
@@ -1051,6 +1052,7 @@ class PokeBattle_Battle
     $gym_weather = false
     $gym_hazard = false
     $gym_taunt = false
+    $gym_priority = false
     # return final output
     return @decision
   end

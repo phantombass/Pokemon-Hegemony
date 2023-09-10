@@ -114,6 +114,11 @@ BattleScript	 = ARMY1
 [ARMYBOSS,Ahab,5]
 BattleScript	 = ARMY2
 #-------------------------------
+[ARMYBOSS,Ahab,12]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+BattleScript	 = ARMY1
+#-------------------------------
 [NAVYBOSS]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
@@ -140,6 +145,11 @@ BattleScript	 = GUARD1
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
 #-------------------------------
+[GUARDBOSS,Sunni,7]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+BattleScript     = HELUM
+#-------------------------------
 [OFFCORP]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
@@ -153,13 +163,28 @@ BattleVS         = plasmaSM
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
 #-------------------------------
+[OFFCORP,Bruce,7]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+BattleScript     = OFFCORPLEAGUE
+#-------------------------------
 [DEFCORP]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
 #-------------------------------
+[DEFCORP,Jackson,6]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+BattleScript	 = JACKSON
+#-------------------------------
 [PSYCORP]
 BattleBGM        = Goldeneye - Silo.ogg
 BattleVS         = plasmaSM
+#-------------------------------
+[PSYCORP,Sylvester,6]
+BattleBGM        = Goldeneye - Silo.ogg
+BattleVS         = plasmaSM
+BattleScript	 = PSYCHICTERRAIN
 #-------------------------------
 [CHANCELLOR]
 BattleBGM        = B2W2-ColressBattle.ogg
@@ -170,6 +195,11 @@ Ace = 6
 [POKEMONTRAINER_Joseph]
 BattleBGM        = HGSS-278-BattleChampion.ogg
 BattleVS         = plasmaSM
+#-------------------------------
+[POKEMONTRAINER_Joseph]
+BattleBGM        = HGSS-278-BattleChampion.ogg
+BattleVS         = plasmaSM
+BattleScript     = JOSEPHTERRAIN
 #-------------------------------
 # Mini Bosses
 #-------------------------------
