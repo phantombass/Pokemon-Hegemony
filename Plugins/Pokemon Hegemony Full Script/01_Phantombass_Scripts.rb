@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.1.5"
+  GAME_VERSION = "5.1.6"
   DISABLE_EVS = 917
 end
 
@@ -916,6 +916,8 @@ class PokeBattle_Battle
     when :DustDevil  then pbDisplay(_INTL("A dust devil approaches."))
     end
     # Terrain announcement
+    @field.terrain = :Grassy if $game_map.map_id == 159
+    $def_terrain = :Grassy if $game_map.map_id == 159
     terrain_data = GameData::BattleTerrain.try_get(@field.terrain)
     pbCommonAnimation(terrain_data.animation) if terrain_data
     case @field.terrain
