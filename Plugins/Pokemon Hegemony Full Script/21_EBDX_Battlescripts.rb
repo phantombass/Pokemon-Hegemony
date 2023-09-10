@@ -254,22 +254,36 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("I don't plan on losing to some punk.")
       if $game_switches[LvlCap::Expert]
-        @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
-        @sprites["battlebg"].reconfigure(:PSYCHIC, Color.white)
-        @battle.field.terrain = :Psychic
-        @battle.field.terrainDuration = -1
-        $gym_gimmick = true
-        @scene.pbDisplay("The battlefield got permanently weird!")
-        @battle.field.weather = :HeavyRain
-        @battle.field.weatherDuration = -1
-        $gym_weather = true
-        @scene.pbDisplay("Jackson set permanent Heavy Rain!")
-        @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
-        @battle.battlers[1].pbOwnSide.effects[PBEffects::Safeguard] = 1
-        @battle.battlers[0].effects[PBEffects::Taunt] = 1
-        @battle.battlers[2].effects[PBEffects::Taunt] = 1
-        $gym_taunt = true
-        @scene.pbDisplay("Jackson's team is protected from status and prevents your status moves!")
+        if $game_switches[LvlCap::Insane]
+          @scene.pbAnimation(GameData::Move.get(:MISTYTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+          @sprites["battlebg"].reconfigure(:MISTY, Color.white)
+          @battle.field.terrain = :Misty
+          @battle.field.terrainDuration = -1
+          $gym_gimmick = true
+          @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
+          @battle.battlers[0].effects[PBEffects::Taunt] = 1
+          @battle.battlers[2].effects[PBEffects::Taunt] = 1
+          $gym_taunt = true
+          $gym_priority = true
+          @scene.pbDisplay("Jackson's team is protected from priority and prevents your status moves!")
+        else
+          @scene.pbAnimation(GameData::Move.get(:PSYCHICTERRAIN).id,@battle.battlers[1],@battle.battlers[1])
+          @sprites["battlebg"].reconfigure(:PSYCHIC, Color.white)
+          @battle.field.terrain = :Psychic
+          @battle.field.terrainDuration = -1
+          $gym_gimmick = true
+          @scene.pbDisplay("The battlefield got permanently weird!")
+          @battle.field.weather = :HeavyRain
+          @battle.field.weatherDuration = -1
+          $gym_weather = true
+          @scene.pbDisplay("Jackson set permanent Heavy Rain!")
+          @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
+          @battle.battlers[1].pbOwnSide.effects[PBEffects::Safeguard] = 1
+          @battle.battlers[0].effects[PBEffects::Taunt] = 1
+          @battle.battlers[2].effects[PBEffects::Taunt] = 1
+          $gym_taunt = true
+          @scene.pbDisplay("Jackson's team is protected from status and prevents your status moves!")
+        end
       end
     end
   }
@@ -306,6 +320,18 @@ module BattleScripts
   OFFCORP1 = {
     "afterLastOpp" => "I can't say I was expecting this.",
     "turnStart0" => "Prepare to be overrun."
+  }
+
+  OFFCORP_LEAGUE = {
+    "turnStart0" => proc do 
+      if $game_switches[LvlCap::Expert]
+        @scene.pbAnimation(GameData::Move.get(:WISH).id,@battle.battlers[1],@battle.battlers[1])
+        @battle.field.weather = :Eclipse
+        @battle.field.weatherDuration = -1
+        $gym_weather = true
+        @scene.pbDisplay("Ahab set permanent Eclipse!")
+      end
+    end
   }
 
   NAVY1 = {
