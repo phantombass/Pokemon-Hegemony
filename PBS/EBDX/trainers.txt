@@ -196,7 +196,7 @@ Ace = 6
 BattleBGM        = HGSS-278-BattleChampion.ogg
 BattleVS         = plasmaSM
 #-------------------------------
-[POKEMONTRAINER_Joseph]
+[POKEMONTRAINER_Joseph,8]
 BattleBGM        = HGSS-278-BattleChampion.ogg
 BattleVS         = plasmaSM
 BattleScript     = JOSEPHTERRAIN
@@ -495,10 +495,15 @@ BattleVS         = plasmaSM
 BattleScript	 = WINSTONLEAGUE
 Ace				 = 6
 #-------------------------------
-[CHAMPION]
+[CHAMPION,Joseph]
 BattleBGM        = HGSS-278-BattleChampion.ogg 
 BattleVS         = plasmaSM
-Ace				 = 6
+BattleScript     = JOSEPHSAND
+#-------------------------------
+[CHAMPION,Joseph,1]
+BattleBGM        = HGSS-278-BattleChampion.ogg 
+BattleVS         = plasmaSM
+BattleScript     = JOSEPHTERRAIN
 #-------------------------------
 [RIVAL2,Rival,10]
 BattleBGM        = Goldeneye - Cradle.ogg
