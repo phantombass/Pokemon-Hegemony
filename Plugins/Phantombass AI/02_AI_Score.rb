@@ -2165,6 +2165,47 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
   next score
 end
 
+# Agility, Autotomize
+PBAI::ScoreHandler.add("030","031") do |score, ai, user, target, move|
+  count = 0
+  t_count = 0
+  if user.setup?
+    if user.statStageAtMax?(:SPEED)
+      score = 0
+      PBAI.log("* 0 for battler being max on Speed")
+    else
+      count = 0
+      if target.faster_than?(user)  
+        add = user.turnCount == 0 ? 100 : 07
+        score += add
+        PBAI.log("+ #{add}")
+        spe_boost = user.stages[:SPEED]*20
+        diff = spe_boost
+        score -= diff
+        PBAI.log("- #{diff} for boosted stats") if diff > 0
+        PBAI.log("+ #{diff} for lowered stats") if diff < 0
+        score += 20 if user.predict_switch?(target)
+        PBAI.log("+ 20 for predicting the switch") if user.predict_switch?(target)
+        score += 50 if $learned_flags[:setup_fodder].include?(target)
+        PBAI.log("+ 50 for using the target as setup fodder") if $learned_flags[:setup_fodder].include?(target)
+      end
+      if $spam_block_flags[:haze_flag].include?(target)
+        score -= 1000
+        PBAI.log("- 1000 because target has Haze")
+      end
+      if $spam_block_triggered && $spam_block_flags[:choice].is_a?(Pokemon) && user.set_up_score == 0
+        score += 1000
+        PBAI.log("+ 1000 to set up on the switch")
+      end
+      if user.set_up_score >= 2
+        score -= 1000
+        PBAI.log("- 1000 to encourage attacking")
+      end
+    end
+  end
+  next score
+end
+
 # Swords Dance, Power-up Punch, Static Surge
 PBAI::ScoreHandler.add("02E","01C","511","028") do |score, ai, user, target, move|
   count = 0
