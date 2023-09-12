@@ -812,7 +812,7 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	nextDmg = target.get_move_damage(battler,nextMove)
   if (nextDmg < battler.hp/2 || nextDmg < battler.totalhp/3) && nextMove.id == :UTURN
   	pkmn = false
-  	user.side.party.each do |mon|
+  	battler.side.party.each do |mon|
   		next if GameData::Species.get(mon).id != :ANNIHILAPE
   		pkmn = true if GameData::Species.get(mon).id == :ANNIHILAPE
   	end
