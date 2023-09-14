@@ -888,5 +888,5 @@
 1049,HAMMERSMASH,Hammer Smash,11C,80,GROUND,Physical,100,10,0,NearOther,0,befs,"This move also hits Pokémon that are in the air. Those Pokémon are knocked down to the ground."
 1050,STONECUTTER,Stone Cutter,000,70,ROCK,Physical,100,10,0,NearOther,0,abefhq,"The target is cut with a stone sword. It has a high critical hit chance."
 1051,MACHPULSE,Mach Pulse,000,40,NORMAL,Special,100,30,0,NearOther,1,befk,"This move usually goes first."
-1052,CRYSTALEDGE,Crystal Dust,000,70,ICE,Physical,100,10,0,NearOther,0,abefhq,"The target is cut with a scythe encased in ice. It has a high critical hit chance."
+1052,CRYSTALEDGE,Crystal Edge,000,70,ICE,Physical,100,10,0,NearOther,0,abefhq,"The target is cut with a scythe encased in ice. It has a high critical hit chance."
 1053,AIRCANNON,Air Cannon,00F,80,FLYING,Special,100,15,20,Other,0,bekmr,"The user releases a horrible aura imbued with dark thoughts. It may also make the target flinch."
