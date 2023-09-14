@@ -1126,15 +1126,12 @@ class PBAI
      end
    end
     def set_up_score
+      stats = [:ATTACK,:DEFENSE,:SPEED,:SPECIAL_ATTACK,:SPECIAL_DEFENSE]
       boosts = []
       score = 0
-      GameData::Stat.each_battle { |s| 
-        if self.battler.stages[s] != nil
-          boosts.push(self.battler.stages[s])
-        else
-          boosts.push(0)
-        end
-      }
+      for stat in stats
+        boosts.push(self.battler.stages[stat])
+      end
       for i in boosts
         score += i
       end

@@ -804,7 +804,7 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	end
   next score
 end
-
+=begin
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	next switch if !$spam_block_triggered
 	next switch if !$spam_block_flags[:choice].is_a?(PokeBattle_Move)
@@ -813,8 +813,8 @@ PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
   if (nextDmg < battler.hp/2 || nextDmg < battler.totalhp/3) && nextMove.id == :UTURN
   	pkmn = false
   	battler.side.party.each do |mon|
-  		next if GameData::Species.get(mon).id != :ANNIHILAPE
-  		pkmn = true if GameData::Species.get(mon).id == :ANNIHILAPE
+  		next if mon.battler.species != :ANNIHILAPE
+  		pkmn = true if mon.battler.species == :ANNIHILAPE
   	end
   	switch = false
   end
@@ -837,7 +837,7 @@ PBAI::SwitchHandler.add do |score,ai,battler,proj,target|
 	end
   next score
 end
-=begin
+
 #Weather Abusers
 PBAI::SwitchHandler.add_out do |switch,ai,battler,target|
 	weather = [:DROUGHT,:DRIZZLE,:SANDSTREAM,:SANDSPIT,:DESOLATELAND,:PRIMORDIALSEA,:DELTASTREAM,:NIGHTFALL,:EQUINOX,:URBANCLOUD,:GALEFORCE,:SNOWWARNING,:HAILSTORM]
