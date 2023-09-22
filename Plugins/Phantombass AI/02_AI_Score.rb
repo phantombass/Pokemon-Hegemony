@@ -2156,6 +2156,10 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
         score -= 1000
         PBAI.log("- 1000 because setup is pointless.")
       end
+if $thief > 0
+      score -= 1000
+      PBAI.log("- 1000 to not give a mon free setup")
+    end
     end
     if $spam_block_flags[:haze_flag].include?(target)
       score -= 1000
@@ -2169,10 +2173,7 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if $thief > 0
-      score -= 1000
-      PBAI.log("- 1000 to not give a mon free setup")
-    end
+    
   next score
 end
 
@@ -2286,10 +2287,6 @@ PBAI::ScoreHandler.add("02E","01C","511","028") do |score, ai, user, target, mov
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if $thief > 0
-        score -= 1000
-        PBAI.log("- 1000 to not give a mon free setup")
-      end
   next score
 end
 
@@ -2363,6 +2360,10 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
         score -= 1000
         PBAI.log("- 1000 because setup is pointless.")
       end
+      if $thief > 0
+        score -= 1000
+        PBAI.log("- 1000 to not give a mon free setup")
+      end
     end
     if $spam_block_flags[:haze_flag].include?(target)
       score -= 1000
@@ -2376,10 +2377,7 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if $thief > 0
-        score -= 1000
-        PBAI.log("- 1000 to not give a mon free setup")
-      end
+    
   next score
 end
 
@@ -2436,6 +2434,10 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
         score -= 1000
         PBAI.log("- 1000 because setup is pointless.")
       end
+      if $thief > 0
+        score -= 1000
+        PBAI.log("- 1000 to not give a mon free setup")
+      end
     end
     if $spam_block_flags[:haze_flag].include?(target)
       score -= 1000
@@ -2449,10 +2451,7 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if $thief > 0
-        score -= 1000
-        PBAI.log("- 1000 to not give a mon free setup")
-      end
+    
   next score
 end
 
@@ -2507,6 +2506,10 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
         score -= 1000
         PBAI.log("- 1000 because setup is pointless.")
       end
+      if $thief > 0
+        score -= 1000
+        PBAI.log("- 1000 to not give a mon free setup")
+      end
     end
   end
   if $spam_block_flags[:haze_flag].include?(target)
@@ -2521,10 +2524,7 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if $thief > 0
-        score -= 1000
-        PBAI.log("- 1000 to not give a mon free setup")
-      end
+    
   next score
 end
 
@@ -2597,6 +2597,10 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039","028") do |score, ai, user, ta
         score -= 1000
         PBAI.log("- 1000 because setup is pointless.")
       end
+      if $thief > 0
+        score -= 1000
+        PBAI.log("- 1000 to not give a mon free setup")
+      end
     end
   end
   if $spam_block_flags[:haze_flag].include?(target)
@@ -2611,10 +2615,7 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039","028") do |score, ai, user, ta
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if $thief > 0
-        score -= 1000
-        PBAI.log("- 1000 to not give a mon free setup")
-      end
+    
   next score
 end
 
@@ -3072,6 +3073,10 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
         score -= 1000
         PBAI.log("- 1000 because we outspeed and Special Attackers don't factor Attack")
       end
+      if $thief > 0
+        score -= 1000
+        PBAI.log("- 1000 to not give a mon free setup")
+      end
     end
     if $spam_block_flags[:haze_flag].include?(target)
       score -= 1000
@@ -3085,10 +3090,7 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if $thief > 0
-        score -= 1000
-        PBAI.log("- 1000 to not give a mon free setup")
-      end
+    
   next score
 end
 
