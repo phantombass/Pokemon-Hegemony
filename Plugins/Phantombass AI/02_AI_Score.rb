@@ -2115,17 +2115,17 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) > target.hp/2
       end
       t_count = 0
-      thief = 0
+      $thief = 0
       if $game_switches[LvlCap::Expert] == true
         target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-          thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+          $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
         end
       else
         if target.used_moves != nil
           target.used_moves.each do |tmove|
             t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-            thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+            $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
           end
         end
       end
@@ -2169,7 +2169,7 @@ PBAI::ScoreHandler.add("035") do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if thief > 0
+    if $thief > 0
       score -= 1000
       PBAI.log("- 1000 to not give a mon free setup")
     end
@@ -2230,17 +2230,17 @@ PBAI::ScoreHandler.add("02E","01C","511","028") do |score, ai, user, target, mov
         count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.physicalMove?
       end
       t_count = 0
-      thief = 0
+      $thief = 0
       if $game_switches[LvlCap::Expert] == true
         target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-          thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+          $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
         end
       else
         if target.used_moves != nil
           target.used_moves.each do |tmove|
             t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-            thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+            $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
           end
         end
       end
@@ -2268,7 +2268,7 @@ PBAI::ScoreHandler.add("02E","01C","511","028") do |score, ai, user, target, mov
         score -= 1000
         PBAI.log("- 1000 because setup is pointless.")
       end
-      if thief > 0
+      if $thief > 0
         score -= 1000
         PBAI.log("- 1000 to not give a mon free setup")
       end
@@ -2286,7 +2286,7 @@ PBAI::ScoreHandler.add("02E","01C","511","028") do |score, ai, user, target, mov
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if thief > 0
+    if $thief > 0
         score -= 1000
         PBAI.log("- 1000 to not give a mon free setup")
       end
@@ -2306,17 +2306,17 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
         count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.physicalMove?
       end
       t_count = 0
-      thief = 0
+      $thief = 0
       if $game_switches[LvlCap::Expert] == true
         target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-          thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+          $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
         end
       else
         if target.used_moves != nil
           target.used_moves.each do |tmove|
             t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-            thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+            $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
           end
         end
       end
@@ -2376,7 +2376,7 @@ PBAI::ScoreHandler.add("024", "025", "518", "026") do |score, ai, user, target, 
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if thief > 0
+    if $thief > 0
         score -= 1000
         PBAI.log("- 1000 to not give a mon free setup")
       end
@@ -2396,17 +2396,17 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.physicalMove?
       end
       t_count = 0
-      thief = 0
+      $thief = 0
       if $game_switches[LvlCap::Expert] == true
         target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-          thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+          $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
         end
       else
         if target.used_moves != nil
           target.used_moves.each do |tmove|
             t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-            thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+            $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
           end
         end
       end
@@ -2449,7 +2449,7 @@ PBAI::ScoreHandler.add("10D") do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if thief > 0
+    if $thief > 0
         score -= 1000
         PBAI.log("- 1000 to not give a mon free setup")
       end
@@ -2469,17 +2469,17 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
         count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.specialMove?
       end
       t_count = 0
-      thief = 0
+      $thief = 0
       if $game_switches[LvlCap::Expert] == true
         target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-          thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+          $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
         end
       else
         if target.used_moves != nil
           target.used_moves.each do |tmove|
             t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-            thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+            $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
           end
         end
       end
@@ -2521,7 +2521,7 @@ PBAI::ScoreHandler.add("032") do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if thief > 0
+    if $thief > 0
         score -= 1000
         PBAI.log("- 1000 to not give a mon free setup")
       end
@@ -2541,17 +2541,17 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039","028") do |score, ai, user, ta
         count += 1 if user.get_move_damage(target, m) > target.hp/2 && m.specialMove?
       end
       t_count = 0
-      thief = 0
+      $thief = 0
       if $game_switches[LvlCap::Expert] == true
         target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-          thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+          $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
         end
       else
         if target.used_moves != nil
           target.used_moves.each do |tmove|
             t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-            thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+            $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
           end
         end
       end
@@ -2611,7 +2611,7 @@ PBAI::ScoreHandler.add("02B", "02C", "14E", "039","028") do |score, ai, user, ta
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if thief > 0
+    if $thief > 0
         score -= 1000
         PBAI.log("- 1000 to not give a mon free setup")
       end
@@ -3034,17 +3034,17 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
       user.moves.each do |m|
         count += 1 if user.get_move_damage(target, m) >= target.hp && m.physicalMove?
       end
-      thief = 0
+      $thief = 0
       if $game_switches[LvlCap::Expert] == true
         target.moves.each do |tmove|
           t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-          thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+          $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
         end
       else
         if target.used_moves != nil
           target.used_moves.each do |tmove|
             t_count += 1 if target.get_move_damage(user, tmove) >= user.hp
-            thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
+            $thief += 1 if [:SPECTRALTHIEF,:PSYCHUP,:SNATCH].include?(tmove.id)
           end
         end
       end
@@ -3085,7 +3085,7 @@ PBAI::ScoreHandler.add("036") do |score, ai, user, target, move|
       score -= 1000
       PBAI.log("- 1000 to encourage attacking")
     end
-    if thief > 0
+    if $thief > 0
         score -= 1000
         PBAI.log("- 1000 to not give a mon free setup")
       end
