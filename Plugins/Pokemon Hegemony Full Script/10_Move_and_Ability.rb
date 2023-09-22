@@ -1212,7 +1212,7 @@ BattleHandlers::DamageCalcUserAbility.add(:ORICHALCUMPULSE,
 #===============================================================================
 BattleHandlers::AbilityOnSwitchIn.add(:PROTOSYNTHESIS,
   proc { |ability, battler, battle, switch_in|
-    next if ![:Sun, :HarshSun].include?(battler.battle.pbWeather) && battler.item != :BOOSTERENERGY
+    next if ![:Sun, :HarshSun].include?(battle.pbWeather) && battler.item != :BOOSTERENERGY
     userStats = battler.plainStats
     highestStatValue = 0
     userStats.each_value { |value| highestStatValue = value if highestStatValue < value }
@@ -3371,7 +3371,9 @@ class PokeBattle_Battler
       :IMPOSTER,
       # Abilities intended to be inherent properties of a certain species
       :COMATOSE,
-      :RKSSYSTEM
+      :RKSSYSTEM,
+      :MULTITOOL,
+      :GODLIKEPOWER
     ]
     return ability_blacklist.include?(abil.id)
   end
@@ -3590,9 +3592,8 @@ class PokeBattle_Battler
     end
     if move.damagingMove? && move.calcType == :GRASS && target.hasActiveItem?(:SAPSIPPERORB)
       ability = target.ability_id
-      target.ability_id = :SAPSIPPER
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
+      if ability != :SAPSIPPER
+        @battle.pbShowAbilitySplash(target,false,true,:SAPSIPPER)
         if target.pbCanRaiseStatStage?(:ATTACK,target)
           target.pbRaiseStatStage(:ATTACK,1,target)
           battle.pbDisplay(_INTL("{1}'s {2} Orb boosted its Attack!",target.pbThis,target.abilityName))
@@ -3606,9 +3607,8 @@ class PokeBattle_Battler
     end
     if move.damagingMove? && move.calcType == :ELECTRIC && target.hasActiveItem?(:LIGHTNINGRODORB)
       ability = target.ability_id
-      target.ability_id = :LIGHTNINGROD
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
+      if ability != :LIGHTNINGROD
+        @battle.pbShowAbilitySplash(target,false,true,:LIGHTNINGROD)
         if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK,target)
           target.pbRaiseStatStage(:SPECIAL_ATTACK,1,target)
           battle.pbDisplay(_INTL("{1}'s {2} Orb boosted its Special Attack!",target.pbThis,target.abilityName))
@@ -3622,9 +3622,8 @@ class PokeBattle_Battler
     end
     if move.damagingMove? && move.calcType == :FIRE && target.hasActiveItem?(:FLASHFIREORB)
       ability = target.ability_id
-      target.ability_id = :FLASHFIRE
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
+      if ability != :FLASHFIRE
+        @battle.pbShowAbilitySplash(target,false,true,:FLASHFIRE)
         if !target.effects[PBEffects::FlashFire]
           target.effects[PBEffects::FlashFire] = true
             battle.pbDisplay(_INTL("The power of {1}'s Fire-type moves rose because of its {2} Orb!",target.pbThis(true),target.abilityName))
@@ -3639,9 +3638,8 @@ class PokeBattle_Battler
     end
     if move.damagingMove? && move.calcType == :ROCK && target.hasActiveItem?(:SCALERORB)
       ability = target.ability_id
-      target.ability_id = :SCALER
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
+      if ability != :SCALER
+        @battle.pbShowAbilitySplash(target,false,true,:SCALER)
         battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
@@ -3650,9 +3648,8 @@ class PokeBattle_Battler
     end
     if move.damagingMove? && move.calcType == :COSMIC && target.hasActiveItem?(:DIMENSIONBLOCKORB)
       ability = target.ability_id
-      target.ability_id = :DIMENSIONBLOCK
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
+      if ability != :DIMENSIONBLOCK
+        @battle.pbShowAbilitySplash(target,false,true,:DIMENSIONBLOCK)
         battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
@@ -3661,9 +3658,8 @@ class PokeBattle_Battler
     end
     if move.damagingMove? && move.calcType == :GROUND && target.hasActiveItem?(:EARTHEATERORB)
       ability = target.ability_id
-      target.ability_id = :EARTHEATER
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
+      if ability != :EARTHEATER
+        @battle.pbShowAbilitySplash(target,false,true,:EARTHEATER)
         if target.canHeal? && target.pbRecoverHP(target.totalhp/4)>0
           @battle.pbDisplay(_INTL("{1}'s {2} Orb restored its HP.",target.pbThis,target.abilityName))
         else
@@ -3676,9 +3672,8 @@ class PokeBattle_Battler
     end
     if move.damagingMove? && move.calcType == :WATER && target.hasActiveItem?(:WATERABSORBORB)
       ability = target.ability_id
-      target.ability_id = :WATERABSORB
-      if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target)
+      if ability != :WATERABSORB
+        @battle.pbShowAbilitySplash(target,false,true,:WATERABSORB)
         if target.canHeal? && target.pbRecoverHP(target.totalhp/4)>0
           @battle.pbDisplay(_INTL("{1}'s {2} Orb restored its HP.",target.pbThis,target.abilityName))
         else
@@ -3687,6 +3682,20 @@ class PokeBattle_Battler
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
       end
+      return false
+    end
+    if move.priority > 0 && target.hasActiveItem?(:DAZZLINGORB)
+      ability = :DAZZLING
+      if ability != target.ability_id
+        @battle.pbShowAbilitySplash(target,false,true,:DAZZLING)
+        @battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+        @battle.pbHideAbilitySplash(target)
+        user.ability_id = ability
+      end
+      return false
+    end
+    if move.priority > 0 && $gym_priority == true
+      @battle.pbDisplay(_INTL("The mysterious power from the Trainer prevents priority moves!"))
       return false
     end
     # Immunity to powder-based moves
