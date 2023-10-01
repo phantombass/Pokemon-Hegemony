@@ -4263,7 +4263,7 @@ Pokemon = TORTERRA,90
 LoseText = "This could be problematic."
 Pokemon = PIKACHU2,89
 	Nature = HASTY
-	Ability = STEAMENGINE
+	Ability = TRANSISTOR
 	Item = LIGHTBALL
 	EV = 0,4,0,252,252,0
 	IV = 31,31,31,31,31,31
@@ -4298,7 +4298,7 @@ Pokemon = TORTERRA,90
 	Item = TORTERRANITE
 	EV = 4,252,0,252,0,0
 	IV = 31,31,31,31,31,31
-	Moves = ROCKPOLISH,EARTHQUAKE,WOODHAMMER,STONEEDGE
+	Moves = SHELLSMASH,EARTHQUAKE,WOODHAMMER,STONEEDGE
 	Roles = WINCON
 #-------------------------------
 [SCIENTIST,Grunt,10]
