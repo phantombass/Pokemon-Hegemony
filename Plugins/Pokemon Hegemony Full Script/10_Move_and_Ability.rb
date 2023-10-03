@@ -115,6 +115,10 @@ class PokeBattle_Battle
     return false if battler.effects[PBEffects::CommanderTatsugiri]
     return true
   end
+  def allOtherSideBattlers(idxBattler = 0)
+    idxBattler = idxBattler.index if idxBattler.respond_to?("index")
+    return @battlers.select { |b| b && !b.fainted? && b.opposes?(idxBattler) }
+  end
 
 end
 class PokeBattle_Move_552 < PokeBattle_Move
