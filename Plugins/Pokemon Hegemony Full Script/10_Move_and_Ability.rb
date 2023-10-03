@@ -41,6 +41,7 @@ BattleHandlers::CertainStatGainItem.add(:MIRRORHERB,
     battle.pbCommonAnimation("UseItem", battler)# if !forced
     battle.pbCommonAnimation("StatUp", battler)
     battle.pbDisplay(_INTL("{1} copied {2}'s stat changes using its {3}!", battler.pbThis,user.pbThis(true),itemName))
+    battler.mirrorHerbUsed = true
     next true
   }
 )
@@ -1931,6 +1932,7 @@ BattleHandlers::DamageCalcTargetAbility.add(:PURIFYINGSALT,
 
 class PokeBattle_Battler
   attr_accessor :legendPlateType
+  attr_accessor :mirrorHerbUsed  # Used to stop Opportunist/Mirror Herb from triggering off other Mirror Herbs.
   alias ragefist_pbEffectsOnMakingHit pbEffectsOnMakingHit
   def pbEffectsOnMakingHit(move, user, target)
     ragefist_pbEffectsOnMakingHit(move, user, target)
@@ -1962,46 +1964,108 @@ class PokeBattle_Battler
     end
     return false
   end
-  def pbCanLowerStatStage?(stat,user=nil,move=nil,showFailMsg=false,ignoreContrary=false)
+  alias paldea_pbCanLowerStatStage? pbCanLowerStatStage?
+  def pbCanLowerStatStage?(*args)
     return false if fainted?
     return false if hasActiveAbility?(:UNSHAKEN)
     return false if hasActiveItem?(:UNSHAKENORB)
-    # Contrary
-    if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !affectedByMoldBreaker?
-      return pbCanRaiseStatStage?(stat,user,move,showFailMsg,true)
-    end
-    if !user || user.index!=@index   # Not self-inflicted
-      if @effects[PBEffects::Substitute]>0 && !(move && move.ignoresSubstitute?(user))
-        @battle.pbDisplay(_INTL("{1} is protected by its substitute!",pbThis)) if showFailMsg
-        return false
-      end
-      if pbOwnSide.effects[PBEffects::Mist]>0 &&
-         !(user && user.hasActiveAbility?(:INFILTRATOR))
-        @battle.pbDisplay(_INTL("{1} is protected by Mist!",pbThis)) if showFailMsg
-        return false
-      end
-      if abilityActive?
-        return false if BattleHandlers.triggerStatLossImmunityAbility(
-           self.ability,self,stat,@battle,showFailMsg) if !affectedByMoldBreaker?
-        return false if BattleHandlers.triggerStatLossImmunityAbilityNonIgnorable(
-           self.ability,self,stat,@battle,showFailMsg)
-      end
-      if !affectedByMoldBreaker?
-        eachAlly do |b|
-          next if !b.abilityActive?
-          return false if BattleHandlers.triggerStatLossImmunityAllyAbility(
-             b.ability,b,self,stat,@battle,showFailMsg)
-        end
+    if !args[1] || args[1].index != @index
+      if itemActive?
+        return false if BattleHandlers.triggerStatLossImmunityItem(self.item, self, args[0], @battle, args[3])
       end
     end
-    # Check the stat stage
-    if statStageAtMin?(stat)
-      @battle.pbDisplay(_INTL("{1}'s {2} won't go any lower!",
-         pbThis, GameData::Stat.get(stat).name)) if showFailMsg
-      return false
-    end
-    return true
+    return paldea_pbCanLowerStatStage?(*args)
   end
+  
+  alias paldea_pbLowerAttackStatStageIntimidate pbLowerAttackStatStageIntimidate
+  def pbLowerAttackStatStageIntimidate(user)
+    return false if fainted?
+    if !hasActiveAbility?(:CONTRARY) && @effects[PBEffects::Substitute] == 0
+      if itemActive? && BattleHandlers.triggerStatLossImmunityItem(self.item, self, :ATTACK, @battle, true)
+        return false
+      end
+    end
+    return paldea_pbLowerAttackStatStageIntimidate(user)
+  end
+  
+  #-----------------------------------------------------------------------------
+  # Aliased for Guard Dog.
+  #-----------------------------------------------------------------------------
+  alias paldea_pbLowerStatStageByAbility pbLowerStatStageByAbility
+  def pbLowerStatStageByAbility(stat, increment, user, splashAnim = true, checkContact = false)
+    if hasActiveAbility?(:GUARDDOG) && user.ability == :INTIMIDATE
+      return pbRaiseStatStageByAbility(stat, increment, self, true)
+    end
+    return paldea_pbLowerStatStageByAbility(stat, increment, user, splashAnim)
+  end
+  
+  #-----------------------------------------------------------------------------
+  # Aliased for Opportunist and Mirror Herb checks.
+  #-----------------------------------------------------------------------------
+  alias paldea_pbRaiseStatStage pbRaiseStatStage
+  def pbRaiseStatStage(*args)
+    ret = paldea_pbRaiseStatStage(*args)
+    if ret && !@mirrorHerbUsed && !(hasActiveAbility?(:CONTRARY) && !args[4] && !@battle.moldBreaker)
+      addSideStatUps(args[0], args[1])
+    end
+    return ret
+  end
+  
+  alias paldea_pbRaiseStatStageByCause pbRaiseStatStageByCause
+  def pbRaiseStatStageByCause(*args)
+    ret = paldea_pbRaiseStatStageByCause(*args)
+    if ret && !@mirrorHerbUsed && !(hasActiveAbility?(:CONTRARY) && !args[5] && !@battle.moldBreaker)
+      addSideStatUps(args[0], args[1]) 
+    end
+    return ret
+  end
+  
+  alias paldea_pbRaiseStatStageByAbility pbRaiseStatStageByAbility
+  def pbRaiseStatStageByAbility(*args)
+    ret = paldea_pbRaiseStatStageByAbility(*args)
+    pbMirrorStatUpsOpposing
+    return ret
+  end
+  
+  #-----------------------------------------------------------------------------
+  # Used for triggering and consuming Mirror Herb.
+  #-----------------------------------------------------------------------------
+  def pbItemOpposingStatGainCheck(statUps, item_to_use = nil)
+    return if fainted?
+    return if !item_to_use && !itemActive?
+    itm = item_to_use || self.item
+    if BattleHandlers.triggerCertainStatGainItem(itm, self, @battle, statUps, !item_to_use)
+      pbHeldItemTriggered(itm, item_to_use.nil?, false)
+    end
+  end
+  
+  #-----------------------------------------------------------------------------
+  # General proc for Opportunist and Mirror Herb.
+  #-----------------------------------------------------------------------------
+  def pbMirrorStatUpsOpposing
+    statUps = @battle.sideStatUps[self.idxOwnSide]
+    return if fainted? || statUps.empty?
+    @battle.allOtherSideBattlers(@index).each do |b|
+      next if !b || b.fainted?
+      if b.abilityActive?
+        BattleHandlers.triggerCertainStatGainAbility(b.ability, b, @battle, statUps)
+      end
+      if b.itemActive?
+        b.pbItemOpposingStatGainCheck(statUps)
+      end
+    end
+    statUps.clear
+  end
+  
+  #-----------------------------------------------------------------------------
+  # Used to tally up the amount of stats raised on each side.
+  #-----------------------------------------------------------------------------
+  def addSideStatUps(stat, increment)
+    statUps = @battle.sideStatUps[self.idxOwnSide]
+    statUps[stat] = 0 if !statUps[stat]
+    statUps[stat] += increment
+  end
+  
   def pbInitEffects(batonPass)
     if batonPass
       # These effects are passed on if Baton Pass is used, but they need to be
@@ -5665,6 +5729,8 @@ class PokeBattle_Move_538 < PokeBattle_Move_10C
 end
 
 class PokeBattle_Battle
+  attr_accessor :sideStatUps
+
   def pbRecordBattlerAsParticipated(battler)
     # Record money-doubling effect of Amulet Coin/Luck Incense
     if !battler.opposes? && [:AMULETCOIN, :LUCKINCENSE].include?(battler.item_id)
