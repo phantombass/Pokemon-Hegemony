@@ -3,20 +3,20 @@
 #===================
 
 module BattleHandlers
-  CertainStatGainAbility = AbilityHandlerHash.new
-  CertainStatGainItem = ItemHandlerHash.new
+  OnOpposingStatGainAbility = AbilityHandlerHash.new
+  OnOpposingStatGainItem = ItemHandlerHash.new
   StatLossImmunity = ItemHandlerHash.new
   OnTerrainChangeAbility                  = AbilityHandlerHash.new
-  def self.triggerCertainStatGainAbility(ability, battler, battle, stat, user, increment)
-    CertainStatGainAbility.trigger(ability, battler, battle, stat, user,increment)
+  def self.triggerOnOpposingnStatGainAbility(ability, battler, battle, statUps)
+    OnOpposingStatGainAbility.trigger(ability, battler, battle, statUps)
   end
 
   def self.triggerOnStatGain(ability, battler, stat, user, increment)
     OnStatGain.trigger(ability, battler, stat, user, increment)
   end
 
-  def self.triggerCertainStatGainItem(item, battler, stat, user, increment, battle, forced)
-    return CertainStatGainItem.trigger(CertainStatGainItem, item, battler, stat, user, increment, battle, forced)
+  def self.triggerOnOpposingStatGainItem(item, battler, battle, statUps, forced)
+    return trigger(OnOpposingStatGain, item, battler, battle, statUps, forced)
   end
 
   def self.triggerStatLossImmunity(item, battler, stat, battle, show_message)
@@ -29,7 +29,7 @@ module BattleHandlers
 end
 
 # Mirror Herb
-BattleHandlers::CertainStatGainItem.add(:MIRRORHERB,
+BattleHandlers::OnOpposingStatGainItem.add(:MIRRORHERB,
   proc { |item, battler, stat, user, increment, battle, forced|
     next false if !battler.opposes?(user)
     next false if battler.statStageAtMax?(stat)
@@ -1180,7 +1180,7 @@ class PokeBattle_Move
   end
 end
 
-BattleHandlers::CertainStatGainAbility.add(:OPPORTUNIST,
+BattleHandlers::OnOpposingStatGainAbility.add(:OPPORTUNIST,
   proc { |ability, battler, battle, stat, user,increment|
     next if !battler.opposes?(user)
     next if battler.statStageAtMax?(stat)
@@ -2038,7 +2038,7 @@ class PokeBattle_Battler
     return if fainted?
     return if !item_to_use && !itemActive?
     itm = item_to_use || self.item
-    if BattleHandlers.triggerCertainStatGainItem(itm, self, @battle, statUps, !item_to_use)
+    if BattleHandlers.triggerOnOpposingStatGainItem(itm, self, @battle, statUps, !item_to_use)
       pbHeldItemTriggered(itm, item_to_use.nil?, false)
     end
   end
@@ -2052,7 +2052,7 @@ class PokeBattle_Battler
     @battle.allOtherSideBattlers(@index).each do |b|
       next if !b || b.fainted?
       if b.abilityActive?
-        BattleHandlers.triggerCertainStatGainAbility(b.ability, b, @battle, statUps)
+        BattleHandlers.triggerOnOpposingnStatGainAbility(b.ability, b, @battle, statUps)
       end
       if b.itemActive?
         b.pbItemOpposingStatGainCheck(statUps)
