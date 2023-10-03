@@ -2052,7 +2052,7 @@ class PokeBattle_Battler
     @battle.allOtherSideBattlers(@index).each do |b|
       next if !b || b.fainted?
       if b.abilityActive?
-        BattleHandlers.triggerOnOpposingnStatGainAbility(b.ability, b, @battle, statUps)
+        BattleHandlers.triggerOnOpposingStatGainAbility(b.ability, b, @battle, statUps)
       end
       if b.itemActive?
         b.pbItemOpposingStatGainCheck(statUps)
