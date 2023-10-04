@@ -442,7 +442,7 @@ class Randomizer
 	  	return if !self.active?(:ENCOUNTERS)
 	    # loads map encounters
 	    data = load_data("Data/encounters.dat")
-	    species_exclusions = $game_switches[906] ? nil : [:SPINDA]
+	    species_exclusions = $game_switches[906] ? nil : [:SPINDA,:ZYGARDE2,:REGIGIGAS2]
 	    return if !data.is_a?(Hash) # failsafe
 	    # iterates through each map point
 	    for key in data.keys
@@ -471,7 +471,7 @@ class Randomizer
 	  	new = {}
 	    array = Randomizer.all_species
 	    # shuffles up species indexes to load a different one
-	    excl = $game_switches[906] ? nil : [:SPINDA]
+	    excl = $game_switches[906] ? nil : [:SPINDA,:ZYGARDE2,:REGIGIGAS2]
 	    for org in Randomizer.all_species
 	      i = rand(array.length)
 	      new[org] = array[i]
@@ -489,7 +489,7 @@ class Randomizer
 	  	new = {}
 	    array = Randomizer.all_species
 	    # shuffles up species indexes to load a different one
-	    excl = $game_switches[906] ? nil : [:SPINDA]
+	    excl = $game_switches[906] ? nil : [:SPINDA,:ZYGARDE2,:REGIGIGAS2]
 	    for org in Randomizer.all_species
 	      i = rand(array.length)
 	      new[org] = array[i]
