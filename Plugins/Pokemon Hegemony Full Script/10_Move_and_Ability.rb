@@ -11,7 +11,7 @@ module BattleHandlers
     OnOpposingStatGainAbility.trigger(ability, battler, battle, statUps)
   end
 
-  def self.triggerOnStatGain(ability, battler, stat, user, increment)
+  def self.triggerOnStatGainAbility(ability, battler, stat, user, increment)
     OnStatGain.trigger(ability, battler, stat, user, increment)
   end
 
