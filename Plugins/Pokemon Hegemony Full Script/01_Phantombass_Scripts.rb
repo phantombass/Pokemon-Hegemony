@@ -4,7 +4,7 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.1.24"
+  GAME_VERSION = "5.1.25"
   DISABLE_EVS = 917
 end
 

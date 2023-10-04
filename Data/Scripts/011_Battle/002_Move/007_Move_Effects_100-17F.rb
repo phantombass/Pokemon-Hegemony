@@ -2029,7 +2029,7 @@ class PokeBattle_Move_15D < PokeBattle_Move
   def ignoresSubstitute?(user); return true; end
 
   def pbStealStats(user,target,numTargets=1)
-    return if $game_switches[LvlCap::Expert]
+    return if Restrictions.active?
     if target.hasRaisedStatStages?
       pbShowAnimation(@id,user,target,1)   # Stat stage-draining animation
       @battle.pbDisplay(_INTL("{1} stole the target's boosted stats!",user.pbThis))
