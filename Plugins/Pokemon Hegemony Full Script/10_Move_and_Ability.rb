@@ -7,11 +7,11 @@ module BattleHandlers
   OnOpposingStatGainItem = ItemHandlerHash.new
   StatLossImmunity = ItemHandlerHash.new
   OnTerrainChangeAbility                  = AbilityHandlerHash.new
-  def self.triggerOnOpposingnStatGainAbility(ability, battler, battle, statUps)
+  def self.triggerOnOpposingStatGainAbility(ability, battler, battle, statUps)
     OnOpposingStatGainAbility.trigger(ability, battler, battle, statUps)
   end
 
-  def self.triggerOnStatGainAbility(ability, battler, stat, user, increment)
+  def self.triggerOnStatGain(ability, battler, stat, user, increment)
     OnStatGain.trigger(ability, battler, stat, user, increment)
   end
 
