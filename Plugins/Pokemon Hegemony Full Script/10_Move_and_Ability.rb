@@ -16,7 +16,7 @@ module BattleHandlers
   end
 
   def self.triggerOnOpposingStatGainItem(item, battler, battle, statUps, forced)
-    return trigger(OnOpposingStatGain, item, battler, battle, statUps, forced)
+    return trigger(OnOpposingStatGainItem, item, battler, battle, statUps, forced)
   end
 
   def self.triggerStatLossImmunity(item, battler, stat, battle, show_message)
