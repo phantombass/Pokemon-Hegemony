@@ -39,6 +39,7 @@ class PBAI
       :should_taunt => [],
       :move => nil
     }
+    $team_flags = {}
     $spam_block_triggered = false
     $test_trigger = false
   end
@@ -859,6 +860,8 @@ class PBAI
             target.flags[:will_be_disabled] = true
           elsif move.function == "0BC"
             target.flags[:will_be_encored] = true
+          elsif move.function == "117"
+            $team_flags[:will_redirect] = true
           end
         end
         return [choice[0], choice[2]]
@@ -1959,6 +1962,7 @@ class PBAI
 
     def end_of_round
       @flags = {}
+      $team_flags = {}
       $switch_flags = {}
       $doubles_switch = nil
       $d_switch = 0
@@ -2028,6 +2032,7 @@ class PBAI
       @battlers.each { |proj| proj.end_of_round if proj }
       $switch_flags = {}
       @flags = {}
+      $team_flags = {}
     end
   end
 end

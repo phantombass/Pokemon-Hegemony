@@ -2987,6 +2987,7 @@ end
 PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
   if ai.battle.pbSideSize(0) == 2
     ally = false
+    prio = false
     b = nil
     enemy = []
     user.battler.eachAlly do |battler|
@@ -2997,12 +2998,18 @@ PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
         enemy.push(opp)
       end
       mon = user.side.battlers.find {|proj| proj && proj != self && !proj.fainted?}
+      prio = (mon.has_role?(:TANK) && mon.has_role?(:REDIRECTION))
       if (mon.bad_against?(enemy[0]) || mon.bad_against?(enemy[1]))
         score += 200
         PBAI.log("+ 200 for redirecting an attack away from partner")
         if user.has_role?(:REDIRECTION)
-          score += 250
-          PBAI.log("+ 250")
+          if prio
+            score -= 1000
+            PBAI.log("- 1000 because ally is more defensive")
+          else
+            score += 250
+            PBAI.log("+ 250")
+          end
         end
       end
       if user.has_role?(:REDIRECTION) && mon.setup?
@@ -3019,6 +3026,10 @@ PBAI::ScoreHandler.add("117","120") do |score, ai, user, target, move|
   else
     score -= 1000
     PBAI.log("- 1000 because move will fail")
+  end
+  if $team_flags[:will_redirect] == true
+    score -= 1000
+    PBAI.log("- 1000 to prevent double Follow Me")
   end
   next score
 end
