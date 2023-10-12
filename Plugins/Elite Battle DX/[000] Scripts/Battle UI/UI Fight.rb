@@ -61,7 +61,7 @@ class PokeBattle_Scene
         initative = ["0EE","529","538","0ED","0EA","151"]
         $spam_block_flags[:double_recover].push(chosen_move) if recover.include?(chosen_move.function) && !@battle.doublebattle
         $spam_block_flags[:initiative_flag].push(chosen_move) if initative.include?(chosen_move.function) && !@battle.doublebattle
-        $spam_block_flags[:yawn].push(battler.moves[cw.index]) if !@battle.doublebattle
+        $spam_block_flags[:yawn].push(battler.moves[chosen_move]) if !@battle.doublebattle
         $spam_block_flags[:protect_switch].push(chosen_move) if chosen_move.is_a?(PokeBattle_ProtectMove) && !@battle.doublebattle
         $spam_block_flags[:choice] = battler.moves[@fightWindow.index]
         $spam_block_flags[:triple_switch].clear
