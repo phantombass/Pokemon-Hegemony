@@ -25,12 +25,13 @@ class PBAI
   	  :no_attacking => [], #Target has no attacking moves
   	  :double_recover => [], # Target uses a recovery move twice in a row
   	  :choiced_flag => [], #Target is choice-locked
-  	  :same_move => [], # Target uses same move 3 times in a row
+  	  :same_move => [], # Target uses same move 5 times in a row
   	  :initiative_flag => [], # Target uses an initiative move 2 times in a row
   	  :double_intimidate => [], # Target pivots between 2 Intimidators
       :protect_switch => [],
       :no_priority_flag => [],
       :fake_out_ghost_flag => [],
+      :yawn => [],
       :choice => nil
   	}
     $learned_flags = {

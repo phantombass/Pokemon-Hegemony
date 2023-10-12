@@ -3691,10 +3691,10 @@ class PokeBattle_Battler
     if move.damagingMove? && move.calcType == :FIRE && target.hasActiveItem?(:FLASHFIREORB)
       ability = target.ability_id
       if ability != :FLASHFIRE
-        @battle.pbShowAbilitySplash(target,false,true,:FLASHFIRE)
+        @battle.pbShowAbilitySplash(target,false,true,"Flash Fire")
         if !target.effects[PBEffects::FlashFire]
           target.effects[PBEffects::FlashFire] = true
-            battle.pbDisplay(_INTL("The power of {1}'s Fire-type moves rose because of its {2} Orb!",target.pbThis(true),target.abilityName))
+            battle.pbDisplay(_INTL("The power of {1}'s Fire-type moves rose because of its Flash Fire Orb!",target.pbThis(true)))
         else
             battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",
                target.pbThis,target.abilityName,move.name))
@@ -3707,8 +3707,8 @@ class PokeBattle_Battler
     if move.damagingMove? && move.calcType == :ROCK && target.hasActiveItem?(:SCALERORB)
       ability = target.ability_id
       if ability != :SCALER
-        @battle.pbShowAbilitySplash(target,false,true,:SCALER)
-        battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+        @battle.pbShowAbilitySplash(target,false,true,"Scaler")
+        battle.pbDisplay(_INTL("{1}'s Scaler Orb made {2} ineffective!",target.pbThis,move.name))
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
       end
@@ -3717,8 +3717,8 @@ class PokeBattle_Battler
     if move.damagingMove? && move.calcType == :COSMIC && target.hasActiveItem?(:DIMENSIONBLOCKORB)
       ability = target.ability_id
       if ability != :DIMENSIONBLOCK
-        @battle.pbShowAbilitySplash(target,false,true,:DIMENSIONBLOCK)
-        battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+        @battle.pbShowAbilitySplash(target,false,true,"Dimension Block")
+        battle.pbDisplay(_INTL("{1}'s Dimension Block Orb made {2} ineffective!",target.pbThis,move.name))
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
       end
@@ -3727,11 +3727,11 @@ class PokeBattle_Battler
     if move.damagingMove? && move.calcType == :GROUND && target.hasActiveItem?(:EARTHEATERORB)
       ability = target.ability_id
       if ability != :EARTHEATER
-        @battle.pbShowAbilitySplash(target,false,true,:EARTHEATER)
+        @battle.pbShowAbilitySplash(target,false,true,"Earth Eater")
         if target.canHeal? && target.pbRecoverHP(target.totalhp/4)>0
-          @battle.pbDisplay(_INTL("{1}'s {2} Orb restored its HP.",target.pbThis,target.abilityName))
+          @battle.pbDisplay(_INTL("{1}'s Earth Eater Orb restored its HP.",target.pbThis,target.abilityName))
         else
-          @battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+          @battle.pbDisplay(_INTL("{1}'s Earth Eater Orb made {2} ineffective!",target.pbThis,move.name))
         end
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
@@ -3741,11 +3741,11 @@ class PokeBattle_Battler
     if move.damagingMove? && move.calcType == :WATER && target.hasActiveItem?(:WATERABSORBORB)
       ability = target.ability_id
       if ability != :WATERABSORB
-        @battle.pbShowAbilitySplash(target,false,true,:WATERABSORB)
+        @battle.pbShowAbilitySplash(target,false,true,"Water Absorb")
         if target.canHeal? && target.pbRecoverHP(target.totalhp/4)>0
-          @battle.pbDisplay(_INTL("{1}'s {2} Orb restored its HP.",target.pbThis,target.abilityName))
+          @battle.pbDisplay(_INTL("{1}'s Water Absorb Orb restored its HP.",target.pbThis))
         else
-          @battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+          @battle.pbDisplay(_INTL("{1}'s Water Absorb Orb made {2} ineffective!",target.pbThis,move.name))
         end
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
@@ -3755,8 +3755,8 @@ class PokeBattle_Battler
     if move.priority > 0 && target.hasActiveItem?(:DAZZLINGORB)
       ability = :DAZZLING
       if ability != target.ability_id
-        @battle.pbShowAbilitySplash(target,false,true,:DAZZLING)
-        @battle.pbDisplay(_INTL("{1}'s {2} Orb made {3} ineffective!",target.pbThis,target.abilityName,move.name))
+        @battle.pbShowAbilitySplash(target,false,true,"Dazzling")
+        @battle.pbDisplay(_INTL("{1}'s Dazzling Orb made {2} ineffective!",target.pbThis,move.name))
         @battle.pbHideAbilitySplash(target)
         user.ability_id = ability
       end
