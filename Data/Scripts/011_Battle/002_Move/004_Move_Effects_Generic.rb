@@ -238,12 +238,12 @@ class PokeBattle_StatUpMove < PokeBattle_Move
 
   def pbEffectGeneral(user)
     return if damagingMove?
-    return if Restrictions.active?
+    return if Restrictions.active? && user.index == 0
     user.pbRaiseStatStage(@statUp[0],@statUp[1],user)
   end
 
   def pbAdditionalEffect(user,target)
-    return if Restrictions.active?
+    return if Restrictions.active? && user.index == 0
     if user.pbCanRaiseStatStage?(@statUp[0],user,self)
       user.pbRaiseStatStage(@statUp[0],@statUp[1],user)
     end
@@ -271,7 +271,7 @@ class PokeBattle_MultiStatUpMove < PokeBattle_Move
 
   def pbEffectGeneral(user)
     return if damagingMove?
-    return if Restrictions.active?
+    return if Restrictions.active? && user.index == 0
     showAnim = true
     for i in 0...@statUp.length/2
       next if !user.pbCanRaiseStatStage?(@statUp[i*2],user,self)
@@ -283,7 +283,7 @@ class PokeBattle_MultiStatUpMove < PokeBattle_Move
 
   def pbAdditionalEffect(user,target)
     showAnim = true
-    return if Restrictions.active?
+    return if Restrictions.active? && user.index == 0
     for i in 0...@statUp.length/2
       next if !user.pbCanRaiseStatStage?(@statUp[i*2],user,self)
       if user.pbRaiseStatStage(@statUp[i*2],@statUp[i*2+1],user,showAnim)
