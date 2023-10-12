@@ -69,7 +69,7 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag if $spam_block_triggered
 	recover = ["0D6","0D5","0D8","1D6","0D9"]
 	same_move = $spam_block_flags[:double_recover]
-	next flag if same_move.length < 2
+	next flag if same_move.length < 3
 	check = 0
 	for i in same_move
 		check += 1 if recover.include?(i.function)
@@ -77,7 +77,7 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 		$spam_block_flags[:double_recover].clear if check == 0
 		$spam_block_flags[:choice] = nil if check == 0
 	end
-	if check == 2
+	if check == 3
 		flag = true
 		$spam_block_triggered = true
 		$spam_block_flags[:double_recover].clear
@@ -90,7 +90,7 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag if $spam_block_triggered
 	next flag if $spam_block_flags[:choiced_flag].include?(target)
 	same_move = $spam_block_flags[:same_move]
-	next flag if same_move.length < 3
+	next flag if same_move.length < 5
 	check = 0
 	for i in 1...same_move.length
 		check += 1 if same_move[i] == same_move[i-1]
@@ -98,7 +98,7 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 		$spam_block_flags[:same_move].clear if check == 0
 		$spam_block_flags[:choice] = nil if check == 0
 	end
-	if check == 2
+	if check == 4
 		flag = true
 		$spam_block_triggered = true
 		$spam_block_flags[:same_move].clear
@@ -144,6 +144,17 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 	protect_switch = $spam_block_flags[:fake_out_ghost_flag]
 	next flag if protect_switch.length < 2
 	flag = protect_switch.length == 2
+	next flag
+end
+
+#Yawn into Protect
+PBAI::SpamHandler.add do |flag,ai,battler,target|
+	next flag if $spam_block_triggered
+	protect_switch = $spam_block_flags[:yawn]
+	next flag if protect_switch.length < 2
+	for i in 1...protect_switch.length
+		flag = (protect_switch[i].id == :YAWN && protect_switch[i-1].is_a?(PokeBattle_ProtectMove))
+	end
 	next flag
 end
 
