@@ -131,10 +131,14 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 	next flag if $spam_block_triggered
 	protect_switch = $spam_block_flags[:protect_switch]
 	next flag if protect_switch.length < 2
-	check = 0
 	for i in 1...protect_switch.length
-		flag = (protect_switch[i] == :Switch && protect_switch[i-1].is_a?(PokeBattle_ProtectMove))
+		if (protect_switch[i] == :Switch && protect_switch[i-1].is_a?(PokeBattle_ProtectMove))
+			$spam_block_flags[:protect_switch_add] += 1
+			$spam_block_flags[:protect_switch].clear
+		end
 	end
+	flag = true if $spam_block_flags[:protect_switch_add] >= 3
+	$spam_block_triggered = flag
 	next flag
 end
 
@@ -144,6 +148,7 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 	protect_switch = $spam_block_flags[:fake_out_ghost_flag]
 	next flag if protect_switch.length < 2
 	flag = protect_switch.length == 2
+	$spam_block_triggered = flag
 	next flag
 end
 
@@ -153,8 +158,13 @@ PBAI::SpamHandler.add do |flag,ai,battler,target|
 	protect_switch = $spam_block_flags[:yawn]
 	next flag if protect_switch.length < 2
 	for i in 1...protect_switch.length
-		flag = (protect_switch[i].id == :YAWN && protect_switch[i-1].is_a?(PokeBattle_ProtectMove))
+		if (protect_switch[i].id == :YAWN && protect_switch[i-1].is_a?(PokeBattle_ProtectMove))
+			$spam_block_flags[:yawn_add] += 1
+			$spam_block_flags[:yawn].clear
+		end
 	end
+	flag = true if $spam_block_flags[:yawn_add] >= 3
+	$spam_block_triggered = flag
 	next flag
 end
 

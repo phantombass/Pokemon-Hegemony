@@ -1,5 +1,5 @@
 module Phantombass_AI
-  VERSION = "3.2"
+  VERSION = "3.3"
 end
 
 class PBAI
@@ -32,6 +32,8 @@ class PBAI
       :no_priority_flag => [],
       :fake_out_ghost_flag => [],
       :yawn => [],
+      :protect_switch_add => 0,
+      :yawn_add => 0,
       :choice => nil
   	}
     $learned_flags = {
@@ -565,6 +567,8 @@ class PBAI
     end
 
     def check_spam_block
+      return false if @battle.doublebattle
+      return false if !$game_switches[LvlCap::Expert]
       flag = $spam_block_triggered
       if $spam_block_triggered == false
         self.opposing_side.battlers.each do |target|
@@ -572,8 +576,6 @@ class PBAI
           flag = PBAI::SpamHandler.trigger(flag,@ai,@battler,target)
         end
       end
-      flag = false if !$game_switches[LvlCap::Expert]
-      flag = false if @battle.doublebattle
       PBAI.log("Spam Block Triggered") if flag
       return flag
     end
