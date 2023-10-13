@@ -1637,9 +1637,9 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, t
     for i in user.roles
       roles.push(i)
     end
-    if user.has_role?([:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:LEAD])#.include?(roles)
-      score += 40 if user.can_switch?
-      PBAI.log("+ 40 ")
+    if user.has_role?([:DEFENSIVEPIVOT,:OFFENSIVEPIVOT,:LEAD]) && user.can_switch?
+      score += 60 
+      PBAI.log("+ 60 ")
     end
     boosts = 0
     o_boost = 0
@@ -1690,8 +1690,8 @@ PBAI::ScoreHandler.add("0EB", "0EC", "0EE", "151", "529") do |score, ai, user, t
       PBAI.log("+ 100 for predicting the target to switch, being unable to kill, and having something to switch to")
     end
     if diff == 1
-      score -= 1000
-      PBAI.log("- 1000 to prefer stronger offensive moves if all other party members are fainted")
+      score -= 100
+      PBAI.log("- 100 to prefer stronger offensive moves if all other party members are fainted")
     end
   end
   if target.hasActiveAbility?([:MAGICBOUNCE,:GOODASGOLD]) && move.statusMove?
