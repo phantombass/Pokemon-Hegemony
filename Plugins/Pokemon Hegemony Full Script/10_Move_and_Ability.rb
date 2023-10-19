@@ -7117,3 +7117,28 @@ BattleHandlers::AbilityOnSwitchIn.add(:GODLIKEPOWER,
     battle.pbHideAbilitySplash(battler)
   }
 )
+
+BattleHandlers::MoveImmunityTargetAbility.add(:PESTICIDE,
+  proc { |ability,user,target,move,type,battle|
+    next if type != :BUG
+    battle.pbShowAbilitySplash(target)
+    if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("It doesn't affect {1}...",target.pbThis(true)))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} blocks {3}!",target.pbThis,target.abilityName,move.name))
+    end
+    if user.status == :NONE
+      anim_name = GameData::Status.get(:POISON).animation
+      battle.pbCommonAnimation(anim_name, user)
+      user.status = :POISON
+    end
+    battle.pbParty(user.index).each do |pkmn|
+      next if !pkmn.hasType?(:BUG) || pkmn.hasType?(:STEEL) || pkmn.hasType?(:POISON)
+      next if pkmn.hasAbility?([:IMMUNITY,:PURIFYINGSALT,:FAIRYBUBBLE,:COMATOSE,:SHIELDSDOWN])
+      pkmn.status = :POISON
+    end
+    battle.pbDisplay(_INTL("All Bug-types in the party were Poisoned!"))
+    battle.pbHideAbilitySplash(target)
+    next true
+  }
+)

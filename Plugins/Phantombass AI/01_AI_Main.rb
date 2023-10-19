@@ -1485,6 +1485,8 @@ class PBAI
         when :COSMIC
           return true if target.hasActiveAbility?(:DIMENSIONBLOCK)
           return true if target.hasActiveItem?(:DIMENSIONBLOCKORB)
+        when :BUG
+          return true if target.hasActiveAbility?(:PESTICIDE)
         end
         return true if move.damagingMove? && Effectiveness.not_very_effective?(typeMod) &&
                        target.hasActiveAbility?(:WONDERGUARD)

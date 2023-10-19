@@ -21,6 +21,30 @@ module LvlCap
   Ironmon = 905
   Kaizo = 906
   Randomizer = 907
+
+  def self.start_battle(type)
+    case type
+    when :Gym
+      $game_switches[LvlCap::Gym] = true
+    when :Boss
+      $game_switches[LvlCap::Boss] = true
+    when :Rival
+      $game_switches[LvlCap::Rival] = true
+    when :LvlTrainer
+      $game_switches[LvlCap::LvlTrainer] = true
+    end
+  end
+
+  def self.end_battle
+    type = [:Gym,:Boss,:Rival,:LvlTrainer]
+    for i in type
+      $game_switches[i] = false
+    end
+  end
+
+  def self.player_max_level
+    return $Trainer.party.map { |e| e.level  }.max
+  end
 end
 
 
@@ -42,100 +66,58 @@ Events.onTrainerPartyLoad+=proc {| sender, trainer |
     if $game_switches && $game_switches[LvlCap::Switch] && $Trainer && $game_switches[Settings::LEVEL_CAP_SWITCH]
        levelcap = $game_switches[LvlCap::Insane] ? INSANE_LEVEL_CAP[$game_system.level_cap] : LEVEL_CAP[$game_system.level_cap]
        badges = $Trainer.badge_count
-       mlv = $Trainer.party.map { |e| e.level  }.max
+       mlv = LvlCap.player_max_level
       for i in 0...party.length
         level = 0
         level=1 if level<1
-      if mlv<=levelcap && mlv <= party[i].level && $game_switches[LvlCap::Gym] == true && $game_switches[LvlCap::Trainers] == true
-        if $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == false
-          level = levelcap + rand(2)
-        elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == true
-          level = levelcap + rand(2) +1
+        if $game_switches[LvlCap::Gym] == true
+          if $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == false
+            level = levelcap + rand(2)
+          elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == true
+            level = levelcap + rand(2) + 1
+          else
+            level = levelcap
+          end
+        elsif $game_switches[LvlCap::Boss] == true && $game_switches[LvlCap::Gym] == false
+          if $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == false
+            level = levelcap + rand(1)
+          elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == true
+            level = levelcap + rand(1) + 1
+          else
+            level = levelcap - rand(1)
+          end
+        elsif $game_switches[LvlCap::LvlTrainer] == true
+          level = levelcap - 5
+        elsif $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Rival] == false
+          level = (mlv-1) - rand(1)
+          if $game_switches[LvlCap::Hard]
+            level += 1
+          elsif $game_switches[LvlCap::Expert]
+            level += 2
+          end
+        elsif $game_switches[LvlCap::Rival] == true && $game_switches[LvlCap::Hard] == false
+          level = party[i].level - rand(2)
+        elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == false && $game_switches[LvlCap::Rival] == true
+          level = party[i].level
+        elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == true && $game_switches[LvlCap::Rival] == true
+          level = party[i].level + 2
         else
-          level = levelcap
+          level = $game_switches[LvlCap::Insane] ? levelcap - 2 : levelcap - 4
         end
-      elsif $game_switches[LvlCap::LvlTrainer] == true
-        level = levelcap - 5
-      elsif $game_switches[LvlCap::Trainers] == true && $game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Rival] == false
-        level = (mlv-1) - rand(1)
-        if $game_switches[LvlCap::Hard]
-          level += 1
-        elsif $game_switches[LvlCap::Expert]
-          level += 2
+        if $game_switches[Settings::DISABLE_EVS] && $game_switches[LvlCap::Hard]
+          minus = $game_switches[LvlCap::Expert] ? 1 : 2
+          #minus = 0 if $game_switches[LvlCap::Insane]
+          level -= minus
         end
-      elsif $game_switches[LvlCap::Rival] == true && $game_switches[LvlCap::Hard] == false
-        level = party[i].level - rand(2)
-      elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == false && $game_switches[LvlCap::Rival] == true
-        level = party[i].level
-      elsif $game_switches[LvlCap::Hard] == true && $game_switches[LvlCap::Expert] == true && $game_switches[LvlCap::Rival] == true
-        level = party[i].level + 2
-      else
-        level = levelcap
-      end
-      if $game_switches[Settings::DISABLE_EVS] && $game_switches[LvlCap::Hard]
-        minus = $game_switches[LvlCap::Expert] ? 1 : 2
-        #minus = 0 if $game_switches[LvlCap::Insane]
-        level -= minus
-      end
-      party[i].level = level
-      #now we evolve the pokémon, if applicable
-      #unused
-      species = party[i].species
-      if badges == 99999
-      newspecies = GameData::Species.get(species).get_baby_species # revert to the first evolution
-      evoflag=0 #used to track multiple evos not done by lvl
-      endevo=false
-      loop do #beginning of loop to evolve species
-      nl = level + 5
-      nl = levelcap if nl > levelcap
-      pkmn = Pokemon.new(newspecies, nl)
-      cevo = GameData::Species.get(newspecies).evolutions
-      evo = GameData::Species.get(newspecies).get_evolutions
-      if evo
-        evo = evo[rand(evo.length - 1)]
-        # here we evolve things that don't evolve through level
-        # that's what we check with evo[0]!=4
-        #notice that such species have cevo==-1 and wouldn't pass the last check
-        #to avoid it we set evoflag to 1 (with some randomness) so that
-        #pokemon may have its second evolution (Raichu, for example)
-        if evo && cevo < 1 && rand(50) <= level
-          if evo[0] != 4 && rand(50) <= level
-          newspecies = evo[2]
-             if evoflag == 0 && rand(50) <= level
-               evoflag=1
-             else
-               evoflag=0
-             end
-           end
-        else
-        endevo=true
+        party[i].level = level
+        #now we evolve the pokémon, if applicable
+        #unused
+        species = party[i].species
+        party[i].calc_stats
+        if ($game_switches[LvlCap::Kaizo] || $game_switches[907]) && ($game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Rival] == false && $game_switches[LvlCap::Trainers] == false && $game_switches[LvlCap::Boss] == false)
+          party[i].species=species
+          party[i].reset_moves
         end
-      end
-      if evoflag==0 || endevo
-      if  cevo == -1 || rand(50) > level
-        # Breaks if there no more evolutions or randomnly
-        # Randomness applies only if the level is under 50
-        break
-      else
-        newspecies = evo[2]
-      end
-      end
-      end #end of loop do
-    #fixing some things such as Bellossom would turn into Vileplume
-    #check if original species could evolve (Bellosom couldn't)
-    couldevo=GameData::Species.get(species).get_evolutions
-    #check if current species can evolve
-    evo = GameData::Species.get(newspecies).get_evolutions
-      if evo.length<1 && couldevo.length<1
-      else
-         species=newspecies
-      end #end of evolving script
-    end
-      party[i].calc_stats
-      if ($game_switches[LvlCap::Kaizo] || $game_switches[907]) && ($game_switches[LvlCap::Gym] == false && $game_switches[LvlCap::Rival] == false && $game_switches[LvlCap::Trainers] == false && $game_switches[LvlCap::Boss] == false)
-        party[i].species=species
-        party[i].reset_moves
-      end
       end #end of for
      end
    end
