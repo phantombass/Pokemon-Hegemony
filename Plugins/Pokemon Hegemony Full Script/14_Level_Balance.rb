@@ -36,7 +36,7 @@ module LvlCap
   end
 
   def self.end_battle
-    type = [:Gym,:Boss,:Rival,:LvlTrainer]
+    type = [LvlCap::Gym,LvlCap::Boss,LvlCap::Rival,LvlCap::LvlTrainer]
     for i in type
       $game_switches[i] = false
     end
