@@ -874,7 +874,7 @@
 1035,ORDERUP,Order Up,543,80,DRAGON,Physical,100,10,0,NearOther,0,abef,"The user attacks with elegant poise. If the user has a Tatsugiri in its mouth, this move boosts one of the user's stats based on the Tatsugiri's form."
 1036,RAGINGBULL,Raging Bull,544,90,NORMAL,Physical,100,10,0,NearOther,0,abef,"The user performs a tackle like a raging bull. This move's type depends on the user's form. It can also break barriers, such as Light Screen and Reflect."
 1037,ASTRALBLADE,Astral Blade,0A9,90,COSMIC,Physical,100,15,0,NearOther,0,abefq,"The user attacks by slicing blade of stardust. The target's stat changes don't affect the damage."
-1038,SHADOWHAMMER,Shadow Hammer,00F,70,NORMAL,Physical,100,20,30,NearOther,0,abes,"The user crashes a haunted hammer into the foe. It may also make the target flinch."
+1038,SHADOWHAMMER,Shadow Hammer,00F,70,GHOST,Physical,100,20,30,NearOther,0,abes,"The user crashes a haunted hammer into the foe. It may also make the target flinch."
 1039,ASTROCUTTER,Astro Cutter,000,60,COSMIC,Physical,100,30,0,NearOther,0,abefhq,"The target is cut with a scythe covered in stardust. It has a high critical hit chance."
 1040,REFLECTION,Reflection,0BD,40,STEEL,Special,100,10,0,NearOther,0,befp,"The user shoots mystical beams from its eyes to inflict damage. The target is hit twice in a row."
 1041,ANCIENTCRY,Ancient Cry,504,95,DRAGON,Special,100,10,0,AllNearFoes,0,befk,"The user lets out a cry learned from the ancient past, which even damages Fairies."

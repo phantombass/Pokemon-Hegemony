@@ -399,9 +399,7 @@ def useMoveDive
     dive_map_id = map_metadata.dive_map_id if map_metadata
   end
   return false if !dive_map_id
-  if !pbHiddenMoveAnimation(pokemon)
-    pbMessage(_INTL("{1} used Dive!",$Trainer.name))
-  end
+  pbMessage(_INTL("{1} used Dive!",$Trainer.name))
   pbFadeOutIn {
     $game_temp.player_new_map_id    = dive_map_id
     $game_temp.player_new_x         = $game_player.x
