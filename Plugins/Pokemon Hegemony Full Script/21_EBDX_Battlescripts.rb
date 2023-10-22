@@ -339,7 +339,7 @@ module BattleScripts
     "turnStart0" => proc do
       @scene.pbTrainerSpeak("Ye may as well be a criminal showing up at a time like this.")
       if $game_switches[LvlCap::Expert]
-        if $game_variables[51] <= 5
+        if $game_variables[51] > 50
           @scene.pbAnimation(GameData::Move.get(:HAIL).id,@battle.battlers[1],@battle.battlers[1])
           @battle.field.weather = :Sleet
           @battle.field.weatherDuration = -1
