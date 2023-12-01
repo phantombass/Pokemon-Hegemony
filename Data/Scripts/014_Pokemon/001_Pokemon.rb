@@ -960,6 +960,15 @@ class Pokemon
 
   # @return [Hash<Integer>] the EV yield of this Pokémon (a hash with six key/value pairs)
   def evYield
+    no_evs = {
+      :HP => 0,
+      :ATTACK => 0,
+      :DEFENSE => 0,
+      :SPEED => 0,
+      :SPECIAL_ATTACK => 0,
+      :SPECIAL_DEFENSE => 0
+    }
+    return no_evs if $game_switches[Settings::DISABLE_EVS]
     this_evs = species_data.evs
     ret = {}
     GameData::Stat.each_main { |s| ret[s.id] = this_evs[s.id] }
