@@ -53,6 +53,15 @@ class Randomizer
     	return keys
   	end
 
+  	def self.all_available_species
+  		keys = []
+  		blacklist = [:MEWTWO,:HOOH,:LUGIA,:KYOGRE,:GROUDON,:RAYQUAZA,:DEOXYS,:DIALGA,:PALKIA,:GIRATINA,:ARCEUS,
+	    	:RESHIRAM,:ZEKROM,:XERNEAS,:YVELTAL,:ZYGARDE,:SOLGALEO,:LUNALA,:ZACIAN,:ZAMAZENTA,:ETERNATUS,:KORAIDON,:MIRAIDON,:ZYGARDE2,:REGIGIGAS2,
+	    	:SPINDA]
+	    GameData::Species.each { |species| keys.push(species.id) if species.form == 0 && !blacklist.include?(species) }
+    	return keys
+    end
+
   	def self.active?(type)
   	    return false if @choices.nil?
   	    return false if @choices == 0
@@ -442,7 +451,6 @@ class Randomizer
 	  	return if !self.active?(:ENCOUNTERS)
 	    # loads map encounters
 	    data = load_data("Data/encounters.dat")
-	    species_exclusions = $game_switches[906] ? nil : [:SPINDA,:ZYGARDE2,:REGIGIGAS2]
 	    return if !data.is_a?(Hash) # failsafe
 	    # iterates through each map point
 	    for key in data.keys
@@ -451,10 +459,7 @@ class Randomizer
 	        # cycle each definition
 	        for i in 0...data[key].types[type].length
 	          # set randomized species
-	          loop do
-	          	data[key].types[type][i][1] = Randomizer.all_species.sample
-	          	break if !species_exclusions.nil? && !species_exclusions.include?(data[key].types[type][i][1])
-	          end
+	          data[key].types[type][i][1] = Randomizer.all_available_species.sample
 	        end
 	      end
 	    end
@@ -469,13 +474,11 @@ class Randomizer
 	  	PBAI.log("Randomizing static...")
 	  	pbMessage(_INTL("\\wtnp[1]Randomizing static..."))
 	  	new = {}
-	    array = Randomizer.all_species
+	    array = Randomizer.all_available_species
 	    # shuffles up species indexes to load a different one
-	    excl = $game_switches[906] ? nil : [:SPINDA,:ZYGARDE2,:REGIGIGAS2]
-	    for org in Randomizer.all_species
+	    for org in Randomizer.all_available_species
 	      i = rand(array.length)
 	      new[org] = array[i]
-	      new[org] = array[i+1] if excl.include?(array[i])
 	      array.delete_at(i)
 	    end
 	    @static = new
@@ -487,13 +490,11 @@ class Randomizer
 	  	PBAI.log("Randomizing gift...")
 	  	pbMessage(_INTL("\\wtnp[1]Randomizing gift..."))
 	  	new = {}
-	    array = Randomizer.all_species
+	    array = Randomizer.all_available_species
 	    # shuffles up species indexes to load a different one
-	    excl = $game_switches[906] ? nil : [:SPINDA,:ZYGARDE2,:REGIGIGAS2]
-	    for org in Randomizer.all_species
+	    for org in Randomizer.all_available_species
 	      i = rand(array.length)
 	      new[org] = array[i]
-	      new[org] = array[i+1] if excl.include?(array[i])
 	      array.delete_at(i)
 	    end
 	    @gift = new
@@ -524,10 +525,8 @@ class Randomizer
 		    species = pokemon.species
 		  end
 		  # if defined as an exclusion rule, species will not be randomized
-		    excl = $game_switches[906] ? nil : [:SPINDA]
 	  	for mon in @gift.keys
 	  		next if mon != species
-	  		next if excl.include?(@gift[mon])
 	  		species = @gift[mon]
 	  	end
 	    if !pokemon.nil?
@@ -547,7 +546,6 @@ class Randomizer
 		    species = pokemon.species
 		  end
 		# if defined as an exclusion rule, species will not be randomized
-		excl = $game_switches[906] ? nil : [:SPINDA]
 	    if !pokemon.nil?
 	      pokemon.species = species
 	      pokemon.calc_stats
@@ -563,7 +561,6 @@ class Randomizer
 		    species = pokemon.species
 		  end
 		  # if defined as an exclusion rule, species will not be randomized
-		    excl = $game_switches[906] ? nil : [:SPINDA]
 	  	for mon in @gift.keys
 	  		next if mon != species
 	  		species = @gift[mon]
