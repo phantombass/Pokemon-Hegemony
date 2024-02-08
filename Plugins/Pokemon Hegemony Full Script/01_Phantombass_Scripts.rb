@@ -4,13 +4,14 @@
 module Settings
   LEVEL_CAP_SWITCH = 904
   FISHING_AUTO_HOOK     = true
-  GAME_VERSION = "5.1.38"
+  GAME_VERSION = "5.1.39"
   DISABLE_EVS = 917
 end
 
 Essentials::ERROR_TEXT += "[Pokémon Hegemony v#{Settings::GAME_VERSION}]\r\n"
 
 def write_version
+  $DEBUG = false
   File.open("version.txt", "wb") { |f|
     version = Settings::GAME_VERSION
     f.write("#{version}")
@@ -132,6 +133,7 @@ Events.onMapChange += proc {| sender, e |
       $game_variables[DailyE4::TimeNow] = $game_variables[DailyE4::LastTime]
     end
     $game_variables[105] = 0 if (!$game_switches[LvlCap::Expert] || !$game_switches[LvlCap::Insane])
+    $game_variables[107] = 100 if $game_switches[LvlCap::Insane]
     pbResetAllRoamers
     $mission.pbEndScene if $mission != nil
 }
