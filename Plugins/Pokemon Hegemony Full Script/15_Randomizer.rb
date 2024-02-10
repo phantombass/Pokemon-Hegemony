@@ -11,6 +11,12 @@ module Randomizer_Info
 	RandomizerOn = 960 #Switch
 end
 
+module Phantombass_Randomizer
+  VERSION = "2.0"
+end
+
+Essentials::ERROR_TEXT += "[Phantombass Randomizer v#{Phantombass_Randomizer::VERSION}]\r\n"
+
 class Randomizer
 	attr_accessor :randomized
 	attr_accessor :choices
@@ -58,7 +64,7 @@ class Randomizer
   		blacklist = [:MEWTWO,:HOOH,:LUGIA,:KYOGRE,:GROUDON,:RAYQUAZA,:DEOXYS,:DIALGA,:PALKIA,:GIRATINA,:ARCEUS,
 	    	:RESHIRAM,:ZEKROM,:XERNEAS,:YVELTAL,:ZYGARDE,:SOLGALEO,:LUNALA,:ZACIAN,:ZAMAZENTA,:ETERNATUS,:KORAIDON,:MIRAIDON,:ZYGARDE2,:REGIGIGAS2,
 	    	:SPINDA]
-	    GameData::Species.each { |species| keys.push(species.id) if species.form == 0 && !blacklist.include?(species) }
+	    GameData::Species.each { |species| keys.push(species.id) if species.form == 0 && !blacklist.include?(species.id) }
     	return keys
     end
 
@@ -288,7 +294,8 @@ class Randomizer
 	      :COMATOSE,
 	      :RKSSYSTEM,
 	      :GODLIKEPOWER,
-	      :HUNGERSWITCH
+	      :HUNGERSWITCH,
+	      :AMPLIFIER
 	    ]
 	    return if !pkmn.is_a?(Hash)
 	    return if !ability.is_a?(Hash)
