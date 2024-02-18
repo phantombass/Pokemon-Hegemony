@@ -262,7 +262,7 @@ module BattleScripts
           $gym_gimmick = true
           @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
           @battle.battlers[0].effects[PBEffects::Taunt] = 1
-          @battle.battlers[2].effects[PBEffects::Taunt] = 1
+          @battle.battlers[2].effects[PBEffects::Taunt] = 1 unless @battle.battlers[2].nil?
           $gym_taunt = true
           $gym_priority = true
           @scene.pbDisplay("Jackson's team is protected from priority and prevents your status moves!")
@@ -280,7 +280,7 @@ module BattleScripts
           @scene.pbAnimation(GameData::Move.get(:AURORAVEIL).id,@battle.battlers[1],@battle.battlers[1])
           @battle.battlers[1].pbOwnSide.effects[PBEffects::Safeguard] = 1
           @battle.battlers[0].effects[PBEffects::Taunt] = 1
-          @battle.battlers[2].effects[PBEffects::Taunt] = 1
+          @battle.battlers[2].effects[PBEffects::Taunt] = 1 unless @battle.battlers[2].nil?
           $gym_taunt = true
           @scene.pbDisplay("Jackson's team is protected from status and prevents your status moves!")
         end
