@@ -34145,7 +34145,8 @@ Evolutions = PAWMO,Level,18
 [1031]
 Name = Pawmo
 InternalName = PAWMO
-Type1 = ELECTRIC,FIGHTING
+Type1 = ELECTRIC
+Type2 = FIGHTING
 BaseStats = 60,75,40,85,50,40
 GenderRate = Female50Percent
 GrowthRate = Medium
