@@ -982,7 +982,7 @@ BattlerEnemyY = 6
 [SCIZOR,1]
 FormName = Mega Scizor
 MegaStone = SCIZORITE
-BaseStats = 70,150,140,65,100,75
+BaseStats = 70,150,140,75,65,100
 Abilities = TECHNICIAN
 HiddenAbility = TECHNICIAN
 Height = 2.0
