@@ -32,6 +32,7 @@ class PokeBattle_DamageState
     @magicBounce        = false
     @totalHPLost        = 0
     @fainted            = false
+    @terashell          = false
     resetPerHit
   end
 
