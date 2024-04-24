@@ -280,6 +280,13 @@ class PokeBattle_Battler
     # Form changes upon entering battle and when the terrain changes
     pbCheckFormOnTerrainChange if !endOfRound
     # Darmanitan - Zen Mode
+    if isSpecies?(:TERAPAGOS) && self.ability == :TERASHIFT
+      if @form == 0
+        @battle.pbShowAbilitySplash(self, true)
+        @battle.pbHideAbilitySplash(self)
+        pbChangeForm(1, _INTL("{1} transformed!", pbThis))
+      end
+    end
     if isSpecies?(:DARMANITAN) && self.ability == :ZENMODE && $weather_form == false
       newForm = @form
         if @hp <= @totalhp/2 && newForm < 2
