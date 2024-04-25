@@ -215,26 +215,18 @@ class PokeBattle_Battler
       end
     end
     # Eiscue - Ice Face
-    if isSpecies?(:EISCUE) && self.ability == :ICEFACE && @battle.pbWeather == :Hail
+    if isSpecies?(:EISCUE) && self.ability == :ICEFACE && [:Hail,:Sleet].include?(@battle.pbWeather)
       if @form == 1
         @battle.pbShowAbilitySplash(self,true)
         pbChangeForm(0,_INTL("{1} transformed!",pbThis))
         @battle.pbHideAbilitySplash(self)
       end
     end
-    if isSpecies?(:DARMANITAN) && hasActiveAbility?(:ZENMODE)
-      if @form == 0 && @battle.pbWeather == (:Sun || :HarshSun)
-        newForm = 2
-        $weather_form = true
-      end
-      if @form == 1 && [:Hail,:Sleet].include?(@battle.pbWeather)
-        newForm = 3
-        $weather_form = true
-      end
-      if newForm != @form
-        @battle.pbShowAbilitySplash(self,true)
+    if isSpecies?(:DARMANITAN) && self.ability == :ZENMODE
+      if @form < 2
+        @battle.pbShowAbilitySplash(self, true)
+        pbChangeForm(@form + 2, _INTL("{1} transformed!", pbThis))
         @battle.pbHideAbilitySplash(self)
-        pbChangeForm(newForm,_INTL("{1} triggered!",abilityName))
       end
     end
   end
@@ -249,6 +241,7 @@ class PokeBattle_Battler
       when :Grassy     then newTypes = :GRASS
       when :Misty      then newTypes = :FAIRY
       when :Psychic    then newTypes = :PSYCHIC
+      when :Poison     then newTypes = :POISON
       else;                 newTypes = originalTypes.dup
       end
       if self.pbTypes != newTypes
