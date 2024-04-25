@@ -2432,7 +2432,8 @@ BattleHandlers::AbilityOnSwitchIn.add(:DOWNLOAD,
       oSpDef += b.spdef
     end
     stat = (oDef<oSpDef) ? :ATTACK : :SPECIAL_ATTACK
-    battler.pbRaiseStatStageByAbility(stat,1,battler)
+    mod = battler.item == :UPGRAD ? 2 : 1
+    battler.pbRaiseStatStageByAbility(stat,mod,battler)
   }
 )
 
@@ -2493,6 +2494,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:FOREWARN,
     if forewarnMoves.length>0
       battle.pbShowAbilitySplash(battler)
       forewarnMoveName = forewarnMoves[battle.pbRandom(forewarnMoves.length)]
+      move_id = GameData::Move.get(forewarnMoveName).id
       if PokeBattle_SceneConstants::USE_ABILITY_SPLASH
         battle.pbDisplay(_INTL("{1} was alerted to {2}!",
           battler.pbThis, forewarnMoveName))
@@ -2500,6 +2502,10 @@ BattleHandlers::AbilityOnSwitchIn.add(:FOREWARN,
         battle.pbDisplay(_INTL("{1}'s Forewarn alerted it to {2}!",
           battler.pbThis, forewarnMoveName))
       end
+      if move_id.category != 2
+        boost = move_id.category == 0 ? :DEFENSE : :SPECIAL_DEFENSE
+      end
+      battler.pbRaiseStatStageByAbility(boost,1,battler)
       battle.pbHideAbilitySplash(battler)
     end
   }
