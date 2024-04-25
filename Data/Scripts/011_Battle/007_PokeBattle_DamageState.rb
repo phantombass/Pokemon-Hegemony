@@ -20,6 +20,7 @@ class PokeBattle_DamageState
   attr_accessor :endured         # Damage was endured
   attr_accessor :berryWeakened   # Whether a type-resisting berry was used
   attr_accessor :iceface         # Ice Face ability used
+  attr_accessor :terashell
 
   def initialize; reset; end
 
