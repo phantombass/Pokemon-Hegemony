@@ -17,6 +17,8 @@ class PokeBattle_Move
   attr_accessor :calcType
   attr_accessor :powerBoost
   attr_accessor :snatched
+  attr_reader :statUp
+  attr_reader :statDown
 
   CRITICAL_HIT_RATIOS = (Settings::NEW_CRITICAL_HIT_RATE_MECHANICS) ? [24, 8, 2, 1] : [16, 8, 4, 3, 2]
 
@@ -44,6 +46,8 @@ class PokeBattle_Move
     @calcType   = nil
     @powerBoost = false   # For Aerilate, Pixilate, Refrigerate, Galvanize
     @snatched   = false
+    @statUp = []
+    @statDown = []
   end
 
   # This is the code actually used to generate a PokeBattle_Move object. The
