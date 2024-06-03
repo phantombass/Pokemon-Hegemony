@@ -2432,7 +2432,7 @@ BattleHandlers::AbilityOnSwitchIn.add(:DOWNLOAD,
       oSpDef += b.spdef
     end
     stat = (oDef<oSpDef) ? :ATTACK : :SPECIAL_ATTACK
-    mod = battler.item == :UPGRAD ? 2 : 1
+    mod = battler.item == :UPGRADE ? 2 : 1
     battler.pbRaiseStatStageByAbility(stat,mod,battler)
   }
 )
