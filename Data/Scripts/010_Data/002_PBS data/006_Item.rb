@@ -72,6 +72,9 @@ module GameData
       @battle_use       = hash[:battle_use]  || 0
       @type             = hash[:type]        || 0
       @move             = hash[:move]
+      if @type == 12
+        @pocket = 7
+      end
     end
 
     # @return [String] the translated name of this item
@@ -107,7 +110,7 @@ module GameData
     def is_mega_stone?;      return @type == 12; end   # Does NOT include Red Orb/Blue Orb
 
     def is_important?
-      return true if is_key_item? || is_HM? || is_TM?
+      return true if is_key_item? || is_HM?
       return false
     end
 
