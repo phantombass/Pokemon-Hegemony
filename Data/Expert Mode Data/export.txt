@@ -1,0 +1,58 @@
+
+Slowpoke-Galar
+Level: 16
+Lax Nature
+Ability: Own Tempo
+IVs: 31 HP / 0 Atk / 18 Def / 2 SpA / 25 SpD / 8 Spe
+- Tackle
+- Confusion
+- Acid
+- Yawn
+
+Sizzlipede
+Level: 16
+Careful Nature
+Ability: Magic Guard
+IVs: 4 HP / 6 Atk / 26 Def / 0 SpA / 19 SpD / 9 Spe
+- Flame Wheel
+- Smokescreen
+- Wrap
+- Bite
+
+Combusken-Wartime
+Level: 16
+Naive Nature
+Ability: Backdraft
+IVs: 2 HP / 31 Atk / 3 Def / 31 SpA / 31 SpD / 20 Spe
+- Gust
+- Defog
+- Scratch
+- Confusion
+
+Shroomish
+Level: 16
+Brave Nature
+Ability: Poison Heal
+IVs: 5 HP / 20 Atk / 30 Def / 31 SpA / 26 SpD / 7 Spe
+- Absorb
+- Headbutt
+- Mega Drain
+- Stun Spore
+
+Grubbin
+Level: 16
+Bold Nature
+Ability: Swarm
+IVs: 15 HP / 21 Atk / 9 Def / 0 SpA / 13 SpD / 27 Spe
+- Vise Grip
+- Mud-Slap
+- Bite
+- Bug Bite
+
+Magikarp
+Level: 16
+Hardy Nature
+Ability: Swift Swim
+IVs: 4 HP / 8 Atk / 10 Def / 11 SpA / 2 SpD / 18 Spe
+- Splash
+- Tackle
