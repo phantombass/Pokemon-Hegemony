@@ -1,0 +1,300 @@
+
+Chimecho-Wartime @ Sitrus Berry
+Level: 60
+Lax Nature
+Ability: Levitate
+IVs: 13 HP / 6 Atk / 14 Def / 17 SpA / 21 SpD / 12 Spe
+- Polarity Pulse
+- Moonblast
+- Recover
+- Mirror Rush
+
+Blaziken-Wartime
+Level: 60
+Brave Nature
+Ability: Backdraft
+IVs: 22 HP / 31 Atk / 31 Def / 27 SpA / 4 SpD / 31 Spe
+- Wind Drill
+- Psychic
+- Vacuum Wave
+- Roost
+
+Annihilape @ Sitrus Berry
+Level: 60
+Mild Nature
+Ability: Iron Fist
+IVs: 2 HP / 18 Atk / 28 Def / 9 SpA / 6 SpD / 18 Spe
+- Rage Fist
+- Close Combat
+- Stomping Tantrum
+- Drain Punch
+
+Tinkaton-Wartime @ Sitrus Berry
+Level: 60
+Modest Nature
+Ability: Clear Body
+IVs: 24 HP / 30 Atk / 4 Def / 7 SpA / 17 SpD / 2 Spe
+- Hex Cannon
+- Covet
+- Shadow Sneak
+- Ice Hammer
+
+Ninetales-Wartime
+Level: 60
+Sassy Nature
+Ability: Composure
+IVs: 8 HP / 24 Atk / 18 Def / 3 SpA / 11 SpD / 8 Spe
+- Night Daze
+- Sludge Bomb
+- Quick Attack
+- Extrasensory
+
+Excadrill
+Level: 60
+Hasty Nature
+Ability: Sand Rush
+IVs: 5 HP / 31 Atk / 9 Def / 3 SpA / 27 SpD / 28 Spe
+- Metal Claw
+- Rock Slide
+- Earthquake
+- Rapid Spin
+
+Probopass
+Level: 60
+Bashful Nature
+Ability: Sturdy
+IVs: 5 HP / 12 Atk / 30 Def / 26 SpA / 12 SpD / 0 Spe
+- Discharge
+- Volt Switch
+- Power Gem
+- Magnet Bomb
+
+Bruxish
+Level: 60
+Serious Nature
+Ability: Strong Jaw
+IVs: 5 HP / 8 Atk / 26 Def / 11 SpA / 19 SpD / 16 Spe
+- Confusion
+- Bite
+- Aqua Jet
+- Disable
+
+Vikavolt @ Sitrus Berry
+Level: 60
+Relaxed Nature
+Ability: Levitate
+IVs: 5 HP / 13 Atk / 8 Def / 4 SpA / 18 SpD / 23 Spe
+- Thunderbolt
+- Bug Buzz
+- Volt Switch
+- Roost
+
+Typhlosion-Hisuian Forme @ Sitrus Berry
+Level: 60
+Hasty Nature
+Ability: Blaze
+IVs: 5 HP / 30 Atk / 14 Def / 7 SpA / 31 SpD / 23 Spe
+- Flamethrower
+- Hex
+- Quick Attack
+- Flame Wheel
+
+Maractus
+Level: 60
+Modest Nature
+Ability: Chlorophyll
+IVs: 5 HP / 12 Atk / 10 Def / 0 SpA / 7 SpD / 7 Spe
+- Spiky Shield
+- Giga Drain
+- Mach Pulse
+- Echoed Voice
+
+Machoke
+Level: 60
+Modest Nature
+Ability: Guts
+IVs: 5 HP / 12 Atk / 15 Def / 19 SpA / 13 SpD / 12 Spe
+- Knock Off
+- Focus Energy
+- Revenge
+- Low Sweep
+
+Crobat
+Level: 60
+Bold Nature
+Ability: Infiltrator
+IVs: 5 HP / 5 Atk / 7 Def / 25 SpA / 24 SpD / 27 Spe
+- Cross Poison
+- Air Cutter
+- Defog
+- Roost
+
+Masquerain
+Level: 60
+Careful Nature
+Ability: Intimidate
+IVs: 5 HP / 21 Atk / 30 Def / 25 SpA / 9 SpD / 5 Spe
+- Defog
+- Bug Buzz
+- Mega Drain
+- Bubble Beam
+
+Hariyama
+Level: 60
+Relaxed Nature
+Ability: Guts
+IVs: 5 HP / 18 Atk / 12 Def / 7 SpA / 7 SpD / 25 Spe
+- Wake-Up Slap
+- Fake Out
+- Vacuum Wave
+- Knock Off
+
+Beartic @ Sitrus Berry
+Level: 60
+Jolly Nature
+Ability: Slush Rush
+IVs: 5 HP / 26 Atk / 7 Def / 31 SpA / 25 SpD / 3 Spe
+- Icicle Crash
+- Liquidation
+- Superpower
+- Aqua Jet
+
+Toedscruel
+Level: 60
+Lax Nature
+Ability: Mycelium Might
+IVs: 5 HP / 4 Atk / 1 Def / 15 SpA / 21 SpD / 18 Spe
+- Spore
+- Mud Shot
+- Giga Drain
+- Screech
+
+Honchkrow
+Level: 60
+Lax Nature
+Ability: Insomnia
+IVs: 5 HP / 31 Atk / 1 Def / 11 SpA / 28 SpD / 27 Spe
+- Night Slash
+- Haze
+- Wing Attack
+- Sucker Punch
+
+Magmortar @ Sitrus Berry
+Level: 60
+Brave Nature
+Ability: Toxic Rush
+IVs: 5 HP / 7 Atk / 14 Def / 5 SpA / 27 SpD / 4 Spe
+- Flamethrower
+- Vacuum Wave
+- Sludge Bomb
+- Weather Ball
+
+Obstagoon @ Sitrus Berry
+Level: 60
+Naive Nature
+Ability: Vocal Fry
+IVs: 5 HP / 3 Atk / 18 Def / 22 SpA / 30 SpD / 21 Spe
+- Obstruct
+- Night Slash
+- Headbutt
+- Fury Swipes
+
+Starmie @ Sitrus Berry
+Level: 60
+Jolly Nature
+Ability: Natural Cure
+IVs: 5 HP / 17 Atk / 28 Def / 31 SpA / 22 SpD / 29 Spe
+- Light Screen
+- Recover
+- Star Beam
+- Surf
+
+Gyarados
+Level: 60
+Rash Nature
+Ability: Intimidate
+IVs: 5 HP / 31 Atk / 0 Def / 8 SpA / 26 SpD / 12 Spe
+- Aqua Tail
+- Ice Fang
+- Crunch
+- Splash
+
+Stonjourner
+Level: 60
+Gentle Nature
+Ability: Power Spot
+IVs: 5 HP / 6 Atk / 25 Def / 31 SpA / 8 SpD / 27 Spe
+- Rock Throw
+- Block
+- Rock Tomb
+- Gravity
+
+Sneasler @ Sitrus Berry
+Level: 60
+Impish Nature
+Ability: Pressure
+IVs: 5 HP / 31 Atk / 13 Def / 14 SpA / 21 SpD / 31 Spe
+- Drain Punch
+- Dire Claw
+- Mach Punch
+- Septic Shot
+
+Chimecho @ Sitrus Berry
+Level: 60
+Naive Nature
+Ability: Levitate
+IVs: 5 HP / 17 Atk / 9 Def / 18 SpA / 15 SpD / 4 Spe
+- Extrasensory
+- Star Beam
+- Echoed Voice
+- Yawn
+
+Whimsicott-Wartime @ Expert Belt
+Level: 60
+Lonely Nature
+Ability: Swift Swim
+IVs: 5 HP / 21 Atk / 10 Def / 31 SpA / 31 SpD / 19 Spe
+- Wind Drill
+- Moonblast
+- Parabolic Charge
+- Volt Switch
+
+Sudowoodo-Wartime
+Level: 60
+Timid Nature
+Ability: Rock Head
+IVs: 5 HP / 22 Atk / 29 Def / 25 SpA / 31 SpD / 13 Spe
+- Giga Drain
+- Fairy's Haunt
+- Fake Tears
+- Aura Sphere
+
+Nidoking
+Level: 60
+Rash Nature
+Ability: Toxic Rush
+IVs: 5 HP / 26 Atk / 16 Def / 16 SpA / 29 SpD / 13 Spe
+- Poison Jab
+- Megahorn
+- Earth Power
+- Fury Attack
+
+Baxcalibur
+Level: 60
+Rash Nature
+Ability: Thermal Exchange
+IVs: 5 HP / 26 Atk / 27 Def / 16 SpA / 0 SpD / 13 Spe
+- Ice Shard
+- Bite
+- Ice Fang
+- Glaive Rush
+
+Drednaw
+Level: 60
+Bold Nature
+Ability: Shell Armor
+IVs: 5 HP / 19 Atk / 25 Def / 27 SpA / 6 SpD / 19 Spe
+- Rock Slide
+- Liquidation
+- Headbutt
+- Crunch
