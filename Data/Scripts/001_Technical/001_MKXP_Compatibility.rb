@@ -1,5 +1,5 @@
 # Using mkxp-z v2.4.0 - https://gitlab.com/mkxp-z/mkxp-z/-/releases/v2.4.0
-$VERBOSE = nil
+#$VERBOSE = nil
 $MOBILE = true
 begin; require 'zlib'; rescue; nil; end
 Font.default_shadow = false if Font.respond_to?(:default_shadow)
