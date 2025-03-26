@@ -118,6 +118,10 @@ class PokeBattle_Move_007 < PokeBattle_ParalysisMove
     end
     return super
   end
+
+  def pbOverrideSuccessCheckPerHit(user,target)
+    return (Settings::MORE_TYPE_EFFECTS && @id == :THUNDERWAVE && user.pbHasType?(:ELECTRIC))
+  end
 end
 
 
@@ -166,6 +170,9 @@ end
 # Burns the target.
 #===============================================================================
 class PokeBattle_Move_00A < PokeBattle_BurnMove
+  def pbOverrideSuccessCheckPerHit(user,target)
+    return (Settings::MORE_TYPE_EFFECTS && statusMove? && user.pbHasType?(:FIRE))
+  end
 end
 
 
@@ -193,6 +200,9 @@ end
 # Freezes the target.
 #===============================================================================
 class PokeBattle_Move_00C < PokeBattle_FreezeMove
+  def pbOverrideSuccessCheckPerHit(user,target)
+    return (Settings::MORE_TYPE_EFFECTS && statusMove? && user.pbHasType?(:ICE))
+  end
 end
 
 

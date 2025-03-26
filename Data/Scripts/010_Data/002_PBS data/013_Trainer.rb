@@ -135,7 +135,7 @@ module GameData
             pkmn.reset_moves
           end
           if !pkmn_data[:roles]
-            pkmn.add_role(:NONE)
+            pkmn.roles = pkmn.assign_roles
           else
             for i in pkmn_data[:roles]
               pkmn.add_role(i)
@@ -158,7 +158,7 @@ module GameData
             else
               pkmn.iv[s.id] = [pkmn_data[:level] / 2, Pokemon::IV_STAT_LIMIT].min
             end
-            if $game_switches[Settings::DISABLE_EVS]
+            if ($game_switches[Settings::DISABLE_EVS] || $game_switches[LvlCap::Expert])
               pkmn.ev[s.id] = 0
             else
               if pkmn_data[:ev]
