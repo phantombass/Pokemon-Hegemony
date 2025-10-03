@@ -110,7 +110,7 @@ module GameData
     def is_mega_stone?;      return @type == 12; end   # Does NOT include Red Orb/Blue Orb
 
     def is_important?
-      return true if is_key_item? || is_HM?
+      return true if is_key_item? || is_HM? || is_TM?
       return false
     end
 
