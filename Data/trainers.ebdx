@@ -1,4 +1,4 @@
-{K"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
+{L"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
 ["Goldeneye - Cradle.ogg@["classicVS"LEADER_Blaine{@{	@
 ["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"Ace[i"LEADER_Sabrina{@{	@
 ["Gym Leader.ogg@["plasmaSM@["
@@ -16,7 +16,7 @@ HAZEL@![i"LEADER_Erika{@{	@
 ["BW-NeoPlasmaBattle.ogg"AIRFORCECAPTAIN{@{@
 ["BW-NeoPlasmaBattle.ogg"AIRFORCE{@{@
 ["BW-NeoPlasmaBattle.ogg"ROCKETBOSS{@{@
-["Goldeneye - Cradle.ogg@["plasmaSM"CREATOR{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"CREATOR{@{@
 ["Goldeneye - Cradle.ogg@["plasmaSM"ROCKETBOSS,Armand{@{@["MILITIA1"ROCKETBOSS,Armand,8{@{@["MILITIA2"ARMYBOSS{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"ARMYBOSS,Ahab,0{@{@["
 ARMY1"ARMYBOSS,Ahab,1{@{@["
@@ -68,4 +68,5 @@ WENDY@![i"DOJO_Adam{@{	@
 ["Goldeneye - Cradle.ogg@["classicVS@["RIVAL2_Sand"RIVAL2,Rival,111{@{@
 ["Goldeneye - Cradle.ogg@["classicVS@["RIVAL2_Wind"RIVAL2,Rival,112{@{@
 ["Goldeneye - Cradle.ogg@["classicVS@["RIVAL2_Sand"CHANCELLOR,Yule,1{@{	@
-["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM@![i
+["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM@![i"RIVAL3{@{@
+["ZinniaBattleTheme.ogg@["classicVS
