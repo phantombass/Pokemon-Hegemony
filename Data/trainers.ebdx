@@ -1,4 +1,4 @@
-{L"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
+{K"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
 ["Goldeneye - Cradle.ogg@["classicVS"LEADER_Blaine{@{	@
 ["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"Ace[i"LEADER_Sabrina{@{	@
 ["Gym Leader.ogg@["plasmaSM@["
@@ -35,15 +35,11 @@ NAVY2"AIRFORCEBOSS{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"GUARDBOSS,Sunni,7{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM@["
 HELUM"OFFCORP{@{@
-["Goldeneye - Silo.ogg@["plasmaSM"OFFCORP,Bruce{@{@
-["Goldeneye - Silo.ogg@["OFFCORP1@["plasmaSM"OFFCORP,Bruce,1{@{@
-["Goldeneye - Silo.ogg@["plasmaSM"OFFCORP,Bruce,7{@{@
-["Goldeneye - Silo.ogg@["plasmaSM@["OFFCORPLEAGUE"DEFCORP{@{@
-["Goldeneye - Silo.ogg@["plasmaSM"DEFCORP,Jackson,6{@{@
-["Goldeneye - Silo.ogg@["plasmaSM@["JACKSON"PSYCORP{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"OFFCORP,Bruce{@{@["OFFCORP1"OFFCORP,Bruce,7{@{@["OFFCORPLEAGUE"DEFCORP{@{@
+["Goldeneye - Silo.ogg@["plasmaSM"DEFCORP,Jackson,6{@{@["JACKSON"PSYCORP{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"PSYCORP,Sylvester,6{@{@
-["Goldeneye - Silo.ogg@["plasmaSM@["PSYCHICTERRAIN"CHANCELLOR{@{	@
-["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM@![i"POKEMONTRAINER_Joseph{@{@
+["Goldeneye - Silo.ogg@["plasmaSM@["PSYCHICTERRAIN"CHANCELLOR{@{@
+["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM"POKEMONTRAINER_Joseph{@{@
 [" HGSS-278-BattleChampion.ogg@["plasmaSM"DOJO_Jasper{@{	@
 ["DPPT-Gym Leader.ogg@["plasmaSM@["JASPER@![i"DOJO_Apollo{@{	@
 ["DPPT-Gym Leader.ogg@["plasmaSM@["APOLLO@![i"DOJO_Luna{@{	@
