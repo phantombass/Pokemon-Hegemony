@@ -137,7 +137,6 @@ System::VERSION != Essentials::MKXPZ_VERSION
 
 printf("\e[1;33mWARNING: mkxp-z version mismatch.\e[0m\r\n")
 end
-
 #===============================================================================
 # Renderer Stabilizer (Constrained platforms: Switch / Consoles / JoiPlay)
 #===============================================================================
@@ -209,6 +208,7 @@ end
 # END OF MULTI-PLATFORM MKXP-Z PATCH
 #===============================================================================
 
+=======
 module Essentials
   GEN_8_VERSION = "1.1.0"
 end
