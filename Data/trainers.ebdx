@@ -1,22 +1,15 @@
-{H"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
-["Goldeneye - Cradle.ogg@["classicVS"LEADER_Blaine{@{
-@
-["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"VictoryTheme[""DPPT - Victory Gym Leader.ogg"Ace[i"LEADER_Sabrina{@{
-@
+{C"RIVAL1{I"__pk__:ET{"BattleBGM["B2W2-RivalTheme.ogg"BattleVS["classicVS"RIVAL2{@{@
+["Goldeneye - Cradle.ogg@["classicVS"LEADER_Blaine{@{	@
+["Gym Leader.ogg@["plasmaSM"BattleScript["TURNER"Ace[i"LEADER_Sabrina{@{	@
 ["Gym Leader.ogg@["plasmaSM@["
-HAZEL@![""DPPT - Victory Gym Leader.ogg@$[i"LEADER_Erika{@{
-@
-["Gym Leader.ogg@["plasmaSM@["ASTRID@![""DPPT - Victory Gym Leader.ogg@$[i"LEADER_Misty{@{
-@
-["Gym Leader.ogg@["plasmaSM@["	GAIL@![""DPPT - Victory Gym Leader.ogg@$[i"LEADER_Brock{@{
-@
-["Gym Leader.ogg@["plasmaSM@["GORDON@![""DPPT - Victory Gym Leader.ogg@$[i"LEADER_Winslow{@{
-@
-["Gym Leader.ogg@["plasmaSM@["WINSLOW@![""DPPT - Victory Gym Leader.ogg@$[i"LEADER_Surge{@{
-@
-["Gym Leader.ogg@["plasmaSM@["VINCENT@![""DPPT - Victory Gym Leader.ogg@$[i"LEADER_Jackson{@{
-@
-["Gym Leader.ogg@["plasmaSM@["JACKSON@![""DPPT - Victory Gym Leader.ogg@$[i"TEAMROCKET_M{@{@
+HAZEL@![i"LEADER_Erika{@{	@
+["Gym Leader.ogg@["plasmaSM@["ASTRID@![i"LEADER_Erika,Astrid,1{@{	@
+["Gym Leader.ogg@["plasmaSM@["ASTRID1@![i	"LEADER_Misty{@{	@
+["Gym Leader.ogg@["plasmaSM@["	GAIL@![i"LEADER_Brock{@{	@
+["Gym Leader.ogg@["plasmaSM@["GORDON@![i"LEADER_Winslow{@{	@
+["Gym Leader.ogg@["plasmaSM@["WINSLOW@![i"LEADER_Surge{@{	@
+["Gym Leader.ogg@["plasmaSM@["VINCENT@![i"LEADER_Jackson{@{	@
+["Gym Leader.ogg@["plasmaSM@["JACKSON@![i"TEAMROCKET_M{@{@
 ["BW-NeoPlasmaBattle.ogg@["teamSkull"TEAMROCKET_F{@{@
 ["BW-NeoPlasmaBattle.ogg@["teamSkull"	ARMY{@{@
 ["BW-NeoPlasmaBattle.ogg"SCIENTIST{@{@
@@ -45,41 +38,23 @@ NAVY2"AIRFORCEBOSS{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"PSYCORP{@{@
 ["Goldeneye - Silo.ogg@["plasmaSM"CHANCELLOR{@{@
 ["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM"POKEMONTRAINER_Joseph{@{@
-[" HGSS-278-BattleChampion.ogg@["plasmaSM"DOJO_Jasper{@{
-@
-["DPPT-Gym Leader.ogg@["plasmaSM@["JASPER@![""DPPT - Victory Gym Leader.ogg@$[i"DOJO_Apollo{@{
-@
-["DPPT-Gym Leader.ogg@["plasmaSM@["APOLLO@![""DPPT - Victory Gym Leader.ogg@$[i"DOJO_Luna{@{
-@
-["DPPT-Gym Leader.ogg@["plasmaSM@["	LUNA@![""DPPT - Victory Gym Leader.ogg@$[i"DOJO_Maloki{@{
-@
-["DPPT-Gym Leader.ogg@["plasmaSM@["MALOKI@![""DPPT - Victory Gym Leader.ogg@$[i"DOJO_Juliet{@{
-@
-["DPPT-Gym Leader.ogg@["plasmaSM@["JULIET@![""DPPT - Victory Gym Leader.ogg@$[i"DOJO_Olaf{@{
-@
-["DPPT-Gym Leader.ogg@["plasmaSM@["	OLAF@![""DPPT - Victory Gym Leader.ogg@$[i"DOJO_Wendy{@{
-@
+[" HGSS-278-BattleChampion.ogg@["plasmaSM"DOJO_Jasper{@{	@
+["DPPT-Gym Leader.ogg@["plasmaSM@["JASPER@![i"DOJO_Apollo{@{	@
+["DPPT-Gym Leader.ogg@["plasmaSM@["APOLLO@![i"DOJO_Luna{@{	@
+["DPPT-Gym Leader.ogg@["plasmaSM@["	LUNA@![i"DOJO_Maloki{@{	@
+["DPPT-Gym Leader.ogg@["plasmaSM@["MALOKI@![i"DOJO_Juliet{@{	@
+["DPPT-Gym Leader.ogg@["plasmaSM@["JULIET@![i"DOJO_Olaf{@{	@
+["DPPT-Gym Leader.ogg@["plasmaSM@["	OLAF@![i"DOJO_Wendy{@{	@
 ["DPPT-Gym Leader.ogg@["plasmaSM@["
-WENDY@![""DPPT - Victory Gym Leader.ogg@$[i"DOJO_Adam{@{
-@
-["DPPT-Gym Leader.ogg@["plasmaSM@["	ADAM@![""DPPT - Victory Gym Leader.ogg@$[i"LEAGUE_Astrid{@{	@
-["Goldeneye - Cradle.ogg@["plasmaSM@["ASTRIDLEAGUE@$[i"LEAGUE_Winslow{@{
-@
-["Goldeneye - Cradle.ogg@["plasmaSM@["WINSLOWLEAGUE@![""DPPT - Victory Gym Leader.ogg@$[i"LEAGUE_Eugene{@{	@
-["Goldeneye - Cradle.ogg@["plasmaSM@![""DPPT - Victory Gym Leader.ogg@$[i"LEAGUE_Armand{@{
-@
-["Goldeneye - Cradle.ogg@["plasmaSM@["ARMANDLEAGUE@![""DPPT - Victory Gym Leader.ogg@$[i"LEAGUE_Vincent{@{
-@
-["Goldeneye - Cradle.ogg@["plasmaSM@["VINCENTLEAGUE@![""DPPT - Victory Gym Leader.ogg@$[i"LEAGUE_Winston{@{
-@
-["Goldeneye - Cradle.ogg@["plasmaSM@["WINSTONLEAGUE@![""DPPT - Victory Gym Leader.ogg@$[i"CHAMPION,Joseph{@{@
+WENDY@![i"DOJO_Adam{@{	@
+["DPPT-Gym Leader.ogg@["plasmaSM@["	ADAM@![i"LEAGUE_Astrid{@{	@
+["Goldeneye - Cradle.ogg@["plasmaSM@["ASTRIDLEAGUE@![i"LEAGUE_Winslow{@{	@
+["Goldeneye - Cradle.ogg@["plasmaSM@["WINSLOWLEAGUE@![i"LEAGUE_Eugene{@{@
+["Goldeneye - Cradle.ogg@["plasmaSM@![i"LEAGUE_Armand{@{	@
+["Goldeneye - Cradle.ogg@["plasmaSM@["ARMANDLEAGUE@![i"LEAGUE_Vincent{@{	@
+["Goldeneye - Cradle.ogg@["plasmaSM@["VINCENTLEAGUE@![i"LEAGUE_Winston{@{	@
+["Goldeneye - Cradle.ogg@["plasmaSM@["WINSTONLEAGUE@![i"CHAMPION,Joseph{@{@
 [" HGSS-278-BattleChampion.ogg@["plasmaSM@["JOSEPHSAND"CHAMPION,Joseph,1{@{@
-[" HGSS-278-BattleChampion.ogg@["plasmaSM@["JOSEPHTERRAIN"RIVAL2,Rival,10{@{@
-["Goldeneye - Cradle.ogg@["classicVS"RIVAL2,Rival,11{@{@
-["Goldeneye - Cradle.ogg@["classicVS"RIVAL2,Rival,12{@{@
-["Goldeneye - Cradle.ogg@["classicVS"RIVAL2,Rival,110{@{@
-["Goldeneye - Cradle.ogg@["classicVS@["RIVAL2_Sand"RIVAL2,Rival,111{@{@
-["Goldeneye - Cradle.ogg@["classicVS@["RIVAL2_Wind"RIVAL2,Rival,112{@{@
-["Goldeneye - Cradle.ogg@["classicVS@["RIVAL2_Sand"CHANCELLOR,Yule,1{@{	@
-["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM@$[i"RIVAL3{@{@
+[" HGSS-278-BattleChampion.ogg@["plasmaSM@["JOSEPHTERRAIN"CHANCELLOR,Yule,1{@{	@
+["B2W2-ColressBattle.ogg@["CHANCELLOR@["plasmaSM@![i"RIVAL3{@{@
 ["ZinniaBattleTheme.ogg@["classicVS
