@@ -258,7 +258,20 @@ Events.onMapChange += proc { |_sender, e|
     188 => 189,
     215 => 216,
     227 => 228,
-    242 => 243
+    242 => 243,
+    263 => 267,
+    266 => 268,
+    277 => 278,
+    289 => 291,
+    300 => 302,
+    307 => 309,
+    312 => 314,
+    317 => 322,
+    325 => 326,
+    336 => 342,
+    341 => 353,
+    346 => 358,
+    350 => 366
   }
   check_map = (town_setup.keys.include?($game_map.map_id) && $PokemonGlobal.visitedMaps[town_setup[$game_map.map_id]] == true || !town_setup.keys.include?($game_map.map_id))
   $PokemonGlobal.visitedMaps[$game_map.map_id] = true unless !check_map
